@@ -1,0 +1,14 @@
+language: python
+python:
+  - "3.6"
+  - "3.7-dev"
+
+before_install:
+- pip install poetry
+install:
+- poetry install
+
+before_script:
+  - psql -c 'create database stickerfinder_test;' -U postgres
+  - cp stickerfinder/config.travis.py stickerfinder/config.py
+script: poetry run pytest
