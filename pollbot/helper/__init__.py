@@ -4,9 +4,10 @@
 donations_text = """
 Hello there!
 
-My name is Arne Beer (@Nukesor) and I'm the sole developer of the Poll Bot.
+My name is Arne Beer (@Nukesor) and I'm the sole developer of the Ultimate PollBot.
 
-All the coding for this project is done in my leisure time and for free.
+This project started as a result
+The whole project has been created during my leisure time and for free.
 This project is non-profit, open-source on [Github](https://github.com/Nukesor/sticker-finder) and hosted on a server I'm renting from my own money.
 
 I really appreciate anything that helps me out and that keeps me and my server running ☺️.

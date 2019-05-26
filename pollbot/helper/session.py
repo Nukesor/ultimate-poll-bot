@@ -3,14 +3,12 @@ import traceback
 from functools import wraps
 from telegram.error import (
     TelegramError,
-    ChatMigrated,
     Unauthorized,
 )
 
-from pollbot.config import config
 from pollbot.db import get_session
 from pollbot.sentry import sentry
-from pollbot.models import Chat, User
+from pollbot.models import User
 from pollbot.helper import error_text
 from pollbot.helper.telegram import call_tg_func
 
@@ -77,14 +75,10 @@ def session_wrapper(send_message=True, private=False):
                 elif hasattr(update, 'edited_message') and update.edited_message:
                     message = update.edited_message
 
-                chat_id = message.chat_id
-                chat_type = message.chat.type
-                chat = Chat.get_or_create(session, chat_id, chat_type)
-
-                if not is_allowed(user, update, chat=chat, private=private):
+                if not is_allowed(user, update, private=private):
                     return
 
-                response = func(context.bot, update, session, chat, user)
+                response = func(context.bot, update, session, user)
 
                 session.commit()
                 # Respond to user
@@ -93,11 +87,7 @@ def session_wrapper(send_message=True, private=False):
 
             # A user banned the bot
             except Unauthorized:
-                session.delete(chat)
-
-            # A group chat has been converted to a super group.
-            except ChatMigrated:
-                session.delete(chat)
+                session.delete(user)
 
             # Raise all telegram errors and let the generic error_callback handle it
             except TelegramError as e:
@@ -133,9 +123,9 @@ def get_user(session, update):
     return user
 
 
-def is_allowed(user, update, chat=None, private=False):
+def is_allowed(user, update, private=False):
     """Check whether the user is allowed to access this endpoint."""
-    if private and chat.type != 'private':
+    if private and update.message.chat.type != 'private':
         call_tg_func(update.message.chat, 'send_message',
                      ['Please do this in a direct conversation with me.'])
         return False

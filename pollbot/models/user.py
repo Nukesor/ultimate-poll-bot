@@ -3,10 +3,12 @@ from sqlalchemy import (
     Boolean,
     Column,
     func,
+    ForeignKey,
 )
 from sqlalchemy.types import (
     BigInteger,
     DateTime,
+    Integer,
     String,
 )
 from sqlalchemy.exc import IntegrityError
@@ -24,6 +26,14 @@ class User(base):
     username = Column(String, unique=True)
     admin = Column(Boolean, default=False, nullable=False)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
+
+    # OneToOne
+    current_poll_id = Column(Integer, ForeignKey('poll.id', ondelete='cascade'), index=True)
+    current_poll = relationship('Poll', uselist=False, foreign_keys='User.current_poll_id', post_update=True)
+
+    # OneToMany
+    votes = relationship('Vote')
+    polls = relationship('Poll', foreign_keys='Poll.user_id', back_populates='user')
 
     def __init__(self, user_id, username):
         """Create a new user."""
