@@ -45,6 +45,19 @@ def handle_vote(session, bot, context):
 
     session.commit()
 
+    # Create text and keyboard
     text = get_poll_management_text(session, poll)
     keyboard = get_vote_keyboard(poll)
-    context.query.message.edit_text(text, reply_markup=keyboard, parse_mode='markdown')
+
+    # Edit message directly (admin interface)
+    if context.query.message is not None:
+        context.query.message.edit_text(text, reply_markup=keyboard, parse_mode='markdown')
+
+    # Edit message via inline_message_id
+    else:
+        bot.edit_message_text(
+            text,
+            reply_markup=keyboard,
+            parse_mode='markdown',
+            inline_message_id=context.query.inline_message_id
+        )

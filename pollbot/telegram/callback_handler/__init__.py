@@ -33,8 +33,9 @@ class CallbackContext():
         self.action = int(data[2])
         self.callback_name = CallbackType(self.callback_type).name
 
-        # Get chat entity and telegram chat
-        self.tg_chat = self.query.message.chat
+        if self.query.message:
+            # Get chat entity and telegram chat
+            self.tg_chat = self.query.message.chat
 
 
 @run_async

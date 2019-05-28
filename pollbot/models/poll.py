@@ -25,6 +25,7 @@ class Poll(base):
     id = Column(Integer, primary_key=True)
     type = Column(String)
     creation_step = Column(String, nullable=False)
+    finished = Column(Boolean, default=False, nullable=False)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 

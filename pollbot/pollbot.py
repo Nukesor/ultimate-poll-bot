@@ -3,6 +3,7 @@ import logging
 from telegram.ext import (
     CallbackQueryHandler,
     CommandHandler,
+    InlineQueryHandler,
     Filters,
     MessageHandler,
     Updater,
@@ -20,6 +21,7 @@ from pollbot.helper import (
 from pollbot.telegram.message_handler import handle_private_text
 from pollbot.telegram.callback_handler import handle_callback_query
 from pollbot.telegram.error_handler import error_callback
+from pollbot.telegram.inline_query import search
 from pollbot.telegram.commands.poll import (
     create_poll,
     cancel_creation,
@@ -68,6 +70,9 @@ dispatcher.add_handler(CommandHandler('donations', send_donation_text))
 
 # Callback handler
 dispatcher.add_handler(CallbackQueryHandler(handle_callback_query))
+
+# InlineQuery handler
+dispatcher.add_handler(InlineQueryHandler(search))
 
 # Message handler
 
