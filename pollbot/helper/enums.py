@@ -48,6 +48,9 @@ class CallbackType(Enum):
     all_options_entered = 4
     cancel = 8
 
+    # Poll voting
+    vote = 20
+
 
 @unique
 class CallbackResult(Enum):
@@ -56,3 +59,9 @@ class CallbackResult(Enum):
     empty = 0
     true = 1
     false = 2
+
+    # Poll voting
+    vote = 20
+    vote_yes = 21
+    vote_no = 22
+    vote_maybe = 23

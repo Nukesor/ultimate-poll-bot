@@ -28,13 +28,14 @@ def get_poll_text(session, poll):
         lines.append(f'*{poll_option.name}*')
         lines.append(calculate_percentage_line(poll_option, total_user_count))
 
-        for index, vote in poll_option.votes:
-            if index != len(poll_option) - 1:
-                line = f'├ {vote.user.name}'
-            else:
-                line = f'└ {vote.user.name}'
+        if not poll.anonymous:
+            for index, vote in enumerate(poll_option.votes):
+                if index != len(poll.options) - 1:
+                    line = f'├ {vote.user.name}'
+                else:
+                    line = f'└ {vote.user.name}'
 
-            lines.append(line)
+                lines.append(line)
 
     lines.append(f'\n{total_user_count} users voted so far')
 

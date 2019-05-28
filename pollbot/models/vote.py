@@ -22,7 +22,6 @@ class Vote(base):
 
     id = Column(Integer, primary_key=True)
     type = Column(String)
-    index = Column(Integer)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 
@@ -36,11 +35,9 @@ class Vote(base):
     user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade'), nullable=False, index=True)
     user = relationship('User')
 
-    def __init__(self, vote_id, vote_type, index, user, poll_option):
+    def __init__(self, vote_type, user, poll_option):
         """Create a new vote."""
-        self.id = vote_id
         self.type = vote_type
-        self.index = index
         self.user = user
         self.poll_option = poll_option
         self.poll = poll_option.poll

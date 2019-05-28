@@ -1,8 +1,12 @@
 """Callback functions needed during creation of a Poll."""
 from pollbot.helper.creation import get_init_text, init_options
-from pollbot.helper.keyboard import get_change_poll_type_keyboard, get_init_keyboard
 from pollbot.helper.enums import PollType, PollCreationStep
 from pollbot.helper.management import get_poll_management_text
+from pollbot.helper.keyboard import (
+    get_change_poll_type_keyboard,
+    get_init_keyboard,
+    get_vote_keyboard,
+)
 
 from pollbot.models import Poll
 
@@ -45,4 +49,8 @@ def all_options_entered(session, context):
     poll.creation_step = PollCreationStep.done.name
 
     context.user.current_poll = None
-    context.tg_chat.send_message(get_poll_management_text(session, poll), parse_mode='markdown')
+    context.tg_chat.send_message(
+        get_poll_management_text(session, poll),
+        parse_mode='markdown',
+        reply_markup=get_vote_keyboard(poll)
+    )

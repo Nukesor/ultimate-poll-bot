@@ -12,6 +12,10 @@ from .creation import (
     all_options_entered,
 )
 
+from .vote import (
+    handle_vote,
+)
+
 
 class CallbackContext():
     """Contains all important information for handling with callbacks."""
@@ -39,6 +43,7 @@ def handle_callback_query(bot, update, session, user):
     """Handle callback queries from inline keyboards."""
     context = CallbackContext(session, update.callback_query, user)
 
+    # Poll creation
     if context.callback_name == CallbackType.show_poll_type_keyboard.name:
         show_poll_type_keyboard(session, context)
     elif context.callback_name == CallbackType.change_poll_type.name:
@@ -49,6 +54,10 @@ def handle_callback_query(bot, update, session, user):
         skip_description(session, context)
     elif context.callback_name == CallbackType.all_options_entered.name:
         all_options_entered(session, context)
+
+    # Voting
+    elif context.callback_name == CallbackType.vote.name:
+        handle_vote(session, bot, context)
 
     return
 
