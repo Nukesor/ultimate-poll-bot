@@ -1,7 +1,6 @@
 """Callback functions needed during creation of a Poll."""
 from pollbot.helper.enums import PollType, VoteType
-from pollbot.helper.management import get_poll_management_text
-from pollbot.helper.keyboard import get_vote_keyboard
+from pollbot.helper.display import update_poll
 
 from pollbot.models import PollOption, Vote
 
@@ -44,20 +43,4 @@ def handle_vote(session, bot, context):
             session.add(vote)
 
     session.commit()
-
-    # Create text and keyboard
-    text = get_poll_management_text(session, poll)
-    keyboard = get_vote_keyboard(poll)
-
-    # Edit message directly (admin interface)
-    if context.query.message is not None:
-        context.query.message.edit_text(text, reply_markup=keyboard, parse_mode='markdown')
-
-    # Edit message via inline_message_id
-    else:
-        bot.edit_message_text(
-            text,
-            reply_markup=keyboard,
-            parse_mode='markdown',
-            inline_message_id=context.query.inline_message_id
-        )
+    update_poll(session, bot, poll)

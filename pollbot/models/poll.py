@@ -42,6 +42,7 @@ class Poll(base):
     # OneToMany
     options = relationship('PollOption', order_by='asc(PollOption.id)')
     votes = relationship('Vote', order_by='asc(PollOption.id)')
+    references = relationship('Reference')
 
     def __init__(self, user):
         """Create a new poll."""

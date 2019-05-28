@@ -1,11 +1,49 @@
 """Poll creation helper."""
 import math
+from telegram.error import BadRequest
 
+from pollbot.helper.keyboard import get_vote_keyboard
 from pollbot.models import (
     User,
     PollOption,
     Vote,
 )
+
+
+def update_poll(session, bot, poll):
+    """Update all messages (references) of a poll."""
+    for reference in poll.references:
+        try:
+            # Admin poll management interface
+            if reference.inline_message_id is None:
+                keyboard = get_vote_keyboard(poll)
+                text = get_poll_management_text(session, poll)
+                bot.edit_message_text(
+                    text,
+                    chat_id=reference.admin_chat_id,
+                    message_id=reference.admin_message_id,
+                    reply_markup=keyboard,
+                    parse_mode='markdown',
+                )
+
+            # Edit message via inline_message_id
+            else:
+                # Create text and keyboard
+                text = get_poll_text(session, poll)
+                keyboard = get_vote_keyboard(poll)
+
+                bot.edit_message_text(
+                    text,
+                    inline_message_id=reference.inline_message_id,
+                    reply_markup=keyboard,
+                    parse_mode='markdown',
+                )
+        except BadRequest as e:
+            if e.message.startswith('Message_id_invalid'):
+                session.delete(reference)
+                session.commit()
+            else:
+                raise
 
 
 def get_poll_text(session, poll):
@@ -56,3 +94,13 @@ def calculate_percentage_line(poll_option, total_user_count):
     line += f' ({percentage}%)'
 
     return ''.join(line)
+
+
+def get_poll_management_text(session, poll):
+    """Create the management interface for a poll."""
+    poll_text = get_poll_text(session, poll)
+
+    management_text = 'Manage your poll:\n\n'
+    management_text += poll_text
+
+    return management_text

@@ -3,7 +3,7 @@ from sqlalchemy import or_
 from telegram.ext import run_async
 from telegram import InlineQueryResultArticle, InputTextMessageContent
 
-from pollbot.helper.management import get_poll_management_text
+from pollbot.helper.display import get_poll_text
 from pollbot.helper.session import hidden_session_wrapper
 from pollbot.helper.keyboard import get_vote_keyboard
 from pollbot.models import Poll
@@ -41,7 +41,7 @@ def search(bot, update, session, user):
     else:
         results = []
         for poll in polls:
-            text = get_poll_management_text(session, poll)
+            text = get_poll_text(session, poll)
             content = InputTextMessageContent(text, parse_mode='markdown')
             results.append(InlineQueryResultArticle(
                 poll.id,
