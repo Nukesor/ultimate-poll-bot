@@ -3,7 +3,7 @@ from telegram.ext import run_async
 
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.enums import PollCreationStep
-from pollbot.helper.poll_creation import get_init_text
+from pollbot.helper.creation import get_init_text
 from pollbot.helper.keyboard import get_main_keyboard, get_init_keyboard
 
 from pollbot.models import Poll

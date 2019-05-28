@@ -30,6 +30,8 @@ class Poll(base):
 
     name = Column(String)
     description = Column(String)
+
+    # Options
     anonymous = Column(Boolean, nullable=False)
 
     # OneToOne
@@ -37,8 +39,8 @@ class Poll(base):
     user = relationship('User', foreign_keys='Poll.user_id', back_populates='polls')
 
     # OneToMany
-    poll_options = relationship('PollOption')
-    votes = relationship('Vote')
+    options = relationship('PollOption', order_by='asc(PollOption.id)')
+    votes = relationship('Vote', order_by='asc(PollOption.id)')
 
     def __init__(self, user):
         """Create a new poll."""

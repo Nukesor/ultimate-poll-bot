@@ -10,7 +10,6 @@ from sqlalchemy.types import (
     String,
 )
 from sqlalchemy.orm import relationship
-from sqlalchemy.exc import IntegrityError
 
 from pollbot.db import base
 
@@ -21,7 +20,7 @@ class PollOption(base):
     __tablename__ = 'poll_option'
 
     id = Column(Integer, primary_key=True)
-    type = Column(String)
+    name = Column(String)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 
@@ -32,7 +31,7 @@ class PollOption(base):
     # OneToMany
     votes = relationship('Vote')
 
-    def __init__(self, poll, text):
+    def __init__(self, poll, name):
         """Create a new poll."""
-        self.text = text
         self.poll = poll
+        self.name = name

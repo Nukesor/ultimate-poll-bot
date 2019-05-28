@@ -11,7 +11,6 @@ from sqlalchemy.types import (
     String,
 )
 from sqlalchemy.orm import relationship
-from sqlalchemy.exc import IntegrityError
 
 from pollbot.db import base
 
@@ -23,6 +22,7 @@ class Vote(base):
 
     id = Column(Integer, primary_key=True)
     type = Column(String)
+    index = Column(Integer)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 
@@ -36,24 +36,11 @@ class Vote(base):
     user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade'), nullable=False, index=True)
     user = relationship('User')
 
-    def __init__(self, vote_id):
+    def __init__(self, vote_id, vote_type, index, user, poll_option):
         """Create a new vote."""
         self.id = vote_id
-
-    @staticmethod
-    def get_or_create(session, vote_id, vote_type):
-        """Get or create a new vote."""
-        vote = session.query(Vote).get(vote_id)
-        if not vote:
-            vote = Vote(vote_id)
-            session.add(vote)
-            try:
-                session.commit()
-            # Handle parallel vote creation
-            except IntegrityError as e:
-                session.rollback()
-                vote = session.query(Vote).get(vote_id)
-                if vote is None:
-                    raise e
-
-        return vote
+        self.type = vote_type
+        self.index = index
+        self.user = user
+        self.poll_option = poll_option
+        self.poll = poll_option.poll

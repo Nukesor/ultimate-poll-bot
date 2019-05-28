@@ -63,7 +63,7 @@ dispatcher.add_handler(CommandHandler('cancel', cancel_creation))
 # Misc commands
 dispatcher.add_handler(CommandHandler('start', start))
 dispatcher.add_handler(CommandHandler('help', send_help_text))
-dispatcher.add_handler(CommandHandler('donation', send_donation_text))
+dispatcher.add_handler(CommandHandler('donations', send_donation_text))
 
 
 # Callback handler

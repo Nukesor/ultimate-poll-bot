@@ -1,7 +1,7 @@
 """Handle messages."""
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.enums import PollCreationStep
-from pollbot.helper.poll_creation import init_description, init_options, next_option
+from pollbot.helper.creation import init_description, init_options, next_option
 from pollbot.models import PollOption
 
 
@@ -12,7 +12,7 @@ def handle_private_text(bot, update, session, user):
     if user.current_poll is None:
         return
 
-    text = update.message.text
+    text = update.message.text.strip()
     poll = user.current_poll
     chat = update.message.chat
     current_step = user.current_poll.creation_step
@@ -29,6 +29,10 @@ def handle_private_text(bot, update, session, user):
 
     # Add an option to the poll
     elif current_step == PollCreationStep.options.name:
+        for option in poll.options:
+            if option.name == text:
+                return "There already exists a option with this name."""
         poll_option = PollOption(poll, text)
-        session.add(poll_option)
+        poll.options.append(poll_option)
+
         next_option(chat, poll, text)
