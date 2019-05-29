@@ -12,6 +12,7 @@ alembic = "1.0"
 python-telegram-bot = "^12.0.0b1"
 SQLAlchemy = "^1.2"
 sqlalchemy-utils = "^0.33"
+psycopg2-binary = "^2.8"
 
 [tool.poetry.dev-dependencies]
 pytest-mock = "^1.10"
