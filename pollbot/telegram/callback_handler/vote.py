@@ -14,7 +14,7 @@ def handle_vote(session, context):
     if poll.vote_type == VoteType.single_vote.name:
         handle_single_vote(session, context, option)
     # Multi votes
-    elif poll.vote_type == VoteType.multiple_votes.name:
+    elif poll.vote_type == VoteType.pav_vote.name:
         handle_multi_vote(session, context, option)
     # Fix count vote
     elif poll.vote_type == VoteType.fix_votes.name:

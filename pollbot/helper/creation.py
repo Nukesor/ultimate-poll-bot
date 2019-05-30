@@ -16,7 +16,7 @@ def get_vote_type_help_text(poll):
 *Single vote*:
 Every user gets a single vote.
 
-*Multiple votes*:
+*Proportional approval voting*:
 Every user is allowed to vote each option without restrictions (But only one vote per option).
 
 *Fixed number of votes*:
