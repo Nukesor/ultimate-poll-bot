@@ -18,8 +18,7 @@ from pollbot.models import Poll
 def create_poll(bot, update, session, user):
     """Create a new poll."""
     # The previous unfinished poll will be removed
-    if user.current_poll is not None \
-       and user.current_poll.expected_input != ExpectedInput.done.name:
+    if user.current_poll is not None and not user.current_poll.created:
         session.delete(user.current_poll)
 
     poll = Poll(user)

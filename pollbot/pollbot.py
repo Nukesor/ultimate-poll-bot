@@ -26,14 +26,13 @@ from pollbot.telegram.inline_query import search
 from pollbot.telegram.inline_result_handler import handle_chosen_inline_result
 from pollbot.telegram.commands.poll import (
     create_poll,
-    cancel_creation,
     list_polls,
 )
 
 
 @session_wrapper()
 def start(bot, update, session, user):
-    """Send a help text."""
+    """Send a start text."""
     keyboard = get_main_keyboard()
     update.message.chat.send_message(start_text, parse_mode='Markdown', reply_markup=keyboard)
 

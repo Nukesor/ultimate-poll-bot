@@ -27,7 +27,7 @@ def handle_private_text(bot, update, session, user):
     elif expected_input == ExpectedInput.description:
         poll.description = text
         poll.expected_input = ExpectedInput.options.name
-        message = 'Now send me the first option (Or send multiple options at once, each option in a new line)'
+        message = 'Now send me the first option (Or send multiple options at once, each option on a new line)'
         chat.send_message(message)
 
     # Add an option to the poll

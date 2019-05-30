@@ -10,10 +10,10 @@ def get_vote_type_help_text(poll):
     return f"""Current vote type: *{vote_type}*
 
 *Single vote*:
-Each user gets a single vote.
+Every user gets a single vote.
 
 *Multiple votes*:
-Each user is allowed to vote each option without restrictions (But only one vote per option).
+Every user is allowed to vote each option without restrictions (But only one vote per option).
 """
 
 
@@ -28,7 +28,7 @@ The current settings for the poll are:
 *Anonymity*: {'Names are not visible' if poll.anonymous else 'Names are visible'}
 
 Please follow these steps:
-1. Please configure the poll to your needs 🙂
+1. Configure the poll to your needs 🙂
 2. 👇 Send me the name of this poll. 👇
 """
     return message

@@ -22,7 +22,7 @@ def handle_vote(session, context):
             existing_vote.poll_option = option
         # Voted for the same thing again
         elif existing_vote and existing_vote.poll_option == option:
-            return
+            session.delete(existing_vote)
         # First vote on this poll
         elif existing_vote is None:
             vote = Vote(VoteResultType.yes.name, user, option)
