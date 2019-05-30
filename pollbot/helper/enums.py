@@ -18,15 +18,15 @@ class VoteType(Enum):
     """Helper class to specify the different types of Polls."""
 
     single_vote = 1
-    pav_vote = 2
-    fix_votes = 3
+    block_vote = 2
+    limited_vote = 3
 #    multiple_per_option = 4
 
 
 VoteTypeTranslation = {
     VoteType.single_vote.name: 'Single vote',
-    VoteType.pav_vote.name: 'Proportional approval voting',
-    VoteType.fix_votes.name: 'Fix number of votes',
+    VoteType.block_vote.name: 'Block vote',
+    VoteType.limited_vote.name: 'Limited vote',
 }
 #    VoteType.multiple_per_option.name: 'Multiple votes per option',
 

@@ -10,15 +10,15 @@ def handle_vote(session, context):
     option = session.query(PollOption).get(context.payload)
     poll = option.poll
 
-    # Single votes
+    # Single vote
     if poll.vote_type == VoteType.single_vote.name:
         handle_single_vote(session, context, option)
-    # Multi votes
-    elif poll.vote_type == VoteType.pav_vote.name:
-        handle_multi_vote(session, context, option)
-    # Fix count vote
-    elif poll.vote_type == VoteType.fix_votes.name:
-        handle_fix_vote(session, context, option)
+    # Block vote
+    elif poll.vote_type == VoteType.block_vote.name:
+        handle_block_vote(session, context, option)
+    # Limited vote
+    elif poll.vote_type == VoteType.limited_vote.name:
+        handle_limited_vote(session, context, option)
 
     session.commit()
     update_poll_messages(session, context.bot, poll)
@@ -45,7 +45,7 @@ def handle_single_vote(session, context, option):
         context.query.answer('Vote registered')
 
 
-def handle_multi_vote(session, context, option):
+def handle_block_vote(session, context, option):
     """Handle a Multi vote."""
     existing_vote = session.query(Vote) \
         .filter(Vote.poll_option == option) \
@@ -62,7 +62,7 @@ def handle_multi_vote(session, context, option):
         context.query.answer('Vote registered')
 
 
-def handle_fix_vote(session, context, option):
+def handle_limited_vote(session, context, option):
     """Handle a Fix count vote."""
     existing_vote = session.query(Vote) \
         .filter(Vote.poll_option == option) \

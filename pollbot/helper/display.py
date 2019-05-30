@@ -125,7 +125,7 @@ def get_poll_text(session, poll):
                 lines.append(line)
 
     vote_type_with_vote_count = [
-        VoteType.fix_votes.name,
+        VoteType.limited_vote.name,
     ]
 
     if poll.vote_type in vote_type_with_vote_count:

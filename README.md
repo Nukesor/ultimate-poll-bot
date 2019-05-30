@@ -9,8 +9,8 @@
 
 - This bot has 4 different vote modi.
     1. Single vote: Every user gets one vote for the poll
-    2. Multi vote: Every user can vote without restriction, but only one vote per option.
-    3. Fix count vote: E.g. every user gets 3 votes for distribution, but only one vote per option.
+    2. Block vote: Every user can vote without restriction, but only one vote per option.
+    3. Limited vote: E.g. every user gets 3 votes for distribution, but only one vote per option.
     4. Election vote: E.g. every user gets 3 votes for distribution.
 
 - Custom sorting of options and users
