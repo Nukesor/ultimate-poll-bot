@@ -42,5 +42,6 @@ def handle_vote(session, context):
             vote = Vote(VoteResultType.yes.name, user, option)
             session.add(vote)
 
+    context.query.answer('Vote registered')
     session.commit()
     update_poll_messages(session, context.bot, poll)
