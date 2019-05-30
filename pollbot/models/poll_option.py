@@ -26,10 +26,10 @@ class PollOption(base):
 
     # ManyToOne
     poll_id = Column(Integer, ForeignKey('poll.id', ondelete='cascade'), nullable=False, index=True)
-    poll = relationship('Poll')
+    poll = relationship('Poll', lazy='joined')
 
     # OneToMany
-    votes = relationship('Vote')
+    votes = relationship('Vote', lazy='joined')
 
     def __init__(self, poll, name):
         """Create a new poll."""

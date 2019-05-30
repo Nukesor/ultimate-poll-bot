@@ -37,12 +37,12 @@ class Poll(base):
 
     # OneToOne
     user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade'), nullable=False, index=True)
-    user = relationship('User', foreign_keys='Poll.user_id', back_populates='polls')
+    user = relationship('User', foreign_keys='Poll.user_id')
 
     # OneToMany
-    options = relationship('PollOption', order_by='asc(PollOption.id)')
-    votes = relationship('Vote', order_by='asc(PollOption.id)')
-    references = relationship('Reference')
+    options = relationship('PollOption', order_by='asc(PollOption.id)', lazy='joined')
+    votes = relationship('Vote')
+    references = relationship('Reference', lazy='joined')
 
     def __init__(self, user):
         """Create a new poll."""
