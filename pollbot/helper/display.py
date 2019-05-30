@@ -5,6 +5,7 @@ from telegram.error import BadRequest
 from pollbot.telegram.keyboard import get_vote_keyboard, get_management_keyboard
 from pollbot.helper.enums import (
     ExpectedInput,
+    VoteType,
     VoteTypeTranslation,
     UserSorting,
     OptionSorting,
@@ -123,11 +124,18 @@ def get_poll_text(session, poll):
 
                 lines.append(line)
 
+    vote_type_with_vote_count = [
+        VoteType.fix_votes.name,
+    ]
+
+    if poll.vote_type in vote_type_with_vote_count:
+        lines.append(f'\nEvery user can vote *{poll.number_of_votes} times*')
+
     # Total user count information
     if total_user_count > 1:
-        lines.append(f'\n*{total_user_count} users* voted so far')
+        lines.append(f'*{total_user_count} users* voted so far')
     elif total_user_count == 1:
-        lines.append('\n*One user* voted so far')
+        lines.append('*One user* voted so far')
 
     # Notify users that poll is closed
     if poll.closed:

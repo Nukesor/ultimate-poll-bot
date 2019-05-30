@@ -10,6 +10,7 @@ class ExpectedInput(Enum):
     description = 2
     options = 3
     votes = 4
+    vote_count = 5
 
 
 @unique
@@ -18,15 +19,15 @@ class VoteType(Enum):
 
     single_vote = 1
     multiple_votes = 2
-#    fix_votes = 3
+    fix_votes = 3
 #    multiple_per_option = 4
 
 
 VoteTypeTranslation = {
     VoteType.single_vote.name: 'Single vote',
     VoteType.multiple_votes.name: 'Multiple votes',
+    VoteType.fix_votes.name: 'Fix number of votes',
 }
-#    VoteType.fix_votes.name: 'Fix number of votes',
 #    VoteType.multiple_per_option.name: 'Multiple votes per option',
 
 

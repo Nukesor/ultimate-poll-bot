@@ -1,7 +1,11 @@
 """Poll creation helper."""
-
 from pollbot.helper.enums import VoteTypeTranslation, ExpectedInput
-from pollbot.telegram.keyboard import get_options_entered_keyboard
+from pollbot.helper.display import get_poll_management_text
+from pollbot.telegram.keyboard import (
+    get_options_entered_keyboard,
+    get_management_keyboard,
+)
+from pollbot.models import Reference
 
 
 def get_vote_type_help_text(poll):
@@ -14,6 +18,9 @@ Every user gets a single vote.
 
 *Multiple votes*:
 Every user is allowed to vote each option without restrictions (But only one vote per option).
+
+*Fixed number of votes*:
+Every user gets a fixed number of votes they can distribute (But only one vote per option).
 """
 
 
@@ -48,3 +55,31 @@ def next_option(tg_chat, poll, options):
         text += '\n\nSend the next option or click *done*.'
 
     tg_chat.send_message(text, reply_markup=keyboard, parse_mode='Markdown')
+
+
+def create_poll(session, poll, user, chat, message=None):
+    """Finish the poll creation."""
+    poll.created = True
+    poll.expected_input = None
+    user.current_poll = None
+
+    if message:
+        message = message.edit_text(
+            get_poll_management_text(session, poll),
+            parse_mode='markdown',
+            reply_markup=get_management_keyboard(poll)
+        )
+    else:
+        message = chat.send_message(
+            get_poll_management_text(session, poll),
+            parse_mode='markdown',
+            reply_markup=get_management_keyboard(poll)
+        )
+
+    reference = Reference(
+        poll,
+        admin_chat_id=chat.id,
+        admin_message_id=message.message_id
+    )
+    session.add(reference)
+    session.commit()
