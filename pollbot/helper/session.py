@@ -89,7 +89,7 @@ def session_wrapper(send_message=True, private=False):
                 session.commit()
                 # Respond to user
                 if hasattr(update, 'message') and response is not None:
-                    call_tg_func(message.chat, 'send_message', args=[response])
+                    message.chat.send_message(response)
 
             # A user banned the bot
             except Unauthorized:
@@ -105,8 +105,7 @@ def session_wrapper(send_message=True, private=False):
                 sentry.captureException()
                 if send_message:
                     session.close()
-                    call_tg_func(message.chat, 'send_message',
-                                 args=[error_text])
+                    message.chat.send_message(error_text)
 
             finally:
                 session.close()

@@ -29,7 +29,7 @@ class PollOption(base):
     poll = relationship('Poll', lazy='joined')
 
     # OneToMany
-    votes = relationship('Vote', lazy='joined')
+    votes = relationship('Vote', lazy='joined', passive_deletes='all')
 
     def __init__(self, poll, name):
         """Create a new poll."""

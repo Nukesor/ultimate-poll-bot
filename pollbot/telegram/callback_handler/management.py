@@ -1,14 +1,23 @@
 """Callback functions needed during creation of a Poll."""
-from pollbot.helper.poll_creation import get_init_text, init_options
-from pollbot.helper.keyboard import get_change_poll_type_keyboard, get_init_keyboard
-from pollbot.helper.enums import PollType, PollCreationStep
-
-from pollbot.models import Poll
+from pollbot.helper.display import remove_poll_messages, update_poll_messages
 
 
-def show_poll_type_keyboard(session, context):
-    """Change the initial keyboard to poll type keyboard."""
-    poll = session.query(Poll).get(context.payload)
+def delete_poll(session, context):
+    """Permanently delete the pall."""
+    remove_poll_messages(session, context.bot, context.poll)
+    session.delete(context.poll)
+    session.commit()
 
-    keyboard = get_change_poll_type_keyboard(poll)
-    context.query.message.edit_reply_markup(reply_markup=keyboard)
+
+def close_poll(session, context):
+    """Close this poll."""
+    context.poll.closed = True
+    session.commit()
+    update_poll_messages(session, context.bot, context.poll)
+
+
+def reopen_poll(session, context):
+    """Reopen this poll."""
+    context.poll.closed = False
+    session.commit()
+    update_poll_messages(session, context.bot, context.poll)

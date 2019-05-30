@@ -2,9 +2,9 @@
 from telegram.ext import run_async
 
 from pollbot.helper.session import session_wrapper
-from pollbot.helper.enums import PollCreationStep
+from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.creation import get_init_text
-from pollbot.helper.keyboard import get_main_keyboard, get_init_keyboard
+from pollbot.telegram.keyboard import get_main_keyboard, get_init_keyboard
 
 from pollbot.models import Poll
 
@@ -15,7 +15,7 @@ def create_poll(bot, update, session, user):
     """Create a new poll."""
     # The previous unfinished poll will be removed
     if user.current_poll is not None \
-       and user.current_poll.creation_step != PollCreationStep.done.name:
+       and user.current_poll.expected_input != ExpectedInput.done.name:
         session.delete(user.current_poll)
 
     poll = Poll(user)
@@ -26,7 +26,7 @@ def create_poll(bot, update, session, user):
     text = get_init_text(poll)
     keyboard = get_init_keyboard(poll)
 
-    update.message.chat.send_message(text, reply_markup=keyboard)
+    update.message.chat.send_message(text, parse_mode='markdown', reply_markup=keyboard)
 
 
 @run_async
@@ -35,7 +35,7 @@ def cancel_creation(bot, update, session, user):
     """Create a new poll."""
     # The previous unfinished poll will be removed
     if user.current_poll is not None \
-       and user.current_poll.creation_step != PollCreationStep.done.name:
+       and user.current_poll.expected_input != ExpectedInput.done.name:
         session.delete(user.current_poll)
         session.commit()
 

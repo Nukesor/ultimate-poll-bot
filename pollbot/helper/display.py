@@ -2,7 +2,8 @@
 import math
 from telegram.error import BadRequest
 
-from pollbot.helper.keyboard import get_vote_keyboard
+from pollbot.helper.enums import ExpectedInput
+from pollbot.telegram.keyboard import get_vote_keyboard, get_management_keyboard
 from pollbot.models import (
     User,
     PollOption,
@@ -10,13 +11,16 @@ from pollbot.models import (
 )
 
 
-def update_poll(session, bot, poll):
+def update_poll_messages(session, bot, poll):
     """Update all messages (references) of a poll."""
     for reference in poll.references:
         try:
             # Admin poll management interface
             if reference.inline_message_id is None:
-                keyboard = get_vote_keyboard(poll)
+                if poll.expected_input == ExpectedInput.votes.name:
+                    keyboard = get_vote_keyboard(poll, show_back=True)
+                else:
+                    keyboard = get_management_keyboard(poll)
                 text = get_poll_management_text(session, poll)
                 bot.edit_message_text(
                     text,
@@ -46,6 +50,32 @@ def update_poll(session, bot, poll):
                 raise
 
 
+def remove_poll_messages(session, bot, poll):
+    """Remove all messages (references) of a poll."""
+    for reference in poll.references:
+        try:
+            # Admin poll management interface
+            if reference.inline_message_id is None:
+                bot.edit_message_text(
+                    'This poll has been permanently deleted.',
+                    chat_id=reference.admin_chat_id,
+                    message_id=reference.admin_message_id,
+                )
+
+            # Edit message via inline_message_id
+            else:
+                # Create text and keyboard
+                bot.edit_message_text(
+                    'This poll has been permanently deleted.',
+                    inline_message_id=reference.inline_message_id,
+                )
+        except BadRequest as e:
+            if e.message.startswith('Message_id_invalid'):
+                pass
+            else:
+                raise
+
+
 def get_poll_text(session, poll):
     """Create the text of the poll."""
     lines = [f"{poll.name}"]
@@ -58,24 +88,39 @@ def get_poll_text(session, poll):
         .group_by(User.id) \
         .count()
 
+    # Name and description
     lines = []
     lines.append(f'*{poll.name}*')
     lines.append(f'_{poll.description}_')
+
+    # All options with their respective people percentage
     for poll_option in poll.options:
         lines.append('')
-        lines.append(f'*{poll_option.name}*')
+        if len(poll_option.votes) != 0:
+            lines.append(f'*{poll_option.name}* ({len(poll_option.votes)} votes)')
+        else:
+            lines.append(f'*{poll_option.name}*')
         lines.append(calculate_percentage_line(poll_option, total_user_count))
 
         if not poll.anonymous:
             for index, vote in enumerate(poll_option.votes):
-                if index != len(poll.options) - 1:
+                if index != len(poll.votes) - 1:
                     line = f'├ {vote.user.name}'
                 else:
                     line = f'└ {vote.user.name}'
 
                 lines.append(line)
 
-    lines.append(f'\n{total_user_count} users voted so far')
+    # Total user count information
+    if total_user_count > 1:
+        lines.append(f'\n*{total_user_count} users* voted so far')
+    elif total_user_count == 1:
+        lines.append('\n*One user* voted so far')
+
+    # Notify users that poll is closed
+    if poll.closed:
+        lines.insert(0, '⚠️ *This poll is closed* ⚠️\n')
+        lines.append('\n⚠️ *This poll is closed* ⚠️')
 
     return '\n'.join(lines)
 
@@ -99,6 +144,10 @@ def calculate_percentage_line(poll_option, total_user_count):
 def get_poll_management_text(session, poll):
     """Create the management interface for a poll."""
     poll_text = get_poll_text(session, poll)
+
+    # Poll is closed, the options are not important any longer
+    if poll.closed:
+        return poll_text
 
     management_text = 'Manage your poll:\n\n'
     management_text += poll_text

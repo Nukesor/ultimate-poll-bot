@@ -29,7 +29,7 @@ class Reference(base):
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 
     # ManyToOne
-    poll_id = Column(Integer, ForeignKey('poll.id', ondelete='cascade'), nullable=False, index=True)
+    poll_id = Column(Integer, ForeignKey('poll.id', ondelete='cascade', ), nullable=False, index=True)
     poll = relationship('Poll')
 
     def __init__(

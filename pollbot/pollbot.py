@@ -12,13 +12,13 @@ from telegram.ext import (
 
 from pollbot.config import config
 from pollbot.helper.session import session_wrapper
-from pollbot.helper.keyboard import get_main_keyboard
 from pollbot.helper import (
     start_text,
     help_text,
     donations_text,
 )
 
+from pollbot.telegram.keyboard import get_main_keyboard
 from pollbot.telegram.message_handler import handle_private_text
 from pollbot.telegram.callback_handler import handle_callback_query
 from pollbot.telegram.error_handler import error_callback
@@ -83,7 +83,7 @@ dispatcher.add_handler(ChosenInlineResultHandler(handle_chosen_inline_result))
 
 dispatcher.add_handler(
     MessageHandler(
-        Filters.text,
+        Filters.text & Filters.private & (~Filters.update.edited_message) & (~Filters.reply),
         handle_private_text
     ))
 

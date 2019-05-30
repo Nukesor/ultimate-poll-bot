@@ -5,8 +5,8 @@ from telegram import InlineQueryResultArticle, InputTextMessageContent
 
 from pollbot.helper.display import get_poll_text
 from pollbot.helper.session import hidden_session_wrapper
-from pollbot.helper.keyboard import get_vote_keyboard
 from pollbot.models import Poll
+from pollbot.telegram.keyboard import get_vote_keyboard
 
 
 @run_async
@@ -18,7 +18,8 @@ def search(bot, update, session, user):
         # Just display all polls
         polls = session.query(Poll) \
             .filter(Poll.user == user) \
-            .filter(Poll.finished.is_(False)) \
+            .filter(Poll.closed.is_(False)) \
+            .filter(Poll.created.is_(True)) \
             .order_by(Poll.created_at.desc()) \
             .all()
 
@@ -26,7 +27,8 @@ def search(bot, update, session, user):
         # Find polls with search paramter in name or description
         polls = session.query(Poll) \
             .filter(Poll.user == user) \
-            .filter(Poll.finished.is_(False)) \
+            .filter(Poll.closed.is_(False)) \
+            .filter(Poll.created.is_(True)) \
             .filter(or_(
                 Poll.name.ilike(f'%{query}%'),
                 Poll.description.ilike(f'%{query}%'),
