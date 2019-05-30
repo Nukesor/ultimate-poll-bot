@@ -183,7 +183,7 @@ def get_percentage_line(poll_option, total_user_count):
     percentage = calculate_percentage(poll_option, total_user_count)
     filled_slots = math.floor(percentage/10)
 
-    line = '| '
+    line = '│ '
     line += filled_slots * '●'
     line += (10-filled_slots) * '○'
     line += f' ({percentage}%)'
