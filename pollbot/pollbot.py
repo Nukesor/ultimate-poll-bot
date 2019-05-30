@@ -27,6 +27,7 @@ from pollbot.telegram.inline_result_handler import handle_chosen_inline_result
 from pollbot.telegram.commands.poll import (
     create_poll,
     cancel_creation,
+    list_polls,
 )
 
 
@@ -62,10 +63,10 @@ dispatcher = updater.dispatcher
 
 # Poll commands
 dispatcher.add_handler(CommandHandler('create', create_poll))
-dispatcher.add_handler(CommandHandler('cancel', cancel_creation))
 
 # Misc commands
-dispatcher.add_handler(CommandHandler('start', create_poll))
+dispatcher.add_handler(CommandHandler('start', start))
+dispatcher.add_handler(CommandHandler('list', list_polls))
 dispatcher.add_handler(CommandHandler('help', send_help_text))
 dispatcher.add_handler(CommandHandler('donations', send_donation_text))
 

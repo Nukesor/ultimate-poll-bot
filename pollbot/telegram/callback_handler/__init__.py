@@ -21,6 +21,7 @@ from .menu import (
     show_deletion_confirmation,
     show_options,
     show_vote_menu,
+    show_menu,
 )
 from .management import (
     delete_poll,
@@ -89,6 +90,8 @@ def handle_callback_query(bot, update, session, user):
         show_options(session, context)
     elif context.callback_type == CallbackType.menu_delete:
         show_deletion_confirmation(session, context)
+    elif context.callback_type == CallbackType.menu_show:
+        show_menu(session, context)
 
     # Actual management options
     elif context.callback_type == CallbackType.delete:

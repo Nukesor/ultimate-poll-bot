@@ -59,11 +59,15 @@ class CallbackType(Enum):
     menu_vote = 31
     menu_option = 32
     menu_delete = 34
+    menu_show = 35
 
     # Poll management
     delete = 50
     close = 51
     reopen = 52
+
+    # Option
+    option_anonymity = 70
 
 
 @unique

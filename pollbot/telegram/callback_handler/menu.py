@@ -1,12 +1,13 @@
 """Callback functions needed during creation of a Poll."""
 from pollbot.helper.enums import CallbackResult, ExpectedInput
 
-from pollbot.helper.display import get_poll_management_text
+from pollbot.helper.display import get_poll_management_text, get_options_text
 from pollbot.telegram.keyboard import (
     get_change_vote_type_keyboard,
     get_deletion_confirmation,
     get_management_keyboard,
     get_vote_keyboard,
+    get_options_keyboard,
 )
 
 
@@ -23,6 +24,10 @@ def go_back(session, context):
     if context.callback_result == CallbackResult.main_menu:
         text = get_poll_management_text(session, context.poll)
         keyboard = get_management_keyboard(context.poll)
+
+    elif context.callback_result == CallbackResult.options:
+        text = get_options_text(context.poll),
+        keyboard = get_options_keyboard(context.poll)
 
     context.query.message.edit_text(
         text,
@@ -45,6 +50,9 @@ def show_vote_menu(session, context):
 
 def show_options(session, context):
     """Show the options tab."""
+    text = get_options_text(context.poll)
+    keyboard = get_options_keyboard(context.poll)
+    context.query.message.edit_text(text, parse_mode='markdown', reply_markup=keyboard)
 
 
 def show_deletion_confirmation(session, context):
@@ -52,4 +60,13 @@ def show_deletion_confirmation(session, context):
     context.query.message.edit_text(
         'Do you really want to delete this poll?',
         reply_markup=get_deletion_confirmation(context.poll),
+    )
+
+
+def show_menu(session, context):
+    """Replace the current message with the main poll menu."""
+    context.query.message.edit_text(
+        get_poll_management_text(session, context.poll),
+        parse_mode='markdown',
+        reply_markup=get_management_keyboard(context.poll),
     )

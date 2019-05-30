@@ -27,12 +27,12 @@ def get_management_keyboard(poll):
     buttons = [
         [InlineKeyboardButton(text='Share this poll', switch_inline_query=poll.name)],
         [
-            InlineKeyboardButton(text='Vote', callback_data=vote_payload),
-            InlineKeyboardButton(text='Options', callback_data=option_payload),
+            InlineKeyboardButton(text='✉️ Vote', callback_data=vote_payload),
+            InlineKeyboardButton(text='⚙️ Options', callback_data=option_payload),
         ],
         [
-            InlineKeyboardButton(text='Delete', callback_data=delete_payload),
-            InlineKeyboardButton(text='Close', callback_data=close_payload),
+            InlineKeyboardButton(text='❌ Delete', callback_data=delete_payload),
+            InlineKeyboardButton(text='🚫 Close', callback_data=close_payload),
         ],
     ]
 
@@ -49,5 +49,11 @@ def get_deletion_confirmation(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_options_keyboard(poll):
-    """Get the options menu for this poll."""
+def get_poll_list_keyboard(polls):
+    """Get the confirmation keyboard for poll deletion."""
+    buttons = []
+    for poll in polls:
+        payload = f'{CallbackType.menu_show.value}:{poll.id}:0'
+        buttons.append([InlineKeyboardButton(text=poll.name, callback_data=payload)])
+
+    return InlineKeyboardMarkup(buttons)

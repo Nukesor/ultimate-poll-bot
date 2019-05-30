@@ -4,7 +4,11 @@ from telegram.ext import run_async
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.creation import get_init_text
-from pollbot.telegram.keyboard import get_main_keyboard, get_init_keyboard
+from pollbot.telegram.keyboard import (
+    get_main_keyboard,
+    get_init_keyboard,
+    get_poll_list_keyboard,
+)
 
 from pollbot.models import Poll
 
@@ -41,3 +45,21 @@ def cancel_creation(bot, update, session, user):
 
     keyboard = get_main_keyboard()
     update.message.chat.send_message('Poll creation canceled', reply_markup=keyboard)
+
+
+@run_async
+@session_wrapper(private=True)
+def list_polls(bot, update, session, user):
+    """Get a list of all active polls."""
+    text = 'Click on any button to manage this specific poll.'
+    polls = session.query(Poll) \
+        .filter(Poll.user == user) \
+        .filter(Poll.created.is_(True)) \
+        .filter(Poll.closed.is_(False)) \
+        .all()
+
+    if len(polls) == 0:
+        return "You don't own any active polls."
+
+    keyboard = get_poll_list_keyboard(polls)
+    update.message.chat.send_message(text, reply_markup=keyboard)

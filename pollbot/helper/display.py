@@ -2,7 +2,7 @@
 import math
 from telegram.error import BadRequest
 
-from pollbot.helper.enums import ExpectedInput
+from pollbot.helper.enums import ExpectedInput, VoteTypeTranslation
 from pollbot.telegram.keyboard import get_vote_keyboard, get_management_keyboard
 from pollbot.models import (
     User,
@@ -153,3 +153,13 @@ def get_poll_management_text(session, poll):
     management_text += poll_text
 
     return management_text
+
+
+def get_options_text(poll):
+    """Compile the options text for this poll."""
+    return f"""*Current options for this poll:*
+
+*Vote type*: {VoteTypeTranslation[poll.vote_type]}
+*Anonymity*: {'Names are not visible' if poll.anonymous else 'Names are visible'}
+
+"""
