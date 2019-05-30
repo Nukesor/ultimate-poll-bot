@@ -2,8 +2,14 @@
 import math
 from telegram.error import BadRequest
 
-from pollbot.helper.enums import ExpectedInput, VoteTypeTranslation
 from pollbot.telegram.keyboard import get_vote_keyboard, get_management_keyboard
+from pollbot.helper.enums import (
+    ExpectedInput,
+    VoteTypeTranslation,
+    UserSorting,
+    OptionSorting,
+    SortOptionTranslation,
+)
 from pollbot.models import (
     User,
     PollOption,
@@ -16,11 +22,12 @@ def update_poll_messages(session, bot, poll):
     for reference in poll.references:
         try:
             # Admin poll management interface
-            if reference.inline_message_id is None:
+            if reference.admin_message_id is not None and not poll.in_options:
                 if poll.expected_input == ExpectedInput.votes.name:
                     keyboard = get_vote_keyboard(poll, show_back=True)
                 else:
                     keyboard = get_management_keyboard(poll)
+
                 text = get_poll_management_text(session, poll)
                 bot.edit_message_text(
                     text,
@@ -31,7 +38,7 @@ def update_poll_messages(session, bot, poll):
                 )
 
             # Edit message via inline_message_id
-            else:
+            elif reference.inline_message_id is not None:
                 # Create text and keyboard
                 text = get_poll_text(session, poll)
                 keyboard = get_vote_keyboard(poll)
@@ -93,19 +100,22 @@ def get_poll_text(session, poll):
     lines.append(f'*{poll.name}*')
     lines.append(f'_{poll.description}_')
 
-    # All options with their respective people percentage
-    for poll_option in poll.options:
-        lines.append('')
-        if len(poll_option.votes) == 1:
-            lines.append(f'*{poll_option.name}* (1 vote)')
-        elif len(poll_option.votes) != 0:
-            lines.append(f'*{poll_option.name}* ({len(poll_option.votes)} votes)')
-        else:
-            lines.append(f'*{poll_option.name}*')
-        lines.append(calculate_percentage_line(poll_option, total_user_count))
+    options = get_sorted_options(poll, poll.options.copy(), total_user_count)
 
-        if not poll.anonymous:
-            for index, vote in enumerate(poll_option.votes):
+    # All options with their respective people percentage
+    for option in options:
+        lines.append('')
+        if len(option.votes) > 0:
+            lines.append(f'*{option.name}* ({len(option.votes)} votes)')
+        else:
+            lines.append(f'*{option.name}*')
+
+        lines.append(get_percentage_line(option, total_user_count))
+
+        # Add the names of the voters to the respective options
+        if not poll.anonymous and len(option.votes) > 0:
+            votes = get_sorted_votes(poll, option.votes)
+            for index, vote in enumerate(votes):
                 if index != len(poll.votes) - 1:
                     line = f'├ {vote.user.name}'
                 else:
@@ -127,12 +137,50 @@ def get_poll_text(session, poll):
     return '\n'.join(lines)
 
 
-def calculate_percentage_line(poll_option, total_user_count):
-    """Calculate the percentage line for each option."""
+def get_sorted_votes(poll, votes):
+    """Sort the polls depending on the current settings."""
+    def get_user_name(vote):
+        """Get the name of user to sort votes."""
+        return vote.user.name
+
+    if poll.user_sorting == UserSorting.user_name.name:
+        votes.sort(key=get_user_name)
+
+    return votes
+
+
+def get_sorted_options(poll, options, total_user_count):
+    """Sort the polls depending on the current settings."""
+    def get_option_name(option):
+        """Get the name of the option."""
+        return option.name
+
+    def get_option_percentage(option):
+        """Get the name of the option."""
+        return calculate_percentage(option, total_user_count)
+
+    if poll.option_sorting == OptionSorting.option_name.name:
+        options.sort(key=get_option_name)
+
+    elif poll.option_sorting == OptionSorting.option_percentage.name:
+        options.sort(key=get_option_percentage, reverse=True)
+
+    return options
+
+
+def calculate_percentage(poll_option, total_user_count):
+    """Calculate the percentage for this option."""
     if total_user_count == 0:
         percentage = 0
     else:
         percentage = round(len(poll_option.votes)/total_user_count * 100)
+
+    return percentage
+
+
+def get_percentage_line(poll_option, total_user_count):
+    """Get the percentage line for each option."""
+    percentage = calculate_percentage(poll_option, total_user_count)
     filled_slots = math.floor(percentage/10)
 
     line = '| '
@@ -159,9 +207,17 @@ def get_poll_management_text(session, poll):
 
 def get_options_text(poll):
     """Compile the options text for this poll."""
-    return f"""*Current options for this poll:*
+    text = f"""*General settings:*
+Vote type: {VoteTypeTranslation[poll.vote_type]}
+Anonymity: {'Names are not visible' if poll.anonymous else 'Names are visible'}
 
-*Vote type*: {VoteTypeTranslation[poll.vote_type]}
-*Anonymity*: {'Names are not visible' if poll.anonymous else 'Names are visible'}
-
+*Sorting:*
 """
+
+    # Sorting of user names
+    if not poll.anonymous:
+        text += f"User: {SortOptionTranslation[poll.user_sorting]}\n"
+
+    text += f'Option: {SortOptionTranslation[poll.option_sorting]}'
+
+    return text

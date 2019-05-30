@@ -31,6 +31,9 @@ from .management import (
 from .options import (
     make_anonymous,
     show_anonymization_confirmation,
+    show_sorting_menu,
+    set_user_order,
+    set_option_order,
 )
 
 
@@ -110,6 +113,12 @@ def handle_callback_query(bot, update, session, user):
         show_anonymization_confirmation(session, context)
     elif context.callback_type == CallbackType.option_anonymization:
         make_anonymous(session, context)
+    elif context.callback_type == CallbackType.option_show_sorting:
+        show_sorting_menu(session, context)
+    elif context.callback_type == CallbackType.option_user_sorting:
+        set_user_order(session, context)
+    elif context.callback_type == CallbackType.option_option_sorting:
+        set_option_order(session, context)
 
     return
 

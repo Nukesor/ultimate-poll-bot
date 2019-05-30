@@ -8,7 +8,7 @@ from pollbot.helper.enums import CallbackType, CallbackResult
 
 
 def get_back_to_management_button(poll):
-    """Get the back to management button for poll management sub options."""
+    """Get the back to management menu button for management sub menus."""
     payload = f'{CallbackType.menu_back.value}:{poll.id}:{CallbackResult.main_menu.value}'
     return InlineKeyboardButton(text='Back', callback_data=payload)
 
@@ -25,10 +25,12 @@ def get_management_keyboard(poll):
     delete_payload = f'{CallbackType.menu_delete.value}:{poll.id}:0'
     close_payload = f'{CallbackType.close.value}:{poll.id}:0'
     buttons = [
-        [InlineKeyboardButton(text='Share this poll', switch_inline_query=poll.name)],
+        [
+            InlineKeyboardButton(text='Share this poll', switch_inline_query=poll.name),
+        ],
         [
             InlineKeyboardButton(text='✉️ Vote', callback_data=vote_payload),
-            InlineKeyboardButton(text='⚙️ Options', callback_data=option_payload),
+            InlineKeyboardButton(text='⚙️ Settings', callback_data=option_payload),
         ],
         [
             InlineKeyboardButton(text='❌ Delete', callback_data=delete_payload),

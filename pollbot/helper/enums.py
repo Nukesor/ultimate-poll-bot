@@ -60,6 +60,7 @@ class CallbackType(Enum):
     menu_option = 32
     menu_delete = 34
     menu_show = 35
+    menu_update = 36
 
     # Poll management
     delete = 50
@@ -69,6 +70,9 @@ class CallbackType(Enum):
     # Option
     option_anonymization_confirmation = 70
     option_anonymization = 71
+    option_show_sorting = 72
+    option_user_sorting = 73
+    option_option_sorting = 74
 
 
 @unique
@@ -88,3 +92,29 @@ class CallbackResult(Enum):
     # Menu navigation
     main_menu = 40
     options = 41
+
+
+@unique
+class UserSorting(Enum):
+    """Save several possible sorting options."""
+
+    user_chrono = 0
+    user_name = 1
+
+
+@unique
+class OptionSorting(Enum):
+    """Save several possible sorting options."""
+
+    option_chrono = 10
+    option_percentage = 11
+    option_name = 12
+
+
+SortOptionTranslation = {
+    UserSorting.user_chrono.name: 'chronologically',
+    UserSorting.user_name.name: 'by name',
+    OptionSorting.option_chrono.name: 'chronologically',
+    OptionSorting.option_percentage.name: 'by percentage',
+    OptionSorting.option_name.name: 'by name',
+}

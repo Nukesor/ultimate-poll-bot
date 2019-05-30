@@ -15,7 +15,7 @@ from sqlalchemy.types import (
 from sqlalchemy.orm import relationship
 
 from pollbot.db import base
-from pollbot.helper.enums import VoteType
+from pollbot.helper.enums import VoteType, UserSorting, OptionSorting
 
 
 class Poll(base):
@@ -36,6 +36,8 @@ class Poll(base):
     vote_type = Column(String, nullable=False)
     anonymous = Column(Boolean, nullable=False)
     number_of_votes = Column(Integer)
+    option_sorting = Column(String, nullable=False)
+    user_sorting = Column(String, nullable=False)
 
     # Flags
     created = Column(Boolean, default=False, nullable=False)
@@ -43,6 +45,7 @@ class Poll(base):
 
     # Chat state variables
     expected_input = Column(String)
+    in_options = Column(Boolean, default=False, nullable=False)
 
     # OneToOne
     user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade'), nullable=False, index=True)
@@ -59,3 +62,6 @@ class Poll(base):
         self.vote_type = VoteType.single_vote.name
         self.expected_input = 'name'
         self.anonymous = False
+
+        self.user_sorting = UserSorting.user_chrono.name
+        self.option_sorting = OptionSorting.option_chrono.name

@@ -25,9 +25,10 @@ def go_back(session, context):
     if context.callback_result == CallbackResult.main_menu:
         text = get_poll_management_text(session, context.poll)
         keyboard = get_management_keyboard(context.poll)
+        context.poll.in_options = False
 
     elif context.callback_result == CallbackResult.options:
-        text = get_options_text(context.poll),
+        text = get_options_text(context.poll)
         keyboard = get_options_keyboard(context.poll)
 
     context.query.message.edit_text(
@@ -54,6 +55,7 @@ def show_options(session, context):
     text = get_options_text(context.poll)
     keyboard = get_options_keyboard(context.poll)
     context.query.message.edit_text(text, parse_mode='markdown', reply_markup=keyboard)
+    context.poll.in_options = True
 
 
 def show_deletion_confirmation(session, context):
