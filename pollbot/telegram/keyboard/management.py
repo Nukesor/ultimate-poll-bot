@@ -43,7 +43,7 @@ def get_deletion_confirmation(poll):
     """Get the confirmation keyboard for poll deletion."""
     payload = f'{CallbackType.delete.value}:{poll.id}:0'
     buttons = [
-        [InlineKeyboardButton(text='Permanently delete poll!', callback_data=payload)],
+        [InlineKeyboardButton(text='⚠️ Permanently delete poll! ⚠️', callback_data=payload)],
         [get_back_to_management_button(poll)],
     ]
     return InlineKeyboardMarkup(buttons)

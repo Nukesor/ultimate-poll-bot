@@ -41,7 +41,7 @@ def handle_private_text(bot, update, session, user):
             # Ignore options that already exist
             for existing_option in poll.options:
                 if existing_option.name == option_to_add and len(options_to_add) == 1:
-                    return "There already exists a option with this name. ⚠️"""
+                    return "❌ There already exists a option with this name."""
 
                 continue
 
@@ -50,6 +50,6 @@ def handle_private_text(bot, update, session, user):
             added_options.append(option_to_add)
 
         if len(added_options) == 0:
-            return "No new options have been added. ⚠️"
+            return "❌ No new options have been added."
 
         next_option(chat, poll, added_options)

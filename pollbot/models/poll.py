@@ -58,4 +58,4 @@ class Poll(base):
         self.user = user
         self.vote_type = VoteType.single_vote.name
         self.expected_input = 'name'
-        self.anonymous = True
+        self.anonymous = False

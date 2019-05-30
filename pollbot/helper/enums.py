@@ -67,7 +67,8 @@ class CallbackType(Enum):
     reopen = 52
 
     # Option
-    option_anonymity = 70
+    option_anonymization_confirmation = 70
+    option_anonymization = 71
 
 
 @unique

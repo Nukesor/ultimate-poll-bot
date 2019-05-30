@@ -1,6 +1,7 @@
 """Callback functions needed during creation of a Poll."""
 from pollbot.helper.enums import CallbackResult, ExpectedInput
 
+from pollbot.models import Reference
 from pollbot.helper.display import get_poll_management_text, get_options_text
 from pollbot.telegram.keyboard import (
     get_change_vote_type_keyboard,
@@ -65,8 +66,17 @@ def show_deletion_confirmation(session, context):
 
 def show_menu(session, context):
     """Replace the current message with the main poll menu."""
-    context.query.message.edit_text(
+    message = context.query.message
+    message.edit_text(
         get_poll_management_text(session, context.poll),
         parse_mode='markdown',
         reply_markup=get_management_keyboard(context.poll),
     )
+
+    reference = Reference(
+        context.poll,
+        admin_chat_id=message.chat.id,
+        admin_message_id=message.message_id
+    )
+    session.add(reference)
+    session.commit()

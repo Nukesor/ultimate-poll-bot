@@ -96,7 +96,9 @@ def get_poll_text(session, poll):
     # All options with their respective people percentage
     for poll_option in poll.options:
         lines.append('')
-        if len(poll_option.votes) != 0:
+        if len(poll_option.votes) == 1:
+            lines.append(f'*{poll_option.name}* (1 vote)')
+        elif len(poll_option.votes) != 0:
             lines.append(f'*{poll_option.name}* ({len(poll_option.votes)} votes)')
         else:
             lines.append(f'*{poll_option.name}*')

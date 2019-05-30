@@ -28,6 +28,10 @@ from .management import (
     close_poll,
     reopen_poll,
 )
+from .options import (
+    make_anonymous,
+    show_anonymization_confirmation,
+)
 
 
 class CallbackContext():
@@ -93,13 +97,19 @@ def handle_callback_query(bot, update, session, user):
     elif context.callback_type == CallbackType.menu_show:
         show_menu(session, context)
 
-    # Actual management options
+    # Management actions
     elif context.callback_type == CallbackType.delete:
         delete_poll(session, context)
     elif context.callback_type == CallbackType.close:
         close_poll(session, context)
     elif context.callback_type == CallbackType.reopen:
         reopen_poll(session, context)
+
+    # Poll options
+    elif context.callback_type == CallbackType.option_anonymization_confirmation:
+        show_anonymization_confirmation(session, context)
+    elif context.callback_type == CallbackType.option_anonymization:
+        make_anonymous(session, context)
 
     return
 
