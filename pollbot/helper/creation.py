@@ -17,13 +17,13 @@ def get_vote_type_help_text(poll):
 Every user gets a single vote.
 
 *Block vote*:
-Every user is allowed to vote each option without restrictions (But only one vote per option).
+Every user can vote for all (or less) options.
 
 *Limited vote*:
-Every user gets a fixed number of votes they can distribute (But only one vote per option).
+Every user gets a fixed number of votes they can distribute, but only once per option.
 
 *Cumulative vote*:
-Every user gets a fixed number of votes they can distribute as they like.
+Every user gets a fixed number of votes they can distribute as they like (even multiple votes per option).
 """
 
 
