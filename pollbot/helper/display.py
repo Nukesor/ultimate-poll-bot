@@ -1,6 +1,5 @@
 """Poll creation helper."""
 import math
-from sqlalchemy import func
 
 from pollbot.helper.enums import (
     VoteType,
@@ -28,10 +27,6 @@ def get_poll_text(session, poll):
         .group_by(User.id) \
         .count()
 
-    total_vote_count = session.query(func.sum(Vote.vote_count)) \
-        .filter(Vote.poll == poll) \
-        .one()
-
     # Name and description
     lines = []
     lines.append(f'*{poll.name}*')
@@ -54,6 +49,9 @@ def get_poll_text(session, poll):
                     line = f'├ {vote.user.name}'
                 else:
                     line = f'└ {vote.user.name}'
+
+                if option.poll.vote_type == VoteType.cumulative_vote.name:
+                    line += f' ({vote.vote_count} votes)'
 
                 lines.append(line)
 

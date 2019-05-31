@@ -51,7 +51,7 @@ def get_cumulative_buttons(poll):
         no_payload = f'{vote_button_type}:{option.id}:{vote_no}'
         buttons.append([
             InlineKeyboardButton(text='➖', callback_data=no_payload),
-            InlineKeyboardButton(text=text, callback_data='ignore:0:0'),
+            InlineKeyboardButton(text=text, callback_data='{CallbackType.ignore.value}:0:0'),
             InlineKeyboardButton(text='➕', callback_data=yes_payload),
         ])
 

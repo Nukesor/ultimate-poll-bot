@@ -75,6 +75,9 @@ class CallbackType(Enum):
     option_user_sorting = 73
     option_option_sorting = 74
 
+    # Misc
+    ignore = 100
+
 
 @unique
 class CallbackResult(Enum):
