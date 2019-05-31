@@ -119,7 +119,8 @@ def handle_cumulative_vote(session, context, option):
         vote_count = 0
 
     action = context.callback_result
-    if action == CallbackResult.vote_yes and vote_count >= option.poll.number_of_votes:
+    allowed_votes = option.poll.number_of_votes
+    if action == CallbackResult.vote_yes and vote_count >= allowed_votes:
         context.query.answer('You have no votes left.')
         return False
 
@@ -132,11 +133,13 @@ def handle_cumulative_vote(session, context, option):
         if action == CallbackResult.vote_yes:
             existing_vote.vote_count += 1
             session.commit()
-            context.query.answer('Vote added')
+            total_vote_count = allowed_votes - (vote_count + 1)
+            context.query.answer(f'Vote added ({total_vote_count} votes left)')
         elif action == CallbackResult.vote_no:
             existing_vote.vote_count -= 1
             session.commit()
-            context.query.answer('Vote removed')
+            total_vote_count = allowed_votes - (vote_count - 1)
+            context.query.answer(f'Vote removed ({total_vote_count} votes left)')
 
         if existing_vote.vote_count <= 0:
             session.delete(existing_vote)

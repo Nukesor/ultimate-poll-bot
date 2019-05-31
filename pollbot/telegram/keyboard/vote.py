@@ -47,18 +47,15 @@ def get_cumulative_buttons(poll):
     buttons = []
     for option in poll.options:
         if poll.vote_type == VoteType.cumulative_vote.name:
-            vote_count = sum([vote.vote_count for vote in option.votes])
+            text = option.name
         else:
-            vote_count = len(option.votes)
-
-        text = f'{option.name} ({vote_count} votes)'
+            text = f'{option.name} ({len(option.votes)} votes)'
 
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
         no_payload = f'{vote_button_type}:{option.id}:{vote_no}'
         buttons.append([
-            InlineKeyboardButton(text='➖', callback_data=no_payload),
-            InlineKeyboardButton(text=text, callback_data=f'{CallbackType.ignore.value}:0:0'),
-            InlineKeyboardButton(text='➕', callback_data=yes_payload),
+            InlineKeyboardButton(text=f'－ {text}', callback_data=no_payload),
+            InlineKeyboardButton(text=f'＋ {text}', callback_data=yes_payload),
         ])
 
     return buttons
