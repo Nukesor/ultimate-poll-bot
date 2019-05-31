@@ -14,7 +14,6 @@ from pollbot.config import config
 from pollbot.helper.session import session_wrapper
 from pollbot.helper import (
     start_text,
-    help_text,
     donations_text,
 )
 
@@ -35,13 +34,6 @@ def start(bot, update, session, user):
     """Send a start text."""
     keyboard = get_main_keyboard()
     update.message.chat.send_message(start_text, parse_mode='Markdown', reply_markup=keyboard)
-
-
-@session_wrapper()
-def send_help_text(bot, update, session, user):
-    """Send a help text."""
-    keyboard = get_main_keyboard()
-    update.message.chat.send_message(help_text, parse_mode='Markdown', reply_markup=keyboard)
 
 
 @session_wrapper()
@@ -66,7 +58,6 @@ dispatcher.add_handler(CommandHandler('create', create_poll))
 # Misc commands
 dispatcher.add_handler(CommandHandler('start', start))
 dispatcher.add_handler(CommandHandler('list', list_polls))
-dispatcher.add_handler(CommandHandler('help', send_help_text))
 dispatcher.add_handler(CommandHandler('donations', send_donation_text))
 
 

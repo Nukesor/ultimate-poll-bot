@@ -25,10 +25,7 @@ Just type /create or click the button below to start creating polls. Everything 
 This project is open-source and hosted on [Github](https://github.com/Nukesor/ultimate-poll-bot).
 """
 
-help_text = """
-"""
-
 
 error_text = """An unknown error occurred. I probably just got a notification about this and I'll try to fix it as quickly as possible.
-In case this error still occurs in a day or two, please report the bug to me :). The link to the Github repository is in the /help text.
+In case this error still occurs in a day or two, please report the bug to me :). The link to the Github repository is in the /start text.
 """

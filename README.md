@@ -25,7 +25,6 @@
     /start      Start the bot
     /create     Create a new poll
     /list       List all active polls and manage them
-    /help       Display help
     /donations  Get me a coffee
 
 
@@ -54,5 +53,4 @@ Get the latest revision with `poetry run alembic history` and change the current
     start - Start the bot
     create - Create a new poll
     list - List all active polls and manage them
-    help - Display help
     donations - Get me a coffee
