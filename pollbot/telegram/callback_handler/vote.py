@@ -14,19 +14,20 @@ def handle_vote(session, context):
 
     # Single vote
     if poll.vote_type == VoteType.single_vote.name:
-        handle_single_vote(session, context, option)
+        update_poll = handle_single_vote(session, context, option)
     # Block vote
     elif poll.vote_type == VoteType.block_vote.name:
-        handle_block_vote(session, context, option)
+        update_poll = handle_block_vote(session, context, option)
     # Limited vote
     elif poll.vote_type == VoteType.limited_vote.name:
-        handle_limited_vote(session, context, option)
+        update_poll = handle_limited_vote(session, context, option)
     # Cumulative vote
     elif poll.vote_type == VoteType.cumulative_vote.name:
-        handle_cumulative_vote(session, context, option)
+        update_poll = handle_cumulative_vote(session, context, option)
 
     session.commit()
-    update_poll_messages(session, context.bot, poll)
+    if update_poll:
+        update_poll_messages(session, context.bot, poll)
 
 
 def handle_single_vote(session, context, option):
@@ -49,6 +50,8 @@ def handle_single_vote(session, context, option):
         session.add(vote)
         context.query.answer('Vote registered')
 
+    return True
+
 
 def handle_block_vote(session, context, option):
     """Handle a block vote."""
@@ -65,6 +68,8 @@ def handle_block_vote(session, context, option):
         vote = Vote(VoteResultType.yes.name, context.user, option)
         session.add(vote)
         context.query.answer('Vote registered')
+
+    return True
 
 
 def handle_limited_vote(session, context, option):
@@ -93,6 +98,9 @@ def handle_limited_vote(session, context, option):
     # Max votes reached
     else:
         context.query.answer('You have no votes left.')
+        return False
+
+    return True
 
 
 def handle_cumulative_vote(session, context, option):
@@ -105,30 +113,39 @@ def handle_cumulative_vote(session, context, option):
     vote_count = session.query(func.sum(Vote.vote_count)) \
         .filter(Vote.poll == option.poll) \
         .filter(Vote.user == context.user) \
-        .count()
+        .one()
+    vote_count = vote_count[0]
 
     action = context.callback_result
     if action == CallbackResult.vote_yes and vote_count >= option.poll.number_of_votes:
         context.query.answer('You have no votes left.')
+        return False
 
     if existing_vote is None and action == CallbackResult.vote_no:
         context.query.answer('You cannot downvote this option.')
+        return False
 
     # Remove vote
     if existing_vote:
         if action == CallbackResult.vote_yes:
             existing_vote.vote_count += 1
+            session.commit()
             context.query.answer('Vote added')
         elif action == CallbackResult.vote_no:
             existing_vote.vote_count -= 1
+            session.commit()
             context.query.answer('Vote removed')
 
         if existing_vote.vote_count <= 0:
             session.delete(existing_vote)
+            session.commit()
 
     # Add vote to option
     elif existing_vote is None and action == CallbackResult.vote_yes:
         vote = Vote(VoteResultType.yes.name, context.user, option)
         vote.vote_count += 1
         session.add(vote)
+        session.commit()
         context.query.answer('Vote registered')
+
+    return True

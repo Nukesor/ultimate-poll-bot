@@ -11,7 +11,7 @@ from pollbot.models import PollOption
 def handle_private_text(bot, update, session, user):
     """Read all private messages and the creation of polls."""
     # The user is currently not editing or creating a poll. Just ignore it
-    if user.current_poll.expected_input is None:
+    if user.current_poll is None or user.current_poll.expected_input is None:
         return
 
     text = update.message.text.strip()
