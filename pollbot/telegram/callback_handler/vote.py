@@ -115,6 +115,8 @@ def handle_cumulative_vote(session, context, option):
         .filter(Vote.user == context.user) \
         .one()
     vote_count = vote_count[0]
+    if vote_count is None:
+        vote_count = 0
 
     action = context.callback_result
     if action == CallbackResult.vote_yes and vote_count >= option.poll.number_of_votes:
