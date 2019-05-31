@@ -21,6 +21,9 @@ Every user is allowed to vote each option without restrictions (But only one vot
 
 *Limited vote*:
 Every user gets a fixed number of votes they can distribute (But only one vote per option).
+
+*Cumulative vote*:
+Every user gets a fixed number of votes they can distribute as they will.
 """
 
 

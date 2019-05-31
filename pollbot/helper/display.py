@@ -1,10 +1,8 @@
 """Poll creation helper."""
 import math
-from telegram.error import BadRequest
+from sqlalchemy import func
 
-from pollbot.telegram.keyboard import get_vote_keyboard, get_management_keyboard
 from pollbot.helper.enums import (
-    ExpectedInput,
     VoteType,
     VoteTypeTranslation,
     UserSorting,
@@ -16,72 +14,6 @@ from pollbot.models import (
     PollOption,
     Vote,
 )
-
-
-def update_poll_messages(session, bot, poll):
-    """Update all messages (references) of a poll."""
-    for reference in poll.references:
-        try:
-            # Admin poll management interface
-            if reference.admin_message_id is not None and not poll.in_options:
-                if poll.expected_input == ExpectedInput.votes.name:
-                    keyboard = get_vote_keyboard(poll, show_back=True)
-                else:
-                    keyboard = get_management_keyboard(poll)
-
-                text = get_poll_management_text(session, poll)
-                bot.edit_message_text(
-                    text,
-                    chat_id=reference.admin_chat_id,
-                    message_id=reference.admin_message_id,
-                    reply_markup=keyboard,
-                    parse_mode='markdown',
-                )
-
-            # Edit message via inline_message_id
-            elif reference.inline_message_id is not None:
-                # Create text and keyboard
-                text = get_poll_text(session, poll)
-                keyboard = get_vote_keyboard(poll)
-
-                bot.edit_message_text(
-                    text,
-                    inline_message_id=reference.inline_message_id,
-                    reply_markup=keyboard,
-                    parse_mode='markdown',
-                )
-        except BadRequest as e:
-            if e.message.startswith('Message_id_invalid'):
-                session.delete(reference)
-                session.commit()
-            else:
-                raise
-
-
-def remove_poll_messages(session, bot, poll):
-    """Remove all messages (references) of a poll."""
-    for reference in poll.references:
-        try:
-            # Admin poll management interface
-            if reference.inline_message_id is None:
-                bot.edit_message_text(
-                    'This poll has been permanently deleted.',
-                    chat_id=reference.admin_chat_id,
-                    message_id=reference.admin_message_id,
-                )
-
-            # Edit message via inline_message_id
-            else:
-                # Create text and keyboard
-                bot.edit_message_text(
-                    'This poll has been permanently deleted.',
-                    inline_message_id=reference.inline_message_id,
-                )
-        except BadRequest as e:
-            if e.message.startswith('Message_id_invalid'):
-                pass
-            else:
-                raise
 
 
 def get_poll_text(session, poll):
@@ -96,6 +28,10 @@ def get_poll_text(session, poll):
         .group_by(User.id) \
         .count()
 
+    total_vote_count = session.query(func.sum(Vote.vote_count)) \
+        .filter(Vote.poll == poll) \
+        .one()
+
     # Name and description
     lines = []
     lines.append(f'*{poll.name}*')
@@ -106,10 +42,7 @@ def get_poll_text(session, poll):
     # All options with their respective people percentage
     for option in options:
         lines.append('')
-        if len(option.votes) > 0:
-            lines.append(f'*{option.name}* ({len(option.votes)} votes)')
-        else:
-            lines.append(f'*{option.name}*')
+        lines.append(get_option_line(session, option))
 
         lines.append(get_percentage_line(option, total_user_count))
 
@@ -126,6 +59,7 @@ def get_poll_text(session, poll):
 
     vote_type_with_vote_count = [
         VoteType.limited_vote.name,
+        VoteType.cumulative_vote.name,
     ]
 
     if poll.vote_type in vote_type_with_vote_count:
@@ -143,6 +77,18 @@ def get_poll_text(session, poll):
         lines.append('\n⚠️ *This poll is closed* ⚠️')
 
     return '\n'.join(lines)
+
+
+def get_option_line(session, option):
+    """Get the line with vote count for this option."""
+    if len(option.votes) > 0:
+        if option.poll.vote_type == VoteType.cumulative_vote.name:
+            vote_count = sum([vote.vote_count for vote in option.votes])
+        else:
+            vote_count = len(option.votes)
+        return f'*{option.name}* ({vote_count} votes)'
+    else:
+        return f'*{option.name}*'
 
 
 def get_sorted_votes(poll, votes):
@@ -176,19 +122,25 @@ def get_sorted_options(poll, options, total_user_count):
     return options
 
 
-def calculate_percentage(poll_option, total_user_count):
+def calculate_percentage(option, total_user_count):
     """Calculate the percentage for this option."""
-    if total_user_count == 0:
-        percentage = 0
+    if option.poll.vote_type == VoteType.cumulative_vote.name:
+        option_vote_count = sum([vote.vote_count for vote in option.votes])
+        poll_vote_count = sum([vote.vote_count for vote in option.poll.votes])
+        percentage = round(option_vote_count/poll_vote_count * 100)
+
     else:
-        percentage = round(len(poll_option.votes)/total_user_count * 100)
+        if total_user_count == 0:
+            percentage = 0
+        else:
+            percentage = round(len(option.votes)/total_user_count * 100)
 
     return percentage
 
 
-def get_percentage_line(poll_option, total_user_count):
+def get_percentage_line(option, total_user_count):
     """Get the percentage line for each option."""
-    percentage = calculate_percentage(poll_option, total_user_count)
+    percentage = calculate_percentage(option, total_user_count)
     filled_slots = math.floor(percentage/10)
 
     line = '│ '

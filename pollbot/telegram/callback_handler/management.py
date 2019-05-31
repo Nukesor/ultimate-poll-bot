@@ -1,5 +1,5 @@
 """Callback functions needed during creation of a Poll."""
-from pollbot.helper.display import remove_poll_messages, update_poll_messages
+from pollbot.helper.update import remove_poll_messages, update_poll_messages
 
 
 def delete_poll(session, context):

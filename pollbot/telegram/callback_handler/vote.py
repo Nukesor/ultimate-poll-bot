@@ -1,6 +1,8 @@
 """Callback functions needed during creation of a Poll."""
-from pollbot.helper.enums import VoteType, VoteResultType
-from pollbot.helper.display import update_poll_messages
+from sqlalchemy import func
+
+from pollbot.helper.enums import VoteType, VoteResultType, CallbackResult
+from pollbot.helper.update import update_poll_messages
 
 from pollbot.models import PollOption, Vote
 
@@ -19,6 +21,9 @@ def handle_vote(session, context):
     # Limited vote
     elif poll.vote_type == VoteType.limited_vote.name:
         handle_limited_vote(session, context, option)
+    # Cumulative vote
+    elif poll.vote_type == VoteType.cumulative_vote.name:
+        handle_cumulative_vote(session, context, option)
 
     session.commit()
     update_poll_messages(session, context.bot, poll)
@@ -27,7 +32,7 @@ def handle_vote(session, context):
 def handle_single_vote(session, context, option):
     """Handle a single vote."""
     existing_vote = session.query(Vote) \
-        .filter(Vote.poll == context.poll) \
+        .filter(Vote.poll == option.poll) \
         .filter(Vote.user == context.user) \
         .one_or_none()
     # Changed vote
@@ -46,7 +51,7 @@ def handle_single_vote(session, context, option):
 
 
 def handle_block_vote(session, context, option):
-    """Handle a Multi vote."""
+    """Handle a block vote."""
     existing_vote = session.query(Vote) \
         .filter(Vote.poll_option == option) \
         .filter(Vote.user == context.user) \
@@ -63,14 +68,14 @@ def handle_block_vote(session, context, option):
 
 
 def handle_limited_vote(session, context, option):
-    """Handle a Fix count vote."""
+    """Handle a limited vote."""
     existing_vote = session.query(Vote) \
         .filter(Vote.poll_option == option) \
         .filter(Vote.user == context.user) \
         .one_or_none()
 
     vote_count = session.query(Vote) \
-        .filter(Vote.poll == context.poll) \
+        .filter(Vote.poll == option.poll) \
         .filter(Vote.user == context.user) \
         .count()
 
@@ -88,3 +93,42 @@ def handle_limited_vote(session, context, option):
     # Max votes reached
     else:
         context.query.answer('You have no votes left.')
+
+
+def handle_cumulative_vote(session, context, option):
+    """Handle a cumulative vote."""
+    existing_vote = session.query(Vote) \
+        .filter(Vote.poll_option == option) \
+        .filter(Vote.user == context.user) \
+        .one_or_none()
+
+    vote_count = session.query(func.sum(Vote.vote_count)) \
+        .filter(Vote.poll == option.poll) \
+        .filter(Vote.user == context.user) \
+        .count()
+
+    action = context.callback_result
+    if action == CallbackResult.vote_yes and vote_count >= option.poll.number_of_votes:
+        context.query.answer('You have no votes left.')
+
+    if existing_vote is None and action == CallbackResult.vote_no:
+        context.query.answer('You cannot downvote this option.')
+
+    # Remove vote
+    if existing_vote:
+        if action == CallbackResult.vote_yes:
+            existing_vote.vote_count += 1
+            context.query.answer('Vote added')
+        elif action == CallbackResult.vote_no:
+            existing_vote.vote_count -= 1
+            context.query.answer('Vote removed')
+
+        if existing_vote.vote_count <= 0:
+            session.delete(existing_vote)
+
+    # Add vote to option
+    elif existing_vote is None and action == CallbackResult.vote_yes:
+        vote = Vote(VoteResultType.yes.name, context.user, option)
+        vote.vote_count += 1
+        session.add(vote)
+        context.query.answer('Vote registered')

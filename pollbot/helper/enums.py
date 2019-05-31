@@ -20,15 +20,15 @@ class VoteType(Enum):
     single_vote = 1
     block_vote = 2
     limited_vote = 3
-#    multiple_per_option = 4
+    cumulative_vote = 4
 
 
 VoteTypeTranslation = {
     VoteType.single_vote.name: 'Single vote',
     VoteType.block_vote.name: 'Block vote',
     VoteType.limited_vote.name: 'Limited vote',
+    VoteType.cumulative_vote.name: 'Cumulative vote',
 }
-#    VoteType.multiple_per_option.name: 'Multiple votes per option',
 
 
 @unique

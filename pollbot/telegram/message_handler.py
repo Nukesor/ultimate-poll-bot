@@ -1,8 +1,7 @@
 """Handle messages."""
 from pollbot.helper.session import session_wrapper
-from pollbot.helper.enums import ExpectedInput
-from pollbot.helper.creation import next_option, get_init_text
-from pollbot.telegram.keyboard import get_init_keyboard
+from pollbot.helper.enums import ExpectedInput, VoteType
+from pollbot.helper.creation import next_option
 from pollbot.telegram.callback_handler.creation import create_poll
 
 from pollbot.models import PollOption
@@ -59,13 +58,18 @@ def handle_private_text(bot, update, session, user):
 
     # Get the amount of possible votes per user for this poll
     elif expected_input == ExpectedInput.vote_count:
-        error_message = f"Please send me a number between 1 and {len(poll.options)}"
+        if poll.vote_type == VoteType.limited_vote.name:
+            error_message = f"Please send me a number between 1 and {len(poll.options)}"
+        elif poll.vote_type == VoteType.cumulative_vote.name:
+            error_message = "Please send me a number bigger than 0"
+
         try:
             amount = int(text)
         except BaseException:
             return error_message
 
-        if amount < 1 or amount > len(poll.options):
+        # Check for valid count
+        if amount < 1 or (poll.vote_type == VoteType.limited_vote.name and amount > len(poll.options)):
             return error_message
 
         poll.number_of_votes = amount

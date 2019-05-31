@@ -1,5 +1,5 @@
 """Callback functions needed during creation of a Poll."""
-from pollbot.helper.display import update_poll_messages
+from pollbot.helper.update import update_poll_messages
 
 from pollbot.helper.display import get_options_text
 from pollbot.telegram.keyboard import (

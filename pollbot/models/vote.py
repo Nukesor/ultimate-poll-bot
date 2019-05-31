@@ -3,6 +3,7 @@ from sqlalchemy import (
     Column,
     func,
     ForeignKey,
+    UniqueConstraint
 )
 from sqlalchemy.types import (
     BigInteger,
@@ -19,9 +20,13 @@ class Vote(base):
     """The model for a Vote."""
 
     __tablename__ = 'vote'
+    __table_args__ = (
+        UniqueConstraint('user_id', 'poll_id', 'poll_option_id'),
+    )
 
     id = Column(Integer, primary_key=True)
     type = Column(String)
+    vote_count = Column(Integer)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 
@@ -39,5 +44,6 @@ class Vote(base):
         """Create a new vote."""
         self.type = vote_type
         self.user = user
+        self.vote_count = 0
         self.poll_option = poll_option
         self.poll = poll_option.poll
