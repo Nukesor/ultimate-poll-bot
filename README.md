@@ -5,19 +5,20 @@
 [![Patreon](https://github.com/Nukesor/images/blob/master/patreon-donate-blue.svg)](https://www.patreon.com/nukesor)
 
 
-# Why should I use this bot? There are bots like @vote
+# Features
 
 - This bot has 4 different vote modi.
-    1. Single vote: Every user gets one vote for the poll
-    2. Block vote: Every user can vote without restriction, but only one vote per option.
-    3. Limited vote: E.g. every user gets X votes for distribution, but max one vote per option.
-    4. Election vote: E.g. every user gets X votes they can distribute as they like.
+    1. Single vote: User get one vote for the poll
+    2. Block vote: Users can vote without restriction, but only one vote per option.
+    3. Limited vote: Each user gets X votes for distribution, but max one vote per option.
+    4. Election vote: Every user gets X votes they can distribute as they like.
 
 - Custom sorting of options and users
 - Anonymize a poll subsequently
 - Set a due date for a poll (Not yet)
 - Get due date notifications for polls, if the bot is in the same group (Not yet)
 - You get a date picker (Not yet)
+
 
 ## Commands:
 
