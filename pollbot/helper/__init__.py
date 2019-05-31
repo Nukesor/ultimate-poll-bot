@@ -22,7 +22,7 @@ start_text = """*Hi!*
 This is the *ULTIMATE* pollbot.
 Just type /create or click the button below to start creating polls. Everything is explained underway.
 
-This project is open-source and hosted on [Github](https://github.com/Nukesor/pollbot).
+This project is open-source and hosted on [Github](https://github.com/Nukesor/ultimate-poll-bot).
 """
 
 help_text = """
