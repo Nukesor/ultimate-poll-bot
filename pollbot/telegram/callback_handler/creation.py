@@ -43,6 +43,9 @@ def toggle_anonymity(session, context):
 
 def all_options_entered(session, context):
     """All options are entered the poll is created."""
+    if context.poll is None:
+        return
+
     if context.poll.vote_type in [VoteType.limited_vote.name, VoteType.cumulative_vote.name]:
         context.poll.expected_input = ExpectedInput.vote_count.name
         context.query.message.chat.send_message('Send me the amount of allowed votes per user.')

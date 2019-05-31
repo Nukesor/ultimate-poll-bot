@@ -125,6 +125,10 @@ def calculate_percentage(option, total_user_count):
     if option.poll.vote_type == VoteType.cumulative_vote.name:
         option_vote_count = sum([vote.vote_count for vote in option.votes])
         poll_vote_count = sum([vote.vote_count for vote in option.poll.votes])
+
+        if poll_vote_count == 0:
+            return 0
+
         percentage = round(option_vote_count/poll_vote_count * 100)
 
     else:
