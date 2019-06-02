@@ -148,7 +148,6 @@ def handle_cumulative_vote(session, context, option):
     # Add vote to option
     elif existing_vote is None and action == CallbackResult.vote_yes:
         vote = Vote(VoteResultType.yes.name, context.user, option)
-        vote.vote_count += 1
         session.add(vote)
         session.commit()
         context.query.answer('Vote registered')

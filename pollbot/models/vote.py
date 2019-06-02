@@ -45,6 +45,6 @@ class Vote(base):
         """Create a new vote."""
         self.type = vote_type
         self.user = user
-        self.vote_count = 0
+        self.vote_count = 1
         self.poll_option = poll_option
         self.poll = poll_option.poll

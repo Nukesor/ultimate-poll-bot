@@ -11,7 +11,7 @@
     1. Single vote: User get one vote for the poll
     2. Block vote: Users can vote without restriction, but only one vote per option.
     3. Limited vote: Each user gets X votes for distribution, but max one vote per option.
-    4. Election vote: Every user gets X votes they can distribute as they like.
+    4. Cumulative vote: Every user gets X votes they can distribute as they like.
 
 - Custom sorting of options and users
 - Anonymize a poll subsequently
