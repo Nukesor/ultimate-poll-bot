@@ -1,5 +1,6 @@
 """Get the text describing the current state of the poll."""
 import math
+from sqlalchemy import func
 from pollbot.helper.enums import VoteType
 from pollbot.helper import (
     poll_has_limited_votes,
@@ -62,6 +63,10 @@ def get_poll_text(session, poll):
     if information_line is not None:
         lines.append(information_line)
 
+    if not poll.anonymous:
+        remaining_votes = get_remaining_votes(session, poll)
+        lines += remaining_votes
+
     # Notify users that poll is closed
     if poll.closed:
         lines.insert(0, '⚠️ *This poll is closed* ⚠️\n')
@@ -121,3 +126,28 @@ def get_vote_information_line(poll, total_user_count):
         vote_information += f' ({total_count} votes)'
 
     return vote_information
+
+
+def get_remaining_votes(session, poll):
+    """Get the remaining votes for a poll."""
+    if not poll_has_limited_votes(poll):
+        return []
+
+    user_vote_count = func.sum(Vote.vote_count).label('user_vote_count')
+    remaining_user_votes = session.query(User.name, user_vote_count) \
+        .join(Vote) \
+        .filter(Vote.poll == poll) \
+        .group_by(User.name) \
+        .having(user_vote_count < poll.number_of_votes) \
+        .order_by(User.name) \
+        .all()
+
+    if len(remaining_user_votes) == 0:
+        return []
+
+    lines = []
+    lines.append('\nRemaining votes:')
+    for user_votes in remaining_user_votes:
+        lines.append(f'{user_votes[0]}: {poll.number_of_votes - user_votes[1]} votes')
+
+    return lines
