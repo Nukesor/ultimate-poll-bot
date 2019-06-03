@@ -30,7 +30,7 @@ The current settings for the poll are:
 
 *Vote type*: {VoteTypeTranslation[poll.vote_type]}
 *Anonymity*: {'Names are not visible' if poll.anonymous else 'Names are visible'}
-*Visible results*: {'Results are not visible until poll is closed' if poll.results_visible else 'Results are directly visible'}
+*Visible results*: {'Results are directly visible' if poll.results_visible else 'Results are not visible until poll is closed'}
 
 Please follow these steps:
 1. Configure the poll to your needs 🙂

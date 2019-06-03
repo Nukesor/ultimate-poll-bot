@@ -71,10 +71,11 @@ def set_option_order(session, context):
 def expect_new_option(session, context):
     """Send a text and tell the user that we expect a new option."""
     context.poll.expected_input = ExpectedInput.new_option.name
+    context.user.current_poll = context.poll
 
-    keyboard = InlineKeyboardMarkup([get_back_to_options_button(context.poll)])
+    keyboard = InlineKeyboardMarkup([[get_back_to_options_button(context.poll)]])
     context.query.message.edit_text(
-        text='Please send me the next option',
+        text='Please send me the new option or multiple options at once, each option in a new line.)',
         parse_mode='markdown',
         reply_markup=keyboard,
     )

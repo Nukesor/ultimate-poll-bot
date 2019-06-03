@@ -40,9 +40,14 @@ def get_options_keyboard(poll):
         buttons.append([InlineKeyboardButton(text=text, callback_data=payload)])
 
     # Sorting sub menu
-    text = '🗒 Sorting settings'
-    payload = f'{CallbackType.settings_show_sorting.value}:{poll.id}:0'
-    buttons.append([InlineKeyboardButton(text=text, callback_data=payload)])
+    sorting_text = '📋 Sorting settings'
+    sorting_payload = f'{CallbackType.settings_show_sorting.value}:{poll.id}:0'
+    buttons.append([InlineKeyboardButton(text=sorting_text, callback_data=sorting_payload)])
+
+    # New option button
+    new_option_text = '＋ Add a new option'
+    new_option_payload = f'{CallbackType.settings_new_option.value}:{poll.id}:0'
+    buttons.append([InlineKeyboardButton(text=new_option_text, callback_data=new_option_payload)])
 
     # Back button
     buttons.append([get_back_to_management_button(poll)])

@@ -35,6 +35,7 @@ from .options import (
     show_sorting_menu,
     set_user_order,
     set_option_order,
+    expect_new_option,
 )
 
 
@@ -122,5 +123,7 @@ def handle_callback_query(bot, update, session, user):
         set_user_order(session, context)
     elif context.callback_type == CallbackType.settings_option_sorting:
         set_option_order(session, context)
+    elif context.callback_type == CallbackType.settings_new_option:
+        expect_new_option(session, context)
 
     return
