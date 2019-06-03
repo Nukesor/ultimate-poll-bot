@@ -5,37 +5,41 @@
 [![Patreon](https://github.com/Nukesor/images/blob/master/patreon-donate-blue.svg)](https://www.patreon.com/nukesor)
 
 
-# Customization Settings:
-Ultimate Pollbot features a wide range of customization and anonymization features.
+## Features:
+Ultimate Pollbot features a wide range of customization, anonymization and management features.
 
 **Poll types**
+
 This bot has 4 different vote modi. Each mode is useful for various scenarious. Choose wisely.
 
-- Single vote: User get one vote for the poll
+- Single vote: User get a single vote to allot
 - Block vote: Users can vote without restriction, but only one vote per option.
 - Limited vote: Each user gets X votes for distribution, but max one vote per option.
 - Cumulative vote: Every user gets X votes they can distribute as they like.
 
 **Anonymity settings:**
-Polls can be configured to be anonymous. The votes of the respective users are not visible.
-Polls can be made anonymous subsequently, but as soon as a poll is anonymous it stays that way!
+
+Polls can be configured to be anonymous, with the result that names of users are not visible.
+Polls can be made anonymous subsequently, but as soon as a poll is anonymous it stays that way forever!
 
 Further it's possible to hide the results of the poll until it gets closed.
-As soon as such a poll is closed, the results will be visible, but such an poll cannot be reopened~
+As soon as such a poll is closed, the results will be visible. **Beware!**: such an poll cannot be reopened.
 
 **Custom sorting options:**
+
 The bot allows to configure the sorting of the option list AND and the user list for each option.
 
 Users can be sorted by vote date or username. Options can be sorted by highest percentage, name or by the order they've been added.
 
 **Planned features:**
+
 - Addition and removal of options
 - Set a due date for a poll
 - Get due date notifications for polls, if the bot is in the same group
 - Date picker for date options
 
 
-# Poll Management:
+**Poll Management:**
 - Polls can be closed
 - Polls can be reopened unless the poll is configured to hide the results until it has been closed.
 - Polls can be completely deleted, which means that all non-forwarded occurences of the poll will be removed.

@@ -33,7 +33,7 @@ def get_poll_text(session, poll):
     lines.append(f'*{poll.name}*')
     lines.append(f'_{poll.description}_')
 
-    if poll.anonymous:
+    if poll.anonymous and not poll.closed:
         lines.append("\n*This poll is anonymous.* Names won't be displayed.")
 
     if not poll.results_visible and not poll.should_show_result():
@@ -73,7 +73,6 @@ def get_poll_text(session, poll):
 
     # Notify users that poll is closed
     if poll.closed:
-        lines.insert(0, '⚠️ *This poll is closed* ⚠️\n')
         lines.append('\n⚠️ *This poll is closed* ⚠️')
 
     return '\n'.join(lines)
