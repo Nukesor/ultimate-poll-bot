@@ -49,6 +49,11 @@ def get_options_keyboard(poll):
     new_option_payload = f'{CallbackType.settings_new_option.value}:{poll.id}:0'
     buttons.append([InlineKeyboardButton(text=new_option_text, callback_data=new_option_payload)])
 
+    # Remove options button
+    new_option_text = '－  Remove options'
+    new_option_payload = f'{CallbackType.settings_show_remove_option_menu.value}:{poll.id}:0'
+    buttons.append([InlineKeyboardButton(text=new_option_text, callback_data=new_option_payload)])
+
     # Back button
     buttons.append([get_back_to_management_button(poll)])
 
@@ -79,6 +84,21 @@ def get_option_sorting_keyboard(poll):
         button = InlineKeyboardButton(
             text=f'Order options {SortOptionTranslation[order.name]}',
             callback_data=f'{CallbackType.settings_option_sorting.value}:{poll.id}:{order.value}'
+        )
+        buttons.append([button])
+
+    buttons.append([get_back_to_options_button(poll)])
+
+    return InlineKeyboardMarkup(buttons)
+
+
+def get_remove_option_keyboad(poll):
+    """Get a keyboard for removing options."""
+    buttons = []
+    for option in poll.options:
+        button = InlineKeyboardButton(
+            text=option.name,
+            callback_data=f'{CallbackType.settings_remove_option.value}:{poll.id}:{option.id}',
         )
         buttons.append([button])
 

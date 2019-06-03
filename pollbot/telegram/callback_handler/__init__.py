@@ -36,6 +36,8 @@ from .options import (
     set_user_order,
     set_option_order,
     expect_new_option,
+    show_remove_options_menu,
+    remove_option,
 )
 
 
@@ -125,5 +127,9 @@ def handle_callback_query(bot, update, session, user):
         set_option_order(session, context)
     elif context.callback_type == CallbackType.settings_new_option:
         expect_new_option(session, context)
+    elif context.callback_type == CallbackType.settings_show_remove_option_menu:
+        show_remove_options_menu(session, context)
+    elif context.callback_type == CallbackType.settings_remove_option:
+        remove_option(session, context)
 
     return

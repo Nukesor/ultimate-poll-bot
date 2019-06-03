@@ -78,6 +78,8 @@ class CallbackType(Enum):
     settings_user_sorting = 73
     settings_option_sorting = 74
     settings_new_option = 75
+    settings_show_remove_option_menu = 76
+    settings_remove_option = 77
 
     # Misc
     ignore = 100

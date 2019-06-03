@@ -8,8 +8,10 @@ from pollbot.telegram.keyboard import (
     get_options_keyboard,
     get_option_sorting_keyboard,
     get_back_to_options_button,
+    get_remove_option_keyboad,
 )
 from pollbot.helper.enums import OptionSorting, UserSorting, ExpectedInput
+from pollbot.models import PollOption
 
 
 def show_anonymization_confirmation(session, context):
@@ -79,5 +81,26 @@ def expect_new_option(session, context):
         parse_mode='markdown',
         reply_markup=keyboard,
     )
+
+
+def show_remove_options_menu(session, context):
+    """Show the menu for removing options."""
+    keyboard = get_remove_option_keyboad(context.poll)
+    context.query.message.edit_text(
+        text='Just click the buttons below to remove the desired options.',
+        parse_mode='markdown',
+        reply_markup=keyboard,
+    )
+
+
+def remove_option(session, context):
+    """Remove the option."""
+    session.query(PollOption) \
+        .filter(PollOption.id == context.action) \
+        .delete()
+    session.commit()
+
+    keyboard = get_remove_option_keyboad(context.poll)
+    context.query.message.edit_reply_markup(reply_markup=keyboard)
 
     update_poll_messages(session, context.bot, context.poll)
