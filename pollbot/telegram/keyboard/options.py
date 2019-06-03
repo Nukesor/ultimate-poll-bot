@@ -22,7 +22,7 @@ def get_back_to_options_button(poll):
 
 def get_anonymization_confirmation_keyboard(poll):
     """Get the confirmation keyboard for poll deletion."""
-    payload = f'{CallbackType.option_anonymization.value}:{poll.id}:0'
+    payload = f'{CallbackType.settings_anonymization.value}:{poll.id}:0'
     buttons = [
         [InlineKeyboardButton(text='⚠️ Permanently anonymize poll! ⚠️', callback_data=payload)],
         [get_back_to_management_button(poll)],
@@ -36,12 +36,12 @@ def get_options_keyboard(poll):
     # Anonymization
     if not poll.anonymous:
         text = "Make votes anonymous"
-        payload = f'{CallbackType.option_anonymization_confirmation.value}:{poll.id}:0'
+        payload = f'{CallbackType.settings_anonymization_confirmation.value}:{poll.id}:0'
         buttons.append([InlineKeyboardButton(text=text, callback_data=payload)])
 
     # Sorting sub menu
     text = '🗒 Sorting settings'
-    payload = f'{CallbackType.option_show_sorting.value}:{poll.id}:0'
+    payload = f'{CallbackType.settings_show_sorting.value}:{poll.id}:0'
     buttons.append([InlineKeyboardButton(text=text, callback_data=payload)])
 
     # Back button
@@ -62,7 +62,7 @@ def get_option_sorting_keyboard(poll):
 
             button = InlineKeyboardButton(
                 text=f'Order users {SortOptionTranslation[order.name]}',
-                callback_data=f'{CallbackType.option_user_sorting.value}:{poll.id}:{order.value}'
+                callback_data=f'{CallbackType.settings_user_sorting.value}:{poll.id}:{order.value}'
             )
             buttons.append([button])
 
@@ -73,7 +73,7 @@ def get_option_sorting_keyboard(poll):
 
         button = InlineKeyboardButton(
             text=f'Order options {SortOptionTranslation[order.name]}',
-            callback_data=f'{CallbackType.option_option_sorting.value}:{poll.id}:{order.value}'
+            callback_data=f'{CallbackType.settings_option_sorting.value}:{poll.id}:{order.value}'
         )
         buttons.append([button])
 

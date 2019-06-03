@@ -31,18 +31,19 @@ The bot allows to configure the sorting of the option list AND and the user list
 
 Users can be sorted by vote date or username. Options can be sorted by highest percentage, name or by the order they've been added.
 
-**Planned features:**
-
-- Addition and removal of options
-- Set a due date for a poll
-- Get due date notifications for polls, if the bot is in the same group
-- Date picker for date options
-
 
 **Poll Management:**
+- Addition and removal of options
 - Polls can be closed
 - Polls can be reopened unless the poll is configured to hide the results until it has been closed.
 - Polls can be completely deleted, which means that all non-forwarded occurences of the poll will be removed.
+
+
+**Planned features:**
+
+- Set a due date for a poll
+- Get due date notifications for polls, if the bot is in the same group
+- Date picker for date options
 
 
 ## Commands:

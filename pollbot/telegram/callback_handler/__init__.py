@@ -112,15 +112,15 @@ def handle_callback_query(bot, update, session, user):
         reopen_poll(session, context)
 
     # Poll options
-    elif context.callback_type == CallbackType.option_anonymization_confirmation:
+    elif context.callback_type == CallbackType.settings_anonymization_confirmation:
         show_anonymization_confirmation(session, context)
-    elif context.callback_type == CallbackType.option_anonymization:
+    elif context.callback_type == CallbackType.settings_anonymization:
         make_anonymous(session, context)
-    elif context.callback_type == CallbackType.option_show_sorting:
+    elif context.callback_type == CallbackType.settings_show_sorting:
         show_sorting_menu(session, context)
-    elif context.callback_type == CallbackType.option_user_sorting:
+    elif context.callback_type == CallbackType.settings_user_sorting:
         set_user_order(session, context)
-    elif context.callback_type == CallbackType.option_option_sorting:
+    elif context.callback_type == CallbackType.settings_option_sorting:
         set_option_order(session, context)
 
     return

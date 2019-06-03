@@ -12,6 +12,8 @@ class ExpectedInput(Enum):
     votes = 4
     vote_count = 5
 
+    new_option = 10
+
 
 @unique
 class VoteType(Enum):
@@ -69,12 +71,13 @@ class CallbackType(Enum):
     close = 51
     reopen = 52
 
-    # Option
-    option_anonymization_confirmation = 70
-    option_anonymization = 71
-    option_show_sorting = 72
-    option_user_sorting = 73
-    option_option_sorting = 74
+    # Settings
+    settings_anonymization_confirmation = 70
+    settings_anonymization = 71
+    settings_show_sorting = 72
+    settings_user_sorting = 73
+    settings_option_sorting = 74
+    settings_new_option = 75
 
     # Misc
     ignore = 100

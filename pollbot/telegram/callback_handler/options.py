@@ -1,13 +1,15 @@
 """Callback functions needed during creation of a Poll."""
-from pollbot.helper.update import update_poll_messages
+from telegram import InlineKeyboardMarkup
 
+from pollbot.helper.update import update_poll_messages
 from pollbot.helper.display import get_options_text
 from pollbot.telegram.keyboard import (
     get_anonymization_confirmation_keyboard,
     get_options_keyboard,
     get_option_sorting_keyboard,
+    get_back_to_options_button,
 )
-from pollbot.helper.enums import OptionSorting, UserSorting
+from pollbot.helper.enums import OptionSorting, UserSorting, ExpectedInput
 
 
 def show_anonymization_confirmation(session, context):
@@ -61,6 +63,20 @@ def set_option_order(session, context):
         text=get_options_text(context.poll),
         parse_mode='markdown',
         reply_markup=get_option_sorting_keyboard(context.poll)
+    )
+
+    update_poll_messages(session, context.bot, context.poll)
+
+
+def expect_new_option(session, context):
+    """Send a text and tell the user that we expect a new option."""
+    context.poll.expected_input = ExpectedInput.new_option.name
+
+    keyboard = InlineKeyboardMarkup([get_back_to_options_button(context.poll)])
+    context.query.message.edit_text(
+        text='Please send me the next option',
+        parse_mode='markdown',
+        reply_markup=keyboard,
     )
 
     update_poll_messages(session, context.bot, context.poll)
