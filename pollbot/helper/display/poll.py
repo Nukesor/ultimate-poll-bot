@@ -1,7 +1,6 @@
 """Get the text describing the current state of the poll."""
 import math
 from sqlalchemy import func
-from pollbot.helper.enums import VoteType
 from pollbot.helper import (
     poll_has_limited_votes,
     poll_is_cumulative,
@@ -22,9 +21,6 @@ from pollbot.helper.display import (
 
 def get_poll_text(session, poll):
     """Create the text of the poll."""
-    lines = [f"{poll.name}"]
-    lines.append(f'{poll.description}')
-
     total_user_count = session.query(User.id) \
         .join(Vote) \
         .join(PollOption) \
@@ -36,6 +32,13 @@ def get_poll_text(session, poll):
     lines = []
     lines.append(f'*{poll.name}*')
     lines.append(f'_{poll.description}_')
+
+    if poll.anonymous:
+        lines.append("\n*This poll is anonymous.* Names won't be displayed.")
+
+    if not poll.results_visible and not poll.should_show_result():
+        lines.append("\nThe results of this poll are *not visible*, until it's closed!")
+        lines.append("Once closed it *cannot be reopened!*")
 
     # Sort the options accordingly to the polls settings
     options = get_sorted_options(poll, poll.options.copy(), total_user_count)
@@ -131,7 +134,9 @@ def get_vote_information_line(poll, total_user_count):
 
 def get_remaining_votes(session, poll):
     """Get the remaining votes for a poll."""
-    if not poll_has_limited_votes(poll) or not poll.should_show_result():
+    if not poll_has_limited_votes(poll)  \
+       or not poll.should_show_result() \
+       or poll.anonymous:
         return []
 
     user_vote_count = func.sum(Vote.vote_count).label('user_vote_count')
