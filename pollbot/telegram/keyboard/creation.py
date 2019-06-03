@@ -18,9 +18,14 @@ def get_init_keyboard(poll):
     toggle_anonymity_payload = f"{toggle_anonymity}:{poll.id}:0"
     toggle_anonymity_text = "Display names in poll" if poll.anonymous else "Anonymize poll"
 
+    toggle_results_visible = CallbackType.toggle_results_visible.value
+    toggle_results_visible_payload = f"{toggle_results_visible}:{poll.id}:0"
+    toggle_results_visible_text = "Hide results until poll is closed" if poll.results_visible else "Permanently show results"
+
     buttons = [
         [InlineKeyboardButton(text=change_type_text, callback_data=change_type_payload)],
         [InlineKeyboardButton(text=toggle_anonymity_text, callback_data=toggle_anonymity_payload)],
+        [InlineKeyboardButton(text=toggle_results_visible_text, callback_data=toggle_results_visible_payload)],
     ]
 
     return InlineKeyboardMarkup(buttons)

@@ -18,6 +18,9 @@ def close_poll(session, context):
 
 def reopen_poll(session, context):
     """Reopen this poll."""
+    if not context.poll.results_visible:
+        context.query.answer('This poll cannot be reopened')
+        return
     context.poll.closed = False
     session.commit()
     update_poll_messages(session, context.bot, context.poll)

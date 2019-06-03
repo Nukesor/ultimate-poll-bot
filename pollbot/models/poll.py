@@ -38,6 +38,7 @@ class Poll(base):
     number_of_votes = Column(Integer)
     option_sorting = Column(String, nullable=False)
     user_sorting = Column(String, nullable=False)
+    results_visible = Column(Boolean, nullable=False, server_default='true')
 
     # Flags
     created = Column(Boolean, default=False, nullable=False)
@@ -62,6 +63,11 @@ class Poll(base):
         self.vote_type = VoteType.single_vote.name
         self.expected_input = 'name'
         self.anonymous = False
+        self.results_visible = True
 
         self.user_sorting = UserSorting.user_chrono.name
         self.option_sorting = OptionSorting.option_chrono.name
+
+    def should_show_result(self):
+        """Determine, whether this results of this poll should be shown."""
+        return self.results_visible or self.closed

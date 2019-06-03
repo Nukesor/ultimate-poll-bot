@@ -1,5 +1,6 @@
 """Callback functions needed during creation of a Poll."""
-from pollbot.helper.creation import get_init_text, get_vote_type_help_text, create_poll
+from pollbot.helper.display.creation import get_init_text, get_vote_type_help_text
+from pollbot.helper.creation import create_poll
 from pollbot.helper.enums import VoteType, ExpectedInput
 from pollbot.telegram.keyboard import (
     get_change_vote_type_keyboard,
@@ -32,6 +33,18 @@ def change_vote_type(session, context):
 def toggle_anonymity(session, context):
     """Change the anonymity settings of a poll."""
     context.poll.anonymous = not context.poll.anonymous
+
+    keyboard = get_init_keyboard(context.poll)
+    context.query.message.edit_text(
+        get_init_text(context.poll),
+        parse_mode='markdown',
+        reply_markup=keyboard
+    )
+
+
+def toggle_results_visible(session, context):
+    """Change the results visible settings of a poll."""
+    context.poll.results_visible = not context.poll.results_visible
 
     keyboard = get_init_keyboard(context.poll)
     context.query.message.edit_text(

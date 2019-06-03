@@ -32,7 +32,10 @@ def get_normal_buttons(poll):
     for option in poll.options:
         result = CallbackResult.vote.value
         payload = f'{vote_button_type}:{option.id}:{result}'
-        text = f'{option.name} ({len(option.votes)} votes)'
+        if poll.should_show_result():
+            text = f'{option.name} ({len(option.votes)} votes)'
+        else:
+            text = f'{option.name}'
         buttons.append([InlineKeyboardButton(text=text, callback_data=payload)])
 
     return buttons
@@ -46,10 +49,7 @@ def get_cumulative_buttons(poll):
 
     buttons = []
     for option in poll.options:
-        if poll.vote_type == VoteType.cumulative_vote.name:
-            text = option.name
-        else:
-            text = f'{option.name} ({len(option.votes)} votes)'
+        text = option.name
 
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
         no_payload = f'{vote_button_type}:{option.id}:{vote_no}'

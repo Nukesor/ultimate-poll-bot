@@ -10,6 +10,7 @@ from .creation import (
     change_vote_type,
     show_vote_type_keyboard,
     all_options_entered,
+    toggle_results_visible,
 )
 
 from .vote import (
@@ -83,6 +84,8 @@ def handle_callback_query(bot, update, session, user):
         toggle_anonymity(session, context)
     elif context.callback_type == CallbackType.all_options_entered:
         all_options_entered(session, context)
+    elif context.callback_type == CallbackType.toggle_results_visible:
+        toggle_results_visible(session, context)
 
     # Voting
     elif context.callback_type == CallbackType.vote:
@@ -121,9 +124,3 @@ def handle_callback_query(bot, update, session, user):
         set_option_order(session, context)
 
     return
-
-
-@run_async
-@hidden_session_wrapper()
-def handle_chosen_inline_result(bot, update, session, user):
-    """Save the chosen inline result."""

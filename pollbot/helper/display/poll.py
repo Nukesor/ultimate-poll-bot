@@ -45,10 +45,11 @@ def get_poll_text(session, poll):
         lines.append('')
         lines.append(get_option_line(session, option))
 
-        lines.append(get_percentage_line(option, total_user_count))
+        if poll.should_show_result():
+            lines.append(get_percentage_line(option, total_user_count))
 
         # Add the names of the voters to the respective options
-        if not poll.anonymous and len(option.votes) > 0:
+        if poll.should_show_result() and not poll.anonymous and len(option.votes) > 0:
             # Sort the votes accordingly to the poll's settings
             votes = get_sorted_votes(poll, option.votes)
             for index, vote in enumerate(votes):
@@ -77,7 +78,7 @@ def get_poll_text(session, poll):
 
 def get_option_line(session, option):
     """Get the line with vote count for this option."""
-    if len(option.votes) > 0:
+    if len(option.votes) > 0 and option.poll.should_show_result():
         if poll_is_cumulative(option.poll):
             vote_count = sum([vote.vote_count for vote in option.votes])
         else:
@@ -130,7 +131,7 @@ def get_vote_information_line(poll, total_user_count):
 
 def get_remaining_votes(session, poll):
     """Get the remaining votes for a poll."""
-    if not poll_has_limited_votes(poll):
+    if not poll_has_limited_votes(poll) or not poll.should_show_result():
         return []
 
     user_vote_count = func.sum(Vote.vote_count).label('user_vote_count')

@@ -15,7 +15,9 @@ def get_back_to_management_button(poll):
 
 def get_management_keyboard(poll):
     """Get the management keyboard for this poll."""
-    if poll.closed:
+    if poll.closed and not poll.results_visible:
+        return InlineKeyboardMarkup([])
+    elif poll.closed:
         payload = f'{CallbackType.reopen.value}:{poll.id}:0'
         buttons = [[InlineKeyboardButton(text='Reopen poll', callback_data=payload)]]
         return InlineKeyboardMarkup(buttons)
