@@ -10,7 +10,6 @@ from pollbot.db import get_session
 from pollbot.sentry import sentry
 from pollbot.models import User
 from pollbot.helper import error_text
-from pollbot.helper.telegram import call_tg_func
 
 
 def job_session_wrapper():
@@ -134,8 +133,7 @@ def get_user(session, update):
 def is_allowed(user, update, private=False):
     """Check whether the user is allowed to access this endpoint."""
     if private and update.message.chat.type != 'private':
-        call_tg_func(update.message.chat, 'send_message',
-                     ['Please do this in a direct conversation with me.'])
+        update.message.chats.end_message('Please do this in a direct conversation with me.')
         return False
 
     return True
