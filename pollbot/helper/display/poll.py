@@ -48,7 +48,7 @@ def get_poll_text(session, poll):
         lines.append('')
         lines.append(get_option_line(session, option))
 
-        if poll.should_show_result():
+        if poll.should_show_result() and poll.show_percentage:
             lines.append(get_percentage_line(option, total_user_count))
 
         # Add the names of the voters to the respective options

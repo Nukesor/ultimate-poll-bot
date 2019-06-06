@@ -38,7 +38,8 @@ class Poll(base):
     number_of_votes = Column(Integer)
     option_sorting = Column(String, nullable=False)
     user_sorting = Column(String, nullable=False)
-    results_visible = Column(Boolean, nullable=False, server_default='true')
+    results_visible = Column(Boolean, nullable=False, default=True)
+    show_percentage = Column(Boolean, nullable=False, default=True, server_default='true')
 
     # Flags
     created = Column(Boolean, default=False, nullable=False)
