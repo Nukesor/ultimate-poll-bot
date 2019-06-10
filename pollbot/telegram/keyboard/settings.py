@@ -14,9 +14,9 @@ from pollbot.helper.enums import (
 )
 
 
-def get_back_to_options_button(poll):
+def get_back_to_settings_button(poll):
     """Get the back to options menu button for option sub menus."""
-    payload = f'{CallbackType.menu_back.value}:{poll.id}:{CallbackResult.options.value}'
+    payload = f'{CallbackType.menu_back.value}:{poll.id}:{CallbackResult.settings.value}'
     return InlineKeyboardButton(text='Back', callback_data=payload)
 
 
@@ -30,7 +30,7 @@ def get_anonymization_confirmation_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_options_keyboard(poll):
+def get_settings_keyboard(poll):
     """Get the options menu for this poll."""
     buttons = []
     # Anonymization
@@ -43,6 +43,12 @@ def get_options_keyboard(poll):
     sorting_text = '📋 Sorting settings'
     sorting_payload = f'{CallbackType.settings_show_sorting.value}:{poll.id}:0'
     buttons.append([InlineKeyboardButton(text=sorting_text, callback_data=sorting_payload)])
+
+    if not poll.anonymous:
+        # Show percentage option
+        percentage_text = '○% Hide percentage' if poll.show_percentage else '○% Show percentage'
+        percentage_payload = f'{CallbackType.settings_toggle_percentage.value}:{poll.id}:0'
+        buttons.append([InlineKeyboardButton(text=percentage_text, callback_data=percentage_payload)])
 
     # New option button
     new_option_text = '＋ Add a new option'
@@ -87,7 +93,7 @@ def get_option_sorting_keyboard(poll):
         )
         buttons.append([button])
 
-    buttons.append([get_back_to_options_button(poll)])
+    buttons.append([get_back_to_settings_button(poll)])
 
     return InlineKeyboardMarkup(buttons)
 
@@ -102,6 +108,6 @@ def get_remove_option_keyboad(poll):
         )
         buttons.append([button])
 
-    buttons.append([get_back_to_options_button(poll)])
+    buttons.append([get_back_to_settings_button(poll)])
 
     return InlineKeyboardMarkup(buttons)

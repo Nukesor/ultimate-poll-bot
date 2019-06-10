@@ -89,7 +89,7 @@ def send_updates(session, bot, poll, show_warning=False):
     for reference in poll.references:
         try:
             # Admin poll management interface
-            if reference.admin_message_id is not None and not poll.in_options:
+            if reference.admin_message_id is not None and not poll.in_settings:
                 if poll.expected_input == ExpectedInput.votes.name:
                     keyboard = get_vote_keyboard(poll, show_back=True)
                 else:

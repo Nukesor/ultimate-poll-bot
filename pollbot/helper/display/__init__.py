@@ -60,4 +60,4 @@ def calculate_percentage(option, total_user_count):
 # Import for easier re-export
 from .poll import * # noqa
 from .management import * # noqa
-from .options import * # noqa
+from .settings import * # noqa

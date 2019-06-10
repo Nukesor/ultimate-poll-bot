@@ -2,13 +2,13 @@
 from pollbot.helper.enums import CallbackResult, ExpectedInput
 
 from pollbot.models import Reference
-from pollbot.helper.display import get_poll_management_text, get_options_text
+from pollbot.helper.display import get_poll_management_text, get_settings_text
 from pollbot.telegram.keyboard import (
     get_change_vote_type_keyboard,
     get_deletion_confirmation,
     get_management_keyboard,
     get_vote_keyboard,
-    get_options_keyboard,
+    get_settings_keyboard,
 )
 
 
@@ -25,11 +25,11 @@ def go_back(session, context):
     if context.callback_result == CallbackResult.main_menu:
         text = get_poll_management_text(session, context.poll, show_warning=False)
         keyboard = get_management_keyboard(context.poll)
-        context.poll.in_options = False
+        context.poll.in_settings = False
 
-    elif context.callback_result == CallbackResult.options:
-        text = get_options_text(context.poll)
-        keyboard = get_options_keyboard(context.poll)
+    elif context.callback_result == CallbackResult.settings:
+        text = get_settings_text(context.poll)
+        keyboard = get_settings_keyboard(context.poll)
 
     context.query.message.edit_text(
         text,
@@ -50,12 +50,12 @@ def show_vote_menu(session, context):
     context.query.message.edit_reply_markup(reply_markup=keyboard)
 
 
-def show_options(session, context):
-    """Show the options tab."""
-    text = get_options_text(context.poll)
-    keyboard = get_options_keyboard(context.poll)
+def show_settings(session, context):
+    """Show the settings tab."""
+    text = get_settings_text(context.poll)
+    keyboard = get_settings_keyboard(context.poll)
     context.query.message.edit_text(text, parse_mode='markdown', reply_markup=keyboard)
-    context.poll.in_options = True
+    context.poll.in_settings = True
 
 
 def show_deletion_confirmation(session, context):

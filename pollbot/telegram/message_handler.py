@@ -2,9 +2,9 @@
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.enums import ExpectedInput, VoteType
 from pollbot.helper.creation import next_option
-from pollbot.helper.display import get_options_text
+from pollbot.helper.display import get_settings_text
 from pollbot.helper.update import update_poll_messages
-from pollbot.telegram.keyboard.options import get_options_keyboard
+from pollbot.telegram.keyboard.settings import get_settings_keyboard
 from pollbot.telegram.callback_handler.creation import create_poll
 
 from pollbot.models import PollOption, Reference
@@ -81,8 +81,8 @@ def handle_private_text(bot, update, session, user):
         # Reset expected input
         poll.expected_input = None
 
-        text = get_options_text(poll)
-        keyboard = get_options_keyboard(poll)
+        text = get_settings_text(poll)
+        keyboard = get_settings_keyboard(poll)
         message = chat.send_message(
             text,
             parse_mode='markdown',

@@ -80,6 +80,7 @@ class CallbackType(Enum):
     settings_new_option = 75
     settings_show_remove_option_menu = 76
     settings_remove_option = 77
+    settings_toggle_percentage = 78
 
     # Misc
     ignore = 100
@@ -101,7 +102,7 @@ class CallbackResult(Enum):
 
     # Menu navigation
     main_menu = 40
-    options = 41
+    settings = 41
 
 
 @unique

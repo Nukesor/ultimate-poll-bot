@@ -20,7 +20,7 @@ from .vote import (
 from .menu import (
     go_back,
     show_deletion_confirmation,
-    show_options,
+    show_settings,
     show_vote_menu,
     show_menu,
 )
@@ -29,7 +29,7 @@ from .management import (
     close_poll,
     reopen_poll,
 )
-from .options import (
+from .settings import (
     make_anonymous,
     show_anonymization_confirmation,
     show_sorting_menu,
@@ -38,6 +38,7 @@ from .options import (
     expect_new_option,
     show_remove_options_menu,
     remove_option,
+    toggle_percentage,
 )
 
 
@@ -100,7 +101,7 @@ def handle_callback_query(bot, update, session, user):
     elif context.callback_type == CallbackType.menu_vote:
         show_vote_menu(session, context)
     elif context.callback_type == CallbackType.menu_option:
-        show_options(session, context)
+        show_settings(session, context)
     elif context.callback_type == CallbackType.menu_delete:
         show_deletion_confirmation(session, context)
     elif context.callback_type == CallbackType.menu_show:
@@ -131,5 +132,7 @@ def handle_callback_query(bot, update, session, user):
         show_remove_options_menu(session, context)
     elif context.callback_type == CallbackType.settings_remove_option:
         remove_option(session, context)
+    elif context.callback_type == CallbackType.settings_toggle_percentage:
+        toggle_percentage(session, context)
 
     return

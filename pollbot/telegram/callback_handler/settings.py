@@ -2,12 +2,12 @@
 from telegram import InlineKeyboardMarkup
 
 from pollbot.helper.update import update_poll_messages
-from pollbot.helper.display import get_options_text
+from pollbot.helper.display import get_settings_text
 from pollbot.telegram.keyboard import (
     get_anonymization_confirmation_keyboard,
-    get_options_keyboard,
+    get_settings_keyboard,
     get_option_sorting_keyboard,
-    get_back_to_options_button,
+    get_back_to_settings_button,
     get_remove_option_keyboad,
 )
 from pollbot.helper.enums import OptionSorting, UserSorting, ExpectedInput
@@ -27,9 +27,9 @@ def make_anonymous(session, context):
     context.poll.anonymous = True
 
     context.query.message.edit_text(
-        get_options_text(context.poll),
+        get_settings_text(context.poll),
         parse_mode='markdown',
-        reply_markup=get_options_keyboard(context.poll)
+        reply_markup=get_settings_keyboard(context.poll)
     )
 
     update_poll_messages(session, context.bot, context.poll)
@@ -49,7 +49,7 @@ def set_user_order(session, context):
     context.poll.user_sorting = user_sorting.name
 
     context.query.message.edit_text(
-        text=get_options_text(context.poll),
+        text=get_settings_text(context.poll),
         parse_mode='markdown',
         reply_markup=get_option_sorting_keyboard(context.poll)
     )
@@ -62,7 +62,7 @@ def set_option_order(session, context):
     context.poll.option_sorting = option_sorting.name
 
     context.query.message.edit_text(
-        text=get_options_text(context.poll),
+        text=get_settings_text(context.poll),
         parse_mode='markdown',
         reply_markup=get_option_sorting_keyboard(context.poll)
     )
@@ -75,7 +75,7 @@ def expect_new_option(session, context):
     context.poll.expected_input = ExpectedInput.new_option.name
     context.user.current_poll = context.poll
 
-    keyboard = InlineKeyboardMarkup([[get_back_to_options_button(context.poll)]])
+    keyboard = InlineKeyboardMarkup([[get_back_to_settings_button(context.poll)]])
     context.query.message.edit_text(
         text='Please send me the new option or multiple options at once, each option in a new line.)',
         parse_mode='markdown',
@@ -104,3 +104,16 @@ def remove_option(session, context):
     context.query.message.edit_reply_markup(reply_markup=keyboard)
 
     update_poll_messages(session, context.bot, context.poll)
+
+
+def toggle_percentage(session, context):
+    """Toggle the visibility of the percentage bar."""
+    poll = context.poll
+    poll.show_percentage = not poll.show_percentage
+
+    update_poll_messages(session, context.bot, context.poll)
+    context.query.message.edit_text(
+        text=get_settings_text(context.poll),
+        parse_mode='markdown',
+        reply_markup=get_settings_keyboard(context.poll)
+    )
