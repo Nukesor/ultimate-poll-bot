@@ -23,7 +23,7 @@ def show_vote_type_keyboard(session, context):
 def go_back(session, context):
     """Go back to the original step."""
     if context.callback_result == CallbackResult.main_menu:
-        text = get_poll_management_text(session, context.poll)
+        text = get_poll_management_text(session, context.poll, show_warning=False)
         keyboard = get_management_keyboard(context.poll)
         context.poll.in_options = False
 

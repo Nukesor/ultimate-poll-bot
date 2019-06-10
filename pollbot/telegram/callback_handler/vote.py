@@ -49,14 +49,14 @@ def respond_to_vote(session, line, context, poll):
         .all()
 
     lines = [line]
-    lines.append('Your votes so far:')
+    lines.append('Your votes:')
     for vote in votes:
         if poll_is_cumulative(poll):
-            lines.append(f'{vote.option.name} ({vote.vote_count}), ')
+            lines.append(f'{vote.poll_option.name} ({vote.vote_count}), ')
         else:
             lines.append(vote.poll_option.name)
 
-    message = '\n'.join(lines)
+    message = ''.join(lines)
 
     context.query.answer(message)
 
@@ -70,7 +70,7 @@ def handle_single_vote(session, context, option):
     # Changed vote
     if existing_vote and existing_vote.poll_option != option:
         existing_vote.poll_option = option
-        respond_to_vote(session, 'Vote changed1', context, option.poll)
+        respond_to_vote(session, 'Vote changed!', context, option.poll)
 
     # Voted for the same thing again
     elif existing_vote and existing_vote.poll_option == option:
@@ -191,6 +191,7 @@ def handle_cumulative_vote(session, context, option):
         vote = Vote(VoteResultType.yes.name, context.user, option)
         session.add(vote)
         session.commit()
+        total_vote_count = allowed_votes - (vote_count - 1)
         respond_to_vote(session, f'Vote registered ({total_vote_count} left)!', context, option.poll)
 
     return True

@@ -53,7 +53,7 @@ def hidden_session_wrapper():
             except TelegramError as e:
                 raise e
             # Handle all not telegram relatated exceptions
-            except BaseException:
+            except:
                 traceback.print_exc()
                 sentry.captureException()
             finally:
@@ -99,7 +99,7 @@ def session_wrapper(send_message=True, private=False):
                 raise e
 
             # Handle all not telegram relatated exceptions
-            except BaseException:
+            except:
                 traceback.print_exc()
                 sentry.captureException()
                 if send_message:

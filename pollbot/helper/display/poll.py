@@ -19,7 +19,7 @@ from pollbot.helper.display import (
 )
 
 
-def get_poll_text(session, poll):
+def get_poll_text(session, poll, show_warning):
     """Create the text of the poll."""
     total_user_count = session.query(User.id) \
         .join(Vote) \
@@ -74,6 +74,11 @@ def get_poll_text(session, poll):
     # Notify users that poll is closed
     if poll.closed:
         lines.append('\n⚠️ *This poll is closed* ⚠️')
+
+    if show_warning:
+        lines.append('\n⚠️ *Too many votes in the last minute:* ⚠️')
+        lines.append('Your votes will still be registered, but this message will only update every 5 seconds.')
+        lines.append("(Telegram doesn't allow to send/update more than 20 messages per minute in a group by a bot.)")
 
     return '\n'.join(lines)
 

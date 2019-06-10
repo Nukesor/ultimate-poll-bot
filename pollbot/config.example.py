@@ -23,5 +23,8 @@ class Config:
     CONNECTION_COUNT = 20
     OVERFLOW_COUNT = 10
 
+    # Flood limit parameter
+    FLOOD_THRESHOLD = 8
+
 
 config = Config()

@@ -17,6 +17,7 @@ from pollbot.helper import (
     donations_text,
 )
 
+from pollbot.telegram.job import message_update_job
 from pollbot.telegram.keyboard import get_main_keyboard
 from pollbot.telegram.message_handler import handle_private_text
 from pollbot.telegram.callback_handler import handle_callback_query
@@ -70,8 +71,11 @@ dispatcher.add_handler(InlineQueryHandler(search))
 # InlineQuery result handler
 dispatcher.add_handler(ChosenInlineResultHandler(handle_chosen_inline_result))
 
-# Message handler
 
+job_queue = updater.job_queue
+job_queue.run_repeating(message_update_job, interval=2, first=0, name='Handle poll message update queue')
+
+# Message handler
 dispatcher.add_handler(
     MessageHandler(
         Filters.text & Filters.private & (~Filters.update.edited_message) & (~Filters.reply),
