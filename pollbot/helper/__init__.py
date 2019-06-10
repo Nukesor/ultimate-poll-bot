@@ -7,7 +7,6 @@ Hello there!
 
 My name is Arne Beer (@Nukesor) and I'm the sole developer of the Ultimate PollBot.
 
-The whole project has been created during my leisure time and for free.
 This project is non-profit, open-source on [Github](https://github.com/Nukesor/pollbot) and hosted on a server I'm renting from my own money.
 
 I really appreciate anything that helps me out and that keeps me and my server running ☺️.
@@ -23,7 +22,31 @@ start_text = """*Hi!*
 This is the *ULTIMATE* pollbot.
 Just type /create or click the button below to start creating polls. Everything is explained underway.
 
-This project is open-source and hosted on [Github](https://github.com/Nukesor/ultimate-poll-bot).
+If you have more questions, check out /help.
+
+This project is open-source on [Github](https://github.com/Nukesor/ultimate-poll-bot).
+"""
+
+help_text = """
+
+*Settings:*
+There are quite a few settings for your polls.
+
+*Creation:*
+1. You can anonymize your poll, which results in no names being displayed!
+2. Poll results can be shown only after closing the poll. This is great to avoid tactical voting, which is possible if people can see the intermediate results of a poll.
+
+*Settings:*
+1. A poll can be made anonymous retrospectively.
+2. The percentage line of options can be hidden in the settings menu.
+3. New options can be added and existing options can be removed in the settings menu.
+4. The order in which options are displayed in the results can be changed.
+5. The order in which names for each option are displayed in the results can be changed.
+
+
+*Too many votes:*
+Don't worry about this message. This mechanism is necessary to prevent my bot from being blocked by telegram for spamming messages.
+The only effect for you is, that the results won't be displayed immediately.
 """
 
 

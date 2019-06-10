@@ -22,7 +22,7 @@ def get_settings_text(poll):
 
     text.append('')
 
-    if not poll.anonymous:
+    if poll.results_visible:
         if poll.show_percentage:
             text.append("*Percentage*: Visible")
         else:
