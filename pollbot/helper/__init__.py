@@ -27,10 +27,7 @@ If you have more questions, check out /help.
 This project is open-source on [Github](https://github.com/Nukesor/ultimate-poll-bot).
 """
 
-help_text = """
-
-*Settings:*
-There are quite a few settings for your polls.
+help_text = """There are quite a few settings for your polls:
 
 *Creation:*
 1. You can anonymize your poll, which results in no names being displayed!
@@ -43,10 +40,16 @@ There are quite a few settings for your polls.
 4. The order in which options are displayed in the results can be changed.
 5. The order in which names for each option are displayed in the results can be changed.
 
-
-*Too many votes:*
+*Too many votes in the last minute:*
 Don't worry about this message. This mechanism is necessary to prevent my bot from being blocked by telegram for spamming messages.
 The only effect for you is, that the results won't be displayed immediately.
+
+*My polls won't update:*
+In this case you probably have multiple active polls or the same poll twice in a single group.
+This is something that a bot cannot detect (telegrams API doesn't allow this). Therefore you need to handle this yourself.
+Only have one highly active poll per group and don't send the same poll multiple times in the same group (or delete the old ones for ALL members of the group).
+
+
 """
 
 

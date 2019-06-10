@@ -7,6 +7,9 @@
 
 ## Features:
 Ultimate Pollbot features a wide range of customization, anonymization and management features.
+Pollbot has a proper way of handling telegrams flood limits in groups.
+In case you hit a certain amount of votes for the current minute, the bot will stop updating the messages on each vote, but rather every five seconds.
+Votes will still be registered and you'll get feedback via button callback notification.
 
 **Poll types**
 
@@ -77,8 +80,8 @@ Get the latest revision with `poetry run alembic history` and change the current
 
 ## Botfather Commands
 
-    start - Start the bot
-    create - Create a new poll
-    list - List all active polls and manage them
-    help - Show the help text
-    donations - Get me a coffee
+start - Start the bot
+create - Create a new poll
+list - List all active polls and manage them
+help - Show the help text
+donations - Get me a coffee
