@@ -6,10 +6,7 @@
 
 
 ## Features:
-Ultimate Pollbot features a wide range of customization, anonymization and management features.
-Pollbot has a proper way of handling telegrams flood limits in groups.
-In case you hit a certain amount of votes for the current minute, the bot will stop updating the messages on each vote, but rather every five seconds.
-Votes will still be registered and you'll get feedback via button callback notification.
+Ultimate Pollbot features a wide range of customization, anonymization and management features:
 
 **Poll types**
 
@@ -40,6 +37,15 @@ Users can be sorted by vote date or username. Options can be sorted by highest p
 - Polls can be closed
 - Polls can be reopened unless the poll is configured to hide the results until it has been closed.
 - Polls can be completely deleted, which means that all non-forwarded occurences of the poll will be removed.
+
+
+**Flood controll prevention:**
+Telegram forbids to send more than 20 messages per minute into the same group. This obviously leads to problems, if there are many people that vote on a single poll.
+
+Pollbot has a proper way of handling this problem.
+In case you hit a certain amount of votes for the current minute, the bot will stop updating the messages on each vote, but it will rather update all messages every five seconds.
+Votes will still be registered and you'll get feedback via button callback notification.
+With this mechanism you can keep spamming vote buttons and do as you like without crashing the bot or activating flood control limits.
 
 
 **Planned features:**
