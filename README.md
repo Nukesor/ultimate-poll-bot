@@ -51,6 +51,7 @@ Users can be sorted by vote date or username. Options can be sorted by highest p
     /start      Start the bot
     /create     Create a new poll
     /list       List all active polls and manage them
+    /help       List all active polls and manage them
     /donations  Get me a coffee
 
 
@@ -79,4 +80,5 @@ Get the latest revision with `poetry run alembic history` and change the current
     start - Start the bot
     create - Create a new poll
     list - List all active polls and manage them
+    help - Show the help text
     donations - Get me a coffee
