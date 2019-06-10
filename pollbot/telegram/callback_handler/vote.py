@@ -11,7 +11,8 @@ from pollbot.models import PollOption, Vote
 def handle_vote(session, context):
     """Handle any clicks on vote buttons."""
     # Remove the poll, in case it got deleted, but we didn't manage to kill all references
-    if context.poll is None:
+    option = session.query(PollOption).get(context.payload)
+    if option is None:
         if context.query.message is not None:
             context.query.message.edit_text('This poll has been permanently deleted.')
         else:
@@ -20,7 +21,6 @@ def handle_vote(session, context):
                 inline_message_id=context.query.inline_message_id,
             )
 
-    option = session.query(PollOption).get(context.payload)
     poll = option.poll
 
     # Single vote
