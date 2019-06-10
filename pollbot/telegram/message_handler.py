@@ -113,7 +113,7 @@ def add_options(poll, text):
     added_options = []
 
     for option_to_add in options_to_add:
-        if option_is_duplicate(poll, options_to_add):
+        if option_is_duplicate(poll, options_to_add) or option_to_add in added_options:
             continue
 
         poll_option = PollOption(poll, option_to_add)

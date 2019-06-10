@@ -44,7 +44,7 @@ def get_settings_keyboard(poll):
     sorting_payload = f'{CallbackType.settings_show_sorting.value}:{poll.id}:0'
     buttons.append([InlineKeyboardButton(text=sorting_text, callback_data=sorting_payload)])
 
-    if not poll.anonymous:
+    if poll.results_visible:
         # Show percentage option
         percentage_text = '○% Hide percentage' if poll.show_percentage else '○% Show percentage'
         percentage_payload = f'{CallbackType.settings_toggle_percentage.value}:{poll.id}:0'
