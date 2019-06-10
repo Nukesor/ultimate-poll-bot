@@ -43,7 +43,7 @@ def search(bot, update, session, user):
     else:
         results = []
         for poll in polls:
-            text = get_poll_text(session, poll)
+            text = get_poll_text(session, poll, show_warning=False)
             content = InputTextMessageContent(text, parse_mode='markdown')
             results.append(InlineQueryResultArticle(
                 poll.id,
