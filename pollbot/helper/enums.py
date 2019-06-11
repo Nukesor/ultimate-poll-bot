@@ -53,7 +53,14 @@ class CallbackType(Enum):
     skip_description = 3
     all_options_entered = 4
     toggle_results_visible = 5
-    cancel = 8
+    open_datepicker = 6
+    close_datepicker = 7
+    accept_date_option = 8
+
+    # Date picker
+    set_date = 10
+    next_month = 11
+    previous_month = 12
 
     # Poll voting
     vote = 20

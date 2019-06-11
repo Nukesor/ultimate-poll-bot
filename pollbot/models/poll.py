@@ -1,7 +1,7 @@
 """The sqlalchemy model for a poll."""
 from sqlalchemy import (
+    Date,
     Column,
-    CheckConstraint,
     func,
     ForeignKey,
 )
@@ -48,6 +48,8 @@ class Poll(base):
     # Chat state variables
     expected_input = Column(String)
     in_settings = Column(Boolean, default=False, nullable=False)
+    current_date = Column(Date, server_default=func.now(), nullable=False)
+
 
     # OneToOne
     user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade'), nullable=False, index=True)
