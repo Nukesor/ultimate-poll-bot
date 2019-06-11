@@ -7,7 +7,7 @@ Hello there!
 
 My name is Arne Beer (@Nukesor) and I'm the sole developer of the Ultimate PollBot.
 
-This project is non-profit, open-source on [Github](https://github.com/Nukesor/pollbot) and hosted on a server I'm renting from my own money.
+This project is non-profit, open-source on [Github](https://github.com/Nukesor/ultimate-poll-bot) and hosted on a server I'm renting from my own money.
 
 I really appreciate anything that helps me out and that keeps me and my server running ☺️.
 
@@ -49,7 +49,8 @@ In this case you probably have multiple active polls or the same poll twice in a
 This is something that a bot cannot detect (telegrams API doesn't allow this). Therefore you need to handle this yourself.
 Only have one highly active poll per group and don't send the same poll multiple times in the same group (or delete the old ones for ALL members of the group).
 
-
+*There is a bug that won't go away!!*
+Usually I get a notification as soon as something breaks, but there might be some bugs that go unnoticed! In that case, just write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot)
 """
 
 
