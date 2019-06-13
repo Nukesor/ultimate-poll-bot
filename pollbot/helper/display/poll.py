@@ -17,7 +17,6 @@ from pollbot.helper.display import (
     get_sorted_votes,
     calculate_percentage,
 )
-from pollbot.helper.update import window_size
 
 
 def get_poll_text(session, poll, show_warning):
@@ -78,7 +77,7 @@ def get_poll_text(session, poll, show_warning):
 
     if show_warning:
         lines.append('\n⚠️ *Too many votes in the last minute:* ⚠️')
-        lines.append(f'Your votes will still be registered, but this message will only update every {window_size} seconds.')
+        lines.append(f'Your votes will still be registered, but this message will only update every 2 seconds.')
         lines.append("(Telegram doesn't allow to send/update more than a certain amount of messages per minute in a group by a bot.)")
 
     return '\n'.join(lines)
