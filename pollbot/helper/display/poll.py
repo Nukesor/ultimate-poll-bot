@@ -17,7 +17,7 @@ from pollbot.helper.display import (
     get_sorted_votes,
     calculate_percentage,
 )
-from pollbot.update import window_size
+from pollbot.helper.update import window_size
 
 
 def get_poll_text(session, poll, show_warning):
