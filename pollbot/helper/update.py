@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from telegram.error import BadRequest
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
+from psycopg2.errors import UniqueViolation
 
 from pollbot.telegram.keyboard import get_vote_keyboard, get_management_keyboard
 from pollbot.helper.enums import ExpectedInput
@@ -12,8 +13,8 @@ from pollbot.helper.display import (
 )
 from pollbot.models import Update
 
-flood_threshold = 8
-window_size = 5
+flood_threshold = 60
+window_size = 2
 
 
 def update_poll_messages(session, bot, poll):
@@ -54,7 +55,7 @@ def update_poll_messages(session, bot, poll):
             else:
                 session.commit()
 
-        except IntegrityError:
+        except (IntegrityError, UniqueViolation):
             # The update has been already created in another thread
             # Get the update and work with this instance
             current_update = session.query(Update) \
@@ -65,15 +66,15 @@ def update_poll_messages(session, bot, poll):
     elif current_update and current_update.updated:
         # We are still below the flood_threshold, update directrly
         if updates_in_last_minute <= flood_threshold:
-            # Update inside of mysql to avoid race conditions between threads
-            session.query(Update) \
-                .filter(Update.id == current_update.id) \
-                .update({'count': Update.count + 1})
-
             if updates_in_last_minute == flood_threshold:
                 send_updates(session, bot, poll, show_warning=True)
             else:
                 send_updates(session, bot, poll)
+
+            # Update inside of mysql to avoid race conditions between threads
+            session.query(Update) \
+                .filter(Update.id == current_update.id) \
+                .update({'count': Update.count + 1})
 
         # Reschedule the update, the job will increment the count
         else:
