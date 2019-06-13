@@ -18,8 +18,10 @@ def get_sorted_votes(poll, votes):
     return votes
 
 
-def get_sorted_options(poll, options, total_user_count):
+def get_sorted_options(poll, total_user_count=0):
     """Sort the options depending on the poll's current settings."""
+    options = poll.options.copy()
+
     def get_option_name(option):
         """Get the name of the option."""
         return option.name

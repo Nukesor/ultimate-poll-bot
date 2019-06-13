@@ -3,8 +3,13 @@ from telegram import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
 )
-
-from pollbot.helper.enums import CallbackType, CallbackResult, VoteType
+from pollbot.helper.enums import (
+    CallbackType,
+    CallbackResult,
+    VoteType,
+    OptionSorting,
+)
+from pollbot.helper.display import get_sorted_options
 
 from .management import get_back_to_management_button
 
@@ -29,7 +34,12 @@ def get_normal_buttons(poll):
     """Get the normal keyboard with one button per option."""
     buttons = []
     vote_button_type = CallbackType.vote.value
-    for option in poll.options:
+
+    options = poll.options
+    if poll.option_sorting == OptionSorting.option_name.name:
+        options = get_sorted_options(poll)
+
+    for option in options:
         result = CallbackResult.vote.value
         payload = f'{vote_button_type}:{option.id}:{result}'
         if poll.should_show_result():
@@ -47,8 +57,12 @@ def get_cumulative_buttons(poll):
     vote_yes = CallbackResult.vote_yes.value
     vote_no = CallbackResult.vote_no.value
 
+    options = poll.options
+    if poll.option_sorting == OptionSorting.option_name:
+        options = get_sorted_options(poll)
+
     buttons = []
-    for option in poll.options:
+    for option in options:
         text = option.name
 
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'

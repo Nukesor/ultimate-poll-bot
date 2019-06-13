@@ -41,7 +41,7 @@ def get_poll_text(session, poll, show_warning):
         lines.append("Once closed it *cannot be reopened!*")
 
     # Sort the options accordingly to the polls settings
-    options = get_sorted_options(poll, poll.options.copy(), total_user_count)
+    options = get_sorted_options(poll, total_user_count)
 
     # All options with their respective people percentage
     for option in options:
