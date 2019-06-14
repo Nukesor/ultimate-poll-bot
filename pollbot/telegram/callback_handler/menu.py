@@ -6,6 +6,7 @@ from pollbot.helper.display import get_poll_management_text, get_settings_text
 from pollbot.telegram.keyboard import (
     get_change_vote_type_keyboard,
     get_deletion_confirmation,
+    get_close_confirmation,
     get_management_keyboard,
     get_vote_keyboard,
     get_settings_keyboard,
@@ -63,6 +64,16 @@ def show_deletion_confirmation(session, context):
     context.query.message.edit_text(
         'Do you really want to delete this poll?',
         reply_markup=get_deletion_confirmation(context.poll),
+    )
+
+
+def show_close_confirmation(session, context):
+    """Show the delete confirmation message."""
+    message = 'Do you really want to close this poll?\n'
+    message += 'The results will become visible, but people will on longer be able to vote'
+    context.query.message.edit_text(
+        message,
+        reply_markup=get_close_confirmation(context.poll),
     )
 
 

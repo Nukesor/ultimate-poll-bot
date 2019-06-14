@@ -118,7 +118,8 @@ def send_updates(session, bot, poll, show_warning=False):
                     parse_mode='markdown',
                 )
         except BadRequest as e:
-            if e.message.startswith('Message_id_invalid'):
+            if e.message.startswith('Message_id_invalid') or \
+                    e.message.startswith("Message can't be edited"):
                 session.delete(reference)
                 session.commit()
             elif e.message.startswith('Message is not modified'):

@@ -30,7 +30,12 @@ def get_management_keyboard(poll):
     vote_payload = f'{CallbackType.menu_vote.value}:{poll.id}:0'
     option_payload = f'{CallbackType.menu_option.value}:{poll.id}:0'
     delete_payload = f'{CallbackType.menu_delete.value}:{poll.id}:0'
-    close_payload = f'{CallbackType.close.value}:{poll.id}:0'
+
+    if poll.results_visible:
+        close_payload = f'{CallbackType.close.value}:{poll.id}:0'
+    else:
+        close_payload = f'{CallbackType.menu_close.value}:{poll.id}:0'
+
     buttons = [
         [
             InlineKeyboardButton(text='Share this poll', switch_inline_query=poll.name),
@@ -45,6 +50,16 @@ def get_management_keyboard(poll):
         ],
     ]
 
+    return InlineKeyboardMarkup(buttons)
+
+
+def get_close_confirmation(poll):
+    """Get the confirmation keyboard for closing of a poll."""
+    payload = f'{CallbackType.close.value}:{poll.id}:0'
+    buttons = [
+        [InlineKeyboardButton(text='⚠️ Permanently close poll! ⚠️', callback_data=payload)],
+        [get_back_to_management_button(poll)],
+    ]
     return InlineKeyboardMarkup(buttons)
 
 

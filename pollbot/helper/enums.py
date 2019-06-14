@@ -72,6 +72,7 @@ class CallbackType(Enum):
     menu_delete = 34
     menu_show = 35
     menu_update = 36
+    menu_close = 37
 
     # Poll management
     delete = 50

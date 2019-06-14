@@ -20,6 +20,7 @@ from .vote import (
 from .menu import (
     go_back,
     show_deletion_confirmation,
+    show_close_confirmation,
     show_settings,
     show_vote_menu,
     show_menu,
@@ -79,60 +80,42 @@ def handle_callback_query(bot, update, session, user):
     """Handle callback queries from inline keyboards."""
     context = CallbackContext(session, bot, update.callback_query, user)
 
-    # Poll creation
-    if context.callback_type == CallbackType.show_vote_type_keyboard:
-        show_vote_type_keyboard(session, context)
-    elif context.callback_type == CallbackType.change_vote_type:
-        change_vote_type(session, context)
-    elif context.callback_type == CallbackType.toggle_anonymity:
-        toggle_anonymity(session, context)
-    elif context.callback_type == CallbackType.all_options_entered:
-        all_options_entered(session, context)
-    elif context.callback_type == CallbackType.toggle_results_visible:
-        toggle_results_visible(session, context)
+    callback_functions = {
+        # Creation
+        CallbackType.show_vote_type_keyboard: show_vote_type_keyboard,
+        CallbackType.change_vote_type: change_vote_type,
+        CallbackType.toggle_anonymity: toggle_anonymity,
+        CallbackType.all_options_entered: all_options_entered,
+        CallbackType.toggle_results_visible: toggle_results_visible,
 
-    # Voting
-    elif context.callback_type == CallbackType.vote:
-        handle_vote(session, context)
+        # Voting
+        CallbackType.vote: handle_vote,
 
-    # Managment menu navigation
-    elif context.callback_type == CallbackType.menu_back:
-        go_back(session, context)
-    elif context.callback_type == CallbackType.menu_vote:
-        show_vote_menu(session, context)
-    elif context.callback_type == CallbackType.menu_option:
-        show_settings(session, context)
-    elif context.callback_type == CallbackType.menu_delete:
-        show_deletion_confirmation(session, context)
-    elif context.callback_type == CallbackType.menu_show:
-        show_menu(session, context)
+        # Menu
+        CallbackType.menu_back: go_back,
+        CallbackType.menu_vote: show_vote_menu,
+        CallbackType.menu_option: show_settings,
+        CallbackType.menu_delete: show_deletion_confirmation,
+        CallbackType.menu_show: show_menu,
+        CallbackType.menu_close: show_close_confirmation,
 
-    # Management actions
-    elif context.callback_type == CallbackType.delete:
-        delete_poll(session, context)
-    elif context.callback_type == CallbackType.close:
-        close_poll(session, context)
-    elif context.callback_type == CallbackType.reopen:
-        reopen_poll(session, context)
+        # Poll management
+        CallbackType.delete: delete_poll,
+        CallbackType.close: close_poll,
+        CallbackType.reopen: reopen_poll,
 
-    # Poll options
-    elif context.callback_type == CallbackType.settings_anonymization_confirmation:
-        show_anonymization_confirmation(session, context)
-    elif context.callback_type == CallbackType.settings_anonymization:
-        make_anonymous(session, context)
-    elif context.callback_type == CallbackType.settings_show_sorting:
-        show_sorting_menu(session, context)
-    elif context.callback_type == CallbackType.settings_user_sorting:
-        set_user_order(session, context)
-    elif context.callback_type == CallbackType.settings_option_sorting:
-        set_option_order(session, context)
-    elif context.callback_type == CallbackType.settings_new_option:
-        expect_new_option(session, context)
-    elif context.callback_type == CallbackType.settings_show_remove_option_menu:
-        show_remove_options_menu(session, context)
-    elif context.callback_type == CallbackType.settings_remove_option:
-        remove_option(session, context)
-    elif context.callback_type == CallbackType.settings_toggle_percentage:
-        toggle_percentage(session, context)
+        # Settings
+        CallbackType.settings_anonymization_confirmation: show_anonymization_confirmation,
+        CallbackType.settings_anonymization: make_anonymous,
+        CallbackType.settings_show_sorting: show_sorting_menu,
+        CallbackType.settings_user_sorting: set_user_order,
+        CallbackType.settings_option_sorting: set_option_order,
+        CallbackType.settings_new_option: expect_new_option,
+        CallbackType.settings_show_remove_option_menu: show_remove_options_menu,
+        CallbackType.settings_remove_option: remove_option,
+        CallbackType.settings_toggle_percentage: toggle_percentage,
+    }
+
+    callback_functions[context.callback_type](session, context)
 
     return
