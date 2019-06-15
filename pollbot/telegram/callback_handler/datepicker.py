@@ -21,6 +21,7 @@ def set_date(session, context):
     poll = context.poll
     poll.current_date = date.fromisoformat(context.action)
     update_creation_datepicker(context)
+    context.query.answer(f'Date changed: {poll.current_date.isoformat()}')
 
 
 def set_next_month(session, context):
@@ -28,6 +29,7 @@ def set_next_month(session, context):
     poll = context.poll
     poll.current_date += relativedelta(months=1)
     update_creation_datepicker(context)
+    context.query.answer(f'Date changed: {poll.current_date.isoformat()}')
 
 
 def set_previous_month(session, context):
@@ -35,6 +37,7 @@ def set_previous_month(session, context):
     poll = context.poll
     poll.current_date -= relativedelta(months=1)
     update_creation_datepicker(context)
+    context.query.answer(f'Date changed: {poll.current_date.isoformat()}')
 
 
 def add_creation_date(session, context):
