@@ -12,7 +12,7 @@ def get_main_keyboard():
     """Get the main keyboard for the current user."""
     buttons = [
         ['/donations', '/list'],
-        ['/create'],
+        ['/list_closed', '/create'],
     ]
     keyboard = ReplyKeyboardMarkup(buttons, one_time_keyboard=True, resize_keyboard=True)
     return keyboard
