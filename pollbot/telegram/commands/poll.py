@@ -62,3 +62,32 @@ def list_polls(bot, update, session, user):
 
     keyboard = get_poll_list_keyboard(polls)
     update.message.chat.send_message(text, reply_markup=keyboard)
+
+
+@run_async
+@session_wrapper(private=True)
+def list_closed_polls(bot, update, session, user):
+    """Get a list of all active polls."""
+    text = 'Click on any button to manage this specific poll.'
+    polls = session.query(Poll) \
+        .filter(Poll.user == user) \
+        .filter(Poll.created.is_(True)) \
+        .filter(Poll.closed.is_(True)) \
+        .all()
+
+    if len(polls) == 0:
+        return "You don't own any closed polls."
+
+    keyboard = get_poll_list_keyboard(polls)
+    update.message.chat.send_message(text, reply_markup=keyboard)
+
+
+@run_async
+@session_wrapper(private=True)
+def delete_all(bot, update, session, user):
+    """Get a list of all active polls."""
+    session.query(Poll) \
+        .filter(Poll.user == user) \
+        .delete()
+
+    return "All polls have been deleted"

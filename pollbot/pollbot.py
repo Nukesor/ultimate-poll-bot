@@ -28,6 +28,8 @@ from pollbot.telegram.inline_result_handler import handle_chosen_inline_result
 from pollbot.telegram.commands.poll import (
     create_poll,
     list_polls,
+    list_closed_polls,
+    delete_all,
 )
 
 
@@ -68,6 +70,8 @@ dispatcher.add_handler(CommandHandler('create', create_poll))
 dispatcher.add_handler(CommandHandler('start', start))
 dispatcher.add_handler(CommandHandler('help', send_help))
 dispatcher.add_handler(CommandHandler('list', list_polls))
+dispatcher.add_handler(CommandHandler('list_closed', list_closed_polls))
+dispatcher.add_handler(CommandHandler('delete_all', delete_all))
 dispatcher.add_handler(CommandHandler('donations', send_donation_text))
 
 
