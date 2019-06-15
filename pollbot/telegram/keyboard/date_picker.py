@@ -27,19 +27,27 @@ def get_datepicker_buttons(poll):
     row = []
     for day in ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]:
         row.append(InlineKeyboardButton(text=day, callback_data=ignore_payload))
-        buttons.append(row)
+    buttons.append(row)
 
     # Iterate through all days and create respective buttons
     calendar_month = calendar.monthcalendar(current_date.year, current_date.month)
     for week in calendar_month:
         row = []
         for day in week:
+            # Format the text. The currently chosen day should be surrounded by brackets e.g (26)
+            day_text = day
+            if day > 0:
+                this_date = date(year=current_date.year, month=current_date.month, day=day)
+                if this_date == current_date:
+                    day_text = f'({day})'
+
+            # Only create real buttons for actual days of the month
             if(day == 0):
                 row.append(InlineKeyboardButton(" ", callback_data=ignore_payload))
             else:
                 day_date = date(current_date.year, current_date.month, day)
                 payload = f'{CallbackType.set_date.value}:{poll.id}:{day_date.isoformat()}'
-                row.append(InlineKeyboardButton(day, callback_data=payload))
+                row.append(InlineKeyboardButton(day_text, callback_data=payload))
 
         buttons.append(row)
 

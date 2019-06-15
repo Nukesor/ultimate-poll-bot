@@ -5,7 +5,7 @@ from pollbot.telegram.keyboard import (
     get_options_entered_keyboard,
     get_management_keyboard,
 )
-from pollbot.models import Reference
+from pollbot.models import PollOption, Reference
 
 
 def next_option(tg_chat, poll, options):
@@ -50,3 +50,29 @@ def create_poll(session, poll, user, chat, message=None):
     )
     session.add(reference)
     session.commit()
+
+
+def add_options(poll, text):
+    """Add a new option to the poll."""
+    options_to_add = [x.strip() for x in text.split('\n') if x.strip() != '']
+    added_options = []
+
+    for option_to_add in options_to_add:
+        if option_is_duplicate(poll, option_to_add) or option_to_add in added_options:
+            continue
+
+        poll_option = PollOption(poll, option_to_add)
+        poll.options.append(poll_option)
+
+        added_options.append(option_to_add)
+
+    return added_options
+
+
+def option_is_duplicate(poll, option_to_add):
+    """Check whether this option already exists on this poll."""
+    for existing_option in poll.options:
+        if existing_option.name == option_to_add:
+            return True
+
+    return False

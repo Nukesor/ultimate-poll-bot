@@ -4,8 +4,8 @@ from telegram import (
 )
 from .creation import * # noqa
 from .management import * # noqa
-from .vote import * # noqa
 from .settings import * # noqa
+from .vote import * # noqa
 
 
 def get_main_keyboard():

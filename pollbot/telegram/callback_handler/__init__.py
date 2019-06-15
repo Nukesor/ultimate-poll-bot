@@ -11,6 +11,8 @@ from .creation import (
     show_vote_type_keyboard,
     all_options_entered,
     toggle_results_visible,
+    open_creation_datepicker,
+    close_creation_datepicker,
 )
 
 from .vote import (
@@ -41,6 +43,12 @@ from .settings import (
     remove_option,
     toggle_percentage,
 )
+from .datepicker import (
+    set_next_month,
+    set_previous_month,
+    set_date,
+    add_creation_date,
+)
 
 
 class CallbackContext():
@@ -55,10 +63,12 @@ class CallbackContext():
 
         # Extract the callback type, task id
         data = data.split(':')
-        self.callback_type = int(data[0])
+        self.callback_type = CallbackType(int(data[0]))
         self.payload = data[1]
-        self.action = int(data[2])
-        self.callback_type = CallbackType(self.callback_type)
+        try:
+            self.action = int(data[2])
+        except:
+            self.action = data[2]
 
         self.poll = session.query(Poll).get(self.payload)
 
@@ -87,6 +97,9 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.toggle_anonymity: toggle_anonymity,
         CallbackType.all_options_entered: all_options_entered,
         CallbackType.toggle_results_visible: toggle_results_visible,
+        CallbackType.open_creation_datepicker: open_creation_datepicker,
+        CallbackType.close_creation_datepicker: close_creation_datepicker,
+        CallbackType.pick_date_option: add_creation_date,
 
         # Voting
         CallbackType.vote: handle_vote,
@@ -114,6 +127,12 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.settings_show_remove_option_menu: show_remove_options_menu,
         CallbackType.settings_remove_option: remove_option,
         CallbackType.settings_toggle_percentage: toggle_percentage,
+
+        # Datepicker
+        CallbackType.set_date: set_date,
+        CallbackType.next_month: set_next_month,
+        CallbackType.previous_month: set_previous_month,
+
     }
 
     callback_functions[context.callback_type](session, context)

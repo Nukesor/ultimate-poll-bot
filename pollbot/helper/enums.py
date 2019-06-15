@@ -11,6 +11,7 @@ class ExpectedInput(Enum):
     options = 3
     votes = 4
     vote_count = 5
+    date = 6
 
     new_option = 10
 
@@ -53,14 +54,6 @@ class CallbackType(Enum):
     skip_description = 3
     all_options_entered = 4
     toggle_results_visible = 5
-    open_datepicker = 6
-    close_datepicker = 7
-    accept_date_option = 8
-
-    # Date picker
-    set_date = 10
-    next_month = 11
-    previous_month = 12
 
     # Poll voting
     vote = 20
@@ -92,6 +85,14 @@ class CallbackType(Enum):
 
     # Misc
     ignore = 100
+
+    # Date picker
+    open_creation_datepicker = 501
+    close_creation_datepicker = 502
+    pick_date_option = 503
+    set_date = 504
+    next_month = 505
+    previous_month = 506
 
 
 @unique

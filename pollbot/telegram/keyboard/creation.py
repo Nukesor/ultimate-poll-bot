@@ -6,6 +6,7 @@ from telegram import (
 
 from pollbot.helper.enums import CallbackType
 from pollbot.helper.enums import VoteType, VoteTypeTranslation
+from pollbot.telegram.keyboard.date_picker import get_datepicker_buttons
 
 
 def get_init_keyboard(poll):
@@ -46,10 +47,40 @@ def get_change_vote_type_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_options_entered_keyboard(poll):
+def get_open_datepicker_keyboard(poll):
     """Get the done keyboard for options during poll creation."""
-    options_entered = CallbackType.all_options_entered.value
-    payload = f'{options_entered}:{poll.id}:0'
-    buttons = [[InlineKeyboardButton(text='Done', callback_data=payload)]]
+    payload = f'{CallbackType.open_creation_datepicker.value}:{poll.id}:0'
+    buttons = [[InlineKeyboardButton(text='Open Datepicker', callback_data=payload)]]
 
     return InlineKeyboardMarkup(buttons)
+
+
+def get_options_entered_keyboard(poll):
+    """Get the done keyboard for options during poll creation."""
+    create_payload = f'{CallbackType.open_creation_datepicker.value}:{poll.id}:0'
+    done_payload = f'{CallbackType.all_options_entered.value}:{poll.id}:0'
+    buttons = [
+        [InlineKeyboardButton(text='Open Datepicker', callback_data=create_payload)],
+        [InlineKeyboardButton(text='Done', callback_data=done_payload)],
+    ]
+
+    return InlineKeyboardMarkup(buttons)
+
+
+def get_creation_datepicker_keyboard(poll):
+    """Get the done keyboard for options during poll creation."""
+    datepicker_buttons = get_datepicker_buttons(poll)
+
+    # Create back and done buttons
+    close_payload = f'{CallbackType.close_creation_datepicker.value}:{poll.id}:0'
+    done_payload = f'{CallbackType.all_options_entered.value}:{poll.id}:0'
+    buttons = [InlineKeyboardButton(text='Close', callback_data=close_payload)]
+    if len(poll.options) > 0:
+        buttons.append(InlineKeyboardButton(text='Done', callback_data=done_payload))
+    datepicker_buttons.append(buttons)
+
+    # Create pick button
+    pick_payload = f'{CallbackType.pick_date_option.value}:{poll.id}:0'
+    datepicker_buttons.append([InlineKeyboardButton(text='Pick this date', callback_data=pick_payload)])
+
+    return InlineKeyboardMarkup(datepicker_buttons)

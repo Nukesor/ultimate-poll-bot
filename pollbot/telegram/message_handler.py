@@ -1,13 +1,20 @@
 """Handle messages."""
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.enums import ExpectedInput, VoteType
-from pollbot.helper.creation import next_option
 from pollbot.helper.display import get_settings_text
 from pollbot.helper.update import update_poll_messages
-from pollbot.telegram.keyboard.settings import get_settings_keyboard
 from pollbot.telegram.callback_handler.creation import create_poll
 
-from pollbot.models import PollOption, Reference
+from pollbot.helper.creation import (
+    next_option,
+    add_options,
+)
+from pollbot.telegram.keyboard import (
+    get_settings_keyboard,
+    get_open_datepicker_keyboard,
+)
+
+from pollbot.models import Reference
 
 
 @session_wrapper()
@@ -33,7 +40,7 @@ def handle_private_text(bot, update, session, user):
         poll.description = text
         poll.expected_input = ExpectedInput.options.name
         message = 'Now send me the first option (Or send multiple options at once, each option on a new line)'
-        chat.send_message(message)
+        chat.send_message(message, reply_markup=get_open_datepicker_keyboard(poll))
 
     # Add an option to the poll
     elif expected_input == ExpectedInput.options:
@@ -105,29 +112,3 @@ def handle_private_text(bot, update, session, user):
         session.commit()
 
         update_poll_messages(session, bot, poll)
-
-
-def add_options(poll, text):
-    """Add a new option to the poll."""
-    options_to_add = [x.strip() for x in text.split('\n') if x.strip() != '']
-    added_options = []
-
-    for option_to_add in options_to_add:
-        if option_is_duplicate(poll, option_to_add) or option_to_add in added_options:
-            continue
-
-        poll_option = PollOption(poll, option_to_add)
-        poll.options.append(poll_option)
-
-        added_options.append(option_to_add)
-
-    return added_options
-
-
-def option_is_duplicate(poll, option_to_add):
-    """Check whether this option already exists on this poll."""
-    for existing_option in poll.options:
-        if existing_option.name == option_to_add:
-            return True
-
-    return False

@@ -37,3 +37,15 @@ Please follow these steps:
 2. 👇 Send me the name of this poll. 👇
 """
     return message
+
+
+def get_datepicker_text(poll):
+    """Get the text for the datepicker."""
+    text = """*Datepicker:*
+To add date, select it and click _Pick this date_.
+
+*Current options:*"""
+    for option in poll.options:
+        text += f'\n{option.name}'
+
+    return text

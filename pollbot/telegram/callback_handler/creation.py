@@ -1,10 +1,17 @@
 """Callback functions needed during creation of a Poll."""
-from pollbot.helper.display.creation import get_init_text, get_vote_type_help_text
 from pollbot.helper.creation import create_poll
 from pollbot.helper.enums import VoteType, ExpectedInput
 from pollbot.telegram.keyboard import (
     get_change_vote_type_keyboard,
     get_init_keyboard,
+    get_options_entered_keyboard,
+    get_creation_datepicker_keyboard,
+    get_open_datepicker_keyboard,
+)
+from pollbot.helper.display.creation import (
+    get_init_text,
+    get_vote_type_help_text,
+    get_datepicker_text,
 )
 
 from pollbot.models import Poll
@@ -66,3 +73,35 @@ def all_options_entered(session, context):
         return
 
     create_poll(session, context.poll, context.user, context.query.message.chat, context.query.message)
+
+
+def open_creation_datepicker(session, context):
+    """All options are entered the poll is created."""
+    keyboard = get_creation_datepicker_keyboard(context.poll)
+    context.poll.expected_input = ExpectedInput.date.name
+    context.query.message.edit_text(
+        get_datepicker_text(context.poll),
+        parse_mode='markdown',
+        reply_markup=keyboard
+    )
+
+    return
+
+
+def close_creation_datepicker(session, context):
+    """All options are entered the poll is created."""
+    if len(context.poll.options) == 0:
+        text = 'Now send me the first option (Or send multiple options at once, each option on a new line)'
+        keyboard = get_open_datepicker_keyboard(context.poll)
+    else:
+        text = 'Send *another option* or click *done*'
+        keyboard = get_options_entered_keyboard(context.poll)
+
+    context.poll.expected_input = ExpectedInput.new_option.name
+    context.query.message.edit_text(
+        text,
+        parse_mode='markdown',
+        reply_markup=keyboard
+    )
+
+    return
