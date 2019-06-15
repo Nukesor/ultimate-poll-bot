@@ -58,6 +58,7 @@ def toggle_anonymity(session, context):
         parse_mode='markdown',
         reply_markup=keyboard
     )
+    context.query.answer('Anonymity setting changed')
 
 
 def toggle_results_visible(session, context):
@@ -70,6 +71,7 @@ def toggle_results_visible(session, context):
         parse_mode='markdown',
         reply_markup=keyboard
     )
+    context.query.answer('Visibility setting changed')
 
 
 def all_options_entered(session, context):

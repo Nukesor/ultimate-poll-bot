@@ -91,6 +91,9 @@ def handle_callback_query(bot, update, session, user):
     """Handle callback queries from inline keyboards."""
     context = CallbackContext(session, bot, update.callback_query, user)
 
+    def ignore(session, context):
+        context.query.answer('')
+
     callback_functions = {
         # Creation
         CallbackType.show_vote_type_keyboard: show_vote_type_keyboard,
@@ -135,6 +138,8 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.next_month: set_next_month,
         CallbackType.previous_month: set_previous_month,
 
+        # Ignore
+        CallbackType.ignore: ignore,
     }
 
     callback_functions[context.callback_type](session, context)
