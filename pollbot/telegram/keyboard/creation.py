@@ -55,6 +55,14 @@ def get_open_datepicker_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
+def get_skip_description_keyboard(poll):
+    """Get the keyboard for skipping the description."""
+    payload = f'{CallbackType.skip_description.value}:{poll.id}:0'
+    buttons = [[InlineKeyboardButton(text='Skip Description', callback_data=payload)]]
+
+    return InlineKeyboardMarkup(buttons)
+
+
 def get_options_entered_keyboard(poll):
     """Get the done keyboard for options during poll creation."""
     create_payload = f'{CallbackType.open_creation_datepicker.value}:{poll.id}:0'

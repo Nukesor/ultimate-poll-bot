@@ -12,6 +12,7 @@ from pollbot.helper.creation import (
 from pollbot.telegram.keyboard import (
     get_settings_keyboard,
     get_open_datepicker_keyboard,
+    get_skip_description_keyboard,
 )
 
 from pollbot.models import Reference
@@ -33,7 +34,11 @@ def handle_private_text(bot, update, session, user):
     if expected_input == ExpectedInput.name:
         poll.name = text
         poll.expected_input = ExpectedInput.description.name
-        chat.send_message('Now send me the description')
+        keyboard = get_skip_description_keyboard(poll)
+        chat.send_message(
+            'Now send me the description.',
+            reply_markup=keyboard,
+        )
 
     # Add the description
     elif expected_input == ExpectedInput.description:

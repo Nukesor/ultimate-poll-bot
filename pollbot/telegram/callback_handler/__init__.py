@@ -13,6 +13,7 @@ from .creation import (
     toggle_results_visible,
     open_creation_datepicker,
     close_creation_datepicker,
+    skip_description,
 )
 
 from .vote import (
@@ -100,6 +101,7 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.open_creation_datepicker: open_creation_datepicker,
         CallbackType.close_creation_datepicker: close_creation_datepicker,
         CallbackType.pick_date_option: add_creation_date,
+        CallbackType.skip_description: skip_description,
 
         # Voting
         CallbackType.vote: handle_vote,
