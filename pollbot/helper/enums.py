@@ -24,6 +24,7 @@ class VoteType(Enum):
     block_vote = 2
     limited_vote = 3
     cumulative_vote = 4
+    count_vote = 5
 
 
 VoteTypeTranslation = {
@@ -31,6 +32,7 @@ VoteTypeTranslation = {
     VoteType.block_vote.name: 'Block vote',
     VoteType.limited_vote.name: 'Limited vote',
     VoteType.cumulative_vote.name: 'Cumulative vote',
+    VoteType.count_vote.name: 'Unlimited votes',
 }
 
 

@@ -1,7 +1,7 @@
 """Callback functions needed during creation of a Poll."""
 from sqlalchemy import func
 
-from pollbot.helper import poll_is_cumulative
+from pollbot.helper import poll_allows_cumulative_votes
 from pollbot.helper.enums import VoteType, VoteResultType, CallbackResult
 from pollbot.helper.update import update_poll_messages
 
@@ -36,24 +36,29 @@ def handle_vote(session, context):
     # Cumulative vote
     elif poll.vote_type == VoteType.cumulative_vote.name:
         update_poll = handle_cumulative_vote(session, context, option)
+    elif poll.vote_type == VoteType.count_vote.name:
+        update_poll = handle_cumulative_vote(session, context, option, unlimited=True)
 
     session.commit()
     if update_poll:
         update_poll_messages(session, context.bot, poll)
 
 
-def respond_to_vote(session, line, context, poll):
+def respond_to_vote(session, line, context, poll, total_vote_count=None, limited=False):
     """Get the formatted response for a user."""
     votes = session.query(Vote) \
         .filter(Vote.user == context.user) \
         .filter(Vote.poll == poll) \
         .all()
 
+    if poll.vote_type == VoteType.cumulative_vote.name:
+        line += f' ({total_vote_count} left)!'
+
     lines = [line]
-    lines.append('Your votes:')
+    lines.append(' Your votes:')
     for vote in votes:
-        if poll_is_cumulative(poll):
-            lines.append(f'{vote.poll_option.name} ({vote.vote_count}), ')
+        if poll_allows_cumulative_votes(poll):
+            lines.append(f' {vote.poll_option.name} ({vote.vote_count}), ')
         else:
             lines.append(vote.poll_option.name)
 
@@ -123,13 +128,13 @@ def handle_limited_vote(session, context, option):
     # Remove vote
     if existing_vote:
         session.delete(existing_vote)
-        respond_to_vote(session, 'Vote removed!', context, option.poll)
+        respond_to_vote(session, 'Vote removed!', context, option.poll, vote_count-1, True)
 
     # Add vote
     elif existing_vote is None and vote_count < option.poll.number_of_votes:
         vote = Vote(VoteResultType.yes.name, context.user, option)
         session.add(vote)
-        respond_to_vote(session, 'Vote registered!', context, option.poll)
+        respond_to_vote(session, 'Vote registered!', context, option.poll, vote_count+1, True)
 
     # Max votes reached
     else:
@@ -139,7 +144,7 @@ def handle_limited_vote(session, context, option):
     return True
 
 
-def handle_cumulative_vote(session, context, option):
+def handle_cumulative_vote(session, context, option, unlimited=True):
     """Handle a cumulative vote."""
     existing_vote = session.query(Vote) \
         .filter(Vote.poll_option == option) \
@@ -155,10 +160,12 @@ def handle_cumulative_vote(session, context, option):
         vote_count = 0
 
     action = context.callback_result
-    allowed_votes = option.poll.number_of_votes
+    allowed_votes = 10000000
+    if not unlimited:
+        allowed_votes = option.poll.number_of_votes
 
     # Upvote, but no votes left
-    if action == CallbackResult.vote_yes and vote_count >= allowed_votes:
+    if not unlimited and action == CallbackResult.vote_yes and vote_count >= allowed_votes:
         respond_to_vote(session, 'No votes left!', context, option.poll)
         return False
 
@@ -173,14 +180,14 @@ def handle_cumulative_vote(session, context, option):
             existing_vote.vote_count += 1
             session.commit()
             total_vote_count = allowed_votes - (vote_count + 1)
-            respond_to_vote(session, f'Vote added ({total_vote_count} left)!', context, option.poll)
+            respond_to_vote(session, f'Vote added!', context, option.poll, total_vote_count, True)
 
         # Remove from existing vote
         elif action == CallbackResult.vote_no:
             existing_vote.vote_count -= 1
             session.commit()
             total_vote_count = allowed_votes - (vote_count - 1)
-            respond_to_vote(session, f'Vote removed ({total_vote_count} left)!', context, option.poll)
+            respond_to_vote(session, f'Vote removed!', context, option.poll, total_vote_count, True)
 
         # Delete vote if necessary
         if existing_vote.vote_count <= 0:
@@ -193,6 +200,6 @@ def handle_cumulative_vote(session, context, option):
         session.add(vote)
         session.commit()
         total_vote_count = allowed_votes - (vote_count - 1)
-        respond_to_vote(session, f'Vote registered ({total_vote_count} left)!', context, option.poll)
+        respond_to_vote(session, f'Vote registered!', context, option.poll, total_vote_count, True)
 
     return True

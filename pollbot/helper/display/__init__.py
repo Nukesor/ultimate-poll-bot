@@ -1,5 +1,5 @@
 """Get the different texts for polls and management."""
-from pollbot.helper import poll_is_cumulative
+from pollbot.helper import poll_allows_cumulative_votes
 from pollbot.helper.enums import (
     UserSorting,
     OptionSorting,
@@ -41,7 +41,7 @@ def get_sorted_options(poll, total_user_count=0):
 
 def calculate_percentage(option, total_user_count):
     """Calculate the percentage for this option."""
-    if poll_is_cumulative(option.poll):
+    if poll_allows_cumulative_votes(option.poll):
         option_vote_count = sum([vote.vote_count for vote in option.votes])
         poll_vote_count = sum([vote.vote_count for vote in option.poll.votes])
 

@@ -3,10 +3,10 @@ from telegram import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
 )
+from pollbot.helper import poll_allows_cumulative_votes
 from pollbot.helper.enums import (
     CallbackType,
     CallbackResult,
-    VoteType,
     OptionSorting,
 )
 from pollbot.helper.display import get_sorted_options
@@ -19,7 +19,7 @@ def get_vote_keyboard(poll, show_back=False):
     if poll.closed or poll.deleted:
         return None
 
-    if poll.vote_type == VoteType.cumulative_vote.name:
+    if poll_allows_cumulative_votes(poll):
         buttons = get_cumulative_buttons(poll)
     else:
         buttons = get_normal_buttons(poll)

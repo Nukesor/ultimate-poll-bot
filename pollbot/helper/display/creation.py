@@ -18,6 +18,9 @@ Every user gets a fixed number of votes they can distribute, but only once per o
 
 *Cumulative vote*:
 Every user gets a fixed number of votes they can distribute as they like (even multiple votes per option).
+
+*Unlimited votes* (or the shopping list):
+Every user can vote as often on any option as they want. This is great if you want to, for instance, determine how much stuff everyone wants for the next festival trip.
 """
 
 

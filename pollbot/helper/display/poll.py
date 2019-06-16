@@ -3,7 +3,7 @@ import math
 from sqlalchemy import func
 from pollbot.helper import (
     poll_has_limited_votes,
-    poll_is_cumulative,
+    poll_allows_cumulative_votes,
     poll_allows_multiple_votes,
     calculate_total_votes,
 )
@@ -89,7 +89,7 @@ def get_poll_text(session, poll, show_warning):
 def get_option_line(session, option):
     """Get the line with vote count for this option."""
     if len(option.votes) > 0 and option.poll.should_show_result():
-        if poll_is_cumulative(option.poll):
+        if poll_allows_cumulative_votes(option.poll):
             vote_count = sum([vote.vote_count for vote in option.votes])
         else:
             vote_count = len(option.votes)
@@ -105,7 +105,7 @@ def get_vote_line(poll, option, vote, index):
     else:
         vote_line = f'└ {vote.user.name}'
 
-    if poll_is_cumulative(option.poll):
+    if poll_allows_cumulative_votes(option.poll):
         vote_line += f' ({vote.vote_count} votes)'
 
     return vote_line

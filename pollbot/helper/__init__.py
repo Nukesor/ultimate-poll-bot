@@ -91,9 +91,12 @@ def poll_has_limited_votes(poll):
     return poll.vote_type in vote_type_with_vote_count
 
 
-def poll_is_cumulative(poll):
+def poll_allows_cumulative_votes(poll):
     """Check whether this poll's type is cumulative."""
-    return poll.vote_type == VoteType.cumulative_vote.name
+    return poll.vote_type in [
+        VoteType.cumulative_vote.name,
+        VoteType.count_vote.name
+    ]
 
 
 def calculate_total_votes(poll):
