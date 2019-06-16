@@ -29,7 +29,7 @@ class User(base):
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
 
     # OneToOne
-    current_poll_id = Column(Integer, ForeignKey('poll.id', ondelete='cascade'), index=True)
+    current_poll_id = Column(Integer, ForeignKey('poll.id', ondelete="set null"), index=True)
     current_poll = relationship('Poll', uselist=False, foreign_keys='User.current_poll_id', post_update=True)
 
     # OneToMany

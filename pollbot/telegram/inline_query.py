@@ -20,6 +20,7 @@ def search(bot, update, session, user):
             .filter(Poll.user == user) \
             .filter(Poll.closed.is_(False)) \
             .filter(Poll.created.is_(True)) \
+            .filter(Poll.deleted.is_(False)) \
             .order_by(Poll.created_at.desc()) \
             .all()
 
@@ -29,6 +30,7 @@ def search(bot, update, session, user):
             .filter(Poll.user == user) \
             .filter(Poll.closed.is_(False)) \
             .filter(Poll.created.is_(True)) \
+            .filter(Poll.deleted.is_(False)) \
             .filter(or_(
                 Poll.name.ilike(f'%{query}%'),
                 Poll.description.ilike(f'%{query}%'),

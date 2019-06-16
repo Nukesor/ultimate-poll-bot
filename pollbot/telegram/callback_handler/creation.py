@@ -136,4 +136,4 @@ def cancel_creation(session, context):
         return
 
     session.delete(context.poll)
-    context.query.message.edit_text('Previous poll deleted. You can now click to /create a new poll.')
+    context.query.message.edit_text('Previous poll deleted. You can now /create a new poll.')
