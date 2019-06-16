@@ -4,6 +4,7 @@ from telegram.ext import run_async
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.display.creation import get_init_text
 from pollbot.telegram.keyboard import (
+    get_cancel_creation_keyboard,
     get_init_keyboard,
     get_poll_list_keyboard,
 )
@@ -16,10 +17,11 @@ from pollbot.models import Poll
 def create_poll(bot, update, session, user):
     """Create a new poll."""
     # The previous unfinished poll will be removed
-    if user.current_poll is not None and  \
-            not user.current_poll.created and \
-            not len(user.current_poll.votes) > 0:
-        session.delete(user.current_poll)
+    if user.current_poll is not None and not user.current_poll.created:
+        update.message.chat.send_message(
+            'You are already creating a poll. Cancel the previous poll creation first',
+            reply_markup=get_cancel_creation_keyboard(user.current_poll))
+        return
 
     poll = Poll(user)
     user.current_poll = poll

@@ -54,6 +54,7 @@ class CallbackType(Enum):
     skip_description = 3
     all_options_entered = 4
     toggle_results_visible = 5
+    cancel_creation = 6
 
     # Poll voting
     vote = 20

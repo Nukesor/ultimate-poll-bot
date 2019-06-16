@@ -59,6 +59,17 @@ In case this error still occurs in a day or two, please report the bug to me :).
 """
 
 
+def poll_required(function):
+    """Decorator that just returns if the poll is missing."""
+    def wrapper(session, context):
+        if context.poll is None or context.poll.deleted:
+            return
+
+        function(session, context, context.poll)
+
+    return wrapper
+
+
 def poll_allows_multiple_votes(poll):
     """Check whether the poll allows multiple votes."""
     multiple_vote_types = [

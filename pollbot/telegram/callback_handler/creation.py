@@ -1,4 +1,5 @@
 """Callback functions needed during creation of a Poll."""
+from pollbot.helper import poll_required
 from pollbot.helper.creation import create_poll
 from pollbot.helper.enums import VoteType, ExpectedInput
 from pollbot.telegram.keyboard import (
@@ -17,13 +18,14 @@ from pollbot.helper.display.creation import (
 from pollbot.models import Poll
 
 
-def skip_description(session, context):
+@poll_required
+def skip_description(session, context, poll):
     """Skip description creation step."""
-    context.poll.expected_input = ExpectedInput.options.name
+    poll.expected_input = ExpectedInput.options.name
     session.commit()
     context.query.message.edit_text(
         'Now send me the first option (Or send multiple options at once, each option on a new line)',
-        reply_markup=get_open_datepicker_keyboard(context.poll)
+        reply_markup=get_open_datepicker_keyboard(poll)
     )
 
     return
@@ -37,64 +39,69 @@ def show_vote_type_keyboard(session, context):
     context.query.message.edit_text(get_vote_type_help_text(poll), parse_mode='markdown', reply_markup=keyboard)
 
 
-def change_vote_type(session, context):
+@poll_required
+def change_vote_type(session, context, poll):
     """Change the vote type."""
-    context.poll.vote_type = VoteType(context.action).name
+    poll.vote_type = VoteType(context.action).name
 
-    keyboard = get_init_keyboard(context.poll)
+    keyboard = get_init_keyboard(poll)
     context.query.message.edit_text(
-        get_init_text(context.poll),
+        get_init_text(poll),
         parse_mode='markdown',
         reply_markup=keyboard
     )
 
 
-def toggle_anonymity(session, context):
+@poll_required
+def toggle_anonymity(session, context, poll):
     """Change the anonymity settings of a poll."""
-    context.poll.anonymous = not context.poll.anonymous
+    poll.anonymous = not poll.anonymous
 
-    keyboard = get_init_keyboard(context.poll)
+    keyboard = get_init_keyboard(poll)
     context.query.message.edit_text(
-        get_init_text(context.poll),
+        get_init_text(poll),
         parse_mode='markdown',
         reply_markup=keyboard
     )
     context.query.answer('Anonymity setting changed')
 
 
-def toggle_results_visible(session, context):
+@poll_required
+def toggle_results_visible(session, context, poll):
     """Change the results visible settings of a poll."""
-    context.poll.results_visible = not context.poll.results_visible
+    poll.results_visible = not poll.results_visible
 
-    keyboard = get_init_keyboard(context.poll)
+    keyboard = get_init_keyboard(poll)
     context.query.message.edit_text(
-        get_init_text(context.poll),
+        get_init_text(poll),
         parse_mode='markdown',
         reply_markup=keyboard
     )
     context.query.answer('Visibility setting changed')
 
 
-def all_options_entered(session, context):
+@poll_required
+def all_options_entered(session, context, poll):
     """All options are entered the poll is created."""
-    if context.poll is None:
+    if poll is None:
         return
 
-    if context.poll.vote_type in [VoteType.limited_vote.name, VoteType.cumulative_vote.name]:
-        context.poll.expected_input = ExpectedInput.vote_count.name
+    if poll.vote_type in [VoteType.limited_vote.name, VoteType.cumulative_vote.name]:
+        poll.expected_input = ExpectedInput.vote_count.name
         context.query.message.chat.send_message('Send me the amount of allowed votes per user.')
 
         return
 
-    create_poll(session, context.poll, context.user, context.query.message.chat, context.query.message)
+    create_poll(session, poll, context.user, context.query.message.chat, context.query.message)
 
 
-def open_creation_datepicker(session, context):
+@poll_required
+def open_creation_datepicker(session, context, poll):
     """All options are entered the poll is created."""
-    keyboard = get_creation_datepicker_keyboard(context.poll)
-    context.poll.expected_input = ExpectedInput.date.name
+    keyboard = get_creation_datepicker_keyboard(poll)
+    poll.expected_input = ExpectedInput.date.name
     context.query.message.edit_text(
-        get_datepicker_text(context.poll),
+        get_datepicker_text(poll),
         parse_mode='markdown',
         reply_markup=keyboard
     )
@@ -102,16 +109,17 @@ def open_creation_datepicker(session, context):
     return
 
 
-def close_creation_datepicker(session, context):
+@poll_required
+def close_creation_datepicker(session, context, poll):
     """All options are entered the poll is created."""
-    if len(context.poll.options) == 0:
+    if len(poll.options) == 0:
         text = 'Now send me the first option (Or send multiple options at once, each option on a new line)'
-        keyboard = get_open_datepicker_keyboard(context.poll)
+        keyboard = get_open_datepicker_keyboard(poll)
     else:
         text = 'Send *another option* or click *done*'
-        keyboard = get_options_entered_keyboard(context.poll)
+        keyboard = get_options_entered_keyboard(poll)
 
-    context.poll.expected_input = ExpectedInput.new_option.name
+    poll.expected_input = ExpectedInput.new_option.name
     context.query.message.edit_text(
         text,
         parse_mode='markdown',
@@ -119,3 +127,13 @@ def close_creation_datepicker(session, context):
     )
 
     return
+
+
+def cancel_creation(session, context):
+    """Cancel the creation of a bot."""
+    if context.poll is None:
+        context.query.answer("Poll to delete doesn't exist")
+        return
+
+    session.delete(context.poll)
+    context.query.message.edit_text('Previous poll deleted. You can now click to /create a new poll.')
