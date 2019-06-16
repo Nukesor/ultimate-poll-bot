@@ -20,6 +20,7 @@ from pollbot.models import Poll
 def skip_description(session, context):
     """Skip description creation step."""
     context.poll.expected_input = ExpectedInput.options.name
+    session.commit()
     context.query.message.edit_text(
         'Now send me the first option (Or send multiple options at once, each option on a new line)',
         reply_markup=get_open_datepicker_keyboard(context.poll)

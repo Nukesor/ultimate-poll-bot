@@ -20,6 +20,7 @@ def handle_vote(session, context):
                 'This poll has been permanently deleted.',
                 inline_message_id=context.query.inline_message_id,
             )
+        return
 
     poll = option.poll
 

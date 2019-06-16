@@ -50,7 +50,6 @@ class Poll(base):
     in_settings = Column(Boolean, default=False, nullable=False)
     current_date = Column(Date, server_default=func.now(), nullable=False)
 
-
     # OneToOne
     user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade'), nullable=False, index=True)
     user = relationship('User', foreign_keys='Poll.user_id')
