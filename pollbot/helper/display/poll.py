@@ -34,7 +34,8 @@ def get_poll_text(session, poll, show_warning):
     # Name and description
     lines = []
     lines.append(f'*{poll.name}*')
-    lines.append(f'_{poll.description}_')
+    if poll.description is not None:
+        lines.append(f'_{poll.description}_')
 
     if poll.anonymous and not poll.closed:
         lines.append("\n*This poll is anonymous.* Names won't be displayed.")
