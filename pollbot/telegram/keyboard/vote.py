@@ -16,7 +16,7 @@ from .management import get_back_to_management_button
 
 def get_vote_keyboard(poll, show_back=False):
     """Get the keyboard for actual voting."""
-    if poll.closed:
+    if poll.closed or poll.deleted:
         return None
 
     if poll.vote_type == VoteType.cumulative_vote.name:

@@ -2,10 +2,8 @@
 from telegram.ext import run_async
 
 from pollbot.helper.session import session_wrapper
-from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.display.creation import get_init_text
 from pollbot.telegram.keyboard import (
-    get_main_keyboard,
     get_init_keyboard,
     get_poll_list_keyboard,
 )
@@ -36,20 +34,6 @@ def create_poll(bot, update, session, user):
 
 @run_async
 @session_wrapper(private=True)
-def cancel_creation(bot, update, session, user):
-    """Create a new poll."""
-    # The previous unfinished poll will be removed
-    if user.current_poll is not None \
-       and user.current_poll.expected_input != ExpectedInput.done.name:
-        session.delete(user.current_poll)
-        session.commit()
-
-    keyboard = get_main_keyboard()
-    update.message.chat.send_message('Poll creation canceled', reply_markup=keyboard)
-
-
-@run_async
-@session_wrapper(private=True)
 def list_polls(bot, update, session, user):
     """Get a list of all active polls."""
     text = 'Click on any button to manage this specific poll.'
@@ -57,6 +41,7 @@ def list_polls(bot, update, session, user):
         .filter(Poll.user == user) \
         .filter(Poll.created.is_(True)) \
         .filter(Poll.closed.is_(False)) \
+        .filter(Poll.deleted.is_(False)) \
         .all()
 
     if len(polls) == 0:
@@ -75,6 +60,7 @@ def list_closed_polls(bot, update, session, user):
         .filter(Poll.user == user) \
         .filter(Poll.created.is_(True)) \
         .filter(Poll.closed.is_(True)) \
+        .filter(Poll.deleted.is_(False)) \
         .all()
 
     if len(polls) == 0:
@@ -90,6 +76,6 @@ def delete_all(bot, update, session, user):
     """Get a list of all active polls."""
     session.query(Poll) \
         .filter(Poll.user == user) \
-        .delete()
+        .update({'deleted': True})
 
     return "All polls have been deleted"

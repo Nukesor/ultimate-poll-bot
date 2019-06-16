@@ -42,12 +42,13 @@ class Poll(base):
     show_percentage = Column(Boolean, nullable=False, default=True, server_default='true')
 
     # Flags
-    created = Column(Boolean, default=False, nullable=False)
-    closed = Column(Boolean, default=False, nullable=False)
+    created = Column(Boolean, nullable=False, default=False)
+    closed = Column(Boolean, nullable=False, default=False)
+    deleted = Column(Boolean, nullable=False, default=False, server_default='false')
 
     # Chat state variables
     expected_input = Column(String)
-    in_settings = Column(Boolean, default=False, nullable=False)
+    in_settings = Column(Boolean, nullable=False, default=False)
     current_date = Column(Date, server_default=func.now(), nullable=False)
 
     # OneToOne

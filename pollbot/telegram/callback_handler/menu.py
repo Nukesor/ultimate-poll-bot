@@ -47,8 +47,11 @@ def show_vote_menu(session, context):
     keyboard = get_vote_keyboard(context.poll, show_back=True)
     # Set the expected_input to votes, since the user might want to vote multiple times
     context.poll.expected_input = ExpectedInput.votes.name
-
-    context.query.message.edit_reply_markup(reply_markup=keyboard)
+    context.query.message.edit_text(
+        get_poll_management_text(session, context.poll),
+        parse_mode='markdown',
+        reply_markup=keyboard
+    )
 
 
 def show_settings(session, context):

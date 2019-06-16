@@ -67,10 +67,10 @@ def get_options_entered_keyboard(poll):
     """Get the done keyboard for options during poll creation."""
     create_payload = f'{CallbackType.open_creation_datepicker.value}:{poll.id}:0'
     done_payload = f'{CallbackType.all_options_entered.value}:{poll.id}:0'
-    buttons = [
-        [InlineKeyboardButton(text='Open Datepicker', callback_data=create_payload)],
-        [InlineKeyboardButton(text='Done', callback_data=done_payload)],
-    ]
+    buttons = [[
+        InlineKeyboardButton(text='Open Datepicker', callback_data=create_payload),
+        InlineKeyboardButton(text='Done', callback_data=done_payload),
+    ]]
 
     return InlineKeyboardMarkup(buttons)
 

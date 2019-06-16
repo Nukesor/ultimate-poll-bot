@@ -15,6 +15,8 @@ def get_back_to_management_button(poll):
 
 def get_management_keyboard(poll):
     """Get the management keyboard for this poll."""
+    if poll.deleted:
+        return None
     delete_payload = f'{CallbackType.menu_delete.value}:{poll.id}:0'
 
     if poll.closed and not poll.results_visible:

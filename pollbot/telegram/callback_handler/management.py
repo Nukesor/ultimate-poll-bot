@@ -5,7 +5,7 @@ from pollbot.helper.update import remove_poll_messages, update_poll_messages
 def delete_poll(session, context):
     """Permanently delete the pall."""
     remove_poll_messages(session, context.bot, context.poll)
-    session.delete(context.poll)
+    context.poll.deleted = True
     session.commit()
 
 
