@@ -6,6 +6,7 @@ class Config:
     """Config class for convenient configuration."""
 
     # Get your telegram api-key from @botfather
+    BOT_NAME = 'ultimate_pollbot'
     TELEGRAM_API_KEY = None
     SQL_URI = 'postgres://localhost/pollbot_test'
     SENTRY_TOKEN = None

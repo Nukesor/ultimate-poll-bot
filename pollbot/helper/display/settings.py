@@ -22,6 +22,11 @@ def get_settings_text(poll):
 
     text.append('')
 
+    if poll.allow_new_options:
+        text.append("*Custom user options*: Anyone can add new options")
+    else:
+        text.append("*Custom user options*: Only you can add new options")
+
     if poll.results_visible:
         if poll.show_percentage:
             text.append("*Percentage*: Visible")

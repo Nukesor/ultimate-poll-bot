@@ -11,15 +11,8 @@ from telegram.ext import (
 )
 
 from pollbot.config import config
-from pollbot.helper.session import session_wrapper
-from pollbot.helper import (
-    start_text,
-    help_text,
-    donations_text,
-)
 
 from pollbot.telegram.job import message_update_job
-from pollbot.telegram.keyboard import get_main_keyboard
 from pollbot.telegram.message_handler import handle_private_text
 from pollbot.telegram.callback_handler import handle_callback_query
 from pollbot.telegram.error_handler import error_callback
@@ -31,28 +24,8 @@ from pollbot.telegram.commands.poll import (
     list_closed_polls,
     delete_all,
 )
-
-
-@session_wrapper()
-def start(bot, update, session, user):
-    """Send a start text."""
-    keyboard = get_main_keyboard()
-    update.message.chat.send_message(start_text, parse_mode='Markdown', reply_markup=keyboard)
-
-
-@session_wrapper()
-def send_help(bot, update, session, user):
-    """Send a start text."""
-    keyboard = get_main_keyboard()
-    update.message.chat.send_message(help_text, parse_mode='Markdown', reply_markup=keyboard)
-
-
-@session_wrapper()
-def send_donation_text(bot, update, session, user):
-    """Send the donation text."""
-    keyboard = get_main_keyboard()
-    update.message.chat.send_message(donations_text, parse_mode='Markdown', reply_markup=keyboard)
-
+from pollbot.telegram.commands.misc import send_help, send_donation_text
+from pollbot.telegram.commands.start import start
 
 logging.basicConfig(level=config.LOG_LEVEL,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')

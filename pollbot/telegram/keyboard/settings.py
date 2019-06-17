@@ -35,7 +35,7 @@ def get_settings_keyboard(poll):
     buttons = []
     # Anonymization
     if not poll.anonymous:
-        text = "Make votes anonymous"
+        text = "🔍 Make votes anonymous"
         payload = f'{CallbackType.settings_anonymization_confirmation.value}:{poll.id}:0'
         buttons.append([InlineKeyboardButton(text=text, callback_data=payload)])
 
@@ -49,6 +49,14 @@ def get_settings_keyboard(poll):
         percentage_text = '○% Hide percentage' if poll.show_percentage else '○% Show percentage'
         percentage_payload = f'{CallbackType.settings_toggle_percentage.value}:{poll.id}:0'
         buttons.append([InlineKeyboardButton(text=percentage_text, callback_data=percentage_payload)])
+
+    # New option button
+    if poll.allow_new_options:
+        allow_new_option_text = "🍺 Forbid users to add new options"
+    else:
+        allow_new_option_text = '🍻 Allow users to add new options'
+    allow_new_option_payload = f'{CallbackType.settings_toggle_allow_new_options.value}:{poll.id}:0'
+    buttons.append([InlineKeyboardButton(text=allow_new_option_text, callback_data=allow_new_option_payload)])
 
     # New option button
     new_option_text = '＋ Add a new option'

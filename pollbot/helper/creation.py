@@ -10,7 +10,7 @@ from pollbot.models import PollOption, Reference
 
 def next_option(tg_chat, poll, options):
     """Send the options message during the creation ."""
-    poll.expected_input = ExpectedInput.options.name
+    poll.user.expected_input = ExpectedInput.options.name
     keyboard = get_options_entered_keyboard(poll)
 
     if len(options) == 1:
@@ -27,7 +27,7 @@ def next_option(tg_chat, poll, options):
 def create_poll(session, poll, user, chat, message=None):
     """Finish the poll creation."""
     poll.created = True
-    poll.expected_input = None
+    user.expected_input = None
     user.current_poll = None
 
     if message:

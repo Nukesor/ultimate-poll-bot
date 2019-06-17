@@ -79,7 +79,7 @@ def set_option_order(session, context, poll):
 @poll_required
 def expect_new_option(session, context, poll):
     """Send a text and tell the user that we expect a new option."""
-    poll.expected_input = ExpectedInput.new_option.name
+    context.user.expected_input = ExpectedInput.new_option.name
     context.user.current_poll = poll
 
     keyboard = InlineKeyboardMarkup([[get_back_to_settings_button(poll)]])
@@ -120,6 +120,19 @@ def toggle_percentage(session, context, poll):
     """Toggle the visibility of the percentage bar."""
     poll = poll
     poll.show_percentage = not poll.show_percentage
+
+    update_poll_messages(session, context.bot, poll)
+    context.query.message.edit_text(
+        text=get_settings_text(poll),
+        parse_mode='markdown',
+        reply_markup=get_settings_keyboard(poll)
+    )
+
+
+@poll_required
+def toggle_allow_new_options(session, context, poll):
+    """Toggle the visibility of the percentage bar."""
+    poll.allow_new_options = not poll.allow_new_options
 
     update_poll_messages(session, context.bot, poll)
     context.query.message.edit_text(

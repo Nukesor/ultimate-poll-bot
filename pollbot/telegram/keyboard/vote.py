@@ -3,6 +3,8 @@ from telegram import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
 )
+
+from pollbot.config import config
 from pollbot.helper import poll_allows_cumulative_votes
 from pollbot.helper.enums import (
     CallbackType,
@@ -23,6 +25,10 @@ def get_vote_keyboard(poll, show_back=False):
         buttons = get_cumulative_buttons(poll)
     else:
         buttons = get_normal_buttons(poll)
+
+    if poll.allow_new_options:
+        url = f'http://t.me/{config.BOT_NAME}?start={poll.uuid}'
+        buttons.append([InlineKeyboardButton(text='Add a new option.', url=url)])
 
     if show_back:
         buttons.append([get_back_to_management_button(poll)])

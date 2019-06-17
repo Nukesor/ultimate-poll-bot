@@ -4,7 +4,9 @@ from sqlalchemy import (
     Column,
     func,
     ForeignKey,
+    text,
 )
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.types import (
     BigInteger,
     Boolean,
@@ -26,6 +28,7 @@ class Poll(base):
     )
 
     id = Column(Integer, primary_key=True)
+    uuid = Column(UUID(as_uuid=True), unique=True, nullable=False, server_default=text('gen_random_uuid()'))
 
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
@@ -36,6 +39,7 @@ class Poll(base):
     vote_type = Column(String, nullable=False)
     anonymous = Column(Boolean, nullable=False)
     number_of_votes = Column(Integer)
+    allow_new_options = Column(Boolean, nullable=False, server_default='false')
     option_sorting = Column(String, nullable=False)
     user_sorting = Column(String, nullable=False)
     results_visible = Column(Boolean, nullable=False, default=True)
@@ -64,7 +68,6 @@ class Poll(base):
         """Create a new poll."""
         self.user = user
         self.vote_type = VoteType.single_vote.name
-        self.expected_input = 'name'
         self.anonymous = False
         self.results_visible = True
 

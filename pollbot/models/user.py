@@ -8,7 +8,6 @@ from sqlalchemy import (
 from sqlalchemy.types import (
     BigInteger,
     DateTime,
-    Integer,
     String,
 )
 from sqlalchemy.exc import IntegrityError
@@ -28,8 +27,10 @@ class User(base):
     admin = Column(Boolean, default=False, nullable=False)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
 
-    # OneToOne
-    current_poll_id = Column(Integer, ForeignKey('poll.id', ondelete="set null"), index=True)
+    expected_input = Column(String)
+
+    # Simple foreign key
+    current_poll_id = Column(BigInteger, ForeignKey('poll.id', ondelete="set null"), index=True)
     current_poll = relationship('Poll', uselist=False, foreign_keys='User.current_poll_id', post_update=True)
 
     # OneToMany

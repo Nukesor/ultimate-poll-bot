@@ -42,7 +42,7 @@ def go_back(session, context, poll):
     )
 
     # Reset the expected input from the previous option
-    poll.expected_input = None
+    context.user.expected_input = None
 
 
 @poll_required
@@ -50,7 +50,7 @@ def show_vote_menu(session, context, poll):
     """Show the vote keyboard in the management interface."""
     keyboard = get_vote_keyboard(poll, show_back=True)
     # Set the expected_input to votes, since the user might want to vote multiple times
-    poll.expected_input = ExpectedInput.votes.name
+    context.user.expected_input = ExpectedInput.votes.name
     context.query.message.edit_text(
         get_poll_management_text(session, poll),
         parse_mode='markdown',

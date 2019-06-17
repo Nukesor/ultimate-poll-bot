@@ -25,7 +25,7 @@ def get_management_keyboard(poll):
         payload = f'{CallbackType.reopen.value}:{poll.id}:0'
         buttons = [
             [InlineKeyboardButton(text='❌ Delete', callback_data=delete_payload)],
-            [InlineKeyboardButton(text='Reopen poll', callback_data=payload)]
+            [InlineKeyboardButton(text='🔓 Reopen poll', callback_data=payload)]
         ]
         return InlineKeyboardMarkup(buttons)
 
@@ -48,7 +48,7 @@ def get_management_keyboard(poll):
         ],
         [
             InlineKeyboardButton(text='❌ Delete', callback_data=delete_payload),
-            InlineKeyboardButton(text='🚫 Close', callback_data=close_payload),
+            InlineKeyboardButton(text='🔒 Close', callback_data=close_payload),
         ],
     ]
 

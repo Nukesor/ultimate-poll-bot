@@ -14,6 +14,7 @@ class ExpectedInput(Enum):
     date = 6
 
     new_option = 10
+    new_user_option = 11
 
 
 @unique
@@ -85,6 +86,7 @@ class CallbackType(Enum):
     settings_show_remove_option_menu = 76
     settings_remove_option = 77
     settings_toggle_percentage = 78
+    settings_toggle_allow_new_options = 79
 
     # Misc
     ignore = 100
