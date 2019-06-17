@@ -3,6 +3,7 @@ from telegram.ext import run_async
 
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.display.creation import get_init_text
+from pollbot.helper.enums import ExpectedInput
 from pollbot.telegram.keyboard import (
     get_cancel_creation_keyboard,
     get_init_keyboard,
@@ -25,6 +26,7 @@ def create_poll(bot, update, session, user):
 
     poll = Poll(user)
     user.current_poll = poll
+    user.expected_input = ExpectedInput.name.name
     session.add(poll)
     session.commit()
 
