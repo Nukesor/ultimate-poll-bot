@@ -96,6 +96,7 @@ def all_options_entered(session, context, poll):
         return
 
     if poll.vote_type in [VoteType.limited_vote.name, VoteType.cumulative_vote.name]:
+        context.query.message.edit_text('All options have been added.')
         context.user.expected_input = ExpectedInput.vote_count.name
         context.query.message.chat.send_message('Send me the amount of allowed votes per user.')
 
@@ -108,7 +109,14 @@ def all_options_entered(session, context, poll):
 def open_creation_datepicker(session, context, poll):
     """All options are entered the poll is created."""
     keyboard = get_creation_datepicker_keyboard(poll)
+    # Switch from new option by text to new option via datepicker
+
+    if context.user.expected_input != ExpectedInput.options.name:
+        context.query.message.edit_text('All options have already been added')
+        return
+
     context.user.expected_input = ExpectedInput.date.name
+
     context.query.message.edit_text(
         get_datepicker_text(poll),
         parse_mode='markdown',
@@ -128,7 +136,12 @@ def close_creation_datepicker(session, context, poll):
         text = 'Send *another option* or click *done*'
         keyboard = get_options_entered_keyboard(poll)
 
-    context.user.expected_input = ExpectedInput.new_option.name
+    # Replace the message completely, since all options have already been entered
+    if context.user.expected_input != ExpectedInput.date.name:
+        context.query.message.edit_text('All options have already been added')
+        return
+
+    context.user.expected_input = ExpectedInput.options.name
     context.query.message.edit_text(
         text,
         parse_mode='markdown',
