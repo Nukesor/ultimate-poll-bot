@@ -14,12 +14,13 @@ Ultimate Pollbot features a wide range of customization, anonymization and manag
 
 **Poll types**
 
-This bot has 4 different vote modi. Each mode is useful for various scenarious. Choose wisely.
+This bot has 5 different vote modi. Each mode is useful for various scenarious. Choose wisely.
 
 - Single vote: User get a single vote to allot
 - Block vote: Users can vote without restriction, but only one vote per option.
-- Limited vote: Each user gets X votes for distribution, but max one vote per option.
+- Limited vote: Each user gets X votes for distribution, but only one vote per option.
 - Cumulative vote: Every user gets X votes they can distribute as they like.
+- Unlimited votes (Also called the shopping list): Every user can vote as often as they like, pretty much like a distributed shopping list.
 
 **Anonymity settings:**
 
@@ -29,15 +30,17 @@ Polls can be made anonymous subsequently, but as soon as a poll is anonymous it 
 Further it's possible to hide the results of the poll until it gets closed.
 As soon as such a poll is closed, the results will be visible. **Beware!**: such an poll cannot be reopened.
 
-**Custom sorting options:**
 
-The bot allows to configure the sorting of the option list AND and the user list for each option.
+**Sorting and Appearance:**
 
-Users can be sorted by vote date or username. Options can be sorted by highest percentage, name or by the order they've been added.
+- The percentage bar in the vote message can be disabled.
+- The bot allows to configure the sorting of the option list AND and the user list for each option.
+- Users can be sorted by vote date or username. Options can be sorted by highest percentage, name or by the order they've been added.
 
 
 **Poll Management:**
 - Addition and removal of options
+- A setting which allows other users to add new options
 - Polls can be closed
 - Polls can be reopened unless the poll is configured to hide the results until it has been closed.
 - Polls can be completely deleted, which means that all non-forwarded occurences of the poll will be removed.
