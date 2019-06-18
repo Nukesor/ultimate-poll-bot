@@ -12,7 +12,7 @@ from pollbot.helper.update import send_updates, window_size
 def message_update_job(context, session):
     """Update all messages if necessary."""
     try:
-        context.job.enabled = False
+        context.job.disabled = False
         now = datetime.now()
         current_time_window = now - timedelta(seconds=now.second % window_size, microseconds=now.microsecond)
         last_time_window = current_time_window - timedelta(seconds=window_size)
@@ -69,3 +69,4 @@ def message_update_job(context, session):
                 pass
     finally:
         context.job.enabled = True
+        session.close()
