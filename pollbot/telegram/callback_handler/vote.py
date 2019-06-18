@@ -144,7 +144,7 @@ def handle_limited_vote(session, context, option):
     return True
 
 
-def handle_cumulative_vote(session, context, option, unlimited=True):
+def handle_cumulative_vote(session, context, option, unlimited=False):
     """Handle a cumulative vote."""
     existing_vote = session.query(Vote) \
         .filter(Vote.poll_option == option) \
