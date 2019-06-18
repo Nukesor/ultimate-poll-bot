@@ -5,6 +5,10 @@
 [![Patreon](https://github.com/Nukesor/images/blob/master/patreon-donate-blue.svg)](https://www.patreon.com/nukesor)
 
 
+![Alt Text](https://github.com/Nukesor/images/blob/master/pollbot.gif)
+
+
+
 ## Features:
 Ultimate Pollbot features a wide range of customization, anonymization and management features:
 
