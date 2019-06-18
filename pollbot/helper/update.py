@@ -58,9 +58,10 @@ def update_poll_messages(session, bot, poll):
         except (IntegrityError, UniqueViolation):
             # The update has been already created in another thread
             # Get the update and work with this instance
+            session.rollback()
             current_update = session.query(Update) \
-                    .filter(Update.time_window == time_window) \
-                    .one()
+                .filter(Update.time_window == time_window) \
+                .one()
 
     # The update should be updated again
     elif current_update and current_update.updated:
