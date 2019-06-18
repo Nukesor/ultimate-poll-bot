@@ -199,7 +199,7 @@ def handle_cumulative_vote(session, context, option, unlimited=False):
         vote = Vote(VoteResultType.yes.name, context.user, option)
         session.add(vote)
         session.commit()
-        total_vote_count = allowed_votes - (vote_count - 1)
+        total_vote_count = allowed_votes - (vote_count + 1)
         respond_to_vote(session, f'Vote registered!', context, option.poll, total_vote_count, True)
 
     return True
