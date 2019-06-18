@@ -42,6 +42,9 @@ def show_vote_type_keyboard(session, context):
 @poll_required
 def change_vote_type(session, context, poll):
     """Change the vote type."""
+    if poll.created:
+        context.query.answer('The poll has already been created')
+        return
     poll.vote_type = VoteType(context.action).name
 
     keyboard = get_init_keyboard(poll)
@@ -55,6 +58,9 @@ def change_vote_type(session, context, poll):
 @poll_required
 def toggle_anonymity(session, context, poll):
     """Change the anonymity settings of a poll."""
+    if poll.created:
+        context.query.answer('The poll has already been created')
+        return
     poll.anonymous = not poll.anonymous
 
     keyboard = get_init_keyboard(poll)
@@ -69,6 +75,9 @@ def toggle_anonymity(session, context, poll):
 @poll_required
 def toggle_results_visible(session, context, poll):
     """Change the results visible settings of a poll."""
+    if poll.created:
+        context.query.answer('The poll has already been created')
+        return
     poll.results_visible = not poll.results_visible
 
     keyboard = get_init_keyboard(poll)
