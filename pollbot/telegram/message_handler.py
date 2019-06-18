@@ -39,7 +39,7 @@ def handle_private_text(bot, update, session, user):
             ExpectedInput.new_user_option: handle_user_option_addition,
         }
 
-        actions[expected_input](bot, update, session, user, text, poll, chat)
+        return actions[expected_input](bot, update, session, user, text, poll, chat)
 
 
 def handle_set_name(bot, update, session, user, text, poll, chat):
