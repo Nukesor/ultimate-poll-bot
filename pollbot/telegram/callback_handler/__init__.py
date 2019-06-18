@@ -33,6 +33,8 @@ from .management import (
     delete_poll,
     close_poll,
     reopen_poll,
+    reset_poll,
+    clone_poll,
 )
 from .settings import (
     make_anonymous,
@@ -124,6 +126,8 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.delete: delete_poll,
         CallbackType.close: close_poll,
         CallbackType.reopen: reopen_poll,
+        CallbackType.reset: reset_poll,
+        CallbackType.clone: clone_poll,
 
         # Settings
         CallbackType.settings_anonymization_confirmation: show_anonymization_confirmation,

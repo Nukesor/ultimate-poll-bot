@@ -77,3 +77,27 @@ class Poll(base):
     def should_show_result(self):
         """Determine, whether this results of this poll should be shown."""
         return self.results_visible or self.closed
+
+    def clone(self, session):
+        """Create a clone from the current poll."""
+        poll = Poll(self.user)
+        poll.created = True
+        session.add(poll)
+
+        poll.name = self.name
+        poll.description = self.description
+        poll.vote_type = self.vote_type
+        poll.anonymous = self.anonymous
+        poll.number_of_votes = self.number_of_votes
+        poll.allow_new_options = self.allow_new_options
+        poll.option_sorting = self.option_sorting
+        poll.user_sorting = self.user_sorting
+        poll.results_visible = self.results_visible
+        poll.show_percentage = self.show_percentage
+
+        from pollbot.models import PollOption
+        for option in self.options:
+            new_option = PollOption(poll, option.name)
+            session.add(new_option)
+
+        return poll

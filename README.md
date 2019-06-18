@@ -44,6 +44,8 @@ As soon as such a poll is closed, the results will be visible. **Beware!**: such
 - Polls can be closed
 - Polls can be reopened unless the poll is configured to hide the results until it has been closed.
 - Polls can be completely deleted, which means that all non-forwarded occurences of the poll will be removed.
+- Polls can be resetted (Delete all votes). Poll needs to be closed first
+- Polls can be cloned (New poll with same options, but without votes). Poll needs to be closed first
 
 
 **Flood controll prevention:**

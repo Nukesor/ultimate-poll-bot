@@ -22,10 +22,16 @@ def get_management_keyboard(poll):
     if poll.closed and not poll.results_visible:
         return InlineKeyboardMarkup([[InlineKeyboardButton(text='❌ Delete', callback_data=delete_payload)]])
     elif poll.closed:
-        payload = f'{CallbackType.reopen.value}:{poll.id}:0'
+        reopen_payload = f'{CallbackType.reopen.value}:{poll.id}:0'
+        reset_payload = f'{CallbackType.reset.value}:{poll.id}:0'
+        clone_payload = f'{CallbackType.clone.value}:{poll.id}:0'
         buttons = [
+            [
+                InlineKeyboardButton(text='🔨 Reset', callback_data=reset_payload),
+                InlineKeyboardButton(text='🧬 Clone', callback_data=clone_payload),
+            ],
             [InlineKeyboardButton(text='❌ Delete', callback_data=delete_payload)],
-            [InlineKeyboardButton(text='🔓 Reopen poll', callback_data=payload)]
+            [InlineKeyboardButton(text='🔓 Reopen poll', callback_data=reopen_payload)]
         ]
         return InlineKeyboardMarkup(buttons)
 

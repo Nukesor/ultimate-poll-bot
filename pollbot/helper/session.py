@@ -54,10 +54,11 @@ def hidden_session_wrapper():
                 raise e
             # Handle all not telegram relatated exceptions
             except:
+                traceback.print_exc()
                 sentry.captureException()
-            finally:
                 if hasattr(update, 'callback_query') and update.callback_query is not None:
                     update.callback_query.answer("An error occurred. It'll be fixed soon.")
+            finally:
                 session.close()
         return wrapper
 

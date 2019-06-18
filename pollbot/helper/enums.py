@@ -75,6 +75,8 @@ class CallbackType(Enum):
     delete = 50
     close = 51
     reopen = 52
+    clone = 53
+    reset = 54
 
     # Settings
     settings_anonymization_confirmation = 70
