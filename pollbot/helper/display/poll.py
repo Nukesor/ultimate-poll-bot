@@ -101,10 +101,10 @@ def get_option_line(session, option):
 
 def get_vote_line(poll, option, vote, index):
     """Get the line showing an actual vote."""
-    if index != len(poll.votes) - 1:
-        vote_line = f'├ {vote.user.name}'
-    else:
+    if index == (len(option.votes) - 1):
         vote_line = f'└ {vote.user.name}'
+    else:
+        vote_line = f'├ {vote.user.name}'
 
     if poll_allows_cumulative_votes(option.poll):
         vote_line += f' ({vote.vote_count} votes)'
