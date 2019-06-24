@@ -25,11 +25,14 @@ def handle_private_text(bot, update, session, user):
     poll = user.current_poll
     chat = update.message.chat
 
+    expected_input = ExpectedInput[user.expected_input]
+    ignored_expected_inputs = [ExpectedInput.date]
     # The user is currently not expecting input or no poll is set
     if user.current_poll is None or user.expected_input is None:
         return
+    elif expected_input in ignored_expected_inputs:
+        return
     else:
-        expected_input = ExpectedInput[user.expected_input]
         actions = {
             ExpectedInput.name: handle_set_name,
             ExpectedInput.description: handle_set_description,
