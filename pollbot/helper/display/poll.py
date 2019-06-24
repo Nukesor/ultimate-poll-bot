@@ -38,11 +38,10 @@ def get_poll_text(session, poll, show_warning):
         lines.append(f'_{poll.description}_')
 
     if poll.anonymous and not poll.closed:
-        lines.append("\n*This poll is anonymous.* Names won't be displayed.")
+        lines.append("\n_Anonymous_")
 
     if not poll.results_visible and not poll.should_show_result():
-        lines.append("\nThe results of this poll are *not visible*, until it's closed!")
-        lines.append("Once closed it *cannot be reopened!*")
+        lines.append("\n_Results are not visible, until poll is closed!")
 
     # Sort the options accordingly to the polls settings
     options = get_sorted_options(poll, total_user_count)
