@@ -33,7 +33,7 @@ def get_poll_text(session, poll, show_warning):
 
     # Name and description
     lines = []
-    lines.append(f'*{poll.name}*')
+    lines.append(f'✉️ *{poll.name}*')
     if poll.description is not None:
         lines.append(f'_{poll.description}_')
 
@@ -97,9 +97,9 @@ def get_option_line(session, option):
             vote_count = sum([vote.vote_count for vote in option.votes])
         else:
             vote_count = len(option.votes)
-        return f'*{option.name}* ({vote_count} votes)'
+        return f'┌ *{option.name}* ({vote_count} votes)'
     else:
-        return f'*{option.name}*'
+        return f'┌ *{option.name}*'
 
 
 def get_vote_line(poll, option, vote, index):
@@ -120,7 +120,11 @@ def get_percentage_line(option, total_user_count):
     percentage = calculate_percentage(option, total_user_count)
     filled_slots = math.floor(percentage/10)
 
-    line = '│ '
+    if len(option.votes) == 0 or option.poll.anonymous:
+        line = '└ '
+    else:
+        line = '│ '
+
     line += filled_slots * '▬'
     line += (10-filled_slots) * '▭'
     line += f' ({percentage}%)'
