@@ -7,10 +7,14 @@
 
 ![Alt Text](https://github.com/Nukesor/images/blob/master/pollbot.gif)
 
+Deciding where you and your friends are going for lunch today can be a real hassle...
+Or deciding which games should be played at the next LAN-Party.
+Since no other telegram poll-/votebot offered the full feature set my friends and I needed, I decided to write the ULTIMATE pollbot. A bot which combines all good features of all existing bots and stuff even beyond that.
 
 
 ## Features:
-Ultimate Pollbot features a wide range of customization, anonymization and management features:
+There are still some features missing, such as Deadlines, Notifications and even more Vote types, but in my opinion it's already better than anything I could find out there.
+
 
 **Poll types**
 
@@ -49,7 +53,7 @@ As soon as such a poll is closed, the results will be visible. **Beware!**: such
 
 
 **Flood controll prevention:**
-Telegram forbids to send more than 20 messages per minute into the same group. This obviously leads to problems, if there are many people that vote on a single poll.
+Telegram forbids to send more than a certain amount of messages per minute into the same group. This obviously leads to problems, if there are many people that vote on a single poll.
 
 Pollbot has a proper way of handling this problem.
 In case you hit a certain amount of votes for the current minute, the bot will stop updating the messages on each vote, but it will rather update all messages every five seconds.
