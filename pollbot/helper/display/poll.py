@@ -37,11 +37,14 @@ def get_poll_text(session, poll, show_warning):
     if poll.description is not None:
         lines.append(f'_{poll.description}_')
 
+    # Anonymity information
+    if not poll.results_visible and not poll.should_show_result() or \
+            poll.anonymous and not poll.closed:
+        lines.append('')
     if poll.anonymous and not poll.closed:
-        lines.append("\n_Anonymous_")
-
+        lines.append('_Anonymous!_')
     if not poll.results_visible and not poll.should_show_result():
-        lines.append("\n_Results are not visible, until poll is closed!")
+        lines.append('_Results are not visible, until poll is closed!_')
 
     # Sort the options accordingly to the polls settings
     options = get_sorted_options(poll, total_user_count)
