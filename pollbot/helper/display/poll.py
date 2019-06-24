@@ -62,6 +62,7 @@ def get_poll_text(session, poll, show_warning):
             for index, vote in enumerate(votes):
                 vote_line = get_vote_line(poll, option, vote, index)
                 lines.append(vote_line)
+    lines.append('')
 
     if poll_has_limited_votes(poll):
         lines.append(f'\nEvery user can vote *{poll.number_of_votes} times*')
