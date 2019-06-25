@@ -14,7 +14,7 @@ if config['webhook']['enabled']:
     )
     updater.bot.set_webhook(
         url=f'{domain}{token}',
-        certificate=open(config.CERT_PATH, 'rb')
+        certificate=open(config['webhook']['cert_path'], 'rb')
     )
 else:
     updater.start_polling()
