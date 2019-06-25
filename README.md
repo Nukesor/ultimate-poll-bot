@@ -80,7 +80,7 @@ With this mechanism you can keep spamming vote buttons and do as you like withou
 
 
 ## Installation and Starting:
-**This bot is developed for Linux. Windows isn't tested, but it shouldn't be too hard to make it compatible. Feel free to create a PR.**
+**This bot is developed for Linux.** Windows isn't tested, but it shouldn't be too hard to make it compatible. Feel free to create a PR.
 
 1. You will need to install `poetry` to install all dependencies.
     - Ultimate Pollbot uses postgres by default. Make sure the user has write/read rights.
