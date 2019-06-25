@@ -1,5 +1,6 @@
 # Ultimate Pollbot ([@ultimate_pollbot](https://t.me/ultimate_pollbot))
 
+
 [![MIT Licence](https://img.shields.io/badge/license-MIT-success.svg)](https://github.com/Nukesor/pollbot/blob/master/LICENSE.md)
 [![Paypal](https://github.com/Nukesor/images/blob/master/paypal-donate-blue.svg)](https://www.paypal.me/arnebeer/)
 [![Patreon](https://github.com/Nukesor/images/blob/master/patreon-donate-blue.svg)](https://www.patreon.com/nukesor)
@@ -34,14 +35,6 @@ Polls can be made anonymous subsequently, but as soon as a poll is anonymous it 
 Further it's possible to hide the results of the poll until it gets closed.
 As soon as such a poll is closed, the results will be visible. **Beware!**: such an poll cannot be reopened.
 
-
-**Sorting and Appearance:**
-
-- The percentage bar in the vote message can be disabled.
-- The bot allows to configure the sorting of the option list AND and the user list for each option.
-- Users can be sorted by vote date or username. Options can be sorted by highest percentage, name or by the order they've been added.
-
-
 **Poll Management:**
 - Addition and removal of options
 - A setting which allows other users to add new options
@@ -52,7 +45,16 @@ As soon as such a poll is closed, the results will be visible. **Beware!**: such
 - Polls can be cloned (New poll with same options, but without votes). Poll needs to be closed first
 
 
+**Sorting and Appearance:**
+
+- A datepicker for easier creation of poll options
+- The percentage bar in the vote message can be disabled.
+- The bot allows to configure the sorting of the option list AND and the user list for each option.
+- Users can be sorted by vote date or username. Options can be sorted by highest percentage, name or by the order they've been added.
+
+
 **Flood controll prevention:**
+
 Telegram forbids to send more than a certain amount of messages per minute into the same group. This obviously leads to problems, if there are many people that vote on a single poll.
 
 Pollbot has a proper way of handling this problem.
@@ -63,9 +65,10 @@ With this mechanism you can keep spamming vote buttons and do as you like withou
 
 **Planned features:**
 
+- A doodle poll
+- A STV poll
 - Set a due date for a poll
 - Get due date notifications for polls, if the bot is in the same group
-- Date picker for date options
 
 
 ## Commands:
@@ -82,19 +85,22 @@ With this mechanism you can keep spamming vote buttons and do as you like withou
 ## Installation and Starting:
 **This bot is developed for Linux.** Windows isn't tested, but it shouldn't be too hard to make it compatible. Feel free to create a PR.
 
-1. You will need to install `poetry` to install all dependencies.
-    - Ultimate Pollbot uses postgres by default. Make sure the user has write/read rights.
-        This can be changed, by changing the SQLURI in the configuration file.
-2. Clone the repository:
+Dependencies: 
+- `poetry` to manage and install dependencies.
+- Ultimate Pollbot uses postgres by default. Make sure the user has write/read rights. (This can be changed, by changing the SQLURI in the configuration file.)
+
+
+1. Clone the repository:
 
         % git clone git@github.com:nukesor/ultimate_pollbot pollbot && cd pollbot
 
-3. Either start the pollbot once or copy the `ultimate_pollbot.toml` manually to `~/.config/ultimate_pollbot.toml` and adjust all necessary values.
-4. Execute following commands to install all dependencies and to start the bot:
+2. Execute following commands to install all dependencies and to initialize the database:
 
         % poetry install
         % poetry run initdb.py
-        % poetry run main.py
+
+3. Either start the pollbot once or copy the `ultimate_pollbot.toml` manually to `~/.config/ultimate_pollbot.toml` and adjust all necessary values.
+4. Start the bot `poetry run main.py`
 
 5. If you plan to keep up to date, you need to set the current alemibic revision manually.
 Get the latest revision with `poetry run alembic history` and change the current head to the newest revision with `poetry run alembic stamp <revision>`.
