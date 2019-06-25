@@ -27,7 +27,8 @@ def get_vote_keyboard(poll, show_back=False):
         buttons = get_normal_buttons(poll)
 
     if poll.allow_new_options:
-        url = f'http://t.me/{config.BOT_NAME}?start={poll.uuid}'
+        bot_name = config['telegram']['bot_name']
+        url = f'http://t.me/{bot_name}?start={poll.uuid}'
         buttons.append([InlineKeyboardButton(text='Add a new option.', url=url)])
 
     if show_back:

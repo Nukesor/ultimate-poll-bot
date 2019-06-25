@@ -62,5 +62,4 @@ target/
 .ipynb_checkpoints
 
 # Repository kram
-*/**/config.py
 pollbot.db

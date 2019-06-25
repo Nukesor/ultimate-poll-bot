@@ -13,9 +13,9 @@ class Sentry(object):
 
     def __init__(self):
         """Construct new sentry wrapper."""
-        if config.SENTRY_TOKEN is not None:
+        if config['logging']['sentry_enabled']:
             self.initialized = True
-            self.sentry = Client(config.SENTRY_TOKEN)
+            self.sentry = Client(config['logging']['sentry_token'])
 
     def captureMessage(self, *args, **kwargs):
         """Capture message with sentry."""

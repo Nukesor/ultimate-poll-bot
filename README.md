@@ -80,14 +80,17 @@ With this mechanism you can keep spamming vote buttons and do as you like withou
 
 
 ## Installation and Starting:
+**This bot is developed for Linux. Windows isn't tested, but it shouldn't be too hard to make it compatible. Feel free to create a PR.**
 
 1. You will need to install `poetry` to install all dependencies.
+    - Ultimate Pollbot uses postgres by default. Make sure the user has write/read rights.
+        This can be changed, by changing the SQLURI in the configuration file.
 2. Clone the repository:
 
         % git clone git@github.com:nukesor/ultimate_pollbot pollbot && cd pollbot
 
-3. Now copy the `pollbot/config.example.py` to `pollbot/config.py` and adjust all necessary values.
-4. Finally execute following commands to install all dependencies and to start the bot:
+3. Either start the pollbot once or copy the `ultimate_pollbot.toml` manually to `~/.config/ultimate_pollbot.toml` and adjust all necessary values.
+4. Execute following commands to install all dependencies and to start the bot:
 
         % poetry install
         % poetry run initdb.py

@@ -1,0 +1,23 @@
+[telegram]
+bot_name = "ultimate_pollbot"
+api_key = ""
+worker_count = 20
+flood_threshold = 8
+
+[database]
+sql_uri = "postgres://localhost/pollbot_test"
+connection_count = 20
+overflow_count = 10
+
+[logging]
+sentry_enabled = false
+sentry_token = ""
+log_level = 20
+debug = false
+
+[webhook]
+enabled = false
+domain = "https://localhost"
+token = "pollbot"
+cert_path = "/path/to/cert.pem"
+port = 7000

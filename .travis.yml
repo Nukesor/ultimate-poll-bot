@@ -9,6 +9,6 @@ install:
 - poetry install
 
 before_script:
-  - psql -c 'create database stickerfinder_test;' -U postgres
-  - cp stickerfinder/config.travis.py stickerfinder/config.py
+  - psql -c 'create database pollbot_test;' -U postgres
+  - cp stickerfinder/travis_ultimate_pollbot.toml ~/.config/ultimate_pollbot.toml
 script: poetry run pytest

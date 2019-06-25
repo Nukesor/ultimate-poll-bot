@@ -27,12 +27,16 @@ from pollbot.telegram.commands.poll import (
 from pollbot.telegram.commands.misc import send_help, send_donation_text
 from pollbot.telegram.commands.start import start
 
-logging.basicConfig(level=config.LOG_LEVEL,
+logging.basicConfig(level=config['logging']['log_level'],
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 # Initialize telegram updater and dispatcher
-updater = Updater(token=config.TELEGRAM_API_KEY, workers=config.WORKER_COUNT, use_context=True,
-                  request_kwargs={'read_timeout': 20, 'connect_timeout': 20})
+updater = Updater(
+    token=config['telegram']['api_key'],
+    workers=config['telegram']['worker_count'],
+    use_context=True,
+    request_kwargs={'read_timeout': 20, 'connect_timeout': 20}
+)
 
 dispatcher = updater.dispatcher
 
