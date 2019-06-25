@@ -9,8 +9,9 @@
 ![Alt Text](https://github.com/Nukesor/images/blob/master/pollbot.gif)
 
 Deciding where you and your friends are going for lunch today can be a real hassle...
-Or deciding which games should be played at the next LAN-Party.
-Since no other telegram poll-/votebot offered the full feature set my friends and I needed, I decided to write the ULTIMATE pollbot. A bot which combines all good features of all existing bots and stuff even beyond that.
+Or, for instance, deciding which games should be played at the next LAN-Party.
+
+Since no other telegram poll-/votebot offered the full feature set my friends and I needed, I decided to write the ULTIMATE pollbot. A bot which combines all good features of all existing bots and even stuff beyond that.
 
 
 ## Features:
