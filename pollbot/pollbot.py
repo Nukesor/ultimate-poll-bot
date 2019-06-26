@@ -22,8 +22,8 @@ from pollbot.telegram.commands.poll import (
     create_poll,
     list_polls,
     list_closed_polls,
+    delete_all,
     delete_all_closed,
-    delete_closed,
 )
 from pollbot.telegram.commands.misc import send_help, send_donation_text
 from pollbot.telegram.commands.start import start
@@ -49,8 +49,8 @@ dispatcher.add_handler(CommandHandler('start', start))
 dispatcher.add_handler(CommandHandler('help', send_help))
 dispatcher.add_handler(CommandHandler('list', list_polls))
 dispatcher.add_handler(CommandHandler('list_closed', list_closed_polls))
-dispatcher.add_handler(CommandHandler('delete_all', delete_all_closed))
-dispatcher.add_handler(CommandHandler('delete_closed', delete_closed))
+dispatcher.add_handler(CommandHandler('delete_all', delete_all))
+dispatcher.add_handler(CommandHandler('delete_closed', delete_all_closed))
 dispatcher.add_handler(CommandHandler('donations', send_donation_text))
 
 
