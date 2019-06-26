@@ -1,7 +1,7 @@
 """Callback functions needed during creation of a Poll."""
 from telegram import InlineKeyboardMarkup
 
-from pollbot.helper import poll_required
+from pollbot.helper import poll_required, first_option_text
 from pollbot.helper.update import update_poll_messages
 from pollbot.helper.display import get_settings_text
 from pollbot.telegram.keyboard import (
@@ -19,7 +19,7 @@ from pollbot.models import PollOption
 def show_anonymization_confirmation(session, context, poll):
     """Show the delete confirmation message."""
     context.query.message.edit_text(
-        'Do you really want to anonymize this poll?\n⚠️ This action is unrevertable. ⚠️',
+        'Do you really want to anonymize this poll?\n⚠️ This action is irrevertible. ⚠️',
         reply_markup=get_anonymization_confirmation_keyboard(poll),
     )
 
@@ -84,7 +84,7 @@ def expect_new_option(session, context, poll):
 
     keyboard = InlineKeyboardMarkup([[get_back_to_settings_button(poll)]])
     context.query.message.edit_text(
-        text='Please send me the new option or multiple options at once, each option in a new line.)',
+        text=first_option_text,
         parse_mode='markdown',
         reply_markup=keyboard,
     )

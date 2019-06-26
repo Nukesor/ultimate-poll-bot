@@ -58,6 +58,11 @@ error_text = """An unknown error occurred. I probably just got a notification ab
 In case this error still occurs in a day or two, please report the bug to me :). The link to the Github repository is in the /start text.
 """
 
+first_option_text = """Please send me an option. You can send multiple options at once, each option on a new line.
+You can also add a description behind a hyphen.
+For instance `Burger - because it is tasty`
+"""
+
 
 def poll_required(function):
     """Decorator that just returns if the poll is missing."""

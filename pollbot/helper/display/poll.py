@@ -53,6 +53,8 @@ def get_poll_text(session, poll, show_warning):
     for option in options:
         lines.append('')
         lines.append(get_option_line(session, option))
+        if option.description is not None:
+            lines.append(f'┆ _{option.description}_')
 
         if poll.should_show_result() and poll.show_percentage:
             lines.append(get_percentage_line(option, total_user_count))

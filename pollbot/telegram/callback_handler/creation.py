@@ -1,5 +1,5 @@
 """Callback functions needed during creation of a Poll."""
-from pollbot.helper import poll_required
+from pollbot.helper import poll_required, first_option_text
 from pollbot.helper.creation import create_poll
 from pollbot.helper.enums import VoteType, ExpectedInput
 from pollbot.telegram.keyboard import (
@@ -130,7 +130,7 @@ def open_creation_datepicker(session, context, poll):
 def close_creation_datepicker(session, context, poll):
     """All options are entered the poll is created."""
     if len(poll.options) == 0:
-        text = 'Now send me the first option (Or send multiple options at once, each option on a new line)'
+        text = first_option_text
         keyboard = get_open_datepicker_keyboard(poll)
     else:
         text = 'Send *another option* or click *done*'

@@ -1,4 +1,6 @@
 """Handle messages."""
+
+from pollbot.helper import first_option_text
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.enums import ExpectedInput, VoteType
 from pollbot.helper.display import get_settings_text
@@ -60,8 +62,7 @@ def handle_set_description(bot, update, session, user, text, poll, chat):
     """Set the description of the poll."""
     poll.description = text
     user.expected_input = ExpectedInput.options.name
-    message = 'Now send me the first option (Or send multiple options at once, each option on a new line)'
-    chat.send_message(message, reply_markup=get_open_datepicker_keyboard(poll))
+    chat.send_message(first_option_text, reply_markup=get_open_datepicker_keyboard(poll), parse_mode='markdown')
 
 
 def handle_create_options(bot, update, session, user, text, poll, chat):

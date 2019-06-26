@@ -58,10 +58,21 @@ def add_options(poll, text):
     added_options = []
 
     for option_to_add in options_to_add:
+        description = None
+        # Extract the description if existing
+        if '-' in option_to_add:
+            # Extract and strip the description
+            splitted = option_to_add.split('-')
+            option_to_add = splitted[0].strip()
+            description = splitted[1].strip()
+            if description == '':
+                description = None
+
         if option_is_duplicate(poll, option_to_add) or option_to_add in added_options:
             continue
 
         poll_option = PollOption(poll, option_to_add)
+        poll_option.description = description
         poll.options.append(poll_option)
 
         added_options.append(option_to_add)
