@@ -1,5 +1,6 @@
 """Callback functions needed during creation of a Poll."""
 from sqlalchemy import func
+from sqlalchemy.exc import IntegrityError
 
 from pollbot.helper import poll_allows_cumulative_votes
 from pollbot.helper.enums import VoteType, VoteResultType, CallbackResult
@@ -23,21 +24,25 @@ def handle_vote(session, context):
         return
 
     poll = option.poll
-
-    # Single vote
-    if poll.vote_type == VoteType.single_vote.name:
-        update_poll = handle_single_vote(session, context, option)
-    # Block vote
-    elif poll.vote_type == VoteType.block_vote.name:
-        update_poll = handle_block_vote(session, context, option)
-    # Limited vote
-    elif poll.vote_type == VoteType.limited_vote.name:
-        update_poll = handle_limited_vote(session, context, option)
-    # Cumulative vote
-    elif poll.vote_type == VoteType.cumulative_vote.name:
-        update_poll = handle_cumulative_vote(session, context, option)
-    elif poll.vote_type == VoteType.count_vote.name:
-        update_poll = handle_cumulative_vote(session, context, option, unlimited=True)
+    try:
+        # Single vote
+        if poll.vote_type == VoteType.single_vote.name:
+            update_poll = handle_single_vote(session, context, option)
+        # Block vote
+        elif poll.vote_type == VoteType.block_vote.name:
+            update_poll = handle_block_vote(session, context, option)
+        # Limited vote
+        elif poll.vote_type == VoteType.limited_vote.name:
+            update_poll = handle_limited_vote(session, context, option)
+        # Cumulative vote
+        elif poll.vote_type == VoteType.cumulative_vote.name:
+            update_poll = handle_cumulative_vote(session, context, option)
+        elif poll.vote_type == VoteType.count_vote.name:
+            update_poll = handle_cumulative_vote(session, context, option, unlimited=True)
+    except IntegrityError:
+        # Double vote. Rollback the transaction and ignore the second vote
+        session.rollback()
+        return
 
     session.commit()
     if update_poll:
