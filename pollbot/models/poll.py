@@ -74,6 +74,14 @@ class Poll(base):
         self.user_sorting = UserSorting.user_chrono.name
         self.option_sorting = OptionSorting.option_chrono.name
 
+    def __repr__(self):
+        """Print as string."""
+        return f'Poll with Id: {self.id}, name: {self.name}'
+
+    def __str__(self):
+        """Print as string."""
+        return f'Poll with Id: {self.id}, name: {self.name}'
+
     def should_show_result(self):
         """Determine, whether this results of this poll should be shown."""
         return self.results_visible or self.closed

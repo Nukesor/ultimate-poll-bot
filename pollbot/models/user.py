@@ -43,6 +43,14 @@ class User(base):
         if username is not None:
             self.username = username.lower()
 
+    def __repr__(self):
+        """Print as string."""
+        return f'User with Id: {self.id}, name: {self.name}'
+
+    def __str__(self):
+        """Print as string."""
+        return f'User with Id: {self.id}, name: {self.name}'
+
     @staticmethod
     def get_or_create(session, tg_user):
         """Get or create a new user."""

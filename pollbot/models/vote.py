@@ -48,3 +48,11 @@ class Vote(base):
         self.vote_count = 1
         self.poll_option = poll_option
         self.poll = poll_option.poll
+
+    def __repr__(self):
+        """Print as string."""
+        return f'Vote with Id: {self.id}, poll: {self.poll_id}'
+
+    def __str__(self):
+        """Print as string."""
+        return f'Vote with Id: {self.id}, poll: {self.poll_id}'
