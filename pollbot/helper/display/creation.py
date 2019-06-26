@@ -8,19 +8,23 @@ def get_vote_type_help_text(poll):
     return f"""Current vote type: *{vote_type}*
 
 *Single vote*:
-Every user gets a single vote.
+Every user gets a single vote. The default and normal voting mode.
 
 *Block vote*:
-Every user can vote for all (or less) options.
+Every user can vote for all (or less) options. Useful for finding the most wanted options in a group, e.g. games that should be played on a LAN-Party.
 
 *Limited vote*:
 Every user gets a fixed number of votes they can distribute, but only once per option.
+Pretty much like block vote, but people need to prioritize.
+This mode is good for limiting the amount of possible winners e.g. if you only want max 4 games on your LAN-Party.
 
 *Cumulative vote*:
 Every user gets a fixed number of votes they can distribute as they like (even multiple votes per option).
+This mode has a little more depth than limited vote, since it allows users to vote on a single option multiple times.
 
 *Unlimited votes* (or the shopping list):
-Every user can vote as often on any option as they want. This is great if you want to, for instance, determine how much stuff everyone wants for the next festival trip.
+Every user can vote as often on any option as they want.
+This is great if you want to, for instance, determine how much stuff everyone wants for the next festival trip.
 """
 
 
