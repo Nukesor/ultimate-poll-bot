@@ -40,6 +40,13 @@ help_text = """There are quite a few settings for your polls:
 4. The order in which options are displayed in the results can be changed.
 5. The order in which names for each option are displayed in the results can be changed.
 
+
+*Delete polls*
+You can delete all polls individually in the main management menu.
+There's also the /delete_closed command, which deletes all closed polls
+and the /delete_all command which deletes ALL polls.
+
+
 *Too many votes in the last minute:*
 Don't worry about this message. This mechanism is necessary to prevent my bot from being blocked by telegram for spamming messages.
 The only effect for you is, that the results won't be displayed immediately.

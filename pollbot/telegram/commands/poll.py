@@ -83,3 +83,15 @@ def delete_all(bot, update, session, user):
         .update({'deleted': True})
 
     return "All polls have been deleted"
+
+
+@run_async
+@session_wrapper(private=True)
+def delete_all_closed(bot, update, session, user):
+    """Get a list of all active polls."""
+    session.query(Poll) \
+        .filter(Poll.user == user) \
+        .filter(Poll.closed.is_(True)) \
+        .update({'deleted': True})
+
+    return "All closed polls have been deleted"

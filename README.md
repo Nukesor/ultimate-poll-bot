@@ -78,6 +78,7 @@ With this mechanism you can keep spamming vote buttons and do as you like withou
     /create         Create a new poll
     /list           List all active polls and manage them
     /list_closed    List all closed polls and manage them
+    /delete_closed  Delete all closed polls
     /delete_all     Delete all polls (closed and unclosed)
     /help           Display the help
     /donations      Get me a coffee
@@ -115,6 +116,7 @@ start - Start the bot
 create - Create a new poll
 list - List all active polls and manage them
 list_closed - List all closed polls and manage them
+delete_closed - Delete all closed polls
 delete_all - Delete all polls (closed and unclosed)
 help - Show the help text
 donations - Get me a coffee
