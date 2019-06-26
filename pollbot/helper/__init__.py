@@ -9,7 +9,7 @@ My name is Arne Beer (@Nukesor) and I'm the sole developer of the Ultimate PollB
 
 This project is non-profit, open-source on [Github](https://github.com/Nukesor/ultimate-poll-bot) and hosted on a server I'm renting from my own money.
 
-I really appreciate anything that helps me out and that keeps me and my server running ☺️.
+I really appreciate anything that helps me out and that keeps my server and me running ☺️.
 
 If you like this project, check my [Patreon](https://www.patreon.com/nukesor) or support me via [Paypal](https://www.paypal.me/arnebeer).
 

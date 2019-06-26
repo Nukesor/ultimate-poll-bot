@@ -52,7 +52,7 @@ def create_poll(session, poll, user, chat, message=None):
     session.commit()
 
 
-def add_options(poll, text):
+def add_options(poll, text, allow_description=True):
     """Add a new option to the poll."""
     options_to_add = [x.strip() for x in text.split('\n') if x.strip() != '']
     added_options = []
@@ -60,7 +60,7 @@ def add_options(poll, text):
     for option_to_add in options_to_add:
         description = None
         # Extract the description if existing
-        if '-' in option_to_add:
+        if allow_description and '-' in option_to_add:
             # Extract and strip the description
             splitted = option_to_add.split('-')
             option_to_add = splitted[0].strip()

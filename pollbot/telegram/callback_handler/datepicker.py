@@ -45,7 +45,7 @@ def set_previous_month(session, context, poll):
 def add_creation_date(session, context, poll):
     """Add a date from the datepicker to the poll."""
     option = poll.current_date.isoformat()
-    added_options = add_options(poll, option)
+    added_options = add_options(poll, option, allow_description=False)
     if len(added_options) == 0:
         context.query.answer(f'Date already picked')
     else:
