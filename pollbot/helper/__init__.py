@@ -42,7 +42,7 @@ help_text = """There are quite a few settings for your polls:
 
 
 *Delete polls*
-You can delete all polls individually in the main management menu.
+You can delete all polls individually in the main poll menu.
 There's also the /delete_closed command, which deletes all closed polls
 and the /delete_all command which deletes ALL polls.
 
