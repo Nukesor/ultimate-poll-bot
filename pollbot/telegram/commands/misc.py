@@ -1,4 +1,9 @@
 """Misc commands."""
+from telegram import (
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+)
+
 from pollbot.helper.session import session_wrapper
 from pollbot.telegram.keyboard import get_main_keyboard
 from pollbot.helper import (
@@ -17,5 +22,13 @@ def send_help(bot, update, session, user):
 @session_wrapper()
 def send_donation_text(bot, update, session, user):
     """Send the donation text."""
-    keyboard = get_main_keyboard()
+    patreon_url = f'https://patreon.com/nukesor'
+    paypal_url = f'https://paypal.me/arnebeer/1'
+    buttons = [
+        [InlineKeyboardButton(text='Patreon', url=patreon_url)],
+        [InlineKeyboardButton(text='Paypal', url=paypal_url)],
+    ]
+
+    keyboard = InlineKeyboardMarkup(buttons)
+
     update.message.chat.send_message(donations_text, parse_mode='Markdown', reply_markup=keyboard)
