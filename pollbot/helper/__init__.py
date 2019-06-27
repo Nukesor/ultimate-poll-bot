@@ -7,7 +7,14 @@ Hello there!
 
 My name is Arne Beer (@Nukesor) and I'm the sole developer of the Ultimate PollBot.
 
+The idea of writing the Ultimate Pollbot was formed, when my friends couldn't decide again where to eat.
+This happened so many times already and we desperately needed a good and stable solution inside of telegram for this problem!
+That's how the ULTIMATE Pollbot was born.
+
+Every line of code in this project was written in my leisure time and is completely for free.
 This project is non-profit, open-source on [Github](https://github.com/Nukesor/ultimate-poll-bot) and hosted on a server I'm renting from my own money.
+
+Right now I usually invest between 2-10 hours a week into developing and maintaining my projects and I would love to get some support, since I'm doing this in a large part for you out there.
 
 I really appreciate anything that helps me out and that keeps my server and me running ☺️.
 
