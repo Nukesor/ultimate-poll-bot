@@ -7,7 +7,7 @@ Hello there!
 
 My name is Arne Beer (@Nukesor) and I'm the sole developer of the Ultimate PollBot.
 
-The idea of writing the Ultimate Pollbot was formed, when my friends couldn't decide again where to eat.
+The idea of writing the Ultimate Pollbot was formed, when my friends couldn't decide again where we should go for lunch.
 This happened so many times already and we desperately needed a good and stable solution inside of telegram for this problem!
 That's how the ULTIMATE Pollbot was born.
 
