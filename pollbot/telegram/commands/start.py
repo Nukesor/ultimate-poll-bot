@@ -1,9 +1,10 @@
 """The start command handler."""
-from pollbot.helper.session import session_wrapper
-from pollbot.telegram.keyboard import get_main_keyboard
 from pollbot.helper import start_text
 from pollbot.helper.enums import ExpectedInput
+from pollbot.helper.session import session_wrapper
 from pollbot.models import Poll
+from pollbot.telegram.keyboard import get_main_keyboard
+from pollbot.telegram.keyboard.external import get_external_datepicker_keyboard
 
 
 @session_wrapper()
@@ -20,7 +21,7 @@ def start(bot, update, session, user):
     # We got an empty text, just send the start message
     if text == '':
         keyboard = get_main_keyboard()
-        update.message.chat.send_message(start_text, parse_mode='Markdown', reply_markup=keyboard)
+        update.message.chat.send_message(start_text, parse_mode='markdown', reply_markup=keyboard)
 
         return
 
@@ -28,7 +29,14 @@ def start(bot, update, session, user):
     if poll is None:
         return 'This poll no longer exists.'
 
+    # Update the expected input and set the current poll
     user.expected_input = ExpectedInput.new_user_option.name
     user.current_poll = poll
     session.commit()
-    return 'Send me the option name (Or send multiple options at once, each option on a new line)'
+
+    text = 'Send me the option name (Or send multiple options at once, each option on a new line)'
+    update.message.chat.send_message(
+        text,
+        parse_mode='markdown',
+        reply_markup=get_external_datepicker_keyboard(poll)
+    )

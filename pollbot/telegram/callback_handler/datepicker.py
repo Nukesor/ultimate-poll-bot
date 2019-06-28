@@ -7,15 +7,22 @@ from pollbot.helper.display.creation import get_datepicker_text
 from pollbot.telegram.keyboard import (
     get_creation_datepicker_keyboard,
     get_add_option_datepicker_keyboard,
+    get_external_datepicker_keyboard,
 )
 
 
 def update_datepicker(context, poll):
     """Update the creation datepicker."""
-    if poll.created:
+    user = context.user
+    if poll.created and poll.user != user:
+        keyboard = get_external_datepicker_keyboard(context.poll)
+    elif poll.created and poll.user == user:
         keyboard = get_add_option_datepicker_keyboard(context.poll)
-    else:
+    elif not poll.created:
         keyboard = get_creation_datepicker_keyboard(context.poll)
+    else:
+        raise Exception('Unknown update constellation in datepicker')
+
     context.query.message.edit_text(
         get_datepicker_text(context.poll),
         parse_mode='markdown',

@@ -9,6 +9,7 @@
 - Better poll management interface structure
 - Addition and removal of options
 - Datepicker in new options
+- External users can use the datepicker
 
 
 **Maintenance:**
