@@ -90,6 +90,7 @@ class CallbackType(Enum):
     settings_toggle_percentage = 78
     settings_toggle_allow_new_options = 79
     settings_toggle_date_format = 80
+    settings_open_add_option_datepicker = 81
 
     # Misc
     ignore = 100

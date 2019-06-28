@@ -48,12 +48,13 @@ from .settings import (
     toggle_percentage,
     toggle_allow_new_options,
     toggle_date_format,
+    open_new_option_datepicker,
 )
 from .datepicker import (
     set_next_month,
     set_previous_month,
     set_date,
-    add_creation_date,
+    add_date,
 )
 
 
@@ -108,7 +109,7 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.toggle_results_visible: toggle_results_visible,
         CallbackType.open_creation_datepicker: open_creation_datepicker,
         CallbackType.close_creation_datepicker: close_creation_datepicker,
-        CallbackType.pick_date_option: add_creation_date,
+        CallbackType.pick_date_option: add_date,
         CallbackType.skip_description: skip_description,
         CallbackType.cancel_creation: cancel_creation,
 
@@ -142,6 +143,7 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.settings_toggle_percentage: toggle_percentage,
         CallbackType.settings_toggle_allow_new_options: toggle_allow_new_options,
         CallbackType.settings_toggle_date_format: toggle_date_format,
+        CallbackType.settings_open_add_option_datepicker: open_new_option_datepicker,
 
         # Datepicker
         CallbackType.set_date: set_date,

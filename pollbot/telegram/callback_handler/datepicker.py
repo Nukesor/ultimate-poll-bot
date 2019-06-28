@@ -3,13 +3,19 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 from pollbot.helper import poll_required
 from pollbot.helper.creation import add_options
-from pollbot.telegram.keyboard import get_creation_datepicker_keyboard
 from pollbot.helper.display.creation import get_datepicker_text
+from pollbot.telegram.keyboard import (
+    get_creation_datepicker_keyboard,
+    get_add_option_datepicker_keyboard,
+)
 
 
-def update_creation_datepicker(context):
+def update_datepicker(context, poll):
     """Update the creation datepicker."""
-    keyboard = get_creation_datepicker_keyboard(context.poll)
+    if poll.created:
+        keyboard = get_add_option_datepicker_keyboard(context.poll)
+    else:
+        keyboard = get_creation_datepicker_keyboard(context.poll)
     context.query.message.edit_text(
         get_datepicker_text(context.poll),
         parse_mode='markdown',
@@ -21,7 +27,7 @@ def update_creation_datepicker(context):
 def set_date(session, context, poll):
     """Show to vote type keyboard."""
     poll.current_date = date.fromisoformat(context.action)
-    update_creation_datepicker(context)
+    update_datepicker(context, poll)
     context.query.answer(f'Date changed: {poll.current_date.isoformat()}')
 
 
@@ -29,7 +35,7 @@ def set_date(session, context, poll):
 def set_next_month(session, context, poll):
     """Show to vote type keyboard."""
     poll.current_date += relativedelta(months=1)
-    update_creation_datepicker(context)
+    update_datepicker(context, poll)
     context.query.answer(f'Date changed: {poll.current_date.isoformat()}')
 
 
@@ -37,17 +43,17 @@ def set_next_month(session, context, poll):
 def set_previous_month(session, context, poll):
     """Show to vote type keyboard."""
     poll.current_date -= relativedelta(months=1)
-    update_creation_datepicker(context)
+    update_datepicker(context, poll)
     context.query.answer(f'Date changed: {poll.current_date.isoformat()}')
 
 
 @poll_required
-def add_creation_date(session, context, poll):
+def add_date(session, context, poll):
     """Add a date from the datepicker to the poll."""
     option = poll.current_date.isoformat()
     added_options = add_options(poll, option, is_date=True)
     if len(added_options) == 0:
         context.query.answer(f'Date already picked')
     else:
-        update_creation_datepicker(context)
+        update_datepicker(context, poll)
         context.query.answer(f'Date picked: {poll.current_date.isoformat()}')

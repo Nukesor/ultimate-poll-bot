@@ -73,10 +73,10 @@ def get_skip_description_keyboard(poll):
 
 def get_options_entered_keyboard(poll):
     """Get the done keyboard for options during poll creation."""
-    create_payload = f'{CallbackType.open_creation_datepicker.value}:{poll.id}:0'
+    datepicker_payload = f'{CallbackType.open_creation_datepicker.value}:{poll.id}:0'
     done_payload = f'{CallbackType.all_options_entered.value}:{poll.id}:0'
     buttons = [[
-        InlineKeyboardButton(text='Open Datepicker', callback_data=create_payload),
+        InlineKeyboardButton(text='Open Datepicker', callback_data=datepicker_payload),
         InlineKeyboardButton(text='Done', callback_data=done_payload),
     ]]
 
@@ -89,9 +89,9 @@ def get_creation_datepicker_keyboard(poll):
 
     # Create back and done buttons
     close_payload = f'{CallbackType.close_creation_datepicker.value}:{poll.id}:0'
-    done_payload = f'{CallbackType.all_options_entered.value}:{poll.id}:0'
     buttons = [InlineKeyboardButton(text='Close', callback_data=close_payload)]
     if len(poll.options) > 0:
+        done_payload = f'{CallbackType.all_options_entered.value}:{poll.id}:0'
         buttons.append(InlineKeyboardButton(text='Done', callback_data=done_payload))
     datepicker_buttons.append(buttons)
 

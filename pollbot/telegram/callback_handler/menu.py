@@ -40,6 +40,7 @@ def go_back(session, context, poll):
         parse_mode='markdown',
         reply_markup=keyboard,
     )
+    context.query.answer('')
 
     # Reset the expected input from the previous option
     context.user.expected_input = None

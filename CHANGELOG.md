@@ -8,6 +8,7 @@
 - Clone and Resetting of polls
 - Better poll management interface structure
 - Addition and removal of options
+- Datepicker in new options
 
 
 **Maintenance:**

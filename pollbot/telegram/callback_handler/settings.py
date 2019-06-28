@@ -1,15 +1,15 @@
 """Callback functions needed during creation of a Poll."""
-from telegram import InlineKeyboardMarkup
-
 from pollbot.helper import poll_required, first_option_text
 from pollbot.helper.update import update_poll_messages
 from pollbot.helper.display import get_settings_text
+from pollbot.helper.display.creation import get_datepicker_text
 from pollbot.telegram.keyboard import (
     get_anonymization_confirmation_keyboard,
     get_settings_keyboard,
     get_option_sorting_keyboard,
-    get_back_to_settings_button,
     get_remove_option_keyboad,
+    get_add_option_keyboard,
+    get_add_option_datepicker_keyboard,
 )
 from pollbot.helper.enums import OptionSorting, UserSorting, ExpectedInput
 from pollbot.models import PollOption
@@ -82,11 +82,20 @@ def expect_new_option(session, context, poll):
     context.user.expected_input = ExpectedInput.new_option.name
     context.user.current_poll = poll
 
-    keyboard = InlineKeyboardMarkup([[get_back_to_settings_button(poll)]])
     context.query.message.edit_text(
         text=first_option_text,
         parse_mode='markdown',
-        reply_markup=keyboard,
+        reply_markup=get_add_option_keyboard(poll),
+    )
+
+
+@poll_required
+def open_new_option_datepicker(session, context, poll):
+    """Send a text and tell the user that we expect a new option."""
+    context.query.message.edit_text(
+        text=get_datepicker_text(poll),
+        parse_mode='markdown',
+        reply_markup=get_add_option_datepicker_keyboard(poll),
     )
 
 

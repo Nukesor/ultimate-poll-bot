@@ -5,6 +5,7 @@ from telegram import (
 )
 
 from pollbot.telegram.keyboard import get_back_to_management_button
+from pollbot.telegram.keyboard.date_picker import get_datepicker_buttons
 from pollbot.helper.enums import (
     CallbackType,
     CallbackResult,
@@ -125,3 +126,31 @@ def get_remove_option_keyboad(poll):
     buttons.append([get_back_to_settings_button(poll)])
 
     return InlineKeyboardMarkup(buttons)
+
+
+def get_add_option_keyboard(poll):
+    """Get the keyboard for adding a new option after poll creation."""
+    datepicker_payload = f'{CallbackType.settings_open_add_option_datepicker.value}:{poll.id}:0'
+    buttons = [
+        [InlineKeyboardButton(text='Open Datepicker', callback_data=datepicker_payload)],
+        [get_back_to_settings_button(poll)],
+    ]
+
+    keyboard = InlineKeyboardMarkup(buttons)
+
+    return keyboard
+
+
+def get_add_option_datepicker_keyboard(poll):
+    """Get the done keyboard for options during poll creation."""
+    datepicker_buttons = get_datepicker_buttons(poll)
+
+    # Add back and pick buttons
+    pick_payload = f'{CallbackType.pick_date_option.value}:{poll.id}:0'
+    row = [
+        get_back_to_settings_button(poll),
+        InlineKeyboardButton(text='Pick this date', callback_data=pick_payload),
+    ]
+    datepicker_buttons.append(row)
+
+    return InlineKeyboardMarkup(datepicker_buttons)
