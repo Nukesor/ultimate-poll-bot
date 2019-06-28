@@ -1,4 +1,5 @@
 """Reply keyboards."""
+from datetime import date
 from telegram import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
@@ -47,12 +48,18 @@ def get_normal_buttons(poll):
         options = get_sorted_options(poll)
 
     for option in options:
+        if option.is_date and option.poll.european_date_format:
+            option_date = date.fromisoformat(option.name)
+            option_name = option_date.strftime('%d.%m.%Y')
+        else:
+            option_name = option.name
+
         result = CallbackResult.vote.value
         payload = f'{vote_button_type}:{option.id}:{result}'
         if poll.should_show_result():
-            text = f'{option.name} ({len(option.votes)} votes)'
+            text = f'{option_name} ({len(option.votes)} votes)'
         else:
-            text = f'{option.name}'
+            text = f'{option_name}'
         buttons.append([InlineKeyboardButton(text=text, callback_data=payload)])
 
     return buttons
@@ -70,13 +77,17 @@ def get_cumulative_buttons(poll):
 
     buttons = []
     for option in options:
-        text = option.name
+        if option.is_date and option.poll.european_date_format:
+            option_date = date.fromisoformat(option.name)
+            option_name = option_date.strftime('%d.%m.%Y')
+        else:
+            option_name = option.name
 
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
         no_payload = f'{vote_button_type}:{option.id}:{vote_no}'
         buttons.append([
-            InlineKeyboardButton(text=f'－ {text}', callback_data=no_payload),
-            InlineKeyboardButton(text=f'＋ {text}', callback_data=yes_payload),
+            InlineKeyboardButton(text=f'－ {option_name}', callback_data=no_payload),
+            InlineKeyboardButton(text=f'＋ {option_name}', callback_data=yes_payload),
         ])
 
     return buttons
