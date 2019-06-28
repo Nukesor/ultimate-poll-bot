@@ -1,11 +1,12 @@
 """Text helper for poll creation."""
+from datetime import date
 from pollbot.helper.enums import VoteTypeTranslation
 
 
 def get_vote_type_help_text(poll):
     """Create the help text for vote types."""
     vote_type = VoteTypeTranslation[poll.vote_type]
-    return f"""Current vote type: *{vote_type}*
+    return f"""Current poll type: *{vote_type}*
 
 *Single vote*:
 Every user gets a single vote. The default and normal voting mode.
@@ -33,9 +34,9 @@ def get_init_text(poll):
     message = f"""Hey there!
 You are about to create a new poll 👌
 
-The current settings for the poll are:
+The current settings for this poll are:
 
-*Vote type*: {VoteTypeTranslation[poll.vote_type]}
+*Poll type*: {VoteTypeTranslation[poll.vote_type]}
 *Anonymity*: {'Names are not visible' if poll.anonymous else 'Names are visible'}
 *Visible results*: {'Results are directly visible' if poll.results_visible else 'Results are not visible until poll is closed'}
 
@@ -53,6 +54,11 @@ To add date, select it and click _Pick this date_.
 
 *Current options:*"""
     for option in poll.options:
-        text += f'\n{option.name}'
+        if option.is_date and option.poll.european_date_format:
+            option_date = date.fromisoformat(option.name)
+            option_name = option_date.strftime('%d.%m.%Y')
+            text += f'\n{option_name}'
+        else:
+            text += f'\n{option.name}'
 
     return text

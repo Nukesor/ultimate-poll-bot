@@ -5,6 +5,7 @@ from sqlalchemy import (
     ForeignKey,
 )
 from sqlalchemy.types import (
+    Boolean,
     Integer,
     DateTime,
     String,
@@ -22,6 +23,7 @@ class PollOption(base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     description = Column(String)
+    is_date = Column(Boolean, nullable=False, default=False)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 

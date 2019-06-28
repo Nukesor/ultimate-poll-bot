@@ -1,6 +1,8 @@
 """Get the text describing the current state of the poll."""
 import math
+from datetime import date
 from sqlalchemy import func
+
 from pollbot.helper import (
     poll_has_limited_votes,
     poll_allows_cumulative_votes,
@@ -94,14 +96,21 @@ def get_poll_text(session, poll, show_warning):
 
 def get_option_line(session, option):
     """Get the line with vote count for this option."""
+    # Special formating for polls with european date format
+    if option.is_date and option.poll.european_date_format:
+        option_date = date.fromisoformat(option.name)
+        option_name = option_date.strftime('%d.%m.%Y')
+    else:
+        option_name = option.name
+
     if len(option.votes) > 0 and option.poll.should_show_result():
         if poll_allows_cumulative_votes(option.poll):
             vote_count = sum([vote.vote_count for vote in option.votes])
         else:
             vote_count = len(option.votes)
-        return f'┌ *{option.name}* ({vote_count} votes)'
+        return f'┌ *{option_name}* ({vote_count} votes)'
     else:
-        return f'┌ *{option.name}*'
+        return f'┌ *{option_name}*'
 
 
 def get_vote_line(poll, option, vote, index):

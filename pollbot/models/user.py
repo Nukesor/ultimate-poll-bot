@@ -29,6 +29,9 @@ class User(base):
 
     expected_input = Column(String)
 
+    # Permanent settings
+    european_date_format = Column(Boolean, nullable=False, default=False, server_default='false')
+
     # Simple foreign key
     current_poll_id = Column(BigInteger, ForeignKey('poll.id', ondelete="set null"), index=True)
     current_poll = relationship('Poll', uselist=False, foreign_keys='User.current_poll_id', post_update=True)

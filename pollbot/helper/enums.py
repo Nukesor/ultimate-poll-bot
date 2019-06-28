@@ -89,6 +89,7 @@ class CallbackType(Enum):
     settings_remove_option = 77
     settings_toggle_percentage = 78
     settings_toggle_allow_new_options = 79
+    settings_toggle_date_format = 80
 
     # Misc
     ignore = 100

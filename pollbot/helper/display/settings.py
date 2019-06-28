@@ -33,6 +33,12 @@ def get_settings_text(poll):
         else:
             text.append("*Percentage*: Hidden")
 
+    if poll.has_date_option():
+        if poll.european_date_format:
+            text.append("*Date format*: DD.MM.YYYY")
+        else:
+            text.append("*Date format*: YYYY-MM-DD")
+
     text.append('')
 
     # Sorting of user names

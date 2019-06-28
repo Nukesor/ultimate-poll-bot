@@ -13,7 +13,7 @@ def get_init_keyboard(poll):
     """Get the initial inline keyboard for poll creation."""
     change_type = CallbackType.show_vote_type_keyboard.value
     change_type_payload = f"{change_type}:{poll.id}:0"
-    change_type_text = "Change vote type"
+    change_type_text = "Change poll type"
 
     toggle_anonymity = CallbackType.toggle_anonymity.value
     toggle_anonymity_payload = f"{toggle_anonymity}:{poll.id}:0"

@@ -140,3 +140,17 @@ def toggle_allow_new_options(session, context, poll):
         parse_mode='markdown',
         reply_markup=get_settings_keyboard(poll)
     )
+
+
+@poll_required
+def toggle_date_format(session, context, poll):
+    """Toggle the visibility of the percentage bar."""
+    poll.european_date_format = not poll.european_date_format
+    poll.user.european_date_format = poll.european_date_format
+
+    update_poll_messages(session, context.bot, poll)
+    context.query.message.edit_text(
+        text=get_settings_text(poll),
+        parse_mode='markdown',
+        reply_markup=get_settings_keyboard(poll)
+    )

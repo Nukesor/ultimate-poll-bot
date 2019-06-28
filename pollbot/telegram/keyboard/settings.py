@@ -50,7 +50,13 @@ def get_settings_keyboard(poll):
         percentage_payload = f'{CallbackType.settings_toggle_percentage.value}:{poll.id}:0'
         buttons.append([InlineKeyboardButton(text=percentage_text, callback_data=percentage_payload)])
 
-    # New option button
+    if poll.has_date_option():
+        # Show percentage option
+        date_format_text = '📅 YYYY-MM-DD date format' if poll.european_date_format else '📅 DD-MM-YYYY date format'
+        date_format_payload = f'{CallbackType.settings_toggle_date_format.value}:{poll.id}:0'
+        buttons.append([InlineKeyboardButton(text=date_format_text, callback_data=date_format_payload)])
+
+    # Allow user options button
     if poll.allow_new_options:
         allow_new_option_text = "🍺 Forbid users to add new options"
     else:

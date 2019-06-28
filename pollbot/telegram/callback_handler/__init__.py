@@ -47,6 +47,7 @@ from .settings import (
     remove_option,
     toggle_percentage,
     toggle_allow_new_options,
+    toggle_date_format,
 )
 from .datepicker import (
     set_next_month,
@@ -140,6 +141,7 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.settings_remove_option: remove_option,
         CallbackType.settings_toggle_percentage: toggle_percentage,
         CallbackType.settings_toggle_allow_new_options: toggle_allow_new_options,
+        CallbackType.settings_toggle_date_format: toggle_date_format,
 
         # Datepicker
         CallbackType.set_date: set_date,

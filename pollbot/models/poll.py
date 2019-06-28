@@ -39,16 +39,17 @@ class Poll(base):
     vote_type = Column(String, nullable=False)
     anonymous = Column(Boolean, nullable=False)
     number_of_votes = Column(Integer)
-    allow_new_options = Column(Boolean, nullable=False, server_default='false')
+    allow_new_options = Column(Boolean, nullable=False, default=False)
     option_sorting = Column(String, nullable=False)
     user_sorting = Column(String, nullable=False)
     results_visible = Column(Boolean, nullable=False, default=True)
-    show_percentage = Column(Boolean, nullable=False, default=True, server_default='true')
+    show_percentage = Column(Boolean, nullable=False, default=True)
+    european_date_format = Column(Boolean, nullable=False, default=False)
 
     # Flags
     created = Column(Boolean, nullable=False, default=False)
     closed = Column(Boolean, nullable=False, default=False)
-    deleted = Column(Boolean, nullable=False, default=False, server_default='false')
+    deleted = Column(Boolean, nullable=False, default=False)
 
     # Chat state variables
     expected_input = Column(String)
@@ -85,6 +86,13 @@ class Poll(base):
     def should_show_result(self):
         """Determine, whether this results of this poll should be shown."""
         return self.results_visible or self.closed
+
+    def has_date_option(self):
+        """Check whether this poll has a date option."""
+        for option in self.options:
+            if option.is_date:
+                return True
+        return False
 
     def clone(self, session):
         """Create a clone from the current poll."""
