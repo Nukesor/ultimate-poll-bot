@@ -99,7 +99,10 @@ def get_option_line(session, option):
     # Special formating for polls with european date format
     if option.is_date and option.poll.european_date_format:
         option_date = date.fromisoformat(option.name)
-        option_name = option_date.strftime('%d.%m.%Y')
+        option_name = option_date.strftime('%d.%m.%Y (%A)')
+    elif option.is_date:
+        option_date = date.fromisoformat(option.name)
+        option_name = option_date.strftime('%Y-%m-%d (%A)')
     else:
         option_name = option.name
 
