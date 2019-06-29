@@ -1,5 +1,4 @@
 """Reply keyboards."""
-from datetime import date
 from telegram import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
@@ -48,11 +47,7 @@ def get_normal_buttons(poll):
         options = get_sorted_options(poll)
 
     for option in options:
-        if option.is_date and option.poll.european_date_format:
-            option_date = date.fromisoformat(option.name)
-            option_name = option_date.strftime('%d.%m.%Y')
-        else:
-            option_name = option.name
+        option_name = option.get_formatted_name()
 
         result = CallbackResult.vote.value
         payload = f'{vote_button_type}:{option.id}:{result}'
@@ -77,11 +72,7 @@ def get_cumulative_buttons(poll):
 
     buttons = []
     for option in options:
-        if option.is_date and option.poll.european_date_format:
-            option_date = date.fromisoformat(option.name)
-            option_name = option_date.strftime('%d.%m.%Y')
-        else:
-            option_name = option.name
+        option_name = option.get_formatted_name()
 
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
         no_payload = f'{vote_button_type}:{option.id}:{vote_no}'

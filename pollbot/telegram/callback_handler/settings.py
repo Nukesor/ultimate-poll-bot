@@ -1,4 +1,5 @@
 """Callback functions needed during creation of a Poll."""
+from datetime import date
 from pollbot.helper import poll_required, first_option_text
 from pollbot.helper.update import update_poll_messages
 from pollbot.helper.display import get_settings_text
@@ -10,9 +11,19 @@ from pollbot.telegram.keyboard import (
     get_remove_option_keyboad,
     get_add_option_keyboard,
     get_add_option_datepicker_keyboard,
+    get_due_date_datepicker_keyboard,
 )
 from pollbot.helper.enums import OptionSorting, UserSorting, ExpectedInput
 from pollbot.models import PollOption
+
+
+def send_settings_message(context):
+    """Edit the message of the current context to the settings menu."""
+    context.query.message.edit_text(
+        text=get_settings_text(context.poll),
+        parse_mode='markdown',
+        reply_markup=get_settings_keyboard(context.poll)
+    )
 
 
 @poll_required
@@ -29,20 +40,14 @@ def make_anonymous(session, context, poll):
     """Change the anonymity settings of a poll."""
     poll.anonymous = True
 
-    context.query.message.edit_text(
-        get_settings_text(poll),
-        parse_mode='markdown',
-        reply_markup=get_settings_keyboard(poll)
-    )
-
     update_poll_messages(session, context.bot, poll)
+    send_settings_message(context)
 
 
 @poll_required
 def show_sorting_menu(session, context, poll):
     """Show the menu for sorting settings."""
     context.query.message.edit_reply_markup(
-        parse_mode='markdown',
         reply_markup=get_option_sorting_keyboard(poll)
     )
 
@@ -53,12 +58,12 @@ def set_user_order(session, context, poll):
     user_sorting = UserSorting(context.action)
     poll.user_sorting = user_sorting.name
 
+    update_poll_messages(session, context.bot, poll)
     context.query.message.edit_text(
         text=get_settings_text(poll),
         parse_mode='markdown',
         reply_markup=get_option_sorting_keyboard(poll)
     )
-    update_poll_messages(session, context.bot, poll)
 
 
 @poll_required
@@ -67,13 +72,12 @@ def set_option_order(session, context, poll):
     option_sorting = OptionSorting(context.action)
     poll.option_sorting = option_sorting.name
 
+    update_poll_messages(session, context.bot, poll)
     context.query.message.edit_text(
         text=get_settings_text(poll),
         parse_mode='markdown',
         reply_markup=get_option_sorting_keyboard(poll)
     )
-
-    update_poll_messages(session, context.bot, poll)
 
 
 @poll_required
@@ -131,11 +135,7 @@ def toggle_percentage(session, context, poll):
     poll.show_percentage = not poll.show_percentage
 
     update_poll_messages(session, context.bot, poll)
-    context.query.message.edit_text(
-        text=get_settings_text(poll),
-        parse_mode='markdown',
-        reply_markup=get_settings_keyboard(poll)
-    )
+    send_settings_message(context)
 
 
 @poll_required
@@ -144,11 +144,7 @@ def toggle_allow_new_options(session, context, poll):
     poll.allow_new_options = not poll.allow_new_options
 
     update_poll_messages(session, context.bot, poll)
-    context.query.message.edit_text(
-        text=get_settings_text(poll),
-        parse_mode='markdown',
-        reply_markup=get_settings_keyboard(poll)
-    )
+    send_settings_message(context)
 
 
 @poll_required
@@ -158,8 +154,24 @@ def toggle_date_format(session, context, poll):
     poll.user.european_date_format = poll.european_date_format
 
     update_poll_messages(session, context.bot, poll)
-    context.query.message.edit_text(
-        text=get_settings_text(poll),
-        parse_mode='markdown',
-        reply_markup=get_settings_keyboard(poll)
+    send_settings_message(context)
+
+
+@poll_required
+def open_due_date_datepicker(session, context, poll):
+    """Open the datepicker for setting a due date."""
+    poll.user.expected_input = ExpectedInput.due_date.name
+    context.query.message.edit_reply_markup(
+        reply_markup=get_due_date_datepicker_keyboard(poll)
     )
+
+
+@poll_required
+def pick_due_date(session, context, poll):
+    """Add a date from the datepicker to the poll."""
+    if poll.current_date <= date.today():
+        context.query.answer('The due date is in the past.')
+        return
+    poll.user.expected_input = None
+    poll.due_date = poll.current_date
+    send_settings_message(context)

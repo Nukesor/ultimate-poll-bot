@@ -49,6 +49,8 @@ from .settings import (
     toggle_allow_new_options,
     toggle_date_format,
     open_new_option_datepicker,
+    open_due_date_datepicker,
+    pick_due_date,
 )
 from .datepicker import (
     set_next_month,
@@ -144,6 +146,8 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.settings_toggle_allow_new_options: toggle_allow_new_options,
         CallbackType.settings_toggle_date_format: toggle_date_format,
         CallbackType.settings_open_add_option_datepicker: open_new_option_datepicker,
+        CallbackType.settings_open_due_date_datepicker: open_due_date_datepicker,
+        CallbackType.settings_pick_due_date: pick_due_date,
 
         # Datepicker
         CallbackType.set_date: set_date,

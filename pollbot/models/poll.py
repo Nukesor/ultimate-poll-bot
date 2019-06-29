@@ -1,4 +1,5 @@
 """The sqlalchemy model for a poll."""
+from datetime import date
 from sqlalchemy import (
     Date,
     Column,
@@ -50,6 +51,7 @@ class Poll(base):
     created = Column(Boolean, nullable=False, default=False)
     closed = Column(Boolean, nullable=False, default=False)
     deleted = Column(Boolean, nullable=False, default=False)
+    due_date = Column(Date, nullable=True)
 
     # Chat state variables
     expected_input = Column(String)
@@ -93,6 +95,13 @@ class Poll(base):
             if option.is_date:
                 return True
         return False
+
+    def get_formatted_due_date(self):
+        """Get the formatted date."""
+        if self.european_date_format:
+            return self.due_date.strftime('%d.%m.%Y')
+
+        return self.due_date.isoformat()
 
     def clone(self, session):
         """Create a clone from the current poll."""

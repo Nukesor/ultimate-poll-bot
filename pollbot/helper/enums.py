@@ -12,6 +12,7 @@ class ExpectedInput(Enum):
     votes = 4
     vote_count = 5
     date = 6
+    due_date = 7
 
     new_option = 10
     new_user_option = 11
@@ -91,6 +92,8 @@ class CallbackType(Enum):
     settings_toggle_allow_new_options = 79
     settings_toggle_date_format = 80
     settings_open_add_option_datepicker = 81
+    settings_open_due_date_datepicker = 82
+    settings_pick_due_date = 83
 
     # Misc
     ignore = 100

@@ -15,6 +15,11 @@ def get_settings_text(poll):
     else:
         text.append("*Anonymity*: Names are visible")
 
+    if poll.due_date:
+        text.append(f"*Due date*: {poll.get_formatted_due_date()}")
+    else:
+        text.append("*Due date*: None")
+
     if poll.results_visible:
         text.append("*Visible results*: Results are directly visible")
     else:

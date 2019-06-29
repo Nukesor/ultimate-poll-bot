@@ -82,6 +82,9 @@ def get_poll_text(session, poll, show_warning):
         remaining_votes = get_remaining_votes(session, poll)
         lines += remaining_votes
 
+    if poll.due_date is not None:
+        lines.append(f'\n📅 This poll is due at: {poll.get_formatted_due_date()}')
+
     # Notify users that poll is closed
     if poll.closed:
         lines.append('\n⚠️ *This poll is closed* ⚠️')

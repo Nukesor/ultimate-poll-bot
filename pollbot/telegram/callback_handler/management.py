@@ -1,4 +1,5 @@
 """Callback functions needed during creation of a Poll."""
+from datetime import date
 from pollbot.helper import poll_required
 from pollbot.helper.update import remove_poll_messages, update_poll_messages
 from pollbot.helper.display import get_poll_management_text
@@ -28,6 +29,8 @@ def reopen_poll(session, context, poll):
         context.query.answer('This poll cannot be reopened')
         return
     poll.closed = False
+    if poll.due_date is not None and poll.due_date <= date.today():
+        poll.due_date = None
     session.commit()
     update_poll_messages(session, context.bot, poll)
 

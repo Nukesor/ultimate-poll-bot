@@ -1,5 +1,4 @@
 """Text helper for poll creation."""
-from datetime import date
 from pollbot.helper.enums import VoteTypeTranslation
 
 
@@ -54,11 +53,6 @@ To add date, select it and click _Pick this date_.
 
 *Current options:*"""
     for option in poll.options:
-        if option.is_date and option.poll.european_date_format:
-            option_date = date.fromisoformat(option.name)
-            option_name = option_date.strftime('%d.%m.%Y')
-            text += f'\n{option_name}'
-        else:
-            text += f'\n{option.name}'
+        text += f'\n{option.get_formatted_name()}'
 
     return text

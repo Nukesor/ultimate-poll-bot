@@ -2,12 +2,14 @@
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from pollbot.helper import poll_required
+from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.creation import add_options
 from pollbot.helper.display.creation import get_datepicker_text
 from pollbot.telegram.keyboard import (
     get_creation_datepicker_keyboard,
     get_add_option_datepicker_keyboard,
     get_external_datepicker_keyboard,
+    get_due_date_datepicker_keyboard,
 )
 
 
@@ -17,7 +19,13 @@ def update_datepicker(context, poll):
     if poll.created and poll.user != user:
         keyboard = get_external_datepicker_keyboard(context.poll)
     elif poll.created and poll.user == user:
-        keyboard = get_add_option_datepicker_keyboard(context.poll)
+        if poll.user.expected_input == ExpectedInput.due_date.name:
+            context.query.message.edit_reply_markup(
+                reply_markup=get_due_date_datepicker_keyboard(context.poll)
+            )
+            return
+        else:
+            keyboard = get_add_option_datepicker_keyboard(context.poll)
     elif not poll.created:
         keyboard = get_creation_datepicker_keyboard(context.poll)
     else:
