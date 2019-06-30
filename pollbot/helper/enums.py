@@ -97,6 +97,7 @@ class CallbackType(Enum):
 
     # Misc
     ignore = 100
+    activate_notification = 101
 
     # Date picker
     open_creation_datepicker = 501

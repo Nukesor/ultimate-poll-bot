@@ -1,5 +1,5 @@
 """Callback functions needed during creation of a Poll."""
-from datetime import date
+from datetime import datetime, date, time
 from pollbot.helper import poll_required, first_option_text
 from pollbot.helper.update import update_poll_messages
 from pollbot.helper.display import get_settings_text
@@ -173,5 +173,7 @@ def pick_due_date(session, context, poll):
         context.query.answer('The due date is in the past.')
         return
     poll.user.expected_input = None
-    poll.due_date = poll.current_date
+    poll.current_date
+    due_date = datetime.combine(poll.current_date, time(hour=19, minute=50))
+    poll.set_due_date(due_date)
     send_settings_message(context)

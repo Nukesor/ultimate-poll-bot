@@ -3,9 +3,9 @@ from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 from datetime import datetime, timedelta
 
-from pollbot.models import Update
+from pollbot.models import Update, Notification, Poll
 from pollbot.helper.session import job_session_wrapper
-from pollbot.helper.update import send_updates, window_size
+from pollbot.helper.update import send_updates, window_size, update_poll_messages
 
 
 @job_session_wrapper()
@@ -70,3 +70,43 @@ def message_update_job(context, session):
     finally:
         context.job.enabled = True
         session.close()
+
+
+@job_session_wrapper()
+def send_notifications(context, session):
+    """Notify the users about the poll being closed soon."""
+    notifications = session.query(Notification) \
+        .join(Notification.poll) \
+        .filter(Poll.next_notification <= datetime.now()) \
+        .all()
+
+    for notification in notifications:
+        poll = notification.poll
+        time_step = poll.due_date - poll.next_notification
+
+        tg_chat = context.bot.get_chat(notification.chat_id)
+        notification.poll_message_id
+
+        if time_step == timedelta(days=1):
+            poll.next_notification = poll.due_date - timedelta(hours=6)
+            tg_chat.send_message(
+                f'The poll *{poll.name}* will automatically close in one day',
+                parse_mode='markdown',
+                reply_to_message_id=notification.poll_message_id,
+            )
+        elif time_step == timedelta(hours=6):
+            poll.next_notification = poll.due_date
+            tg_chat.send_message(
+                f'The poll *{poll.name}* will automatically close in six hours',
+                parse_mode='markdown',
+                reply_to_message_id=notification.poll_message_id,
+            )
+        elif poll.due_date == poll.next_notification:
+            poll.closed = True
+            update_poll_messages(session, context.bot, poll)
+            tg_chat.send_message(
+                f'The poll *{poll.name}* is now closed',
+                parse_mode='markdown',
+                reply_to_message_id=notification.poll_message_id,
+            )
+            session.delete(notification)

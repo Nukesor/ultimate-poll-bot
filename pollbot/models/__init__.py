@@ -4,3 +4,4 @@ from pollbot.models.reference import Reference # noqa
 from pollbot.models.user import User # noqa
 from pollbot.models.vote import Vote # noqa
 from pollbot.models.update import Update # noqa
+from pollbot.models.notification import Notification # noqa

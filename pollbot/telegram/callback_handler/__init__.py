@@ -58,6 +58,9 @@ from .datepicker import (
     set_date,
     add_date,
 )
+from .external import (
+    activate_notification,
+)
 
 
 class CallbackContext():
@@ -153,6 +156,9 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.set_date: set_date,
         CallbackType.next_month: set_next_month,
         CallbackType.previous_month: set_previous_month,
+
+        # External
+        CallbackType.activate_notification: activate_notification,
 
         # Ignore
         CallbackType.ignore: ignore,

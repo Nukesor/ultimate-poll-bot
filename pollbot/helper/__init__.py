@@ -47,12 +47,21 @@ help_text = """There are quite a few settings for your polls:
 4. The order in which options are displayed in the results can be changed.
 5. The order in which names for each option are displayed in the results can be changed.
 
+*Notifications:*
+To enable notifications in a chat follow these steps:
+1. Create a poll
+2. Set a due date in the settings menu
+3. Go to the chat you want to be notified (The pollbot needs added to the group)
+4. Reply with /notify to the poll message you forwarded
+5. Pick the correct poll
+
+This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect forwarded messages from bots in groups.
+Thereby we don't know which poll is posted in which group and everything needs to be done manually.
 
 *Delete polls*
 You can delete all polls individually in the main poll menu.
 There's also the /delete_closed command, which deletes all closed polls
 and the /delete_all command which deletes ALL polls.
-
 
 *Too many votes in the last minute:*
 Don't worry about this message. This mechanism is necessary to prevent my bot from being blocked by telegram for spamming messages.

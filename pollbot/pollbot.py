@@ -12,7 +12,7 @@ from telegram.ext import (
 
 from pollbot.config import config
 
-from pollbot.telegram.job import message_update_job
+from pollbot.telegram.job import message_update_job, send_notifications
 from pollbot.telegram.message_handler import handle_private_text
 from pollbot.telegram.callback_handler import handle_callback_query
 from pollbot.telegram.error_handler import error_callback
@@ -27,6 +27,7 @@ from pollbot.telegram.commands.poll import (
 )
 from pollbot.telegram.commands.misc import send_help, send_donation_text
 from pollbot.telegram.commands.start import start
+from pollbot.telegram.commands.external import notify
 
 logging.basicConfig(level=config['logging']['log_level'],
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -52,6 +53,7 @@ dispatcher.add_handler(CommandHandler('list_closed', list_closed_polls))
 dispatcher.add_handler(CommandHandler('delete_all', delete_all))
 dispatcher.add_handler(CommandHandler('delete_closed', delete_all_closed))
 dispatcher.add_handler(CommandHandler('donations', send_donation_text))
+dispatcher.add_handler(CommandHandler('notify', notify))
 
 
 # Callback handler
@@ -66,6 +68,7 @@ dispatcher.add_handler(ChosenInlineResultHandler(handle_chosen_inline_result))
 
 job_queue = updater.job_queue
 job_queue.run_repeating(message_update_job, interval=1, first=0, name='Handle poll message update queue')
+job_queue.run_repeating(send_notifications, interval=10, first=0, name='Handle notifications and due dates')
 
 # Message handler
 dispatcher.add_handler(

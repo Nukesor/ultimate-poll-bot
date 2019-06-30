@@ -22,3 +22,16 @@ def get_external_datepicker_keyboard(poll):
     datepicker_buttons.append(row)
 
     return InlineKeyboardMarkup(datepicker_buttons)
+
+
+def get_notify_keyboard(polls):
+    """Get the keyboard for activationg notifications in a chat."""
+    # Add back and pick buttons
+    buttons = []
+    for poll in polls:
+        pick_payload = f'{CallbackType.activate_notification.value}:{poll.id}:0'
+        buttons.append([
+            InlineKeyboardButton(text=poll.name, callback_data=pick_payload),
+        ])
+
+    return InlineKeyboardMarkup(buttons)

@@ -1,5 +1,5 @@
 """The sqlalchemy model for a poll."""
-from datetime import date
+from datetime import datetime, timedelta
 from sqlalchemy import (
     Date,
     Column,
@@ -51,7 +51,8 @@ class Poll(base):
     created = Column(Boolean, nullable=False, default=False)
     closed = Column(Boolean, nullable=False, default=False)
     deleted = Column(Boolean, nullable=False, default=False)
-    due_date = Column(Date, nullable=True)
+    due_date = Column(DateTime, nullable=True)
+    next_notification = Column(DateTime, nullable=True)
 
     # Chat state variables
     expected_input = Column(String)
@@ -99,9 +100,22 @@ class Poll(base):
     def get_formatted_due_date(self):
         """Get the formatted date."""
         if self.european_date_format:
-            return self.due_date.strftime('%d.%m.%Y')
+            return self.due_date.strftime('%d.%m.%Y %H:%M UTC')
 
-        return self.due_date.isoformat()
+        return self.due_date.strftime('%Y-%m-%d %H:%M UTC')
+
+    def set_due_date(self, date):
+        """Set the due date and the next notification."""
+        now = datetime.now()
+        self.due_date = date
+        if now < self.due_date - timedelta(days=7):
+            self.next_notification = self.due_date - timedelta(days=7)
+        elif now < self.due_date - timedelta(days=1):
+            self.next_notification = self.due_date - timedelta(days=1)
+        elif now < self.due_date - timedelta(hours=6):
+            self.next_notification = self.due_date - timedelta(hours=6)
+        else:
+            self.next_notification = self.due_date
 
     def clone(self, session):
         """Create a clone from the current poll."""
