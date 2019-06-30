@@ -174,6 +174,6 @@ def pick_due_date(session, context, poll):
         return
     poll.user.expected_input = None
     poll.current_date
-    due_date = datetime.combine(poll.current_date, time(hour=19, minute=50))
+    due_date = datetime.combine(poll.current_date, time(hour=12, minute=00))
     poll.set_due_date(due_date)
     send_settings_message(context)
