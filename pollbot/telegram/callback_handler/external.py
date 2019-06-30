@@ -18,6 +18,18 @@ def activate_notification(session, context, poll):
     if notification is None:
         raise Exception(f"Got rogue notification board for poll {poll} and user {user}")
 
-    notification.poll = poll
+    existing_notification = session.query(Notification) \
+        .filter(Notification.poll == poll) \
+        .filter(Notification.chat_id == message.chat_id) \
+        .one_or_none()
+
+    # We already got a notification in this chat for this poll
+    # Save the poll message id anyway
+    if existing_notification:
+        session.delete(notification)
+        existing_notification.poll_message_id = notification.poll_message_id
+    else:
+        notification.poll = poll
+
     session.commit()
     context.query.message.edit_text('Notifications activated')

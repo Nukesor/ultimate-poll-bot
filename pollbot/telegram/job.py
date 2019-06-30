@@ -102,7 +102,6 @@ def send_notifications(context, session):
                 reply_to_message_id=notification.poll_message_id,
             )
         elif poll.due_date == poll.next_notification:
-            poll.closed = True
             update_poll_messages(session, context.bot, poll)
             tg_chat.send_message(
                 f'The poll *{poll.name}* is now closed',
@@ -110,3 +109,13 @@ def send_notifications(context, session):
                 reply_to_message_id=notification.poll_message_id,
             )
             session.delete(notification)
+
+    polls_to_close = session.query(Poll) \
+        .filter(Poll.due_date <= datetime.now()) \
+        .filter(Poll.closed.is_(False)) \
+        .filter(Poll.deleted.is_(False)) \
+        .all()
+
+    for poll in polls_to_close:
+        poll.closed = True
+        update_poll_messages(session, context.bot, poll)

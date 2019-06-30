@@ -12,5 +12,9 @@
 - External users can use the datepicker
 
 
+- Set a due date for a poll, at which the poll will be automatically closed
+- Activate notifications in chats, which remind everyone that the poll will close soon
+
+
 **Maintenance:**
 - Huge amount of bugfixes
