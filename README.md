@@ -38,7 +38,7 @@ As soon as such a poll is closed, the results will be visible. **Beware!**: such
 
 **Poll Management:**
 - Addition and removal of options
-- A setting which allows other users to add new options
+- Allow other users to add new options
 - Polls can be closed
 - Polls can be reopened unless the poll is configured to hide the results until it has been closed.
 - Polls can be completely deleted, which means that all non-forwarded occurences of the poll will be removed.
@@ -46,9 +46,14 @@ As soon as such a poll is closed, the results will be visible. **Beware!**: such
 - Polls can be cloned (New poll with same options, but without votes). Poll needs to be closed first
 
 
+**Convenience features:**
+- A datepicker for easier creation of poll options
+- Specify a due date, at which the poll will be automatically closed.
+- Activate notifications in chats to notify users that the poll will close soon.
+
+
 **Sorting and Appearance:**
 
-- A datepicker for easier creation of poll options
 - The percentage bar in the vote message can be disabled.
 - The bot allows to configure the sorting of the option list AND and the user list for each option.
 - Users can be sorted by vote date or username. Options can be sorted by highest percentage, name or by the order they've been added.
@@ -68,8 +73,6 @@ With this mechanism you can keep spamming vote buttons and do as you like withou
 
 - A doodle poll
 - A STV poll
-- Set a due date for a poll
-- Get due date notifications for polls, if the bot is in the same group
 
 
 ## Commands:
