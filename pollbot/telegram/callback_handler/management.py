@@ -10,8 +10,9 @@ from pollbot.telegram.keyboard import get_management_keyboard
 def delete_poll(session, context, poll):
     """Permanently delete the pall."""
     remove_poll_messages(session, context.bot, poll)
-    poll.deleted = True
+    session.delete(poll)
     session.commit()
+    context.query.answer('Poll deleted.')
 
 
 @poll_required
@@ -20,13 +21,14 @@ def close_poll(session, context, poll):
     poll.closed = True
     session.commit()
     update_poll_messages(session, context.bot, poll)
+    context.query.answer('Poll closed.')
 
 
 @poll_required
 def reopen_poll(session, context, poll):
     """Reopen this poll."""
     if not poll.results_visible:
-        context.query.answer('This poll cannot be reopened')
+        context.query.answer('Poll cannot be reopened')
         return
     poll.closed = False
     if poll.due_date is not None and poll.due_date <= datetime.now():
@@ -57,4 +59,4 @@ def clone_poll(session, context, poll):
             parse_mode='markdown',
             reply_markup=get_management_keyboard(new_poll)
         )
-    context.query.answer('The poll has been cloned')
+    context.query.answer('Poll cloned.')

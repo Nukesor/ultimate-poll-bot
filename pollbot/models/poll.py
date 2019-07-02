@@ -50,7 +50,6 @@ class Poll(base):
     # Flags
     created = Column(Boolean, nullable=False, default=False)
     closed = Column(Boolean, nullable=False, default=False)
-    deleted = Column(Boolean, nullable=False, default=False)
     due_date = Column(DateTime, nullable=True)
     next_notification = Column(DateTime, nullable=True)
 

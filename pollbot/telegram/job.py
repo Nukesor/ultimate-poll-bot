@@ -113,7 +113,6 @@ def send_notifications(context, session):
     polls_to_close = session.query(Poll) \
         .filter(Poll.due_date <= datetime.now()) \
         .filter(Poll.closed.is_(False)) \
-        .filter(Poll.deleted.is_(False)) \
         .all()
 
     for poll in polls_to_close:

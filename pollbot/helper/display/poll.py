@@ -23,9 +23,6 @@ from pollbot.helper.display import (
 
 def get_poll_text(session, poll, show_warning):
     """Create the text of the poll."""
-    if poll.deleted:
-        return 'This poll has been permanently deleted.'
-
     total_user_count = session.query(User.id) \
         .join(Vote) \
         .join(PollOption) \

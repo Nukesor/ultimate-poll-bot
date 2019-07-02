@@ -46,7 +46,6 @@ def list_polls(bot, update, session, user):
         .filter(Poll.user == user) \
         .filter(Poll.created.is_(True)) \
         .filter(Poll.closed.is_(False)) \
-        .filter(Poll.deleted.is_(False)) \
         .all()
 
     if len(polls) == 0:
@@ -65,7 +64,6 @@ def list_closed_polls(bot, update, session, user):
         .filter(Poll.user == user) \
         .filter(Poll.created.is_(True)) \
         .filter(Poll.closed.is_(True)) \
-        .filter(Poll.deleted.is_(False)) \
         .all()
 
     if len(polls) == 0:
@@ -78,10 +76,9 @@ def list_closed_polls(bot, update, session, user):
 @run_async
 @session_wrapper(private=True)
 def delete_all(bot, update, session, user):
-    """Get a list of all active polls."""
-    session.query(Poll) \
-        .filter(Poll.user == user) \
-        .update({'deleted': True})
+    """Delete all polls of the user."""
+    for poll in user.polls:
+        session.delete(poll)
 
     return "All polls have been deleted"
 
@@ -89,10 +86,9 @@ def delete_all(bot, update, session, user):
 @run_async
 @session_wrapper(private=True)
 def delete_all_closed(bot, update, session, user):
-    """Get a list of all active polls."""
-    session.query(Poll) \
-        .filter(Poll.user == user) \
-        .filter(Poll.closed.is_(True)) \
-        .update({'deleted': True})
+    """Delete all closed polls of the user."""
+    for poll in user.polls:
+        if poll.closed:
+            session.delete(poll)
 
     return "All closed polls have been deleted"

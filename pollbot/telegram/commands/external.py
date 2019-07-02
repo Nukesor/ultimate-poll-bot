@@ -10,7 +10,6 @@ def notify(bot, update, session, user):
     polls = session.query(Poll) \
         .filter(Poll.user == user) \
         .filter(Poll.closed.is_(False)) \
-        .filter(Poll.deleted.is_(False)) \
         .filter(Poll.due_date.isnot(None)) \
         .all()
 

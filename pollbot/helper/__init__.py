@@ -90,7 +90,7 @@ For instance `Burger - because it is tasty`
 def poll_required(function):
     """Decorator that just returns if the poll is missing."""
     def wrapper(session, context):
-        if context.poll is None or context.poll.deleted:
+        if context.poll is None:
             return
 
         function(session, context, context.poll)
