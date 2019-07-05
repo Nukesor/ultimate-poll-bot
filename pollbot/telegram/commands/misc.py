@@ -16,7 +16,12 @@ from pollbot.helper import (
 def send_help(bot, update, session, user):
     """Send a start text."""
     keyboard = get_main_keyboard()
-    update.message.chat.send_message(help_text, parse_mode='Markdown', reply_markup=keyboard)
+    update.message.chat.send_message(
+        help_text,
+        parse_mode='Markdown',
+        reply_markup=keyboard,
+        disable_web_page_preview=True,
+    )
 
 
 @session_wrapper()

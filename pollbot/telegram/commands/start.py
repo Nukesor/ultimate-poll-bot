@@ -21,7 +21,11 @@ def start(bot, update, session, user):
     # We got an empty text, just send the start message
     if text == '':
         keyboard = get_main_keyboard()
-        update.message.chat.send_message(start_text, parse_mode='markdown', reply_markup=keyboard)
+        update.message.chat.send_message(
+            start_text,
+            parse_mode='markdown',
+            reply_markup=keyboard,
+        )
 
         return
 

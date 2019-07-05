@@ -44,8 +44,8 @@ help_text = """There are quite a few settings for your polls:
 1. A poll can be made anonymous retrospectively.
 2. The percentage line of options can be hidden in the settings menu.
 3. New options can be added and existing options can be removed in the settings menu.
-4. The order in which options are displayed in the results can be changed.
-5. The order in which names for each option are displayed in the results can be changed.
+4. You can allow other users to add options to your poll.
+5. The order in which user names and options are displayed in the results can be changed.
 
 *Notifications:*
 To enable notifications in a chat follow these steps:
@@ -58,22 +58,26 @@ To enable notifications in a chat follow these steps:
 This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect forwarded messages from bots in groups.
 Thereby we don't know which poll is posted in which group and everything needs to be done manually.
 
+*Find old polls:*
+There are two commands `/list` and `/list\_closed`, which allow you to find and manage your old polls.
+
 *Delete polls*
-You can delete all polls individually in the main poll menu.
-There's also the /delete_closed command, which deletes all closed polls
-and the /delete_all command which deletes ALL polls.
+You can delete individual polls in the respective poll menus.
+There's also the /delete\_closed command, which deletes all closed polls
+and the /delete\_all command which deletes ALL polls.
 
 *Too many votes in the last minute:*
 Don't worry about this message. This mechanism is necessary to prevent my bot from being blocked by telegram for spamming messages.
 The only effect for you is, that the results won't be displayed immediately.
 
 *My polls won't update:*
-In this case you probably have multiple active polls or the same poll twice in a single group.
-This is something that a bot cannot detect (telegrams API doesn't allow this). Therefore you need to handle this yourself.
+In this case you probably have multiple active polls in a single group (or the same poll multiple times).
+This is something the bot cannot detect (telegrams API doesn't allow this). Therefore you need to handle this yourself.
 Only have one highly active poll per group and don't send the same poll multiple times in the same group (or delete the old ones for ALL members of the group).
 
 *There is a bug that won't go away!!*
-Usually I get a notification as soon as something breaks, but there might be some bugs that go unnoticed! In that case, just write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot)
+I usually get a notification as soon as something breaks, but there might be some bugs that go unnoticed!
+In case a bug isn't fixed in a day or two, please write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot).
 """
 
 
