@@ -23,6 +23,7 @@ There are still some features missing, such as Deadlines, Notifications and even
 This bot has 5 different vote modi. Each mode is useful for various scenarious. Choose wisely.
 
 - Single vote: User get a single vote to allot
+- Doodle: Users can vote with `yes`, `no` and `maybe` for each option.
 - Block vote: Users can vote without restriction, but only one vote per option.
 - Limited vote: Each user gets X votes for distribution, but only one vote per option.
 - Cumulative vote: Every user gets X votes they can distribute as they like.
