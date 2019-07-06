@@ -1,5 +1,5 @@
 """Some static stuff or helper functions."""
-from .enums import VoteType
+from .enums import PollType
 
 
 donations_text = """
@@ -104,30 +104,30 @@ def poll_required(function):
 
 def poll_allows_multiple_votes(poll):
     """Check whether the poll allows multiple votes."""
-    multiple_vote_types = [
-        VoteType.block_vote.name,
-        VoteType.limited_vote.name,
-        VoteType.cumulative_vote.name,
+    multiple_poll_types = [
+        PollType.block_vote.name,
+        PollType.limited_vote.name,
+        PollType.cumulative_vote.name,
     ]
 
-    return poll.vote_type in multiple_vote_types
+    return poll.poll_type in multiple_poll_types
 
 
 def poll_has_limited_votes(poll):
     """Check whether the poll has limited votes."""
-    vote_type_with_vote_count = [
-        VoteType.limited_vote.name,
-        VoteType.cumulative_vote.name,
+    poll_type_with_vote_count = [
+        PollType.limited_vote.name,
+        PollType.cumulative_vote.name,
     ]
 
-    return poll.vote_type in vote_type_with_vote_count
+    return poll.poll_type in poll_type_with_vote_count
 
 
 def poll_allows_cumulative_votes(poll):
     """Check whether this poll's type is cumulative."""
-    return poll.vote_type in [
-        VoteType.cumulative_vote.name,
-        VoteType.count_vote.name
+    return poll.poll_type in [
+        PollType.cumulative_vote.name,
+        PollType.count_vote.name
     ]
 
 

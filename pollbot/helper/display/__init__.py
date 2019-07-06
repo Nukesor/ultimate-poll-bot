@@ -3,6 +3,8 @@ from pollbot.helper import poll_allows_cumulative_votes
 from pollbot.helper.enums import (
     UserSorting,
     OptionSorting,
+    VoteResultType,
+    PollType,
 )
 
 
@@ -41,20 +43,35 @@ def get_sorted_options(poll, total_user_count=0):
 
 def calculate_percentage(option, total_user_count):
     """Calculate the percentage for this option."""
+    # Return 0 if:
+    # - No user voted yet
+    # - This option has no votes
+    # - The poll has no votes
+    if total_user_count == 0:
+        return 0
+    if len(option.votes) == 0:
+        return 0
+
+    poll_vote_count = sum([vote.vote_count for vote in option.poll.votes])
+    if poll_vote_count == 0:
+        return 0
+
     if poll_allows_cumulative_votes(option.poll):
         option_vote_count = sum([vote.vote_count for vote in option.votes])
-        poll_vote_count = sum([vote.vote_count for vote in option.poll.votes])
-
-        if poll_vote_count == 0:
-            return 0
 
         percentage = round(option_vote_count/poll_vote_count * 100)
 
+    elif option.poll.poll_type == PollType.doodle.name:
+        score = 0
+        for vote in option.votes:
+            if vote.type == VoteResultType.yes.name:
+                score += 1
+            elif vote.type == VoteResultType.maybe.name:
+                score += 0.5
+
+        return score/total_user_count * 100
     else:
-        if total_user_count == 0:
-            percentage = 0
-        else:
-            percentage = round(len(option.votes)/total_user_count * 100)
+        percentage = round(len(option.votes)/total_user_count * 100)
 
     return percentage
 

@@ -3,7 +3,7 @@ from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 
 from pollbot.helper import poll_allows_cumulative_votes
-from pollbot.helper.enums import VoteType, VoteResultType, CallbackResult
+from pollbot.helper.enums import PollType, CallbackResult
 from pollbot.helper.update import update_poll_messages
 
 from pollbot.models import PollOption, Vote
@@ -26,19 +26,23 @@ def handle_vote(session, context):
     poll = option.poll
     try:
         # Single vote
-        if poll.vote_type == VoteType.single_vote.name:
+        if poll.poll_type == PollType.single_vote.name:
             update_poll = handle_single_vote(session, context, option)
         # Block vote
-        elif poll.vote_type == VoteType.block_vote.name:
+        elif poll.poll_type == PollType.block_vote.name:
             update_poll = handle_block_vote(session, context, option)
         # Limited vote
-        elif poll.vote_type == VoteType.limited_vote.name:
+        elif poll.poll_type == PollType.limited_vote.name:
             update_poll = handle_limited_vote(session, context, option)
         # Cumulative vote
-        elif poll.vote_type == VoteType.cumulative_vote.name:
+        elif poll.poll_type == PollType.cumulative_vote.name:
             update_poll = handle_cumulative_vote(session, context, option)
-        elif poll.vote_type == VoteType.count_vote.name:
+        elif poll.poll_type == PollType.count_vote.name:
             update_poll = handle_cumulative_vote(session, context, option, unlimited=True)
+        elif poll.poll_type == PollType.doodle.name:
+            update_poll = handle_doodle_vote(session, context, option)
+        else:
+            raise Exception("Unknown poll type")
     except IntegrityError:
         # Double vote. Rollback the transaction and ignore the second vote
         session.rollback()
@@ -56,7 +60,7 @@ def respond_to_vote(session, line, context, poll, total_vote_count=None, limited
         .filter(Vote.poll == poll) \
         .all()
 
-    if poll.vote_type == VoteType.cumulative_vote.name:
+    if limited:
         line += f' ({total_vote_count} left)!'
 
     lines = [line]
@@ -90,7 +94,7 @@ def handle_single_vote(session, context, option):
 
     # First vote on this poll
     elif existing_vote is None:
-        vote = Vote(VoteResultType.yes.name, context.user, option)
+        vote = Vote(context.user, option)
         session.add(vote)
         respond_to_vote(session, 'Vote registered!', context, option.poll)
 
@@ -111,7 +115,7 @@ def handle_block_vote(session, context, option):
 
     # Add vote
     elif existing_vote is None:
-        vote = Vote(VoteResultType.yes.name, context.user, option)
+        vote = Vote(context.user, option)
         session.add(vote)
         respond_to_vote(session, 'Vote registered!', context, option.poll)
 
@@ -137,7 +141,7 @@ def handle_limited_vote(session, context, option):
 
     # Add vote
     elif existing_vote is None and vote_count < option.poll.number_of_votes:
-        vote = Vote(VoteResultType.yes.name, context.user, option)
+        vote = Vote(context.user, option)
         session.add(vote)
         respond_to_vote(session, 'Vote registered!', context, option.poll, vote_count+1, True)
 
@@ -201,10 +205,36 @@ def handle_cumulative_vote(session, context, option, unlimited=False):
 
     # Add new vote
     elif existing_vote is None and action == CallbackResult.vote_yes:
-        vote = Vote(VoteResultType.yes.name, context.user, option)
+        vote = Vote(context.user, option)
         session.add(vote)
         session.commit()
         total_vote_count = allowed_votes - (vote_count + 1)
         respond_to_vote(session, f'Vote registered!', context, option.poll, total_vote_count, True)
+
+    return True
+
+
+def handle_doodle_vote(session, context, option):
+    """Handle a doodle vote."""
+    vote = session.query(Vote) \
+        .filter(Vote.poll_option == option) \
+        .filter(Vote.user == context.user) \
+        .one_or_none()
+
+    if context.callback_result.name is None:
+        data = context.data # noqa
+        raise Exception("Unknown callback result")
+
+    # Remove vote
+    if vote is not None:
+        vote.type = context.callback_result.name
+        context.query.answer(f'Vote changed to {vote.type}')
+
+    # Add vote
+    else:
+        vote = Vote(context.user, option)
+        vote.type = context.callback_result.name
+        session.add(vote)
+        context.query.answer(f'Vote registered ({vote.type})')
 
     return True

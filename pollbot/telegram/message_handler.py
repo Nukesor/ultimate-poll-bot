@@ -2,7 +2,7 @@
 
 from pollbot.helper import first_option_text
 from pollbot.helper.session import session_wrapper
-from pollbot.helper.enums import ExpectedInput, VoteType
+from pollbot.helper.enums import ExpectedInput, PollType
 from pollbot.helper.display import get_settings_text
 from pollbot.helper.update import update_poll_messages
 from pollbot.telegram.callback_handler.creation import create_poll
@@ -82,9 +82,9 @@ def handle_create_options(bot, update, session, user, text, poll, chat):
 
 def handle_set_vote_count(bot, update, session, user, text, poll, chat):
     """Set the amount of possible votes for this poll."""
-    if poll.vote_type == VoteType.limited_vote.name:
+    if poll.poll_type == PollType.limited_vote.name:
         error_message = f"Please send me a number between 1 and {len(poll.options)}"
-    elif poll.vote_type == VoteType.cumulative_vote.name:
+    elif poll.poll_type == PollType.cumulative_vote.name:
         error_message = "Please send me a number bigger than 0"
 
     try:
@@ -93,7 +93,7 @@ def handle_set_vote_count(bot, update, session, user, text, poll, chat):
         return error_message
 
     # Check for valid count
-    if amount < 1 or (poll.vote_type == VoteType.limited_vote.name and amount > len(poll.options)):
+    if amount < 1 or (poll.poll_type == PollType.limited_vote.name and amount > len(poll.options)):
         return error_message
 
     poll.number_of_votes = amount

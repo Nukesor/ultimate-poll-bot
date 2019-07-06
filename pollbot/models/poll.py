@@ -18,7 +18,7 @@ from sqlalchemy.types import (
 from sqlalchemy.orm import relationship
 
 from pollbot.db import base
-from pollbot.helper.enums import VoteType, UserSorting, OptionSorting
+from pollbot.helper.enums import PollType, UserSorting, OptionSorting
 
 
 class Poll(base):
@@ -37,7 +37,7 @@ class Poll(base):
     # Options
     name = Column(String)
     description = Column(String)
-    vote_type = Column(String, nullable=False)
+    poll_type = Column(String, nullable=False)
     anonymous = Column(Boolean, nullable=False)
     number_of_votes = Column(Integer)
     allow_new_options = Column(Boolean, nullable=False, default=False)
@@ -70,7 +70,7 @@ class Poll(base):
     def __init__(self, user):
         """Create a new poll."""
         self.user = user
-        self.vote_type = VoteType.single_vote.name
+        self.poll_type = PollType.single_vote.name
         self.anonymous = False
         self.results_visible = True
 
@@ -124,7 +124,7 @@ class Poll(base):
 
         poll.name = self.name
         poll.description = self.description
-        poll.vote_type = self.vote_type
+        poll.poll_type = self.poll_type
         poll.anonymous = self.anonymous
         poll.number_of_votes = self.number_of_votes
         poll.allow_new_options = self.allow_new_options

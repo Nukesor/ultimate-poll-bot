@@ -19,22 +19,24 @@ class ExpectedInput(Enum):
 
 
 @unique
-class VoteType(Enum):
+class PollType(Enum):
     """Helper class to specify the different types of Polls."""
 
-    single_vote = 1
-    block_vote = 2
-    limited_vote = 3
-    cumulative_vote = 4
-    count_vote = 5
+    single_vote = 0
+    doodle = 10
+    block_vote = 20
+    limited_vote = 30
+    cumulative_vote = 40
+    count_vote = 50
 
 
-VoteTypeTranslation = {
-    VoteType.single_vote.name: 'Single vote',
-    VoteType.block_vote.name: 'Block vote',
-    VoteType.limited_vote.name: 'Limited vote',
-    VoteType.cumulative_vote.name: 'Cumulative vote',
-    VoteType.count_vote.name: 'Unlimited votes',
+PollTypeTranslation = {
+    PollType.single_vote.name: 'Single vote',
+    PollType.doodle.name: 'Doodle',
+    PollType.block_vote.name: 'Block vote',
+    PollType.limited_vote.name: 'Limited vote',
+    PollType.cumulative_vote.name: 'Cumulative vote',
+    PollType.count_vote.name: 'Unlimited votes',
 }
 
 
@@ -52,8 +54,8 @@ class CallbackType(Enum):
     """A class representing callback types."""
 
     # Poll creation
-    show_vote_type_keyboard = 0
-    change_vote_type = 1
+    show_poll_type_keyboard = 0
+    change_poll_type = 1
     toggle_anonymity = 2
     skip_description = 3
     all_options_entered = 4
@@ -118,9 +120,9 @@ class CallbackResult(Enum):
 
     # Poll voting
     vote = 20
-    vote_yes = 21
-    vote_no = 22
-    vote_maybe = 23
+    yes = 21
+    no = 22
+    maybe = 23
 
     # Menu navigation
     main_menu = 40

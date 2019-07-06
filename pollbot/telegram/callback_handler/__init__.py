@@ -7,8 +7,8 @@ from pollbot.models import Poll
 
 from .creation import (
     toggle_anonymity,
-    change_vote_type,
-    show_vote_type_keyboard,
+    change_poll_type,
+    show_poll_type_keyboard,
     all_options_entered,
     toggle_results_visible,
     open_creation_datepicker,
@@ -103,12 +103,12 @@ def handle_callback_query(bot, update, session, user):
     context = CallbackContext(session, bot, update.callback_query, user)
 
     def ignore(session, context):
-        context.query.answer('')
+        context.query.answer("This button doesn't do anything and is just for styling.")
 
     callback_functions = {
         # Creation
-        CallbackType.show_vote_type_keyboard: show_vote_type_keyboard,
-        CallbackType.change_vote_type: change_vote_type,
+        CallbackType.show_poll_type_keyboard: show_poll_type_keyboard,
+        CallbackType.change_poll_type: change_poll_type,
         CallbackType.toggle_anonymity: toggle_anonymity,
         CallbackType.all_options_entered: all_options_entered,
         CallbackType.toggle_results_visible: toggle_results_visible,

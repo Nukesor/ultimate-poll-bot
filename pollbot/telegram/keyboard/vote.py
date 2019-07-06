@@ -1,4 +1,5 @@
 """Reply keyboards."""
+import string
 from telegram import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
@@ -10,6 +11,7 @@ from pollbot.helper.enums import (
     CallbackType,
     CallbackResult,
     OptionSorting,
+    PollType,
 )
 from pollbot.helper.display import get_sorted_options
 
@@ -23,6 +25,8 @@ def get_vote_keyboard(poll, show_back=False):
 
     if poll_allows_cumulative_votes(poll):
         buttons = get_cumulative_buttons(poll)
+    elif poll.poll_type == PollType.doodle.name:
+        buttons = get_doodle_buttons(poll)
     else:
         buttons = get_normal_buttons(poll)
 
@@ -61,7 +65,7 @@ def get_normal_buttons(poll):
 
 
 def get_cumulative_buttons(poll):
-    """Get the normal keyboard with one button per option."""
+    """Get the cumulative keyboard with two buttons per option."""
     vote_button_type = CallbackType.vote.value
     vote_yes = CallbackResult.vote_yes.value
     vote_no = CallbackResult.vote_no.value
@@ -79,6 +83,35 @@ def get_cumulative_buttons(poll):
         buttons.append([
             InlineKeyboardButton(text=f'－ {option_name}', callback_data=no_payload),
             InlineKeyboardButton(text=f'＋ {option_name}', callback_data=yes_payload),
+        ])
+
+    return buttons
+
+
+def get_doodle_buttons(poll):
+    """Get the doodle keyboard with yes, maybe and no button per option."""
+    ignore_button_type = CallbackType.ignore.value
+    vote_button_type = CallbackType.vote.value
+    vote_yes = CallbackResult.yes.value
+    vote_maybe = CallbackResult.maybe.value
+    vote_no = CallbackResult.no.value
+
+    options = poll.options
+    if poll.option_sorting == OptionSorting.option_name:
+        options = get_sorted_options(poll)
+
+    buttons = []
+    letters = string.ascii_lowercase
+    for index, option in enumerate(options):
+        ignore_payload = f'{ignore_button_type}:0:0'
+        yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
+        maybe_payload = f'{vote_button_type}:{option.id}:{vote_maybe}'
+        no_payload = f'{vote_button_type}:{option.id}:{vote_no}'
+        buttons.append([
+            InlineKeyboardButton(text=f'{letters[index]})', callback_data=ignore_payload),
+            InlineKeyboardButton(text='✅', callback_data=yes_payload),
+            InlineKeyboardButton(text='❔', callback_data=maybe_payload),
+            InlineKeyboardButton(text='❌', callback_data=no_payload),
         ])
 
     return buttons

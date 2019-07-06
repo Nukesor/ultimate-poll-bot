@@ -1,8 +1,10 @@
 """Get the text describing the current state of the poll."""
 import math
+import string
 from datetime import date
 from sqlalchemy import func
 
+from pollbot.helper.enums import PollType
 from pollbot.helper import (
     poll_has_limited_votes,
     poll_allows_cumulative_votes,
@@ -49,9 +51,9 @@ def get_poll_text(session, poll, show_warning):
     options = get_sorted_options(poll, total_user_count)
 
     # All options with their respective people percentage
-    for option in options:
+    for index, option in enumerate(options):
         lines.append('')
-        lines.append(get_option_line(session, option))
+        lines.append(get_option_line(session, option, index))
         if option.description is not None:
             lines.append(f'┆ _{option.description}_')
 
@@ -94,7 +96,7 @@ def get_poll_text(session, poll, show_warning):
     return '\n'.join(lines)
 
 
-def get_option_line(session, option):
+def get_option_line(session, option, index):
     """Get the line with vote count for this option."""
     # Special formating for polls with european date format
     if option.is_date and option.poll.european_date_format:
@@ -106,14 +108,19 @@ def get_option_line(session, option):
     else:
         option_name = option.name
 
+    prefix = ''
+    if option.poll.poll_type == PollType.doodle.name:
+        letters = string.ascii_letters
+        prefix = f'{letters[index]}) '
+
     if len(option.votes) > 0 and option.poll.should_show_result():
         if poll_allows_cumulative_votes(option.poll):
             vote_count = sum([vote.vote_count for vote in option.votes])
         else:
             vote_count = len(option.votes)
-        return f'┌ *{option_name}* ({vote_count} votes)'
+        return f'┌ {prefix}*{option_name}* ({vote_count} votes)'
     else:
-        return f'┌ *{option_name}*'
+        return f'┌ {prefix}*{option_name}*'
 
 
 def get_vote_line(poll, option, vote, index):
@@ -123,8 +130,10 @@ def get_vote_line(poll, option, vote, index):
     else:
         vote_line = f'├ {vote.user.name}'
 
-    if poll_allows_cumulative_votes(option.poll):
+    if poll_allows_cumulative_votes(poll):
         vote_line += f' ({vote.vote_count} votes)'
+    elif poll.poll_type == PollType.doodle.name:
+        vote_line += f' ({vote.type})'
 
     return vote_line
 

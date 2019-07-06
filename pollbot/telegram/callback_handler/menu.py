@@ -5,7 +5,7 @@ from pollbot.models import Reference
 from pollbot.helper import poll_required
 from pollbot.helper.display import get_poll_management_text, get_settings_text
 from pollbot.telegram.keyboard import (
-    get_change_vote_type_keyboard,
+    get_change_poll_type_keyboard,
     get_deletion_confirmation,
     get_close_confirmation,
     get_management_keyboard,
@@ -15,9 +15,9 @@ from pollbot.telegram.keyboard import (
 
 
 @poll_required
-def show_vote_type_keyboard(session, context, poll):
+def show_poll_type_keyboard(session, context, poll):
     """Change the initial keyboard to vote type keyboard."""
-    keyboard = get_change_vote_type_keyboard(poll)
+    keyboard = get_change_poll_type_keyboard(poll)
     context.query.message.edit_text(
         reply_markup=keyboard
     )

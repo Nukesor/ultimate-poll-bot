@@ -5,13 +5,13 @@ from telegram import (
 )
 
 from pollbot.helper.enums import CallbackType
-from pollbot.helper.enums import VoteType, VoteTypeTranslation
+from pollbot.helper.enums import PollType, PollTypeTranslation
 from pollbot.telegram.keyboard.date_picker import get_datepicker_buttons
 
 
 def get_init_keyboard(poll):
     """Get the initial inline keyboard for poll creation."""
-    change_type = CallbackType.show_vote_type_keyboard.value
+    change_type = CallbackType.show_poll_type_keyboard.value
     change_type_payload = f"{change_type}:{poll.id}:0"
     change_type_text = "Change poll type"
 
@@ -32,15 +32,15 @@ def get_init_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_change_vote_type_keyboard(poll):
+def get_change_poll_type_keyboard(poll):
     """Get the inline keyboard for changing the vote type."""
-    change_type = CallbackType["change_vote_type"].value
+    change_type = CallbackType["change_poll_type"].value
 
     # Dynamically create a button for each vote type
     buttons = []
-    for vote_type in VoteType:
-        text = VoteTypeTranslation[vote_type.name]
-        payload = f'{change_type}:{poll.id}:{vote_type.value}'
+    for poll_type in PollType:
+        text = PollTypeTranslation[poll_type.name]
+        payload = f'{change_type}:{poll.id}:{poll_type.value}'
         button = [InlineKeyboardButton(text=text, callback_data=payload)]
         buttons.append(button)
 

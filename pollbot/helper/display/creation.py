@@ -1,14 +1,17 @@
 """Text helper for poll creation."""
-from pollbot.helper.enums import VoteTypeTranslation
+from pollbot.helper.enums import PollTypeTranslation
 
 
-def get_vote_type_help_text(poll):
+def get_poll_type_help_text(poll):
     """Create the help text for vote types."""
-    vote_type = VoteTypeTranslation[poll.vote_type]
-    return f"""Current poll type: *{vote_type}*
+    poll_type = PollTypeTranslation[poll.poll_type]
+    return f"""Current poll type: *{poll_type}*
 
 *Single vote*:
 Every user gets a single vote. The default and normal voting mode.
+
+*Doodle*:
+Users can vote for `yes`, `no`, or `maybe` for each option. Great for finding a date.
 
 *Block vote*:
 Every user can vote for all (or less) options. Useful for finding the most wanted options in a group, e.g. games that should be played on a LAN-Party.
@@ -35,7 +38,7 @@ You are about to create a new poll 👌
 
 The current settings for this poll are:
 
-*Poll type*: {VoteTypeTranslation[poll.vote_type]}
+*Poll type*: {PollTypeTranslation[poll.poll_type]}
 *Anonymity*: {'Names are not visible' if poll.anonymous else 'Names are visible'}
 *Visible results*: {'Results are directly visible' if poll.results_visible else 'Results are not visible until poll is closed'}
 
