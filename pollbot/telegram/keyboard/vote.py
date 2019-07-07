@@ -67,8 +67,8 @@ def get_normal_buttons(poll):
 def get_cumulative_buttons(poll):
     """Get the cumulative keyboard with two buttons per option."""
     vote_button_type = CallbackType.vote.value
-    vote_yes = CallbackResult.vote_yes.value
-    vote_no = CallbackResult.vote_no.value
+    vote_yes = CallbackResult.yes.value
+    vote_no = CallbackResult.no.value
 
     options = poll.options
     if poll.option_sorting == OptionSorting.option_name:

@@ -174,25 +174,25 @@ def handle_cumulative_vote(session, context, option, unlimited=False):
         allowed_votes = option.poll.number_of_votes
 
     # Upvote, but no votes left
-    if not unlimited and action == CallbackResult.vote_yes and vote_count >= allowed_votes:
+    if not unlimited and action == CallbackResult.yes and vote_count >= allowed_votes:
         respond_to_vote(session, 'No votes left!', context, option.poll)
         return False
 
     # Early return if downvote on non existing vote
-    if existing_vote is None and action == CallbackResult.vote_no:
+    if existing_vote is None and action == CallbackResult.no:
         respond_to_vote(session, 'Cannot downvote this option.', context, option.poll)
         return False
 
     if existing_vote:
         # Add to an existing vote
-        if action == CallbackResult.vote_yes:
+        if action == CallbackResult.yes:
             existing_vote.vote_count += 1
             session.commit()
             total_vote_count = allowed_votes - (vote_count + 1)
             respond_to_vote(session, f'Vote added!', context, option.poll, total_vote_count, True)
 
         # Remove from existing vote
-        elif action == CallbackResult.vote_no:
+        elif action == CallbackResult.no:
             existing_vote.vote_count -= 1
             session.commit()
             total_vote_count = allowed_votes - (vote_count - 1)
@@ -204,7 +204,7 @@ def handle_cumulative_vote(session, context, option, unlimited=False):
             session.commit()
 
     # Add new vote
-    elif existing_vote is None and action == CallbackResult.vote_yes:
+    elif existing_vote is None and action == CallbackResult.yes:
         vote = Vote(context.user, option)
         session.add(vote)
         session.commit()
