@@ -30,16 +30,6 @@ class PollType(Enum):
     count_vote = 50
 
 
-PollTypeTranslation = {
-    PollType.single_vote.name: 'Single vote',
-    PollType.doodle.name: 'Doodle',
-    PollType.block_vote.name: 'Block vote',
-    PollType.limited_vote.name: 'Limited vote',
-    PollType.cumulative_vote.name: 'Cumulative vote',
-    PollType.count_vote.name: 'Unlimited votes',
-}
-
-
 @unique
 class VoteResultType(Enum):
     """Helper enum to specify the different types of possible votes."""

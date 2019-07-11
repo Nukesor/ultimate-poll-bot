@@ -1,14 +1,12 @@
 """The settings management text."""
-from pollbot.helper.enums import (
-    PollTypeTranslation,
-    SortOptionTranslation,
-)
+from pollbot.helper.enums import SortOptionTranslation
+from pollbot.helper import translate_poll_type
 
 
 def get_settings_text(poll):
     """Compile the options text for this poll."""
     text = []
-    text.append(f"*Vote type*: {PollTypeTranslation[poll.poll_type]}")
+    text.append(f"*Vote type*: {translate_poll_type(poll.poll_type, poll.locale)}")
 
     if poll.anonymous:
         text.append("*Anonymity*: Names are not visible")

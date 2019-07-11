@@ -1,4 +1,5 @@
 """Some static stuff or helper functions."""
+from pollbot.i18n import i18n
 from .enums import PollType
 
 
@@ -82,7 +83,7 @@ In case a bug isn't fixed in a day or two, please write a ticket on [Github](htt
 
 
 error_text = """An unknown error occurred. I probably just got a notification about this and I'll try to fix it as quickly as possible.
-In case this error still occurs in a day or two, please report the bug to me :). The link to the Github repository is in the /start text.
+In case this error still occurs in a day or two, please report the bug to me :). The link to the Github repository is in the /start and /help text.
 """
 
 first_option_text = """Please send me an option. You can send multiple options at once, each option on a new line.
@@ -91,8 +92,22 @@ For instance `Burger - because it is tasty`
 """
 
 
+def translate_poll_type(poll_type, locale):
+    """Translate a poll type to the users language."""
+    mapping = {
+        PollType.single_vote.name: i18n.t('poll_types.single_vote', locale=locale),
+        PollType.doodle.name: i18n.t('poll_types.doodle', locale=locale),
+        PollType.block_vote.name: i18n.t('poll_types.block_vote', locale=locale),
+        PollType.limited_vote.name: i18n.t('poll_types.limited_vote', locale=locale),
+        PollType.cumulative_vote.name: i18n.t('poll_types.cumulative_vote', locale=locale),
+        PollType.count_vote.name: i18n.t('poll_types.count_vote', locale=locale),
+    }
+
+    return mapping[poll_type]
+
+
 def poll_required(function):
-    """Decorator that just returns if the poll is missing."""
+    """Return if the poll does not exist in the context object."""
     def wrapper(session, context):
         if context.poll is None:
             return

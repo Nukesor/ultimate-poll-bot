@@ -1,11 +1,10 @@
 """Text helper for poll creation."""
-from pollbot.helper.enums import PollTypeTranslation
+from pollbot.helper import translate_poll_type
 
 
 def get_poll_type_help_text(poll):
     """Create the help text for vote types."""
-    poll_type = PollTypeTranslation[poll.poll_type]
-    return f"""Current poll type: *{poll_type}*
+    return f"""Current poll type: *{translate_poll_type(poll.poll_type, poll.locale)}*
 
 *Single vote*:
 Every user gets a single vote. The default and normal voting mode.
@@ -38,7 +37,7 @@ You are about to create a new poll 👌
 
 The current settings for this poll are:
 
-*Poll type*: {PollTypeTranslation[poll.poll_type]}
+*Poll type*: {translate_poll_type(poll.poll_type, poll.locale)}
 *Anonymity*: {'Names are not visible' if poll.anonymous else 'Names are visible'}
 *Visible results*: {'Results are directly visible' if poll.results_visible else 'Results are not visible until poll is closed'}
 

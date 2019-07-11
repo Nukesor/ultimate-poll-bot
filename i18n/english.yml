@@ -1,0 +1,7 @@
+poll_types:
+  single_vote: Single vote
+  doodle: Doodle
+  block_vote: Block vote
+  limited_vote: Limited vote
+  cumulative_vote: Cumulative vote
+  count_vote: Unlimited votes

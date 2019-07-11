@@ -24,8 +24,9 @@ class User(base):
     id = Column(BigInteger, primary_key=True)
     name = Column(String)
     username = Column(String, unique=True)
-    admin = Column(Boolean, default=False, nullable=False)
+    locale = Column(String, server_default='english')
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 
     expected_input = Column(String)
 
