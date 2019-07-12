@@ -11,7 +11,20 @@ creation:
     Please send me an option. You can send multiple options at once, each option on a new line.
     You can also add a description behind a hyphen.
     For instance `Burger - because it is tasty`
+  next_option: Send *another option* or click *done*
+  no_new_option: No new option has been added
+  options_added: '❌ Options have been added:'
+  all_options_already_added: All options have already been added
+  description: Now send me the description.
+  not_allowed: You are no longer allowed to add new options.
+  error:
+    limit_bigger_zero: Please send me a number bigger than 0
+    limit_between: Please send me a number between 1 and %{limit}
 
+
+delete:
+  doesnt_exist: Poll to delete doesn't exist
+  previous_deleted: Previous poll deleted. You can now /create a new poll.
 
 misc:
   donation: |

@@ -56,7 +56,7 @@ def handle_set_name(bot, update, session, user, text, poll, chat):
     user.expected_input = ExpectedInput.description.name
     keyboard = get_skip_description_keyboard(poll)
     chat.send_message(
-        'Now send me the description.',
+        i18n.t('creation.description', locale=user.locale),
         reply_markup=keyboard,
     )
 
@@ -66,7 +66,7 @@ def handle_set_description(bot, update, session, user, text, poll, chat):
     poll.description = text
     user.expected_input = ExpectedInput.options.name
     chat.send_message(
-        i18n.t('creation.first_opion', locale=user.locale),
+        i18n.t('creation.first_option', locale=user.locale),
         reply_markup=get_open_datepicker_keyboard(poll),
         parse_mode='markdown'
     )
@@ -79,7 +79,7 @@ def handle_create_options(bot, update, session, user, text, poll, chat):
     added_options = add_options(poll, text)
 
     if len(added_options) == 0:
-        return "❌ No new options have been added."
+        return "❌ No new option has been added."
 
     next_option(chat, poll, added_options)
 
@@ -87,9 +87,9 @@ def handle_create_options(bot, update, session, user, text, poll, chat):
 def handle_set_vote_count(bot, update, session, user, text, poll, chat):
     """Set the amount of possible votes for this poll."""
     if poll.poll_type == PollType.limited_vote.name:
-        error_message = f"Please send me a number between 1 and {len(poll.options)}"
+        error_message = i18n.t('creation.error.limit_between', locale=user.locale, limit=len(poll.options))
     elif poll.poll_type == PollType.cumulative_vote.name:
-        error_message = "Please send me a number bigger than 0"
+        error_message = i18n.t('creation.error.limit_bigger_zero', locale=user.locale)
 
     try:
         amount = int(text)
@@ -110,12 +110,12 @@ def handle_new_option(bot, update, session, user, text, poll, chat):
     added_options = add_options(poll, text)
 
     if len(added_options) > 0:
-        text = 'Options have been added:\n'
+        text = i18n.t('creation.options_added', locale=user.locale) + '\n'
         for option in added_options:
             text += f'\n*{option}*'
         chat.send_message(text, parse_mode='markdown')
     else:
-        chat.send_message('No new option has been added')
+        chat.send_message(i18n.t('creation.no_new_option', locale=user.locale))
 
     # Reset expected input
     user.current_poll = None
@@ -158,7 +158,7 @@ def handle_user_option_addition(bot, update, session, user, text, poll, chat):
     if not poll.allow_new_options:
         user.current_poll = None
         user.expected_input = None
-        chat.send_message('You are no longer allowed to add new options.')
+        chat.send_message(i18n.t('creation.not_allowed', locale=user.locale))
 
     added_options = add_options(poll, text)
 
@@ -168,7 +168,7 @@ def handle_user_option_addition(bot, update, session, user, text, poll, chat):
         user.expected_input = None
 
         # Send message
-        text = 'Options have been added:\n'
+        text = i18n.t('creation.options_added', locale=user.locale) + '\n'
         for option in added_options:
             text += f'\n*{option}*'
         chat.send_message(text, parse_mode='markdown')
@@ -176,4 +176,4 @@ def handle_user_option_addition(bot, update, session, user, text, poll, chat):
         # Upate all polls
         update_poll_messages(session, bot, poll)
     else:
-        chat.send_message('No new option has been added')
+        chat.send_message(i18n.t('creation.no_new_option', locale=user.locale))

@@ -132,15 +132,15 @@ def close_creation_datepicker(session, context, poll):
     """All options are entered the poll is created."""
     user = context.user
     if len(poll.options) == 0:
-        text = i18n.t('misc.start', locale=user.locale),
+        text = i18n.t('creation.first_option', locale=user.locale)
         keyboard = get_open_datepicker_keyboard(poll)
     else:
-        text = 'Send *another option* or click *done*'
+        text = i18n.t('creation.next_option', locale=user.locale)
         keyboard = get_options_entered_keyboard(poll)
 
     # Replace the message completely, since all options have already been entered
     if user.expected_input != ExpectedInput.date.name:
-        context.query.message.edit_text('All options have already been added')
+        context.query.message.edit_text(i18n.t('creation.all_options_already_added', locale=user.locale))
         return
 
     user.expected_input = ExpectedInput.options.name
@@ -156,8 +156,8 @@ def close_creation_datepicker(session, context, poll):
 def cancel_creation(session, context):
     """Cancel the creation of a bot."""
     if context.poll is None:
-        context.query.answer("Poll to delete doesn't exist")
+        context.query.answer(i18n.t('delete.doesnt_exist', locale=context.user.locale))
         return
 
     session.delete(context.poll)
-    context.query.message.edit_text('Previous poll deleted. You can now /create a new poll.')
+    context.query.message.edit_text(i18n.t('delete.previous_deleted', locale=context.user.locale))
