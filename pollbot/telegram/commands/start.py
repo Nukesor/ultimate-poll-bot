@@ -1,5 +1,5 @@
 """The start command handler."""
-from pollbot.helper import start_text
+from pollbot.i18n import i18n
 from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.session import session_wrapper
 from pollbot.models import Poll
@@ -22,7 +22,7 @@ def start(bot, update, session, user):
     if text == '':
         keyboard = get_main_keyboard()
         update.message.chat.send_message(
-            start_text,
+            i18n.t('misc.start', locale=user.locale),
             parse_mode='markdown',
             reply_markup=keyboard,
         )

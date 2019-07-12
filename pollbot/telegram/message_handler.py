@@ -1,6 +1,6 @@
 """Handle messages."""
 
-from pollbot.helper import first_option_text
+from pollbot.i18n import i18n
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.enums import ExpectedInput, PollType
 from pollbot.helper.display import get_settings_text
@@ -65,7 +65,11 @@ def handle_set_description(bot, update, session, user, text, poll, chat):
     """Set the description of the poll."""
     poll.description = text
     user.expected_input = ExpectedInput.options.name
-    chat.send_message(first_option_text, reply_markup=get_open_datepicker_keyboard(poll), parse_mode='markdown')
+    chat.send_message(
+        i18n.t('creation.first_opion', locale=user.locale),
+        reply_markup=get_open_datepicker_keyboard(poll),
+        parse_mode='markdown'
+    )
 
 
 def handle_create_options(bot, update, session, user, text, poll, chat):

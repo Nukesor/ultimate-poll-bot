@@ -9,7 +9,7 @@ from telegram.error import (
 from pollbot.db import get_session
 from pollbot.sentry import sentry
 from pollbot.models import User
-from pollbot.helper import error_text
+from pollbot.i18n import i18n
 
 
 def job_session_wrapper():
@@ -105,8 +105,11 @@ def session_wrapper(send_message=True, private=False):
                 traceback.print_exc()
                 sentry.captureException()
                 if send_message:
+                    locale = 'english'
+                    if user is not None:
+                        locale = user.locale
                     session.close()
-                    message.chat.send_message(error_text)
+                    message.chat.send_message(i18n.t('misc.error', locale=locale))
 
             finally:
                 session.close()

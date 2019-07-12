@@ -1,6 +1,7 @@
 """Callback functions needed during creation of a Poll."""
 from datetime import datetime, date, time
-from pollbot.helper import poll_required, first_option_text
+from pollbot.i18n import i18n
+from pollbot.helper import poll_required
 from pollbot.helper.update import update_poll_messages
 from pollbot.helper.display import get_settings_text
 from pollbot.helper.display.creation import get_datepicker_text
@@ -83,11 +84,12 @@ def set_option_order(session, context, poll):
 @poll_required
 def expect_new_option(session, context, poll):
     """Send a text and tell the user that we expect a new option."""
-    context.user.expected_input = ExpectedInput.new_option.name
-    context.user.current_poll = poll
+    user = context.user
+    user.expected_input = ExpectedInput.new_option.name
+    user.current_poll = poll
 
     context.query.message.edit_text(
-        text=first_option_text,
+        text=i18n.t('creation.first_opion', locale=user.locale),
         parse_mode='markdown',
         reply_markup=get_add_option_keyboard(poll),
     )
