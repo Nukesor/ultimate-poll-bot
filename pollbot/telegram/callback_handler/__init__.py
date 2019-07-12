@@ -1,5 +1,6 @@
 """Callback query handling."""
 from telegram.ext import run_async
+from raven import breadcrumbs
 
 from pollbot.helper.session import hidden_session_wrapper
 from pollbot.helper.enums import CallbackType, CallbackResult
@@ -101,6 +102,18 @@ class CallbackContext():
 def handle_callback_query(bot, update, session, user):
     """Handle callback queries from inline keyboards."""
     context = CallbackContext(session, bot, update.callback_query, user)
+
+    breadcrumbs.record(
+        'Callback query incoming',
+        {
+            'query': update.callback_query,
+            'user': user,
+            'callback_type': context.callback_type,
+            'callback_result': context.callback_result,
+            'poll': context.poll,
+        },
+        'callbacks',
+    )
 
     def ignore(session, context):
         context.query.answer("This button doesn't do anything and is just for styling.")
