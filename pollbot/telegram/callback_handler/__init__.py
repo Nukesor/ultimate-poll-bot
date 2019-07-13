@@ -111,8 +111,7 @@ def handle_callback_query(bot, update, session, user):
     context = CallbackContext(session, bot, update.callback_query, user)
 
     breadcrumbs.record(
-        'Callback query incoming',
-        {
+        data={
             'query': update.callback_query,
             'data': update.callback_query.data,
             'user': user,
@@ -120,7 +119,7 @@ def handle_callback_query(bot, update, session, user):
             'callback_result': context.callback_result,
             'poll': context.poll,
         },
-        'callbacks',
+        category='callbacks',
     )
 
     def ignore(session, context):
