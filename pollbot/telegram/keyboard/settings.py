@@ -4,7 +4,7 @@ from telegram import (
     InlineKeyboardButton,
 )
 
-from pollbot.i18n import i18n
+from pollbot.i18n import i18n, supported_languages
 from pollbot.telegram.keyboard import get_back_to_management_button
 from pollbot.telegram.keyboard.date_picker import get_datepicker_buttons
 from pollbot.helper.enums import (
@@ -200,7 +200,7 @@ def get_settings_language_keyboard(poll):
     """Get a keyboard for sorting options."""
     buttons = []
     # Compile the possible options for user sorting
-    for language in ['english']:
+    for language in supported_languages:
         button = InlineKeyboardButton(
             language,
             callback_data=f'{CallbackType.settings_change_poll_language.value}:{poll.id}:{language}'

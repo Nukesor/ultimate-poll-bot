@@ -27,6 +27,7 @@ def create_poll(bot, update, session, user):
 
     poll = Poll(user)
     poll.european_date_format = user.european_date_format
+    poll.locale = user.locale
     user.current_poll = poll
     user.expected_input = ExpectedInput.name.name
     session.add(poll)

@@ -4,6 +4,7 @@ from telegram import (
     InlineKeyboardButton,
 )
 
+from pollbot.i18n import supported_languages
 from pollbot.helper.enums import CallbackType
 
 
@@ -11,7 +12,7 @@ def get_user_language_keyboard(user):
     """Get user language picker keyboard."""
     buttons = []
     # Compile the possible options for user sorting
-    for language in ['english']:
+    for language in supported_languages:
         button = InlineKeyboardButton(
             language,
             callback_data=f'{CallbackType.user_change_language.value}:{user.id}:{language}'
