@@ -1,6 +1,7 @@
 """Option for setting the current date of the picker."""
 from datetime import date
 from dateutil.relativedelta import relativedelta
+from pollbot.i18n import i18n
 from pollbot.helper import poll_required
 from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.creation import add_options
@@ -43,7 +44,8 @@ def set_date(session, context, poll):
     """Show to vote type keyboard."""
     poll.current_date = date.fromisoformat(context.action)
     update_datepicker(context, poll)
-    context.query.answer(f'Date changed: {poll.current_date.isoformat()}')
+    context.query.answer(i18n.t('callback.date_changed', locale=poll.locale,
+                                date=poll.current_date.isoformat()))
 
 
 @poll_required
@@ -51,7 +53,8 @@ def set_next_month(session, context, poll):
     """Show to vote type keyboard."""
     poll.current_date += relativedelta(months=1)
     update_datepicker(context, poll)
-    context.query.answer(f'Date changed: {poll.current_date.isoformat()}')
+    context.query.answer(i18n.t('callback.date_changed', locale=poll.locale,
+                                date=poll.current_date.isoformat()))
 
 
 @poll_required
@@ -59,7 +62,8 @@ def set_previous_month(session, context, poll):
     """Show to vote type keyboard."""
     poll.current_date -= relativedelta(months=1)
     update_datepicker(context, poll)
-    context.query.answer(f'Date changed: {poll.current_date.isoformat()}')
+    context.query.answer(i18n.t('callback.date_changed', locale=poll.locale,
+                                date=poll.current_date.isoformat()))
 
 
 @poll_required
@@ -68,7 +72,8 @@ def add_date(session, context, poll):
     option = poll.current_date.isoformat()
     added_options = add_options(poll, option, is_date=True)
     if len(added_options) == 0:
-        context.query.answer(f'Date already picked')
+        context.query.answer(i18n.t('callback.date_already_picked', locale=poll.locale))
     else:
         update_datepicker(context, poll)
-        context.query.answer(f'Date picked: {poll.current_date.isoformat()}')
+        context.query.answer(i18n.t('callback.date_picked', locale=poll.locale,
+                                    date=poll.current_date.isoformat()))

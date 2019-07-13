@@ -53,7 +53,7 @@ def get_init_text(poll):
 
 def get_datepicker_text(poll):
     """Get the text for the datepicker."""
-    text = i18n.t('creation.datepicker_text', locale=poll.user.locale)
+    text = i18n.t('creation.datepicker_text', locale=poll.locale)
     for option in poll.options:
         text += f'\n{option.get_formatted_name()}'
 

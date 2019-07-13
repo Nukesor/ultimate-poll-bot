@@ -25,7 +25,7 @@ def skip_description(session, context, poll):
     context.user.expected_input = ExpectedInput.options.name
     session.commit()
     context.query.message.edit_text(
-        'Now send me the first option (Or send multiple options at once, each option on a new line)',
+        i18n.t('creation.option.first', locale=context.user.locale),
         reply_markup=get_open_datepicker_keyboard(poll)
     )
 
@@ -37,14 +37,18 @@ def show_poll_type_keyboard(session, context):
     poll = session.query(Poll).get(context.payload)
 
     keyboard = get_change_poll_type_keyboard(poll)
-    context.query.message.edit_text(get_poll_type_help_text(poll), parse_mode='markdown', reply_markup=keyboard)
+    context.query.message.edit_text(
+        get_poll_type_help_text(poll),
+        parse_mode='markdown',
+        reply_markup=keyboard
+    )
 
 
 @poll_required
 def change_poll_type(session, context, poll):
     """Change the vote type."""
     if poll.created:
-        context.query.answer('The poll has already been created')
+        context.query.answer(i18n.t('callback.poll_created', locale=context.user.locale))
         return
     poll.poll_type = PollType(context.action).name
 
@@ -60,7 +64,7 @@ def change_poll_type(session, context, poll):
 def toggle_anonymity(session, context, poll):
     """Change the anonymity settings of a poll."""
     if poll.created:
-        context.query.answer('The poll has already been created')
+        context.query.answer(i18n.t('callback.poll_already_created', locale=context.user.locale))
         return
     poll.anonymous = not poll.anonymous
 
@@ -70,14 +74,14 @@ def toggle_anonymity(session, context, poll):
         parse_mode='markdown',
         reply_markup=keyboard
     )
-    context.query.answer('Anonymity setting changed')
+    context.query.answer(i18n.t('callback.anonymity_changed', locale=context.user.locale))
 
 
 @poll_required
 def toggle_results_visible(session, context, poll):
     """Change the results visible settings of a poll."""
     if poll.created:
-        context.query.answer('The poll has already been created')
+        context.query.answer(i18n.t('callback.poll_already_created', locale=context.user.locale))
         return
     poll.results_visible = not poll.results_visible
 
@@ -87,7 +91,7 @@ def toggle_results_visible(session, context, poll):
         parse_mode='markdown',
         reply_markup=keyboard
     )
-    context.query.answer('Visibility setting changed')
+    context.query.answer(i18n.t('callback.visibility_changed', locale=context.user.locale))
 
 
 @poll_required
@@ -96,10 +100,12 @@ def all_options_entered(session, context, poll):
     if poll is None:
         return
 
+    locale = context.user.locale
     if poll.poll_type in [PollType.limited_vote.name, PollType.cumulative_vote.name]:
-        context.query.message.edit_text('All options have been added.')
+        message = context.query.message
+        message.edit_text(i18n.t('creation.option.finished', locale=locale))
         context.user.expected_input = ExpectedInput.vote_count.name
-        context.query.message.chat.send_message('Send me the amount of allowed votes per user.')
+        message.chat.send_message(i18n.t('creation.vote_count_request', locale=locale))
 
         return
 
@@ -111,14 +117,14 @@ def open_creation_datepicker(session, context, poll):
     """All options are entered the poll is created."""
     keyboard = get_creation_datepicker_keyboard(poll)
     # Switch from new option by text to new option via datepicker
-
+    message = context.query.message
     if context.user.expected_input != ExpectedInput.options.name:
-        context.query.message.edit_text('All options have already been added')
+        message.edit_text(i18n.t('creation.option.finished', locale=context.user.locale))
         return
 
     context.user.expected_input = ExpectedInput.date.name
 
-    context.query.message.edit_text(
+    message.edit_text(
         get_datepicker_text(poll),
         parse_mode='markdown',
         reply_markup=keyboard
@@ -138,13 +144,14 @@ def close_creation_datepicker(session, context, poll):
         text = i18n.t('creation.option.next', locale=user.locale)
         keyboard = get_options_entered_keyboard(poll)
 
+    message = context.query.message
     # Replace the message completely, since all options have already been entered
     if user.expected_input != ExpectedInput.date.name:
-        context.query.message.edit_text(i18n.t('creation.option.finished', locale=user.locale))
+        message.edit_text(i18n.t('creation.option.finished', locale=user.locale))
         return
 
     user.expected_input = ExpectedInput.options.name
-    context.query.message.edit_text(
+    message.edit_text(
         text,
         parse_mode='markdown',
         reply_markup=keyboard

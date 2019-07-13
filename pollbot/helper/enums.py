@@ -86,10 +86,13 @@ class CallbackType(Enum):
     settings_open_add_option_datepicker = 81
     settings_open_due_date_datepicker = 82
     settings_pick_due_date = 83
+    settings_open_language_picker = 84
+    settings_change_poll_language = 85
 
     # Misc
     ignore = 100
     activate_notification = 101
+    external_open_datepicker = 102
 
     # Date picker
     open_creation_datepicker = 501
@@ -134,12 +137,3 @@ class OptionSorting(Enum):
     option_chrono = 10
     option_percentage = 11
     option_name = 12
-
-
-SortOptionTranslation = {
-    UserSorting.user_chrono.name: 'chronologically',
-    UserSorting.user_name.name: 'by name',
-    OptionSorting.option_chrono.name: 'chronologically',
-    OptionSorting.option_percentage.name: 'by percentage',
-    OptionSorting.option_name.name: 'by name',
-}

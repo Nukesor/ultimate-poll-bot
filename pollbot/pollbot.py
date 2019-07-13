@@ -29,6 +29,7 @@ from pollbot.telegram.commands.poll import (
 from pollbot.telegram.commands.misc import send_help, send_donation_text
 from pollbot.telegram.commands.start import start
 from pollbot.telegram.commands.external import notify
+from pollbot.telegram.commands.admin import broadcast, test_broadcast
 
 logging.basicConfig(level=config['logging']['log_level'],
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -56,6 +57,9 @@ dispatcher.add_handler(CommandHandler('delete_closed', delete_all_closed))
 dispatcher.add_handler(CommandHandler('donations', send_donation_text))
 dispatcher.add_handler(CommandHandler('notify', notify))
 
+# Admin command
+dispatcher.add_handler(CommandHandler('broadcast', broadcast))
+dispatcher.add_handler(CommandHandler('test_broadcast', test_broadcast))
 
 # Callback handler
 dispatcher.add_handler(CallbackQueryHandler(handle_callback_query))

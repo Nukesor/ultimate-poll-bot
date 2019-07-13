@@ -38,3 +38,15 @@ def get_notify_keyboard(polls):
         ])
 
     return InlineKeyboardMarkup(buttons)
+
+
+def get_external_add_option_keyboard(poll):
+    """Get the external keyboard for adding a new option after poll creation."""
+    locale = poll.user.locale
+    datepicker_payload = f'{CallbackType.external_open_datepicker.value}:{poll.id}:0'
+    buttons = [[InlineKeyboardButton(i18n.t('datepicker.open', locale=locale),
+                                     callback_data=datepicker_payload)]]
+
+    keyboard = InlineKeyboardMarkup(buttons)
+
+    return keyboard

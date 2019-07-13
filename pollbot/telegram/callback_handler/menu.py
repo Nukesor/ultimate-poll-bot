@@ -1,8 +1,9 @@
 """Callback functions needed during creation of a Poll."""
-from pollbot.helper.enums import CallbackResult, ExpectedInput
 
+from pollbot.i18n import i18n
 from pollbot.models import Reference
 from pollbot.helper import poll_required
+from pollbot.helper.enums import CallbackResult, ExpectedInput
 from pollbot.helper.display import get_poll_management_text, get_settings_text
 from pollbot.telegram.keyboard import (
     get_change_poll_type_keyboard,
@@ -72,18 +73,16 @@ def show_settings(session, context, poll):
 def show_deletion_confirmation(session, context, poll):
     """Show the delete confirmation message."""
     context.query.message.edit_text(
-        'Do you really want to delete this poll?',
+        i18n.t('management.delete', locale=poll.user.locale),
         reply_markup=get_deletion_confirmation(poll),
     )
 
 
 @poll_required
 def show_close_confirmation(session, context, poll):
-    """Show the delete confirmation message."""
-    message = 'Do you really want to close this poll?\n'
-    message += 'The results will become visible, but people will on longer be able to vote'
+    """Show the permanent close confirmation message."""
     context.query.message.edit_text(
-        message,
+        i18n.t('management.permanently_close', locale=poll.user.locale),
         reply_markup=get_close_confirmation(poll),
     )
 

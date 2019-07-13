@@ -12,7 +12,6 @@ from pollbot.helper.enums import (
     CallbackResult,
     UserSorting,
     OptionSorting,
-    SortOptionTranslation,
 )
 
 
@@ -45,6 +44,11 @@ def get_settings_keyboard(poll):
         text = i18n.t('keyboard.anonymize', locale=locale)
         payload = f'{CallbackType.settings_anonymization_confirmation.value}:{poll.id}:0'
         buttons.append([InlineKeyboardButton(text=text, callback_data=payload)])
+
+    # Change language
+    language_text = i18n.t('keyboard.change_language', locale=locale)
+    language_payload = f'{CallbackType.settings_open_language_picker.value}:{poll.id}:0'
+    buttons.append([InlineKeyboardButton(text=language_text, callback_data=language_payload)])
 
     # Open due date datepicker
     new_option_text = i18n.t('keyboard.due_date', locale=locale)
@@ -126,7 +130,7 @@ def get_option_sorting_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_remove_option_keyboad(poll):
+def get_remove_option_keyboard(poll):
     """Get a keyboard for removing options."""
     buttons = []
     for option in poll.options:
@@ -190,3 +194,21 @@ def get_due_date_datepicker_keyboard(poll):
     datepicker_buttons.append(row)
 
     return InlineKeyboardMarkup(datepicker_buttons)
+
+
+def get_settings_language_keyboard(poll):
+    """Get a keyboard for sorting options."""
+    buttons = []
+    # Compile the possible options for user sorting
+    for language in ['english', 'test']:
+        button = InlineKeyboardButton(
+            language,
+            callback_data=f'{CallbackType.settings_change_poll_language.value}:{poll.id}:{language}'
+        )
+        buttons.append([button])
+
+    github_url = 'https://github.com/Nukesor/ultimate-poll-bot/tree/master/i18n'
+    buttons.append([InlineKeyboardButton(text='Add a new language', url=github_url)])
+    buttons.append([get_back_to_settings_button(poll)])
+
+    return InlineKeyboardMarkup(buttons)

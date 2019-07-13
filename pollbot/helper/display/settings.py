@@ -1,53 +1,61 @@
 """The settings management text."""
-from pollbot.helper.enums import SortOptionTranslation
+from pollbot.i18n import i18n
 from pollbot.helper import translate_poll_type
 
 
 def get_settings_text(poll):
     """Compile the options text for this poll."""
     text = []
-    text.append(f"*Vote type*: {translate_poll_type(poll.poll_type, poll.locale)}")
+    locale = poll.user.locale
+    text.append(i18n.t('settings.poll_type',
+                       locale=locale,
+                       poll_type=translate_poll_type(poll.poll_type, poll.locale)))
+
+    text.append(i18n.t('settings.language', locale=locale, language=poll.locale))
 
     if poll.anonymous:
-        text.append("*Anonymity*: Names are not visible")
+        text.append(i18n.t('settings.anonymous', locale=locale))
     else:
-        text.append("*Anonymity*: Names are visible")
+        text.append(i18n.t('settings.not_anonymous', locale=locale))
 
     if poll.due_date:
-        text.append(f"*Due date*: {poll.get_formatted_due_date()}")
+        text.append(i18n.t('settings.due_date', locale=locale,
+                           date=poll.get_formatted_due_date()))
     else:
-        text.append("*Due date*: None")
+        text.append(i18n.t('settings.no_due_date', locale=locale))
 
     if poll.results_visible:
-        text.append("*Visible results*: Results are directly visible")
+        text.append(i18n.t('settings.results_visible', locale=locale))
     else:
-        text.append("*Visible results*: Results are not visible until poll is closed")
+        text.append(i18n.t('settings.results_not_visible', locale=locale))
 
     text.append('')
 
     if poll.allow_new_options:
-        text.append("*Custom user options*: Anyone can add new options")
+        text.append(i18n.t('settings.user_options', locale=locale))
     else:
-        text.append("*Custom user options*: Only you can add new options")
+        text.append(i18n.t('settings.no_user_options', locale=locale))
 
     if poll.results_visible:
         if poll.show_percentage:
-            text.append("*Percentage*: Visible")
+            text.append(i18n.t('settings.percentage', locale=locale))
         else:
-            text.append("*Percentage*: Hidden")
+            text.append(i18n.t('settings.no_percentage', locale=locale))
 
     if poll.has_date_option():
         if poll.european_date_format:
-            text.append("*Date format*: DD.MM.YYYY")
+            text.append(i18n.t('settings.euro_date_format', locale=locale))
         else:
-            text.append("*Date format*: YYYY-MM-DD")
+            text.append(i18n.t('settings.us_date_format', locale=locale))
 
     text.append('')
 
     # Sorting of user names
     if not poll.anonymous:
-        text.append(f'*User Sorting*: {SortOptionTranslation[poll.user_sorting]}')
+        sorting_name = i18n.t(f'sorting.{poll.user_sorting}', locale=locale)
+        text.append(i18n.t('settings.user_sorting', locale=locale, name=sorting_name))
 
-    text.append(f'*Option Sorting*: {SortOptionTranslation[poll.option_sorting]}')
+    sorting_name = i18n.t(f'sorting.{poll.option_sorting}', locale=locale)
+    text.append(i18n.t('settings.option_sorting', locale=locale, name=sorting_name))
 
     return '\n'.join(text)

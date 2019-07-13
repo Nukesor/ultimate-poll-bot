@@ -4,6 +4,7 @@ import string
 from datetime import date
 from sqlalchemy import func
 
+from pollbot.i18n import i18n
 from pollbot.helper.enums import PollType
 from pollbot.helper import (
     poll_has_limited_votes,
@@ -43,9 +44,9 @@ def get_poll_text(session, poll, show_warning):
             poll.anonymous and not poll.closed:
         lines.append('')
     if poll.anonymous and not poll.closed:
-        lines.append('_Anonymous!_')
+        lines.append(f"_{i18n.t('poll.anonymous', locale=poll.locale)}_")
     if not poll.results_visible and not poll.should_show_result():
-        lines.append('_Results are not visible, until poll is closed!_')
+        lines.append(f"_{i18n.t('poll.results_not_visible', locale=poll.locale)}_")
 
     # Sort the options accordingly to the polls settings
     options = get_sorted_options(poll, total_user_count)
@@ -70,7 +71,9 @@ def get_poll_text(session, poll, show_warning):
     lines.append('')
 
     if poll_has_limited_votes(poll):
-        lines.append(f'\nEvery user can vote *{poll.number_of_votes} times*')
+        lines.append(i18n.t('poll.vote_times',
+                            locale=poll.locale,
+                            amount=poll.number_of_votes))
 
     # Total user count information
     information_line = get_vote_information_line(poll, total_user_count)
@@ -82,16 +85,16 @@ def get_poll_text(session, poll, show_warning):
         lines += remaining_votes
 
     if poll.due_date is not None:
-        lines.append(f'\n📅 This poll is due at: {poll.get_formatted_due_date()}')
+        lines.append(i18n.t('poll.due',
+                            locale=poll.locale,
+                            date=poll.get_formatted_due_date()))
 
     # Notify users that poll is closed
     if poll.closed:
-        lines.append('\n⚠️ *This poll is closed* ⚠️')
+        lines.append(i18n.t('poll.closed', locale=poll.locale))
 
     if show_warning:
-        lines.append('\n⚠️ *Too many votes in the last minute:* ⚠️')
-        lines.append(f'Your votes will still be registered, but this message will only update every 2 seconds.')
-        lines.append("(Telegram doesn't allow to send/update more than a certain amount of messages per minute in a group by a bot.)")
+        lines.append(i18n.t('poll.too_many_votes', locale=poll.locale))
 
     return '\n'.join(lines)
 
@@ -159,13 +162,15 @@ def get_vote_information_line(poll, total_user_count):
     """Get line that shows information about total user votes."""
     vote_information = None
     if total_user_count > 1:
-        vote_information = f'*{total_user_count} users* voted so far'
+        vote_information = i18n.t('poll.many_users_voted',
+                                  locale=poll.locale,
+                                  count=total_user_count)
     elif total_user_count == 1:
-        vote_information = '*One user* voted so far'
+        vote_information = i18n.t('poll.one_user_voted', locale=poll.locale)
 
     if vote_information is not None and poll_allows_multiple_votes(poll):
         total_count = calculate_total_votes(poll)
-        vote_information += f' ({total_count} votes)'
+        vote_information += i18n.t('poll.total_votes', locale=poll.locale, count=total_count)
 
     return vote_information
 
@@ -190,8 +195,11 @@ def get_remaining_votes(session, poll):
         return []
 
     lines = []
-    lines.append('\nRemaining votes:')
+    lines.append(i18n.t('poll.remaining_votes', locale=poll.locale))
     for user_votes in remaining_user_votes:
-        lines.append(f'{user_votes[0]}: {poll.number_of_votes - user_votes[1]} votes')
+        lines.append(i18n.t('poll.remaining_votes',
+                            locale=poll.locale,
+                            name=user_votes[0],
+                            count=poll.number_of_votes - user_votes[1]))
 
     return lines

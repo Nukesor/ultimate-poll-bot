@@ -52,6 +52,8 @@ from .settings import (
     open_new_option_datepicker,
     open_due_date_datepicker,
     pick_due_date,
+    open_language_picker,
+    change_poll_language,
 )
 from .datepicker import (
     set_next_month,
@@ -61,6 +63,7 @@ from .datepicker import (
 )
 from .external import (
     activate_notification,
+    open_external_datepicker,
 )
 
 
@@ -107,6 +110,7 @@ def handle_callback_query(bot, update, session, user):
         'Callback query incoming',
         {
             'query': update.callback_query,
+            'data': update.callback_query.data,
             'user': user,
             'callback_type': context.callback_type,
             'callback_result': context.callback_result,
@@ -164,6 +168,8 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.settings_open_add_option_datepicker: open_new_option_datepicker,
         CallbackType.settings_open_due_date_datepicker: open_due_date_datepicker,
         CallbackType.settings_pick_due_date: pick_due_date,
+        CallbackType.settings_open_language_picker: open_language_picker,
+        CallbackType.settings_change_poll_language: change_poll_language,
 
         # Datepicker
         CallbackType.set_date: set_date,
@@ -172,6 +178,7 @@ def handle_callback_query(bot, update, session, user):
 
         # External
         CallbackType.activate_notification: activate_notification,
+        CallbackType.external_open_datepicker: open_external_datepicker,
 
         # Ignore
         CallbackType.ignore: ignore,

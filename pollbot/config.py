@@ -10,6 +10,7 @@ default_config = {
         "api_key": "your_telegram_api_key",
         "worker_count": 20,
         "flood_threshold": 8,
+        "admin": 'nukesor',
     },
     'database': {
         "sql_uri": 'postgres://localhost/pollbot',

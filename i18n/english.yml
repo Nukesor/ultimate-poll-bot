@@ -17,6 +17,23 @@ datepicker:
   pick_date: Pick this date
   due_date: Set due date
 
+poll:
+  anonymous: Anonymous!
+  results_not_visible: Results are not visible, until poll is closed!
+  vote_times: "\nEvery user can vote *%{amount} times*"
+  due: "\n📅 This poll is due at: %{date}"
+  closed: "\n⚠️ *This poll is closed* ⚠️"
+  many_users_voted: "*%{count} users* voted so far"
+  one_user_voted: "*One user* voted so far"
+  total_votes: " (%{count} votes)"
+  remaining_votes: "\nRemaining votes:"
+  remaining_votes_user: "%{name}: %{count} votes"
+  too_many_votes: |
+
+        ⚠️ *Too many votes in the last minute:* ⚠️
+        Your votes will still be registered, but this message will only update every 2 seconds.
+        (Telegram doesn't allow to send/update more than a certain amount of messages per minute in a group by a bot.)
+
 deleted:
   poll: This poll has been permanently deleted.
   polls: All polls have been deleted
@@ -24,15 +41,28 @@ deleted:
 
 callback:
   error: An error occurred. It'll be fixed soon.
+  closed: Poll closed
+  cannot_reopen: Poll cannot be reopened.
+  cloned: Poll cloned
+  deleted: Poll deleted.
+  poll_created: The poll has already been created
+  poll_already_created: The poll has already been created
+  votes_removed: All votes have been removed
+  anonymity_changed: Anonymity setting changed
+  visibility_changed: Visibility setting changed
+  date_changed: "Date changed: %{date}"
+  date_already_picked: Date already picked
+  date_picked: "Date picked: %{date}"
+  due_date_in_past: The due date is in the past
 
 inline_query:
   create_first: Click here to create a poll first ;)
   create_poll: Click to create a new poll.
 
 notification:
-  one_day: 'The poll *%{name}* will automatically close in one day'
-  six_hours: 'The poll *%{name}* will automatically close in six hours'
-  closed: 'The poll *%{poll.name}* is now closed'
+  one_day: "The poll *%{name}* will automatically close in one day"
+  six_hours: "The poll *%{name}* will automatically close in six hours"
+  closed: "The poll *%{poll.name}* is now closed"
 
 keyboard:
   done: Done
@@ -45,6 +75,7 @@ keyboard:
   share: Share this poll
   close: 🔒 Close
   settings: ⚙️ Settings
+  change_language: Change language
   vote: ✉️ Vote
   permanently_close: ⚠️ Permanently close poll! ⚠️
   permanently_delete: ⚠️ Permanently delete poll! ⚠️
@@ -68,6 +99,35 @@ sorting:
     option_percentage: by percentage
     option_name: by name
 
+settings:
+  poll_type: "*Poll type*: %{poll_type}"
+  language: "*Language*: %{language}"
+  anonymous: "*Anonymity*: Names are not visible"
+  not_anonymous: "*Anonymity*: Names are visible"
+  due_date: "*Due date*: %{date}"
+  no_due_date: "*Due date*: None"
+  results_visible: "*Visible results*: Results are directly visible"
+  results_not_visible: "*Visible results*: Results are not visible until poll is closed"
+  user_options: "*Custom user options*: Anyone can add new options"
+  no_user_options: "*Custom user options*: Only you can add new options"
+  percentage: "*Percentage*: Visible"
+  no_percentage: "*Percentage*: Hidden"
+  euro_date_format: "*Date format*: DD.MM.YYYY"
+  us_date_format: "*Date format*: DD.MM.YYYY"
+  user_sorting: "*User Sorting*: %{name}"
+  option_sorting: "*Option Sorting*: %{name}"
+  change_language: Just click on a language to change it for this poll.
+  anonymize: |
+    Do you really want to anonymize this poll?
+    ⚠️ This action is irrevertible. ⚠️
+  remove_options: Just click the buttons below to remove the desired options.
+
+management:
+  permanently_close: |
+    Do you really want to permanently close this poll?
+    The results will become visible, but people will on longer be able to vote
+  delete: Do you really want to delete this poll?
+
 creation:
   already_creating: You are already creating a poll. Cancel the previous poll creation first
   description: Now send me the description
@@ -75,6 +135,7 @@ creation:
   not_allowed: You are no longer allowed to add new options
   current_poll_type: Current poll type
   cancel: Cancel previous creation
+  vote_count_request: Send me the amount of allowed votes per user.
 
   keyboard:
     change: Change poll type
@@ -84,18 +145,18 @@ creation:
     results_not_visible: Permanently show results
 
   option:
-    next: 'Send *another option* or click *done*'
+    next: "Send *another option* or click *done*"
     first: |
       Please send me an option. You can send multiple options at once, each option on a new line.
       You can also add a description behind a hyphen.
       For instance `Burger - because it is tasty`
     no_new: ❌ No new option has been added
-    single_added: '*%{option}* has been added. 👍\nSend the *another option* or click *done*.'
-    multiple_added: '❌ Options have been added:'
+    single_added: "*%{option}* has been added. 👍\nSend the *another option* or click *done*."
+    multiple_added: "Options have been added:"
     finished: All options have already been added
 
   help:
-    unlimited_votes: '*Unlimited votes* (or the shopping list)'
+    unlimited_votes: "*Unlimited votes* (or the shopping list)"
     single_help: Every user gets a single vote. The default and normal voting mode.
     doodle_help: Users can vote for `yes`, `no`, or `maybe` for each option. Great for finding a date.
     block_help: Every user can vote for all (or less) options. Useful for finding the most wanted options in a group, e.g. games that should be played on a LAN-Party.
@@ -139,6 +200,7 @@ creation:
 external:
   notification:
     pick_poll: Pick the correct poll to activate notifications
+    activated: Notifications activated
 
 delete:
   doesnt_exist: Poll to delete doesn't exist

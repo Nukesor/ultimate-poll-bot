@@ -9,10 +9,11 @@ from pollbot.telegram.keyboard import (
     get_anonymization_confirmation_keyboard,
     get_settings_keyboard,
     get_option_sorting_keyboard,
-    get_remove_option_keyboad,
+    get_remove_option_keyboard,
     get_add_option_keyboard,
     get_add_option_datepicker_keyboard,
     get_due_date_datepicker_keyboard,
+    get_settings_language_keyboard,
 )
 from pollbot.helper.enums import OptionSorting, UserSorting, ExpectedInput
 from pollbot.models import PollOption
@@ -31,7 +32,7 @@ def send_settings_message(context):
 def show_anonymization_confirmation(session, context, poll):
     """Show the delete confirmation message."""
     context.query.message.edit_text(
-        'Do you really want to anonymize this poll?\n⚠️ This action is irrevertible. ⚠️',
+        i18n.t('settings.anonymize', locale=poll.user.locale),
         reply_markup=get_anonymization_confirmation_keyboard(poll),
     )
 
@@ -89,7 +90,7 @@ def expect_new_option(session, context, poll):
     user.current_poll = poll
 
     context.query.message.edit_text(
-        text=i18n.t('creation.first_opion', locale=user.locale),
+        text=i18n.t('creation.option.first', locale=user.locale),
         parse_mode='markdown',
         reply_markup=get_add_option_keyboard(poll),
     )
@@ -108,9 +109,9 @@ def open_new_option_datepicker(session, context, poll):
 @poll_required
 def show_remove_options_menu(session, context, poll):
     """Show the menu for removing options."""
-    keyboard = get_remove_option_keyboad(poll)
+    keyboard = get_remove_option_keyboard(poll)
     context.query.message.edit_text(
-        text='Just click the buttons below to remove the desired options.',
+        i18n.t('settings.remove_options', locale=poll.user.locale),
         parse_mode='markdown',
         reply_markup=keyboard,
     )
@@ -124,7 +125,7 @@ def remove_option(session, context, poll):
         .delete()
     session.commit()
 
-    keyboard = get_remove_option_keyboad(poll)
+    keyboard = get_remove_option_keyboard(poll)
     context.query.message.edit_reply_markup(reply_markup=keyboard)
 
     update_poll_messages(session, context.bot, poll)
@@ -172,10 +173,31 @@ def open_due_date_datepicker(session, context, poll):
 def pick_due_date(session, context, poll):
     """Add a date from the datepicker to the poll."""
     if poll.current_date <= date.today():
-        context.query.answer('The due date is in the past.')
+        context.query.answer(
+            i18n.t('callback.due_date_in_past', locale=poll.user.locale),
+        )
         return
     poll.user.expected_input = None
     poll.current_date
     due_date = datetime.combine(poll.current_date, time(hour=12, minute=00))
     poll.set_due_date(due_date)
+    send_settings_message(context)
+
+
+@poll_required
+def open_language_picker(session, context, poll):
+    """Open the language picker."""
+    keyboard = get_settings_language_keyboard(poll)
+    context.query.message.edit_text(
+        i18n.t('settings.change_language', locale=poll.user.locale),
+        parse_mode='markdown',
+        reply_markup=keyboard,
+    )
+
+
+@poll_required
+def change_poll_language(session, context, poll):
+    """Open the language picker."""
+    poll.locale = context.action
+    session.commit()
     send_settings_message(context)

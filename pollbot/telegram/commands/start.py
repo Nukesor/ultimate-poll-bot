@@ -4,7 +4,7 @@ from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.session import session_wrapper
 from pollbot.models import Poll
 from pollbot.telegram.keyboard import get_main_keyboard
-from pollbot.telegram.keyboard.external import get_external_datepicker_keyboard
+from pollbot.telegram.keyboard.external import get_external_add_option_keyboard
 
 
 @session_wrapper()
@@ -39,7 +39,7 @@ def start(bot, update, session, user):
     session.commit()
 
     update.message.chat.send_message(
-        i18n.t('creation.option.first', poll.locale),
+        i18n.t('creation.option.first', locale=poll.locale),
         parse_mode='markdown',
-        reply_markup=get_external_datepicker_keyboard(poll)
+        reply_markup=get_external_add_option_keyboard(poll)
     )

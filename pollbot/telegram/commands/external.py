@@ -1,10 +1,13 @@
 """The start command handler."""
+from telegram.ext import run_async
+
 from pollbot.i18n import i18n
 from pollbot.helper.session import session_wrapper
 from pollbot.models import Poll, Notification
 from pollbot.telegram.keyboard.external import get_notify_keyboard
 
 
+@run_async
 @session_wrapper()
 def notify(bot, update, session, user):
     """Activate notifications for polls with due date."""
