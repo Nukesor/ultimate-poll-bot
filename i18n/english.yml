@@ -8,8 +8,8 @@ poll_types:
 
 list:
   polls: Click on any button to manage this specific poll
-  no_polls:
-  no_closed_polls:
+  no_polls: You don't own any open polls
+  no_closed_polls: You don't own any closed polls
 
 
 datepicker:
