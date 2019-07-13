@@ -20,7 +20,7 @@ There are still some features missing, such as Deadlines, Notifications and even
 
 **Poll types**
 
-This bot has 5 different vote modi. Each mode is useful for various scenarious. Choose wisely.
+This bot has 6 different vote modi. Each mode is useful for various scenarious. Choose wisely.
 
 - Single vote: User get a single vote to allot
 - Doodle: Users can vote with `yes`, `no` and `maybe` for each option.
