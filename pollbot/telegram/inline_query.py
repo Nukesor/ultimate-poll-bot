@@ -3,6 +3,7 @@ from sqlalchemy import or_
 from telegram.ext import run_async
 from telegram import InlineQueryResultArticle, InputTextMessageContent
 
+from pollbot.i18n import i18n
 from pollbot.helper.display import get_poll_text
 from pollbot.helper.session import hidden_session_wrapper
 from pollbot.models import Poll
@@ -37,9 +38,11 @@ def search(bot, update, session, user):
             .all()
 
     if len(polls) == 0:
-        update.inline_query.answer([], cache_time=300, is_personal=True,
-                                   switch_pm_text="Click here to create a poll first ;)",
-                                   switch_pm_parameter='inline')
+        update.inline_query.answer(
+            [], cache_time=300, is_personal=True,
+            switch_pm_text=i18n.t('inline_query.create_first', locale=user.locale),
+            switch_pm_parameter='inline',
+        )
     else:
         results = []
         for poll in polls:
@@ -53,6 +56,8 @@ def search(bot, update, session, user):
                 reply_markup=get_vote_keyboard(poll),
             ))
 
-        update.inline_query.answer(results, cache_time=300, is_personal=True,
-                                   switch_pm_text="Click to create a new poll.",
-                                   switch_pm_parameter='inline')
+        update.inline_query.answer(
+            results, cache_time=300, is_personal=True,
+            switch_pm_text=i18n.t('inline_query.create_poll', locale=user.locale),
+            switch_pm_parameter='inline'
+        )

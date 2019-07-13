@@ -20,8 +20,21 @@ datepicker:
   pick_date: Pick this date
 
 deleted:
+  poll: This poll has been permanently deleted.
   polls: All polls have been deleted
   closed_polls: All closed polls have been deleted
+
+callback:
+  error: An error occurred. It'll be fixed soon.
+
+inline_query:
+  create_first: Click here to create a poll first ;)
+  create_poll: Click to create a new poll.
+
+notification:
+  one_day: 'The poll *%{name}* will automatically close in one day'
+  six_hours: 'The poll *%{name}* will automatically close in six hours'
+  closed: 'The poll *%{poll.name}* is now closed'
 
 creation:
   already_creating: You are already creating a poll. Cancel the previous poll creation first

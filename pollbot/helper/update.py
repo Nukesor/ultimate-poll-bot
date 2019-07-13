@@ -5,6 +5,7 @@ from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 from psycopg2.errors import UniqueViolation
 
+from pollbot.i18n import i18n
 from pollbot.telegram.keyboard import get_vote_keyboard, get_management_keyboard
 from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.display import (
@@ -136,7 +137,7 @@ def remove_poll_messages(session, bot, poll):
             # Admin poll management interface
             if reference.inline_message_id is None:
                 bot.edit_message_text(
-                    'This poll has been permanently deleted.',
+                    i18n.t('deleted.poll', locale=poll.locale),
                     chat_id=reference.admin_chat_id,
                     message_id=reference.admin_message_id,
                 )
@@ -145,7 +146,7 @@ def remove_poll_messages(session, bot, poll):
             else:
                 # Create text and keyboard
                 bot.edit_message_text(
-                    'This poll has been permanently deleted.',
+                    i18n.t('deleted.poll', locale=poll.locale),
                     inline_message_id=reference.inline_message_id,
                 )
         except BadRequest as e:

@@ -7,6 +7,7 @@ from telegram.error import (
     Unauthorized,
 )
 
+from pollbot.i18n import i18n
 from pollbot.sentry import sentry
 
 
@@ -31,6 +32,9 @@ def error_callback(update, context):
 
     except: # noqa
         if hasattr(update, 'callback_query') and update.callback_query is not None:
-            update.callback_query.answer("An error occurred. It'll be fixed soon.")
+            locale = 'english'
+            if user is not None:
+                locale = user.locale
+            update.callback_query.answer(i18n.t('callback_error', locale=locale)
         traceback.print_exc()
         sentry.captureException()

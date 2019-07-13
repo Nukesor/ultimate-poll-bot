@@ -3,6 +3,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 from datetime import datetime, timedelta
 
+from pollbot.i18n import i18n
 from pollbot.models import Update, Notification, Poll
 from pollbot.helper.session import job_session_wrapper
 from pollbot.helper.update import send_updates, window_size, update_poll_messages
@@ -82,6 +83,7 @@ def send_notifications(context, session):
 
     for notification in notifications:
         poll = notification.poll
+        locale = poll.locale
         time_step = poll.due_date - poll.next_notification
 
         tg_chat = context.bot.get_chat(notification.chat_id)
@@ -90,21 +92,21 @@ def send_notifications(context, session):
         if time_step == timedelta(days=1):
             poll.next_notification = poll.due_date - timedelta(hours=6)
             tg_chat.send_message(
-                f'The poll *{poll.name}* will automatically close in one day',
+                i18n.t('notification.one_day', locale=locale, name=poll.name),
                 parse_mode='markdown',
                 reply_to_message_id=notification.poll_message_id,
             )
         elif time_step == timedelta(hours=6):
             poll.next_notification = poll.due_date
             tg_chat.send_message(
-                f'The poll *{poll.name}* will automatically close in six hours',
+                i18n.t('notification.six_hours', locale=locale, name=poll.name),
                 parse_mode='markdown',
                 reply_to_message_id=notification.poll_message_id,
             )
         elif poll.due_date == poll.next_notification:
             update_poll_messages(session, context.bot, poll)
             tg_chat.send_message(
-                f'The poll *{poll.name}* is now closed',
+                i18n.t('notification.closed', locale=locale, name=poll.name),
                 parse_mode='markdown',
                 reply_to_message_id=notification.poll_message_id,
             )
