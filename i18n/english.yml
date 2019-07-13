@@ -206,6 +206,9 @@ delete:
   doesnt_exist: Poll to delete doesn't exist
   previous_deleted: Previous poll deleted. You can now /create a new poll.
 
+user:
+  language_changed: Language changed
+
 misc:
   donation: |
     Hello there!
@@ -232,6 +235,7 @@ misc:
     This is the *ULTIMATE* pollbot.
     Just type /create or click the button below to start creating polls. Everything is explained underway.
 
+    You can change the language with /language.
     If you have more questions, check out /help.
 
     This project is open-source on [Github](https://github.com/Nukesor/ultimate-poll-bot).
@@ -265,10 +269,15 @@ misc:
     *Find old polls:*
     There are two commands `/list` and `/list\_closed`, which allow you to find and manage your old polls.
 
-    *Delete polls*
+    *Delete polls:*
     You can delete individual polls in the respective poll menus.
     There's also the /delete\_closed command, which deletes all closed polls
     and the /delete\_all command which deletes ALL polls.
+
+    *Language:*
+    Ultimate pollbot supports multiple languages, but only English is officially maintained.
+    If anything breaks, because of broken translations, please fix it on your own. I will not investigate these issues.
+    The language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
 
     *Too many votes in the last minute:*
     Don't worry about this message. This mechanism is necessary to prevent my bot from being blocked by telegram for spamming messages.

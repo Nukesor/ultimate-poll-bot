@@ -6,7 +6,7 @@ from telegram import (
 
 from pollbot.i18n import i18n
 from pollbot.helper.session import session_wrapper
-from pollbot.telegram.keyboard import get_main_keyboard
+from pollbot.telegram.keyboard import get_main_keyboard, get_user_language_keyboard
 
 
 @session_wrapper()
@@ -37,4 +37,15 @@ def send_donation_text(bot, update, session, user):
         i18n.t('misc.donation', locale=user.locale),
         parse_mode='Markdown',
         reply_markup=keyboard
+    )
+
+
+@session_wrapper()
+def change_language(bot, update, session, user):
+    """Open the language picker."""
+    keyboard = get_user_language_keyboard(user)
+    update.message.chat.send_message(
+        i18n.t('settings.change_language', locale=user.locale),
+        parse_mode='markdown',
+        reply_markup=keyboard,
     )

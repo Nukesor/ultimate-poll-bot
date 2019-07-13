@@ -200,7 +200,7 @@ def get_settings_language_keyboard(poll):
     """Get a keyboard for sorting options."""
     buttons = []
     # Compile the possible options for user sorting
-    for language in ['english', 'test']:
+    for language in ['english']:
         button = InlineKeyboardButton(
             language,
             callback_data=f'{CallbackType.settings_change_poll_language.value}:{poll.id}:{language}'

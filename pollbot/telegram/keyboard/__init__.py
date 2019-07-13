@@ -7,6 +7,7 @@ from .management import * # noqa
 from .settings import * # noqa
 from .vote import * # noqa
 from .external import * # noqa
+from .user import * # noqa
 
 
 def get_main_keyboard():

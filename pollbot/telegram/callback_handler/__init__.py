@@ -66,6 +66,10 @@ from .external import (
     open_external_datepicker,
 )
 
+from .user import (
+    change_user_language,
+)
+
 
 class CallbackContext():
     """Contains all important information for handling with callbacks."""
@@ -170,6 +174,9 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.settings_pick_due_date: pick_due_date,
         CallbackType.settings_open_language_picker: open_language_picker,
         CallbackType.settings_change_poll_language: change_poll_language,
+
+        # User
+        CallbackType.user_change_language: change_user_language,
 
         # Datepicker
         CallbackType.set_date: set_date,

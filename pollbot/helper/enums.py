@@ -94,6 +94,9 @@ class CallbackType(Enum):
     activate_notification = 101
     external_open_datepicker = 102
 
+    # User
+    user_change_language = 200
+
     # Date picker
     open_creation_datepicker = 501
     close_creation_datepicker = 502

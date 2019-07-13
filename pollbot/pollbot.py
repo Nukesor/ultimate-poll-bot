@@ -26,7 +26,7 @@ from pollbot.telegram.commands.poll import (
     delete_all,
     delete_all_closed,
 )
-from pollbot.telegram.commands.misc import send_help, send_donation_text
+from pollbot.telegram.commands.misc import send_help, send_donation_text, change_language
 from pollbot.telegram.commands.start import start
 from pollbot.telegram.commands.external import notify
 from pollbot.telegram.commands.admin import broadcast, test_broadcast
@@ -56,6 +56,7 @@ dispatcher.add_handler(CommandHandler('delete_all', delete_all))
 dispatcher.add_handler(CommandHandler('delete_closed', delete_all_closed))
 dispatcher.add_handler(CommandHandler('donations', send_donation_text))
 dispatcher.add_handler(CommandHandler('notify', notify))
+dispatcher.add_handler(CommandHandler('language', change_language))
 
 # Admin command
 dispatcher.add_handler(CommandHandler('broadcast', broadcast))
