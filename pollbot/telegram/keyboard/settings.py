@@ -4,6 +4,7 @@ from telegram import (
     InlineKeyboardButton,
 )
 
+from pollbot.i18n import i18n
 from pollbot.telegram.keyboard import get_back_to_management_button
 from pollbot.telegram.keyboard.date_picker import get_datepicker_buttons
 from pollbot.helper.enums import (
@@ -17,15 +18,19 @@ from pollbot.helper.enums import (
 
 def get_back_to_settings_button(poll):
     """Get the back to options menu button for option sub menus."""
+    locale = poll.user.locale
     payload = f'{CallbackType.menu_back.value}:{poll.id}:{CallbackResult.settings.value}'
-    return InlineKeyboardButton(text='Back', callback_data=payload)
+    return InlineKeyboardButton(text=i18n.t('keyboard.back', locale=locale),
+                                callback_data=payload)
 
 
 def get_anonymization_confirmation_keyboard(poll):
     """Get the confirmation keyboard for poll deletion."""
+    locale = poll.user.locale
     payload = f'{CallbackType.settings_anonymization.value}:{poll.id}:0'
     buttons = [
-        [InlineKeyboardButton(text='⚠️ Permanently anonymize poll! ⚠️', callback_data=payload)],
+        [InlineKeyboardButton(i18n.t('keyboard.permanently_anonymize', locale=locale),
+                              callback_data=payload)],
         [get_back_to_management_button(poll)],
     ]
     return InlineKeyboardMarkup(buttons)
@@ -34,14 +39,15 @@ def get_anonymization_confirmation_keyboard(poll):
 def get_settings_keyboard(poll):
     """Get the options menu for this poll."""
     buttons = []
+    locale = poll.user.locale
     # Anonymization
     if not poll.anonymous:
-        text = "🔍 Make votes anonymous"
+        text = i18n.t('keyboard.anonymize', locale=locale)
         payload = f'{CallbackType.settings_anonymization_confirmation.value}:{poll.id}:0'
         buttons.append([InlineKeyboardButton(text=text, callback_data=payload)])
 
     # Open due date datepicker
-    new_option_text = '📅 Set due date'
+    new_option_text = i18n.t('keyboard.due_date', locale=locale)
     new_option_payload = f'{CallbackType.settings_open_due_date_datepicker.value}:{poll.id}:0'
     buttons.append([InlineKeyboardButton(text=new_option_text, callback_data=new_option_payload)])
 
@@ -52,30 +58,31 @@ def get_settings_keyboard(poll):
         buttons.append([InlineKeyboardButton(text=date_format_text, callback_data=date_format_payload)])
 
     # Sorting sub menu
-    sorting_text = '📋 Sorting settings'
+    sorting_text = i18n.t('keyboard.sorting', locale=locale)
     sorting_payload = f'{CallbackType.settings_show_sorting.value}:{poll.id}:0'
     buttons.append([InlineKeyboardButton(text=sorting_text, callback_data=sorting_payload)])
     if poll.results_visible:
         # Show percentage option
-        percentage_text = '○% Hide percentage' if poll.show_percentage else '○% Show percentage'
+        percentage_text = i18n.t('keyboard.hide_percentage', locale=locale)
+        if poll.show_percentage:
+            percentage_text = i18n.t('keyboard.show_percentage', locale=locale)
         percentage_payload = f'{CallbackType.settings_toggle_percentage.value}:{poll.id}:0'
         buttons.append([InlineKeyboardButton(text=percentage_text, callback_data=percentage_payload)])
 
     # New option button
-    new_option_text = '＋ Add a new option'
+    new_option_text = i18n.t('keyboard.new_option', locale=locale)
     new_option_payload = f'{CallbackType.settings_new_option.value}:{poll.id}:0'
     buttons.append([InlineKeyboardButton(text=new_option_text, callback_data=new_option_payload)])
 
     # Remove options button
-    new_option_text = '－  Remove options'
+    new_option_text = i18n.t('keyboard.remove_option', locale=locale)
     new_option_payload = f'{CallbackType.settings_show_remove_option_menu.value}:{poll.id}:0'
     buttons.append([InlineKeyboardButton(text=new_option_text, callback_data=new_option_payload)])
 
     # Allow user options button
+    allow_new_option_text = i18n.t('keyboard.allow_user_options', locale=locale)
     if poll.allow_new_options:
-        allow_new_option_text = "🍺 Forbid users to add new options"
-    else:
-        allow_new_option_text = '🍻 Allow users to add new options'
+        allow_new_option_text = i18n.t('keyboard.forbid_user_options', locale=locale)
     allow_new_option_payload = f'{CallbackType.settings_toggle_allow_new_options.value}:{poll.id}:0'
     buttons.append([InlineKeyboardButton(text=allow_new_option_text, callback_data=allow_new_option_payload)])
     # Back button
@@ -87,6 +94,7 @@ def get_settings_keyboard(poll):
 def get_option_sorting_keyboard(poll):
     """Get a keyboard for sorting options."""
     buttons = []
+    locale = poll.user.locale
 
     # Compile the possible options for user sorting
     if not poll.anonymous:
@@ -94,8 +102,9 @@ def get_option_sorting_keyboard(poll):
             if order.name == poll.user_sorting:
                 continue
 
+            option_name = i18n.t(f'sorting.{order.name}', locale=locale)
             button = InlineKeyboardButton(
-                text=f'Order users {SortOptionTranslation[order.name]}',
+                i18n.t('keyboard.order_users', locale=locale, name=option_name),
                 callback_data=f'{CallbackType.settings_user_sorting.value}:{poll.id}:{order.value}'
             )
             buttons.append([button])
@@ -105,8 +114,9 @@ def get_option_sorting_keyboard(poll):
         if order.name == poll.option_sorting:
             continue
 
+        option_name = i18n.t(f'sorting.{order.name}', locale=locale)
         button = InlineKeyboardButton(
-            text=f'Order options {SortOptionTranslation[order.name]}',
+            i18n.t('keyboard.order_options', locale=locale, name=option_name),
             callback_data=f'{CallbackType.settings_option_sorting.value}:{poll.id}:{order.value}'
         )
         buttons.append([button])
@@ -133,9 +143,12 @@ def get_remove_option_keyboad(poll):
 
 def get_add_option_keyboard(poll):
     """Get the keyboard for adding a new option after poll creation."""
+    locale = poll.user.locale
     datepicker_payload = f'{CallbackType.settings_open_add_option_datepicker.value}:{poll.id}:0'
     buttons = [
-        [InlineKeyboardButton(text='Open Datepicker', callback_data=datepicker_payload)],
+        [InlineKeyboardButton(
+            i18n.t('datepicker.open', locale=locale),
+            callback_data=datepicker_payload)],
         [get_back_to_settings_button(poll)],
     ]
 
@@ -146,13 +159,15 @@ def get_add_option_keyboard(poll):
 
 def get_add_option_datepicker_keyboard(poll):
     """Get the done keyboard for options during poll creation."""
+    locale = poll.user.locale
     datepicker_buttons = get_datepicker_buttons(poll)
-
     # Add back and pick buttons
     pick_payload = f'{CallbackType.pick_date_option.value}:{poll.id}:0'
     row = [
         get_back_to_settings_button(poll),
-        InlineKeyboardButton(text='Pick this date', callback_data=pick_payload),
+        InlineKeyboardButton(
+            i18n.t('datepicker.pick_date', locale=locale),
+            callback_data=pick_payload),
     ]
     datepicker_buttons.append(row)
 
@@ -164,10 +179,13 @@ def get_due_date_datepicker_keyboard(poll):
     datepicker_buttons = get_datepicker_buttons(poll)
 
     # Add back and pick buttons
+    locale = poll.user.locale
     pick_payload = f'{CallbackType.settings_pick_due_date.value}:{poll.id}:0'
     row = [
         get_back_to_settings_button(poll),
-        InlineKeyboardButton(text='Set due date', callback_data=pick_payload),
+        InlineKeyboardButton(
+            i18n.t('datepicker.due_date', locale=locale),
+            callback_data=pick_payload),
     ]
     datepicker_buttons.append(row)
 

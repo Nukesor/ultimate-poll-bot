@@ -5,6 +5,7 @@ from telegram import (
     InlineKeyboardButton,
 )
 
+from pollbot.i18n import i18n
 from pollbot.config import config
 from pollbot.helper import poll_allows_cumulative_votes
 from pollbot.helper.enums import (
@@ -20,6 +21,7 @@ from .management import get_back_to_management_button
 
 def get_vote_keyboard(poll, show_back=False):
     """Get the keyboard for actual voting."""
+    locale = poll.locale
     if poll.closed:
         return None
 
@@ -33,7 +35,8 @@ def get_vote_keyboard(poll, show_back=False):
     if poll.allow_new_options:
         bot_name = config['telegram']['bot_name']
         url = f'http://t.me/{bot_name}?start={poll.uuid}'
-        buttons.append([InlineKeyboardButton(text='Add a new option.', url=url)])
+        buttons.append([InlineKeyboardButton(
+            i18n.t('keyboard.new_option', locale=locale), url=url)])
 
     if show_back:
         buttons.append([get_back_to_management_button(poll)])
@@ -59,7 +62,7 @@ def get_normal_buttons(poll):
             text = f'{option_name} ({len(option.votes)} votes)'
         else:
             text = f'{option_name}'
-        buttons.append([InlineKeyboardButton(text=text, callback_data=payload)])
+        buttons.append([InlineKeyboardButton(text, callback_data=payload)])
 
     return buttons
 
@@ -81,8 +84,8 @@ def get_cumulative_buttons(poll):
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
         no_payload = f'{vote_button_type}:{option.id}:{vote_no}'
         buttons.append([
-            InlineKeyboardButton(text=f'－ {option_name}', callback_data=no_payload),
-            InlineKeyboardButton(text=f'＋ {option_name}', callback_data=yes_payload),
+            InlineKeyboardButton(f'－ {option_name}', callback_data=no_payload),
+            InlineKeyboardButton(f'＋ {option_name}', callback_data=yes_payload),
         ])
 
     return buttons
@@ -108,10 +111,10 @@ def get_doodle_buttons(poll):
         maybe_payload = f'{vote_button_type}:{option.id}:{vote_maybe}'
         no_payload = f'{vote_button_type}:{option.id}:{vote_no}'
         buttons.append([
-            InlineKeyboardButton(text=f'{letters[index]})', callback_data=ignore_payload),
-            InlineKeyboardButton(text='✅', callback_data=yes_payload),
-            InlineKeyboardButton(text='❔', callback_data=maybe_payload),
-            InlineKeyboardButton(text='❌', callback_data=no_payload),
+            InlineKeyboardButton(f'{letters[index]})', callback_data=ignore_payload),
+            InlineKeyboardButton('✅', callback_data=yes_payload),
+            InlineKeyboardButton('❔', callback_data=maybe_payload),
+            InlineKeyboardButton('❌', callback_data=no_payload),
         ])
 
     return buttons

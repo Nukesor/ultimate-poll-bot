@@ -30,9 +30,9 @@ def get_init_keyboard(poll):
         toggle_results_visible_text = i18n.t('creation.keyboard.results_not_visible', locale=locale)
 
     buttons = [
-        [InlineKeyboardButton(text=change_type_text, callback_data=change_type_payload)],
-        [InlineKeyboardButton(text=toggle_anonymity_text, callback_data=toggle_anonymity_payload)],
-        [InlineKeyboardButton(text=toggle_results_visible_text, callback_data=toggle_results_visible_payload)],
+        [InlineKeyboardButton(change_type_text, callback_data=change_type_payload)],
+        [InlineKeyboardButton(toggle_anonymity_text, callback_data=toggle_anonymity_payload)],
+        [InlineKeyboardButton(toggle_results_visible_text, callback_data=toggle_results_visible_payload)],
     ]
 
     return InlineKeyboardMarkup(buttons)
@@ -47,7 +47,7 @@ def get_change_poll_type_keyboard(poll):
     for poll_type in PollType:
         text = translate_poll_type(poll_type.name, poll.locale)
         payload = f'{change_type}:{poll.id}:{poll_type.value}'
-        button = [InlineKeyboardButton(text=text, callback_data=payload)]
+        button = [InlineKeyboardButton(text, callback_data=payload)]
         buttons.append(button)
 
     return InlineKeyboardMarkup(buttons)
@@ -57,7 +57,7 @@ def get_open_datepicker_keyboard(poll):
     """Get the done keyboard for options during poll creation."""
     payload = f'{CallbackType.open_creation_datepicker.value}:{poll.id}:0'
     buttons = [[InlineKeyboardButton(
-        text=i18n.t('creation.open_datepicker', locale=poll.user.locale),
+        i18n.t('datepicker.open', locale=poll.user.locale),
         callback_data=payload,
     )]]
 
@@ -68,7 +68,7 @@ def get_cancel_creation_keyboard(poll):
     """Get the cancel creation button."""
     payload = f'{CallbackType.cancel_creation.value}:{poll.id}:0'
     buttons = [[InlineKeyboardButton(
-        text=i18n.t('creation.cancel', locale=poll.user.locale),
+        i18n.t('creation.cancel', locale=poll.user.locale),
         callback_data=payload)]]
 
     return InlineKeyboardMarkup(buttons)
@@ -78,7 +78,7 @@ def get_skip_description_keyboard(poll):
     """Get the keyboard for skipping the description."""
     payload = f'{CallbackType.skip_description.value}:{poll.id}:0'
     buttons = [[InlineKeyboardButton(
-        text=i18n.t('creation.skip_description', locale=poll.user.locale),
+        i18n.t('creation.skip_description', locale=poll.user.locale),
         callback_data=payload)]]
 
     return InlineKeyboardMarkup(buttons)
@@ -90,9 +90,9 @@ def get_options_entered_keyboard(poll):
     datepicker_payload = f'{CallbackType.open_creation_datepicker.value}:{poll.id}:0'
     done_payload = f'{CallbackType.all_options_entered.value}:{poll.id}:0'
     buttons = [[
-        InlineKeyboardButton(text=i18n.t('creation.open_datepicker', locale=locale),
+        InlineKeyboardButton(i18n.t('datepicker.open', locale=locale),
                              callback_data=datepicker_payload),
-        InlineKeyboardButton(text=i18n.t('general.done', locale=locale),
+        InlineKeyboardButton(i18n.t('keyboard.done', locale=locale),
                              callback_data=done_payload),
     ]]
 
@@ -106,17 +106,17 @@ def get_creation_datepicker_keyboard(poll):
 
     # Create back and done buttons
     close_payload = f'{CallbackType.close_creation_datepicker.value}:{poll.id}:0'
-    buttons = [InlineKeyboardButton(text=i18n.t('general.close', locale=locale),
+    buttons = [InlineKeyboardButton(i18n.t('keyboard.close', locale=locale),
                                     callback_data=close_payload)]
     if len(poll.options) > 0:
         done_payload = f'{CallbackType.all_options_entered.value}:{poll.id}:0'
-        buttons.append(InlineKeyboardButton(texte=i18n.t('general.done', locale=locale),
+        buttons.append(InlineKeyboardButton(i18n.t('keyboard.done', locale=locale),
                                             callback_data=done_payload))
     datepicker_buttons.append(buttons)
 
     # Create pick button
     pick_payload = f'{CallbackType.pick_date_option.value}:{poll.id}:0'
-    datepicker_buttons.append([InlineKeyboardButton(text=i18n.t('datepicker.pick_date', locale=locale),
+    datepicker_buttons.append([InlineKeyboardButton(i18n.t('datepicker.pick_date', locale=locale),
                                                     callback_data=pick_payload)])
 
     return InlineKeyboardMarkup(datepicker_buttons)

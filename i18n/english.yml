@@ -6,10 +6,6 @@ poll_types:
   cumulative_vote: Cumulative vote
   count_vote: Unlimited votes
 
-general:
-  done: Done
-  close: Close
-
 list:
   polls: Click on any button to manage this specific poll
   no_polls:
@@ -17,7 +13,9 @@ list:
 
 
 datepicker:
+  open:  Open datepicker
   pick_date: Pick this date
+  due_date: Set due date
 
 deleted:
   poll: This poll has been permanently deleted.
@@ -36,13 +34,46 @@ notification:
   six_hours: 'The poll *%{name}* will automatically close in six hours'
   closed: 'The poll *%{poll.name}* is now closed'
 
+keyboard:
+  done: Done
+  close: Close
+  back: Back
+  delete: ❌ Delete
+  reset: 🔨 Reset
+  clone: 🧬 Clone
+  reopen: 🔓 Reopen poll
+  share: Share this poll
+  close: 🔒 Close
+  settings: ⚙️ Settings
+  vote: ✉️ Vote
+  permanently_close: ⚠️ Permanently close poll! ⚠️
+  permanently_delete: ⚠️ Permanently delete poll! ⚠️
+  permanently_anonymize: ⚠️ Permanently anonymize poll! ⚠️
+  anonymize: 🔍 Make votes anonymous
+  due_date: 📅 Set due date
+  sorting: 📋 Sorting settings
+  hide_percentage: ○% Hide percentage
+  show_percentage: ○% Show percentage
+  new_option: ＋ Add a new option
+  remove_option: － Remove options
+  forbid_user_options: 🍺 Forbid users to add new options
+  allow_user_options: 🍻 Allow users to add new options
+  order_users: Order users %{name}
+  order_options: Order users %{name}
+
+sorting:
+    user_chrono: chronologically
+    user_name: by name
+    option_chrono: chronologically
+    option_percentage: by percentage
+    option_name: by name
+
 creation:
   already_creating: You are already creating a poll. Cancel the previous poll creation first
   description: Now send me the description
   skip_description: Skip description
   not_allowed: You are no longer allowed to add new options
   current_poll_type: Current poll type
-  open_datepicker:  Open datepicker
   cancel: Cancel previous creation
 
   keyboard:

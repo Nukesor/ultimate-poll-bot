@@ -21,12 +21,12 @@ def get_datepicker_buttons(poll):
 
     # Add headline
     headline = f'{calendar.month_name[current_date.month]} {current_date.year}'
-    buttons.append([InlineKeyboardButton(text=headline, callback_data=ignore_payload)])
+    buttons.append([InlineKeyboardButton(headline, callback_data=ignore_payload)])
 
     # Create the week-day column description
     row = []
     for day in ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]:
-        row.append(InlineKeyboardButton(text=day, callback_data=ignore_payload))
+        row.append(InlineKeyboardButton(day, callback_data=ignore_payload))
     buttons.append(row)
 
     # Iterate through all days and create respective buttons

@@ -4,6 +4,7 @@ from telegram import (
     InlineKeyboardButton,
 )
 
+from pollbot.i18n import i18n
 from pollbot.telegram.keyboard.date_picker import get_datepicker_buttons
 from pollbot.helper.enums import (
     CallbackType,
@@ -17,7 +18,9 @@ def get_external_datepicker_keyboard(poll):
     # Add back and pick buttons
     pick_payload = f'{CallbackType.pick_date_option.value}:{poll.id}:0'
     row = [
-        InlineKeyboardButton(text='Pick this date', callback_data=pick_payload),
+        InlineKeyboardButton(
+            i18n.t('datepicker.pick_date', locale=poll.locale),
+            callback_data=pick_payload),
     ]
     datepicker_buttons.append(row)
 
@@ -31,7 +34,7 @@ def get_notify_keyboard(polls):
     for poll in polls:
         pick_payload = f'{CallbackType.activate_notification.value}:{poll.id}:0'
         buttons.append([
-            InlineKeyboardButton(text=poll.name, callback_data=pick_payload),
+            InlineKeyboardButton(poll.name, callback_data=pick_payload),
         ])
 
     return InlineKeyboardMarkup(buttons)

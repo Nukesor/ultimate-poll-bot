@@ -60,7 +60,7 @@ def hidden_session_wrapper():
                     locale = 'english'
                     if user is not None:
                         locale = user.locale
-                    update.callback_query.answer(i18n.t('callback_error', locale=locale)
+                    update.callback_query.answer(i18n.t('callback.error', locale=locale))
             finally:
                 session.close()
         return wrapper
