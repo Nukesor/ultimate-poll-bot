@@ -277,6 +277,8 @@ misc:
 
     *Language:*
     Ultimate pollbot supports multiple languages, but only English is officially maintained.
+    To add a new language, go to the Github repository, copy the `english.yml`, rename it to your language and adjust all values.
+    Be careful to not fuck up any Markdown styling (`**`, `__`, `${}`), otherwise stuff will break for your language.
     If anything breaks, because of broken translations, please fix it on your own. I will not investigate these issues.
     The language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
 
