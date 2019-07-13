@@ -11,12 +11,52 @@ creation:
     Please send me an option. You can send multiple options at once, each option on a new line.
     You can also add a description behind a hyphen.
     For instance `Burger - because it is tasty`
-  next_option: Send *another option* or click *done*
-  no_new_option: No new option has been added
+  next_option: 'Send *another option* or click *done*'
+  no_new_option: ❌ No new option has been added
+  single_option_added: '*%{option}* has been added. 👍\nSend the *another option* or click *done*.'
   options_added: '❌ Options have been added:'
   all_options_already_added: All options have already been added
   description: Now send me the description.
   not_allowed: You are no longer allowed to add new options.
+  current_poll_type: Current poll type
+  help:
+    unlimited_votes: '*Unlimited votes* (or the shopping list)'
+    single_help: Every user gets a single vote. The default and normal voting mode.
+    doodle_help: Users can vote for `yes`, `no`, or `maybe` for each option. Great for finding a date.
+    block_help: Every user can vote for all (or less) options. Useful for finding the most wanted options in a group, e.g. games that should be played on a LAN-Party.
+    limited_help: |
+      Every user gets a fixed number of votes they can distribute, but only once per option.
+      Pretty much like block vote, but people need to prioritize.
+      This mode is good for limiting the amount of possible winners e.g. if you only want max 4 games on your LAN-Party.
+    cumulative_help: |
+      Every user gets a fixed number of votes they can distribute as they like (even multiple votes per option).
+      This mode has a little more depth than limited vote, since it allows users to vote on a single option multiple times.
+    unlimited_help: |
+      Every user can vote as often on any option as they want.
+      This is great if you want to, for instance, determine how much stuff everyone wants for the next festival trip.
+
+  results_not_visible: Results are not visible until poll is closed
+  results_visible: Results are directly visible
+  anonymity: Names are not visible
+  no_anonymity: Names are visible
+  init_text: |
+    Hey there!
+    You are about to create a new poll 👌
+
+    The current settings for this poll are:
+
+    *Poll type*: %{poll_type}
+    *Anonymity*: %{anonymity}
+    *Visible results*: %{results_visible}
+
+    Please follow these steps:
+    1. Configure the poll to your needs 🙂
+    2. 👇 Send me the name of this poll. 👇
+  datepicker_text: |
+    *Datepicker:*
+    To add date, select it and click _Pick this date_.
+
+    *Current options:*
   error:
     limit_bigger_zero: Please send me a number bigger than 0
     limit_between: Please send me a number between 1 and %{limit}

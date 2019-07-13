@@ -79,7 +79,7 @@ def handle_create_options(bot, update, session, user, text, poll, chat):
     added_options = add_options(poll, text)
 
     if len(added_options) == 0:
-        return "❌ No new option has been added."
+        return i18n.t('creation.no_new_option', locale=user.locale)
 
     next_option(chat, poll, added_options)
 

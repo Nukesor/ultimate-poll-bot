@@ -1,59 +1,59 @@
 """Text helper for poll creation."""
 from pollbot.helper import translate_poll_type
+from pollbot.i18n import i18n
 
 
 def get_poll_type_help_text(poll):
     """Create the help text for vote types."""
-    return f"""Current poll type: *{translate_poll_type(poll.poll_type, poll.locale)}*
+    locale = poll.user.locale
+    text = f"""{i18n.t('creation.current_poll_type', locale=locale)}: *{translate_poll_type(poll.poll_type, locale)}*
 
-*Single vote*:
-Every user gets a single vote. The default and normal voting mode.
+*{i18n.t('poll_types.single_vote', locale=locale)}*:
+{i18n.t('creation.help.single_help', locale=locale)}
 
-*Doodle*:
-Users can vote for `yes`, `no`, or `maybe` for each option. Great for finding a date.
+*{i18n.t('poll_types.doodle', locale=locale)}*:
+{i18n.t('creation.help.doodle_help', locale=locale)}
 
-*Block vote*:
-Every user can vote for all (or less) options. Useful for finding the most wanted options in a group, e.g. games that should be played on a LAN-Party.
+*{i18n.t('poll_types.block_vote', locale=locale)}*:
+{i18n.t('creation.help.block_help', locale=locale)}
 
-*Limited vote*:
-Every user gets a fixed number of votes they can distribute, but only once per option.
-Pretty much like block vote, but people need to prioritize.
-This mode is good for limiting the amount of possible winners e.g. if you only want max 4 games on your LAN-Party.
+*{i18n.t('poll_types.limited_vote', locale=locale)}*:
+{i18n.t('creation.help.limited_help', locale=locale)}
 
-*Cumulative vote*:
-Every user gets a fixed number of votes they can distribute as they like (even multiple votes per option).
-This mode has a little more depth than limited vote, since it allows users to vote on a single option multiple times.
+*{i18n.t('poll_types.cumulative_vote', locale=locale)}*:
+{i18n.t('creation.help.cumulative_help', locale=locale)}
 
-*Unlimited votes* (or the shopping list):
-Every user can vote as often on any option as they want.
-This is great if you want to, for instance, determine how much stuff everyone wants for the next festival trip.
+{i18n.t('creation.help.unlimited_votes', locale=locale)}:
+{i18n.t('creation.help.unlimited_help', locale=locale)}
 """
+    return text
 
 
 def get_init_text(poll):
     """Compile the poll creation initialization text."""
-    message = f"""Hey there!
-You are about to create a new poll 👌
+    locale = poll.user.locale
 
-The current settings for this poll are:
+    anonymity = i18n.t('creation.no_anonymity', locale=locale)
+    if poll.anonymous:
+        anonymity = i18n.t('creation.anonymity', locale=locale)
 
-*Poll type*: {translate_poll_type(poll.poll_type, poll.locale)}
-*Anonymity*: {'Names are not visible' if poll.anonymous else 'Names are visible'}
-*Visible results*: {'Results are directly visible' if poll.results_visible else 'Results are not visible until poll is closed'}
+    results_visible = i18n.t('creation.results_not_visible', locale=locale)
+    if poll.results_visible:
+        results_visible = i18n.t('creation.results_visible', locale=locale)
 
-Please follow these steps:
-1. Configure the poll to your needs 🙂
-2. 👇 Send me the name of this poll. 👇
-"""
+    message = i18n.t(
+        'creation.init_text',
+        locale=poll.user.locale,
+        poll_type=translate_poll_type(poll.poll_type, poll.locale),
+        anonymity=anonymity,
+        results_visible=results_visible,
+    )
     return message
 
 
 def get_datepicker_text(poll):
     """Get the text for the datepicker."""
-    text = """*Datepicker:*
-To add date, select it and click _Pick this date_.
-
-*Current options:*"""
+    text = i18n.t('creation.datepicker_text', locale=poll.user.locale)
     for option in poll.options:
         text += f'\n{option.get_formatted_name()}'
 

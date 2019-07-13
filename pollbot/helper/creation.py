@@ -1,4 +1,5 @@
 """Poll creation helper."""
+from pollbot.i18n import i18n
 from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.display import get_poll_management_text
 from pollbot.telegram.keyboard import (
@@ -10,16 +11,17 @@ from pollbot.models import PollOption, Reference
 
 def next_option(tg_chat, poll, options):
     """Send the options message during the creation ."""
+    locale = poll.user.locale
     poll.user.expected_input = ExpectedInput.options.name
     keyboard = get_options_entered_keyboard(poll)
 
     if len(options) == 1:
-        text = f"*{options[0]}* has been added. 👍\nSend the *another option* or click *done*."
+        text = i18n.t('creation.single_option_added', locale=locale, option=options[0])
     else:
-        text = 'Options have been added:\n'
+        text = i18n.t('creation.options_added', locale=locale)
         for option in options:
             text += f'\n*{option}*'
-        text += '\n\nSend the next option or click *done*.'
+        text += '\n\n' + i18n.t('creation.next_option', locale=locale)
 
     tg_chat.send_message(text, reply_markup=keyboard, parse_mode='Markdown')
 
