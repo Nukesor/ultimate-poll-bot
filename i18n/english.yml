@@ -47,6 +47,7 @@ callback:
   deleted: Poll deleted.
   poll_created: The poll has already been created
   poll_already_created: The poll has already been created
+  poll_no_longer_exists: This poll no longer exists.
   votes_removed: All votes have been removed
   anonymity_changed: Anonymity setting changed
   visibility_changed: Visibility setting changed

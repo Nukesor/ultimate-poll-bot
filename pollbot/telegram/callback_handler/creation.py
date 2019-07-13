@@ -32,7 +32,8 @@ def skip_description(session, context, poll):
     return
 
 
-def show_poll_type_keyboard(session, context):
+@poll_required
+def show_poll_type_keyboard(session, context, poll):
     """Show to vote type keyboard."""
     poll = session.query(Poll).get(context.payload)
 
