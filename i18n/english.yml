@@ -6,19 +6,50 @@ poll_types:
   cumulative_vote: Cumulative vote
   count_vote: Unlimited votes
 
+general:
+  done: Done
+  close: Close
+
+list:
+  polls: Click on any button to manage this specific poll
+  no_polls:
+  no_closed_polls:
+
+
+datepicker:
+  pick_date: Pick this date
+
+deleted:
+  polls: All polls have been deleted
+  closed_polls: All closed polls have been deleted
+
 creation:
-  first_option: |
-    Please send me an option. You can send multiple options at once, each option on a new line.
-    You can also add a description behind a hyphen.
-    For instance `Burger - because it is tasty`
-  next_option: 'Send *another option* or click *done*'
-  no_new_option: ❌ No new option has been added
-  single_option_added: '*%{option}* has been added. 👍\nSend the *another option* or click *done*.'
-  options_added: '❌ Options have been added:'
-  all_options_already_added: All options have already been added
-  description: Now send me the description.
-  not_allowed: You are no longer allowed to add new options.
+  already_creating: You are already creating a poll. Cancel the previous poll creation first
+  description: Now send me the description
+  skip_description: Skip description
+  not_allowed: You are no longer allowed to add new options
   current_poll_type: Current poll type
+  open_datepicker:  Open datepicker
+  cancel: Cancel previous creation
+
+  keyboard:
+    change: Change poll type
+    anonymity: Anonymize poll
+    no_anonymity: Display names in poll
+    results_visible: Hide results until poll is closed
+    results_not_visible: Permanently show results
+
+  option:
+    next: 'Send *another option* or click *done*'
+    first: |
+      Please send me an option. You can send multiple options at once, each option on a new line.
+      You can also add a description behind a hyphen.
+      For instance `Burger - because it is tasty`
+    no_new: ❌ No new option has been added
+    single_added: '*%{option}* has been added. 👍\nSend the *another option* or click *done*.'
+    multiple_added: '❌ Options have been added:'
+    finished: All options have already been added
+
   help:
     unlimited_votes: '*Unlimited votes* (or the shopping list)'
     single_help: Every user gets a single vote. The default and normal voting mode.
@@ -61,6 +92,9 @@ creation:
     limit_bigger_zero: Please send me a number bigger than 0
     limit_between: Please send me a number between 1 and %{limit}
 
+external:
+  notification:
+    pick_poll: Pick the correct poll to activate notifications
 
 delete:
   doesnt_exist: Poll to delete doesn't exist

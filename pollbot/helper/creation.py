@@ -16,12 +16,12 @@ def next_option(tg_chat, poll, options):
     keyboard = get_options_entered_keyboard(poll)
 
     if len(options) == 1:
-        text = i18n.t('creation.single_option_added', locale=locale, option=options[0])
+        text = i18n.t('creation.option.single_added', locale=locale, option=options[0])
     else:
-        text = i18n.t('creation.options_added', locale=locale)
+        text = i18n.t('creation.option.multiple_added', locale=locale)
         for option in options:
             text += f'\n*{option}*'
-        text += '\n\n' + i18n.t('creation.next_option', locale=locale)
+        text += '\n\n' + i18n.t('creation.option.next', locale=locale)
 
     tg_chat.send_message(text, reply_markup=keyboard, parse_mode='Markdown')
 

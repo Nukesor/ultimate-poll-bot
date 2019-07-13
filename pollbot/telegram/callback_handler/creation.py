@@ -132,15 +132,15 @@ def close_creation_datepicker(session, context, poll):
     """All options are entered the poll is created."""
     user = context.user
     if len(poll.options) == 0:
-        text = i18n.t('creation.first_option', locale=user.locale)
+        text = i18n.t('creation.option.first', locale=user.locale)
         keyboard = get_open_datepicker_keyboard(poll)
     else:
-        text = i18n.t('creation.next_option', locale=user.locale)
+        text = i18n.t('creation.option.next', locale=user.locale)
         keyboard = get_options_entered_keyboard(poll)
 
     # Replace the message completely, since all options have already been entered
     if user.expected_input != ExpectedInput.date.name:
-        context.query.message.edit_text(i18n.t('creation.all_options_already_added', locale=user.locale))
+        context.query.message.edit_text(i18n.t('creation.option.finished', locale=user.locale))
         return
 
     user.expected_input = ExpectedInput.options.name

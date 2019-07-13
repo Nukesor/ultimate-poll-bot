@@ -1,4 +1,5 @@
 """The start command handler."""
+from pollbot.i18n import i18n
 from pollbot.helper.session import session_wrapper
 from pollbot.models import Poll, Notification
 from pollbot.telegram.keyboard.external import get_notify_keyboard
@@ -14,7 +15,7 @@ def notify(bot, update, session, user):
         .all()
 
     select_message = update.message.chat.send_message(
-        'Pick the correct poll to activate notifications',
+        i18n.t('external.notification.pick_poll', locale=user.locale),
         parse_mode='markdown',
         reply_markup=get_notify_keyboard(polls)
     )

@@ -66,7 +66,7 @@ def handle_set_description(bot, update, session, user, text, poll, chat):
     poll.description = text
     user.expected_input = ExpectedInput.options.name
     chat.send_message(
-        i18n.t('creation.first_option', locale=user.locale),
+        i18n.t('creation.option.first', locale=user.locale),
         reply_markup=get_open_datepicker_keyboard(poll),
         parse_mode='markdown'
     )
@@ -79,7 +79,7 @@ def handle_create_options(bot, update, session, user, text, poll, chat):
     added_options = add_options(poll, text)
 
     if len(added_options) == 0:
-        return i18n.t('creation.no_new_option', locale=user.locale)
+        return i18n.t('creation.option.no_new', locale=user.locale)
 
     next_option(chat, poll, added_options)
 
@@ -110,12 +110,12 @@ def handle_new_option(bot, update, session, user, text, poll, chat):
     added_options = add_options(poll, text)
 
     if len(added_options) > 0:
-        text = i18n.t('creation.options_added', locale=user.locale) + '\n'
+        text = i18n.t('creation.option.multiple_added', locale=user.locale) + '\n'
         for option in added_options:
             text += f'\n*{option}*'
         chat.send_message(text, parse_mode='markdown')
     else:
-        chat.send_message(i18n.t('creation.no_new_option', locale=user.locale))
+        chat.send_message(i18n.t('creation.option.no_new', locale=user.locale))
 
     # Reset expected input
     user.current_poll = None
@@ -168,7 +168,7 @@ def handle_user_option_addition(bot, update, session, user, text, poll, chat):
         user.expected_input = None
 
         # Send message
-        text = i18n.t('creation.options_added', locale=user.locale) + '\n'
+        text = i18n.t('creation.option.multiple_added', locale=user.locale) + '\n'
         for option in added_options:
             text += f'\n*{option}*'
         chat.send_message(text, parse_mode='markdown')
@@ -176,4 +176,4 @@ def handle_user_option_addition(bot, update, session, user, text, poll, chat):
         # Upate all polls
         update_poll_messages(session, bot, poll)
     else:
-        chat.send_message(i18n.t('creation.no_new_option', locale=user.locale))
+        chat.send_message(i18n.t('creation.option.no_new', locale=user.locale))

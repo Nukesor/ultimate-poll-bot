@@ -38,9 +38,8 @@ def start(bot, update, session, user):
     user.current_poll = poll
     session.commit()
 
-    text = 'Send me the option name (Or send multiple options at once, each option on a new line)'
     update.message.chat.send_message(
-        text,
+        i18n.t('creation.option.first', poll.locale),
         parse_mode='markdown',
         reply_markup=get_external_datepicker_keyboard(poll)
     )

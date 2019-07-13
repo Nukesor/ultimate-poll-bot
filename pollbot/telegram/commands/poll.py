@@ -1,6 +1,7 @@
 """Poll related commands."""
 from telegram.ext import run_async
 
+from pollbot.i18n import i18n
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.display.creation import get_init_text
 from pollbot.helper.enums import ExpectedInput
@@ -20,7 +21,7 @@ def create_poll(bot, update, session, user):
     # The previous unfinished poll will be removed
     if user.current_poll is not None and not user.current_poll.created:
         update.message.chat.send_message(
-            'You are already creating a poll. Cancel the previous poll creation first',
+            i18n.t('creation.already_creating', locale=user.locale),
             reply_markup=get_cancel_creation_keyboard(user.current_poll))
         return
 
@@ -41,7 +42,7 @@ def create_poll(bot, update, session, user):
 @session_wrapper(private=True)
 def list_polls(bot, update, session, user):
     """Get a list of all active polls."""
-    text = 'Click on any button to manage this specific poll.'
+    text = i18n.t('list.polls', locale=user.locale)
     polls = session.query(Poll) \
         .filter(Poll.user == user) \
         .filter(Poll.created.is_(True)) \
@@ -49,7 +50,7 @@ def list_polls(bot, update, session, user):
         .all()
 
     if len(polls) == 0:
-        return "You don't own any active polls."
+        return i18n.t('list.no_polls', locale=user.locale)
 
     keyboard = get_poll_list_keyboard(polls)
     update.message.chat.send_message(text, reply_markup=keyboard)
@@ -59,7 +60,7 @@ def list_polls(bot, update, session, user):
 @session_wrapper(private=True)
 def list_closed_polls(bot, update, session, user):
     """Get a list of all active polls."""
-    text = 'Click on any button to manage this specific poll.'
+    text = i18n.t('list.polls', locale=user.locale)
     polls = session.query(Poll) \
         .filter(Poll.user == user) \
         .filter(Poll.created.is_(True)) \
@@ -67,7 +68,7 @@ def list_closed_polls(bot, update, session, user):
         .all()
 
     if len(polls) == 0:
-        return "You don't own any closed polls."
+        return i18n.t('list.no_closed_polls', locale=user.locale)
 
     keyboard = get_poll_list_keyboard(polls)
     update.message.chat.send_message(text, reply_markup=keyboard)
@@ -80,7 +81,7 @@ def delete_all(bot, update, session, user):
     for poll in user.polls:
         session.delete(poll)
 
-    return "All polls have been deleted"
+    return i18n.t('deleted.polls', locale=user.locale)
 
 
 @run_async
@@ -91,4 +92,4 @@ def delete_all_closed(bot, update, session, user):
         if poll.closed:
             session.delete(poll)
 
-    return "All closed polls have been deleted"
+    return i18n.t('deleted.closed_polls', locale=user.locale)
