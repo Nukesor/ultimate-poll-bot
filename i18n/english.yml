@@ -60,7 +60,7 @@ callback:
     your_votes : ' Your votes:'
     changed: Vote changed!
     removed: Vote removed!
-    registered: Vote registere!
+    registered: Vote registered!
     no_left: No votes left!
     doodle_changed: Vote changed to %{vote_type}
     doodle_registered: 'Vote registered (%{vote_type})'
