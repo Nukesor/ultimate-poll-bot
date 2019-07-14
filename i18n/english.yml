@@ -134,7 +134,7 @@ management:
 creation:
   already_creating: You are already creating a poll. Cancel the previous poll creation first
   description: Now send me the description
-  skip_description: Skip description
+  kkip_description: Skip description
   not_allowed: You are no longer allowed to add new options
   current_poll_type: Current poll type
   cancel: Cancel previous creation
@@ -200,6 +200,9 @@ creation:
   error:
     limit_bigger_zero: Please send me a number bigger than 0
     limit_between: Please send me a number between 1 and %{limit}
+    markdown: |
+      Please don't use markdown symbols in your names, description or options. Such symbols are `_`,`*` and `[`.
+      Please send me the message again without these symbols.
 
 external:
   canceled: Canceled

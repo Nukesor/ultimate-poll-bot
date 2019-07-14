@@ -46,6 +46,10 @@ def handle_private_text(bot, update, session, user):
             ExpectedInput.new_option: handle_new_option,
             ExpectedInput.new_user_option: handle_user_option_addition,
         }
+        if '*' in text or '_' in text or '[' in text:
+            chat.send_message(i18n.t('creation.error.markdown', locale=user.locale),
+                              parse_mode='Markdown')
+            return
 
         return actions[expected_input](bot, update, session, user, text, poll, chat)
 

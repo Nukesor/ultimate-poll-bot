@@ -198,6 +198,9 @@ creation:
   error:
     limit_bigger_zero: Lütfen bana 0'dan büyük bir sayı gönderin
     limit_between: Lütfen bana 1 ile %{limit} arasında bir sayı gönderin
+    markdown: |
+      Please don't use markdown symbols in your names, description or options. Such symbols are `_`,`*` and `[`.
+      Please send me the message again without these symbols.
 
 external:
   canceled: Canceled
