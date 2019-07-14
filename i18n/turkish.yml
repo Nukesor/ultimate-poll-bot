@@ -1,0 +1,299 @@
+poll_types:
+  single_vote: Tekli oy
+  doodle: Karalama
+  block_vote: Toplu oy
+  limited_vote: Sınırlı oy
+  cumulative_vote: Kümülatif oy
+  count_vote: Sınırsız oy
+
+list:
+  polls: Bu anketi yönetmek için herhangi bir butona tıklayın
+  no_polls: Açık anketiniz yok
+  no_closed_polls: Kapalı anketiniz yok
+
+
+datepicker:
+  open:  Tarih seçiciyi aç
+  pick_date: Bu tarihi seç
+  due_date: Bitiş tarihi ayarlayın
+
+poll:
+  anonymous: Anonim!
+  results_not_visible: Sonuçlar anket kapanana kadar gösterilmez!
+  vote_times: "\nHer kullanıcı *%{amount} kez* oy verebilir"
+  due: "\n📅 Bu anket şu tarihte bitiyor: %{date}"
+  closed: "\n⚠️ *Bu anket kapalı* ⚠️"
+  many_users_voted: "Şimdiye kadar *%{count} kullanıcı* oy verdi"
+  one_user_voted: "Şimdiye kadar *1 kullanıcı* oy verdi"
+  total_votes: " (%{count} oy)"
+  remaining_votes: "\nKalan oylar:"
+  remaining_votes_user: "%{name}: %{count} oy"
+  too_many_votes: |
+        ⚠️ *Son dakika içinde çok fazla oy:* ⚠️
+        Oylarınız hala kayıtlı, ama bu mesaj her 2 saniyede güncellenecek
+        (Telegram bir grupta bot tarafından aynı dakika içinde birden fazla mesajı göndermeye/güncellemeye izin vermiyor)
+
+deleted:
+  poll: Bu anket kalıcı olarak silindi
+  polls: Tüm anketler silindi
+  closed_polls: Tüm kapalı anketler silindi
+
+callback:
+  error: Bir hata oluştu. Yakında düzelecek.
+  closed: Anket kapandı.
+  cannot_reopen: Anket yeniden açılamaz.
+  cloned: Anket kopyalandı
+  deleted: Anket silindi.
+  poll_created: Anket zaten oluşturuldu
+  poll_already_created: Anket zaten oluşturuldu
+  poll_no_longer_exists: Bu anket atık yok
+  votes_removed: Tüm oylar kaldırıldı
+  anonymity_changed: Anonimlik ayarı değişti
+  visibility_changed: Görünürlük ayarı değişti
+  date_changed: "Tarih değişti: %{date}"
+  date_already_picked: Tarih zaten seçildi
+  date_picked: "Tarih seçildi: %{date}"
+  due_date_in_past: Bitiş tarihi geçmiş
+
+inline_query:
+  create_first: İlk olarak bir anket oluşturmak için buraya tıklayın ;)
+  create_poll: Yeni bir anket oluşturmak için tıklayın.
+
+notification:
+  one_day: "*%{name}* anketi bir gün içinde otomatik olaak kapatılacak"
+  six_hours: "*%{name}* anketi altı saat içinde otomatik olarak kapatılacak"
+  closed: "*%{poll.name}* anketi artık kapalı"
+
+keyboard:
+  done: Bitti
+  close: Kapat
+  back: Geri
+  delete: ❌ Sil
+  reset: 🔨 Sıfırla
+  clone: 🧬 Kopyala
+  reopen: 🔓 Anketiyeniden aç
+  share: Bu anketi paylaş
+  close: 🔒 Kapat
+  settings: ⚙️ Ayarlar
+  change_language: Dili değiştir
+  vote: ✉️ Oy ver
+  permanently_close: ⚠️ Anketi kalıcı olarak kapat! ⚠️
+  permanently_delete: ⚠️ Anketi kalıcı olarak sil! ⚠️
+  permanently_anonymize: ⚠️ Anketi kalıcı olarak anonim yap! ⚠️
+  anonymize: 🔍 Oyları anonim yap
+  due_date: 📅 Bitiş tarihi ayarla
+  sorting: 📋 Sıralama ayarları
+  hide_percentage: ○% Yüzdeyi gizle
+  show_percentage: ○% Yüzdeyi göster
+  new_option: ＋ Yeni bir seçenek ekle
+  remove_option: － Seçenekleri kaldır
+  forbid_user_options: 🍺 Kullanıcıların yeni seçenekler eklemesini yasakla
+  allow_user_options: 🍻 Kullanıcıların yeni seçenekler eklemesine izin ver
+  order_users: Kullanıcıları sırala %{name}
+  order_options: Seçenekleri sırala %{name}
+
+sorting:
+    user_chrono: kronolojik olarak
+    user_name: isme göre
+    option_chrono: kronolojik olarak
+    option_percentage: yüzdeye göre
+    option_name: isme göre
+
+settings:
+  poll_type: "*Anket tipi*: %{poll_type}"
+  language: "*Dil*: %{language}"
+  anonymous: "*Anonimlik*: İsimler gösterilmez"
+  not_anonymous: "*Anonimlik*: İsimler gösterilir"
+  due_date: "*Bitiş tarihi*: %{date}"
+  no_due_date: "*Bitiş tarihi*: Yok"
+  results_visible: "*Sonuç görünürlüğü*: Sonuçlar direkt olarak gösterilir"
+  results_not_visible: "*Sonuç görünürlüğü*: Sonuçlar anket kapanana kadar gösterilmez"
+  user_options: "*Custom user options*: Herkes yeni seçenekler ekleyebilir"
+  no_user_options: "*Custom user options*: Yalnızca siz yeni seçenekler ekleyebilirsiniz"
+  percentage: "*Yüzde*: Görünür"
+  no_percentage: "*Yüzde*: Gizli"
+  euro_date_format: "*Tarih biçimi*: DD.MM.YYYY"
+  us_date_format: "*Tarih biçimi*: DD.MM.YYYY"
+  user_sorting: "*Kullanıcı Sıralaması*: %{name}"
+  option_sorting: "*Seçenek Sıralaması*: %{name}"
+  change_language: Bu anket için değiştirmek içinbir dile tıklayın
+  anonymize: |
+    Bu anketi gerçekten anonim yapmak istiyor musunuz?
+    ⚠️ Bu işlem geri alınamaz. ⚠️
+  remove_options: İstediğiniz seçenekleri kaldırmak için aşağıdaki butonları kullanın
+
+management:
+  permanently_close: |
+    Bu anketi gerçekten kalıcı olarak kapatmak istiyor musunuz?
+    Sonuçlar görünür olacak, ama insanlar artık oy veremeyecek
+  delete: Bu anketi gerçekten silmek istiyor musunuz?
+
+creation:
+  already_creating: Zaten bir anket oluşturuyorsunuz. İlk olarak önceki anket oluşturmayı iptal edin
+  description: Şimdi bana bir açıklama gönderin
+  skip_description: Açıklamayı atla
+  not_allowed: Artık yeni seçenek eklemenize izin verilmiyor
+  current_poll_type: Şu anki anket tipi
+  cancel: Önceki oluşturmayı iptal et
+  vote_count_request: Her kullanıcı için izin verilen oy miktarını gönderin
+
+  keyboard:
+    change: Anket tipini değiştir
+    anonymity: Anketi anonim yap
+    no_anonymity: İsimleri ankette göster
+    results_visible: Anket kapanana kadar sonuçları gizle
+    results_not_visible: Sonuçları kalıcı olarak göster
+
+  option:
+    next: "*Başka bir seçenek* ekleyin ya da *bitti*ye tıklayın"
+    first: |
+      Lütfen bana bir seçenek gönderin. Tek seferde (her seçenek için yeni satır) birden fazla seçenek gönderebilirsiniz.
+      Ayrıca kısa çizgi arkasına açıklama ekleyebilirsiniz.
+      Örneğin `Burger - çünkü lezzetli`
+    no_new: ❌ Hiç yeni seçenek eklenmedi
+    single_added: "*%{option}* eklendi. 👍\n*Başka bir seçenek* gönderin ya da *bitti*ye tıklayın."
+    multiple_added: "Seçenekler eklendi:"
+    finished: Tüm seçenekler zaten eklendi
+
+  help:
+    unlimited_votes: "*Sınırsız oy* (veya alışveriş listesi)"
+    single_help: Her kullanıcı tek oy verir. Varsayılan ve normal oylama modu.
+    doodle_help: Her kullanıcı her seçenek için `evet`, `hayır` ya da `belki` gibi oy verebilir. Bir tarih bulmak için harikadır.
+    block_help: Her kullanıcı tüm (ya da daha az) seçeneklere oy verebilir. Bir grupta en çok istenen seçeneği bulmak için kullanışlıdır, örneğin bir LAN partisinde oynanması gereken oyunlar.
+    limited_help: |
+      Her kullanıcı dağıtabilecekleri sabit sayıda oyu verir, ama seçenek başına bir kez.
+      Toplu oya çok benziyor, ama insanların öncelik vermesi gerekiyor.
+      Bu mod olası kazanan miktarını sınırlandırmak için iyidir, örneğin LAN partisinde sadece 4 oyun istiyorsanız.
+    cumulative_help: |
+      Her kullanıcı istedikleri gibi dağıtabilecekleri sabit sayıda bir oy verir (seçenek başına birden fazla oy bile).
+      Bu mod, sınırlı oylamadan biraz daha fazla derinliğe sahiptir, çünkü kullanıcıların tek bir seçenek üzerinde birden fazla oy kullanmasına izin verir.
+    unlimited_help: |
+      Her kullanıcı istediği herhangi bir seçeneğe istediği sıklıkta oy verebilir.
+      İstiyorsanız harika, örneğin, bir sonraki festival yolculuğunu herkesi ne kadar istediğini belirlemek.
+  
+  results_not_visible: Sonuçlar anket kapanana kadar gösterilmez
+  results_visible: Sonuçlar direkt olarak gösterilir
+  anonymity: İsimler gösterilmez
+  no_anonymity: İsimler gösterilir
+  init_text: |
+    Merhaba!
+    Yeni bir anket oluşturmak üzeresiniz 👌
+    
+    Bu anket için şu anki ayarlar:
+    
+    *Anket tipi*: %{poll_type}
+    *Anonimlik*: %{anonymity}
+    *Sonuç görünürlüğü*: %{results_visible}
+    
+    Lütfen bu adımları izleyin:
+    1. İhtiyaçlarınıza göre anketinizi yapılandırın 🙂
+    2. 👇 Bana bu anketin adını gönderin. 👇
+  datepicker_text: |
+    *Tarih seçici:*
+    Tarih eklemek için, onu seçin ve _Bu tarihi seç_e tıklayın.
+    
+    *Şu anki seçenekler:*
+  error:
+    limit_bigger_zero: Lütfen bana 0'dan büyük bir sayı gönderin
+    limit_between: Lütfen bana 1 ile %{limit} arasında bir sayı gönderin
+
+external:
+  notification:
+    pick_poll: Bildirimleri etkinleştirmek için doğru anketi gönderin
+    activated: Bildirimler etkinleştirildi
+
+delete:
+  doesnt_exist: Silinecek anket yok
+  previous_deleted: Önceki anket silindi. Yeni bir anket oluşturmak için /create komutunu kullanabilirsiniz.
+
+user:
+  language_changed: Dil değişti
+
+misc:
+  donation: |
+    Merhaba!
+    
+    Benim adım Arne Beer (@Nukesor) Ultimate PollBot'un tek geliştiricisiyim.
+    
+    Ultimate Pollbot'u yazma fikri, arkadaşlarım öğle yemeğinde nereye gideceklerine karar veremediği zaman şekillendi.
+    Bu zaten birçok kez oluyordu ve bu sorun için Telegram'ın içinde iyi ve kararlı bir çözüme ihtiyacımız vardı!
+    İşte ULTIMATE Pollbot böyle doğdu.
+    
+    Bu projedeki her kod satırı boş zamanlarımda yazıldı ve tamamen ücretsiz.
+    Bu proje kar amacı gütmeyen, [Github](https://github.com/Nukesor/ultimate-poll-bot)'ta açık kaynaklı ve kendi paramla kiraladığım sunucumda barınan bir projedir.
+    
+    Şu an genellikle haftada 2-10 saatimi projelerimi geliştirmeye ve sürdürmeye yatırıyorum ve biraz destek almayı isterdim, çünkü bunun büyük bir bölümünü sizin için yapıyorum.
+    
+    Bana yardım eden, sunucumun ve benim çalışmamızı sürdüren her şeyi takdir ediyorum ☺️.
+    
+    Bu projeyi sevdiyseniz, [Patreon](https://www.patreon.com/nukesor) sayfamı kontrol edin ya da beni [Paypal](https://www.paypal.me/arnebeer) ile destekleyin.
+    
+    İyi günler!
+  start: |
+    *Merhaba!*
+    
+    Bu *ULTIMATE* pollbot.
+    Anketleri oluşturmaya başlamak için /create komutunu yazın ya da aşağıdaki butona tıklayın. Sonrasında her şey anlatılmaktadır.
+    
+
+    /language ile dili değiştirebilirsiniz.
+    Daha fazla sorunuz varsa, /help komutunu kontrol edin.
+    
+
+    Bu proje [Github](https://github.com/Nukesor/ultimate-poll-bot)'ta açık kaynaklıdır.
+  
+
+  help: |
+    Anketleriniz için epeyce ayar var:
+    
+    *Oluşturma:*
+    1. Anketinizi anonim yapabilirsiniz, böylece isimler sonuçlarda gösterilmez!
+    2. Anket sonuçları sadece anket kapandıktan sonra gösterilebilir. Bu, insanların bir anketin ara sonuçlarını görebilmesi durumunda mümkün olan taktiksel oylamayı önlemek için harikadır.
+    
+    *Ayarlar:*
+    1. Anket geriye dönük olarak anonim yapılabilir.
+    2. Ayarlar menüsünde seçeneklerin yüzde satırı gizlenebilir.
+    3. Ayarlar menüsünde yeni seçenekler eklenebilir ve varolan seçenekler kaldırılabilir.
+    4. Diğer kullanıcıların anketinize seçenek eklemesine izin verebilirsiniz.
+    5. Kullanıcı isimlerinin ve seçeneklerin sonuçlardaki görüntülenme sırası değiştirilebilir.
+    
+    *Bildirimler:*
+    Bir sohbette bildirimleri etkinleştirmek için bu adımları izleyin:
+    1. Bir anket oluşturun
+    2. Ayarlar menüsünde bitiş tarihini ayarlayın
+    3. Haber almak istediğiniz sohbete gidin (Pollbot'un gruba eklenmesi gerekiyor)
+    4. İlettiğiniz anket mesajını /notify ile yanıtlayın
+    5. Doğru anketi seçin
+    
+    Tüm bu işlem mutsuz bir şekilde aşırı derecede karmaşık, çünkü Telegram botlardan iletilen mesajların gruplarda tespit edilmesine izin vermiyor.
+    Dolayısıyla hangi grupta hangi anketin yayınlandığını ve her şeyin manuel olarak yapılması gerektiğini bilmiyoruz.
+    
+    *Eski anketleri bul:*
+    Eski anketlerinizi bulmak ve yönetmek için `/list` ve `/list\_closed` olarak iki komut var.
+    
+    *Anketleri sil:*
+    Bireysel anketleri ilgili anket menülerinden silebilirsiniz.
+    Ayrıca tüm kapalı anketleri silmek için /delete\_closed komutu
+    ve tüm anketleri silmek için /delete\_all komutu var.
+    
+    *Dil:*
+    Ultimate pollbot çoklu dili destekliyor, ama resmi olarak İngilizce sürdürülüyor.
+    Bozuk çeviriler nedeniyle herhangi bir hata varsa, lütfen kendiniz düzeltin. Bu konulara bakmayacağım.
+    Dil desteği, mutlu bir şekilde desteklediğim topluluk tabanlı bir özellik ancak birden fazla dili kendi başıma destekleyemiyorum.
+    
+    *Son dakika içinde çok fazla oy:*
+    Bu mesaj hakkında endişelenmeyin. Bu mekanizma botumun spam mesajlar nedeniyle Telegram tarafından engellenmesini önlemek için gerekli.
+    Size olan tek etkisi, sonuçların hemen gösterilmemesidir.
+    
+    *Anketlerim güncellenmiyor:*
+    Bu durumda muhtemelen tek bir grupta birden fazla aktif anketiniz vardır (veya aynı anketten birden fazla).
+    Bu, botun tespit edemediği bir şey (Telegram API'leri buna izin vermiyor). Bu yüzden bunu kendiniz halletmelisiniz.
+    Her grupta yalnızca bir tane yüksek etkin etkinliğe sahip anket olmalı ve aynı anketi aynı grupta birçok kez göndermeyin (veya eskileri grubun TÜM üyeleri için silin).
+    
+    *Gitmeyen bir hata var!!*
+    Genellikle bir şey bozulur bozulmaz bir bildirim alırım, haberim olmayan bazı hatalar olabilir!
+    Hata bir veya iki gün içinde çözülmezse, lütfen [Github](https://github.com/Nukesor/ultimate-poll-bot)'tan bir konu açın.
+  
+  error: |
+    Bilinmeyen bir hata oluştu. Muhtemelen bunun hakkında bildirim aldım ve olabildiğince çabuk çözmeye çalışacağım.
+    Bu hata bir veya iki gün içinde hala devam ederse, lütfen hatayı bana bildirin :). Github bağlantısı /start ve /help yazılarının içinde.
