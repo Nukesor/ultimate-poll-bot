@@ -92,6 +92,7 @@ keyboard:
   allow_user_options: 🍻 Kullanıcıların yeni seçenekler eklemesine izin ver
   order_users: Kullanıcıları sırala %{name}
   order_options: Seçenekleri sırala %{name}
+  vote_with_count: '%{option_name} (%{count} oy)'
 
 sorting:
     user_chrono: kronolojik olarak

@@ -59,7 +59,10 @@ def get_normal_buttons(poll):
         result = CallbackResult.vote.value
         payload = f'{vote_button_type}:{option.id}:{result}'
         if poll.should_show_result():
-            text = f'{option_name} ({len(option.votes)} votes)'
+            text = i18n.t('keyboard.vote_with_count',
+                          option_name=option_name,
+                          count=len(option.votes),
+                          locale=poll.locale)
         else:
             text = f'{option_name}'
         buttons.append([InlineKeyboardButton(text, callback_data=payload)])

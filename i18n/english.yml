@@ -93,6 +93,7 @@ keyboard:
   allow_user_options: 🍻 Allow users to add new options
   order_users: Order users %{name}
   order_options: Order users %{name}
+  vote_with_count: '%{option_name} (%{count} votes)'
 
 sorting:
     user_chrono: chronologically
