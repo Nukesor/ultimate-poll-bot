@@ -1,6 +1,7 @@
 """Text helper for poll creation."""
 from pollbot.helper import translate_poll_type
 from pollbot.i18n import i18n
+from pollbot.helper.enums import ExpectedInput
 
 
 def get_poll_type_help_text(poll):
@@ -32,6 +33,8 @@ def get_poll_type_help_text(poll):
 def get_init_text(poll):
     """Compile the poll creation initialization text."""
     locale = poll.user.locale
+    poll.user.current_poll = poll
+    poll.user.expected_input = ExpectedInput.name.name
 
     anonymity = i18n.t('creation.no_anonymity', locale=locale)
     if poll.anonymous:
