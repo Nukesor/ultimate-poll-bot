@@ -10,8 +10,9 @@ from pollbot.models import Poll, Reference
 def handle_chosen_inline_result(bot, update, session, user):
     """Save the chosen inline result."""
     result = update.chosen_inline_result
+    poll_id = result.result_id
 
-    poll = session.query(Poll).get(result.result_id)
+    poll = session.query(Poll).get(poll_id)
 
     reference = Reference(poll, inline_message_id=result.inline_message_id)
     session.add(reference)
