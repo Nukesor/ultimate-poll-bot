@@ -62,7 +62,7 @@ inline_query:
 notification:
   one_day: "*%{name}* anketi bir gün içinde otomatik olaak kapatılacak"
   six_hours: "*%{name}* anketi altı saat içinde otomatik olarak kapatılacak"
-  closed: "*%{poll.name}* anketi artık kapalı"
+  closed: "*%{name}* anketi artık kapalı"
 
 keyboard:
   done: Bitti
@@ -170,7 +170,7 @@ creation:
     unlimited_help: |
       Her kullanıcı istediği herhangi bir seçeneğe istediği sıklıkta oy verebilir.
       İstiyorsanız harika, örneğin, bir sonraki festival yolculuğunu herkesi ne kadar istediğini belirlemek.
-  
+
   results_not_visible: Sonuçlar anket kapanana kadar gösterilmez
   results_visible: Sonuçlar direkt olarak gösterilir
   anonymity: İsimler gösterilmez
@@ -178,20 +178,20 @@ creation:
   init_text: |
     Merhaba!
     Yeni bir anket oluşturmak üzeresiniz 👌
-    
+
     Bu anket için şu anki ayarlar:
-    
+
     *Anket tipi*: %{poll_type}
     *Anonimlik*: %{anonymity}
     *Sonuç görünürlüğü*: %{results_visible}
-    
+
     Lütfen bu adımları izleyin:
     1. İhtiyaçlarınıza göre anketinizi yapılandırın 🙂
     2. 👇 Bana bu anketin adını gönderin. 👇
   datepicker_text: |
     *Tarih seçici:*
     Tarih eklemek için, onu seçin ve _Bu tarihi seç_e tıklayın.
-    
+
     *Şu anki seçenekler:*
   error:
     limit_bigger_zero: Lütfen bana 0'dan büyük bir sayı gönderin
@@ -212,51 +212,51 @@ user:
 misc:
   donation: |
     Merhaba!
-    
+
     Benim adım Arne Beer (@Nukesor) Ultimate PollBot'un tek geliştiricisiyim.
-    
+
     Ultimate Pollbot'u yazma fikri, arkadaşlarım öğle yemeğinde nereye gideceklerine karar veremediği zaman şekillendi.
     Bu zaten birçok kez oluyordu ve bu sorun için Telegram'ın içinde iyi ve kararlı bir çözüme ihtiyacımız vardı!
     İşte ULTIMATE Pollbot böyle doğdu.
-    
+
     Bu projedeki her kod satırı boş zamanlarımda yazıldı ve tamamen ücretsiz.
     Bu proje kar amacı gütmeyen, [Github](https://github.com/Nukesor/ultimate-poll-bot)'ta açık kaynaklı ve kendi paramla kiraladığım sunucumda barınan bir projedir.
-    
+
     Şu an genellikle haftada 2-10 saatimi projelerimi geliştirmeye ve sürdürmeye yatırıyorum ve biraz destek almayı isterdim, çünkü bunun büyük bir bölümünü sizin için yapıyorum.
-    
+
     Bana yardım eden, sunucumun ve benim çalışmamızı sürdüren her şeyi takdir ediyorum ☺️.
-    
+
     Bu projeyi sevdiyseniz, [Patreon](https://www.patreon.com/nukesor) sayfamı kontrol edin ya da beni [Paypal](https://www.paypal.me/arnebeer) ile destekleyin.
-    
+
     İyi günler!
   start: |
     *Merhaba!*
-    
+
     Bu *ULTIMATE* pollbot.
     Anketleri oluşturmaya başlamak için /create komutunu yazın ya da aşağıdaki butona tıklayın. Sonrasında her şey anlatılmaktadır.
-    
+
 
     /language ile dili değiştirebilirsiniz.
     Daha fazla sorunuz varsa, /help komutunu kontrol edin.
-    
+
 
     Bu proje [Github](https://github.com/Nukesor/ultimate-poll-bot)'ta açık kaynaklıdır.
-  
+
 
   help: |
     Anketleriniz için epeyce ayar var:
-    
+
     *Oluşturma:*
     1. Anketinizi anonim yapabilirsiniz, böylece isimler sonuçlarda gösterilmez!
     2. Anket sonuçları sadece anket kapandıktan sonra gösterilebilir. Bu, insanların bir anketin ara sonuçlarını görebilmesi durumunda mümkün olan taktiksel oylamayı önlemek için harikadır.
-    
+
     *Ayarlar:*
     1. Anket geriye dönük olarak anonim yapılabilir.
     2. Ayarlar menüsünde seçeneklerin yüzde satırı gizlenebilir.
     3. Ayarlar menüsünde yeni seçenekler eklenebilir ve varolan seçenekler kaldırılabilir.
     4. Diğer kullanıcıların anketinize seçenek eklemesine izin verebilirsiniz.
     5. Kullanıcı isimlerinin ve seçeneklerin sonuçlardaki görüntülenme sırası değiştirilebilir.
-    
+
     *Bildirimler:*
     Bir sohbette bildirimleri etkinleştirmek için bu adımları izleyin:
     1. Bir anket oluşturun
@@ -264,36 +264,36 @@ misc:
     3. Haber almak istediğiniz sohbete gidin (Pollbot'un gruba eklenmesi gerekiyor)
     4. İlettiğiniz anket mesajını /notify ile yanıtlayın
     5. Doğru anketi seçin
-    
+
     Tüm bu işlem mutsuz bir şekilde aşırı derecede karmaşık, çünkü Telegram botlardan iletilen mesajların gruplarda tespit edilmesine izin vermiyor.
     Dolayısıyla hangi grupta hangi anketin yayınlandığını ve her şeyin manuel olarak yapılması gerektiğini bilmiyoruz.
-    
+
     *Eski anketleri bul:*
     Eski anketlerinizi bulmak ve yönetmek için `/list` ve `/list\_closed` olarak iki komut var.
-    
+
     *Anketleri sil:*
     Bireysel anketleri ilgili anket menülerinden silebilirsiniz.
     Ayrıca tüm kapalı anketleri silmek için /delete\_closed komutu
     ve tüm anketleri silmek için /delete\_all komutu var.
-    
+
     *Dil:*
     Ultimate pollbot çoklu dili destekliyor, ama resmi olarak İngilizce sürdürülüyor.
     Bozuk çeviriler nedeniyle herhangi bir hata varsa, lütfen kendiniz düzeltin. Bu konulara bakmayacağım.
     Dil desteği, mutlu bir şekilde desteklediğim topluluk tabanlı bir özellik ancak birden fazla dili kendi başıma destekleyemiyorum.
-    
+
     *Son dakika içinde çok fazla oy:*
     Bu mesaj hakkında endişelenmeyin. Bu mekanizma botumun spam mesajlar nedeniyle Telegram tarafından engellenmesini önlemek için gerekli.
     Size olan tek etkisi, sonuçların hemen gösterilmemesidir.
-    
+
     *Anketlerim güncellenmiyor:*
     Bu durumda muhtemelen tek bir grupta birden fazla aktif anketiniz vardır (veya aynı anketten birden fazla).
     Bu, botun tespit edemediği bir şey (Telegram API'leri buna izin vermiyor). Bu yüzden bunu kendiniz halletmelisiniz.
     Her grupta yalnızca bir tane yüksek etkin etkinliğe sahip anket olmalı ve aynı anketi aynı grupta birçok kez göndermeyin (veya eskileri grubun TÜM üyeleri için silin).
-    
+
     *Gitmeyen bir hata var!!*
     Genellikle bir şey bozulur bozulmaz bir bildirim alırım, haberim olmayan bazı hatalar olabilir!
     Hata bir veya iki gün içinde çözülmezse, lütfen [Github](https://github.com/Nukesor/ultimate-poll-bot)'tan bir konu açın.
-  
+
   error: |
     Bilinmeyen bir hata oluştu. Muhtemelen bunun hakkında bildirim aldım ve olabildiğince çabuk çözmeye çalışacağım.
     Bu hata bir veya iki gün içinde hala devam ederse, lütfen hatayı bana bildirin :). Github bağlantısı /start ve /help yazılarının içinde.

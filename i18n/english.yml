@@ -63,7 +63,7 @@ inline_query:
 notification:
   one_day: "The poll *%{name}* will automatically close in one day"
   six_hours: "The poll *%{name}* will automatically close in six hours"
-  closed: "The poll *%{poll.name}* is now closed"
+  closed: "The poll *%{name}* is now closed"
 
 keyboard:
   done: Done
