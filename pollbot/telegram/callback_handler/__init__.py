@@ -64,6 +64,8 @@ from .datepicker import (
 from .external import (
     activate_notification,
     open_external_datepicker,
+    open_external_menu,
+    external_cancel,
 )
 
 from .user import (
@@ -185,6 +187,8 @@ def handle_callback_query(bot, update, session, user):
         # External
         CallbackType.activate_notification: activate_notification,
         CallbackType.external_open_datepicker: open_external_datepicker,
+        CallbackType.external_open_menu: open_external_menu,
+        CallbackType.external_cancel: external_cancel,
 
         # Ignore
         CallbackType.ignore: ignore,

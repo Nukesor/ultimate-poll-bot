@@ -17,7 +17,7 @@ from pollbot.telegram.keyboard import (
 def update_datepicker(context, poll):
     """Update the creation datepicker."""
     user = context.user
-    if poll.created and poll.user != user:
+    if True: # poll.created and poll.user != user :
         keyboard = get_external_datepicker_keyboard(context.poll)
     elif poll.created and poll.user == user:
         if poll.user.expected_input == ExpectedInput.due_date.name:

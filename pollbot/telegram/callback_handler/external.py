@@ -4,7 +4,11 @@ from pollbot.helper import poll_required
 from pollbot.models import Notification
 from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.display.creation import get_datepicker_text
-from pollbot.telegram.keyboard.external import get_external_datepicker_keyboard
+
+from pollbot.telegram.keyboard.external import (
+    get_external_datepicker_keyboard,
+    get_external_add_option_keyboard,
+)
 
 
 @poll_required
@@ -55,4 +59,30 @@ def open_external_datepicker(session, context, poll):
         reply_markup=keyboard
     )
 
+    return
+
+
+@poll_required
+def open_external_menu(session, context, poll):
+    """All options are entered the poll is created."""
+    context.user.expected_input = ExpectedInput.new_user_option.name
+    context.user.current_poll = poll
+    session.commit()
+
+    context.query.message.edit_text(
+        i18n.t('creation.option.first', locale=poll.locale),
+        parse_mode='markdown',
+        reply_markup=get_external_add_option_keyboard(poll)
+    )
+    return
+
+
+@poll_required
+def external_cancel(session, context, poll):
+    """All options are entered the poll is created."""
+    context.user.expected_input = None
+    context.user.current_poll = None
+    session.commit()
+
+    context.query.message.edit_text(i18n.t('external.canceled', locale=poll.locale))
     return

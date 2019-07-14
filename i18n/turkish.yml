@@ -68,6 +68,7 @@ keyboard:
   done: Bitti
   close: Kapat
   back: Geri
+  cancel: Cancel
   delete: ❌ Sil
   reset: 🔨 Sıfırla
   clone: 🧬 Kopyala
@@ -198,6 +199,7 @@ creation:
     limit_between: Lütfen bana 1 ile %{limit} arasında bir sayı gönderin
 
 external:
+  canceled: Canceled
   notification:
     pick_poll: Bildirimleri etkinleştirmek için doğru anketi gönderin
     activated: Bildirimler etkinleştirildi

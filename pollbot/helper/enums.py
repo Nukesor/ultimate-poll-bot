@@ -93,6 +93,8 @@ class CallbackType(Enum):
     ignore = 100
     activate_notification = 101
     external_open_datepicker = 102
+    external_open_menu = 103
+    external_cancel = 104
 
     # User
     user_change_language = 200

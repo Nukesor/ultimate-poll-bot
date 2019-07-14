@@ -69,6 +69,7 @@ keyboard:
   done: Done
   close: Close
   back: Back
+  cancel: Cancel
   delete: ❌ Delete
   reset: 🔨 Reset
   clone: 🧬 Clone
@@ -200,6 +201,7 @@ creation:
     limit_between: Please send me a number between 1 and %{limit}
 
 external:
+  canceled: Canceled
   notification:
     pick_poll: Pick the correct poll to activate notifications
     activated: Notifications activated
