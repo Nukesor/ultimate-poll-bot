@@ -197,7 +197,7 @@ def get_remaining_votes(session, poll):
     lines = []
     lines.append(i18n.t('poll.remaining_votes', locale=poll.locale))
     for user_votes in remaining_user_votes:
-        lines.append(i18n.t('poll.remaining_votes',
+        lines.append(i18n.t('poll.remaining_votes_user',
                             locale=poll.locale,
                             name=user_votes[0],
                             count=poll.number_of_votes - user_votes[1]))

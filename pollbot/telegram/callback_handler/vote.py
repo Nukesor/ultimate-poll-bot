@@ -2,6 +2,7 @@
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 
+from pollbot.i18n import i18n
 from pollbot.helper import poll_allows_cumulative_votes
 from pollbot.helper.enums import PollType, CallbackResult
 from pollbot.helper.update import update_poll_messages
@@ -15,10 +16,10 @@ def handle_vote(session, context):
     option = session.query(PollOption).get(context.payload)
     if option is None:
         if context.query.message is not None:
-            context.query.message.edit_text('This poll has been permanently deleted.')
+            context.query.message.edit_text(i18n.t('deleted.polls', locale=context.user.locale))
         else:
             context.bot.edit_message_text(
-                'This poll has been permanently deleted.',
+                i18n.t('deleted.polls', locale=context.user.locale),
                 inline_message_id=context.query.inline_message_id,
             )
         return
@@ -55,16 +56,17 @@ def handle_vote(session, context):
 
 def respond_to_vote(session, line, context, poll, total_vote_count=None, limited=False):
     """Get the formatted response for a user."""
+    locale = poll.locale
     votes = session.query(Vote) \
         .filter(Vote.user == context.user) \
         .filter(Vote.poll == poll) \
         .all()
 
     if limited:
-        line += f' ({total_vote_count} left)!'
+        line += i18n.t('callback.vote.votes_left', locale=locale, count=total_vote_count)
 
     lines = [line]
-    lines.append(' Your votes:')
+    lines.append(i18n.t('callback.vote.your_votes', locale=locale, count=total_vote_count))
     for vote in votes:
         if poll_allows_cumulative_votes(poll):
             lines.append(f' {vote.poll_option.name} ({vote.vote_count}), ')
@@ -78,31 +80,37 @@ def respond_to_vote(session, line, context, poll, total_vote_count=None, limited
 
 def handle_single_vote(session, context, option):
     """Handle a single vote."""
+    locale = option.poll.locale
     existing_vote = session.query(Vote) \
         .filter(Vote.poll == option.poll) \
         .filter(Vote.user == context.user) \
         .one_or_none()
+
     # Changed vote
     if existing_vote and existing_vote.poll_option != option:
         existing_vote.poll_option = option
-        respond_to_vote(session, 'Vote changed!', context, option.poll)
+        vote_changed = i18n.t('callback.vote.changed', locale=locale)
+        respond_to_vote(session, vote_changed, context, option.poll)
 
     # Voted for the same thing again
     elif existing_vote and existing_vote.poll_option == option:
         session.delete(existing_vote)
-        context.query.answer('Vote removed!')
+        vote_removed = i18n.t('callback.vote.removed', locale=locale)
+        context.query.answer(vote_removed)
 
     # First vote on this poll
     elif existing_vote is None:
         vote = Vote(context.user, option)
         session.add(vote)
-        respond_to_vote(session, 'Vote registered!', context, option.poll)
+        vote_registered = i18n.t('callback.vote.registered', locale=locale)
+        respond_to_vote(session, vote_registered, context, option.poll)
 
     return True
 
 
 def handle_block_vote(session, context, option):
     """Handle a block vote."""
+    locale = option.poll.locale
     existing_vote = session.query(Vote) \
         .filter(Vote.poll_option == option) \
         .filter(Vote.user == context.user) \
@@ -111,19 +119,22 @@ def handle_block_vote(session, context, option):
     # Remove vote
     if existing_vote:
         session.delete(existing_vote)
-        respond_to_vote(session, 'Vote removed!', context, option.poll)
+        vote_removed = i18n.t('callback.vote.removed', locale=locale)
+        respond_to_vote(session, vote_removed, context, option.poll)
 
     # Add vote
     elif existing_vote is None:
         vote = Vote(context.user, option)
         session.add(vote)
-        respond_to_vote(session, 'Vote registered!', context, option.poll)
+        vote_registered = i18n.t('callback.vote.registered', locale=locale)
+        respond_to_vote(session, vote_registered, context, option.poll)
 
     return True
 
 
 def handle_limited_vote(session, context, option):
     """Handle a limited vote."""
+    locale = option.poll.locale
     existing_vote = session.query(Vote) \
         .filter(Vote.poll_option == option) \
         .filter(Vote.user == context.user) \
@@ -137,17 +148,20 @@ def handle_limited_vote(session, context, option):
     # Remove vote
     if existing_vote:
         session.delete(existing_vote)
-        respond_to_vote(session, 'Vote removed!', context, option.poll, vote_count-1, True)
+        vote_removed = i18n.t('callback.vote.removed', locale=locale)
+        respond_to_vote(session, vote_removed, context, option.poll, vote_count-1, True)
 
     # Add vote
     elif existing_vote is None and vote_count < option.poll.number_of_votes:
         vote = Vote(context.user, option)
         session.add(vote)
-        respond_to_vote(session, 'Vote registered!', context, option.poll, vote_count+1, True)
+        vote_registered = i18n.t('callback.vote.registered', locale=locale)
+        respond_to_vote(session, vote_registered, context, option.poll, vote_count+1, True)
 
     # Max votes reached
     else:
-        respond_to_vote(session, 'No votes left!', context, option.poll)
+        no_left = i18n.t('callback.vote.no_left', locale=locale)
+        respond_to_vote(session, no_left, context, option.poll)
         return False
 
     return True
@@ -155,6 +169,7 @@ def handle_limited_vote(session, context, option):
 
 def handle_cumulative_vote(session, context, option, unlimited=False):
     """Handle a cumulative vote."""
+    locale = option.poll.locale
     existing_vote = session.query(Vote) \
         .filter(Vote.poll_option == option) \
         .filter(Vote.user == context.user) \
@@ -175,7 +190,8 @@ def handle_cumulative_vote(session, context, option, unlimited=False):
 
     # Upvote, but no votes left
     if not unlimited and action == CallbackResult.yes and vote_count >= allowed_votes:
-        respond_to_vote(session, 'No votes left!', context, option.poll)
+        no_left = i18n.t('callback.vote.no_left', locale=locale)
+        respond_to_vote(session, no_left, context, option.poll)
         return False
 
     # Early return if downvote on non existing vote
@@ -189,14 +205,16 @@ def handle_cumulative_vote(session, context, option, unlimited=False):
             existing_vote.vote_count += 1
             session.commit()
             total_vote_count = allowed_votes - (vote_count + 1)
-            respond_to_vote(session, f'Vote added!', context, option.poll, total_vote_count, True)
+            vote_registered = i18n.t('callback.vote.registered', locale=locale)
+            respond_to_vote(session, vote_registered, context, option.poll, total_vote_count, True)
 
         # Remove from existing vote
         elif action == CallbackResult.no:
             existing_vote.vote_count -= 1
             session.commit()
             total_vote_count = allowed_votes - (vote_count - 1)
-            respond_to_vote(session, f'Vote removed!', context, option.poll, total_vote_count, True)
+            vote_removed = i18n.t('callback.vote.removed', locale=locale)
+            respond_to_vote(session, vote_removed, context, option.poll, total_vote_count, True)
 
         # Delete vote if necessary
         if existing_vote.vote_count <= 0:
@@ -209,13 +227,15 @@ def handle_cumulative_vote(session, context, option, unlimited=False):
         session.add(vote)
         session.commit()
         total_vote_count = allowed_votes - (vote_count + 1)
-        respond_to_vote(session, f'Vote registered!', context, option.poll, total_vote_count, True)
+        vote_registered = i18n.t('callback.vote.registered', locale=locale)
+        respond_to_vote(session, vote_registered, context, option.poll, total_vote_count, True)
 
     return True
 
 
 def handle_doodle_vote(session, context, option):
     """Handle a doodle vote."""
+    locale = option.poll.locale
     vote = session.query(Vote) \
         .filter(Vote.poll_option == option) \
         .filter(Vote.user == context.user) \
@@ -228,13 +248,15 @@ def handle_doodle_vote(session, context, option):
     # Remove vote
     if vote is not None:
         vote.type = context.callback_result.name
-        context.query.answer(f'Vote changed to {vote.type}')
+        changed = i18n.t('callback.vote.doodle_changed', locale=locale, vote_type=vote.type)
+        context.query.answer(changed)
 
     # Add vote
     else:
         vote = Vote(context.user, option)
         vote.type = context.callback_result.name
         session.add(vote)
-        context.query.answer(f'Vote registered ({vote.type})')
+        registered = i18n.t('callback.vote.doodle_registered', locale=locale, vote_type=vote.type)
+        context.query.answer(registered)
 
     return True

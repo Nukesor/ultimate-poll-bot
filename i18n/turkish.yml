@@ -93,6 +93,16 @@ keyboard:
   order_users: Kullanıcıları sırala %{name}
   order_options: Seçenekleri sırala %{name}
   vote_with_count: '%{option_name} (%{count} oy)'
+  vote:
+    votes_left: '(%{count} left)!'
+    your_votes : ' Your votes:'
+    changed: Vote changed!
+    removed: Vote removed!
+    registered: Vote registere!
+    no_left: No votes left!
+    doodle_changed: Vote changed to %{vote_type}
+    doodle_registered: 'Vote registered (%{vote_type})'
+
 
 sorting:
     user_chrono: kronolojik olarak

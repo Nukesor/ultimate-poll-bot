@@ -55,6 +55,16 @@ callback:
   date_already_picked: Date already picked
   date_picked: "Date picked: %{date}"
   due_date_in_past: The due date is in the past
+  vote:
+    votes_left: '(%{count} left)!'
+    your_votes : ' Your votes:'
+    changed: Vote changed!
+    removed: Vote removed!
+    registered: Vote registere!
+    no_left: No votes left!
+    doodle_changed: Vote changed to %{vote_type}
+    doodle_registered: 'Vote registered (%{vote_type})'
+
 
 inline_query:
   create_first: Click here to create a poll first ;)
@@ -134,7 +144,7 @@ management:
 creation:
   already_creating: You are already creating a poll. Cancel the previous poll creation first
   description: Now send me the description
-  kkip_description: Skip description
+  skip_description: Skip description
   not_allowed: You are no longer allowed to add new options
   current_poll_type: Current poll type
   cancel: Cancel previous creation
