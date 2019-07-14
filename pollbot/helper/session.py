@@ -101,7 +101,6 @@ def session_wrapper(send_message=True, private=False):
 
             # Raise all telegram errors and let the generic error_callback handle it
             except TelegramError as e:
-                traceback.print_exc()
                 raise e
 
             # Handle all not telegram relatated exceptions
