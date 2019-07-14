@@ -68,11 +68,11 @@ keyboard:
   done: Bitti
   close: Kapat
   back: Geri
-  cancel: Cancel
+  cancel: İptal et
   delete: ❌ Sil
   reset: 🔨 Sıfırla
   clone: 🧬 Kopyala
-  reopen: 🔓 Anketiyeniden aç
+  reopen: 🔓 Anketi yeniden aç
   share: Bu anketi paylaş
   close_poll: 🔒 Kapat
   settings: ⚙️ Ayarlar
@@ -94,14 +94,14 @@ keyboard:
   order_options: Seçenekleri sırala %{name}
   vote_with_count: '%{option_name} (%{count} oy)'
   vote:
-    votes_left: '(%{count} left)!'
-    your_votes : ' Your votes:'
-    changed: Vote changed!
-    removed: Vote removed!
-    registered: Vote registere!
-    no_left: No votes left!
-    doodle_changed: Vote changed to %{vote_type}
-    doodle_registered: 'Vote registered (%{vote_type})'
+    votes_left: '(%{count} kaldı)!'
+    your_votes : ' Oylarınız:'
+    changed: Oy değiştirildi!
+    removed: Oy kaldırıldı!
+    registered: Oy kaydedildi!
+    no_left: Hiç oy kalmadı!
+    doodle_changed: Oy %{vote_type} olarak değiştirildi
+    doodle_registered: 'Oy (%{vote_type}) olarak kaydedildi'
 
 
 sorting:
@@ -120,8 +120,8 @@ settings:
   no_due_date: "*Bitiş tarihi*: Yok"
   results_visible: "*Sonuç görünürlüğü*: Sonuçlar direkt olarak gösterilir"
   results_not_visible: "*Sonuç görünürlüğü*: Sonuçlar anket kapanana kadar gösterilmez"
-  user_options: "*Custom user options*: Herkes yeni seçenekler ekleyebilir"
-  no_user_options: "*Custom user options*: Yalnızca siz yeni seçenekler ekleyebilirsiniz"
+  user_options: "*Özel kullanıcı seçenekleri*: Herkes yeni seçenekler ekleyebilir"
+  no_user_options: "*Özel kullanıcı seçenekleri*: Yalnızca siz yeni seçenekler ekleyebilirsiniz"
   percentage: "*Yüzde*: Görünür"
   no_percentage: "*Yüzde*: Gizli"
   euro_date_format: "*Tarih biçimi*: DD.MM.YYYY"
@@ -209,11 +209,11 @@ creation:
     limit_bigger_zero: Lütfen bana 0'dan büyük bir sayı gönderin
     limit_between: Lütfen bana 1 ile %{limit} arasında bir sayı gönderin
     markdown: |
-      Please don't use markdown symbols in your names, description or options. Such symbols are `_`,`*` and `[`.
-      Please send me the message again without these symbols.
+      Lütfen isim, açıklama ve seçeneklerinizde markdown sembolleri kullanmayın. Söz konusu semboller `_`,`*` ve `[` gibidir.
+      Lütfen mesajı bu semboller olmadan tekrar gönderin.
 
 external:
-  canceled: Canceled
+  canceled: İptal edildi
   notification:
     pick_poll: Bildirimleri etkinleştirmek için doğru anketi gönderin
     activated: Bildirimler etkinleştirildi
