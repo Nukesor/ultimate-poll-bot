@@ -74,7 +74,7 @@ def get_management_keyboard(poll):
                 i18n.t('keyboard.delete', locale=locale),
                 callback_data=delete_payload),
             InlineKeyboardButton(
-                i18n.t('keyboard.close', locale=locale),
+                i18n.t('keyboard.close_poll', locale=locale),
                 callback_data=close_payload),
         ],
     ]

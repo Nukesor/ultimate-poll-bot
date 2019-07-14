@@ -73,7 +73,7 @@ keyboard:
   clone: 🧬 Kopyala
   reopen: 🔓 Anketiyeniden aç
   share: Bu anketi paylaş
-  close: 🔒 Kapat
+  close_poll: 🔒 Kapat
   settings: ⚙️ Ayarlar
   change_language: Dili değiştir
   vote: ✉️ Oy ver

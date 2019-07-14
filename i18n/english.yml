@@ -74,7 +74,7 @@ keyboard:
   clone: 🧬 Clone
   reopen: 🔓 Reopen poll
   share: Share this poll
-  close: 🔒 Close
+  close_poll: 🔒 Close
   settings: ⚙️ Settings
   change_language: Change language
   vote: ✉️ Vote
@@ -146,13 +146,13 @@ creation:
     results_not_visible: Permanently show results
 
   option:
-    next: "Send *another option* or click *done*"
+    next: "Send *another option*, pick a date and add it as an option, or click *Done* when you're finished."
     first: |
       Please send me an option. You can send multiple options at once, each option on a new line.
       You can also add a description behind a hyphen.
       For instance `Burger - because it is tasty`
     no_new: ❌ No new option has been added
-    single_added: "*%{option}* has been added. 👍\nSend the *another option* or click *done*."
+    single_added: "*%{option}* has been added. 👍\nSend *another option*, pick a date and add it as an option, or click *Done* when you're finished."
     multiple_added: "Options have been added:"
     finished: All options have already been added
 
@@ -191,7 +191,8 @@ creation:
     2. 👇 Send me the name of this poll. 👇
   datepicker_text: |
     *Datepicker:*
-    To add date, select it and click _Pick this date_.
+    To add date, select it and click *Pick this date*.
+    Click *Done* when you're finished.
 
     *Current options:*
   error:
