@@ -69,7 +69,7 @@ def respond_to_vote(session, line, context, poll, total_vote_count=None, limited
         if poll_allows_cumulative_votes(poll):
             lines.append(f' {vote.poll_option.name} ({vote.vote_count}), ')
         else:
-            lines.append(vote.poll_option.name)
+            lines.append(f' {vote.poll_option.name}')
 
     message = ''.join(lines)
 
