@@ -21,6 +21,7 @@ def tables(engine):
     """Create the base schema."""
     with engine.connect() as con:
         con.execute('CREATE EXTENSION IF NOT EXISTS pg_trgm;')
+        con.execute('CREATE EXTENSION IF NOT EXISTS pgcrypto;')
     base.metadata.create_all(engine)
     yield
     base.metadata.drop_all(engine)
