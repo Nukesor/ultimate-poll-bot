@@ -1,5 +1,5 @@
 """Factories for creating new databse objects."""
-from pollbot.models import User
+from pollbot.models import User, Poll
 
 
 def user_factory(session, user_id, name, admin=False):
@@ -9,3 +9,10 @@ def user_factory(session, user_id, name, admin=False):
     session.commit()
 
     return user
+
+def poll_factory(session, user):
+    poll = Poll(user)
+    session.add(poll)
+    session.commit()
+
+    return poll
