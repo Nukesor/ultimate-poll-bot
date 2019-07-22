@@ -18,7 +18,7 @@ datepicker:
   due_date: Set due date
 
 poll:
-  anonymous: Anonymous!
+  anonymous: Poll is anonymous!
   results_not_visible: Results are not visible, until poll is closed!
   vote_times: "\nEvery user can vote *%{amount} times*"
   due: "\n📅 This poll is due at: %{date}"

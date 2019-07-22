@@ -67,9 +67,9 @@ def get_settings_keyboard(poll):
     buttons.append([InlineKeyboardButton(text=sorting_text, callback_data=sorting_payload)])
     if poll.results_visible:
         # Show percentage option
-        percentage_text = i18n.t('keyboard.hide_percentage', locale=locale)
+        percentage_text = i18n.t('keyboard.show_percentage', locale=locale)
         if poll.show_percentage:
-            percentage_text = i18n.t('keyboard.show_percentage', locale=locale)
+            percentage_text = i18n.t('keyboard.hide_percentage', locale=locale)
         percentage_payload = f'{CallbackType.settings_toggle_percentage.value}:{poll.id}:0'
         buttons.append([InlineKeyboardButton(text=percentage_text, callback_data=percentage_payload)])
 

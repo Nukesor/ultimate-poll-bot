@@ -82,6 +82,7 @@ With this mechanism you can keep spamming vote buttons and do as you like withou
     /create         Create a new poll
     /list           List all active polls and manage them
     /list_closed    List all closed polls and manage them
+    /notify         Activate notifications in a chat
     /delete_closed  Delete all closed polls
     /delete_all     Delete all polls (closed and unclosed)
     /help           Display the help
@@ -121,6 +122,7 @@ create - Create a new poll
 language - Change the language
 list - List all active polls and manage them
 list_closed - List all closed polls and manage them
+notify - Activate notifications in a chat (Respond to the poll message)
 delete_closed - Delete all closed polls
 delete_all - Delete all polls (closed and unclosed)
 help - Show the help text
