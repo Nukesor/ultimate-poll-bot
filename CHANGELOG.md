@@ -1,3 +1,16 @@
+## v1.0.1
+**Additions:**
+- New language: German
+- New language: Turkish (Thanks to @cnpltdncsln)
+- Users in polls are linked with telegram mentions
+- 
+
+**Fixes:**
+- Prevent usage of markdown characters in user input
+- Fixed many typos/wrong translation keys
+- Fixed datepicker behaviour (Was really fucky before)
+- Some minor bugs
+
 ## v1.0.0
 
 **Additions:**

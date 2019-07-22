@@ -72,8 +72,18 @@ With this mechanism you can keep spamming vote buttons and do as you like withou
 
 **Planned features:**
 
-- A doodle poll
 - A STV poll
+
+
+# Acknowledgements
+
+Thanks to [cnpltdncsln](https://github.com/cnpltdncsln) for providing turkish translations.
+
+Thanks to my patreons:
+
+- [Svenstaro](https://github.com/Svenstaro)
+- [Prior99](https://github.com/prior99)
+- Sgit Kene
 
 
 ## Commands:
