@@ -29,7 +29,6 @@ poll:
   remaining_votes: "\nRemaining votes:"
   remaining_votes_user: "%{name}: %{count} votes"
   too_many_votes: |
-
         ⚠️ *Too many votes in the last minute:* ⚠️
         Your votes will still be registered, but this message will only update every 2 seconds.
         (Telegram doesn't allow to send/update more than a certain amount of messages per minute in a group by a bot.)
@@ -40,11 +39,11 @@ deleted:
   closed_polls: All closed polls have been deleted
 
 callback:
-  error: An error occurred. It'll be fixed soon.
+  error: An error occurred. It'll be fixed soon!
   closed: Poll closed
-  cannot_reopen: Poll cannot be reopened.
+  cannot_reopen: Poll cannot be reopened
   cloned: Poll cloned
-  deleted: Poll deleted.
+  deleted: Poll deleted
   poll_created: The poll has already been created
   poll_already_created: The poll has already been created
   poll_no_longer_exists: This poll no longer exists.
@@ -102,7 +101,7 @@ keyboard:
   forbid_user_options: 🍺 Forbid users to add new options
   allow_user_options: 🍻 Allow users to add new options
   order_users: Order users %{name}
-  order_options: Order users %{name}
+  order_options: Order options %{name}
   vote_with_count: '%{option_name} (%{count} votes)'
 
 sorting:
@@ -126,25 +125,26 @@ settings:
   percentage: "*Percentage*: Visible"
   no_percentage: "*Percentage*: Hidden"
   euro_date_format: "*Date format*: DD.MM.YYYY"
-  us_date_format: "*Date format*: DD.MM.YYYY"
-  user_sorting: "*User Sorting*: %{name}"
-  option_sorting: "*Option Sorting*: %{name}"
+  us_date_format: "*Date format*: YYYY-MM-DD"
+  user_sorting: "*User sorting*: %{name}"
+  option_sorting: "*Option sorting*: %{name}"
   change_language: Just click on a language to change it for this poll.
   anonymize: |
     Do you really want to anonymize this poll?
     ⚠️ This action is irrevertible. ⚠️
-  remove_options: Just click the buttons below to remove the desired options.
+  remove_options: Just click the buttons below to remove the unwanted options.
 
 management:
   permanently_close: |
     Do you really want to permanently close this poll?
     The results will become visible, but people will on longer be able to vote
+    ⚠️ This action is irrevertible. ⚠️
   delete: Do you really want to delete this poll?
 
 creation:
   already_creating: You are already creating a poll. Cancel the previous poll creation first
   description: Now send me the description
-  skip_description: Skip description
+  skip_description: Skip
   not_allowed: You are no longer allowed to add new options
   current_poll_type: Current poll type
   cancel: Cancel previous creation
@@ -231,11 +231,11 @@ misc:
   donation: |
     Hello there!
 
-    My name is Arne Beer (@Nukesor) and I'm the sole developer of the Ultimate PollBot.
+    My name is Arne Beer (@Nukesor). I'm the sole developer of the Ultimate PollBot.
 
-    The idea of writing the Ultimate Pollbot was formed, when my friends couldn't decide again where we should go for lunch.
+    The idea of writing the Ultimate PollBot was formed, when my friends couldn't decide again where we should go for lunch.
     This happened so many times already and we desperately needed a good and stable solution inside of telegram for this problem!
-    That's how the ULTIMATE Pollbot was born.
+    That's how the ULTIMATE PollBot was born.
 
     Every line of code in this project was written in my leisure time and is completely for free.
     This project is non-profit, open-source on [Github](https://github.com/Nukesor/ultimate-poll-bot) and hosted on a server I'm renting from my own money.
@@ -244,18 +244,20 @@ misc:
 
     I really appreciate anything that helps me out and that keeps my server and me running ☺️.
 
+    If you have any questions, stop by my [support group](https://t.me/nukesors_projects).
     If you like this project, check my [Patreon](https://www.patreon.com/nukesor) or support me via [Paypal](https://www.paypal.me/arnebeer).
 
     Have great day!
   start: |
     *Hi!*
 
-    This is the *ULTIMATE* pollbot.
+    This is the *ULTIMATE* PollBot.
     Just type /create or click the button below to start creating polls. Everything is explained underway.
 
     You can change the language with /language.
     If you have more questions, check out /help.
 
+    If you like the project, stop by my [support group](https://t.me/nukesors_projects).
     This project is open-source on [Github](https://github.com/Nukesor/ultimate-poll-bot).
 
 
@@ -278,10 +280,10 @@ misc:
     1. Create a poll
     2. Set a due date in the settings menu
     3. Go to the chat you want to be notified (The pollbot needs added to the group)
-    4. Reply with /notify to the poll message you forwarded
+    4. Reply with /notify to the poll message you selected via @ultimate_pollbot
     5. Pick the correct poll
 
-    This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect forwarded messages from bots in groups.
+    This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect messages from bots in groups.
     Thereby we don't know which poll is posted in which group and everything needs to be done manually.
 
     *Find old polls:*
@@ -297,22 +299,13 @@ misc:
     To add a new language, go to the Github repository, copy the `english.yml`, rename it to your language and adjust all values.
     Be careful to not fuck up any Markdown styling (`**`, `__`, `${}`), otherwise stuff will break for your language.
     If anything breaks, because of broken translations, please fix it on your own. I will not investigate these issues.
-    The language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
-
-    *Too many votes in the last minute:*
-    Don't worry about this message. This mechanism is necessary to prevent my bot from being blocked by telegram for spamming messages.
-    The only effect for you is, that the results won't be displayed immediately.
-
-    *My polls won't update:*
-    In this case you probably have multiple active polls in a single group (or the same poll multiple times).
-    This is something the bot cannot detect (telegrams API doesn't allow this). Therefore you need to handle this yourself.
-    Only have one highly active poll per group and don't send the same poll multiple times in the same group (or delete the old ones for ALL members of the group).
+    The multi language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
 
     *There is a bug that won't go away!!*
     I usually get a notification as soon as something breaks, but there might be some bugs that go unnoticed!
-    In case a bug isn't fixed in a day or two, please write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot).
+    In case a bug isn't fixed in a day or two, please write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot) or stop by my [support group](https://t.me/nukesors_projects).
 
   error: |
     An unknown error occurred. I probably just got a notification about this and I'll try to fix it as quickly as possible.
-    In case this error still occurs in a day or two, please report the bug to me :). The link to the Github repository is in the /start and /help text.
+    In case the bug isn't fixed in a day or two, please write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot) or stop by my [support group](https://t.me/nukesors_projects).
 

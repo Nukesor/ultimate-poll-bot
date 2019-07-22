@@ -125,7 +125,7 @@ settings:
   percentage: "*Yüzde*: Görünür"
   no_percentage: "*Yüzde*: Gizli"
   euro_date_format: "*Tarih biçimi*: DD.MM.YYYY"
-  us_date_format: "*Tarih biçimi*: DD.MM.YYYY"
+  us_date_format: "*Tarih biçimi*: YYYY-MM-DD"
   user_sorting: "*Kullanıcı Sıralaması*: %{name}"
   option_sorting: "*Seçenek Sıralaması*: %{name}"
   change_language: Bu anket için değiştirmek içinbir dile tıklayın

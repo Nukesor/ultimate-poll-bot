@@ -25,8 +25,6 @@ class Poll(base):
     """The model for a Poll."""
 
     __tablename__ = 'poll'
-    __table_args__ = (
-    )
 
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), unique=True, nullable=False, server_default=text('gen_random_uuid()'))
