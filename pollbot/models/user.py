@@ -72,7 +72,8 @@ class User(base):
                     raise e
 
         # Allways update the username in case the username changed
-        user.username = tg_user.username.lower()
+        if tg_user.username is not None:
+            user.username = tg_user.username.lower()
 
         # Allways update the name in case something changed
         name = User.get_name_from_tg_user(tg_user)

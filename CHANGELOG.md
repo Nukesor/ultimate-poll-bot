@@ -3,7 +3,6 @@
 - New language: German
 - New language: Turkish (Thanks to @cnpltdncsln)
 - Users in polls are linked with telegram mentions
-- 
 
 **Fixes:**
 - Prevent usage of markdown characters in user input
