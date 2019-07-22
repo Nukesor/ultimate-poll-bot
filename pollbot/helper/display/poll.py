@@ -128,10 +128,11 @@ def get_option_line(session, option, index):
 
 def get_vote_line(poll, option, vote, index):
     """Get the line showing an actual vote."""
+    user_mention = f'[{vote.user.name}](tg://user?id={vote.user.id})'
     if index == (len(option.votes) - 1):
-        vote_line = f'└ {vote.user.name}'
+        vote_line = f'└ {user_mention}'
     else:
-        vote_line = f'├ {vote.user.name}'
+        vote_line = f'├ {user_mention}'
 
     if poll_allows_cumulative_votes(poll):
         vote_line += f' ({vote.vote_count} votes)'

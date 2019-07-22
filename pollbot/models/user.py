@@ -59,7 +59,6 @@ class User(base):
     def get_or_create(session, tg_user):
         """Get or create a new user."""
         user = session.query(User).get(tg_user.id)
-        name = User.get_name_from_tg_user(tg_user)
         if not user:
             user = User(tg_user.id, tg_user.username)
             session.add(user)
@@ -73,9 +72,10 @@ class User(base):
                     raise e
 
         # Allways update the username in case the username changed
-        if tg_user.username is not None:
-            user.username = tg_user.username.lower()
+        user.username = tg_user.username.lower()
 
+        # Allways update the name in case something changed
+        name = User.get_name_from_tg_user(tg_user)
         user.name = name
 
         return user
@@ -92,5 +92,8 @@ class User(base):
 
         if tg_user.username is not None and name == '':
             name = tg_user.username
+
+        if name == '':
+            name = str(tg_user.id)
 
         return name.strip()
