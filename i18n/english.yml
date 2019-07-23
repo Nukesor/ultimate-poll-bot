@@ -280,7 +280,7 @@ misc:
     1. Create a poll
     2. Set a due date in the settings menu
     3. Go to the chat you want to be notified (The pollbot needs added to the group)
-    4. Reply with /notify to the poll message you selected via @ultimate_pollbot
+    4. Reply with /notify to the poll message you selected via @ultimate\_pollbot
     5. Pick the correct poll
 
     This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect messages from bots in groups.
