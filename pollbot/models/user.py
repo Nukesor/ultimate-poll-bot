@@ -97,4 +97,7 @@ class User(base):
         if name == '':
             name = str(tg_user.id)
 
+        for character in ['[', ']', '_', '*']:
+            name = name.replace(character, '')
+
         return name.strip()
