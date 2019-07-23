@@ -287,7 +287,7 @@ misc:
     Thereby we don't know which poll is posted in which group and everything needs to be done manually.
 
     *Find old polls:*
-    There are two commands `/list` and `/list\_closed`, which allow you to find and manage your old polls.
+    There are two commands /list and /list\_closed, which allow you to find and manage your old polls.
 
     *Delete polls:*
     You can delete individual polls in the respective poll menus.

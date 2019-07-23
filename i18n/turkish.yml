@@ -285,7 +285,7 @@ misc:
     Dolayısıyla hangi grupta hangi anketin yayınlandığını ve her şeyin manuel olarak yapılması gerektiğini bilmiyoruz.
 
     *Eski anketleri bul:*
-    Eski anketlerinizi bulmak ve yönetmek için `/list` ve `/list\_closed` olarak iki komut var.
+    Eski anketlerinizi bulmak ve yönetmek için /list ve /list\_closed olarak iki komut var.
 
     *Anketleri sil:*
     Bireysel anketleri ilgili anket menülerinden silebilirsiniz.
