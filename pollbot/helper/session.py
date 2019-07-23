@@ -97,7 +97,7 @@ def session_wrapper(send_message=True, private=False):
 
             # A user banned the bot
             except Unauthorized:
-                session.delete(user)
+                pass
 
             # Raise all telegram errors and let the generic error_callback handle it
             except TelegramError as e:
