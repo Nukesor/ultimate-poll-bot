@@ -58,7 +58,7 @@ class Poll(base):
     current_date = Column(Date, server_default=func.now(), nullable=False)
 
     # OneToOne
-    user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade'), nullable=False, index=True)
+    user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade', name='user'), nullable=False, index=True)
     user = relationship('User', foreign_keys='Poll.user_id')
 
     # OneToMany

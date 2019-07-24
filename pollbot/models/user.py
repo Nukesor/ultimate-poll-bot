@@ -34,7 +34,7 @@ class User(base):
     european_date_format = Column(Boolean, nullable=False, default=False, server_default='false')
 
     # Simple foreign key
-    current_poll_id = Column(BigInteger, ForeignKey('poll.id', ondelete="set null"), index=True)
+    current_poll_id = Column(BigInteger, ForeignKey('poll.id', ondelete="set null", name='current_poll'), index=True)
     current_poll = relationship('Poll', uselist=False, foreign_keys='User.current_poll_id', post_update=True)
 
     # OneToMany
