@@ -154,7 +154,7 @@ def get_percentage_line(option, total_user_count):
 
     line += filled_slots * '▬'
     line += (10-filled_slots) * '▭'
-    line += f' ({percentage}%)'
+    line += f' ({percentage:.0f}%)'
 
     return ''.join(line)
 
