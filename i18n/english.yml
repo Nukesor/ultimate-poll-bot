@@ -110,6 +110,7 @@ sorting:
     option_chrono: chronologically
     option_percentage: by percentage
     option_name: by name
+    doodle_sorting: by answer
 
 settings:
   poll_type: "*Poll type*: %{poll_type}"

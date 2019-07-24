@@ -1,6 +1,7 @@
 """The settings management text."""
 from pollbot.i18n import i18n
 from pollbot.helper import translate_poll_type
+from pollbot.helper.enums import PollType
 
 
 def get_settings_text(poll):
@@ -51,7 +52,10 @@ def get_settings_text(poll):
     text.append('')
 
     # Sorting of user names
-    if not poll.anonymous:
+    if poll.poll_type == PollType.doodle.name:
+        sorting_name = i18n.t(f'sorting.doodle_sorting', locale=locale)
+        text.append(i18n.t('settings.user_sorting', locale=locale, name=sorting_name))
+    elif not poll.anonymous:
         sorting_name = i18n.t(f'sorting.{poll.user_sorting}', locale=locale)
         text.append(i18n.t('settings.user_sorting', locale=locale, name=sorting_name))
 

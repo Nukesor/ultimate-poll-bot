@@ -12,6 +12,7 @@ from pollbot.helper.enums import (
     CallbackResult,
     UserSorting,
     OptionSorting,
+    PollType,
 )
 
 
@@ -101,7 +102,7 @@ def get_option_sorting_keyboard(poll):
     locale = poll.user.locale
 
     # Compile the possible options for user sorting
-    if not poll.anonymous:
+    if not poll.anonymous and poll.poll_type != PollType.doodle.name:
         for order in UserSorting:
             if order.name == poll.user_sorting:
                 continue

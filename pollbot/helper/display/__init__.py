@@ -14,7 +14,14 @@ def get_sorted_votes(poll, votes):
         """Get the name of user to sort votes."""
         return vote.user.name
 
-    if poll.user_sorting == UserSorting.user_name.name:
+    def get_doodle_int(vote):
+        """Get the name of user to sort votes."""
+        return VoteResultType[vote.type].value
+
+    if poll.poll_type == PollType.doodle.name:
+        votes.sort(key=get_doodle_int)
+
+    elif poll.user_sorting == UserSorting.user_name.name:
         votes.sort(key=get_user_name)
 
     return votes
