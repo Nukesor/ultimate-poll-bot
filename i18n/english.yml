@@ -220,6 +220,7 @@ external:
   notification:
     pick_poll: Pick the correct poll to activate notifications
     activated: Notifications activated
+    new_notification_board: Please use the newer notification board.
 
 delete:
   doesnt_exist: Poll to delete doesn't exist

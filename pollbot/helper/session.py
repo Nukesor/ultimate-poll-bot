@@ -112,7 +112,11 @@ def session_wrapper(send_message=True, private=False):
                     if user is not None:
                         locale = user.locale
                     session.close()
-                    message.chat.send_message(i18n.t('misc.error', locale=locale))
+                    message.chat.send_message(
+                        i18n.t('misc.error', locale=locale),
+                        parse_mode='markdown',
+                        disable_web_page_preview=True,
+                    )
 
             finally:
                 session.close()
