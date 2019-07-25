@@ -10,7 +10,7 @@ def get_settings_text(poll):
     locale = poll.user.locale
     text.append(i18n.t('settings.poll_type',
                        locale=locale,
-                       poll_type=translate_poll_type(poll.poll_type, poll.locale)))
+                       poll_type=translate_poll_type(poll.poll_type, locale)))
 
     text.append(i18n.t('settings.language', locale=locale, language=poll.locale))
 

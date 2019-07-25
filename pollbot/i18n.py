@@ -11,4 +11,5 @@ supported_languages = [
     'english',
     'german',
     'turkish',
+    'polish',
 ]

@@ -1,4 +1,7 @@
 ## v1.0.1
+- New language: Polish (Thanks to tszalbot)
+
+## v1.0.1
 **Additions:**
 - New language: German
 - New language: Turkish (Thanks to @cnpltdncsln)
