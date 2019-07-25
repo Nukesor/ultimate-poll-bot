@@ -1,0 +1,318 @@
+poll_types:
+  single_vote: Pojedyńczy głos
+  doodle: Doodle
+  block_vote: Głosy blokowe
+  limited_vote: Limitowane głosy
+  cumulative_vote: Kumulacyjne głosy
+  count_vote: Nielimitowane głosy
+
+list:
+  polls: Kliknij dowolny przycisk aby edytować tą ankietę
+  no_polls: Nie posiadasz żadnych ankiet
+  no_closed_polls: Nie posiadasz źadnych zamkniętych ankiet
+
+
+datepicker:
+  open:  Otwórz wybór dat
+  pick_date: Wybierz datę
+  due_date: Ustaw deadline
+
+poll:
+  anonymous: Ankieta jest anonimowa!
+  results_not_visible: Wyniki są niewidoczne, dopóki ankieta zostanie zamknięta!
+  vote_times: "\nKażdy użytkownik może głosować *%{amount} razy*"
+  due: "\n📅 Data zakończenia ankiety: %{date}"
+  closed: "\n⚠️ *Ta ankieta jest zamknięta* ⚠️"
+  many_users_voted: "*%{count} osób* zagłosowało"
+  one_user_voted: "*Jedna osoba* zagłosowała"
+  total_votes: " (%{count} głosów)"
+  remaining_votes: "\nPozostałe głosy:"
+  remaining_votes_user: "%{name}: %{count} głosów"
+  too_many_votes: |
+        ⚠️ *Za dużo głosów w przeciągu minuty:* ⚠️
+        Twoje głosy nadal będą rejestrowane, Ale ta informacja będzie odświeżana co 2 sekundy.
+        (Telegram nie pozwala botom na wysyłanie/odświeżanie wiadomości w grupach zbyt dużo razy na minutę.)
+
+deleted:
+  poll: Ankieta została usunięta.
+  polls: Wszystkie ankiety zostały usunięte
+  closed_polls: Wszystkie zamknięte ankiety zostały usunięte
+
+callback:
+  error: Wystąpił błąd. Wkrótce zostanie naprawiony!
+  closed: Ankieta zamknięta
+  cannot_reopen: Ankieta nie może być ponownie otwarta
+  cloned: Ankieta sklonowana
+  deleted: Ankieta usunięta
+  poll_created: Ankieta już istnieje
+  poll_already_created: Ankieta już istnieje
+  poll_no_longer_exists: Ankieta już nie istnieje.
+  votes_removed: Wszystkie głosy usunięte
+  anonymity_changed: Anonimowość zmieniona
+  visibility_changed: Widoczność zmieniona
+  date_changed: "Data zmieniona: %{date}"
+  date_already_picked: Data już wybrana
+  date_picked: "Wybrana data: %{date}"
+  due_date_in_past: Deadline nie jest w przeszłości
+  vote:
+    votes_left: '(zostało %{count} głosów)!'
+    your_votes : ' Twoje głosy:'
+    changed: Głos zmieniony!
+    removed: Głos usunięty!
+    registered: Głos zapisany!
+    no_left: Brak głosów!
+    doodle_changed: Głos zmieniony na %{vote_type}
+    doodle_registered: 'Głos zapisany (%{vote_type})'
+
+
+inline_query:
+  create_first: Kliknij tutaj aby najpierw stworzyć ankietę ;)
+  create_poll: Kliknij aby stworzyć ankietę.
+
+notification:
+  one_day: "Ankieta *%{name}* zostanie zamknięta automatycznie za 1 dzień"
+  six_hours: "Ankieta *%{name}* zostanie zamknięta automatycznie za 6 godzin"
+  closed: "Ankieta *%{name}* została zamknięta"
+
+keyboard:
+  done: Gotowe
+  close: Zamknij
+  back: Powrót
+  cancel: Anuluj
+  delete: ❌ Usuń
+  reset: 🔨 Resetuj
+  clone: 🧬 Klonuj
+  reopen: 🔓 Otwórz ankietę
+  share: Udostępnij ankietę
+  close_poll: 🔒 Zamknij
+  settings: ⚙️ Ustawienia
+  change_language: Zmień język
+  vote: ✉️ Głos
+  permanently_close: ⚠️ Zamknij ankietę permanentnie! ⚠️
+  permanently_delete: ⚠️ Usuń ankietę permanentnie! ⚠️
+  permanently_anonymize: ⚠️ Zmień ankietę na anonimową permanentnie! ⚠️
+  anonymize: 🔍 Zrób głosy anonimowe
+  due_date: 📅 Ustaw deadline
+  sorting: 📋 Ustawienia sortowania
+  hide_percentage: ○% Ukryj procenty
+  show_percentage: ○% Pokaż procenty
+  new_option: ＋ Dodaj nową opcję
+  remove_option: － Usuń opcję
+  forbid_user_options: 🍺 Wyłącz dodawanie nowych opcji
+  allow_user_options: 🍻 Włącz dodawanie nowych opcji
+  order_users: Sortuj osoby %{name}
+  order_options: Sortuj opcje %{name}
+  vote_with_count: '%{option_name} (%{count} głosów)'
+
+sorting:
+    user_chrono: chronologicznie
+    user_name: po nazwie
+    option_chrono: chronologicznie
+    option_percentage: procentowo
+    option_name: po nazwie
+    doodle_sorting: według odpowiedzi
+
+settings:
+  poll_type: "*Typ ankiety*: %{poll_type}"
+  language: "*Język*: %{language}"
+  anonymous: "*Anonimowość*: Nazwy nie widoczne"
+  not_anonymous: "*Anonimowość*: Nazwy widoczne"
+  due_date: "*Deadline*: %{date}"
+  no_due_date: "*Deadline*: Brak"
+  results_visible: "*Widoczne wyniki*: Wyniki są widoczne bezpośrednio"
+  results_not_visible: "*Widoczne wyniki*: Wyniki nie są widoczne dopóki ankieta nie jest zamknięta"
+  user_options: "*Własne odpowiedzi*: Każdy może dodawać nowe opcje"
+  no_user_options: "*Własne odpowiedzi*: Tylko ty możesz dodawać nowe opcje"
+  percentage: "*Procenty*: Widoczne"
+  no_percentage: "*Procenty*: Niewidoczne"
+  euro_date_format: "*Format daty*: DD.MM.YYYY"
+  us_date_format: "*Format daty*: YYYY-MM-DD"
+  user_sorting: "*Sortowanie*: %{name}"
+  option_sorting: "*Sortowanie opcji*: %{name}"
+  change_language: Kliknij na język aby go zmienić dla tej ankiety.
+  anonymize: |
+    Czy na pewno chcesz aby ta ankieta była anonimowa?
+    ⚠️ Ta akcja jest nieodwracalna. ⚠️
+  remove_options: Kliknij przycisk poniżej aby usunąć niepożądane opcje.
+
+management:
+  permanently_close: |
+    Czy na pewno chcesz permanentnie zamknąć tę ankietę?
+    Wyniki będą widoczne, ale głosowanie nie będzie możliwe
+    ⚠️ Ta akcja jest nieodwracalna. ⚠️
+  delete: Czy na pewno chcesz usunąć tę ankietę?
+
+creation:
+  already_creating: Już jesteś w trakcie tworzenia ankiety. Anuluj poprzednie tworzenie ankiety, aby kontynuować
+  description: Teraz wyślij mi opis ankiety
+  skip_description: Pomiń
+  not_allowed: Nie masz już możliwości dodawania nowych opcji
+  current_poll_type: Obecny typ ankiety
+  cancel: Anuluj poprzednie tworzenie ankiety
+  vote_count_request: Wyślij mi ilość dopuszczalnych głosów.
+
+  keyboard:
+    change: Zmień typ ankiety
+    anonymity: Zmień ankietę na anonimową
+    no_anonymity: Wyświetlaj nazwy w ankiecie
+    results_visible: Ukryj nazwy do zamknięcia ankiety
+    results_not_visible: Pokaż wyniki cały czas
+
+  option:
+    next: "Wyślij *kolejną opcję*, wybierz datę i dodaj ją jako opcje, lub kliknij *Gotowe* aby stworzyć ankietę."
+    first: |
+      Wyślij opcję. Możesz wysłać ich kilka naraz, Każdą w nowej linii.
+      Możesz też dodać opis opcji po myślniku.
+      Na przykład `Hamburger - bo jest smaczny`
+    no_new: ❌ Nie została dodana żadna nowa opcja
+    single_added: "*%{option}* zostało dodane. 👍\nWyślij *kolejną opcję*, wybierz datę i dodaj ją jako opcje, lub kliknij *Gotowe* aby stworzyć ankietę."
+    multiple_added: "Dodano opcje:"
+    finished: Wszystkie opcje zostały już dodane
+
+  help:
+    unlimited_votes: "*Nieskonczoność głosów* (lista zakupów)"
+    single_help: Każda osoba ma jeden głos. Domyślne głosowanie.
+    doodle_help: Osoby mogą głosować na `tak`, `nie`, albo `może` dla każdej z odpowiedzi. Idealne dla znalezienia daty.
+    block_help: Każdy może głosować na każdą (lub mniej) opcji. Przydaje się w celu znalezienia najbardziej pożądanych opcji w grupie, np. gry które powinny znaleźć się na LAN-Party.
+    limited_help: |
+      Każdy dostaje daną ilość głosów, które może użyć na kilku opcjach, ale tylko raz na opcję.
+      Podobne do głosowania blokowego, ale każdy ilość głosów jest ograniczona.
+      Ten typ jest dobry dla limitowania zwycięskich opcji np. jeżeli chcesz mieć tylko 4 gry na LAN-Party.
+    cumulative_help: |
+      Każdy dostaje daną ilość głosów, które może użyć na kilku opcjach (nawet kilka razy na opcję).
+      Ten typ jest podobny do limitowanego głosowania, z tym że pozwala na głosowanie kilka razy na jedną opcję.
+    unlimited_help: |
+      Każdy może głosować tyle razy ile chce na każdą z opcji.
+      Przydaje sie w przypadku, gdy np. chcesz dowiedzieć się ile rzeczy każdy chce ze sobą zabrać na koncert.
+
+  results_not_visible: Wyniki nie są widoczne aż do zamknięcia ankiety
+  results_visible: Wyniki są bezpośrednio widoczne
+  anonymity: Nazwy nie są widoczne
+  no_anonymity: Nazwy są widoczne
+  init_text: |
+    Cześć!
+    Za chwilę stworzysz swoją własną ankietę 👌
+
+    Obecne ustawienia ankiety:
+
+    *Typ ankiety*: %{poll_type}
+    *Anonimowość*: %{anonymity}
+    *Widoczność wyników*: %{results_visible}
+
+    Następne kroki:
+    1. Skonfiguruj ankietę według uznania 🙂
+    2. 👇 Wyślij mi nazwę ankiety. 👇
+  datepicker_text: |
+    *Wybór daty:*
+    Aby dodać datę, wybierz ją i kliknij *Wybierz tę datę*.
+    Potem kliknij *Gotowe*.
+
+    *Obecne opcje:*
+  error:
+    limit_bigger_zero: Wpisz numer większy od 0
+    limit_between: Wpisz numer między 1, a %{limit}
+    markdown: |
+      Proszę nie używać w nazwie, opisie i odpowiedziach znaków specjalnych, takich jak `_`,`*` i `[`.
+      Wyślij wiadomość na nowo bez tych znaków.
+
+external:
+  canceled: Anulowano
+  notification:
+    pick_poll: Wybierz właściwą ankietę aby aktywować powiadomienia
+    activated: Powiadomienia aktywowane
+    new_notification_board: Proszę użyć nowej tablicy wyboru powiadomień.
+
+delete:
+  doesnt_exist: Ankieta do usunięcia nie istnieje
+  previous_deleted: Poprzednia ankieta nie istnieje. Możesz teraz stworzyć nową używając /create.
+
+user:
+  language_changed: Zmieniono język
+
+misc:
+  donation: |
+    Hello there!
+
+    My name is Arne Beer (@Nukesor) and I'm the sole developer of the Ultimate PollBot.
+
+    The idea of writing the Ultimate Pollbot was formed, when my friends couldn't decide again where we should go for lunch.
+    This happened so many times already and we desperately needed a good and stable solution inside of telegram for this problem!
+    That's how the ULTIMATE Pollbot was born.
+
+    Every line of code in this project was written in my leisure time and is completely for free.
+    This project is non-profit, open-source on [Github](https://github.com/Nukesor/ultimate-poll-bot) and hosted on a server I'm renting from my own money.
+
+    Right now I usually invest between 2-10 hours a week into developing and maintaining my projects and I would love to get some support, since I'm doing this in a large part for you out there.
+
+    I really appreciate anything that helps me out and that keeps my server and me running ☺️.
+
+    If you like this project, check my [Patreon](https://www.patreon.com/nukesor) or support me via [Paypal](https://www.paypal.me/arnebeer).
+
+    Have great day!
+  start: |
+    *Hi!*
+
+    This is the *ULTIMATE* pollbot.
+    Just type /create or click the button below to start creating polls. Everything is explained underway.
+
+    You can change the language with /language.
+    If you have more questions, check out /help.
+
+    This project is open-source on [Github](https://github.com/Nukesor/ultimate-poll-bot).
+
+
+  help: |
+    There are quite a few settings for your polls:
+
+    *Creation:*
+    1. You can anonymize your poll, which results in no names being displayed!
+    2. Poll results can be shown only after closing the poll. This is great to avoid tactical voting, which is possible if people can see the intermediate results of a poll.
+
+    *Settings:*
+    1. A poll can be made anonymous retrospectively.
+    2. The percentage line of options can be hidden in the settings menu.
+    3. New options can be added and existing options can be removed in the settings menu.
+    4. You can allow other users to add options to your poll.
+    5. The order in which user names and options are displayed in the results can be changed.
+
+    *Notifications:*
+    To enable notifications in a chat follow these steps:
+    1. Create a poll
+    2. Set a due date in the settings menu
+    3. Go to the chat you want to be notified (The pollbot needs added to the group)
+    4. Reply with /notify to the poll message you forwarded
+    5. Pick the correct poll
+
+    This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect forwarded messages from bots in groups.
+    Thereby we don't know which poll is posted in which group and everything needs to be done manually.
+
+    *Find old polls:*
+    There are two commands `/list` and `/list\_closed`, which allow you to find and manage your old polls.
+
+    *Delete polls:*
+    You can delete individual polls in the respective poll menus.
+    There's also the /delete\_closed command, which deletes all closed polls
+    and the /delete\_all command which deletes ALL polls.
+
+    *Language:*
+    Ultimate pollbot supports multiple languages, but only English is officially maintained.
+    If anything breaks, because of broken translations, please fix it on your own. I will not investigate these issues.
+    The language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
+
+    *Too many votes in the last minute:*
+    Don't worry about this message. This mechanism is necessary to prevent my bot from being blocked by telegram for spamming messages.
+    The only effect for you is, that the results won't be displayed immediately.
+
+    *My polls won't update:*
+    In this case you probably have multiple active polls in a single group (or the same poll multiple times).
+    This is something the bot cannot detect (telegrams API doesn't allow this). Therefore you need to handle this yourself.
+    Only have one highly active poll per group and don't send the same poll multiple times in the same group (or delete the old ones for ALL members of the group).
+
+    *There is a bug that won't go away!!*
+    I usually get a notification as soon as something breaks, but there might be some bugs that go unnoticed!
+    In case a bug isn't fixed in a day or two, please write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot).
+    
+  error: |
+    Wystąpił niespodziewany błąd. Prawdopodobnie dostałem już o tym powiadomienie i spróbuję to naprawić najszybciej jak to możliwe.
+    W przypadku gdy błąd nie został naprawiony w przeciągu 2 lub 3 dni, dodaj problem na [Github](https://github.com/Nukesor/ultimate-poll-bot) lub skontaktuj sie ze mną na [grupie supportu](https://t.me/nukesors_projects).
+
