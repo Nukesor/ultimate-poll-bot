@@ -2,7 +2,6 @@
 import time
 from telegram.ext import run_async
 from telegram.error import BadRequest, Unauthorized
-from sqlalchemy import func
 
 from pollbot.helper.session import session_wrapper
 from pollbot.models import User, Poll
@@ -86,6 +85,13 @@ def stats(bot, update, session, user):
     cumulative = session.query(Poll).filter(Poll.poll_type == 'cumulative_vote').count()
     count = session.query(Poll).filter(Poll.poll_type == 'count_vote').count()
 
+    single_percent = single/total_polls * 100
+    doodle_percent = doodle/total_polls * 100
+    block_percent = block/total_polls * 100
+    limited_percent = limited/total_polls * 100
+    cumulative_percent = cumulative/total_polls * 100
+    count_percent = count/total_polls * 100
+
     message = f"""Stats:
 
 Users:
@@ -101,12 +107,12 @@ Polls:
     Deleted: {highest_id - total_polls}
 
 Types:
-    Single:  {single}
-    Doodle: {doodle}
-    Block: {block}
-    Limited: {limited}
-    Cumulative: {cumulative}
-    Count: {count}
+    Single:  {single} ({single_percent:.2f}%)
+    Doodle: {doodle} ({doodle_percent:.2f}%)
+    Block: {block} ({block_percent:.2f}%)
+    Limited: {limited} ({limited_percent:.2f}%)
+    Cumulative: {cumulative} ({cumulative_percent:.2f}%)
+    Count: {count} ({count_percent:.2f}%)
 """
 
     bot.send_message(user.id, message)
