@@ -2,9 +2,10 @@
 import time
 from telegram.ext import run_async
 from telegram.error import BadRequest, Unauthorized
+from sqlalchemy import func
 
 from pollbot.helper.session import session_wrapper
-from pollbot.models import User
+from pollbot.models import User, Poll
 from pollbot.config import config
 
 
@@ -49,3 +50,67 @@ def test_broadcast(bot, update, session, user):
     message = update.message.text.split(' ', 1)[1].strip()
 
     bot.send_message(user.id, message, parse_mode='Markdown')
+
+
+@run_async
+@session_wrapper()
+def stats(bot, update, session, user):
+    """Send the broadcast message to the admin for test purposes."""
+    if user.username.lower() != config['telegram']['admin'].lower():
+        return 'You are not allowed to do this'
+
+    # User stats
+    total_users = session.query(User.id).count()
+    users_owning_polls = session.query(User) \
+        .join(User.polls) \
+        .group_by(User) \
+        .count()
+    users_with_votes = session.query(User) \
+        .join(User.votes) \
+        .group_by(User) \
+        .count()
+
+    print(total_users)
+
+    # Polls
+    highest_id = session.query(Poll.id).order_by(Poll.id.desc()).first()[0]
+    total_polls = session.query(Poll).count()
+    open_polls = session.query(Poll) \
+        .filter(Poll.closed.is_(False)) \
+        .count()
+    closed_polls = session.query(Poll) \
+        .filter(Poll.closed.is_(True)) \
+        .count()
+
+    # Poll types
+    single = session.query(Poll).filter(Poll.poll_type == 'single_vote').count()
+    doodle = session.query(Poll).filter(Poll.poll_type == 'doodle').count()
+    block = session.query(Poll).filter(Poll.poll_type == 'block_vote').count()
+    limited = session.query(Poll).filter(Poll.poll_type == 'limited_vote').count()
+    cumulative = session.query(Poll).filter(Poll.poll_type == 'cumulative_vote').count()
+    count = session.query(Poll).filter(Poll.poll_type == 'count_vote').count()
+
+    message = f"""Stats:
+
+Users:
+    Total: {total_users}
+    Owning polls: {users_owning_polls}
+    Voted: {users_with_votes}
+
+Polls:
+    Highest ID: {highest_id}
+    Total: {total_polls}
+    Open: {open_polls}
+    Closed: {closed_polls}
+    Deleted: {highest_id - total_polls}
+
+Types:
+    Single:  {single}
+    Doodle: {doodle}
+    Block: {block}
+    Limited: {limited}
+    Cumulative: {cumulative}
+    Count: {count}
+"""
+
+    bot.send_message(user.id, message)

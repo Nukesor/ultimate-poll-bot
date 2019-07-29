@@ -29,7 +29,7 @@ from pollbot.telegram.commands.poll import (
 from pollbot.telegram.commands.misc import send_help, send_donation_text, change_language
 from pollbot.telegram.commands.start import start
 from pollbot.telegram.commands.external import notify
-from pollbot.telegram.commands.admin import broadcast, test_broadcast
+from pollbot.telegram.commands.admin import broadcast, test_broadcast, stats
 
 logging.basicConfig(level=config['logging']['log_level'],
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -61,6 +61,7 @@ dispatcher.add_handler(CommandHandler('language', change_language))
 # Admin command
 dispatcher.add_handler(CommandHandler('broadcast', broadcast))
 dispatcher.add_handler(CommandHandler('test_broadcast', test_broadcast))
+dispatcher.add_handler(CommandHandler('stats', stats))
 
 # Callback handler
 dispatcher.add_handler(CallbackQueryHandler(handle_callback_query))
