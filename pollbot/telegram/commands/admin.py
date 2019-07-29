@@ -21,8 +21,6 @@ def broadcast(bot, update, session, user):
 
     update.message.chat.send_message(f'Sending broadcast to {len(users)} chats.')
     for user in users:
-        print('sending')
-        print(user.id)
         try:
             bot.send_message(user.id, message, parse_mode='Markdown')
 
@@ -69,8 +67,6 @@ def stats(bot, update, session, user):
         .join(User.votes) \
         .group_by(User) \
         .count()
-
-    print(total_users)
 
     # Polls
     highest_id = session.query(Poll.id).order_by(Poll.id.desc()).first()[0]
