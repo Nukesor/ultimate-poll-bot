@@ -267,56 +267,62 @@ misc:
     Bu proje [Github](https://github.com/Nukesor/ultimate-poll-bot)'ta açık kaynaklıdır.
 
 
-  help: |
-    Anketleriniz için epeyce ayar var:
+  help:
+    intro: |
+      Anketleriniz için epeyce ayar var:
 
-    *Oluşturma:*
-    1. Anketinizi anonim yapabilirsiniz, böylece isimler sonuçlarda gösterilmez!
-    2. Anket sonuçları sadece anket kapandıktan sonra gösterilebilir. Bu, insanların bir anketin ara sonuçlarını görebilmesi durumunda mümkün olan taktiksel oylamayı önlemek için harikadır.
+    creation: |
+      *Oluşturma:*
 
-    *Ayarlar:*
-    1. Anket geriye dönük olarak anonim yapılabilir.
-    2. Ayarlar menüsünde seçeneklerin yüzde satırı gizlenebilir.
-    3. Ayarlar menüsünde yeni seçenekler eklenebilir ve varolan seçenekler kaldırılabilir.
-    4. Diğer kullanıcıların anketinize seçenek eklemesine izin verebilirsiniz.
-    5. Kullanıcı isimlerinin ve seçeneklerin sonuçlardaki görüntülenme sırası değiştirilebilir.
+      1. Anketinizi anonim yapabilirsiniz, böylece isimler sonuçlarda gösterilmez!
+      2. Anket sonuçları sadece anket kapandıktan sonra gösterilebilir. Bu, insanların bir anketin ara sonuçlarını görebilmesi durumunda mümkün olan taktiksel oylamayı önlemek için harikadır.
 
-    *Bildirimler:*
-    Bir sohbette bildirimleri etkinleştirmek için bu adımları izleyin:
-    1. Bir anket oluşturun
-    2. Ayarlar menüsünde bitiş tarihini ayarlayın
-    3. Haber almak istediğiniz sohbete gidin (Pollbot'un gruba eklenmesi gerekiyor)
-    4. İlettiğiniz anket mesajını /notify ile yanıtlayın
-    5. Doğru anketi seçin
+    settings: |
+      *Ayarlar:*
 
-    Tüm bu işlem mutsuz bir şekilde aşırı derecede karmaşık, çünkü Telegram botlardan iletilen mesajların gruplarda tespit edilmesine izin vermiyor.
-    Dolayısıyla hangi grupta hangi anketin yayınlandığını ve her şeyin manuel olarak yapılması gerektiğini bilmiyoruz.
+      1. Anket geriye dönük olarak anonim yapılabilir.
+      2. Ayarlar menüsünde seçeneklerin yüzde satırı gizlenebilir.
+      3. Ayarlar menüsünde yeni seçenekler eklenebilir ve varolan seçenekler kaldırılabilir.
+      4. Diğer kullanıcıların anketinize seçenek eklemesine izin verebilirsiniz.
+      5. Kullanıcı isimlerinin ve seçeneklerin sonuçlardaki görüntülenme sırası değiştirilebilir.
 
-    *Eski anketleri bul:*
-    Eski anketlerinizi bulmak ve yönetmek için /list ve /list\_closed olarak iki komut var.
+    notifications: |
+      *Bildirimler:*
 
-    *Anketleri sil:*
-    Bireysel anketleri ilgili anket menülerinden silebilirsiniz.
-    Ayrıca tüm kapalı anketleri silmek için /delete\_closed komutu
-    ve tüm anketleri silmek için /delete\_all komutu var.
+      Bir sohbette bildirimleri etkinleştirmek için bu adımları izleyin:
+      1. Bir anket oluşturun
+      2. Ayarlar menüsünde bitiş tarihini ayarlayın
+      3. Haber almak istediğiniz sohbete gidin (Pollbot'un gruba eklenmesi gerekiyor)
+      4. İlettiğiniz anket mesajını /notify ile yanıtlayın
+      5. Doğru anketi seçin
 
-    *Dil:*
-    Ultimate pollbot çoklu dili destekliyor, ama resmi olarak İngilizce sürdürülüyor.
-    Bozuk çeviriler nedeniyle herhangi bir hata varsa, lütfen kendiniz düzeltin. Bu konulara bakmayacağım.
-    Dil desteği, mutlu bir şekilde desteklediğim topluluk tabanlı bir özellik ancak birden fazla dili kendi başıma destekleyemiyorum.
+      Tüm bu işlem mutsuz bir şekilde aşırı derecede karmaşık, çünkü Telegram botlardan iletilen mesajların gruplarda tespit edilmesine izin vermiyor.
+      Dolayısıyla hangi grupta hangi anketin yayınlandığını ve her şeyin manuel olarak yapılması gerektiğini bilmiyoruz.
 
-    *Son dakika içinde çok fazla oy:*
-    Bu mesaj hakkında endişelenmeyin. Bu mekanizma botumun spam mesajlar nedeniyle Telegram tarafından engellenmesini önlemek için gerekli.
-    Size olan tek etkisi, sonuçların hemen gösterilmemesidir.
+    management: |
+      *Eski anketleri bul:*
 
-    *Anketlerim güncellenmiyor:*
-    Bu durumda muhtemelen tek bir grupta birden fazla aktif anketiniz vardır (veya aynı anketten birden fazla).
-    Bu, botun tespit edemediği bir şey (Telegram API'leri buna izin vermiyor). Bu yüzden bunu kendiniz halletmelisiniz.
-    Her grupta yalnızca bir tane yüksek etkin etkinliğe sahip anket olmalı ve aynı anketi aynı grupta birçok kez göndermeyin (veya eskileri grubun TÜM üyeleri için silin).
+      Eski anketlerinizi bulmak ve yönetmek için /list ve /list\_closed olarak iki komut var.
 
-    *Gitmeyen bir hata var!!*
-    Genellikle bir şey bozulur bozulmaz bir bildirim alırım, haberim olmayan bazı hatalar olabilir!
-    Hata bir veya iki gün içinde çözülmezse, lütfen [Github](https://github.com/Nukesor/ultimate-poll-bot)'tan bir konu açın.
+
+      *Anketleri sil:*
+
+      Bireysel anketleri ilgili anket menülerinden silebilirsiniz.
+      Ayrıca tüm kapalı anketleri silmek için /delete\_closed komutu
+      ve tüm anketleri silmek için /delete\_all komutu var.
+
+    languages: |
+      *Dil:*
+
+      Ultimate pollbot çoklu dili destekliyor, ama resmi olarak İngilizce sürdürülüyor.
+      Bozuk çeviriler nedeniyle herhangi bir hata varsa, lütfen kendiniz düzeltin. Bu konulara bakmayacağım.
+      Dil desteği, mutlu bir şekilde desteklediğim topluluk tabanlı bir özellik ancak birden fazla dili kendi başıma destekleyemiyorum.
+
+    bugs: |
+      *Gitmeyen bir hata var!!*
+
+      Genellikle bir şey bozulur bozulmaz bir bildirim alırım, haberim olmayan bazı hatalar olabilir!
+      Hata bir veya iki gün içinde çözülmezse, lütfen [Github](https://github.com/Nukesor/ultimate-poll-bot)'tan bir konu açın.
 
   error: |
     Bilinmeyen bir hata oluştu. Muhtemelen bunun hakkında bildirim aldım ve olabildiğince çabuk çözmeye çalışacağım.

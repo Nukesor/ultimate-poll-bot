@@ -6,15 +6,17 @@ from telegram import (
 
 from pollbot.i18n import i18n
 from pollbot.helper.session import session_wrapper
-from pollbot.telegram.keyboard import get_main_keyboard, get_user_language_keyboard
+from pollbot.telegram.keyboard import get_user_language_keyboard
+from pollbot.helper.display.misc import get_help_text_and_keyboard
 
 
 @session_wrapper()
 def send_help(bot, update, session, user):
-    """Send a start text."""
-    keyboard = get_main_keyboard()
+    """Send a help text."""
+    text, keyboard = get_help_text_and_keyboard(user, 'intro')
+
     update.message.chat.send_message(
-        i18n.t('misc.help', locale=user.locale),
+        text,
         parse_mode='Markdown',
         reply_markup=keyboard,
         disable_web_page_preview=True,

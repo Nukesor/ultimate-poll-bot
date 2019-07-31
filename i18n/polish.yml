@@ -269,56 +269,61 @@ misc:
     This project is open-source on [Github](https://github.com/Nukesor/ultimate-poll-bot).
 
 
-  help: |
-    There are quite a few settings for your polls:
+  help:
+    intro: |
+      There are quite a few settings for your polls:
 
-    *Creation:*
-    1. You can anonymize your poll, which results in no names being displayed!
-    2. Poll results can be shown only after closing the poll. This is great to avoid tactical voting, which is possible if people can see the intermediate results of a poll.
+    creation: |
+      *Creation:*
 
-    *Settings:*
-    1. A poll can be made anonymous retrospectively.
-    2. The percentage line of options can be hidden in the settings menu.
-    3. New options can be added and existing options can be removed in the settings menu.
-    4. You can allow other users to add options to your poll.
-    5. The order in which user names and options are displayed in the results can be changed.
+      1. You can anonymize your poll, which results in no names being displayed!
+      2. Poll results can be shown only after closing the poll. This is great to avoid tactical voting, which is possible if people can see the intermediate results of a poll.
 
-    *Notifications:*
-    To enable notifications in a chat follow these steps:
-    1. Create a poll
-    2. Set a due date in the settings menu
-    3. Go to the chat you want to be notified (The pollbot needs added to the group)
-    4. Reply with /notify to the poll message you forwarded
-    5. Pick the correct poll
+    settings: |
+      *Settings:*
 
-    This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect forwarded messages from bots in groups.
-    Thereby we don't know which poll is posted in which group and everything needs to be done manually.
+      1. A poll can be made anonymous retrospectively.
+      2. The percentage line of options can be hidden in the settings menu.
+      3. New options can be added and existing options can be removed in the settings menu.
+      4. You can allow other users to add options to your poll.
+      5. The order in which user names and options are displayed in the results can be changed.
 
-    *Find old polls:*
-    There are two commands `/list` and `/list\_closed`, which allow you to find and manage your old polls.
+    notifications: |
+      *Notifications:*
 
-    *Delete polls:*
-    You can delete individual polls in the respective poll menus.
-    There's also the /delete\_closed command, which deletes all closed polls
-    and the /delete\_all command which deletes ALL polls.
+      To enable notifications in a chat follow these steps:
+      1. Create a poll
+      2. Set a due date in the settings menu
+      3. Go to the chat you want to be notified (The pollbot needs added to the group)
+      4. Reply with /notify to the poll message you forwarded
+      5. Pick the correct poll
 
-    *Language:*
-    Ultimate pollbot supports multiple languages, but only English is officially maintained.
-    If anything breaks, because of broken translations, please fix it on your own. I will not investigate these issues.
-    The language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
+      This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect forwarded messages from bots in groups.
+      Thereby we don't know which poll is posted in which group and everything needs to be done manually.
 
-    *Too many votes in the last minute:*
-    Don't worry about this message. This mechanism is necessary to prevent my bot from being blocked by telegram for spamming messages.
-    The only effect for you is, that the results won't be displayed immediately.
+    management: |
+      *Find old polls:*
 
-    *My polls won't update:*
-    In this case you probably have multiple active polls in a single group (or the same poll multiple times).
-    This is something the bot cannot detect (telegrams API doesn't allow this). Therefore you need to handle this yourself.
-    Only have one highly active poll per group and don't send the same poll multiple times in the same group (or delete the old ones for ALL members of the group).
+      There are two commands `/list` and `/list\_closed`, which allow you to find and manage your old polls.
 
-    *There is a bug that won't go away!!*
-    I usually get a notification as soon as something breaks, but there might be some bugs that go unnoticed!
-    In case a bug isn't fixed in a day or two, please write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot).
+      *Delete polls:*
+
+      You can delete individual polls in the respective poll menus.
+      There's also the /delete\_closed command, which deletes all closed polls
+      and the /delete\_all command which deletes ALL polls.
+
+    languages: |
+      *Language:*
+
+      Ultimate pollbot supports multiple languages, but only English is officially maintained.
+      If anything breaks, because of broken translations, please fix it on your own. I will not investigate these issues.
+      The language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
+
+    bugs: |
+      *There is a bug that won't go away!!*
+
+      I usually get a notification as soon as something breaks, but there might be some bugs that go unnoticed!
+      In case a bug isn't fixed in a day or two, please write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot).
 
   error: |
     Wystąpił niespodziewany błąd. Prawdopodobnie dostałem już o tym powiadomienie i spróbuję to naprawić najszybciej jak to możliwe.

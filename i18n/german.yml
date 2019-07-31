@@ -104,6 +104,14 @@ keyboard:
   order_users: Sortiere Nutzer %{name}
   order_options: Sortiere Optionen %{name}
   vote_with_count: '%{option_name} (%{count} Stimmen)'
+  help:
+    creation: Erstellung
+    settings: Einstellungen
+    notifications: Benachrichtigungen
+    management: Verwaltung
+    languages: Sprachen
+    bugs: Fehler
+
 
 sorting:
     user_chrono: nach Zeit
@@ -272,49 +280,64 @@ misc:
     Dieses Projekt ist open-source auf [Github](https://github.com/Nukesor/ultimate-poll-bot).
 
 
-  help: |
-    Es gibt eine gute Anzahl an Einstellugnen für deine Polls:
+  help:
+    intro: |
+      Es gibt eine gute Anzahl an Einstellungen für deine Polls:
 
-    *Erstellung:*
-    1. Du kannst Polls anonymisieren, sodass Namen nicht sichtbar sind!
-    2. Die Ergebnisse von Polls können versteckt werden, bis der Poll geschlossen wird. Das ist praktisch, um taktisches Abstimmen zu verhindern, welches möglich ist, wenn man konstant sieht, wo wie abgestimmt wird.
+    creation: |
+      *Erstellung:*
 
-    *Einstellungen:*
-    1. Ein Poll kann im Nachhinein anoymisiert werden.
-    2. Die Prozent Anzeige kann versteckt oder angezeigt werden.
-    3. Neue Optionen können hinzugefügt oder entfernt werden.
-    4. Du kannst anderen Nutzern erlauben neue Optionen hinzuzufügen.
-    5. Die Reihenfolge in denen Nutzer und Optionen in dem Poll angezeigt werden, kann verändert werden.
+      1. Du kannst Polls anonymisieren, sodass Namen nicht sichtbar sind!
+      2. Die Ergebnisse von Polls können versteckt werden, bis der Poll geschlossen wird. Das ist praktisch, um taktisches Abstimmen zu verhindern, welches möglich ist, wenn man konstant sieht, wo wie abgestimmt wird.
 
-    *Erinnerungen:*
-    Um Erinnerungen in einem Chat zu aktivieren, folge diesen Schritten:
-    1. Erstelle einen Poll
-    2. Set a due date in the settings menu
-    3. Gehe zu dem Chat in dem du die Erinnerungen aktivieren willst (Der PollBot muss in dieser Gruppe sein)
-    4. Antworte auf die von dir via @ultimate_pollbot gesendete Poll Nachricht mit /notify
-    5. Wähle in der nun erschienen Nachricht den richtigen Poll aus
+    settings: |
+      *Einstellungen:*
 
-    Diese ganze Prozudur ist leider etwas umständlich, da Telegram es Bots nicht erlaubt die `via` Nachrichten zu erkennen.
-    Daher weiß ich nicht, welcher Poll in welcher Gruppe geposted wurde und alles muss manuell gemacht werden.
+      1. Ein Poll kann im Nachhinein anoymisiert werden.
+      2. Die Prozent Anzeige kann versteckt oder angezeigt werden.
+      3. Neue Optionen können hinzugefügt oder entfernt werden.
+      4. Du kannst anderen Nutzern erlauben neue Optionen hinzuzufügen.
+      5. Die Reihenfolge in denen Nutzer und Optionen in dem Poll angezeigt werden, kann verändert werden.
 
-    *Alte Polls finden:*
-    Hierfür gibts die beiden Befehle /list und /list\_closed, mit welchen du deine alten Polls finden und verwalten kannst.
+    notifications: |
+      *Erinnerungen:*
 
-    *Polls löschen:*
-    Du kannst einfach individuelle Polls in den jeweiligen Menüs löschen.
-    Zudem gibt es den /delete\_closed Befehl, welcher alle geschlossenen Polls löscht.
-    Und es gibt den /delete\_all Befehl, welcher ALLE Polls löscht.
+      Um Erinnerungen in einem Chat zu aktivieren, folge diesen Schritten:
+      1. Erstelle einen Poll
+      2. Set a due date in the settings menu
+      3. Gehe zu dem Chat in dem du die Erinnerungen aktivieren willst (Der PollBot muss in dieser Gruppe sein)
+      4. Antworte auf die von dir via @ultimate_pollbot gesendete Poll Nachricht mit /notify
+      5. Wähle in der nun erschienen Nachricht den richtigen Poll aus
 
-    *Sprache:*
-    Ultimate PollBot unterstützt verschiedene Sprachen, aber nur Englisch ist offiziell unterstützt.
-    Um eine neue Sprache hinzuzufügen, geht zum Github Repository, kopiert die english.yml, kopiert sie, bennent die Kopie in eure Sprache um, und übersetzt alle Texte.
-    Passt auf das Markdown styling nicht kaputt zu machen (`**`, `__`, `${}`), andernfalls geht Kram kaputt für eure Sprache.
-    Wenn was kaputt geht, kümmert euch bitte selbst darum. Ich werde mich weiterhin nur um den Englischen Text kümmern.
-    Die verschiedenen Sprachen sind ein Gemeinschafts-Feature, welches ich gerne unterstütze, aber ich kann mich nicht alleine um mehrere Sprachen kümmern!
+      Diese ganze Prozudur ist leider etwas umständlich, da Telegram es Bots nicht erlaubt die `via` Nachrichten zu erkennen.
+      Daher weiß ich nicht, welcher Poll in welcher Gruppe geposted wurde und alles muss manuell gemacht werden.
 
-    *Hier ist ein Fehler, der nicht weggehen will!!*
-    Normalerweise bekomme ich eine Benachrichtigung, wenn was kaputt geht, aber es kann passieren, dass ich etwas nicht mitbekomme!
-    Falls ein Bug nicht innerhalb von ein paar Tagen verschwindet, schreibt gerne ein Ticket auf [Github](https://github.com/Nukesor/ultimate-poll-bot) oder schaut in der [Support Gruppe](https://t.me/nukesors_projects) vorbei.
+    management: |
+      *Alte Polls finden:*
+
+      Hierfür gibts die beiden Befehle /list und /list\_closed, mit welchen du deine alten Polls finden und verwalten kannst.
+
+
+      *Polls löschen:*
+
+      Du kannst einfach individuelle Polls in den jeweiligen Menüs löschen.
+      Zudem gibt es den /delete\_closed Befehl, welcher alle geschlossenen Polls löscht.
+      Und es gibt den /delete\_all Befehl, welcher ALLE Polls löscht.
+
+    languages: |
+      *Sprache:*
+
+      Ultimate PollBot unterstützt verschiedene Sprachen, aber nur Englisch ist offiziell unterstützt.
+      Um eine neue Sprache hinzuzufügen, geht zum Github Repository, kopiert die english.yml, kopiert sie, bennent die Kopie in eure Sprache um, und übersetzt alle Texte.
+      Passt auf das Markdown styling nicht kaputt zu machen (`**`, `__`, `${}`), andernfalls geht Kram kaputt für eure Sprache.
+      Wenn was kaputt geht, kümmert euch bitte selbst darum. Ich werde mich weiterhin nur um den Englischen Text kümmern.
+      Die verschiedenen Sprachen sind ein Gemeinschafts-Feature, welches ich gerne unterstütze, aber ich kann mich nicht alleine um mehrere Sprachen kümmern!
+
+    bugs: |
+      *Hier ist ein Fehler, der nicht weggehen will!!*
+
+      Normalerweise bekomme ich eine Benachrichtigung, wenn was kaputt geht, aber es kann passieren, dass ich etwas nicht mitbekomme!
+      Falls ein Bug nicht innerhalb von ein paar Tagen verschwindet, schreibt gerne ein Ticket auf [Github](https://github.com/Nukesor/ultimate-poll-bot) oder schaut in der [Support Gruppe](https://t.me/nukesors_projects) vorbei.
 
   error: |
     Ein unbekannter Fehler ist aufgetreten. Ich habe wahrscheinlich schon eine Benachrichtigung bekommen und werde versuchen das so schnell wie möglich zu beheben!

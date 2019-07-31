@@ -103,6 +103,14 @@ keyboard:
   order_users: Order users %{name}
   order_options: Order options %{name}
   vote_with_count: '%{option_name} (%{count} votes)'
+  help:
+    creation: Creation
+    settings: Settings
+    notifications: Notifications
+    management: Management
+    languages: Languages
+    bugs: Bugs
+
 
 sorting:
     user_chrono: chronologically
@@ -271,51 +279,67 @@ misc:
     This project is open-source on [Github](https://github.com/Nukesor/ultimate-poll-bot).
 
 
-  help: |
-    There are quite a few settings for your polls:
+  help:
+    intro: |
+      There are quite a few settings for your polls.
+      Just pick the category you're interested in or just read everything 😉.
 
-    🌟*Creation:*
-    1. You can anonymize your poll, which results in no names being displayed!
-    2. Poll results can be shown only after closing the poll. This is great to avoid tactical voting, which is possible if people can see the intermediate results of a poll.
+    creation: |
+      🌟*Creation:*
 
-    ⚙️ *Settings:*
-    1. A poll can be made anonymous retrospectively.
-    2. The percentage line of options can be hidden in the settings menu.
-    3. New options can be added and existing options can be removed in the settings menu.
-    4. You can allow other users to add options to your poll.
-    5. The order in which user names and options are displayed in the results can be changed.
+      1. You can anonymize your poll, which results in no names being displayed!
+      2. Poll results can be shown only after closing the poll. This is great to avoid tactical voting, which is possible if people can see the intermediate results of a poll.
 
-    📣 *Notifications:*
-    If you enable notifications for your chat, the bot will send a message 1 day, 6 hours, and 1 hour before the poll closes.
-    This is just a feature to remind everyone in a group that a poll will close soon, and to make it easy to find the poll message again 😉.
+    settings: |
+      ⚙️ *Settings:*
 
-    To enable notifications in a chat follow these steps:
-    1. Create a poll
-    2. Set a due date in the settings menu
-    3. Go to the chat you want to be notified (The pollbot needs added to the group)
-    4. Reply with /notify to the poll message you selected via @ultimate\_pollbot
-    5. Pick the correct poll
+      1. A poll can be made anonymous retrospectively.
+      2. The percentage line of options can be hidden in the settings menu.
+      3. New options can be added and existing options can be removed in the settings menu.
+      4. You can allow other users to add options to your poll.
+      5. The order in which user names and options are displayed in the results can be changed.
 
-    This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect messages from bots in groups 😐.
-    Thereby we don't know which poll is posted in which group and everything needs to be done manually.
+    notifications: |
+      📣 *Notifications:*
 
-    🕰 *Find old polls:*
-    There are two commands /list and /list\_closed, which allow you to find and manage your old polls.
+      If you enable notifications for your chat, the bot will send a message 1 day, 6 hours, and 1 hour before the poll closes.
+      This is just a feature to remind everyone in a group that a poll will close soon, and to make it easy to find the poll message again 😉.
 
-    ⚠️ *Delete polls:*
-    You can delete individual polls in the respective poll menus.
-    There's also the /delete\_closed command, which deletes all closed polls and the /delete\_all command which deletes ALL polls.
+      To enable notifications in a chat follow these steps:
+      1. Create a poll
+      2. Set a due date in the settings menu
+      3. Go to the chat you want to be notified (The pollbot needs added to the group)
+      4. Reply with /notify to the poll message you selected via @ultimate\_pollbot
+      5. Pick the correct poll
 
-    🌐 *Language:*
-    Ultimate pollbot supports multiple languages, but only English is officially maintained.
-    To add a new language, go to the Github repository, copy the `english.yml`, rename it to your language and adjust all values.
-    Be careful to not fuck up any Markdown styling (`**`, `__`, `${}`), otherwise stuff will break for your language.
-    If anything breaks, because of broken translations, please fix it on your own. I will not investigate these issues.
-    The multi language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
+      This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect messages from bots in groups 😐.
+      Thereby we don't know which poll is posted in which group and everything needs to be done manually.
 
-    ⚠️ *There is a bug that won't go away!!* 😩
-    I usually get a notification as soon as something breaks, but there might be some bugs that go unnoticed!
-    In case a bug isn't fixed in a day or two, please write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot) or stop by my [support group](https://t.me/nukesors_projects).
+    management: |
+      🕰 *Find old polls:*
+
+      There are two commands /list and /list\_closed, which allow you to find and manage your old polls.
+
+
+      ⚠️ *Delete polls:*
+
+      You can delete individual polls in the respective poll menus.
+      There's also the /delete\_closed command, which deletes all closed polls and the /delete\_all command which deletes ALL polls.
+
+    languages: |
+      🌐 *Language:*
+
+      Ultimate pollbot supports multiple languages, but only English is officially maintained.
+      To add a new language, go to the Github repository, copy the `english.yml`, rename it to your language and adjust all values.
+      Be careful to not fuck up any Markdown styling (`**`, `__`, `${}`), otherwise stuff will break for your language.
+      If anything breaks, because of broken translations, please fix it on your own. I will not investigate these issues.
+      The multi language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
+
+    bugs: |
+      ⚠️ *There is a bug that won't go away!!* 😩
+
+      I usually get a notification as soon as something breaks, but there might be some bugs that go unnoticed!
+      In case a bug isn't fixed in a day or two, please write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot) or stop by my [support group](https://t.me/nukesors_projects).
 
   error: |
     An unknown error occurred. I probably just got a notification about this and I'll try to fix it as quickly as possible.

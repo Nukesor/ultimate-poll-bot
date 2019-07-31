@@ -1,4 +1,5 @@
 ## v1.0.1
+- Better help interface
 - New language: Polish (Thanks to tszalbot)
 
 ## v1.0.1

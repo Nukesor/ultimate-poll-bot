@@ -71,6 +71,9 @@ from .external import (
 from .user import (
     change_user_language,
 )
+from .misc import (
+    switch_help,
+)
 
 
 class CallbackContext():
@@ -189,6 +192,9 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.external_open_datepicker: open_external_datepicker,
         CallbackType.external_open_menu: open_external_menu,
         CallbackType.external_cancel: external_cancel,
+
+        # Misc
+        CallbackType.switch_help: switch_help,
 
         # Ignore
         CallbackType.ignore: ignore,
