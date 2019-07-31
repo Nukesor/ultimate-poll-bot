@@ -86,7 +86,7 @@ keyboard:
   share: Share this poll
   close_poll: 🔒 Close
   settings: ⚙️ Settings
-  change_language: Change language
+  change_language: 🌐 Change language
   vote: ✉️ Vote
   permanently_close: ⚠️ Permanently close poll! ⚠️
   permanently_delete: ⚠️ Permanently delete poll! ⚠️
@@ -266,18 +266,21 @@ misc:
   help: |
     There are quite a few settings for your polls:
 
-    *Creation:*
+    🌟*Creation:*
     1. You can anonymize your poll, which results in no names being displayed!
     2. Poll results can be shown only after closing the poll. This is great to avoid tactical voting, which is possible if people can see the intermediate results of a poll.
 
-    *Settings:*
+    ⚙️ *Settings:*
     1. A poll can be made anonymous retrospectively.
     2. The percentage line of options can be hidden in the settings menu.
     3. New options can be added and existing options can be removed in the settings menu.
     4. You can allow other users to add options to your poll.
     5. The order in which user names and options are displayed in the results can be changed.
 
-    *Notifications:*
+    📣 *Notifications:*
+    If you enable notifications for your chat, the bot will send a message 1 day, 6 hours, and 1 hour before the poll closes.
+    This is just a feature to remind everyone in a group that a poll will close soon, and to make it easy to find the poll message again 😉.
+
     To enable notifications in a chat follow these steps:
     1. Create a poll
     2. Set a due date in the settings menu
@@ -285,25 +288,25 @@ misc:
     4. Reply with /notify to the poll message you selected via @ultimate\_pollbot
     5. Pick the correct poll
 
-    This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect messages from bots in groups.
+    This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect messages from bots in groups 😐.
     Thereby we don't know which poll is posted in which group and everything needs to be done manually.
 
-    *Find old polls:*
+    🕰 *Find old polls:*
     There are two commands /list and /list\_closed, which allow you to find and manage your old polls.
 
-    *Delete polls:*
+    ⚠️ *Delete polls:*
     You can delete individual polls in the respective poll menus.
     There's also the /delete\_closed command, which deletes all closed polls
     and the /delete\_all command which deletes ALL polls.
 
-    *Language:*
+    🌐 *Language:*
     Ultimate pollbot supports multiple languages, but only English is officially maintained.
     To add a new language, go to the Github repository, copy the `english.yml`, rename it to your language and adjust all values.
     Be careful to not fuck up any Markdown styling (`**`, `__`, `${}`), otherwise stuff will break for your language.
     If anything breaks, because of broken translations, please fix it on your own. I will not investigate these issues.
     The multi language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
 
-    *There is a bug that won't go away!!*
+    ⚠️ *There is a bug that won't go away!!* 😩
     I usually get a notification as soon as something breaks, but there might be some bugs that go unnoticed!
     In case a bug isn't fixed in a day or two, please write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot) or stop by my [support group](https://t.me/nukesors_projects).
 
