@@ -1,3 +1,3 @@
 #!/bin/bash
 
-watchexec --watch pollbot --restart "poetry run ./main.py"
+watchexec -w ./ -s SIGINT -r "poetry run ./main.py"
