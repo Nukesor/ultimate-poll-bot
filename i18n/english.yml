@@ -147,7 +147,6 @@ creation:
   description: Now send me the description
   skip_description: Skip
   not_allowed: You are no longer allowed to add new options
-  current_poll_type: Current poll type
   cancel: Cancel previous creation
   vote_count_request: Send me the amount of allowed votes per user.
 
@@ -169,21 +168,30 @@ creation:
     multiple_added: "Options have been added:"
     finished: All options have already been added
 
-  help:
-    unlimited_votes: "*Unlimited votes* (or the shopping list)"
-    single_help: Every user gets a single vote. The default and normal voting mode.
-    doodle_help: Users can vote for `yes`, `no`, or `maybe` for each option. Great for finding a date.
-    block_help: Every user can vote for all (or less) options. Useful for finding the most wanted options in a group, e.g. games that should be played on a LAN-Party.
-    limited_help: |
-      Every user gets a fixed number of votes they can distribute, but only once per option.
-      Pretty much like block vote, but people need to prioritize.
-      This mode is good for limiting the amount of possible winners e.g. if you only want max 4 games on your LAN-Party.
-    cumulative_help: |
-      Every user gets a fixed number of votes they can distribute as they like (even multiple votes per option).
-      This mode has a little more depth than limited vote, since it allows users to vote on a single option multiple times.
-    unlimited_help: |
-      Every user can vote as often on any option as they want.
-      This is great if you want to, for instance, determine how much stuff everyone wants for the next festival trip.
+  poll_type_help: |
+    Current poll type: *%{poll_type}*
+
+    *Single Vote:*
+    Every user gets a single vote. The default and normal voting mode.
+
+    *Doodle:*
+    Users can vote for `yes`, `no`, or `maybe` for each option. Great for finding a date.
+
+    *Bock Vote:*
+    Every user can vote for all (or less) options. Useful for finding the most wanted options in a group, e.g. games that should be played on a LAN-Party.
+
+    *Limited Vote:*
+    Every user gets a fixed number of votes they can distribute, but only once per option.
+    Pretty much like block vote, but people need to prioritize.
+    This mode is good for limiting the amount of possible winners e.g. if you only want max 4 games on your LAN-Party.
+
+    *Cumulative Vote:*
+    Every user gets a fixed number of votes they can distribute as they like (even multiple votes per option).
+    This mode has a little more depth than limited vote, since it allows users to vote on a single option multiple times.
+
+    *Unlimited votes* (or the shopping list)
+    Every user can vote as often on any option as they want.
+    This is great if you want to, for instance, determine how much stuff everyone wants for the next festival trip.
 
   results_not_visible: Results are not visible until poll is closed
   results_visible: Results are directly visible

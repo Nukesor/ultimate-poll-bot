@@ -145,7 +145,6 @@ creation:
   description: Şimdi bana bir açıklama gönderin
   skip_description: Açıklamayı atla
   not_allowed: Artık yeni seçenek eklemenize izin verilmiyor
-  current_poll_type: Şu anki anket tipi
   cancel: Önceki oluşturmayı iptal et
   vote_count_request: Her kullanıcı için izin verilen oy miktarını gönderin
 
@@ -167,21 +166,30 @@ creation:
     multiple_added: "Seçenekler eklendi:"
     finished: Tüm seçenekler zaten eklendi
 
-  help:
-    unlimited_votes: "*Sınırsız oy* (veya alışveriş listesi)"
-    single_help: Her kullanıcı tek oy verir. Varsayılan ve normal oylama modu.
-    doodle_help: Her kullanıcı her seçenek için `evet`, `hayır` ya da `belki` gibi oy verebilir. Bir tarih bulmak için harikadır.
-    block_help: Her kullanıcı tüm (ya da daha az) seçeneklere oy verebilir. Bir grupta en çok istenen seçeneği bulmak için kullanışlıdır, örneğin bir LAN partisinde oynanması gereken oyunlar.
-    limited_help: |
-      Her kullanıcı dağıtabilecekleri sabit sayıda oyu verir, ama seçenek başına bir kez.
-      Toplu oya çok benziyor, ama insanların öncelik vermesi gerekiyor.
-      Bu mod olası kazanan miktarını sınırlandırmak için iyidir, örneğin LAN partisinde sadece 4 oyun istiyorsanız.
-    cumulative_help: |
-      Her kullanıcı istedikleri gibi dağıtabilecekleri sabit sayıda bir oy verir (seçenek başına birden fazla oy bile).
-      Bu mod, sınırlı oylamadan biraz daha fazla derinliğe sahiptir, çünkü kullanıcıların tek bir seçenek üzerinde birden fazla oy kullanmasına izin verir.
-    unlimited_help: |
-      Her kullanıcı istediği herhangi bir seçeneğe istediği sıklıkta oy verebilir.
-      İstiyorsanız harika, örneğin, bir sonraki festival yolculuğunu herkesi ne kadar istediğini belirlemek.
+  poll_type_help: |
+    Şu anki anket tipi: *%{poll_type}*
+
+    *Tekli oy:*
+    Her kullanıcı tek oy verir. Varsayılan ve normal oylama modu.
+
+    *Karalama:*
+    Her kullanıcı her seçenek için `evet`, `hayır` ya da `belki` gibi oy verebilir. Bir tarih bulmak için harikadır.
+
+    *Toplu oy:*
+    Her kullanıcı tüm (ya da daha az) seçeneklere oy verebilir. Bir grupta en çok istenen seçeneği bulmak için kullanışlıdır, örneğin bir LAN partisinde oynanması gereken oyunlar.
+
+    *Sınırlı oy:*
+    Her kullanıcı dağıtabilecekleri sabit sayıda oyu verir, ama seçenek başına bir kez.
+    Toplu oya çok benziyor, ama insanların öncelik vermesi gerekiyor.
+    Bu mod olası kazanan miktarını sınırlandırmak için iyidir, örneğin LAN partisinde sadece 4 oyun istiyorsanız.
+
+    *Kümülatif oy:*
+    Her kullanıcı istedikleri gibi dağıtabilecekleri sabit sayıda bir oy verir (seçenek başına birden fazla oy bile).
+    Bu mod, sınırlı oylamadan biraz daha fazla derinliğe sahiptir, çünkü kullanıcıların tek bir seçenek üzerinde birden fazla oy kullanmasına izin verir.
+
+    *Sınırsız oy* (veya alışveriş listesi)
+    Her kullanıcı istediği herhangi bir seçeneğe istediği sıklıkta oy verebilir.
+    İstiyorsanız harika, örneğin, bir sonraki festival yolculuğunu herkesi ne kadar istediğini belirlemek.
 
   results_not_visible: Sonuçlar anket kapanana kadar gösterilmez
   results_visible: Sonuçlar direkt olarak gösterilir

@@ -15,7 +15,7 @@ def get_init_keyboard(poll):
     locale = poll.user.locale
     change_type = CallbackType.show_poll_type_keyboard.value
     change_type_payload = f"{change_type}:{poll.id}:0"
-    change_type_text = "Change poll type"
+    change_type_text = i18n.t('creation.keyboard.change', locale=locale)
 
     toggle_anonymity = CallbackType.toggle_anonymity.value
     toggle_anonymity_payload = f"{toggle_anonymity}:{poll.id}:0"

@@ -147,7 +147,6 @@ creation:
   description: Teraz wyślij mi opis ankiety
   skip_description: Pomiń
   not_allowed: Nie masz już możliwości dodawania nowych opcji
-  current_poll_type: Obecny typ ankiety
   cancel: Anuluj poprzednie tworzenie ankiety
   vote_count_request: Wyślij mi ilość dopuszczalnych głosów.
 
@@ -169,21 +168,30 @@ creation:
     multiple_added: "Dodano opcje:"
     finished: Wszystkie opcje zostały już dodane
 
-  help:
-    unlimited_votes: "*Nieskonczoność głosów* (lista zakupów)"
-    single_help: Każda osoba ma jeden głos. Domyślne głosowanie.
-    doodle_help: Osoby mogą głosować na `tak`, `nie`, albo `może` dla każdej z odpowiedzi. Idealne dla znalezienia daty.
-    block_help: Każdy może głosować na każdą (lub mniej) opcji. Przydaje się w celu znalezienia najbardziej pożądanych opcji w grupie, np. gry które powinny znaleźć się na LAN-Party.
-    limited_help: |
-      Każdy dostaje daną ilość głosów, które może użyć na kilku opcjach, ale tylko raz na opcję.
-      Podobne do głosowania blokowego, ale każdy ilość głosów jest ograniczona.
-      Ten typ jest dobry dla limitowania zwycięskich opcji np. jeżeli chcesz mieć tylko 4 gry na LAN-Party.
-    cumulative_help: |
-      Każdy dostaje daną ilość głosów, które może użyć na kilku opcjach (nawet kilka razy na opcję).
-      Ten typ jest podobny do limitowanego głosowania, z tym że pozwala na głosowanie kilka razy na jedną opcję.
-    unlimited_help: |
-      Każdy może głosować tyle razy ile chce na każdą z opcji.
-      Przydaje sie w przypadku, gdy np. chcesz dowiedzieć się ile rzeczy każdy chce ze sobą zabrać na koncert.
+  poll_type_help: |
+    Obecny typ ankiety: *%{poll_type}*
+
+    *Pojedyńczy głos:*
+    Każda osoba ma jeden głos. Domyślne głosowanie.
+
+    *Doodle:*
+    Osoby mogą głosować na `tak`, `nie`, albo `może` dla każdej z odpowiedzi. Idealne dla znalezienia daty.
+
+    *Głosy blokowe:*
+    Każdy może głosować na każdą (lub mniej) opcji. Przydaje się w celu znalezienia najbardziej pożądanych opcji w grupie, np. gry które powinny znaleźć się na LAN-Party.
+
+    *Limitowane głosy:*
+    Każdy dostaje daną ilość głosów, które może użyć na kilku opcjach, ale tylko raz na opcję.
+    Podobne do głosowania blokowego, ale każdy ilość głosów jest ograniczona.
+    Ten typ jest dobry dla limitowania zwycięskich opcji np. jeżeli chcesz mieć tylko 4 gry na LAN-Party.
+
+    *Kumulacyjne głosy:*
+    Każdy dostaje daną ilość głosów, które może użyć na kilku opcjach (nawet kilka razy na opcję).
+    Ten typ jest podobny do limitowanego głosowania, z tym że pozwala na głosowanie kilka razy na jedną opcję.
+
+    *Nieskonczoność głosów:* (lista zakupów)
+    Każdy może głosować tyle razy ile chce na każdą z opcji.
+    Przydaje sie w przypadku, gdy np. chcesz dowiedzieć się ile rzeczy każdy chce ze sobą zabrać na koncert.
 
   results_not_visible: Wyniki nie są widoczne aż do zamknięcia ankiety
   results_visible: Wyniki są bezpośrednio widoczne
@@ -311,7 +319,7 @@ misc:
     *There is a bug that won't go away!!*
     I usually get a notification as soon as something breaks, but there might be some bugs that go unnoticed!
     In case a bug isn't fixed in a day or two, please write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot).
-    
+
   error: |
     Wystąpił niespodziewany błąd. Prawdopodobnie dostałem już o tym powiadomienie i spróbuję to naprawić najszybciej jak to możliwe.
     W przypadku gdy błąd nie został naprawiony w przeciągu 2 lub 3 dni, dodaj problem na [Github](https://github.com/Nukesor/ultimate-poll-bot) lub skontaktuj sie ze mną na [grupie supportu](https://t.me/nukesors_projects).

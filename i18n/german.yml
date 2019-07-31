@@ -1,10 +1,10 @@
 poll_types:
-  single_vote: Single vote
+  single_vote: Einzelne Stimme
   doodle: Doodle
-  block_vote: Block vote
-  limited_vote: Limited vote
-  cumulative_vote: Cumulative vote
-  count_vote: Unlimited votes
+  block_vote: Block
+  limited_vote: Limitierte Stimmen
+  cumulative_vote: Kumulative Stimmen
+  count_vote: Unlimitierte Stimmen
 
 list:
   polls: Klicke auf einen Button um diesen spezifischen Poll zu managen
@@ -147,7 +147,6 @@ creation:
   description: Jetzt sende mir bitte die Beschreibung.
   skip_description: Überspringen
   not_allowed: Optionen hinzufügen ist nicht mehr erlaubt für diesen Poll.
-  current_poll_type: Momentane Poll Art
   cancel: Vorherige Erstellung abbrechen
   vote_count_request: Schicke mir die Menge an Stimmen, die jeder User bekommen soll.
 
@@ -169,21 +168,30 @@ creation:
     multiple_added: "Optionen wurden hinzugefügt:"
     finished: Alle Optionen wurden bereits hinzugefügt
 
-  help:
-    unlimited_votes: "*Unlimited votes* (oder die Einkaufsliste)"
-    single_help: Jeder user bekommt eine einzelne Stimme. Dies ist der Standart und normale Abstimmungsmodus.
-    doodle_help: Nutzer können mit `Ja`, `Nein` oder `Vielleicht` für jede Option abstimmen. Perfekt um einen Termin zu finden.
-    block_help: Jeder Nutzer kann für alle (oder weniger) Optionen abstimmen. Praktisch, wenn mann die meist gewollten Option in einer Gruppe bestimmen will, z.B. Spiele auf einer LAN-Party.
-    limited_help: |
-      Jeder Nutzer bekommt eine fixe Zahl an Stimmen, die sie verteilen können, aber maximal eine pro Option.
-      Fast das selbe wie Block vote, aber hier müssen die Nutzer priorisieren.
-      Dieser Modus kann benutzt werden, um die Anzahl der ausgewählten Optionen zu limitieren, falls man z.B. maximal vier Spiele auf einer LAN-Party spielen will.
-    cumulative_help: |
-      Jeder Nutzer bekommt eine fixe Zahl an Stimmen, die sie verteilen können, auch mehrere pro Option.
-      Dieser Modus bringt etwas mehr Tiefe in den ganzen Prozess, da die Nutzer z.B. auch alle ihre Stimmen auf eine einzige Option anwenden können
-    unlimited_help: |
-      Jeder Nutzer kann so oft abstimmen wie sie wollen.
-      Dieser Modus ist praktisch, wenn man z.B. herausfinden will, wie viel man für den nächsten Festival Ausflug einkaufen soll.
+  poll_type_help: |
+    Momentane Poll Art: *%{poll_type}*
+
+    *Einzelne Stimme*:
+    Jeder user bekommt eine einzelne Stimme. Dies ist der Standart und normale Abstimmungsmodus.
+
+    *Doodle:*
+    Nutzer können mit `Ja`, `Nein` oder `Vielleicht` für jede Option abstimmen. Perfekt um einen Termin zu finden.
+
+    *Block:*
+    Jeder Nutzer kann für alle (oder weniger) Optionen abstimmen. Praktisch, wenn mann die meist gewollten Option in einer Gruppe bestimmen will, z.B. Spiele auf einer LAN-Party.
+
+    *Begrenzte Stimmen:*
+    Jeder Nutzer bekommt eine fixe Zahl an Stimmen, die sie verteilen können, aber maximal eine pro Option.
+    Fast das selbe wie Block vote, aber hier müssen die Nutzer priorisieren.
+    Dieser Modus kann benutzt werden, um die Anzahl der ausgewählten Optionen zu limitieren, falls man z.B. maximal vier Spiele auf einer LAN-Party spielen will.
+
+    *Kumulative Stimmen:*
+    Jeder Nutzer bekommt eine fixe Zahl an Stimmen, die sie verteilen können, auch mehrere pro Option.
+    Dieser Modus bringt etwas mehr Tiefe in den ganzen Prozess, da die Nutzer z.B. auch alle ihre Stimmen auf eine einzige Option anwenden können
+
+    "*Unlimitierte Stimmen* (oder die Einkaufsliste):"
+    Jeder Nutzer kann so oft abstimmen wie sie wollen.
+    Dieser Modus ist praktisch, wenn man z.B. herausfinden will, wie viel man für den nächsten Festival Ausflug einkaufen soll.
 
   results_not_visible: Resultate sind nicht sichtbar, bis der Poll geschlossen wird.
   results_visible: Resultate sind immer sichtbar

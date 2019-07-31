@@ -7,27 +7,14 @@ from pollbot.helper.enums import ExpectedInput
 def get_poll_type_help_text(poll):
     """Create the help text for vote types."""
     locale = poll.user.locale
-    text = f"""{i18n.t('creation.current_poll_type', locale=locale)}: *{translate_poll_type(poll.poll_type, locale)}*
 
-*{i18n.t('poll_types.single_vote', locale=locale)}*:
-{i18n.t('creation.help.single_help', locale=locale)}
+    message = i18n.t(
+        'creation.poll_type_help',
+        locale=locale,
+        poll_type=translate_poll_type(poll.poll_type, locale),
+    )
 
-*{i18n.t('poll_types.doodle', locale=locale)}*:
-{i18n.t('creation.help.doodle_help', locale=locale)}
-
-*{i18n.t('poll_types.block_vote', locale=locale)}*:
-{i18n.t('creation.help.block_help', locale=locale)}
-
-*{i18n.t('poll_types.limited_vote', locale=locale)}*:
-{i18n.t('creation.help.limited_help', locale=locale)}
-
-*{i18n.t('poll_types.cumulative_vote', locale=locale)}*:
-{i18n.t('creation.help.cumulative_help', locale=locale)}
-
-{i18n.t('creation.help.unlimited_votes', locale=locale)}:
-{i18n.t('creation.help.unlimited_help', locale=locale)}
-"""
-    return text
+    return message
 
 
 def get_init_text(poll):
