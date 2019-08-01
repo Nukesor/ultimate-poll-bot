@@ -25,6 +25,7 @@ def start(bot, update, session, user):
             i18n.t('misc.start', locale=user.locale),
             parse_mode='markdown',
             reply_markup=keyboard,
+            disable_web_page_preview=True,
         )
 
         return
