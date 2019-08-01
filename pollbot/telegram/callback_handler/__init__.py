@@ -108,6 +108,13 @@ class CallbackContext():
             # Get chat entity and telegram chat
             self.tg_chat = self.query.message.chat
 
+    def __repr__(self):
+        """Print as string."""
+        representation = f'Context: query-{self.data}, poll-({self.poll}), user-({self.user}), '
+        representation += f'type-{self.callback_type}, action-{self.action}'
+
+        return representation
+
 
 @run_async
 @hidden_session_wrapper()

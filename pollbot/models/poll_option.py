@@ -35,6 +35,15 @@ class PollOption(base):
     # OneToMany
     votes = relationship('Vote', lazy='joined', passive_deletes='all', order_by='Vote.id')
 
+    def __init__(self, poll, name):
+        """Create a new poll."""
+        self.poll = poll
+        self.name = name
+
+    def __repr__(self):
+        """Print as string."""
+        return f'Option with Id: {self.id}, poll: {self.poll_id}, name: {self.name}'
+
     def get_formatted_name(self):
         """Get the name depending on whether the option is a date."""
         if self.is_date and self.poll.european_date_format:
@@ -42,8 +51,3 @@ class PollOption(base):
             return option_date.strftime('%d.%m.%Y')
 
         return self.name
-
-    def __init__(self, poll, name):
-        """Create a new poll."""
-        self.poll = poll
-        self.name = name

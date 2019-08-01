@@ -55,10 +55,6 @@ class Vote(base):
         """Print as string."""
         return f'Vote with Id: {self.id}, poll: {self.poll_id}'
 
-    def __str__(self):
-        """Print as string."""
-        return f'Vote with Id: {self.id}, poll: {self.poll_id}'
-
 
 Index(
     'ix_unique_single_vote',

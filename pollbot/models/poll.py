@@ -80,10 +80,6 @@ class Poll(base):
         """Print as string."""
         return f'Poll with Id: {self.id}, name: {self.name}'
 
-    def __str__(self):
-        """Print as string."""
-        return f'Poll with Id: {self.id}, name: {self.name}'
-
     def should_show_result(self):
         """Determine, whether this results of this poll should be shown."""
         return self.results_visible or self.closed
