@@ -3,6 +3,7 @@ from sqlalchemy import (
     Column,
     func,
     ForeignKey,
+    Index,
     UniqueConstraint
 )
 from sqlalchemy.types import (
@@ -27,6 +28,7 @@ class Vote(base):
 
     id = Column(Integer, primary_key=True)
     type = Column(String, nullable=True)
+    poll_type = Column(String, nullable=True)
     vote_count = Column(Integer)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
@@ -47,6 +49,7 @@ class Vote(base):
         self.vote_count = 1
         self.poll_option = poll_option
         self.poll = poll_option.poll
+        self.poll_type = self.poll.poll_type
 
     def __repr__(self):
         """Print as string."""
@@ -55,3 +58,11 @@ class Vote(base):
     def __str__(self):
         """Print as string."""
         return f'Vote with Id: {self.id}, poll: {self.poll_id}'
+
+
+Index(
+    'ix_unique_single_vote',
+    Vote.user_id, Vote.poll_id,
+    unique=True,
+    postgresql_where=Vote.poll_type == 'single_vote',
+)

@@ -2,6 +2,10 @@
 - Better help interface
 - New language: Polish (Thanks to tszalbot)
 
+
+**Fixes:**
+- Fixed a bug, where a user could vote twice on a single vote poll.
+
 ## v1.0.1
 **Additions:**
 - New language: German
