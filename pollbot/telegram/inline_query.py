@@ -39,7 +39,7 @@ def search(bot, update, session, user):
 
     if len(polls) == 0:
         update.inline_query.answer(
-            [], cache_time=300, is_personal=True,
+            [], cache_time=0, is_personal=True,
             switch_pm_text=i18n.t('inline_query.create_first', locale=user.locale),
             switch_pm_parameter='inline',
         )
