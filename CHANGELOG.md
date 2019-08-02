@@ -6,6 +6,7 @@
 **Fixes:**
 - Fixed a bug, where a user could vote twice on a single vote poll.
 - Fixed a bug, where a user could get a deleted poll in inline queries due to caching
+- Hide remaining votes for unlimited poll
 
 ## v1.0.1
 **Additions:**

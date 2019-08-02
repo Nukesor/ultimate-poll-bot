@@ -54,7 +54,7 @@ def handle_vote(session, context):
         update_poll_messages(session, context.bot, poll)
 
 
-def respond_to_vote(session, line, context, poll, total_vote_count=None, limited=False):
+def respond_to_vote(session, line, context, poll, remaining_votes=None, limited=False):
     """Get the formatted response for a user."""
     locale = poll.locale
     votes = session.query(Vote) \
@@ -63,10 +63,10 @@ def respond_to_vote(session, line, context, poll, total_vote_count=None, limited
         .all()
 
     if limited:
-        line += i18n.t('callback.vote.votes_left', locale=locale, count=total_vote_count)
+        line += i18n.t('callback.vote.votes_left', locale=locale, count=remaining_votes)
 
     lines = [line]
-    lines.append(i18n.t('callback.vote.your_votes', locale=locale, count=total_vote_count))
+    lines.append(i18n.t('callback.vote.your_votes', locale=locale))
     for vote in votes:
         if poll_allows_cumulative_votes(poll):
             lines.append(f' {vote.poll_option.name} ({vote.vote_count}), ')
@@ -204,17 +204,17 @@ def handle_cumulative_vote(session, context, option, unlimited=False):
         if action == CallbackResult.yes:
             existing_vote.vote_count += 1
             session.commit()
-            total_vote_count = allowed_votes - (vote_count + 1)
+            remaining_votes = allowed_votes - (vote_count + 1)
             vote_registered = i18n.t('callback.vote.registered', locale=locale)
-            respond_to_vote(session, vote_registered, context, option.poll, total_vote_count, True)
+            respond_to_vote(session, vote_registered, context, option.poll, remaining_votes, not unlimited)
 
         # Remove from existing vote
         elif action == CallbackResult.no:
             existing_vote.vote_count -= 1
             session.commit()
-            total_vote_count = allowed_votes - (vote_count - 1)
+            remaining_votes = allowed_votes - (vote_count - 1)
             vote_removed = i18n.t('callback.vote.removed', locale=locale)
-            respond_to_vote(session, vote_removed, context, option.poll, total_vote_count, True)
+            respond_to_vote(session, vote_removed, context, option.poll, remaining_votes, not unlimited)
 
         # Delete vote if necessary
         if existing_vote.vote_count <= 0:
@@ -226,9 +226,9 @@ def handle_cumulative_vote(session, context, option, unlimited=False):
         vote = Vote(context.user, option)
         session.add(vote)
         session.commit()
-        total_vote_count = allowed_votes - (vote_count + 1)
+        remaining_votes = allowed_votes - (vote_count + 1)
         vote_registered = i18n.t('callback.vote.registered', locale=locale)
-        respond_to_vote(session, vote_registered, context, option.poll, total_vote_count, True)
+        respond_to_vote(session, vote_registered, context, option.poll, remaining_votes, not unlimited)
 
     return True
 
