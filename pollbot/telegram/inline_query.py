@@ -57,7 +57,7 @@ def search(bot, update, session, user):
             ))
 
         update.inline_query.answer(
-            results, cache_time=300, is_personal=True,
+            results, cache_time=0, is_personal=True,
             switch_pm_text=i18n.t('inline_query.create_poll', locale=user.locale),
             switch_pm_parameter='inline'
         )
