@@ -285,18 +285,27 @@ misc:
 
     creation: |
       🌟*Creation:*
+      To create a new poll, just write or click /create.
+      For each poll you can specify several initial settings
 
-      1. You can anonymize your poll, which results in no names being displayed!
-      2. Poll results can be shown only after closing the poll. This is great to avoid tactical voting, which is possible if people can see the intermediate results of a poll.
+      1. The poll type. The various types are explained in detail in the poll type menu.
+      2. You can anonymize your poll, which results in no names being displayed! This is permanent and for all parties.
+      I won't implement polls where results are anonymous to users, but visible to the creator. This could lead to confusion and result in people voting while believing that no party can see their votes.
+
+      3. Poll results only become visible after closing the poll. This is great to avoid tactical voting, which is possible if people can see the intermediate results of a poll.
+      *Attention: A closed poll with this mode stays closed:*
+      Reopening a poll would allow a user, specifically the poll creator, to look at the votes, and place his own vote in a manner, that would result in a possible advantage for him.
 
     settings: |
       ⚙️ *Settings:*
+      Further settings of a poll can be adjusted after the poll has been created:
 
       1. A poll can be made anonymous retrospectively.
       2. The percentage line of options can be hidden in the settings menu.
       3. New options can be added and existing options can be removed in the settings menu.
       4. You can allow other users to add options to your poll.
       5. The order in which user names and options are displayed in the results can be changed.
+      5. A due date at which the poll will be automatically closed can be set.
 
     notifications: |
       📣 *Notifications:*
