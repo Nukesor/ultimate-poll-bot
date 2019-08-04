@@ -291,10 +291,10 @@ misc:
 
       *Poll type:* The various types are explained in detail in the poll type menu.
       *Anonymity:* You can anonymize your poll, which results in no names being displayed! This is permanent and for all parties.
-      *Visible results:* Poll can be only become visible after closing the poll. This is great to avoid tactical voting, which is possible if people can see the intermediate results of a poll.
+      *Visible results:* In this mode, votes only become visible after closing the poll. This is great to avoid the possibility of [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) and the influence of [Anchoring](https://en.wikipedia.org/wiki/Anchoring)
 
-      *Attention: A closed poll with this mode stays closed:*
-      Reopening a poll would allow a user, specifically the poll creator, to look at the votes, and place his own vote in a manner, that would result in a possible advantage for him.
+      -> *Attention: A closed poll with invisible results stays closed!:*
+      Reopening a poll would allow a user, specifically the poll creator, to look at the votes, and place his own vote in a manner, that would result in a possible advantage for him (tactical voting).
 
     settings: |
       ⚙️ *Settings:*
