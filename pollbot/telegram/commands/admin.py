@@ -7,6 +7,7 @@ from pollbot.models import User, Poll
 from pollbot.config import config
 from pollbot.i18n import i18n
 from pollbot.helper.session import session_wrapper
+from pollbot.helper.update import update_poll_messages
 
 
 def admin_required(function):
@@ -136,7 +137,11 @@ Types:
 @session_wrapper()
 @admin_required
 def update_all(bot, update, session, user):
-    """Send the broadcast message to the admin for test purposes."""
-    message = update.message.text.split(' ', 1)[1].strip()
+    """Update all polls."""
+    polls = session.query(Poll) \
+        .filter(Poll.created.is_(True)) \
+        .all()
 
-    bot.send_message(user.id, message, parse_mode='Markdown')
+    for poll in polls:
+        update_poll_messages(session, bot, poll)
+        time.sleep(2)
