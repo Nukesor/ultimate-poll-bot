@@ -24,7 +24,7 @@ from pollbot.helper.display import (
 )
 
 
-def get_poll_text(session, poll, show_warning):
+def get_poll_text(session, poll, show_warning, management=False):
     """Create the text of the poll."""
     total_user_count = session.query(User.id) \
         .join(Vote) \
@@ -90,13 +90,14 @@ def get_poll_text(session, poll, show_warning):
                             date=poll.get_formatted_due_date()))
 
     # Own poll note
-    lines.append(i18n.t('poll.own_poll', locale=poll.locale))
+    if not management:
+        lines.append(i18n.t('poll.own_poll', locale=poll.locale))
 
     # Notify users that poll is closed
-    if poll.closed:
+    if poll.closed and not management:
         lines.append(i18n.t('poll.closed', locale=poll.locale))
 
-    if show_warning:
+    if show_warning and not management:
         lines.append(i18n.t('poll.too_many_votes', locale=poll.locale))
 
     return '\n'.join(lines)
