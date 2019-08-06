@@ -125,7 +125,8 @@ def send_updates(session, bot, poll, show_warning=False):
         except BadRequest as e:
             if e.message.startswith('Message_id_invalid') or \
                    e.message.startswith("Message can't be edited") or \
-                   e.message.startswith("Message to edit not found"):
+                   e.message.startswith("Message to edit not found") or \
+                   e.message.startswith("Chat not found"):
                 session.delete(reference)
                 session.commit()
             elif e.message.startswith('Message is not modified'):

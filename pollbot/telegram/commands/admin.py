@@ -140,8 +140,18 @@ def update_all(bot, update, session, user):
     """Update all polls."""
     polls = session.query(Poll) \
         .filter(Poll.created.is_(True)) \
+        .order_by(Poll.id.desc()) \
         .all()
 
+    bot.send_message(user.id, f'Updating {len(polls)} polls')
+    count = 0
+
     for poll in polls:
+        count += 1
+        if count % 500 == 0:
+            bot.send_message(user.id, f'Updated {count} polls')
+
         update_poll_messages(session, bot, poll)
         time.sleep(2)
+
+    return "Done"

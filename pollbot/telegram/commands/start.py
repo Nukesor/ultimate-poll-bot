@@ -12,6 +12,7 @@ def start(bot, update, session, user):
     """Send a start text."""
     # Truncate the /start command
     text = update.message.text[6:].strip()
+    user.started = True
 
     try:
         poll = session.query(Poll).filter(Poll.uuid == text).one()
