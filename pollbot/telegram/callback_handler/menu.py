@@ -40,6 +40,7 @@ def go_back(session, context, poll):
         text,
         parse_mode='markdown',
         reply_markup=keyboard,
+        disable_web_page_preview=True,
     )
     context.query.answer('')
 
@@ -56,7 +57,8 @@ def show_vote_menu(session, context, poll):
     context.query.message.edit_text(
         get_poll_management_text(session, poll),
         parse_mode='markdown',
-        reply_markup=keyboard
+        reply_markup=keyboard,
+        disable_web_page_preview=True,
     )
 
 
@@ -95,6 +97,7 @@ def show_menu(session, context, poll):
         get_poll_management_text(session, poll),
         parse_mode='markdown',
         reply_markup=get_management_keyboard(poll),
+        disable_web_page_preview=True,
     )
 
     reference = Reference(

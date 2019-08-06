@@ -36,13 +36,15 @@ def create_poll(session, poll, user, chat, message=None):
         message = message.edit_text(
             get_poll_management_text(session, poll),
             parse_mode='markdown',
-            reply_markup=get_management_keyboard(poll)
+            reply_markup=get_management_keyboard(poll),
+            disable_web_page_preview=True,
         )
     else:
         message = chat.send_message(
             get_poll_management_text(session, poll),
             parse_mode='markdown',
-            reply_markup=get_management_keyboard(poll)
+            reply_markup=get_management_keyboard(poll),
+            disable_web_page_preview=True,
         )
 
     reference = Reference(

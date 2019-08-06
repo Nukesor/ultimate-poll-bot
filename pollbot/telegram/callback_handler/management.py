@@ -59,6 +59,7 @@ def clone_poll(session, context, poll):
     context.tg_chat.send_message(
             get_poll_management_text(session, new_poll),
             parse_mode='markdown',
-            reply_markup=get_management_keyboard(new_poll)
+            reply_markup=get_management_keyboard(new_poll),
+            disable_web_page_preview=True,
         )
     context.query.answer(i18n.t('callback.cloned', locale=poll.user.locale))
