@@ -70,9 +70,15 @@ def stats(bot, update, session, user):
     # Polls
     highest_id = session.query(Poll.id).order_by(Poll.id.desc()).first()[0]
     total_polls = session.query(Poll).count()
-    open_polls = session.query(Poll) \
+    created_polls = session.query(Poll) \
         .filter(Poll.closed.is_(False)) \
+        .filter(Poll.created.is_(True)) \
         .count()
+    unfinished_polls = session.query(Poll) \
+        .filter(Poll.closed.is_(False)) \
+        .filter(Poll.created.is_(False)) \
+        .count()
+
     closed_polls = session.query(Poll) \
         .filter(Poll.closed.is_(True)) \
         .count()
@@ -102,7 +108,8 @@ Users:
 Polls:
     Highest ID: {highest_id}
     Total: {total_polls}
-    Open: {open_polls}
+    Open: {created_polls}
+    Unfinished: {unfinished_polls}
     Closed: {closed_polls}
     Deleted: {highest_id - total_polls}
 

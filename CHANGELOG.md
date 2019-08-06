@@ -1,5 +1,7 @@
 ## v1.0.1
 - Better help interface
+- Lots of text adjustments
+- Share button after poll is closed
 - New language: Polish (Thanks to tszalbot)
 
 

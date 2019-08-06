@@ -14,21 +14,28 @@ from pollbot.telegram.keyboard import get_vote_keyboard
 @hidden_session_wrapper()
 def search(bot, update, session, user):
     """Handle inline queries for sticker search."""
-    query = update.inline_query.query
-    if query.strip() == '':
+    query = update.inline_query.query.strip()
+
+    # Also search for closed polls if the `closed_polls` keyword is found
+    closed = False
+    if 'closed_polls' in query:
+        closed = True
+        query = query.replace('closed_polls', '').strip()
+
+    if query == '':
         # Just display all polls
         polls = session.query(Poll) \
             .filter(Poll.user == user) \
-            .filter(Poll.closed.is_(False)) \
+            .filter(Poll.closed.is_(closed)) \
             .filter(Poll.created.is_(True)) \
             .order_by(Poll.created_at.desc()) \
             .all()
 
     else:
-        # Find polls with search paramter in name or description
+        # Find polls with search parameter in name or description
         polls = session.query(Poll) \
             .filter(Poll.user == user) \
-            .filter(Poll.closed.is_(False)) \
+            .filter(Poll.closed.is_(closed)) \
             .filter(Poll.created.is_(True)) \
             .filter(or_(
                 Poll.name.ilike(f'%{query}%'),
@@ -47,7 +54,11 @@ def search(bot, update, session, user):
         results = []
         for poll in polls:
             text = get_poll_text(session, poll, show_warning=False)
-            content = InputTextMessageContent(text, parse_mode='markdown')
+            content = InputTextMessageContent(
+                text,
+                parse_mode='markdown',
+                disable_web_page_preview=True,
+            )
             results.append(InlineQueryResultArticle(
                 poll.id,
                 poll.name,

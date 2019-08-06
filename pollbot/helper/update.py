@@ -27,6 +27,7 @@ def update_poll_messages(session, bot, poll):
 
     # Check whether we have a new window
     current_update = session.query(Update) \
+        .filter(Update.poll == poll) \
         .filter(Update.time_window == time_window) \
         .one_or_none()
 
@@ -105,6 +106,7 @@ def send_updates(session, bot, poll, show_warning=False):
                     message_id=reference.admin_message_id,
                     reply_markup=keyboard,
                     parse_mode='markdown',
+                    disable_web_page_preview=True,
                 )
 
             # Edit message via inline_message_id
@@ -118,6 +120,7 @@ def send_updates(session, bot, poll, show_warning=False):
                     inline_message_id=reference.inline_message_id,
                     reply_markup=keyboard,
                     parse_mode='markdown',
+                    disable_web_page_preview=True,
                 )
         except BadRequest as e:
             if e.message.startswith('Message_id_invalid') or \
