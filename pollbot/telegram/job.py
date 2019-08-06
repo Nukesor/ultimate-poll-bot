@@ -2,6 +2,7 @@
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 from datetime import datetime, timedelta
+from telegram.error import BadRequest
 
 from pollbot.i18n import i18n
 from pollbot.models import Update, Notification, Poll
@@ -82,35 +83,39 @@ def send_notifications(context, session):
         .all()
 
     for notification in notifications:
-        poll = notification.poll
-        locale = poll.locale
-        time_step = poll.due_date - poll.next_notification
+        try:
+            poll = notification.poll
+            locale = poll.locale
+            time_step = poll.due_date - poll.next_notification
 
-        tg_chat = context.bot.get_chat(notification.chat_id)
-        notification.poll_message_id
+            tg_chat = context.bot.get_chat(notification.chat_id)
+            notification.poll_message_id
 
-        if time_step == timedelta(days=1):
-            poll.next_notification = poll.due_date - timedelta(hours=6)
-            tg_chat.send_message(
-                i18n.t('notification.one_day', locale=locale, name=poll.name),
-                parse_mode='markdown',
-                reply_to_message_id=notification.poll_message_id,
-            )
-        elif time_step == timedelta(hours=6):
-            poll.next_notification = poll.due_date
-            tg_chat.send_message(
-                i18n.t('notification.six_hours', locale=locale, name=poll.name),
-                parse_mode='markdown',
-                reply_to_message_id=notification.poll_message_id,
-            )
-        elif poll.due_date == poll.next_notification:
-            update_poll_messages(session, context.bot, poll)
-            tg_chat.send_message(
-                i18n.t('notification.closed', locale=locale, name=poll.name),
-                parse_mode='markdown',
-                reply_to_message_id=notification.poll_message_id,
-            )
-            session.delete(notification)
+            if time_step == timedelta(days=1):
+                poll.next_notification = poll.due_date - timedelta(hours=6)
+                tg_chat.send_message(
+                    i18n.t('notification.one_day', locale=locale, name=poll.name),
+                    parse_mode='markdown',
+                    reply_to_message_id=notification.poll_message_id,
+                )
+            elif time_step == timedelta(hours=6):
+                poll.next_notification = poll.due_date
+                tg_chat.send_message(
+                    i18n.t('notification.six_hours', locale=locale, name=poll.name),
+                    parse_mode='markdown',
+                    reply_to_message_id=notification.poll_message_id,
+                )
+            elif poll.due_date == poll.next_notification:
+                update_poll_messages(session, context.bot, poll)
+                tg_chat.send_message(
+                    i18n.t('notification.closed', locale=locale, name=poll.name),
+                    parse_mode='markdown',
+                    reply_to_message_id=notification.poll_message_id,
+                )
+                session.delete(notification)
+        except BadRequest as e:
+            if e.message == 'Chat not found':
+                session.delete(notification)
 
     polls_to_close = session.query(Poll) \
         .filter(Poll.due_date <= datetime.now()) \
@@ -120,3 +125,15 @@ def send_notifications(context, session):
     for poll in polls_to_close:
         poll.closed = True
         update_poll_messages(session, context.bot, poll)
+
+
+@job_session_wrapper()
+def delete_old_updates(context, session):
+    """Delete all unneded updates."""
+    now = datetime.now()
+    time_window = now - timedelta(seconds=now.second % window_size, microseconds=now.microsecond)
+    ten_minutes_ago = time_window - timedelta(minutes=10)
+
+    session.query(Update) \
+        .filter(Update.time_window <= ten_minutes_ago) \
+        .delete()

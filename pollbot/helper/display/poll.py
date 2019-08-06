@@ -89,6 +89,9 @@ def get_poll_text(session, poll, show_warning):
                             locale=poll.locale,
                             date=poll.get_formatted_due_date()))
 
+    # Own poll note
+    lines.append(i18n.t('poll.own_poll', locale=poll.locale))
+
     # Notify users that poll is closed
     if poll.closed:
         lines.append(i18n.t('poll.closed', locale=poll.locale))
