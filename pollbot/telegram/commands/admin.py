@@ -68,11 +68,15 @@ def stats(bot, update, session, user):
     total_users = session.query(User.id).count()
     users_owning_polls = session.query(User) \
         .join(User.polls) \
+        .filter(Poll.created.is_(True)) \
         .group_by(User) \
         .count()
     users_with_votes = session.query(User) \
         .join(User.votes) \
         .group_by(User) \
+        .count()
+    users_started = session.query(User) \
+        .filter(User.started.is_(True)) \
         .count()
 
     # Polls
@@ -110,6 +114,7 @@ def stats(bot, update, session, user):
 
 Users:
     Total: {total_users}
+    Started: {users_started}
     Owning polls: {users_owning_polls}
     Voted: {users_with_votes}
 
