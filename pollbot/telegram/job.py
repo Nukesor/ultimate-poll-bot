@@ -77,54 +77,50 @@ def message_update_job(context, session):
 @job_session_wrapper()
 def send_notifications(context, session):
     """Notify the users about the poll being closed soon."""
-    notifications = session.query(Notification) \
+    polls = session.query(Poll) \
         .join(Notification.poll) \
         .filter(Poll.next_notification <= datetime.now()) \
         .all()
 
-    for notification in notifications:
-        try:
-            poll = notification.poll
-            locale = poll.locale
-            time_step = poll.due_date - poll.next_notification
+    for poll in polls:
+        time_step = poll.due_date - poll.next_notification
 
-            tg_chat = context.bot.get_chat(notification.chat_id)
-            notification.poll_message_id
+        # One day remaining reminder
+        if time_step == timedelta(days=1):
+            send_notifications_for_poll(session, context.bot, poll, 'notification.one_day')
+            poll.next_notification = poll.due_date - timedelta(hours=6)
 
-            if time_step == timedelta(days=1):
-                poll.next_notification = poll.due_date - timedelta(hours=6)
-                tg_chat.send_message(
-                    i18n.t('notification.one_day', locale=locale, name=poll.name),
-                    parse_mode='markdown',
-                    reply_to_message_id=notification.poll_message_id,
-                )
-            elif time_step == timedelta(hours=6):
-                poll.next_notification = poll.due_date
-                tg_chat.send_message(
-                    i18n.t('notification.six_hours', locale=locale, name=poll.name),
-                    parse_mode='markdown',
-                    reply_to_message_id=notification.poll_message_id,
-                )
-            elif poll.due_date == poll.next_notification:
-                update_poll_messages(session, context.bot, poll)
-                tg_chat.send_message(
-                    i18n.t('notification.closed', locale=locale, name=poll.name),
-                    parse_mode='markdown',
-                    reply_to_message_id=notification.poll_message_id,
-                )
+        # Six hours remaining reminder
+        elif time_step == timedelta(hours=6):
+            send_notifications_for_poll(session, context.bot, poll, 'notification.six_hours')
+            poll.next_notification = poll.due_date
+
+        # Send the closed notification, remove all notifications and close the poll
+        elif poll.due_date == poll.next_notification:
+            poll.closed = True
+            update_poll_messages(session, context.bot, poll)
+
+            send_notifications_for_poll(session, context.bot, poll, 'notification.closed')
+            for notification in poll.notifications:
                 session.delete(notification)
+
+
+def send_notifications_for_poll(session, bot, poll, message_key):
+    """Send the notifications for a single poll depending on the remaining time."""
+    locale = poll.locale
+    for notification in poll.notifications:
+        try:
+            # Get the chat and send the notification
+            tg_chat = bot.get_chat(notification.chat_id)
+            tg_chat.send_message(
+                i18n.t(message_key, locale=locale, name=poll.name),
+                parse_mode='markdown',
+                reply_to_message_id=notification.poll_message_id,
+            )
+
         except BadRequest as e:
             if e.message == 'Chat not found':
                 session.delete(notification)
-
-    polls_to_close = session.query(Poll) \
-        .filter(Poll.due_date <= datetime.now()) \
-        .filter(Poll.closed.is_(False)) \
-        .all()
-
-    for poll in polls_to_close:
-        poll.closed = True
-        update_poll_messages(session, context.bot, poll)
 
 
 @job_session_wrapper()

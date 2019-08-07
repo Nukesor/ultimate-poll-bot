@@ -1,7 +1,12 @@
 """Inline query handler function."""
 from sqlalchemy import or_
 from telegram.ext import run_async
-from telegram import InlineQueryResultArticle, InputTextMessageContent
+from telegram import (
+    InlineQueryResultArticle,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+    InputTextMessageContent,
+)
 
 from pollbot.i18n import i18n
 from pollbot.helper.display import get_poll_text
@@ -54,6 +59,10 @@ def search(bot, update, session, user):
         results = []
         for poll in polls:
             text = get_poll_text(session, poll, show_warning=False)
+            if poll.closed:
+                keyboard = InlineKeyboardMarkup([[InlineKeyboardButton('Please ignore this', callback_data='100')]])
+            else:
+                keyboard = get_vote_keyboard(poll)
             content = InputTextMessageContent(
                 text,
                 parse_mode='markdown',
@@ -64,7 +73,7 @@ def search(bot, update, session, user):
                 poll.name,
                 description=poll.description,
                 input_message_content=content,
-                reply_markup=get_vote_keyboard(poll),
+                reply_markup=keyboard,
             ))
 
         update.inline_query.answer(

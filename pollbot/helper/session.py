@@ -50,8 +50,8 @@ def hidden_session_wrapper():
 
                 session.commit()
             # Raise all telegram errors and let the generic error_callback handle it
-            except TelegramError as e:
-                raise e
+#            except TelegramError as e:
+#                raise e
             # Handle all not telegram relatated exceptions
             except:
                 traceback.print_exc()
@@ -100,8 +100,8 @@ def session_wrapper(send_message=True, private=False):
                 pass
 
             # Raise all telegram errors and let the generic error_callback handle it
-            except TelegramError as e:
-                raise e
+#            except TelegramError as e:
+#                raise e
 
             # Handle all not telegram relatated exceptions
             except:

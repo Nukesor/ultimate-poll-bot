@@ -65,6 +65,7 @@ class Poll(base):
     options = relationship('PollOption', order_by='asc(PollOption.id)', lazy='joined', passive_deletes='all')
     votes = relationship('Vote', passive_deletes=True)
     references = relationship('Reference', lazy='joined', passive_deletes='all')
+    notifications = relationship('Notification', passive_deletes='all')
 
     def __init__(self, user):
         """Create a new poll."""

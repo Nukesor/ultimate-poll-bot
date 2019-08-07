@@ -1,6 +1,7 @@
 """Handle inline query results."""
 from telegram.ext import run_async
 
+from pollbot.helper.update import update_poll_messages
 from pollbot.helper.session import hidden_session_wrapper
 from pollbot.models import Poll, Reference
 
@@ -17,3 +18,6 @@ def handle_chosen_inline_result(bot, update, session, user):
     reference = Reference(poll, inline_message_id=result.inline_message_id)
     session.add(reference)
     session.commit()
+
+    if poll.closed:
+        update_poll_messages(session, bot, poll)
