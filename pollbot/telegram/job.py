@@ -2,7 +2,7 @@
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 from datetime import datetime, timedelta
-from telegram.error import BadRequest, Unauthorized
+from telegram.error import BadRequest, Unauthorized, Forbidden
 
 from pollbot.i18n import i18n
 from pollbot.models import Update, Notification, Poll
@@ -127,7 +127,7 @@ def send_notifications_for_poll(session, bot, poll, message_key):
             if e.message == 'Chat not found':
                 session.delete(notification)
         # Bot was removed from group
-        except Unauthorized:
+        except (Unauthorized, Forbidden):
             session.delete(notification)
 
 
