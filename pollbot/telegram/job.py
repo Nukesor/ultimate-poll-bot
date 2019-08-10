@@ -83,10 +83,15 @@ def send_notifications(context, session):
         .all()
 
     for poll in polls:
+
         time_step = poll.due_date - poll.next_notification
 
+        if time_step == timedelta(days=7):
+            send_notifications_for_poll(session, context.bot, poll, 'notification.one_week')
+            poll.next_notification = poll.due_date - timedelta(hours=6)
+
         # One day remaining reminder
-        if time_step == timedelta(days=1):
+        elif time_step == timedelta(days=1):
             send_notifications_for_poll(session, context.bot, poll, 'notification.one_day')
             poll.next_notification = poll.due_date - timedelta(hours=6)
 

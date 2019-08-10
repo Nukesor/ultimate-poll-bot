@@ -73,6 +73,7 @@ inline_query:
   create_poll: Click to create a new poll.
 
 notification:
+  one_week: "The poll *%{name}* will automatically close in one week"
   one_day: "The poll *%{name}* will automatically close in one day"
   six_hours: "The poll *%{name}* will automatically close in six hours"
   closed: "The poll *%{name}* is now closed"
