@@ -24,14 +24,31 @@ from pollbot.helper.display import (
 )
 
 
+class Context():
+    """Context for poll text creation
+
+    This class contains all necessary information and flags, that
+    are needed to decide in which way a poll should be displayed.
+    """
+
+    def __init__(self, session, poll):
+        self.total_user_count = session.query(User.id) \
+            .join(Vote) \
+            .join(PollOption) \
+            .filter(PollOption.poll == poll) \
+            .group_by(User.id) \
+            .count()
+
+        # Flags
+        self.anonymous = poll.anonymous
+        self.show_results = poll.should_show_result()
+        self.show_percentage = poll.show_percentage
+        self.limited_votes = poll_has_limited_votes(poll)
+
+
 def get_poll_text(session, poll, show_warning, management=False):
     """Create the text of the poll."""
-    total_user_count = session.query(User.id) \
-        .join(Vote) \
-        .join(PollOption) \
-        .filter(PollOption.poll == poll) \
-        .group_by(User.id) \
-        .count()
+    context = Context(session, poll)
 
     # Name and description
     lines = []
@@ -40,48 +57,28 @@ def get_poll_text(session, poll, show_warning, management=False):
         lines.append(f'_{poll.description}_')
 
     # Anonymity information
-    if not poll.results_visible and not poll.should_show_result() or \
-            poll.anonymous and not poll.closed:
+    if not context.show_results or context.anonymous:
         lines.append('')
-    if poll.anonymous and not poll.closed:
+    if context.anonymous:
         lines.append(f"_{i18n.t('poll.anonymous', locale=poll.locale)}_")
-    if not poll.results_visible and not poll.should_show_result():
+    if not context.show_results:
         lines.append(f"_{i18n.t('poll.results_not_visible', locale=poll.locale)}_")
 
-    # Sort the options accordingly to the polls settings
-    options = get_sorted_options(poll, total_user_count)
-
-    # All options with their respective people percentage
-    for index, option in enumerate(options):
-        lines.append('')
-        lines.append(get_option_line(session, option, index))
-        if option.description is not None:
-            lines.append(f'┆ _{option.description}_')
-
-        if poll.should_show_result() and poll.show_percentage:
-            lines.append(get_percentage_line(option, total_user_count))
-
-        # Add the names of the voters to the respective options
-        if poll.should_show_result() and not poll.anonymous and len(option.votes) > 0:
-            # Sort the votes accordingly to the poll's settings
-            votes = get_sorted_votes(poll, option.votes)
-            for index, vote in enumerate(votes):
-                vote_line = get_vote_line(poll, option, vote, index)
-                lines.append(vote_line)
+    lines += get_option_information(session, poll, context)
     lines.append('')
 
-    if poll_has_limited_votes(poll):
+    if context.limited_votes:
         lines.append(i18n.t('poll.vote_times',
                             locale=poll.locale,
                             amount=poll.number_of_votes))
 
     # Total user count information
-    information_line = get_vote_information_line(poll, total_user_count)
+    information_line = get_vote_information_line(poll, context)
     if information_line is not None:
         lines.append(information_line)
 
-    if not poll.anonymous:
-        remaining_votes = get_remaining_votes(session, poll)
+    if context.show_results and context.limited_votes:
+        remaining_votes = get_remaining_votes_lines(session, poll)
         lines += remaining_votes
 
     if poll.due_date is not None:
@@ -101,6 +98,32 @@ def get_poll_text(session, poll, show_warning, management=False):
         lines.append(i18n.t('poll.too_many_votes', locale=poll.locale))
 
     return '\n'.join(lines)
+
+
+def get_option_information(session, poll, context):
+    lines = []
+    # Sort the options accordingly to the polls settings
+    options = get_sorted_options(poll, context.total_user_count)
+
+    # All options with their respective people percentage
+    for index, option in enumerate(options):
+        lines.append('')
+        lines.append(get_option_line(session, option, index))
+        if option.description is not None:
+            lines.append(f'┆ _{option.description}_')
+
+        if context.show_results and context.show_percentage:
+            lines.append(get_percentage_line(option, context))
+
+        # Add the names of the voters to the respective options
+        if context.show_results and not context.anonymous and len(option.votes) > 0:
+            # Sort the votes accordingly to the poll's settings
+            votes = get_sorted_votes(poll, option.votes)
+            for index, vote in enumerate(votes):
+                vote_line = get_vote_line(poll, option, vote, index)
+                lines.append(vote_line)
+
+    return lines
 
 
 def get_option_line(session, option, index):
@@ -146,9 +169,9 @@ def get_vote_line(poll, option, vote, index):
     return vote_line
 
 
-def get_percentage_line(option, total_user_count):
+def get_percentage_line(option, context):
     """Get the percentage line for each option."""
-    percentage = calculate_percentage(option, total_user_count)
+    percentage = calculate_percentage(option, context.total_user_count)
     filled_slots = math.floor(percentage/10)
 
     if len(option.votes) == 0 or option.poll.anonymous:
@@ -163,29 +186,27 @@ def get_percentage_line(option, total_user_count):
     return ''.join(line)
 
 
-def get_vote_information_line(poll, total_user_count):
+def get_vote_information_line(poll, context):
     """Get line that shows information about total user votes."""
     vote_information = None
-    if total_user_count > 1:
+    if context.total_user_count > 1:
         vote_information = i18n.t('poll.many_users_voted',
                                   locale=poll.locale,
-                                  count=total_user_count)
-    elif total_user_count == 1:
+                                  count=context.total_user_count)
+    elif context.total_user_count == 1:
         vote_information = i18n.t('poll.one_user_voted', locale=poll.locale)
 
     if vote_information is not None and poll_allows_multiple_votes(poll):
         total_count = calculate_total_votes(poll)
-        vote_information += i18n.t('poll.total_votes', locale=poll.locale, count=total_count)
+        vote_information += i18n.t('poll.total_votes',
+                                   locale=poll.locale,
+                                   count=total_count)
 
     return vote_information
 
 
-def get_remaining_votes(session, poll):
+def get_remaining_votes_lines(session, poll):
     """Get the remaining votes for a poll."""
-    if not poll_has_limited_votes(poll)  \
-       or not poll.should_show_result() \
-       or poll.anonymous:
-        return []
 
     user_vote_count = func.sum(Vote.vote_count).label('user_vote_count')
     remaining_user_votes = session.query(User.name, user_vote_count) \
