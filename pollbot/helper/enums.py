@@ -19,6 +19,14 @@ class ExpectedInput(Enum):
 
 
 @unique
+class StartAction(Enum):
+    """Helper enum to specify the different possible entry types for /start."""
+
+    new_option = 0
+    results = 1
+
+
+@unique
 class PollType(Enum):
     """Helper class to specify the different types of Polls."""
 

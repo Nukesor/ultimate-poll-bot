@@ -1,6 +1,7 @@
 """The start command handler."""
+from uuid import UUID
 from pollbot.i18n import i18n
-from pollbot.helper.enums import ExpectedInput
+from pollbot.helper.enums import ExpectedInput, StartAction
 from pollbot.helper.session import session_wrapper
 from pollbot.models import Poll
 from pollbot.telegram.keyboard import get_main_keyboard
@@ -15,7 +16,10 @@ def start(bot, update, session, user):
     user.started = True
 
     try:
-        poll = session.query(Poll).filter(Poll.uuid == text).one()
+        poll_uuid = UUID(text.split('-')[0])
+        action = StartAction(int(text.split('-')[1]))
+
+        poll = session.query(Poll).filter(Poll.uuid == poll_uuid).one()
     except:
         text = ''
 
@@ -31,7 +35,6 @@ def start(bot, update, session, user):
 
         return
 
-    poll = session.query(Poll).filter(Poll.uuid == text).one()
     if poll is None:
         return 'This poll no longer exists.'
 

@@ -13,7 +13,9 @@ from pollbot.helper.enums import (
     CallbackResult,
     OptionSorting,
     PollType,
+    StartAction,
 )
+from pollbot.telegram.keyboard import get_start_button_payload
 from pollbot.helper.display import get_sorted_options
 
 from .management import get_back_to_management_button
@@ -34,7 +36,8 @@ def get_vote_keyboard(poll, show_back=False):
 
     if poll.allow_new_options:
         bot_name = config['telegram']['bot_name']
-        url = f'http://t.me/{bot_name}?start={poll.uuid}'
+        payload = get_start_button_payload(poll, StartAction.new_option)
+        url = f'http://t.me/{bot_name}?start={payload}'
         buttons.append([InlineKeyboardButton(
             i18n.t('keyboard.new_option', locale=locale), url=url)])
 
