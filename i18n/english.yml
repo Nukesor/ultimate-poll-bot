@@ -349,7 +349,10 @@ misc:
       The multi language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
 
     bugs: |
-      ⚠️ *There is a bug that won't go away!!* 😩
+      *Known Bugs:*
+      *1.* Polls with too many votes don't update anymore. This is due to telegrams limitation of 4096 characters per message. A fix is in progress. The current workaround is to make the poll anonymous and thereby reduce the length of the message.
+
+      ⚠️ *There is an unknown bug that won't go away!!* 😩
 
       I usually get a notification as soon as something breaks, but there might be some bugs that go unnoticed!
       In case a bug isn't fixed in a day or two, please write a ticket on [Github](https://github.com/Nukesor/ultimate-poll-bot) or stop by my [support group](https://t.me/nukesors_projects).
