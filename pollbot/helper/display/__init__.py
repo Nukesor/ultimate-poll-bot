@@ -1,56 +1,9 @@
 """Get the different texts for polls and management."""
 from pollbot.helper import poll_allows_cumulative_votes
 from pollbot.helper.enums import (
-    UserSorting,
-    OptionSorting,
     VoteResultType,
     PollType,
 )
-
-
-def get_sorted_votes(poll, votes):
-    """Sort the votes depending on the poll's current settings."""
-    def get_user_name(vote):
-        """Get the name of user to sort votes."""
-        return vote.user.name
-
-    def get_doodle_int(vote):
-        """Get the sorting key for the vote type."""
-        mapping = {
-            'yes': 1,
-            'maybe': 2,
-            'no': 3,
-        }
-        return mapping[vote.type]
-
-    if poll.poll_type == PollType.doodle.name:
-        votes.sort(key=get_doodle_int)
-
-    elif poll.user_sorting == UserSorting.user_name.name:
-        votes.sort(key=get_user_name)
-
-    return votes
-
-
-def get_sorted_options(poll, total_user_count=0):
-    """Sort the options depending on the poll's current settings."""
-    options = poll.options.copy()
-
-    def get_option_name(option):
-        """Get the name of the option."""
-        return option.name
-
-    def get_option_percentage(option):
-        """Get the name of the option."""
-        return calculate_percentage(option, total_user_count)
-
-    if poll.option_sorting == OptionSorting.option_name.name:
-        options.sort(key=get_option_name)
-
-    elif poll.option_sorting == OptionSorting.option_percentage.name:
-        options.sort(key=get_option_percentage, reverse=True)
-
-    return options
 
 
 def calculate_percentage(option, total_user_count):

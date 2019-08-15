@@ -16,7 +16,7 @@ from pollbot.helper.enums import (
     StartAction,
 )
 from pollbot.telegram.keyboard import get_start_button_payload
-from pollbot.helper.display import get_sorted_options
+from pollbot.helper.display.poll import get_sorted_options
 
 from .management import get_back_to_management_button
 
