@@ -3,7 +3,7 @@
 from pollbot.i18n import i18n
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.enums import ExpectedInput, PollType
-from pollbot.helper.display import get_settings_text
+from pollbot.display import get_settings_text
 from pollbot.helper.update import update_poll_messages
 from pollbot.telegram.callback_handler.creation import create_poll
 

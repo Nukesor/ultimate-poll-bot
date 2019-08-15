@@ -1,7 +1,7 @@
 """Poll creation helper."""
 from pollbot.i18n import i18n
 from pollbot.helper.enums import ExpectedInput
-from pollbot.helper.display import get_poll_management_text
+from pollbot.display import get_poll_management_text
 from pollbot.telegram.keyboard import (
     get_options_entered_keyboard,
     get_management_keyboard,

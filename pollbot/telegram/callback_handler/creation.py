@@ -10,7 +10,7 @@ from pollbot.telegram.keyboard import (
     get_creation_datepicker_keyboard,
     get_open_datepicker_keyboard,
 )
-from pollbot.helper.display.creation import (
+from pollbot.display.creation import (
     get_init_text,
     get_poll_type_help_text,
     get_datepicker_text,

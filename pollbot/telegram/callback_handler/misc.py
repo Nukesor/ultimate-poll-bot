@@ -1,5 +1,5 @@
 """Option for setting the current date of the picker."""
-from pollbot.helper.display.misc import get_help_text_and_keyboard
+from pollbot.display.misc import get_help_text_and_keyboard
 
 
 def switch_help(session, context):

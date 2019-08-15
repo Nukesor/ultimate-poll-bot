@@ -9,7 +9,7 @@ from telegram import (
 )
 
 from pollbot.i18n import i18n
-from pollbot.helper.display import get_poll_text
+from pollbot.display import get_poll_text
 from pollbot.helper.session import hidden_session_wrapper
 from pollbot.models import Poll
 from pollbot.telegram.keyboard import get_vote_keyboard

@@ -3,7 +3,7 @@ from pollbot.i18n import i18n
 from pollbot.helper import poll_required
 from pollbot.models import Notification
 from pollbot.helper.enums import ExpectedInput
-from pollbot.helper.display.creation import get_datepicker_text
+from pollbot.display.creation import get_datepicker_text
 
 from pollbot.telegram.keyboard.external import (
     get_external_datepicker_keyboard,

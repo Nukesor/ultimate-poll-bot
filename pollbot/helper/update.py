@@ -8,7 +8,7 @@ from psycopg2.errors import UniqueViolation
 from pollbot.i18n import i18n
 from pollbot.telegram.keyboard import get_vote_keyboard, get_management_keyboard
 from pollbot.helper.enums import ExpectedInput
-from pollbot.helper.display import (
+from pollbot.display import (
     get_poll_management_text,
     get_poll_text,
 )

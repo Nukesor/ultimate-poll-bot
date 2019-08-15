@@ -3,8 +3,8 @@ from datetime import datetime, date, time
 from pollbot.i18n import i18n
 from pollbot.helper import poll_required
 from pollbot.helper.update import update_poll_messages
-from pollbot.helper.display import get_settings_text
-from pollbot.helper.display.creation import get_datepicker_text
+from pollbot.display import get_settings_text
+from pollbot.display.creation import get_datepicker_text
 from pollbot.telegram.keyboard import (
     get_anonymization_confirmation_keyboard,
     get_settings_keyboard,

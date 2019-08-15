@@ -7,7 +7,7 @@ from telegram import (
 from pollbot.i18n import i18n
 from pollbot.helper.session import session_wrapper
 from pollbot.telegram.keyboard import get_user_language_keyboard
-from pollbot.helper.display.misc import get_help_text_and_keyboard
+from pollbot.display.misc import get_help_text_and_keyboard
 
 
 @session_wrapper()

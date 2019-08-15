@@ -7,7 +7,7 @@ from pollbot.helper.enums import (
 )
 
 from pollbot.helper import poll_allows_cumulative_votes
-from pollbot.helper.display import calculate_percentage
+from pollbot.display import calculate_percentage
 from .vote import (
     get_vote_line,
     get_sorted_votes,
