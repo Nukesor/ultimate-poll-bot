@@ -1,38 +1,12 @@
 import math
 import string
 from datetime import date
-from pollbot.helper.enums import (
-    OptionSorting,
-    PollType,
-)
 
+from pollbot.helper.enums import PollType
 from pollbot.helper import poll_allows_cumulative_votes
-from pollbot.display import calculate_percentage
-from .vote import (
-    get_vote_line,
-    get_sorted_votes,
-)
-
-
-def get_sorted_options(poll, total_user_count=0):
-    """Sort the options depending on the poll's current settings."""
-    options = poll.options.copy()
-
-    def get_option_name(option):
-        """Get the name of the option."""
-        return option.name
-
-    def get_option_percentage(option):
-        """Get the name of the option."""
-        return calculate_percentage(option, total_user_count)
-
-    if poll.option_sorting == OptionSorting.option_name.name:
-        options.sort(key=get_option_name)
-
-    elif poll.option_sorting == OptionSorting.option_percentage.name:
-        options.sort(key=get_option_percentage, reverse=True)
-
-    return options
+from pollbot.helper.vote import get_sorted_votes
+from pollbot.helper.option import get_sorted_options, calculate_percentage
+from .vote import get_vote_line
 
 
 def get_option_information(session, poll, context):
@@ -103,5 +77,3 @@ def get_percentage_line(option, context):
     line += f' ({percentage:.0f}%)'
 
     return ''.join(line)
-
-
