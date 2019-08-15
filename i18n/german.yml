@@ -162,8 +162,8 @@ creation:
     change: Poll Art ändern
     anonymity: Poll anonymisieren
     no_anonymity: Namen im Poll anzeigen
-    results_visible: Resultate verbergen, bis Poll geschlossen wird
-    results_not_visible: Resultate dauerhaft anzeigen
+    results_visible: Resultate dauerhaft anzeigen
+    results_not_visible: Resultate verbergen, bis Poll geschlossen wird
 
   option:
     next: "Schicke mir *noch eine Option*, wähle ein Datum als Option aus, oder klicke auf *Fertig* wenn du alles erledigt hast."

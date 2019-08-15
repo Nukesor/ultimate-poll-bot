@@ -152,8 +152,8 @@ creation:
     change: Anket tipini değiştir
     anonymity: Anketi anonim yap
     no_anonymity: İsimleri ankette göster
-    results_visible: Anket kapanana kadar sonuçları gizle
-    results_not_visible: Sonuçları kalıcı olarak göster
+    results_visible: Sonuçları kalıcı olarak göster
+    results_not_visible: Anket kapanana kadar sonuçları gizle
 
   option:
     next: "*Başka bir seçenek* ekleyin ya da *bitti*ye tıklayın"

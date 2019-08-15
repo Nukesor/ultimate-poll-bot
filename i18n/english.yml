@@ -166,8 +166,8 @@ creation:
     change: Change poll type
     anonymity: Anonymize poll
     no_anonymity: Display names in poll
-    results_visible: Hide results until poll is closed
-    results_not_visible: Permanently show results
+    results_visible: Permanently show results
+    results_not_visible: Hide results until poll is closed
 
   option:
     next: "Send *another option*, pick a date and add it as an option, or click *Done* when you're finished."

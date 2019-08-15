@@ -154,8 +154,8 @@ creation:
     change: Zmień typ ankiety
     anonymity: Zmień ankietę na anonimową
     no_anonymity: Wyświetlaj nazwy w ankiecie
-    results_visible: Ukryj nazwy do zamknięcia ankiety
-    results_not_visible: Pokaż wyniki cały czas
+    results_visible: Pokaż wyniki cały czas
+    results_not_visible: Ukryj nazwy do zamknięcia ankiety
 
   option:
     next: "Wyślij *kolejną opcję*, wybierz datę i dodaj ją jako opcje, lub kliknij *Gotowe* aby stworzyć ankietę."
