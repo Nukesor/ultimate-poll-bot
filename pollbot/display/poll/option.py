@@ -4,12 +4,11 @@ from datetime import date
 
 from pollbot.helper.enums import PollType
 from pollbot.helper import poll_allows_cumulative_votes
-from pollbot.helper.vote import get_sorted_votes
 from pollbot.helper.option import get_sorted_options, calculate_percentage
-from .vote import get_vote_line
+from .vote import get_vote_lines
 
 
-def get_option_information(session, poll, context):
+def get_option_information(session, poll, context, summarize):
     lines = []
     # Sort the options accordingly to the polls settings
     options = get_sorted_options(poll, context.total_user_count)
@@ -27,10 +26,7 @@ def get_option_information(session, poll, context):
         # Add the names of the voters to the respective options
         if context.show_results and not context.anonymous and len(option.votes) > 0:
             # Sort the votes accordingly to the poll's settings
-            votes = get_sorted_votes(poll, option.votes)
-            for index, vote in enumerate(votes):
-                vote_line = get_vote_line(poll, option, vote, index)
-                lines.append(vote_line)
+            lines += get_vote_lines(poll, option, summarize)
 
     return lines
 

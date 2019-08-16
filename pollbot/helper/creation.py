@@ -1,7 +1,7 @@
 """Poll creation helper."""
 from pollbot.i18n import i18n
 from pollbot.helper.enums import ExpectedInput
-from pollbot.display import get_poll_management_text
+from pollbot.display.poll import get_poll_text
 from pollbot.telegram.keyboard import (
     get_options_entered_keyboard,
     get_management_keyboard,
@@ -34,14 +34,14 @@ def create_poll(session, poll, user, chat, message=None):
 
     if message:
         message = message.edit_text(
-            get_poll_management_text(session, poll),
+            get_poll_text(session, poll),
             parse_mode='markdown',
             reply_markup=get_management_keyboard(poll),
             disable_web_page_preview=True,
         )
     else:
         message = chat.send_message(
-            get_poll_management_text(session, poll),
+            get_poll_text(session, poll),
             parse_mode='markdown',
             reply_markup=get_management_keyboard(poll),
             disable_web_page_preview=True,

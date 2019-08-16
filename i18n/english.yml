@@ -31,6 +31,7 @@ poll:
   total_votes: " (%{count} votes)"
   remaining_votes: "\nRemaining votes:"
   remaining_votes_user: "%{name}: %{count} votes"
+  summarized_users: "and %{count} other people."
   too_many_votes: |
         ⚠️ *Too many votes in the last minute:* ⚠️
         Your votes will still be registered, but this message will only update every 2 seconds.

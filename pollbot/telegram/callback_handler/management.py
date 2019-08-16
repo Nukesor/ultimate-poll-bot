@@ -4,7 +4,7 @@ from datetime import datetime
 from pollbot.i18n import i18n
 from pollbot.helper import poll_required
 from pollbot.helper.update import remove_poll_messages, update_poll_messages
-from pollbot.display import get_poll_management_text
+from pollbot.display import get_poll_text
 from pollbot.telegram.keyboard import get_management_keyboard
 
 
@@ -57,7 +57,7 @@ def clone_poll(session, context, poll):
     session.commit()
 
     context.tg_chat.send_message(
-            get_poll_management_text(session, new_poll),
+            get_poll_text(session, new_poll),
             parse_mode='markdown',
             reply_markup=get_management_keyboard(new_poll),
             disable_web_page_preview=True,

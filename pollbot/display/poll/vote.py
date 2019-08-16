@@ -6,6 +6,7 @@ from pollbot.helper import (
     poll_allows_multiple_votes,
     calculate_total_votes,
 )
+from pollbot.helper.vote import get_sorted_votes
 from pollbot.helper.enums import (
     UserSorting,
     PollType,
@@ -15,6 +16,29 @@ from pollbot.models import (
     PollOption,
     Vote,
 )
+
+
+def get_vote_lines(poll, option, summarize):
+    "Return all vote related lines for this option."""
+    lines = []
+    threshold = 2
+    # Sort the votes accordingly to the poll's settings
+    votes = get_sorted_votes(poll, option.votes)
+    for index, vote in enumerate(votes):
+        # If we need to summarize the votes, just display the first few names
+        # and summarize all remaining votes in a single line.
+        if summarize and index == threshold:
+            count = len(option.votes) - threshold
+            lines += [i18n.t('poll.summarized_users',
+                             locale=poll.locale,
+                             count=count)]
+            break
+
+        vote_line = get_vote_line(poll, option, vote, index)
+        lines.append(vote_line)
+
+    return lines
+
 
 
 def get_vote_line(poll, option, vote, index):

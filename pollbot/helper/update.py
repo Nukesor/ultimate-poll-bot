@@ -9,7 +9,6 @@ from pollbot.i18n import i18n
 from pollbot.telegram.keyboard import get_vote_keyboard, get_management_keyboard
 from pollbot.helper.enums import ExpectedInput
 from pollbot.display import (
-    get_poll_management_text,
     get_poll_text,
 )
 from pollbot.models import Update
@@ -99,7 +98,7 @@ def send_updates(session, bot, poll, show_warning=False):
                 else:
                     keyboard = get_management_keyboard(poll)
 
-                text = get_poll_management_text(session, poll, show_warning)
+                text = get_poll_text(session, poll, show_warning)
                 bot.edit_message_text(
                     text,
                     chat_id=reference.admin_chat_id,

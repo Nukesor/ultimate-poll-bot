@@ -40,7 +40,19 @@ class Context():
         self.limited_votes = poll_has_limited_votes(poll)
 
 
-def get_poll_text(session, poll, show_warning, management=False):
+def get_poll_text(session, poll, show_warning=False):
+    """Get the poll text and vote keyboard."""
+    lines = compile_poll_text(session, poll, show_warning)
+    text = '\n'.join(lines)
+
+    if len(text) > 4000:
+        lines = compile_poll_text(session, poll, show_warning, True)
+        text = '\n'.join(lines)
+
+    return text
+
+
+def compile_poll_text(session, poll, show_warning, summarize=False):
     """Create the text of the poll."""
     context = Context(session, poll)
 
@@ -58,7 +70,7 @@ def get_poll_text(session, poll, show_warning, management=False):
     if not context.show_results:
         lines.append(f"_{i18n.t('poll.results_not_visible', locale=poll.locale)}_")
 
-    lines += get_option_information(session, poll, context)
+    lines += get_option_information(session, poll, context, summarize)
     lines.append('')
 
     if context.limited_votes:
@@ -71,7 +83,7 @@ def get_poll_text(session, poll, show_warning, management=False):
     if information_line is not None:
         lines.append(information_line)
 
-    if context.show_results and context.limited_votes:
+    if context.show_results and context.limited_votes and not summarize:
         remaining_votes = get_remaining_votes_lines(session, poll)
         lines += remaining_votes
 
@@ -81,17 +93,13 @@ def get_poll_text(session, poll, show_warning, management=False):
                             date=poll.get_formatted_due_date()))
 
     # Own poll note
-    if not management:
-        lines.append(i18n.t('poll.own_poll', locale=poll.locale))
+    lines.append(i18n.t('poll.own_poll', locale=poll.locale))
 
     # Notify users that poll is closed
-    if poll.closed and not management:
+    if poll.closed:
         lines.append(i18n.t('poll.closed', locale=poll.locale))
 
-    if show_warning and not management:
+    if show_warning:
         lines.append(i18n.t('poll.too_many_votes', locale=poll.locale))
 
-    return '\n'.join(lines)
-
-
-
+    return lines
