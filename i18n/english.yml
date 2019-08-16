@@ -323,9 +323,11 @@ misc:
       To enable notifications in a chat follow these steps:
       *1.* Create a poll
       *2.* Set a due date in the settings menu
-      *3.* Go to the chat you want to be notified (The pollbot needs added to the group, before the poll is shared or you need to share it again)
-      *4.* Reply with /notify to the poll message you selected via @ultimate\_pollbot
-      *5.* Pick the correct poll
+      *3.* Go to the chat you want to be notified
+      *4.* Add the pollbot to the group
+      *5.* Share the poll to this group
+      *6.* Reply with /notify to the poll message you selected via @ultimate\_pollbot
+      *7.* Pick the correct poll
 
       This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect messages from bots in groups 😐.
       Thereby we don't know which poll is posted in which group and everything needs to be done manually.
