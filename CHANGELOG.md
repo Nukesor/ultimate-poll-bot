@@ -1,4 +1,8 @@
-## v1.0.1
+## v1.1.1
+- Support for super long polls. Those polls now get summarized as soon as they reach a certain length and a new button appears.
+    This button redirects to the bot and gives you a detailed summary of the poll results in multiple messages
+
+- Revamp of the doodle result interface
 - Better help interface
 - Lots of text adjustments
 - Share button after poll is closed

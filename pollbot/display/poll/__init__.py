@@ -63,10 +63,12 @@ def get_poll_text(session, poll, show_warning=False):
 
 def get_poll_text_and_summarize(session, poll, show_warning=False):
     """Get the poll text and vote keyboard."""
-    lines = compile_poll_text(session, poll, show_warning)
-    text = '\n'.join(lines)
+    summarize = poll.summarize
 
-    summarize = len(text) > 4000
+    if not summarize:
+        lines = compile_poll_text(session, poll, show_warning)
+        text = '\n'.join(lines)
+        summarize = len(text) > 4000
 
     if summarize:
         lines = compile_poll_text(session, poll, show_warning, summarize)

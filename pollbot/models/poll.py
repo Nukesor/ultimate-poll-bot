@@ -45,6 +45,7 @@ class Poll(base):
     results_visible = Column(Boolean, nullable=False, default=True)
     show_percentage = Column(Boolean, nullable=False, default=True)
     european_date_format = Column(Boolean, nullable=False, default=False)
+    summarize = Column(Boolean, nullable=False, default=False, server_default='false')
 
     # Flags
     created = Column(Boolean, nullable=False, default=False)
