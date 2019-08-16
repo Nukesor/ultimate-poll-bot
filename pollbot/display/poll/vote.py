@@ -6,16 +6,74 @@ from pollbot.helper import (
     poll_allows_multiple_votes,
     calculate_total_votes,
 )
-from pollbot.helper.vote import get_sorted_votes
+from pollbot.helper.vote import (
+    get_sorted_votes,
+    get_sorted_doodle_votes,
+)
 from pollbot.helper.enums import (
-    UserSorting,
     PollType,
 )
 from pollbot.models import (
     User,
-    PollOption,
     Vote,
 )
+
+
+def get_doodle_vote_lines(poll, option, summarize):
+    "Return all vote related lines for this option."""
+    lines = []
+    votes_by_answer = get_sorted_doodle_votes(poll, option.votes)
+
+    for answer in votes_by_answer.keys():
+        lines.append(i18n.t(f'poll.doodle.{answer}', locale=poll.locale))
+        lines += get_doodle_answer_lines(votes_by_answer[answer], summarize)
+
+    return lines
+
+
+def get_doodle_answer_lines(votes, summarize):
+    """Return the user names for a doodle answer.
+
+    Try to compress as many usernames as possible into a single line.
+
+    e.g.:
+    Arne, Test1, Test2, Test3,
+    wtfoktesttesthey, Test4, Test5,
+    rofl, ...
+    """
+    threshold = 30
+    votes_displayed = 0
+    lines = []
+    current_line = '┆ '
+    characters = len(current_line)
+    for vote in votes:
+        # Only the characters of the username count (not the mention)
+        characters += len(vote.user.name)
+        # If the line lenght is above the threshold, start a new line
+        # Don't stop here, if the first name of the line already is too long
+        if characters > threshold and (2 + len(vote.user.name)) != characters:
+            lines.append(current_line)
+            # If we need to summarize, just break after the first line
+            if summarize:
+                break
+            current_line = '┆ '
+            characters = len(current_line)
+
+        user_mention = f'[{vote.user.name}](tg://user?id={vote.user.id}), '
+        current_line += user_mention
+        votes_displayed += 1
+
+    lines.append(current_line)
+
+    # Add the summary information
+    if summarize:
+        count = len(votes) - votes_displayed
+        if count != 0:
+            lines.append(i18n.t('poll.summarized_users',
+                                locale=votes[0].poll.locale,
+                                count=count))
+
+    return lines
 
 
 def get_vote_lines(poll, option, summarize):
@@ -29,9 +87,9 @@ def get_vote_lines(poll, option, summarize):
         # and summarize all remaining votes in a single line.
         if summarize and index == threshold:
             count = len(option.votes) - threshold
-            lines += [i18n.t('poll.summarized_users',
-                             locale=poll.locale,
-                             count=count)]
+            lines.append(i18n.t('poll.summarized_users',
+                                locale=poll.locale,
+                                count=count))
             break
 
         vote_line = get_vote_line(poll, option, vote, index)

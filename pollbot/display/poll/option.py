@@ -5,7 +5,7 @@ from datetime import date
 from pollbot.helper.enums import PollType
 from pollbot.helper import poll_allows_cumulative_votes
 from pollbot.helper.option import get_sorted_options, calculate_percentage
-from .vote import get_vote_lines
+from .vote import get_vote_lines, get_doodle_vote_lines
 
 
 def get_option_information(session, poll, context, summarize):
@@ -26,14 +26,17 @@ def get_option_information(session, poll, context, summarize):
         # Add the names of the voters to the respective options
         if context.show_results and not context.anonymous and len(option.votes) > 0:
             # Sort the votes accordingly to the poll's settings
-            lines += get_vote_lines(poll, option, summarize)
+            if poll.poll_type == PollType.doodle.name:
+                lines += get_doodle_vote_lines(poll, option, summarize)
+            else:
+                lines += get_vote_lines(poll, option, summarize)
 
     return lines
 
 
 def get_option_line(session, option, index):
     """Get the line with vote count for this option."""
-    # Special formating for polls with european date format
+    # Special formating for polls with European date format
     if option.is_date and option.poll.european_date_format:
         option_date = date.fromisoformat(option.name)
         option_name = option_date.strftime('%d.%m.%Y (%A)')
@@ -61,7 +64,7 @@ def get_option_line(session, option, index):
 def get_percentage_line(option, context):
     """Get the percentage line for each option."""
     percentage = calculate_percentage(option, context.total_user_count)
-    filled_slots = math.floor(percentage/10)
+    filled_slots = math.floor(percentage / 10)
 
     if len(option.votes) == 0 or option.poll.anonymous:
         line = '└ '
@@ -69,7 +72,7 @@ def get_percentage_line(option, context):
         line = '│ '
 
     line += filled_slots * '▬'
-    line += (10-filled_slots) * '▭'
+    line += (10 - filled_slots) * '▭'
     line += f' ({percentage:.0f}%)'
 
     return ''.join(line)

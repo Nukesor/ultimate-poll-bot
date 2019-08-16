@@ -1,7 +1,4 @@
-from pollbot.helper.enums import (
-    UserSorting,
-    PollType,
-)
+"""Helper functions for votes."""
 
 
 def get_sorted_votes(poll, votes):
@@ -10,19 +7,27 @@ def get_sorted_votes(poll, votes):
         """Get the name of user to sort votes."""
         return vote.user.name
 
-    def get_doodle_int(vote):
-        """Get the sorting key for the vote type."""
-        mapping = {
-            'yes': 1,
-            'maybe': 2,
-            'no': 3,
-        }
-        return mapping[vote.type]
-
-    if poll.poll_type == PollType.doodle.name:
-        votes.sort(key=get_doodle_int)
-
-    elif poll.user_sorting == UserSorting.user_name.name:
-        votes.sort(key=get_user_name)
+    votes.sort(key=get_user_name)
 
     return votes
+
+
+def get_sorted_doodle_votes(poll, votes):
+    """Sort the votes depending on the poll's current settings."""
+    doodle_answers = ['yes', 'maybe', 'no']
+
+    votes_by_answer = {}
+    for key in doodle_answers:
+        # First get all votes that match the key
+        votes_for_answer = []
+        for vote in votes:
+            if vote.type == key:
+                votes_for_answer.append(vote)
+
+        # If there are no answers, just continue
+        if len(votes_for_answer) == 0:
+            continue
+
+        votes_by_answer[key] = votes_for_answer
+
+    return votes_by_answer

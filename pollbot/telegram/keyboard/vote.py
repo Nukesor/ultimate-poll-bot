@@ -28,11 +28,16 @@ def get_vote_keyboard_with_summary(poll, show_back=False):
     url = f'http://t.me/{bot_name}?start={payload}'
     row = [InlineKeyboardButton(i18n.t('keyboard.show_results', locale=poll.locale), url=url)]
 
+    # If the poll is closed, only show the show results button
     if poll.closed:
         buttons = [row]
-    else:
-        buttons = get_vote_buttons(poll, show_back)
-        buttons.append(row)
+        return InlineKeyboardMarkup(buttons)
+
+    # Compile the keyboard from vote_buttons, back button and show summary button
+    buttons = get_vote_buttons(poll, show_back)
+    buttons.append(row)
+    if show_back:
+        buttons.append([get_back_to_management_button(poll)])
 
     return InlineKeyboardMarkup(buttons)
 
@@ -43,6 +48,10 @@ def get_vote_keyboard(poll, show_back=False):
         return None
 
     buttons = get_vote_buttons(poll, show_back)
+
+    if show_back:
+        buttons.append([get_back_to_management_button(poll)])
+
     return InlineKeyboardMarkup(buttons)
 
 
@@ -63,9 +72,6 @@ def get_vote_buttons(poll, show_back=False):
         url = f'http://t.me/{bot_name}?start={payload}'
         buttons.append([InlineKeyboardButton(
             i18n.t('keyboard.new_option', locale=locale), url=url)])
-
-    if show_back:
-        buttons.append([get_back_to_management_button(poll)])
 
     return buttons
 
