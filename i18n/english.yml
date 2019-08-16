@@ -255,11 +255,11 @@ misc:
   donation: |
     Hello there!
 
-    My name is Arne Beer (@Nukesor). I'm the sole developer of the Ultimate PollBot.
+    My name is Arne Beer (@Nukesor). I'm the sole developer of the Ultimate pollbot.
 
-    The idea of writing the Ultimate PollBot was formed, when my friends couldn't decide again where we should go for lunch.
+    The idea of writing the Ultimate pollbot was formed, when my friends couldn't decide again where we should go for lunch.
     This happened so many times already and we desperately needed a good and stable solution inside of telegram for this problem!
-    That's how the ULTIMATE PollBot was born.
+    That's how the ULTIMATE pollbot was born.
 
     Every line of code in this project was written in my leisure time and is completely for free.
     This project is non-profit, open-source on [Github](https://github.com/Nukesor/ultimate-poll-bot) and hosted on a server I'm renting from my own money.
@@ -273,7 +273,7 @@ misc:
 
     Have great day!
   start: |
-    🌟Welcome to the *ULTIMATE* PollBot 🌟
+    🌟Welcome to the *ULTIMATE* pollbot 🌟
 
     Just type /create or click the button below to start creating polls. Everything is explained underway.
 
@@ -346,8 +346,8 @@ misc:
 
       Ultimate pollbot supports multiple languages, but only English is officially maintained.
       To add a new language, go to the Github repository, copy the `english.yml`, rename it to your language and adjust all values.
-      Be careful to not fuck up any Markdown styling (`**`, `__`, `${}`), otherwise stuff will break for your language.
-      If anything breaks, because of broken translations, please fix it on your own. I will not investigate these issues.
+      Be careful to keep the correct Markdown styling (`**`, `__`, `${}`), otherwise stuff will break for your language.
+      If anything breaks, I will try to fix it, but please help me to prevent this. It just takes time and effort to fix such bugs.
       The multi language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
 
     bugs: |
