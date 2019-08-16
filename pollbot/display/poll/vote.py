@@ -24,14 +24,15 @@ def get_doodle_vote_lines(poll, option, summarize):
     lines = []
     votes_by_answer = get_sorted_doodle_votes(poll, option.votes)
 
-    for answer in votes_by_answer.keys():
+    for index, answer in enumerate(votes_by_answer.keys()):
+        is_last = index == len(votes_by_answer.keys()) - 1
         lines.append(i18n.t(f'poll.doodle.{answer}', locale=poll.locale))
-        lines += get_doodle_answer_lines(votes_by_answer[answer], summarize)
+        lines += get_doodle_answer_lines(votes_by_answer[answer], summarize, is_last)
 
     return lines
 
 
-def get_doodle_answer_lines(votes, summarize):
+def get_doodle_answer_lines(votes, summarize, is_last):
     """Return the user names for a doodle answer.
 
     Try to compress as many usernames as possible into a single line.
@@ -46,7 +47,7 @@ def get_doodle_answer_lines(votes, summarize):
     lines = []
     current_line = '┆ '
     characters = len(current_line)
-    for vote in votes:
+    for index, vote in enumerate(votes):
         # Only the characters of the username count (not the mention)
         characters += len(vote.user.name)
         # If the line lenght is above the threshold, start a new line
@@ -59,19 +60,27 @@ def get_doodle_answer_lines(votes, summarize):
             current_line = '┆ '
             characters = len(current_line)
 
-        user_mention = f'[{vote.user.name}](tg://user?id={vote.user.id}), '
+        user_mention = f'[{vote.user.name}](tg://user?id={vote.user.id})'
+        # Add a comma at the end of the user mention if it's not the last one
+        if index != (len(votes) - 1):
+            user_mention += ', '
+
         current_line += user_mention
         votes_displayed += 1
 
-    lines.append(current_line)
-
     # Add the summary information
-    if summarize:
-        count = len(votes) - votes_displayed
-        if count != 0:
-            lines.append(i18n.t('poll.summarized_users',
-                                locale=votes[0].poll.locale,
-                                count=count))
+    remaining_votes = len(votes) - votes_displayed
+    if summarize and remaining_votes != 0:
+        prefix = '└ ' if is_last else '┆ '
+        summary = i18n.t('poll.summarized_users', locale=votes[0].poll.locale,
+                         count=remaining_votes)
+        lines.append(prefix + summary)
+    # Or simply add the last line.
+    else:
+        # Replace the start character of the first line, to keep the styling correct
+        if is_last:
+            current_line = current_line.replace('┆', '└')
+        lines.append(current_line)
 
     return lines
 
@@ -87,9 +96,9 @@ def get_vote_lines(poll, option, summarize):
         # and summarize all remaining votes in a single line.
         if summarize and index == threshold:
             count = len(option.votes) - threshold
-            lines.append(i18n.t('poll.summarized_users',
-                                locale=poll.locale,
-                                count=count))
+            lines.append('└ ' + i18n.t('poll.summarized_users',
+                                       locale=poll.locale,
+                                       count=count))
             break
 
         vote_line = get_vote_line(poll, option, vote, index)
