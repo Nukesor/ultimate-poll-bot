@@ -14,7 +14,6 @@ from pollbot.telegram.keyboard.vote import (
 )
 from .option import (
     get_option_information,
-    get_sorted_options,
 )
 from .vote import (
     get_vote_information_line,
