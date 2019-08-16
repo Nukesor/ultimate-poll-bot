@@ -40,7 +40,6 @@ def get_vote_lines(poll, option, summarize):
     return lines
 
 
-
 def get_vote_line(poll, option, vote, index):
     """Get the line showing an actual vote."""
     user_mention = f'[{vote.user.name}](tg://user?id={vote.user.id})'

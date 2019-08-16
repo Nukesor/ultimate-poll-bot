@@ -16,12 +16,31 @@ from pollbot.helper.enums import (
     StartAction,
 )
 from pollbot.telegram.keyboard import get_start_button_payload
-from pollbot.display.poll import get_sorted_options
+from pollbot.helper.option import get_sorted_options
 
 from .management import get_back_to_management_button
 
 
+def get_vote_keyboard_with_summary(poll, show_back=False):
+    """In case the poll has been summarized, add a deeplink to the bot."""
+    buttons = get_vote_buttons(poll, show_back)
+
+    payload = get_start_button_payload(poll, StartAction.show_results)
+    bot_name = config['telegram']['bot_name']
+    url = f'http://t.me/{bot_name}?start={payload}'
+    buttons.append([InlineKeyboardButton(
+        i18n.t('keyboard.show_results', locale=poll.locale), url=url)])
+
+    return InlineKeyboardMarkup(buttons)
+
+
 def get_vote_keyboard(poll, show_back=False):
+    """Get a plain vote keyboard."""
+    buttons = get_vote_buttons(poll, show_back)
+    return InlineKeyboardMarkup(buttons)
+
+
+def get_vote_buttons(poll, show_back=False):
     """Get the keyboard for actual voting."""
     locale = poll.locale
     if poll.closed:
@@ -44,7 +63,7 @@ def get_vote_keyboard(poll, show_back=False):
     if show_back:
         buttons.append([get_back_to_management_button(poll)])
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_normal_buttons(poll):

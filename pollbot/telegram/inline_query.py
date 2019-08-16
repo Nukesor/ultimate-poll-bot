@@ -9,7 +9,7 @@ from telegram import (
 )
 
 from pollbot.i18n import i18n
-from pollbot.display import get_poll_text
+from pollbot.display import get_poll_text_and_vote_keyboard
 from pollbot.helper.session import hidden_session_wrapper
 from pollbot.models import Poll
 from pollbot.telegram.keyboard import get_vote_keyboard
@@ -58,11 +58,10 @@ def search(bot, update, session, user):
     else:
         results = []
         for poll in polls:
-            text = get_poll_text(session, poll, show_warning=False)
+            text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_warning=False)
             if poll.closed:
                 keyboard = InlineKeyboardMarkup([[InlineKeyboardButton('Please ignore this', callback_data='100')]])
-            else:
-                keyboard = get_vote_keyboard(poll)
+
             content = InputTextMessageContent(
                 text,
                 parse_mode='markdown',

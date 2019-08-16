@@ -4,13 +4,16 @@ from pollbot.i18n import i18n
 from pollbot.models import Reference
 from pollbot.helper import poll_required
 from pollbot.helper.enums import CallbackResult, ExpectedInput
-from pollbot.display import get_poll_text, get_settings_text
+from pollbot.display import (
+    get_poll_text_and_vote_keyboard,
+    get_settings_text,
+    get_poll_text,
+)
 from pollbot.telegram.keyboard import (
     get_change_poll_type_keyboard,
     get_deletion_confirmation,
     get_close_confirmation,
     get_management_keyboard,
-    get_vote_keyboard,
     get_settings_keyboard,
 )
 
@@ -28,7 +31,7 @@ def show_poll_type_keyboard(session, context, poll):
 def go_back(session, context, poll):
     """Go back to the original step."""
     if context.callback_result == CallbackResult.main_menu:
-        text = get_poll_text(session, poll, show_warning=False)
+        text = get_poll_text(session, poll)
         keyboard = get_management_keyboard(poll)
         poll.in_settings = False
 
@@ -51,11 +54,11 @@ def go_back(session, context, poll):
 @poll_required
 def show_vote_menu(session, context, poll):
     """Show the vote keyboard in the management interface."""
-    keyboard = get_vote_keyboard(poll, show_back=True)
+    text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_back=True)
     # Set the expected_input to votes, since the user might want to vote multiple times
     context.user.expected_input = ExpectedInput.votes.name
     context.query.message.edit_text(
-        get_poll_text(session, poll),
+        text,
         parse_mode='markdown',
         reply_markup=keyboard,
         disable_web_page_preview=True,

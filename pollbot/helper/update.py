@@ -6,10 +6,10 @@ from sqlalchemy.exc import IntegrityError
 from psycopg2.errors import UniqueViolation
 
 from pollbot.i18n import i18n
-from pollbot.telegram.keyboard import get_vote_keyboard, get_management_keyboard
+from pollbot.telegram.keyboard import get_management_keyboard
 from pollbot.helper.enums import ExpectedInput
 from pollbot.display import (
-    get_poll_text,
+    get_poll_text_and_vote_keyboard,
 )
 from pollbot.models import Update
 
@@ -93,12 +93,11 @@ def send_updates(session, bot, poll, show_warning=False):
         try:
             # Admin poll management interface
             if reference.admin_message_id is not None and not poll.in_settings:
-                if poll.user.expected_input == ExpectedInput.votes.name:
-                    keyboard = get_vote_keyboard(poll, show_back=True)
-                else:
+                text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_warning)
+
+                if poll.user.expected_input != ExpectedInput.votes.name:
                     keyboard = get_management_keyboard(poll)
 
-                text = get_poll_text(session, poll, show_warning)
                 bot.edit_message_text(
                     text,
                     chat_id=reference.admin_chat_id,
@@ -111,8 +110,7 @@ def send_updates(session, bot, poll, show_warning=False):
             # Edit message via inline_message_id
             elif reference.inline_message_id is not None:
                 # Create text and keyboard
-                text = get_poll_text(session, poll, show_warning)
-                keyboard = get_vote_keyboard(poll)
+                text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_warning)
 
                 bot.edit_message_text(
                     text,

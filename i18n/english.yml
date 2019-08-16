@@ -107,6 +107,7 @@ keyboard:
   allow_user_options: 🍻 Allow users to add new options
   order_users: Order users %{name}
   order_options: Order options %{name}
+  show_results: View full results
   vote_with_count: '%{option_name} (%{count} votes)'
   help:
     creation: Creation

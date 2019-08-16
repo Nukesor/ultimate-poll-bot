@@ -8,6 +8,10 @@ from pollbot.models import (
     PollOption,
     Vote,
 )
+from pollbot.telegram.keyboard.vote import (
+    get_vote_keyboard,
+    get_vote_keyboard_with_summary,
+)
 from .option import (
     get_option_information,
     get_sorted_options,
@@ -40,19 +44,39 @@ class Context():
         self.limited_votes = poll_has_limited_votes(poll)
 
 
+def get_poll_text_and_vote_keyboard(session, poll, show_warning=False, show_back=False):
+    """Get the text and the vote keyboard."""
+    text, summarize = get_poll_text_and_summarize(session, poll, show_warning=False)
+
+    if summarize:
+        keyboard = get_vote_keyboard_with_summary(poll, show_back)
+    else:
+        keyboard = get_vote_keyboard(poll, show_back)
+
+    return text, keyboard
+
+
 def get_poll_text(session, poll, show_warning=False):
+    """Simple wrapper for if you really only want the poll text."""
+    text, summarize = get_poll_text_and_summarize(session, poll, show_warning=False)
+    return text
+
+
+def get_poll_text_and_summarize(session, poll, show_warning=False):
     """Get the poll text and vote keyboard."""
     lines = compile_poll_text(session, poll, show_warning)
     text = '\n'.join(lines)
 
-    if len(text) > 4000:
-        lines = compile_poll_text(session, poll, show_warning, True)
+    summarize = len(text) > 4000
+
+    if summarize:
+        lines = compile_poll_text(session, poll, show_warning, summarize)
         text = '\n'.join(lines)
 
-    return text
+    return text, summarize
 
 
-def compile_poll_text(session, poll, show_warning, summarize=False):
+def compile_poll_text(session, poll, show_warning=False, summarize=False):
     """Create the text of the poll."""
     context = Context(session, poll)
 

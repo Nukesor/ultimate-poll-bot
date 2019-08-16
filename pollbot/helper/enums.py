@@ -23,7 +23,7 @@ class StartAction(Enum):
     """Helper enum to specify the different possible entry types for /start."""
 
     new_option = 0
-    results = 1
+    show_results = 1
 
 
 @unique
