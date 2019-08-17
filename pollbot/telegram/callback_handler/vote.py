@@ -77,8 +77,8 @@ def respond_to_vote(session, line, context, poll, remaining_votes=None, limited=
 
     # Inline query responses cannot be longer than 200 characters
     # Restrict it, since we get an MessageTooLong error otherwise
-    if len(line) > 190:
-        line = line[0:190]
+    if len(message) > 190:
+        message = message[0:190]
 
     context.query.answer(message)
 
