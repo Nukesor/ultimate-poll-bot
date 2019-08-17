@@ -1,6 +1,6 @@
-## v1.1.1
+## v1.1.0
 - Support for super long polls. Those polls now get summarized as soon as they reach a certain length and a new button appears.
-    This button redirects to the bot and gives you a detailed summary of the poll results in multiple messages
+    This button redirects to the bot and gives you a detailed summary of the poll results in multiple messages. (Telegram only allows 4096 characters per message)
 
 - Clicking on the letter buttons on a doodle poll (`a)`, etc.) now shows the option's name
 - Revamp of the doodle result interface
