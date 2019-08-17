@@ -73,6 +73,7 @@ from .user import (
 )
 from .misc import (
     switch_help,
+    show_option_name,
 )
 
 
@@ -202,6 +203,7 @@ def handle_callback_query(bot, update, session, user):
 
         # Misc
         CallbackType.switch_help: switch_help,
+        CallbackType.show_option_name: show_option_name,
 
         # Ignore
         CallbackType.ignore: ignore,

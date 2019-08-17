@@ -128,7 +128,7 @@ def get_cumulative_buttons(poll):
 
 def get_doodle_buttons(poll):
     """Get the doodle keyboard with yes, maybe and no button per option."""
-    ignore_button_type = CallbackType.ignore.value
+    show_option_name = CallbackType.show_option_name.value
     vote_button_type = CallbackType.vote.value
     vote_yes = CallbackResult.yes.value
     vote_maybe = CallbackResult.maybe.value
@@ -141,7 +141,7 @@ def get_doodle_buttons(poll):
     buttons = []
     letters = string.ascii_lowercase
     for index, option in enumerate(options):
-        ignore_payload = f'{ignore_button_type}:0:0'
+        ignore_payload = f'{show_option_name}:{poll.id}:{option.id}'
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
         maybe_payload = f'{vote_button_type}:{option.id}:{vote_maybe}'
         no_payload = f'{vote_button_type}:{option.id}:{vote_no}'

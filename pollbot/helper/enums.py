@@ -104,6 +104,8 @@ class CallbackType(Enum):
     external_open_menu = 103
     external_cancel = 104
 
+    show_option_name = 110
+
     switch_help = 120
 
     # User
