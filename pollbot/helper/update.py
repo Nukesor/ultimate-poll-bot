@@ -41,20 +41,27 @@ def update_poll_messages(session, bot, poll):
     # No window yet, we need to create it
     if current_update is None:
         try:
+            # Create and commit update.
+            # This automatically schedules the update and might result in a double
+            # update, if the job runs at practically the same time.
+            # The worst case scenario is a Message is not modified exception.
             update = Update(poll, time_window)
             session.add(update)
+            session.commit()
 
             # We are below the flood_limit, just update it
             if updates_in_last_minute <= flood_threshold:
-                update.count = 1
-                update.updated = True
-                # Set the count and updated to true to avoid racing conditions with other threads
-                session.commit()
+                # Try to send updates
                 send_updates(session, bot, poll)
 
-            # We are above the flood limit. Simply commit and thereby schedule the update.
-            else:
-                session.commit()
+                # If that succeeded, set updated to true and increase count
+                # Update inside of mysql to avoid race conditions between threads
+                session.query(Update) \
+                    .filter(Update.id == current_update.id) \
+                    .update({
+                        'count': Update.count + 1,
+                        'updated': True,
+                    })
 
         except (IntegrityError, UniqueViolation):
             # The update has been already created in another thread
@@ -66,25 +73,35 @@ def update_poll_messages(session, bot, poll):
 
     # The update should be updated again
     elif current_update and current_update.updated:
-        # We are still below the flood_threshold, update directrly
-        if updates_in_last_minute <= flood_threshold:
-            if updates_in_last_minute == flood_threshold:
-                send_updates(session, bot, poll, show_warning=True)
+        try:
+            # We are still below the flood_threshold, update directrly
+            if updates_in_last_minute <= flood_threshold:
+                if updates_in_last_minute == flood_threshold:
+                    send_updates(session, bot, poll, show_warning=True)
+                else:
+                    send_updates(session, bot, poll)
+
+                # Update inside of mysql to avoid race conditions between threads
+                session.query(Update) \
+                    .filter(Update.id == current_update.id) \
+                    .update({'count': Update.count + 1})
+
+            # Reschedule the update, the job will increment the count
             else:
-                send_updates(session, bot, poll)
-
-            # Update inside of mysql to avoid race conditions between threads
-            session.query(Update) \
-                .filter(Update.id == current_update.id) \
-                .update({'count': Update.count + 1})
-
-        # Reschedule the update, the job will increment the count
-        else:
+                current_update.updated = False
+        except Exception as e:
+            # Some error occurred during updating of the message.
+            # Set the updated flag to False to reschedule the update!
             current_update.updated = False
+            # Commit here for now and raise e. Just for temporary debugging and monitoring purposes
+            session.commit()
+            raise e
 
     # The next update is already scheduled
     elif current_update and not current_update.updated:
         pass
+
+    session.commit()
 
 
 def send_updates(session, bot, poll, show_warning=False):
