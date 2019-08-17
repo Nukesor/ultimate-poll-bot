@@ -29,7 +29,7 @@ def get_vote_keyboard_with_summary(poll, show_back=False):
     row = [InlineKeyboardButton(i18n.t('keyboard.show_results', locale=poll.locale), url=url)]
 
     # If the poll is closed, only show the show results button
-    if poll.closed:
+    if poll.closed and not poll.anonymous:
         buttons = [row]
         return InlineKeyboardMarkup(buttons)
 
