@@ -31,7 +31,7 @@ poll:
   total_votes: " (%{count} votes)"
   remaining_votes: "\nRemaining votes:"
   remaining_votes_user: "%{name}: %{count} votes"
-  summarized_users: "and *%{count} other people*."
+  summarized_users: "_and %{count} other people._"
   doodle:
     'yes': "├ *Yes:*"
     maybe: "├ *Maybe:*"

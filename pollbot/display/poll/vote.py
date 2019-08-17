@@ -28,6 +28,8 @@ def get_doodle_vote_lines(poll, option, summarize):
         is_last = index == len(votes_by_answer.keys()) - 1
         lines.append(i18n.t(f'poll.doodle.{answer}', locale=poll.locale))
         lines += get_doodle_answer_lines(votes_by_answer[answer], summarize, is_last)
+        if not is_last:
+            lines += '┆'
 
     return lines
 
