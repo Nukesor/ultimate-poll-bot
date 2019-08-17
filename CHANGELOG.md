@@ -10,6 +10,7 @@
 
 
 **Fixes:**
+- Fixed a bug, where votes weren't registered, because the option name was too long.
 - Fixed a bug, where a user could vote twice on a single vote poll.
 - Fixed a bug, where a user could get a deleted poll in inline queries due to caching
 - Fixed a bug, where notifications weren't sent for all users due to one single user activating notifications and then removing the bot from the group.
