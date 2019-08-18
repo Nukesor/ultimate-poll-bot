@@ -96,7 +96,8 @@ def show_styling_menu(session, context, poll):
     context.query.message.edit_text(
         get_poll_text(session, context.poll),
         parse_mode='markdown',
-        reply_markup=get_styling_settings_keyboard(poll)
+        reply_markup=get_styling_settings_keyboard(poll),
+        disable_web_page_preview=True,
     )
 
 

@@ -10,7 +10,8 @@ def send_styling_message(session, context):
     context.query.message.edit_text(
         text=get_poll_text(session, context.poll),
         parse_mode='markdown',
-        reply_markup=get_styling_settings_keyboard(context.poll)
+        reply_markup=get_styling_settings_keyboard(context.poll),
+        disable_web_page_preview=True,
     )
 
 
