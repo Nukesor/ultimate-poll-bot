@@ -1,5 +1,4 @@
 ## v1.1.0
-
 - Support for super long polls. Those polls now get summarized as soon as they reach a certain length and a new button appears.
     This button redirects to the bot and gives you a detailed summary of the poll results in multiple messages. (Telegram only allows 4096 characters per message)
 - Clicking on the letter buttons on a doodle poll (`a)`, etc.) now shows the option's name
@@ -10,16 +9,16 @@
 - New language: Polish (Thanks to tszalbot)
 
 **New styling menu:**
-- All styling and sorting related sub setting menu
-- All impacts on the poll layout can be seen live
-- Added new summarization setting. (Many votes are summarized like this `and 10 oher people`)
+- All styling and sorting related setting were put into a dedicated styling menu
+- All impacts on the poll layout can be seen live in the message above
+- Added new summarization setting. (Options with many votes are summarized like this and 10 oher people)
 
 **Fixes:**
 - Fixed a bug, where votes weren't registered, because the option name was too long.
 - Fixed a bug, where a user could vote twice on a single vote poll.
 - Fixed a bug, where a user could get a deleted poll in inline queries due to caching
 - Fixed a bug, where notifications weren't sent for all users due to one single user activating notifications and then removing the bot from the group.
-- Fixed a bug, where notifications weren't, if the due date was more then 1 week in the future.
+- Fixed a bug, where notifications weren't working, if the due date was more then 1 week in the future.
 - Hide remaining votes for unlimited poll
 
 ## v1.0.1
