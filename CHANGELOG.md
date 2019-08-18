@@ -2,20 +2,17 @@
 
 - Support for super long polls. Those polls now get summarized as soon as they reach a certain length and a new button appears.
     This button redirects to the bot and gives you a detailed summary of the poll results in multiple messages. (Telegram only allows 4096 characters per message)
-
-
-**New styling menu:**
-- A all styling and sorting related sub setting menu
-- All impacts on the poll layout can be seen live
-- Added new summarization setting. (Many votes are summarized like this `and 10 oher people`)
-
 - Clicking on the letter buttons on a doodle poll (`a)`, etc.) now shows the option's name
 - Revamp of the doodle result interface
 - Better help interface
 - Lots of text adjustments
-- Share button after poll is closed
+- Share polls after they have been closed
 - New language: Polish (Thanks to tszalbot)
 
+**New styling menu:**
+- All styling and sorting related sub setting menu
+- All impacts on the poll layout can be seen live
+- Added new summarization setting. (Many votes are summarized like this `and 10 oher people`)
 
 **Fixes:**
 - Fixed a bug, where votes weren't registered, because the option name was too long.
