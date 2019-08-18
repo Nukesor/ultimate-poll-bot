@@ -45,8 +45,8 @@ def update_poll_messages(session, bot, poll):
             # This automatically schedules the update and might result in a double
             # update, if the job runs at practically the same time.
             # The worst case scenario is a Message is not modified exception.
-            update = Update(poll, time_window)
-            session.add(update)
+            current_update = Update(poll, time_window)
+            session.add(current_update)
             session.commit()
 
             # We are below the flood_limit, just update it

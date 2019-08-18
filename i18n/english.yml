@@ -102,16 +102,18 @@ keyboard:
   permanently_anonymize: ⚠️ Permanently anonymize poll! ⚠️
   anonymize: 🔍 Make votes anonymous
   due_date: 📅 Set due date
-  sorting: 📋 Sorting settings
+  styling: 🎀 Styling settings
+  show_results: 🔎 View full results
   hide_percentage: ○% Hide percentage
   show_percentage: ○% Show percentage
+  summarize_votes: Summarize many votes
+  dont_summarize_votes: Show all votes
   new_option: ＋ Add a new option
   remove_option: － Remove options
   forbid_user_options: 🍺 Forbid users to add new options
   allow_user_options: 🍻 Allow users to add new options
   order_users: Order users %{name}
   order_options: Order options %{name}
-  show_results: 🔎 View full results
   vote_with_count: '%{option_name} (%{count} votes)'
   help:
     creation: Creation
@@ -147,6 +149,9 @@ settings:
   us_date_format: "*Date format*: YYYY-MM-DD"
   user_sorting: "*User sorting*: %{name}"
   option_sorting: "*Option sorting*: %{name}"
+  summarize: "*Summarize votes*: Summarize many votes"
+  dont_summarize: "*Summarize votes*: Show all votes"
+  permanently_summarized: "*Summarize votes*: Too many votes. Permanently summarized."
   change_language: Just click on a language to change it for this poll.
   anonymize: |
     Do you really want to anonymize this poll?

@@ -32,6 +32,8 @@ def get_settings_text(poll):
 
     text.append('')
 
+    text.append('*------- Styling -------*')
+    text.append('')
     if poll.allow_new_options:
         text.append(i18n.t('settings.user_options', locale=locale))
     else:
@@ -42,6 +44,13 @@ def get_settings_text(poll):
             text.append(i18n.t('settings.percentage', locale=locale))
         else:
             text.append(i18n.t('settings.no_percentage', locale=locale))
+
+        if poll.permanently_summarized:
+            text.append(i18n.t('settings.permanently_summarized', locale=locale))
+        elif poll.summarize:
+            text.append(i18n.t('settings.summarize', locale=locale))
+        else:
+            text.append(i18n.t('settings.dont_summarize', locale=locale))
 
     if poll.has_date_option():
         if poll.european_date_format:

@@ -82,7 +82,7 @@ class CallbackType(Enum):
     # Settings
     settings_anonymization_confirmation = 70
     settings_anonymization = 71
-    settings_show_sorting = 72
+    settings_show_styling = 72
     settings_user_sorting = 73
     settings_option_sorting = 74
     settings_new_option = 75
@@ -96,6 +96,7 @@ class CallbackType(Enum):
     settings_pick_due_date = 83
     settings_open_language_picker = 84
     settings_change_poll_language = 85
+    settings_toggle_summarization = 86
 
     # Misc
     ignore = 100

@@ -56,23 +56,10 @@ def get_settings_keyboard(poll):
     new_option_payload = f'{CallbackType.settings_open_due_date_datepicker.value}:{poll.id}:0'
     buttons.append([InlineKeyboardButton(text=new_option_text, callback_data=new_option_payload)])
 
-    if poll.has_date_option():
-        # Show percentage option
-        date_format_text = '📅 yyyy-mm-dd date format' if poll.european_date_format else '📅 dd.mm.yyyy date format'
-        date_format_payload = f'{CallbackType.settings_toggle_date_format.value}:{poll.id}:0'
-        buttons.append([InlineKeyboardButton(text=date_format_text, callback_data=date_format_payload)])
-
     # Sorting sub menu
-    sorting_text = i18n.t('keyboard.sorting', locale=locale)
-    sorting_payload = f'{CallbackType.settings_show_sorting.value}:{poll.id}:0'
-    buttons.append([InlineKeyboardButton(text=sorting_text, callback_data=sorting_payload)])
-    if poll.results_visible:
-        # Show percentage option
-        percentage_text = i18n.t('keyboard.show_percentage', locale=locale)
-        if poll.show_percentage:
-            percentage_text = i18n.t('keyboard.hide_percentage', locale=locale)
-        percentage_payload = f'{CallbackType.settings_toggle_percentage.value}:{poll.id}:0'
-        buttons.append([InlineKeyboardButton(text=percentage_text, callback_data=percentage_payload)])
+    styling_text = i18n.t('keyboard.styling', locale=locale)
+    styling_payload = f'{CallbackType.settings_show_styling.value}:{poll.id}:0'
+    buttons.append([InlineKeyboardButton(text=styling_text, callback_data=styling_payload)])
 
     # New option button
     new_option_text = i18n.t('keyboard.new_option', locale=locale)
@@ -96,10 +83,32 @@ def get_settings_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_option_sorting_keyboard(poll):
+def get_styling_settings_keyboard(poll):
     """Get a keyboard for sorting options."""
     buttons = []
     locale = poll.user.locale
+
+    # Show/hide percentage
+    if poll.results_visible:
+        percentage_text = i18n.t('keyboard.show_percentage', locale=locale)
+        if poll.show_percentage:
+            percentage_text = i18n.t('keyboard.hide_percentage', locale=locale)
+        percentage_payload = f'{CallbackType.settings_toggle_percentage.value}:{poll.id}:0'
+        buttons.append([InlineKeyboardButton(text=percentage_text, callback_data=percentage_payload)])
+
+    # Summarize votes in poll
+    if poll.results_visible and not poll.permanently_summarized:
+        summarize_text = i18n.t('keyboard.summarize_votes', locale=locale)
+        if poll.summarize:
+            summarize_text = i18n.t('keyboard.dont_summarize_votes', locale=locale)
+        summarize_payload = f'{CallbackType.settings_toggle_summarization.value}:{poll.id}:0'
+        buttons.append([InlineKeyboardButton(text=summarize_text, callback_data=summarize_payload)])
+
+    # Date format styling between US and european
+    if poll.has_date_option():
+        date_format_text = '📅 yyyy-mm-dd date format' if poll.european_date_format else '📅 dd.mm.yyyy date format'
+        date_format_payload = f'{CallbackType.settings_toggle_date_format.value}:{poll.id}:0'
+        buttons.append([InlineKeyboardButton(text=date_format_text, callback_data=date_format_payload)])
 
     # Compile the possible options for user sorting
     if not poll.anonymous and poll.poll_type != PollType.doodle.name:

@@ -40,20 +40,23 @@ from .management import (
 from .settings import (
     make_anonymous,
     show_anonymization_confirmation,
-    show_sorting_menu,
-    set_user_order,
-    set_option_order,
+    show_styling_menu,
     expect_new_option,
     show_remove_options_menu,
     remove_option,
-    toggle_percentage,
     toggle_allow_new_options,
-    toggle_date_format,
     open_new_option_datepicker,
     open_due_date_datepicker,
     pick_due_date,
     open_language_picker,
     change_poll_language,
+)
+from .styling import (
+    toggle_percentage,
+    toggle_date_format,
+    toggle_summerization,
+    set_option_order,
+    set_user_order,
 )
 from .datepicker import (
     set_next_month,
@@ -172,20 +175,23 @@ def handle_callback_query(bot, update, session, user):
         # Settings
         CallbackType.settings_anonymization_confirmation: show_anonymization_confirmation,
         CallbackType.settings_anonymization: make_anonymous,
-        CallbackType.settings_show_sorting: show_sorting_menu,
-        CallbackType.settings_user_sorting: set_user_order,
-        CallbackType.settings_option_sorting: set_option_order,
+        CallbackType.settings_show_styling: show_styling_menu,
         CallbackType.settings_new_option: expect_new_option,
         CallbackType.settings_show_remove_option_menu: show_remove_options_menu,
         CallbackType.settings_remove_option: remove_option,
-        CallbackType.settings_toggle_percentage: toggle_percentage,
         CallbackType.settings_toggle_allow_new_options: toggle_allow_new_options,
-        CallbackType.settings_toggle_date_format: toggle_date_format,
         CallbackType.settings_open_add_option_datepicker: open_new_option_datepicker,
         CallbackType.settings_open_due_date_datepicker: open_due_date_datepicker,
         CallbackType.settings_pick_due_date: pick_due_date,
         CallbackType.settings_open_language_picker: open_language_picker,
         CallbackType.settings_change_poll_language: change_poll_language,
+
+        # Styling
+        CallbackType.settings_toggle_percentage: toggle_percentage,
+        CallbackType.settings_toggle_date_format: toggle_date_format,
+        CallbackType.settings_toggle_summarization: toggle_summerization,
+        CallbackType.settings_user_sorting: set_user_order,
+        CallbackType.settings_option_sorting: set_option_order,
 
         # User
         CallbackType.user_change_language: change_user_language,
