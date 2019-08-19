@@ -9,8 +9,6 @@ list:
     polls: 'Kliknij dowolny przycisk aby edytować tą ankietę'
     no_polls: 'Nie posiadasz żadnych ankiet'
     no_closed_polls: 'Nie posiadasz źadnych zamkniętych ankiet'
-admin:
-    not_allowed: ''
 datepicker:
     open: 'Otwórz wybór dat'
     pick_date: 'Wybierz datę'
@@ -21,18 +19,12 @@ poll:
     vote_times: "\nKażdy użytkownik może głosować *%{amount} razy*"
     due: "\n📅 Data zakończenia ankiety: %{date}"
     closed: "\n⚠️ *Ta ankieta jest zamknięta* ⚠️"
-    own_poll: ''
     many_users_voted: '*%{count} osób* zagłosowało'
     one_user_voted: '*Jedna osoba* zagłosowała'
     total_votes: ' (%{count} głosów)'
     remaining_votes: "\nPozostałe głosy:"
     remaining_votes_user: '%{name}: %{count} głosów'
-    summarized_users: ''
     too_many_votes: "⚠️ *Za dużo głosów w przeciągu minuty:* ⚠️\nTwoje głosy nadal będą rejestrowane, Ale ta informacja będzie odświeżana co 2 sekundy.\n(Telegram nie pozwala botom na wysyłanie/odświeżanie wiadomości w grupach zbyt dużo razy na minutę.)\n"
-    doodle:
-        'yes': ''
-        maybe: ''
-        'no': ''
 deleted:
     poll: 'Ankieta została usunięta.'
     polls: 'Wszystkie ankiety zostały usunięte'
@@ -66,7 +58,6 @@ inline_query:
     create_first: 'Kliknij tutaj aby najpierw stworzyć ankietę ;)'
     create_poll: 'Kliknij aby stworzyć ankietę.'
 notification:
-    one_week: ''
     one_day: 'Ankieta *%{name}* zostanie zamknięta automatycznie za 1 dzień'
     six_hours: 'Ankieta *%{name}* zostanie zamknięta automatycznie za 6 godzin'
     closed: 'Ankieta *%{name}* została zamknięta'
@@ -97,18 +88,7 @@ keyboard:
     allow_user_options: '🍻 Włącz dodawanie nowych opcji'
     order_users: 'Sortuj osoby %{name}'
     order_options: 'Sortuj opcje %{name}'
-    show_results: ''
     vote_with_count: '%{option_name} (%{count} głosów)'
-    help:
-        creation: ''
-        settings: ''
-        notifications: ''
-        management: ''
-        languages: ''
-        bugs: ''
-    styling: ''
-    summarize_votes: ''
-    dont_summarize_votes: ''
 sorting:
     user_chrono: chronologicznie
     user_name: 'po nazwie'
@@ -136,9 +116,6 @@ settings:
     change_language: 'Kliknij na język aby go zmienić dla tej ankiety.'
     anonymize: "Czy na pewno chcesz aby ta ankieta była anonimowa?\n⚠️ Ta akcja jest nieodwracalna. ⚠️\n"
     remove_options: 'Kliknij przycisk poniżej aby usunąć niepożądane opcje.'
-    summarize: ''
-    dont_summarize: ''
-    permanently_summarized: ''
 management:
     permanently_close: "Czy na pewno chcesz permanentnie zamknąć tę ankietę?\nWyniki będą widoczne, ale głosowanie nie będzie możliwe\n⚠️ Ta akcja jest nieodwracalna. ⚠️\n"
     delete: 'Czy na pewno chcesz usunąć tę ankietę?'
@@ -185,14 +162,4 @@ delete:
 user:
     language_changed: 'Zmieniono język'
 misc:
-    donation: ''
-    start: ''
-    help:
-        intro: ''
-        creation: ''
-        settings: ''
-        notifications: ''
-        management: ''
-        languages: ''
-        bugs: ''
     error: "Wystąpił niespodziewany błąd. Prawdopodobnie dostałem już o tym powiadomienie i spróbuję to naprawić najszybciej jak to możliwe.\nW przypadku gdy błąd nie został naprawiony w przeciągu 2 lub 3 dni, dodaj problem na [Github](https://github.com/Nukesor/ultimate-poll-bot) lub skontaktuj sie ze mną na [grupie supportu](https://t.me/nukesors_projects).\n"

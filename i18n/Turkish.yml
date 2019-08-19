@@ -9,8 +9,6 @@ list:
     polls: 'Bu anketi yönetmek için herhangi bir butona tıklayın'
     no_polls: 'Açık anketiniz yok'
     no_closed_polls: 'Kapalı anketiniz yok'
-admin:
-    not_allowed: ''
 datepicker:
     open: 'Tarih seçiciyi aç'
     pick_date: 'Bu tarihi seç'
@@ -21,18 +19,12 @@ poll:
     vote_times: "\nHer kullanıcı *%{amount} kez* oy verebilir"
     due: "\n📅 Bu anket şu tarihte bitiyor: %{date}"
     closed: "\n⚠️ *Bu anket kapalı* ⚠️"
-    own_poll: ''
     many_users_voted: 'Şimdiye kadar *%{count} kullanıcı* oy verdi'
     one_user_voted: 'Şimdiye kadar *1 kullanıcı* oy verdi'
     total_votes: ' (%{count} oy)'
     remaining_votes: "\nKalan oylar:"
     remaining_votes_user: '%{name}: %{count} oy'
-    summarized_users: ''
     too_many_votes: "⚠️ *Son dakika içinde çok fazla oy:* ⚠️\nOylarınız hala kayıtlı, ama bu mesaj her 2 saniyede güncellenecek\n(Telegram bir grupta bot tarafından aynı dakika içinde birden fazla mesajı göndermeye/güncellemeye izin vermiyor)\n"
-    doodle:
-        'yes': ''
-        maybe: ''
-        'no': ''
 deleted:
     poll: 'Bu anket kalıcı olarak silindi'
     polls: 'Tüm anketler silindi'
@@ -66,7 +58,6 @@ inline_query:
     create_first: 'İlk olarak bir anket oluşturmak için buraya tıklayın ;)'
     create_poll: 'Yeni bir anket oluşturmak için tıklayın.'
 notification:
-    one_week: ''
     one_day: '*%{name}* anketi bir gün içinde otomatik olaak kapatılacak'
     six_hours: '*%{name}* anketi altı saat içinde otomatik olarak kapatılacak'
     closed: '*%{name}* anketi artık kapalı'
@@ -97,25 +88,13 @@ keyboard:
     allow_user_options: '🍻 Kullanıcıların yeni seçenekler eklemesine izin ver'
     order_users: 'Kullanıcıları sırala %{name}'
     order_options: 'Seçenekleri sırala %{name}'
-    show_results: ''
     vote_with_count: '%{option_name} (%{count} oy)'
-    help:
-        creation: ''
-        settings: ''
-        notifications: ''
-        management: ''
-        languages: ''
-        bugs: ''
-    styling: ''
-    summarize_votes: ''
-    dont_summarize_votes: ''
 sorting:
     user_chrono: 'kronolojik olarak'
     user_name: 'isme göre'
     option_chrono: 'kronolojik olarak'
     option_percentage: 'yüzdeye göre'
     option_name: 'isme göre'
-    doodle_sorting: ''
 settings:
     poll_type: '*Anket tipi*: %{poll_type}'
     language: '*Dil*: %{language}'
@@ -136,9 +115,6 @@ settings:
     change_language: 'Bu anket için değiştirmek içinbir dile tıklayın'
     anonymize: "Bu anketi gerçekten anonim yapmak istiyor musunuz?\n⚠️ Bu işlem geri alınamaz. ⚠️\n"
     remove_options: 'İstediğiniz seçenekleri kaldırmak için aşağıdaki butonları kullanın'
-    summarize: ''
-    dont_summarize: ''
-    permanently_summarized: ''
 management:
     permanently_close: "Bu anketi gerçekten kalıcı olarak kapatmak istiyor musunuz?\nSonuçlar görünür olacak, ama insanlar artık oy veremeyecek\n"
     delete: 'Bu anketi gerçekten silmek istiyor musunuz?'
@@ -178,7 +154,6 @@ external:
     notification:
         pick_poll: 'Bildirimleri etkinleştirmek için doğru anketi gönderin'
         activated: 'Bildirimler etkinleştirildi'
-        new_notification_board: ''
 delete:
     doesnt_exist: 'Silinecek anket yok'
     previous_deleted: 'Önceki anket silindi. Yeni bir anket oluşturmak için /create komutunu kullanabilirsiniz.'
