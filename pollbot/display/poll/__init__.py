@@ -1,5 +1,6 @@
 """Get the text describing the current state of the poll."""
 from pollbot.i18n import i18n
+from pollbot.helper.enums import PollType
 from pollbot.helper import (
     poll_has_limited_votes,
 )
@@ -117,6 +118,11 @@ def compile_poll_text(session, poll, show_warning=False, summarize=False):
         lines.append(i18n.t('poll.due',
                             locale=poll.locale,
                             date=poll.get_formatted_due_date()))
+
+    if not poll.closed and poll.poll_type == PollType.doodle.name:
+        lines.append('')
+        lines.append(i18n.t('poll.doodle_help', locale=poll.locale))
+        lines.append('')
 
     # Own poll note
     lines.append(i18n.t('poll.own_poll', locale=poll.locale))
