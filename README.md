@@ -80,6 +80,11 @@ With this mechanism you can keep spamming vote buttons and do as you like withou
 First of all, thanks to [Lokalise](https://lokalise.co) for providing my projects with a free license for open-source development!
 
 Thanks to [cnpltdncsln](https://github.com/cnpltdncsln) for providing turkish translations.
+Thanks to [tszalbot](https://github.com/tszalbot) for providing polish translations.
+Thanks to [FedericoAntoniazzi](https://github.com/FedericoAntoniazzi) and [LBindustries](https://github.com/LBindustries) for providing italian translations.
+Thanks to [balboag](https://github.com/balboag) for providing spanish translations.
+Thanks to [gui258](https://github.com/gui258) for providing brazilian portuguese translations.
+
 
 Thanks to my patreons:
 
