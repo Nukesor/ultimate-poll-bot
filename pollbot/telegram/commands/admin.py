@@ -33,6 +33,7 @@ def broadcast(bot, update, session, user):
     for user in users:
         try:
             bot.send_message(user.id, message, parse_mode='Markdown')
+            user.started = True
 
         # The chat doesn't exist any longer, delete it
         except BadRequest as e:
@@ -41,6 +42,7 @@ def broadcast(bot, update, session, user):
 
         # We are not allowed to contact this user.
         except Unauthorized:
+            user.started = False
             pass
 
         # Sleep one second to not trigger flood prevention
