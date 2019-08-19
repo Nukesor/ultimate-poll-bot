@@ -77,6 +77,8 @@ With this mechanism you can keep spamming vote buttons and do as you like withou
 
 # Acknowledgements
 
+First of all, thanks to [Lokalise](https://lokalise.co) for providing my projects with a free license for open-source development!
+
 Thanks to [cnpltdncsln](https://github.com/cnpltdncsln) for providing turkish translations.
 
 Thanks to my patreons:

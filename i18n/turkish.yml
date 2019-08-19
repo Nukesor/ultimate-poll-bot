@@ -54,6 +54,15 @@ callback:
   date_already_picked: Tarih zaten seçildi
   date_picked: "Tarih seçildi: %{date}"
   due_date_in_past: Bitiş tarihi geçmiş
+  vote:
+    votes_left: '(%{count} kaldı)!'
+    your_votes : ' Oylarınız:'
+    changed: Oy değiştirildi!
+    removed: Oy kaldırıldı!
+    registered: Oy kaydedildi!
+    no_left: Hiç oy kalmadı!
+    doodle_changed: Oy %{vote_type} olarak değiştirildi
+    doodle_registered: 'Oy (%{vote_type}) olarak kaydedildi'
 
 inline_query:
   create_first: İlk olarak bir anket oluşturmak için buraya tıklayın ;)
@@ -93,16 +102,6 @@ keyboard:
   order_users: Kullanıcıları sırala %{name}
   order_options: Seçenekleri sırala %{name}
   vote_with_count: '%{option_name} (%{count} oy)'
-  vote:
-    votes_left: '(%{count} kaldı)!'
-    your_votes : ' Oylarınız:'
-    changed: Oy değiştirildi!
-    removed: Oy kaldırıldı!
-    registered: Oy kaydedildi!
-    no_left: Hiç oy kalmadı!
-    doodle_changed: Oy %{vote_type} olarak değiştirildi
-    doodle_registered: 'Oy (%{vote_type}) olarak kaydedildi'
-
 
 sorting:
     user_chrono: kronolojik olarak
