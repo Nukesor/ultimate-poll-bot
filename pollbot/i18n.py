@@ -10,6 +10,7 @@ i18n.load_path.append('./i18n/')
 supported_languages = [
     'English',
     'German',
-    'Turkish',
     'Polish',
+    'Spanish',
+    'Turkish',
 ]
