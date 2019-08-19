@@ -8,8 +8,8 @@ i18n.set('fallback', 'english')
 i18n.load_path.append('./i18n/')
 
 supported_languages = [
-    'english',
-    'german',
-    'turkish',
-    'polish',
+    'English',
+    'German',
+    'Turkish',
+    'Polish',
 ]

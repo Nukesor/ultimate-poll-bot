@@ -1,0 +1,198 @@
+poll_types:
+    single_vote: 'Pojedyńczy głos'
+    doodle: Doodle
+    block_vote: 'Głosy blokowe'
+    limited_vote: 'Limitowane głosy'
+    cumulative_vote: 'Kumulacyjne głosy'
+    count_vote: 'Nielimitowane głosy'
+list:
+    polls: 'Kliknij dowolny przycisk aby edytować tą ankietę'
+    no_polls: 'Nie posiadasz żadnych ankiet'
+    no_closed_polls: 'Nie posiadasz źadnych zamkniętych ankiet'
+admin:
+    not_allowed: ''
+datepicker:
+    open: 'Otwórz wybór dat'
+    pick_date: 'Wybierz datę'
+    due_date: 'Ustaw deadline'
+poll:
+    anonymous: 'Ankieta jest anonimowa!'
+    results_not_visible: 'Wyniki są niewidoczne, dopóki ankieta zostanie zamknięta!'
+    vote_times: "\nKażdy użytkownik może głosować *%{amount} razy*"
+    due: "\n📅 Data zakończenia ankiety: %{date}"
+    closed: "\n⚠️ *Ta ankieta jest zamknięta* ⚠️"
+    own_poll: ''
+    many_users_voted: '*%{count} osób* zagłosowało'
+    one_user_voted: '*Jedna osoba* zagłosowała'
+    total_votes: ' (%{count} głosów)'
+    remaining_votes: "\nPozostałe głosy:"
+    remaining_votes_user: '%{name}: %{count} głosów'
+    summarized_users: ''
+    too_many_votes: "⚠️ *Za dużo głosów w przeciągu minuty:* ⚠️\nTwoje głosy nadal będą rejestrowane, Ale ta informacja będzie odświeżana co 2 sekundy.\n(Telegram nie pozwala botom na wysyłanie/odświeżanie wiadomości w grupach zbyt dużo razy na minutę.)\n"
+    doodle:
+        'yes': ''
+        maybe: ''
+        'no': ''
+deleted:
+    poll: 'Ankieta została usunięta.'
+    polls: 'Wszystkie ankiety zostały usunięte'
+    closed_polls: 'Wszystkie zamknięte ankiety zostały usunięte'
+callback:
+    error: 'Wystąpił błąd. Wkrótce zostanie naprawiony!'
+    closed: 'Ankieta zamknięta'
+    cannot_reopen: 'Ankieta nie może być ponownie otwarta'
+    cloned: 'Ankieta sklonowana'
+    deleted: 'Ankieta usunięta'
+    poll_created: 'Ankieta już istnieje'
+    poll_already_created: 'Ankieta już istnieje'
+    poll_no_longer_exists: 'Ankieta już nie istnieje.'
+    votes_removed: 'Wszystkie głosy usunięte'
+    anonymity_changed: 'Anonimowość zmieniona'
+    visibility_changed: 'Widoczność zmieniona'
+    date_changed: 'Data zmieniona: %{date}'
+    date_already_picked: 'Data już wybrana'
+    date_picked: 'Wybrana data: %{date}'
+    due_date_in_past: 'Deadline nie jest w przeszłości'
+    vote:
+        votes_left: '(zostało %{count} głosów)!'
+        your_votes: ' Twoje głosy:'
+        changed: 'Głos zmieniony!'
+        removed: 'Głos usunięty!'
+        registered: 'Głos zapisany!'
+        no_left: 'Brak głosów!'
+        doodle_changed: 'Głos zmieniony na %{vote_type}'
+        doodle_registered: 'Głos zapisany (%{vote_type})'
+inline_query:
+    create_first: 'Kliknij tutaj aby najpierw stworzyć ankietę ;)'
+    create_poll: 'Kliknij aby stworzyć ankietę.'
+notification:
+    one_week: ''
+    one_day: 'Ankieta *%{name}* zostanie zamknięta automatycznie za 1 dzień'
+    six_hours: 'Ankieta *%{name}* zostanie zamknięta automatycznie za 6 godzin'
+    closed: 'Ankieta *%{name}* została zamknięta'
+keyboard:
+    done: Gotowe
+    close: Zamknij
+    back: Powrót
+    cancel: Anuluj
+    delete: '❌ Usuń'
+    reset: '🔨 Resetuj'
+    clone: '🧬 Klonuj'
+    reopen: '🔓 Otwórz ankietę'
+    share: 'Udostępnij ankietę'
+    close_poll: '🔒 Zamknij'
+    settings: '⚙️ Ustawienia'
+    change_language: 'Zmień język'
+    vote: '✉️ Głos'
+    permanently_close: '⚠️ Zamknij ankietę permanentnie! ⚠️'
+    permanently_delete: '⚠️ Usuń ankietę permanentnie! ⚠️'
+    permanently_anonymize: '⚠️ Zmień ankietę na anonimową permanentnie! ⚠️'
+    anonymize: '🔍 Zrób głosy anonimowe'
+    due_date: '📅 Ustaw deadline'
+    hide_percentage: '○% Ukryj procenty'
+    show_percentage: '○% Pokaż procenty'
+    new_option: '＋ Dodaj nową opcję'
+    remove_option: '－ Usuń opcję'
+    forbid_user_options: '🍺 Wyłącz dodawanie nowych opcji'
+    allow_user_options: '🍻 Włącz dodawanie nowych opcji'
+    order_users: 'Sortuj osoby %{name}'
+    order_options: 'Sortuj opcje %{name}'
+    show_results: ''
+    vote_with_count: '%{option_name} (%{count} głosów)'
+    help:
+        creation: ''
+        settings: ''
+        notifications: ''
+        management: ''
+        languages: ''
+        bugs: ''
+    styling: ''
+    summarize_votes: ''
+    dont_summarize_votes: ''
+sorting:
+    user_chrono: chronologicznie
+    user_name: 'po nazwie'
+    option_chrono: chronologicznie
+    option_percentage: procentowo
+    option_name: 'po nazwie'
+    doodle_sorting: 'według odpowiedzi'
+settings:
+    poll_type: '*Typ ankiety*: %{poll_type}'
+    language: '*Język*: %{language}'
+    anonymous: '*Anonimowość*: Nazwy nie widoczne'
+    not_anonymous: '*Anonimowość*: Nazwy widoczne'
+    due_date: '*Deadline*: %{date}'
+    no_due_date: '*Deadline*: Brak'
+    results_visible: '*Widoczne wyniki*: Wyniki są widoczne bezpośrednio'
+    results_not_visible: '*Widoczne wyniki*: Wyniki nie są widoczne dopóki ankieta nie jest zamknięta'
+    user_options: '*Własne odpowiedzi*: Każdy może dodawać nowe opcje'
+    no_user_options: '*Własne odpowiedzi*: Tylko ty możesz dodawać nowe opcje'
+    percentage: '*Procenty*: Widoczne'
+    no_percentage: '*Procenty*: Niewidoczne'
+    euro_date_format: '*Format daty*: DD.MM.YYYY'
+    us_date_format: '*Format daty*: YYYY-MM-DD'
+    user_sorting: '*Sortowanie*: %{name}'
+    option_sorting: '*Sortowanie opcji*: %{name}'
+    change_language: 'Kliknij na język aby go zmienić dla tej ankiety.'
+    anonymize: "Czy na pewno chcesz aby ta ankieta była anonimowa?\n⚠️ Ta akcja jest nieodwracalna. ⚠️\n"
+    remove_options: 'Kliknij przycisk poniżej aby usunąć niepożądane opcje.'
+    summarize: ''
+    dont_summarize: ''
+    permanently_summarized: ''
+management:
+    permanently_close: "Czy na pewno chcesz permanentnie zamknąć tę ankietę?\nWyniki będą widoczne, ale głosowanie nie będzie możliwe\n⚠️ Ta akcja jest nieodwracalna. ⚠️\n"
+    delete: 'Czy na pewno chcesz usunąć tę ankietę?'
+creation:
+    already_creating: 'Już jesteś w trakcie tworzenia ankiety. Anuluj poprzednie tworzenie ankiety, aby kontynuować'
+    description: 'Teraz wyślij mi opis ankiety'
+    skip_description: Pomiń
+    not_allowed: 'Nie masz już możliwości dodawania nowych opcji'
+    cancel: 'Anuluj poprzednie tworzenie ankiety'
+    vote_count_request: 'Wyślij mi ilość dopuszczalnych głosów.'
+    keyboard:
+        change: 'Zmień typ ankiety'
+        anonymity: 'Zmień ankietę na anonimową'
+        no_anonymity: 'Wyświetlaj nazwy w ankiecie'
+        results_visible: 'Pokaż wyniki cały czas'
+        results_not_visible: 'Ukryj nazwy do zamknięcia ankiety'
+    option:
+        next: 'Wyślij *kolejną opcję*, wybierz datę i dodaj ją jako opcje, lub kliknij *Gotowe* aby stworzyć ankietę.'
+        first: "Wyślij opcję. Możesz wysłać ich kilka naraz, Każdą w nowej linii.\nMożesz też dodać opis opcji po myślniku.\nNa przykład `Hamburger - bo jest smaczny`\n"
+        no_new: '❌ Nie została dodana żadna nowa opcja'
+        single_added: "*%{option}* zostało dodane. 👍\nWyślij *kolejną opcję*, wybierz datę i dodaj ją jako opcje, lub kliknij *Gotowe* aby stworzyć ankietę."
+        multiple_added: 'Dodano opcje:'
+        finished: 'Wszystkie opcje zostały już dodane'
+    poll_type_help: "Obecny typ ankiety: *%{poll_type}*\n\n*Pojedyńczy głos:*\nKażda osoba ma jeden głos. Domyślne głosowanie.\n\n*Doodle:*\nOsoby mogą głosować na `tak`, `nie`, albo `może` dla każdej z odpowiedzi. Idealne dla znalezienia daty.\n\n*Głosy blokowe:*\nKażdy może głosować na każdą (lub mniej) opcji. Przydaje się w celu znalezienia najbardziej pożądanych opcji w grupie, np. gry które powinny znaleźć się na LAN-Party.\n\n*Limitowane głosy:*\nKażdy dostaje daną ilość głosów, które może użyć na kilku opcjach, ale tylko raz na opcję.\nPodobne do głosowania blokowego, ale każdy ilość głosów jest ograniczona.\nTen typ jest dobry dla limitowania zwycięskich opcji np. jeżeli chcesz mieć tylko 4 gry na LAN-Party.\n\n*Kumulacyjne głosy:*\nKażdy dostaje daną ilość głosów, które może użyć na kilku opcjach (nawet kilka razy na opcję).\nTen typ jest podobny do limitowanego głosowania, z tym że pozwala na głosowanie kilka razy na jedną opcję.\n\n*Nieskonczoność głosów:* (lista zakupów)\nKażdy może głosować tyle razy ile chce na każdą z opcji.\nPrzydaje sie w przypadku, gdy np. chcesz dowiedzieć się ile rzeczy każdy chce ze sobą zabrać na koncert.\n"
+    results_not_visible: 'Wyniki nie są widoczne aż do zamknięcia ankiety'
+    results_visible: 'Wyniki są bezpośrednio widoczne'
+    anonymity: 'Nazwy nie są widoczne'
+    no_anonymity: 'Nazwy są widoczne'
+    init_text: "Cześć!\nZa chwilę stworzysz swoją własną ankietę 👌\n\nObecne ustawienia ankiety:\n\n*Typ ankiety*: %{poll_type}\n*Anonimowość*: %{anonymity}\n*Widoczność wyników*: %{results_visible}\n\nNastępne kroki:\n1. Skonfiguruj ankietę według uznania 🙂\n2. 👇 Wyślij mi nazwę ankiety. 👇\n"
+    datepicker_text: "*Wybór daty:*\nAby dodać datę, wybierz ją i kliknij *Wybierz tę datę*.\nPotem kliknij *Gotowe*.\n\n*Obecne opcje:*\n"
+    error:
+        limit_bigger_zero: 'Wpisz numer większy od 0'
+        limit_between: 'Wpisz numer między 1, a %{limit}'
+        markdown: "Proszę nie używać w nazwie, opisie i odpowiedziach znaków specjalnych, takich jak `_`,`*` i `[`.\nWyślij wiadomość na nowo bez tych znaków.\n"
+external:
+    canceled: Anulowano
+    notification:
+        pick_poll: 'Wybierz właściwą ankietę aby aktywować powiadomienia'
+        activated: 'Powiadomienia aktywowane'
+        new_notification_board: 'Proszę użyć nowej tablicy wyboru powiadomień.'
+delete:
+    doesnt_exist: 'Ankieta do usunięcia nie istnieje'
+    previous_deleted: 'Poprzednia ankieta nie istnieje. Możesz teraz stworzyć nową używając /create.'
+user:
+    language_changed: 'Zmieniono język'
+misc:
+    donation: ''
+    start: ''
+    help:
+        intro: ''
+        creation: ''
+        settings: ''
+        notifications: ''
+        management: ''
+        languages: ''
+        bugs: ''
+    error: "Wystąpił niespodziewany błąd. Prawdopodobnie dostałem już o tym powiadomienie i spróbuję to naprawić najszybciej jak to możliwe.\nW przypadku gdy błąd nie został naprawiony w przeciągu 2 lub 3 dni, dodaj problem na [Github](https://github.com/Nukesor/ultimate-poll-bot) lub skontaktuj sie ze mną na [grupie supportu](https://t.me/nukesors_projects).\n"
