@@ -114,6 +114,7 @@ keyboard:
   allow_user_options: 🍻 Allow users to add new options
   order_users: Order users %{name}
   order_options: Order options %{name}
+  add_new_language: Add a new language
   vote_with_count: '%{option_name} (%{count} votes)'
   help:
     creation: Creation
@@ -277,7 +278,7 @@ misc:
 
     I really appreciate anything that helps me out and that keeps my server and me running ☺️.
 
-    If you like this project, check out my [Patreon page](https://www.patreon.com/nukesor) or support me via [Paypal](https://www.paypal.me/arnebeer).
+    If you like this project, check out my [Patreon page](https://www.patreon.com/nukesor) or support me via [PayPal](https://www.paypal.me/arnebeer).
     If you have any questions, stop by my [support group](https://t.me/nukesors_projects).
 
     Have great day!

@@ -4,7 +4,7 @@ from telegram import (
     InlineKeyboardButton,
 )
 
-from pollbot.i18n import supported_languages
+from pollbot.i18n import supported_languages, i18n
 from pollbot.helper.enums import CallbackType
 
 
@@ -20,6 +20,7 @@ def get_user_language_keyboard(user):
         buttons.append([button])
 
     github_url = 'https://github.com/Nukesor/ultimate-poll-bot/tree/master/i18n'
-    buttons.append([InlineKeyboardButton(text='Add a new language', url=github_url)])
+    new_language = i18n.t('keyboard.add_new_language', locale=user.locale)
+    buttons.append([InlineKeyboardButton(text=new_language, url=github_url)])
 
     return InlineKeyboardMarkup(buttons)
