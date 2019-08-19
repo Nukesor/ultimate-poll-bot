@@ -50,7 +50,7 @@ class User(base):
 
     def __repr__(self):
         """Print as string."""
-        return f'User with Id: {self.id}, name: {self.name}'
+        return f'User with Id: {self.id}, name: {self.name}, locale: {self.locale}'
 
     @staticmethod
     def get_or_create(session, tg_user):

@@ -81,7 +81,7 @@ class Poll(base):
 
     def __repr__(self):
         """Print as string."""
-        return f'Poll with Id: {self.id}, name: {self.name}'
+        return f'Poll with Id: {self.id}, name: {self.name}, locale: {self.locale}'
 
     def should_show_result(self):
         """Determine, whether this results of this poll should be shown."""
