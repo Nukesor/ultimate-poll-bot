@@ -203,7 +203,8 @@ creation:
     Users can vote for `yes`, `no`, or `maybe` for each option. Great for finding a date.
 
     🎮 *Block Vote:*
-    Every user can vote for all (or less) options. Useful for finding the most wanted options in a group, e.g. games that should be played on a LAN-Party.
+    Every user can vote for all (or less) options. Like a doodle, but you can only vote `yes`.
+    Useful for finding the most wanted options in a group, e.g. games that should be played on a LAN-Party.
 
     🎮 *Limited Vote:*
     Every user gets a fixed number of votes they can distribute, but only once per option.
