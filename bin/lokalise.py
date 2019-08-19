@@ -21,6 +21,7 @@ payload = {
     "yaml_include_root": False,
     "bundle_structure": "%LANG_NAME%.%FORMAT%",
     "original_filenames": False,
+    "export_sort": "first_added",
     "filter_langs": [
         "de",
         "it",
