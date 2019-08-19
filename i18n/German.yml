@@ -109,6 +109,7 @@ keyboard:
     styling: '🎀 Styling-Einstellungen'
     summarize_votes: 'Fasse viele Stimmen zusammen'
     dont_summarize_votes: 'Zeige alle Stimmen'
+    add_new_language: 'Neue Sprache hinzufügen'
 sorting:
     user_chrono: 'nach Zeit'
     user_name: 'nach Name'

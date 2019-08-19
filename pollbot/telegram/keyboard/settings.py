@@ -31,7 +31,7 @@ def get_anonymization_confirmation_keyboard(poll):
     buttons = [
         [InlineKeyboardButton(i18n.t('keyboard.permanently_anonymize', locale=locale),
                               callback_data=payload)],
-        [get_back_to_management_button(poll)],
+        [get_back_to_settings_button(poll)],
     ]
     return InlineKeyboardMarkup(buttons)
 
