@@ -63,11 +63,19 @@ def start(bot, update, session, user):
 
         for chunk in chunks:
             message = '\n'.join(chunk)
-            update.message.chat.send_message(
-                message,
-                parse_mode='markdown',
-                disable_web_page_preview=True,
-            )
+            try:
+                update.message.chat.send_message(
+                    message,
+                    parse_mode='markdown',
+                    disable_web_page_preview=True,
+                )
+            # Retry for Timeout error (happens quite often when sending large messages)
+            except TimeoutError:
+                update.message.chat.send_message(
+                    message,
+                    parse_mode='markdown',
+                    disable_web_page_preview=True,
+                )
             time.sleep(1)
 
         update.message.chat.send_message(
