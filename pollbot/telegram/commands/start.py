@@ -71,6 +71,7 @@ def start(bot, update, session, user):
                 )
             # Retry for Timeout error (happens quite often when sending large messages)
             except TimeoutError:
+                time.sleep(2)
                 update.message.chat.send_message(
                     message,
                     parse_mode='markdown',
