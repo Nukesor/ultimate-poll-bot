@@ -295,7 +295,7 @@ misc:
     If you like the project, stop by my [support group](https://t.me/nukesors_projects) or check out my [Patreon page](https://www.patreon.com/nukesor).
     This bot is open-source on [GitHub](https://github.com/Nukesor/ultimate-poll-bot).
 
-
+  start_after_results: Hey! Just type /create to make your own poll ☺️
   help:
     intro: |
       There are quite a few settings for your polls.

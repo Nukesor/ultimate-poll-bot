@@ -29,13 +29,13 @@ def start(bot, update, session, user):
     except:
         text = ''
 
+    main_keyboard = get_main_keyboard()
     # We got an empty text, just send the start message
     if text == '':
-        keyboard = get_main_keyboard()
         update.message.chat.send_message(
             i18n.t('misc.start', locale=user.locale),
             parse_mode='markdown',
-            reply_markup=keyboard,
+            reply_markup=main_keyboard,
             disable_web_page_preview=True,
         )
 
@@ -69,3 +69,9 @@ def start(bot, update, session, user):
                 disable_web_page_preview=True,
             )
             time.sleep(1)
+
+        update.message.chat.send_message(
+            i18n.t('misc.start_after_results', locale=poll.locale),
+            parse_mode='markdown',
+            reply_markup=main_keyboard,
+        )
