@@ -71,8 +71,16 @@ def get_user_activity(session):
     voting_users = running_window(session, voting_users_subquery)
     voting_users = [('voted', q[0], q[1]) for q in voting_users]
 
+    # Group the started users by date
+    owning_users_subquery = session.query(creation_date, func.count(User.id).label('count')) \
+        .filter(User.polls.any()) \
+        .group_by(creation_date) \
+        .subquery()
+    owning_users = running_window(session, owning_users_subquery)
+    owning_users = [('currently owning poll', q[0], q[1]) for q in owning_users]
+
     # Combine the results in a single dataframe and name the columns
-    user_statistics = started_users + all_users + voting_users
+    user_statistics = started_users + all_users + voting_users + owning_users
     dataframe = pandas.DataFrame(user_statistics, columns=['type', 'date', 'users'])
 
     months = mdates.MonthLocator()  # every month
