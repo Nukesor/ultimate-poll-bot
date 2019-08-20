@@ -1,6 +1,8 @@
 """The start command handler."""
 import time
 from uuid import UUID
+from telegram.ext import run_async
+
 from pollbot.i18n import i18n
 from pollbot.models import Poll
 from pollbot.helper.enums import ExpectedInput, StartAction
@@ -11,6 +13,7 @@ from pollbot.telegram.keyboard import get_main_keyboard
 from pollbot.telegram.keyboard.external import get_external_add_option_keyboard
 
 
+@run_async
 @session_wrapper()
 def start(bot, update, session, user):
     """Send a start text."""

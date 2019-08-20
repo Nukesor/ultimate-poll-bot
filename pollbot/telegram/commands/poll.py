@@ -19,6 +19,7 @@ from pollbot.models import Poll
 def create_poll(bot, update, session, user):
     """Create a new poll."""
     # The previous unfinished poll will be removed
+    user.started = True
     if user.current_poll is not None and not user.current_poll.created:
         update.message.chat.send_message(
             i18n.t('creation.already_creating', locale=user.locale),

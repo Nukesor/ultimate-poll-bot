@@ -1,4 +1,5 @@
 """Misc commands."""
+from telegram.ext import run_async
 from telegram import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
@@ -10,6 +11,7 @@ from pollbot.telegram.keyboard import get_user_language_keyboard
 from pollbot.display.misc import get_help_text_and_keyboard
 
 
+@run_async
 @session_wrapper()
 def send_help(bot, update, session, user):
     """Send a help text."""
@@ -23,6 +25,7 @@ def send_help(bot, update, session, user):
     )
 
 
+@run_async
 @session_wrapper()
 def send_donation_text(bot, update, session, user):
     """Send the donation text."""
@@ -42,6 +45,7 @@ def send_donation_text(bot, update, session, user):
     )
 
 
+@run_async
 @session_wrapper()
 def change_language(bot, update, session, user):
     """Open the language picker."""

@@ -6,6 +6,7 @@ from telegram.error import BadRequest, Unauthorized
 from pollbot.models import User, Poll
 from pollbot.config import config
 from pollbot.i18n import i18n
+from pollbot.helper.plot import send_plots
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.update import update_poll_messages
 
@@ -37,7 +38,7 @@ def broadcast(bot, update, session, user):
 
         # The chat doesn't exist any longer, delete it
         except BadRequest as e:
-            if e.message == 'Chat not found': # noqa
+            if e.message == 'Chat not found':  # noqa
                 pass
 
         # We are not allowed to contact this user.
@@ -105,12 +106,12 @@ def stats(bot, update, session, user):
     cumulative = session.query(Poll).filter(Poll.poll_type == 'cumulative_vote').count()
     count = session.query(Poll).filter(Poll.poll_type == 'count_vote').count()
 
-    single_percent = single/total_polls * 100
-    doodle_percent = doodle/total_polls * 100
-    block_percent = block/total_polls * 100
-    limited_percent = limited/total_polls * 100
-    cumulative_percent = cumulative/total_polls * 100
-    count_percent = count/total_polls * 100
+    single_percent = single / total_polls * 100
+    doodle_percent = doodle / total_polls * 100
+    block_percent = block / total_polls * 100
+    limited_percent = limited / total_polls * 100
+    cumulative_percent = cumulative / total_polls * 100
+    count_percent = count / total_polls * 100
 
     message = f"""Stats:
 
@@ -162,3 +163,11 @@ def update_all(bot, update, session, user):
         time.sleep(2)
 
     return "Done"
+
+
+@run_async
+@session_wrapper()
+@admin_required
+def plot(bot, update, session, user):
+    """Plot interesting statistics."""
+    send_plots(bot, update, session, user)

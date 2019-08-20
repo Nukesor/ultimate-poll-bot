@@ -38,6 +38,7 @@ from pollbot.telegram.commands.admin import (
     test_broadcast,
     stats,
     update_all,
+    plot,
 )
 
 logging.basicConfig(level=config['logging']['log_level'],
@@ -72,6 +73,7 @@ dispatcher.add_handler(CommandHandler('broadcast', broadcast))
 dispatcher.add_handler(CommandHandler('test_broadcast', test_broadcast))
 dispatcher.add_handler(CommandHandler('stats', stats))
 dispatcher.add_handler(CommandHandler('update_all', update_all))
+dispatcher.add_handler(CommandHandler('plot', plot))
 
 # Callback handler
 dispatcher.add_handler(CallbackQueryHandler(handle_callback_query))

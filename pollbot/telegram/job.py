@@ -3,6 +3,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 from datetime import datetime, timedelta
 from telegram.error import BadRequest, Unauthorized
+from telegram.ext import run_async
 
 from pollbot.i18n import i18n
 from pollbot.models import Update, Notification, Poll
@@ -10,13 +11,15 @@ from pollbot.helper.session import job_session_wrapper
 from pollbot.helper.update import send_updates, window_size, update_poll_messages
 
 
+@run_async
 @job_session_wrapper()
 def message_update_job(context, session):
     """Update all messages if necessary."""
     try:
         context.job.enabled = False
         now = datetime.now()
-        current_time_window = now - timedelta(seconds=now.second % window_size, microseconds=now.microsecond)
+        current_time_window = now - timedelta(seconds=now.second % window_size,
+                                              microseconds=now.microsecond)
         last_time_window = current_time_window - timedelta(seconds=window_size)
         one_minute_ago = current_time_window - timedelta(minutes=1)
 
@@ -74,6 +77,7 @@ def message_update_job(context, session):
         session.close()
 
 
+@run_async
 @job_session_wrapper()
 def send_notifications(context, session):
     """Notify the users about the poll being closed soon."""
@@ -110,7 +114,7 @@ def send_notifications(context, session):
                 session.delete(notification)
 
 
-def send_notifications_for_poll(session, bot, poll, message_key):
+def send_notifications_for_poll(context, session, bot, poll, message_key):
     """Send the notifications for a single poll depending on the remaining time."""
     locale = poll.locale
     for notification in poll.notifications:
@@ -131,6 +135,7 @@ def send_notifications_for_poll(session, bot, poll, message_key):
             session.delete(notification)
 
 
+@run_async
 @job_session_wrapper()
 def delete_old_updates(context, session):
     """Delete all unneded updates."""
