@@ -37,22 +37,27 @@ class Poll(base):
     description = Column(String)
     locale = Column(String, default='English')
     poll_type = Column(String, nullable=False)
-    anonymous = Column(Boolean, nullable=False)
     number_of_votes = Column(Integer)
-    allow_new_options = Column(Boolean, nullable=False, default=False)
-    option_sorting = Column(String, nullable=False)
-    user_sorting = Column(String, nullable=False)
+
+    # Functionality
+    anonymous = Column(Boolean, nullable=False)
     results_visible = Column(Boolean, nullable=False, default=True)
+    due_date = Column(DateTime, nullable=True)
+    next_notification = Column(DateTime, nullable=True)
+    allow_new_options = Column(Boolean, nullable=False, default=False)
+
+    # Styling
     show_percentage = Column(Boolean, nullable=False, default=True)
     european_date_format = Column(Boolean, nullable=False, default=False)
+    permanently_summarized = Column(Boolean, nullable=False, default=False)
+    compact_doodle_buttons = Column(Boolean, nullable=False, default=True, server_default='true')
     summarize = Column(Boolean, nullable=False, default=False)
-    permanently_summarized = Column(Boolean, nullable=False, default=False, server_default='false')
+    option_sorting = Column(String, nullable=False)
+    user_sorting = Column(String, nullable=False)
 
     # Flags
     created = Column(Boolean, nullable=False, default=False)
     closed = Column(Boolean, nullable=False, default=False)
-    due_date = Column(DateTime, nullable=True)
-    next_notification = Column(DateTime, nullable=True)
 
     # Chat state variables
     expected_input = Column(String)
@@ -86,6 +91,9 @@ class Poll(base):
     def should_show_result(self):
         """Determine, whether this results of this poll should be shown."""
         return self.results_visible or self.closed
+
+    def is_doodle(self):
+        return self.poll_type == PollType.doodle.name
 
     def has_date_option(self):
         """Check whether this poll has a date option."""

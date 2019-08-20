@@ -1,3 +1,14 @@
+## v1.2.0
+- Lokalise integration
+- New language Italian
+- New language Spanish
+- Text adjustments
+
+** Fixes: **
+- Hide remaining votes in anonymous polls
+- Fixed a bug where messages couldn't be sent due to messages being too long
+
+
 ## v1.1.0
 - Support for super long polls. Those polls now get summarized as soon as they reach a certain length and a new button appears.
     This button redirects to the bot and gives you a detailed summary of the poll results in multiple messages. (Telegram only allows 4096 characters per message)

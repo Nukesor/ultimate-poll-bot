@@ -97,6 +97,7 @@ class CallbackType(Enum):
     settings_open_language_picker = 84
     settings_change_poll_language = 85
     settings_toggle_summarization = 86
+    settings_toggle_compact_buttons = 87
 
     # Misc
     ignore = 100

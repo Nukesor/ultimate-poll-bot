@@ -110,8 +110,16 @@ def get_styling_settings_keyboard(poll):
         date_format_payload = f'{CallbackType.settings_toggle_date_format.value}:{poll.id}:0'
         buttons.append([InlineKeyboardButton(text=date_format_text, callback_data=date_format_payload)])
 
+    if poll.is_doodle():
+        doodle_button_text = i18n.t('keyboard.compact_doodle', locale=locale)
+        if poll.compact_doodle_buttons:
+            doodle_button_text = i18n.t('keyboard.no_compact_doodle', locale=locale)
+        doodle_button_payload = f'{CallbackType.settings_toggle_compact_buttons.value}:{poll.id}:0'
+        buttons.append([InlineKeyboardButton(text=doodle_button_text,
+                                             callback_data=doodle_button_payload)])
+
     # Compile the possible options for user sorting
-    if not poll.anonymous and poll.poll_type != PollType.doodle.name:
+    if not poll.anonymous and not poll.is_doodle():
         for order in UserSorting:
             if order.name == poll.user_sorting:
                 continue

@@ -45,6 +45,15 @@ def toggle_summerization(session, context, poll):
 
 
 @poll_required
+def toggle_compact_doodle_buttons(session, context, poll):
+    """Toggle the doodle poll button style."""
+    poll.compact_doodle_buttons = not poll.compact_doodle_buttons
+
+    update_poll_messages(session, context.bot, poll)
+    send_styling_message(session, context)
+
+
+@poll_required
 def set_option_order(session, context, poll):
     """Set the order in which options are listed."""
     option_sorting = OptionSorting(context.action)

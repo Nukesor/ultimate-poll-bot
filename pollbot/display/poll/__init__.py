@@ -120,7 +120,7 @@ def compile_poll_text(session, poll, show_warning=False, summarize=False):
                             locale=poll.locale,
                             date=poll.get_formatted_due_date()))
 
-    if not poll.closed and poll.poll_type == PollType.doodle.name:
+    if not poll.closed and poll.is_doodle() and poll.compact_doodle_buttons:
         lines.append('')
         lines.append(i18n.t('poll.doodle_help', locale=poll.locale))
         lines.append('')

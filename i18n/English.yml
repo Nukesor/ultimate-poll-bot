@@ -109,6 +109,8 @@ keyboard:
   show_percentage: ○% Show percentage
   summarize_votes: Summarize many votes
   dont_summarize_votes: Show all votes
+  compact_doodle: Show letter buttons (smaller keyboard)
+  no_compact_doodle: Show option names in buttons
   new_option: ＋ Add a new option
   remove_option: － Remove options
   forbid_user_options: 🍺 Forbid users to add new options

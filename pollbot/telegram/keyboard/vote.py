@@ -145,11 +145,22 @@ def get_doodle_buttons(poll):
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
         maybe_payload = f'{vote_button_type}:{option.id}:{vote_maybe}'
         no_payload = f'{vote_button_type}:{option.id}:{vote_no}'
-        buttons.append([
-            InlineKeyboardButton(f'{letters[index]})', callback_data=ignore_payload),
+        option_row = [InlineKeyboardButton(f'{option.name}', callback_data=ignore_payload)]
+
+        # If we don't have the compact button view, display the option name on it's own button row
+        if not poll.compact_doodle_buttons:
+            option_row = [InlineKeyboardButton(f'{option.name}', callback_data=ignore_payload)]
+            buttons.append(option_row)
+            option_row = []
+        else:
+            option_row = [InlineKeyboardButton(f'{letters[index]})', callback_data=ignore_payload)]
+
+        vote_row = [
             InlineKeyboardButton('✅', callback_data=yes_payload),
             InlineKeyboardButton('❔', callback_data=maybe_payload),
             InlineKeyboardButton('❌', callback_data=no_payload),
-        ])
+        ]
+
+        buttons.append(option_row + vote_row)
 
     return buttons
