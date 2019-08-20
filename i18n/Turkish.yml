@@ -9,6 +9,8 @@ list:
     polls: 'Bu anketi yönetmek için herhangi bir butona tıklayın'
     no_polls: 'Açık anketiniz yok'
     no_closed_polls: 'Kapalı anketiniz yok'
+admin:
+    not_allowed: 'Bunu yapmaya izniniz yok. Sadece yönetici!'
 datepicker:
     open: 'Tarih seçiciyi aç'
     pick_date: 'Bu tarihi seç'
@@ -19,12 +21,19 @@ poll:
     vote_times: "\nHer kullanıcı *%{amount} kez* oy verebilir"
     due: "\n📅 Bu anket şu tarihte bitiyor: %{date}"
     closed: "\n⚠️ *Bu anket kapalı* ⚠️"
+    own_poll: '*Kendi* anketinizi [buradan](https://t.me/ultimate_pollbot) oluşturun'
     many_users_voted: 'Şimdiye kadar *%{count} kullanıcı* oy verdi'
     one_user_voted: 'Şimdiye kadar *1 kullanıcı* oy verdi'
     total_votes: ' (%{count} oy)'
     remaining_votes: "\nKalan oylar:"
     remaining_votes_user: '%{name}: %{count} oy'
+    summarized_users: '_ve %{count} diğer kişi._'
     too_many_votes: "⚠️ *Son dakika içinde çok fazla oy:* ⚠️\nOylarınız hala kayıtlı, ama bu mesaj her 2 saniyede güncellenecek\n(Telegram bir grupta bot tarafından aynı dakika içinde birden fazla mesajı göndermeye/güncellemeye izin vermiyor)\n"
+    doodle:
+        'yes': '├ *Evet:*'
+        maybe: '├ *Belki:*'
+        'no': '├ *Hayır:*'
+    doodle_help: 'Seçenek adlarını görmek için aşağıdaki `a)`, `b)` butonlarına *tıklayın*.'
 deleted:
     poll: 'Bu anket kalıcı olarak silindi'
     polls: 'Tüm anketler silindi'
@@ -58,6 +67,7 @@ inline_query:
     create_first: 'İlk olarak bir anket oluşturmak için buraya tıklayın ;)'
     create_poll: 'Yeni bir anket oluşturmak için tıklayın.'
 notification:
+    one_week: '*%{name}* anketi bir hafta içinde otomatik olarak kapanacak'
     one_day: '*%{name}* anketi bir gün içinde otomatik olaak kapatılacak'
     six_hours: '*%{name}* anketi altı saat içinde otomatik olarak kapatılacak'
     closed: '*%{name}* anketi artık kapalı'
@@ -88,13 +98,26 @@ keyboard:
     allow_user_options: '🍻 Kullanıcıların yeni seçenekler eklemesine izin ver'
     order_users: 'Kullanıcıları sırala %{name}'
     order_options: 'Seçenekleri sırala %{name}'
+    show_results: '🔎 Tüm oyları görüntüle'
     vote_with_count: '%{option_name} (%{count} oy)'
+    help:
+        creation: Oluşturma
+        settings: Ayarlar
+        notifications: Bildirimler
+        management: Yönetim
+        languages: Diller
+        bugs: Hatalar
+    styling: '🎀 Stil ayarları'
+    summarize_votes: 'Birçok oyu özetleyin'
+    dont_summarize_votes: 'Tüm oyları göster'
+    add_new_language: 'Yeni bir dil ekle'
 sorting:
     user_chrono: 'kronolojik olarak'
     user_name: 'isme göre'
     option_chrono: 'kronolojik olarak'
     option_percentage: 'yüzdeye göre'
     option_name: 'isme göre'
+    doodle_sorting: 'cevaba göre'
 settings:
     poll_type: '*Anket tipi*: %{poll_type}'
     language: '*Dil*: %{language}'
@@ -115,8 +138,11 @@ settings:
     change_language: 'Bu anket için değiştirmek içinbir dile tıklayın'
     anonymize: "Bu anketi gerçekten anonim yapmak istiyor musunuz?\n⚠️ Bu işlem geri alınamaz. ⚠️\n"
     remove_options: 'İstediğiniz seçenekleri kaldırmak için aşağıdaki butonları kullanın'
+    summarize: '*Oyları özetleyin*: Birçok oyu özetleyin'
+    dont_summarize: '*Oyları özetleyin*: Tüm oyları göster'
+    permanently_summarized: '*Oyları özetleyin*: Çok fazla oy. Kalıcı olarak özetlenir.'
 management:
-    permanently_close: "Bu anketi gerçekten kalıcı olarak kapatmak istiyor musunuz?\nSonuçlar görünür olacak, ama insanlar artık oy veremeyecek\n"
+    permanently_close: "Bu anketi gerçekten kalıcı olarak kapatmak istiyor musunuz?\nSonuçlar görünür olacak, ama insanlar artık oy veremeyecek\n⚠️ Bu işlem geri alınamaz. ⚠️"
     delete: 'Bu anketi gerçekten silmek istiyor musunuz?'
 creation:
     already_creating: 'Zaten bir anket oluşturuyorsunuz. İlk olarak önceki anket oluşturmayı iptal edin'
@@ -154,6 +180,7 @@ external:
     notification:
         pick_poll: 'Bildirimleri etkinleştirmek için doğru anketi gönderin'
         activated: 'Bildirimler etkinleştirildi'
+        new_notification_board: 'Lütfen daha yeni bildirim panosunu kullanın.'
 delete:
     doesnt_exist: 'Silinecek anket yok'
     previous_deleted: 'Önceki anket silindi. Yeni bir anket oluşturmak için /create komutunu kullanabilirsiniz.'
@@ -161,13 +188,6 @@ user:
     language_changed: 'Dil değişti'
 misc:
     donation: "Merhaba!\n\nBenim adım Arne Beer (@Nukesor) Ultimate PollBot'un tek geliştiricisiyim.\n\nUltimate Pollbot'u yazma fikri, arkadaşlarım öğle yemeğinde nereye gideceklerine karar veremediği zaman şekillendi.\nBu zaten birçok kez oluyordu ve bu sorun için Telegram'ın içinde iyi ve kararlı bir çözüme ihtiyacımız vardı!\nİşte ULTIMATE Pollbot böyle doğdu.\n\nBu projedeki her kod satırı boş zamanlarımda yazıldı ve tamamen ücretsiz.\nBu proje kar amacı gütmeyen, [Github](https://github.com/Nukesor/ultimate-poll-bot)'ta açık kaynaklı ve kendi paramla kiraladığım sunucumda barınan bir projedir.\n\nŞu an genellikle haftada 2-10 saatimi projelerimi geliştirmeye ve sürdürmeye yatırıyorum ve biraz destek almayı isterdim, çünkü bunun büyük bir bölümünü sizin için yapıyorum.\n\nBana yardım eden, sunucumun ve benim çalışmamızı sürdüren her şeyi takdir ediyorum ☺️.\n\nBu projeyi sevdiyseniz, [Patreon](https://www.patreon.com/nukesor) sayfamı kontrol edin ya da beni [Paypal](https://www.paypal.me/arnebeer) ile destekleyin.\n\nİyi günler!\n"
-    start: "*Merhaba!*\n\nBu *ULTIMATE* pollbot.\nAnketleri oluşturmaya başlamak için /create komutunu yazın ya da aşağıdaki butona tıklayın. Sonrasında her şey anlatılmaktadır.\n\n\n/language ile dili değiştirebilirsiniz.\nDaha fazla sorunuz varsa, /help komutunu kontrol edin.\n\n\nBu proje [Github](https://github.com/Nukesor/ultimate-poll-bot)'ta açık kaynaklıdır.\n"
     help:
-        intro: "Anketleriniz için epeyce ayar var:\n"
-        creation: "*Oluşturma:*\n\n1. Anketinizi anonim yapabilirsiniz, böylece isimler sonuçlarda gösterilmez!\n2. Anket sonuçları sadece anket kapandıktan sonra gösterilebilir. Bu, insanların bir anketin ara sonuçlarını görebilmesi durumunda mümkün olan taktiksel oylamayı önlemek için harikadır.\n"
-        settings: "*Ayarlar:*\n\n1. Anket geriye dönük olarak anonim yapılabilir.\n2. Ayarlar menüsünde seçeneklerin yüzde satırı gizlenebilir.\n3. Ayarlar menüsünde yeni seçenekler eklenebilir ve varolan seçenekler kaldırılabilir.\n4. Diğer kullanıcıların anketinize seçenek eklemesine izin verebilirsiniz.\n5. Kullanıcı isimlerinin ve seçeneklerin sonuçlardaki görüntülenme sırası değiştirilebilir.\n"
-        notifications: "*Bildirimler:*\n\nBir sohbette bildirimleri etkinleştirmek için bu adımları izleyin:\n1. Bir anket oluşturun\n2. Ayarlar menüsünde bitiş tarihini ayarlayın\n3. Haber almak istediğiniz sohbete gidin (Pollbot'un gruba eklenmesi gerekiyor)\n4. İlettiğiniz anket mesajını /notify ile yanıtlayın\n5. Doğru anketi seçin\n\nTüm bu işlem mutsuz bir şekilde aşırı derecede karmaşık, çünkü Telegram botlardan iletilen mesajların gruplarda tespit edilmesine izin vermiyor.\nDolayısıyla hangi grupta hangi anketin yayınlandığını ve her şeyin manuel olarak yapılması gerektiğini bilmiyoruz.\n"
         management: "*Eski anketleri bul:*\n\nEski anketlerinizi bulmak ve yönetmek için /list ve /list\\_closed olarak iki komut var.\n\n\n*Anketleri sil:*\n\nBireysel anketleri ilgili anket menülerinden silebilirsiniz.\nAyrıca tüm kapalı anketleri silmek için /delete\\_closed komutu\nve tüm anketleri silmek için /delete\\_all komutu var.\n"
-        languages: "*Dil:*\n\nUltimate pollbot çoklu dili destekliyor, ama resmi olarak İngilizce sürdürülüyor.\nBozuk çeviriler nedeniyle herhangi bir hata varsa, lütfen kendiniz düzeltin. Bu konulara bakmayacağım.\nDil desteği, mutlu bir şekilde desteklediğim topluluk tabanlı bir özellik ancak birden fazla dili kendi başıma destekleyemiyorum.\n"
         bugs: "*Gitmeyen bir hata var!!*\n\nGenellikle bir şey bozulur bozulmaz bir bildirim alırım, haberim olmayan bazı hatalar olabilir!\nHata bir veya iki gün içinde çözülmezse, lütfen [Github](https://github.com/Nukesor/ultimate-poll-bot)'tan bir konu açın.\n"
-    error: "Bilinmeyen bir hata oluştu. Muhtemelen bunun hakkında bildirim aldım ve olabildiğince çabuk çözmeye çalışacağım.\nBu hata bir veya iki gün içinde hala devam ederse, lütfen hatayı bana bildirin :). Github bağlantısı /start ve /help yazılarının içinde.\n"
