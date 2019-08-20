@@ -110,7 +110,8 @@ def compile_poll_text(session, poll, show_warning=False, summarize=False):
     if information_line is not None:
         lines.append(information_line)
 
-    if context.show_results and context.limited_votes and not summarize:
+    if context.show_results and not context.anonymous and \
+            context.limited_votes and not summarize:
         remaining_votes = get_remaining_votes_lines(session, poll)
         lines += remaining_votes
 

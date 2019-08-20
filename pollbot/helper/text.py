@@ -7,7 +7,8 @@ def split_text(lines):
 
     chars = 0
     for line in lines:
-        chars += len(line)
+        # Append the length of the line + a newline
+        chars += len(line) + 1
         if chars < 4000:
             current_chunk.append(line)
         else:

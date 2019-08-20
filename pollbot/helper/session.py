@@ -95,10 +95,6 @@ def session_wrapper(send_message=True, private=False):
                 if hasattr(update, 'message') and response is not None:
                     message.chat.send_message(response)
 
-            # A user banned the bot
-            except Unauthorized:
-                pass
-
             # Raise all telegram errors and let the generic error_callback handle it
 #            except TelegramError as e:
 #                raise e
