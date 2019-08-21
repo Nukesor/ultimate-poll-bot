@@ -1,10 +1,16 @@
 ## v1.2.0
+- New doodle button layout in style settings
+- Remove percentage order option for doodle
+
 - Lokalise integration
 - New language Italian
 - New language Spanish
 - Text adjustments
+- Forbid polls which are longer than 4000 characters at point of creation
+- Send warning for polls which are longer than 3000 characters at point of creation
 
 ** Fixes: **
+- Doodle button order not the same as text above when ordering by percentage
 - Hide remaining votes in anonymous polls
 - Fixed a bug where messages couldn't be sent due to messages being too long
 

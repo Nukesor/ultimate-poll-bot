@@ -29,4 +29,7 @@ def show_option_name(session, context):
     if len(message) > 190:
         message = message[0:190]
 
+    if option.is_date:
+        message = option.get_formatted_name()
+
     context.query.answer(message)
