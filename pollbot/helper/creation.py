@@ -32,20 +32,32 @@ def create_poll(session, poll, user, chat, message=None):
     user.expected_input = None
     user.current_poll = None
 
+    text = get_poll_text(session, poll)
+
+    if len(text) > 4000:
+        error_message = i18n.t('misc.over_4000', locale=user.locale)
+        message = chat.send_message(error_message, parse_mode='markdown')
+        session.delete(poll)
+        return
+
     if message:
         message = message.edit_text(
-            get_poll_text(session, poll),
+            text,
             parse_mode='markdown',
             reply_markup=get_management_keyboard(poll),
             disable_web_page_preview=True,
         )
     else:
         message = chat.send_message(
-            get_poll_text(session, poll),
+            text,
             parse_mode='markdown',
             reply_markup=get_management_keyboard(poll),
             disable_web_page_preview=True,
         )
+
+    if len(text) > 3000:
+        error_message = i18n.t('misc.over_3000', locale=user.locale)
+        message = chat.send_message(error_message, parse_mode='markdown')
 
     reference = Reference(
         poll,

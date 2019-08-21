@@ -298,6 +298,20 @@ misc:
     This bot is open-source on [GitHub](https://github.com/Nukesor/ultimate-poll-bot).
 
   start_after_results: Hey! Just type /create to make your own poll ☺️
+  over_3000: |
+    ⚠️ Your poll is already over *3000 characters* long, please try to keep it short and at least under 3000, or even better under 2500 🙏.
+
+    Telegram enforces a maximum of 4096 characters per messages and I need to display votes on top of your initial text. Every poll with more characters than that *will just stop working*.
+    I already try to handle this as good as possible and summarize votes to save space, but there's only so much space.
+
+    For polls with a lot of text and over 10-15 options, you might be better off using an external tool like [Doodle](https://doodle.com/)
+  over_4000: |
+    ⚠️ Your poll is over *4000 characters* long. This is too long to display it in a single message. Please try to keep it short and under 3000 characters, or even better under 2500 🙏.
+
+    Telegram enforces a maximum of 4096 characters per messages and I need to display votes on top of your initial text. Every poll with more characters than that *will just stop working*.
+    I already try to handle this as good as possible, but my hands are tied with this one.
+
+    For really long polls with many options, you are better off using an external tool like [Doodle](https://doodle.com/)
   help:
     intro: |
       There are quite a few settings for your polls.
