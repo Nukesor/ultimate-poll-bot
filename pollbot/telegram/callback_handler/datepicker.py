@@ -5,6 +5,7 @@ from pollbot.i18n import i18n
 from pollbot.helper import poll_required
 from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.creation import add_options
+from pollbot.helper.update import update_poll_messages
 from pollbot.display.creation import get_datepicker_text
 from pollbot.telegram.keyboard import (
     get_creation_datepicker_keyboard,
@@ -77,3 +78,6 @@ def add_date(session, context, poll):
         update_datepicker(context, poll)
         context.query.answer(i18n.t('callback.date_picked', locale=poll.locale,
                                     date=poll.current_date.isoformat()))
+
+    if poll.created:
+        update_poll_messages(session, context.bot, poll)
