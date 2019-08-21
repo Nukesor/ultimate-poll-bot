@@ -45,7 +45,7 @@ def calculate_percentage(option, total_user_count):
     if poll_allows_cumulative_votes(option.poll):
         option_vote_count = sum([vote.vote_count for vote in option.votes])
 
-        percentage = round(option_vote_count/poll_vote_count * 100)
+        percentage = round(option_vote_count / poll_vote_count * 100)
 
     elif option.poll.poll_type == PollType.doodle.name:
         score = 0
@@ -55,8 +55,8 @@ def calculate_percentage(option, total_user_count):
             elif vote.type == VoteResultType.maybe.name:
                 score += 0.5
 
-        return score/total_user_count * 100
+        return score / total_user_count * 100
     else:
-        percentage = round(len(option.votes)/total_user_count * 100)
+        percentage = round(len(option.votes) / total_user_count * 100)
 
     return percentage

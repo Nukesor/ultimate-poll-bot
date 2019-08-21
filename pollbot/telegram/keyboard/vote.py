@@ -134,9 +134,7 @@ def get_doodle_buttons(poll):
     vote_maybe = CallbackResult.maybe.value
     vote_no = CallbackResult.no.value
 
-    options = poll.options
-    if poll.option_sorting == OptionSorting.option_name:
-        options = get_sorted_options(poll)
+    options = get_sorted_options(poll)
 
     buttons = []
     letters = string.ascii_lowercase
