@@ -4,7 +4,7 @@ import pandas
 import matplotlib
 import matplotlib.dates as mdates
 import numpy as np
-from sqlalchemy import func, Date, cast, Integer, or_
+from sqlalchemy import func, Date, cast, Integer
 
 from pollbot.models import User
 
