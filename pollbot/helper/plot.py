@@ -6,7 +6,7 @@ import matplotlib.dates as mdates
 import numpy as np
 from sqlalchemy import func, Date, cast, Integer
 
-from pollbot.models import User
+from pollbot.models import User, Vote
 
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt  # noqa
@@ -16,6 +16,8 @@ def send_plots(bot, update, session, user):
     """Generate and send plots to the user."""
     image = get_user_activity(session)
     update.message.chat.send_document(image, caption='User statistics')
+    image = get_vote_activity(session)
+    update.message.chat.send_document(image, caption='Vote statistics')
     image.close()
 
 
@@ -47,11 +49,12 @@ def get_user_activity(session):
     # Grid style
     plt.style.use('seaborn-whitegrid')
 
-    creation_date = cast(User.created_at, Date).label('creation_date')
+    creation_date = func.cast(User.created_at, Date).label('creation_date')
     # Group the started users by date
     started_users_subquery = session.query(creation_date, func.count(User.id).label('count')) \
         .filter(User.started.is_(True)) \
         .group_by(creation_date) \
+        .order_by(creation_date) \
         .subquery()
     started_users = running_window(session, started_users_subquery)
     started_users = [('started', q[0], q[1]) for q in started_users]
@@ -59,6 +62,7 @@ def get_user_activity(session):
     # Group the started users by date
     all_users_subquery = session.query(creation_date, func.count(User.id).label('count')) \
         .group_by(creation_date) \
+        .order_by(creation_date) \
         .subquery()
     all_users = running_window(session, all_users_subquery)
     all_users = [('all', q[0], q[1]) for q in all_users]
@@ -67,6 +71,7 @@ def get_user_activity(session):
     voting_users_subquery = session.query(creation_date, func.count(User.id).label('count')) \
         .filter(User.votes.any()) \
         .group_by(creation_date) \
+        .order_by(creation_date) \
         .subquery()
     voting_users = running_window(session, voting_users_subquery)
     voting_users = [('voted', q[0], q[1]) for q in voting_users]
@@ -75,6 +80,7 @@ def get_user_activity(session):
     owning_users_subquery = session.query(creation_date, func.count(User.id).label('count')) \
         .filter(User.polls.any()) \
         .group_by(creation_date) \
+        .order_by(creation_date) \
         .subquery()
     owning_users = running_window(session, owning_users_subquery)
     owning_users = [('currently owning poll', q[0], q[1]) for q in owning_users]
@@ -97,4 +103,36 @@ def get_user_activity(session):
 
     image = image_from_figure(fig)
     image.name = 'user_statistics.png'
+    return image
+
+
+def get_vote_activity(session):
+    """Create a plot showing the inline usage statistics."""
+    creation_date = func.date_trunc('day', Vote.created_at).label('creation_date')
+    votes = session.query(creation_date, func.count(Vote.id).label('count')) \
+        .group_by(creation_date) \
+        .order_by(creation_date) \
+        .all()
+    total_votes = [('Total votes', q[0], q[1]) for q in votes]
+
+    # Grid style
+    plt.style.use('seaborn-whitegrid')
+
+    # Combine the results in a single dataframe and name the columns
+    dataframe = pandas.DataFrame(total_votes, columns=['type', 'date', 'votes'])
+
+    months = mdates.MonthLocator()  # every month
+    months_fmt = mdates.DateFormatter('%Y-%m')
+
+    max_number = max([vote[2] for vote in total_votes])
+    # Plot each result set
+    fig, ax = plt.subplots(figsize=(30, 15), dpi=120)
+    for key, group in dataframe.groupby(['type']):
+        ax = group.plot(ax=ax, kind='bar', x='date', y='votes', label=key)
+        ax.xaxis.set_major_locator(months)
+        ax.xaxis.set_major_formatter(months_fmt)
+        ax.yaxis.set_ticks(np.arange(0, max_number, 100))
+
+    image = image_from_figure(fig)
+    image.name = 'vote_statistics.png'
     return image
