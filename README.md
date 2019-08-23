@@ -118,17 +118,14 @@ Dependencies:
 
         % git clone git@github.com:nukesor/ultimate_pollbot pollbot && cd pollbot
 
-2. Execute following commands to install all dependencies and to initialize the database:
+2. Execute `poetry install` to install all dependencies.
+3. Either start the pollbot once with `poetry run main.py` or copy the `pollbot.toml` manually to `~/.config/pollbot.toml` and adjust all necessary values.
+4. Run `poetry run initdb.py` to initialize the database.
+5. Start the bot `poetry run main.py`
 
-        % poetry install
-        % poetry run initdb.py
-
-3. Either start the pollbot once or copy the `ultimate_pollbot.toml` manually to `~/.config/ultimate_pollbot.toml` and adjust all necessary values.
-4. Start the bot `poetry run main.py`
-
-5. If you plan to keep up to date, you need to set the current alemibic revision manually.
+6. If you plan to keep up to date, you need to set the current alemibic revision manually.
 Get the latest revision with `poetry run alembic history` and change the current head to the newest revision with `poetry run alembic stamp <revision>`.
-6. Now you can just execute `poetry run alembic upgrade head`, whenever you are updating from a previous version.
+7. Now you can just execute `poetry run alembic upgrade head`, whenever you are updating from a previous version.
 
 
 
