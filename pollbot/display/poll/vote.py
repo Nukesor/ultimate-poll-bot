@@ -24,6 +24,22 @@ def get_doodle_vote_lines(poll, option, summarize):
     lines = []
     votes_by_answer = get_sorted_doodle_votes(poll, option.votes)
 
+    # Do some super summarization in case the poll gets too long
+    if summarize:
+        for index, answer in enumerate(votes_by_answer.keys()):
+            is_last = index == len(votes_by_answer.keys()) - 1
+            line = i18n.t(f'poll.doodle.{answer}_summarized', locale=poll.locale,
+                          count=len(votes_by_answer[answer]))
+
+            # Last line must be properly styled
+            if is_last:
+                line = line.replace('├', '└')
+
+            lines.append(line)
+
+        return lines
+
+    # Create the default or simple summarized vote lines
     for index, answer in enumerate(votes_by_answer.keys()):
         is_last = index == len(votes_by_answer.keys()) - 1
         lines.append(i18n.t(f'poll.doodle.{answer}', locale=poll.locale))
@@ -56,9 +72,6 @@ def get_doodle_answer_lines(votes, summarize, is_last):
         # Don't stop here, if the first name of the line already is too long
         if characters > threshold and (2 + len(vote.user.name)) != characters:
             lines.append(current_line)
-            # If we need to summarize, just break after the first line
-            if summarize:
-                break
             current_line = '┆ '
             characters = len(current_line)
 
@@ -70,19 +83,11 @@ def get_doodle_answer_lines(votes, summarize, is_last):
         current_line += user_mention
         votes_displayed += 1
 
-    # Add the summary information
-    remaining_votes = len(votes) - votes_displayed
-    if summarize and remaining_votes != 0:
-        prefix = '└ ' if is_last else '┆ '
-        summary = i18n.t('poll.summarized_users', locale=votes[0].poll.locale,
-                         count=remaining_votes)
-        lines.append(prefix + summary)
-    # Or simply add the last line.
-    else:
-        # Replace the start character of the first line, to keep the styling correct
-        if is_last:
-            current_line = current_line.replace('┆', '└')
-        lines.append(current_line)
+    # Add the last line.
+    # Replace the start character of the first line, to keep the styling correct
+    if is_last:
+        current_line = current_line.replace('┆', '└')
+    lines.append(current_line)
 
     return lines
 

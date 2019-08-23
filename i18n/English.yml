@@ -37,6 +37,9 @@ poll:
     'yes': "├ *Yes:*"
     maybe: "├ *Maybe:*"
     'no': "├ *No:*"
+    yes_summarized: "├ *Yes:* %{count} votes"
+    maybe_summarized: "├ *Maybe:* %{count} votes"
+    no_summarized: "├ *No:* %{count} votes"
   too_many_votes: |
         ⚠️ *Too many votes in the last minute:* ⚠️
         Your votes will still be registered, but this message will only update every 2 seconds.
@@ -321,9 +324,9 @@ misc:
 
     Please try to keep the description and option names short and if you want to use polls with many options, you may be better of using an external tool like [Doodle](https://doodle.com/).
 
-    (I'm planning to do an even more aggressive reduction of text, but even this will have it's limits)
+        One way to resolve this problem might be to remove options (the admin can do that).
 
-    👇 You can still vote below and see the results until now. 👇
+    👇 You can still vote and see the results below. 👇
   help:
     intro: |
       There are quite a few settings for your polls.
