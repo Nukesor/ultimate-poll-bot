@@ -141,7 +141,7 @@ def delete_old_updates(context, session):
     """Delete all unneded updates."""
     now = datetime.now()
     time_window = now - timedelta(seconds=now.second % window_size, microseconds=now.microsecond)
-    ten_minutes_ago = time_window - timedelta(minutes=10)
+    ten_minutes_ago = time_window - timedelta(days=3)
 
     session.query(Update) \
         .filter(Update.time_window <= ten_minutes_ago) \
