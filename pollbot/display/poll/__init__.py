@@ -76,7 +76,7 @@ def get_poll_text_and_summarize(session, poll, show_warning=False):
         lines = compile_poll_text(session, poll, show_warning, summarize)
         text = '\n'.join(lines)
 
-    if len(text) > 4096:
+    if len(text) > 4000:
         text = i18n.t('misc.too_long', locale=poll.locale)
 
     return text, summarize

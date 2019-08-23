@@ -11,7 +11,7 @@ from telegram.ext import (
 )
 
 from pollbot.config import config
-from pollbot.i18n import i18n # noqa
+from pollbot.i18n import i18n
 
 from pollbot.telegram.job import (
     message_update_job,
