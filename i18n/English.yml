@@ -312,6 +312,18 @@ misc:
     I already try to handle this as good as possible, but my hands are tied with this one.
 
     For really long polls with many options, you are better off using an external tool like [Doodle](https://doodle.com/)
+  too_long: |
+    Hey!
+
+    I'm very sorry, but your poll is simply too long. You probably got a large number of options or added a very long description text (or both). 😬
+
+    Since Telegram only allows 4096 characters per message, I simply cannot show any polls that are getting longer than this. 😐
+
+    Please try to keep the description and option names short and if you want to use polls with many options, you may be better of using external tool like [Doodle](https://doodle.com/).
+
+    (I'm planning to do an even more aggressive reduction of text, but even this will have it's limits)
+
+    👇 You can still vote below and see the results until now. 👇
   help:
     intro: |
       There are quite a few settings for your polls.
