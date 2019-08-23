@@ -319,7 +319,7 @@ misc:
 
     Since Telegram only allows 4096 characters per message, I simply cannot show any polls that are getting longer than this. 😐
 
-    Please try to keep the description and option names short and if you want to use polls with many options, you may be better of using external tool like [Doodle](https://doodle.com/).
+    Please try to keep the description and option names short and if you want to use polls with many options, you may be better of using an external tool like [Doodle](https://doodle.com/).
 
     (I'm planning to do an even more aggressive reduction of text, but even this will have it's limits)
 
