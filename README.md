@@ -111,7 +111,7 @@ Thanks to my patreons:
 
 Dependencies: 
 - `poetry` to manage and install dependencies.
-- Ultimate Pollbot uses postgres by default. Make sure the user has write/read rights. (This can be changed, by changing the SQLURI in the configuration file.)
+- Ultimate Pollbot uses postgres. Make sure the user has write/read rights.
 
 
 1. Clone the repository:
