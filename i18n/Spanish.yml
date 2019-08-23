@@ -121,12 +121,12 @@ sorting:
 settings:
     poll_type: '*Tipo de encuesta*: %{poll_type}'
     language: '*Idioma*: %{language}'
-    anonymous: '*Anonimato*: Nombres no visibles'
-    not_anonymous: '*Anonimato*: Nombres visibles'
+    anonymous: '*Nombres*: Ocultos'
+    not_anonymous: '*Nombres*: Visibles'
     due_date: '*Fecha de vencimiento*: %{date}'
     no_due_date: '*Fecha de vencimiento*: Ninguna'
-    results_visible: '*Resultados visibles*: Resultados visibles directamente'
-    results_not_visible: '*Resultados visibles*: Resultados no visibles hasta su cierre'
+    results_visible: '*Resultados*: Visibles'
+    results_not_visible: '*Resultados*: Ocultos'
     user_options: '*Opciones de usuario personalizadas*: Cualquiera puede añadir nuevas opciones'
     no_user_options: '*Opciones de usuario personalizadas*: Solo tú puedes añadir nuevas opciones'
     percentage: '*Porcentaje*: Visible'
@@ -153,9 +153,9 @@ creation:
     vote_count_request: 'Envíame la cantidad de votos permitidos por usuario.'
     keyboard:
         change: 'Cambiar tipo de encuesta'
-        anonymity: 'Anonimizar la encuesta'
+        anonymity: 'Ocultar nombres en la encuesta'
         no_anonymity: 'Mostrar nombres en la encuesta'
-        results_visible: 'Mostrar resultados permanentemente'
+        results_visible: 'Mostrar resultados en la encuesta'
         results_not_visible: 'Ocultar resultados hasta su cierre'
     option:
         next: 'Envía *otra opción*, elige una fecha y añádela como opción o haz clic en *Hecho* cuando hayas terminado.'
@@ -165,11 +165,11 @@ creation:
         multiple_added: 'Se añadieron opciones:'
         finished: 'Ya se añadieron todas las opciones'
     poll_type_help: "Tipo de encuesta actual: *%{poll_type}*\n\n👍 *Voto único Vote:*\nCada usuario tiene un solo voto. El modo de votación por defecto y normal.\n\n📅 *Doodle:*\nLos usuarios pueden votar `sí`, `no` o `quizás` para cada opción. Perfecto para elegir una fecha.\n\n🎮 *Voto en bloque:*\nCada usuario puede votar todas las opciones (o menos). Útil para encontrar las opciones más buscadas en un grupo, por ejemplo, juegos que deben jugarse en una LAN-Party.\n\n🎮 *Voto limitado:*\nCada usuario obtiene un número fijo de votos que puede distribuir, pero solo una vez por opción.\nEs como el voto en bloque, pero la gente tiene que priorizar.\nEste modo es bueno para limitar la cantidad de posibles ganadores, por ejemplo, si sólo quieres un máximo de 4 juegos en tu LAN-Party.\n\n📊 *Voto acumulativo:*\nCada usuario obtiene un número fijo de votos que puede distribuir como quiera (incluso varios votos por opción).\nEste modo tiene un poco más de profundidad que el voto limitado, ya que permite a los usuarios votar en una sola opción varias veces.\n\n🛒 *Votos ilimitados* (o la lista de compras) 😎\nCada usuario puede votar tantas veces como quiera en cualquier opción.\nEsto es perfecto si quieres, por ejemplo, conocer la cantidad de cosas que todos quieren para el próximo viaje de festival.\n"
-    results_not_visible: 'Resultados no visibles hasta su cierre'
-    results_visible: 'Resultados visibles directamente'
-    anonymity: 'Nombres no visibles'
-    no_anonymity: 'Nombres visibles'
-    init_text: "Estás creando una nueva encuesta 👌\n\nLos ajustes para esta encuesta son:\n\n*Tipo de encuesta*: %{poll_type}\n*Anonimato*: %{anonymity}\n*Resultados visibles*: %{results_visible}\n\nPor favor, sigue estos pasos:\n1. Configúrala a tus necesidades 🙂\n2. Envía el nombre de la encuesta.👇\n"
+    results_not_visible: Ocultos
+    results_visible: Visibles
+    anonymity: Ocultos
+    no_anonymity: Visibles
+    init_text: "Estás creando una nueva encuesta 👌\n\nAjustes de la encuesta:\n*Tipo*: %{poll_type}\n*Nombres*: %{anonymity}\n*Resultados*: %{results_visible}\n\nPor favor, sigue estos pasos:\n1. Configúra la encuesta a tu gusto 🙂\n2. Envía el nombre de la encuesta.👇\n"
     datepicker_text: "*Selector de fechas:*\nPara añadir una fecha, selecciónala y haz clic en *Elegir esta fecha*. Haz clic en *Hecho* cuando hayas terminado.\n\n*Opciones actuales:*\n"
     error:
         limit_bigger_zero: 'Por favor envíame un número mayor que 0'
@@ -183,7 +183,7 @@ external:
         new_notification_board: 'Por favor, usa el nuevo tablero de avisos'
 delete:
     doesnt_exist: 'La encuesta a eliminar no existe'
-    previous_deleted: 'La encuesta fue eliminada. Envía /create para crear una nueva.'
+    previous_deleted: 'Encuesta eliminada. Envía /create para crear una nueva.'
 user:
     language_changed: 'Idioma cambiado'
 misc:
