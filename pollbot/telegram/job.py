@@ -91,17 +91,17 @@ def send_notifications(context, session):
         time_step = poll.due_date - poll.next_notification
 
         if time_step == timedelta(days=7):
-            send_notifications_for_poll(session, context.bot, poll, 'notification.one_week')
+            send_notifications_for_poll(context, session, poll, 'notification.one_week')
             poll.next_notification = poll.due_date - timedelta(hours=6)
 
         # One day remaining reminder
         elif time_step == timedelta(days=1):
-            send_notifications_for_poll(session, context.bot, poll, 'notification.one_day')
+            send_notifications_for_poll(context, session, poll, 'notification.one_day')
             poll.next_notification = poll.due_date - timedelta(hours=6)
 
         # Six hours remaining reminder
         elif time_step == timedelta(hours=6):
-            send_notifications_for_poll(session, context.bot, poll, 'notification.six_hours')
+            send_notifications_for_poll(context, session, poll, 'notification.six_hours')
             poll.next_notification = poll.due_date
 
         # Send the closed notification, remove all notifications and close the poll
@@ -109,7 +109,7 @@ def send_notifications(context, session):
             poll.closed = True
             update_poll_messages(session, context.bot, poll)
 
-            send_notifications_for_poll(session, context.bot, poll, 'notification.closed')
+            send_notifications_for_poll(context, session, poll, 'notification.closed')
             for notification in poll.notifications:
                 session.delete(notification)
 
