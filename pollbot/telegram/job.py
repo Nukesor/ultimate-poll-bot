@@ -114,13 +114,13 @@ def send_notifications(context, session):
                 session.delete(notification)
 
 
-def send_notifications_for_poll(context, session, bot, poll, message_key):
+def send_notifications_for_poll(context, session, poll, message_key):
     """Send the notifications for a single poll depending on the remaining time."""
     locale = poll.locale
     for notification in poll.notifications:
         try:
             # Get the chat and send the notification
-            tg_chat = bot.get_chat(notification.chat_id)
+            tg_chat = context.bot.get_chat(notification.chat_id)
             tg_chat.send_message(
                 i18n.t(message_key, locale=locale, name=poll.name),
                 parse_mode='markdown',
