@@ -92,7 +92,7 @@ def send_notifications(context, session):
 
         if time_step == timedelta(days=7):
             send_notifications_for_poll(context, session, poll, 'notification.one_week')
-            poll.next_notification = poll.due_date - timedelta(day=1)
+            poll.next_notification = poll.due_date - timedelta(days=1)
 
         # One day remaining reminder
         elif time_step == timedelta(days=1):
@@ -112,6 +112,8 @@ def send_notifications(context, session):
             send_notifications_for_poll(context, session, poll, 'notification.closed')
             for notification in poll.notifications:
                 session.delete(notification)
+
+        session.commit()
 
 
 def send_notifications_for_poll(context, session, poll, message_key):
