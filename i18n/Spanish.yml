@@ -12,18 +12,18 @@ list:
 admin:
     not_allowed: 'No tienes permisos hacer esto. ¡Solo para administradores!'
 datepicker:
-    open: 'Abrir selector de fechas'
+    open: 'Selector de fechas'
     pick_date: 'Elegir esta fecha'
     due_date: 'Elegir fecha de vencimiento'
 poll:
     anonymous: '¡La encuesta es anónima!'
-    results_not_visible: '¡Resultados no visibles hasta el cierre de la encuesta!'
+    results_not_visible: '¡Resultados ocultos hasta el cierre de la encuesta!'
     vote_times: "\nCada usuario puede votar *%{amount} veces*"
     due: "\n📅 Esta encuesta vence el: %{date}"
-    closed: "\n⚠️ *Esta encuesta está cerrada* ⚠️"
+    closed: "\n⚠️ *Encuesta cerrada* ⚠️"
     own_poll: 'Crea *tu propia* encuesta [aquí](https://t.me/ultimate_pollbot)'
     many_users_voted: '*%{count} usuarios* han votado'
-    one_user_voted: '*Un usuario* ha votado'
+    one_user_voted: '*1 usuario* ha votado'
     total_votes: ' (%{count} votos)'
     remaining_votes: "\nVotos restantes:"
     remaining_votes_user: '%{name}: %{count} votos'
@@ -35,7 +35,7 @@ poll:
         'no': '├ *No:*'
     doodle_help: '*Haz clic* en los botones `a)`, `b)` abajo para ver los nombres de las opciones.'
 deleted:
-    poll: 'Esta encuesta fue eliminada definitivamente.'
+    poll: 'Encuesta eliminada.'
     polls: 'Todas las encuestas fueron eliminadas'
     closed_polls: 'Todas las encuestas cerradas fueron eliminadas'
 callback:
@@ -112,7 +112,7 @@ keyboard:
     dont_summarize_votes: 'Mostrar todos los votos'
     add_new_language: 'Añadir nuevo idioma'
 sorting:
-    user_chrono: cronológicamente
+    user_chrono: cronológico
     user_name: 'por nombre'
     option_chrono: cronológico
     option_percentage: 'por porcentaje'
@@ -127,7 +127,7 @@ settings:
     no_due_date: '*Fecha de vencimiento*: Ninguna'
     results_visible: '*Resultados*: Visibles'
     results_not_visible: '*Resultados*: Ocultos'
-    user_options: '*Opciones de usuario personalizadas*: Cualquiera puede añadir nuevas opciones'
+    user_options: '*Opciones de usuario personalizadas*: Todos pueden añadir nuevas opciones'
     no_user_options: '*Opciones de usuario personalizadas*: Solo tú puedes añadir nuevas opciones'
     percentage: '*Porcentaje*: Visible'
     no_percentage: '*Porcentaje*: Oculto'
@@ -169,7 +169,7 @@ creation:
     results_visible: Visibles
     anonymity: Ocultos
     no_anonymity: Visibles
-    init_text: "Estás creando una nueva encuesta 👌\n\nAjustes de la encuesta:\n*Tipo*: %{poll_type}\n*Nombres*: %{anonymity}\n*Resultados*: %{results_visible}\n\nPor favor, sigue estos pasos:\n1. Configúra la encuesta a tu gusto 🙂\n2. Envía el nombre de la encuesta.👇\n"
+    init_text: "Creemos una nueva encuesta 👌\n\nAjustes de la encuesta:\n*Tipo*: %{poll_type}\n*Nombres*: %{anonymity}\n*Resultados*: %{results_visible}\n\nPor favor, sigue estos pasos:\n1. Configúrala a tu gusto 🙂\n2. Envíame la pregunta 👇\n"
     datepicker_text: "*Selector de fechas:*\nPara añadir una fecha, selecciónala y haz clic en *Elegir esta fecha*. Haz clic en *Hecho* cuando hayas terminado.\n\n*Opciones actuales:*\n"
     error:
         limit_bigger_zero: 'Por favor envíame un número mayor que 0'
