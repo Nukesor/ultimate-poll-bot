@@ -15,7 +15,8 @@ Since no other telegram poll-/votebot offered the full feature set my friends an
 
 
 ## Features:
-There are still some features missing, such as Deadlines, Notifications and even more Vote types, but in my opinion it's already better than anything I could find out there.
+Most features are implemented such as Deadlines, Notifications, a lot of Vote types, a datepicker and more stuff.
+There are still some things that can be improved and added, but in my opinion, it's already the best bot out there if you want to create and manage a polls.
 
 
 **Poll types**
