@@ -34,6 +34,7 @@ def search(bot, update, session, user):
             .filter(Poll.closed.is_(closed)) \
             .filter(Poll.created.is_(True)) \
             .order_by(Poll.created_at.desc()) \
+            .limit(20) \
             .all()
 
     else:
@@ -47,6 +48,7 @@ def search(bot, update, session, user):
                 Poll.description.ilike(f'%{query}%'),
             )) \
             .order_by(Poll.created_at.desc()) \
+            .limit(20) \
             .all()
 
     if len(polls) == 0:
