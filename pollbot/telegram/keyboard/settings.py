@@ -136,7 +136,7 @@ def get_styling_settings_keyboard(poll):
         if order.name == poll.option_sorting:
             continue
 
-        if order.name == OptionSorting.option_percentage.name and poll.is_doodle:
+        if order.name == OptionSorting.option_percentage.name and poll.is_doodle():
             continue
 
         option_name = i18n.t(f'sorting.{order.name}', locale=locale)

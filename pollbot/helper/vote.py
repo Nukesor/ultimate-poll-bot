@@ -1,4 +1,5 @@
 """Helper functions for votes."""
+from pollbot.helper.enums import UserSorting
 
 
 def get_sorted_votes(poll, votes):
@@ -7,7 +8,8 @@ def get_sorted_votes(poll, votes):
         """Get the name of user to sort votes."""
         return vote.user.name
 
-    votes.sort(key=get_user_name)
+    if poll.user_sorting == UserSorting.user_name.name:
+        votes.sort(key=get_user_name)
 
     return votes
 

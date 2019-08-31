@@ -24,6 +24,7 @@ def show_option_name(session, context):
 
     if option is None:
         context.query.answer("Option no longer exists")
+        return
 
     message = option.name
     if len(message) > 190:
