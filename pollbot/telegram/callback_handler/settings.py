@@ -84,10 +84,22 @@ def pick_due_date(session, context, poll):
         )
         return
     poll.user.expected_input = None
-    poll.current_date
     due_date = datetime.combine(poll.current_date, time(hour=12, minute=00))
     poll.set_due_date(due_date)
     send_settings_message(context)
+
+
+@poll_required
+def remove_due_date(session, context, poll):
+    """Remove the due date from a poll."""
+    poll.due_date = None
+    poll.next_notification = None
+    poll.user.expected_input = ExpectedInput.due_date.name
+    context.query.message.edit_text(
+        text=get_settings_text(context.poll),
+        parse_mode='markdown',
+        reply_markup=get_due_date_datepicker_keyboard(poll)
+    )
 
 
 @poll_required

@@ -98,6 +98,7 @@ class CallbackType(Enum):
     settings_change_poll_language = 85
     settings_toggle_summarization = 86
     settings_toggle_compact_buttons = 87
+    settings_remove_due_date = 88
 
     # Misc
     ignore = 100

@@ -18,6 +18,7 @@ datepicker:
   open:  Open datepicker
   pick_date: Pick this date
   due_date: Set due date
+  remove_due_date: Remove due date
 
 poll:
   anonymous: Poll is anonymous!
