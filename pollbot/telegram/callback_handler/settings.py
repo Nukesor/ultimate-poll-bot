@@ -83,10 +83,13 @@ def pick_due_date(session, context, poll):
             i18n.t('callback.due_date_in_past', locale=poll.user.locale),
         )
         return
-    poll.user.expected_input = None
     due_date = datetime.combine(poll.current_date, time(hour=12, minute=00))
     poll.set_due_date(due_date)
-    send_settings_message(context)
+    context.query.message.edit_text(
+        text=get_settings_text(context.poll),
+        parse_mode='markdown',
+        reply_markup=get_due_date_datepicker_keyboard(poll)
+    )
 
 
 @poll_required
