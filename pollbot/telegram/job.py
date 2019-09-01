@@ -84,10 +84,10 @@ def send_notifications(context, session):
     polls = session.query(Poll) \
         .join(Notification.poll) \
         .filter(Poll.next_notification <= datetime.now()) \
+        .filter(Poll.closed.is_(False)) \
         .all()
 
     for poll in polls:
-
         time_step = poll.due_date - poll.next_notification
 
         if time_step == timedelta(days=7):

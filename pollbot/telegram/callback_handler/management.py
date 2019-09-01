@@ -33,9 +33,15 @@ def reopen_poll(session, context, poll):
         context.query.answer(i18n.t('callback.cannot_reopen', locale=poll.user.locale))
         return
     poll.closed = False
+
+    # Remove the due date if it's in the past
+    # If the due date is still valid, recalculate the next_notification date
     if poll.due_date is not None and poll.due_date <= datetime.now():
         poll.due_date = None
         poll.next_notification = None
+    else:
+        poll.set_due_date(self.due_date)
+
     session.commit()
     update_poll_messages(session, context.bot, poll)
 
@@ -57,9 +63,9 @@ def clone_poll(session, context, poll):
     session.commit()
 
     context.tg_chat.send_message(
-            get_poll_text(session, new_poll),
-            parse_mode='markdown',
-            reply_markup=get_management_keyboard(new_poll),
-            disable_web_page_preview=True,
-        )
+        get_poll_text(session, new_poll),
+        parse_mode='markdown',
+        reply_markup=get_management_keyboard(new_poll),
+        disable_web_page_preview=True,
+    )
     context.query.answer(i18n.t('callback.cloned', locale=poll.user.locale))
