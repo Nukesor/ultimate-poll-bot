@@ -1,5 +1,4 @@
 """Callback functions needed during creation of a Poll."""
-
 from pollbot.i18n import i18n
 from pollbot.models import Reference
 from pollbot.helper import poll_required

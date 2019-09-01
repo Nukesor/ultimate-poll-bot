@@ -142,6 +142,8 @@ class Poll(base):
         from pollbot.models import PollOption
         for option in self.options:
             new_option = PollOption(poll, option.name)
+            new_option.description = option.description
+            new_option.is_date = option.is_date
             session.add(new_option)
 
         return poll
