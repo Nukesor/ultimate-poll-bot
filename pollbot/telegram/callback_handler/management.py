@@ -40,7 +40,7 @@ def reopen_poll(session, context, poll):
         poll.due_date = None
         poll.next_notification = None
     else:
-        poll.set_due_date(self.due_date)
+        poll.set_due_date(poll.due_date)
 
     session.commit()
     update_poll_messages(session, context.bot, poll)
