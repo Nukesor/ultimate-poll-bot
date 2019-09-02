@@ -111,6 +111,12 @@ class Poll(base):
 
     def set_due_date(self, date):
         """Set the due date and the next notification."""
+        if date is None:
+            self.due_date = None
+            return
+
+        # Calculate the next_notification date depending
+        # on the given due date
         now = datetime.now()
         self.due_date = date
         if now < self.due_date - timedelta(days=7):
