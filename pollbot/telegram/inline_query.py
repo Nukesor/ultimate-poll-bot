@@ -34,7 +34,7 @@ def search(bot, update, session, user):
             .filter(Poll.closed.is_(closed)) \
             .filter(Poll.created.is_(True)) \
             .order_by(Poll.created_at.desc()) \
-            .limit(20) \
+            .limit(50) \
             .all()
 
     else:
@@ -48,7 +48,7 @@ def search(bot, update, session, user):
                 Poll.description.ilike(f'%{query}%'),
             )) \
             .order_by(Poll.created_at.desc()) \
-            .limit(20) \
+            .limit(50) \
             .all()
 
     if len(polls) == 0:
@@ -60,7 +60,10 @@ def search(bot, update, session, user):
     else:
         results = []
         for poll in polls:
-            text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_warning=False)
+            text, keyboard = get_poll_text_and_vote_keyboard(
+                session, poll,
+                inline_query=True
+            )
             if poll.closed:
                 keyboard = InlineKeyboardMarkup([[InlineKeyboardButton('Please ignore this', callback_data='100')]])
 

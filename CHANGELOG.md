@@ -13,6 +13,7 @@
 - Doodle button order not the same as text above when ordering by percentage
 - Hide remaining votes in anonymous polls
 - Fixed a bug where messages couldn't be sent due to messages being too long
+- Fixed a bug where inline queries didn't work due to many very long polls.
 
 
 ## v1.1.0

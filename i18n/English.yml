@@ -23,6 +23,7 @@ datepicker:
 poll:
   anonymous: Poll is anonymous!
   results_not_visible: Results are not visible, until poll is closed!
+  please_wait: "\n\nPlease wait a second, while the bot synchronizes the polls ☺️"
   vote_times: "\nEvery user can vote *%{amount} times*"
   due: "\n📅 This poll is due at: %{date}"
   closed: "\n⚠️ *This poll is closed* ⚠️"

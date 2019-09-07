@@ -19,5 +19,4 @@ def handle_chosen_inline_result(bot, update, session, user):
     session.add(reference)
     session.commit()
 
-    if poll.closed:
-        update_poll_messages(session, bot, poll)
+    update_poll_messages(session, bot, poll)

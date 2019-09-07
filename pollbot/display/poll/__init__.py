@@ -44,9 +44,15 @@ class Context():
         self.limited_votes = poll_has_limited_votes(poll)
 
 
-def get_poll_text_and_vote_keyboard(session, poll, show_warning=False, show_back=False):
+def get_poll_text_and_vote_keyboard(
+        session, poll,
+        show_warning=False,
+        show_back=False,
+        inline_query=False):
     """Get the text and the vote keyboard."""
-    text, summarize = get_poll_text_and_summarize(session, poll, show_warning=False)
+    text, summarize = get_poll_text_and_summarize(session, poll,
+                                                  show_warning=False,
+                                                  inline_query=inline_query)
 
     if summarize:
         keyboard = get_vote_keyboard_with_summary(poll, show_back)
@@ -62,18 +68,23 @@ def get_poll_text(session, poll, show_warning=False):
     return text
 
 
-def get_poll_text_and_summarize(session, poll, show_warning=False):
+def get_poll_text_and_summarize(session, poll, show_warning=False, inline_query=False):
     """Get the poll text and vote keyboard."""
     summarize = poll.permanently_summarized or poll.summarize
 
     if not summarize:
-        lines = compile_poll_text(session, poll, show_warning)
+        lines = compile_poll_text(session, poll,
+                                  show_warning=show_warning,
+                                  inline_query=inline_query)
         text = '\n'.join(lines)
         summarize = len(text) > 4000
         poll.permanently_summarized = summarize
 
     if summarize:
-        lines = compile_poll_text(session, poll, show_warning, summarize)
+        lines = compile_poll_text(session, poll,
+                                  show_warning=show_warning,
+                                  summarize=summarize,
+                                  inline_query=inline_query)
         text = '\n'.join(lines)
 
     if len(text) > 4000:
@@ -82,7 +93,7 @@ def get_poll_text_and_summarize(session, poll, show_warning=False):
     return text, summarize
 
 
-def compile_poll_text(session, poll, show_warning=False, summarize=False):
+def compile_poll_text(session, poll, show_warning=False, summarize=False, inline_query=False):
     """Create the text of the poll."""
     context = Context(session, poll)
 
@@ -99,6 +110,14 @@ def compile_poll_text(session, poll, show_warning=False, summarize=False):
         lines.append(f"_{i18n.t('poll.anonymous', locale=poll.locale)}_")
     if not context.show_results:
         lines.append(f"_{i18n.t('poll.results_not_visible', locale=poll.locale)}_")
+
+    # Only send the name nad description, when using an inline_query
+    # Otherwise the result may be too larg (due to many large poll texts)
+    # and the inline query fails
+    if inline_query:
+        lines.append(i18n.t('poll.please_wait',
+                            locale=poll.locale))
+        return lines
 
     lines += get_option_information(session, poll, context, summarize)
     lines.append('')
