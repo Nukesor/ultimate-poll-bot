@@ -1,0 +1,200 @@
+poll_types:
+    single_vote: 'Jeden hlas'
+    doodle: Ano/Ne
+    block_vote: 'Blokové hlasy'
+    limited_vote: 'Omezené hlasy'
+    cumulative_vote: 'Kumulativní hlasy'
+    count_vote: 'Neomezené hlasy'
+list:
+    polls: 'Klepnutím na kterékoliv tlačítko spravujte tuto konkrétní anketu'
+    no_polls: 'Nevlastníte žádné otevřené ankety'
+    no_closed_polls: 'Nevlastníte žádné uzavřené ankety'
+admin:
+    not_allowed: 'K tomuto nemáte oprávnění, jen pro administrátory!'
+datepicker:
+    open: 'Otevřít kalendář'
+    pick_date: 'Vybrat toto datum'
+    due_date: 'Nastavit datum uzavření'
+poll:
+    anonymous: 'Anketa je anonymní!'
+    results_not_visible: 'Výsledky nejsou viditelné, dokud se anketa neuzavře!'
+    vote_times: "\nPočat hlasů na uživatele: *%{amount}*"
+    due: "\n📅 Datum uzavření ankety: %{date}"
+    closed: "\n⚠️ *Tato anketa je uzavřena* ⚠️"
+    own_poll: 'Vytvořte si *svou vlastní* anketu přímo [zde](https://t.me/ultimate_pollbot)'
+    many_users_voted: 'Počet uživatelů, kteří hlasovali: *%{count}*'
+    one_user_voted: 'Zatím hlasoval jen *jeden uživatel*'
+    total_votes: ' (Počet hlasů: %{count})'
+    remaining_votes: "\nZbylé hlasy:"
+    remaining_votes_user: '%{name}, hlasů: %{count}'
+    summarized_users: '_a další lidé (%{count})_'
+    too_many_votes: "⚠️ *Příliš mnoho hlasů v poslední minutě:* ⚠️\nVaše hlasy budou přidány, ale tato zpráva se bude doplňovat každé 2 vteřiny.\n(Telegram neumožňuje botům ve skupinách, aby zasílali/upravovalivíce zpráv, než je daný limit.)\n"
+    doodle:
+        'yes': '├ *Ano:*'
+        maybe: '├ *Možná:*'
+        'no': '├ *Ne:*'
+    doodle_help: '*Klikněte* na tlačítka `a)`, `b)` níže pro zobrazení názvů možností.'
+deleted:
+    poll: 'Tato anketa byla natrvalo smazána.'
+    polls: 'Všechny ankety byly smazány.'
+    closed_polls: 'Všechny uzavřené ankety byly smazány'
+callback:
+    error: 'Vyskytla se chyba. Brzy bude opravena!'
+    closed: 'Anketa uzavřena'
+    cannot_reopen: 'Anketa nemůže být opět otevřena'
+    cloned: 'Anketa naklonována'
+    deleted: 'Anketa smazána'
+    poll_created: 'Anketa již byla vytvořena'
+    poll_already_created: 'Anketa již byla vytvořena'
+    poll_no_longer_exists: 'Tato anketa již neexistuje.'
+    votes_removed: 'Všechny hlasy byly odstraněny'
+    anonymity_changed: 'Nastavení anonymity změněno'
+    visibility_changed: 'Nastavení viditelnosti změněno'
+    date_changed: 'Změněno datum: %{date}'
+    date_already_picked: 'Datum již vybráno'
+    date_picked: 'Vybráno datum: %{date}'
+    due_date_in_past: 'Datum uzavření již nastalo'
+    vote:
+        votes_left: '(zbylo: %{count})!'
+        your_votes: ' Vaše hlasy:'
+        changed: 'Hlas změněn!'
+        removed: 'Hlas odebrán!'
+        registered: 'Hlas přidán!'
+        no_left: 'Již nezbyly hlasy!'
+        doodle_changed: 'Hlas změněn na: %{vote_type}'
+        doodle_registered: 'Hlas přidán (%{vote_type})'
+inline_query:
+    create_first: 'Klepni sem a vytvoř anketu ;)'
+    create_poll: 'Klepněte pro vytvoření nové ankety.'
+notification:
+    one_week: 'Anketa *%{name}* se do týdne automaticky uzavře'
+    one_day: 'Anketa *%{name}* se během jednoho dne automaticky uzavře'
+    six_hours: 'Anketa *%{name}* se během šesti hodin automaticky uzavře'
+    closed: 'Anketa *%{name}* je nyní uzavřena'
+keyboard:
+    done: Hotovo
+    close: Zavřít
+    back: Zpět
+    cancel: Zrušit
+    delete: '❌ Smazat'
+    reset: '🔨 Obnovit'
+    clone: '🧬 Klonovat'
+    reopen: '🔓 Znovu otevřít anketu'
+    share: 'Sdílet tuto anketu'
+    close_poll: '🔒 Zavřít'
+    settings: '⚙️ Nastavení'
+    change_language: '🌐 Změnit jazyk'
+    vote: '✉️ Hlasovat'
+    permanently_close: '⚠️ Trvale zavřít anketu! ⚠️'
+    permanently_delete: '⚠️ Trvale smazat anketu! ⚠️'
+    permanently_anonymize: '⚠️Trvale anonymizovat anketu! ⚠️'
+    anonymize: '🔍 Anonymizovat hlasy'
+    due_date: '📅 Nastavit datum uzavření'
+    hide_percentage: '○% Skrýt procenta'
+    show_percentage: '○% Zobrazit procenta'
+    new_option: '＋ Přidat novou možnost'
+    remove_option: '－ Odstranit možnosti'
+    forbid_user_options: '🍺 Zakázat uživatelům přidávat nové možnosti'
+    allow_user_options: '🍻 Povolit uživatelům přidávat nové možnosti'
+    order_users: 'Řazení uživatelů%{name}'
+    order_options: 'Řazení možností %{name}'
+    show_results: '🔎 Zobrazit všechny hlasy'
+    vote_with_count: '%{option_name} (hlasy: %{count})'
+    help:
+        creation: Tvorba
+        settings: Nastavení
+        notifications: Oznámení
+        management: Správa
+        languages: Jazyky
+        bugs: Chyby
+    styling: '🎀 Stylistická nastavení'
+    summarize_votes: 'Sumarizovat hodně hlasů'
+    dont_summarize_votes: 'Ukázat všechny hlasy'
+    add_new_language: 'Přidat nový jazyk'
+sorting:
+    user_chrono: chronologicky
+    user_name: 'dle jména'
+    option_chrono: chronologicky
+    option_percentage: 'dle procent'
+    option_name: 'dle názvu'
+    doodle_sorting: 'dle odpovědi'
+settings:
+    poll_type: '*Druh ankety*: %{poll_type}'
+    language: '*Jazyk*: %{language}'
+    anonymous: '*Anonymita*: Jména nejsou viditelná'
+    not_anonymous: '*Anonymita*: Jména jsou viditelná'
+    due_date: '*Datum uzavření*: %{date}'
+    no_due_date: '*Datum uzavření*: Žádné'
+    results_visible: '*Viditelnost výsledků*: Výsledky jsou přímo viditelné'
+    results_not_visible: '*Viditelnost výsledků*: Výsledky nejsou viditelné do uzavření ankety'
+    user_options: '*Tvorba možností*: Kdokoliv může přidat novou možnost'
+    no_user_options: '*Tvorba možností*: Jen Vy smíte přidávat nové možnosti'
+    percentage: '*Procenta*: Viditelná'
+    no_percentage: '*Procenta*: Skrytá'
+    euro_date_format: '*Formát data*: DD.MM.RRRR'
+    us_date_format: '*Formát data*: RRRR-MM-DD'
+    user_sorting: '*Řazení uživatelů*: %{name}'
+    option_sorting: '*Řazení možností*: %{name}'
+    change_language: 'Klepněte na jazyk, abyste ho pro tuto anketu změnili.'
+    anonymize: "Opravdu chcete anonymizovat tuto anketu?\n⚠️ Tento krok je nevratný. ⚠️\n"
+    remove_options: 'Klikněte na tlačítka níže pro odstranění nehodících se možností.'
+    summarize: '*Sumarizace hlasů*: Sumarizovat hodně hlasů'
+    dont_summarize: '*Sumarizace hlasů*: Ukázat všechny hlasy'
+    permanently_summarized: '*Sumarizace hlasů*: Příliš mnoho hlasů. Přímo sumarizováno.'
+management:
+    permanently_close: "Opravdu chcete trvale uzavřít tuto anketu?\nVýsledky budou viditelné, ale již nebude možno dále hlasovat\n⚠️ Tento krok je nevratný. ⚠️\n"
+    delete: 'Opravdu chcete smazat tuto anketu?'
+creation:
+    already_creating: 'Již vytváříte anketu. Nejprve zrušte tvorbu první ankety'
+    description: 'Nyní mi zašlete popis'
+    skip_description: Přeskočit
+    not_allowed: 'Již nemůžete přidávat další možnosti'
+    cancel: 'Zrušit předchozí tvorbu'
+    vote_count_request: 'Zašlete mi počet hlasů pro uživatele.'
+    keyboard:
+        change: 'Změnit druh ankety'
+        anonymity: 'Anonymizovat anketu'
+        no_anonymity: 'Zobrazovat jména v anketě'
+        results_visible: 'Trvale zobrazovat výsledky'
+        results_not_visible: 'Skrýt výsledky do uzavření ankety'
+    option:
+        next: 'Pošlete *jinou možnost*, zvolte datum a přidejte ho jako možnost, nebo stiskněte *Hotovo*, když jste hotovi.'
+        first: "Pošlete mi prosím možnost. Můžete zaslat více možností najednou, každou na nový řádek.\nMůžete také přidat popisek za spojovník. \nNapříklad `Burger - protože je chutný`\n"
+        no_new: '❌ Nebyla přidána žádná nová možnost'
+        single_added: "Možnost *%{option}* byla přidána. 👍\nPošlete *jinou možnost*, vyberte datum a přidejte ho jako možnost, nebo stiskněte *Hotovo*, když jste hotovi."
+        multiple_added: 'Možnosti byly přidány:'
+        finished: 'Všechny možnosti již byly přidány'
+    poll_type_help: "Aktuální druh ankety: *%{poll_type}*\n\n👍 *Jeden hlas:*\nKaždý uživatel dostane jediný hlas. Výchozí a normální systém. \n\n📅 *Ano/Ne:*\nUživatel může hlasovat pro `ano`, `ne`, nebo `možná` u každé možnosti. Dobré pro hledání vhodného data.\n\n🎮 *Blokové hlasy:*\nKaždý uživatel může hlasovat pro všechny (nebo méně) možností. Využitelné při hledání nejžádanější varianty, např. hry, kterou by chtělo hrát nejvíce lidí.\n\n🎮 *Omezené hlasy:*\nKaždý uživatel dostane daný počet hlasů, které může rozdělit, ale vždy jen jeden pro každou z možností.\nVelmi podobné Blokovým hlasům, ale lidé si musí určit priority. Tento systém je dobrý pro omezení počtu možných výherců.\n\n📊 *Kumulativní hlasy:*\nKaždý uživatel dostane daný počet hlasů, které může rozdělit, jak se mu zachce (takže lze hlasovat vícekrát pro stejnou možnost).\nTento systém dává hodnotnější informace než Omezené hlasy díky tomu, že lze dát více hlasů stejné možnosti.\n\n🛒 *Neomezené hlasy* (nebo Nákupní seznam) 😎\nKaždý uživatel může pro každou možnost hlasovat kolikrát chce.\nTo je dobré například, když chcete vědět, jaké věci je potřeba nakoupit nebo kolik kterých věcí vzít s sebou.\n"
+    results_not_visible: 'Výsledky nejsou viditelné do uzavření ankety'
+    results_visible: 'Výsledky jsou přímo viditelné'
+    anonymity: 'Jména nejsou viditelná'
+    no_anonymity: 'Jména jsou viditelná'
+    init_text: "Ahoj! \nPrávě se chystáte vytvořit novou anketu👌\n\nAktuální nastavení pro tuto anketu jsou:\n\n*Druh ankety*: %{poll_type}\n*Anonymita*: %{anonymity}\n*Viditelnost výsledků*: %{results_visible}\n\nPostupujte prosím dle těchto kroků:\n1. Nakonfigurujte anketu dle svých potřeb 🙂\n2. 👇 Zašlete mi název této ankety. 👇\n"
+    datepicker_text: "*Výběr data:*\nK přidání data toto datum vyberte a stiskněte *Vybrat toto datum*.\nKlikněte na *Hotovo*, když jste hotovi.\n\n*Aktuální možnosti:*\n"
+    error:
+        limit_bigger_zero: 'Zašlete mi prosím číslo větší než 0'
+        limit_between: 'Pošlete mi prosím číslo mezi 1 a %{limit}'
+        markdown: "Nepoužívejte prosím v názvech, popisech ani možnostech formátovací symboly. Tyto symboly jsou podtržítko `_`, hvězdička `*` a hranatá závorka `[`.\nPošlete mi prosím zprávu znovu bez těchto symbolů. \n"
+external:
+    canceled: Zrušeno
+    notification:
+        pick_poll: 'Zvolte správnou anketu k aktivování oznámení'
+        activated: 'Oznámení aktivována'
+        new_notification_board: 'Použijte prosím novější tabulku oznámení.'
+delete:
+    doesnt_exist: 'Anketa, kterou chcete vymazat neexistuje'
+    previous_deleted: 'Předchozí anketa smazána. Nyní můžete vytvořit novou pomocí /create'
+user:
+    language_changed: 'Jazyk změněn'
+misc:
+    donation: "Ahoj!\n\nMé jméno je Arne Beer (@Nukesor). Jsem jediným vývojářem Ultimate pollbot.\n\nNápad k vytvoření Ultimate pollbota se zformoval, když se mí přátelé opět nedokázali rozhodnout, kam jít na oběd.\nUž se to stalo tolikrát a naléhavě jsme potřebovali  dobré a stabilní řešení tohoto problému uvnitř Telegramu!\nA tak se zrodil ULTIMATE pollbot.\n\nKaždý řádek kódu v tomto projektu jsem napsal ve svém volném čase a zcela zadarmo.\nTento projekt je nevýdělečný, open-source na [GitHubu](https://github.com/Nukesor/ultimate-poll-bot) a hostovaný na serveru, který si pronajímám za vlastní peníze.\n\nPrávě teď obvykle trávím 2-10 hodin týdně vývojem a údržbou mých projektů a byl bych moc rád za nějakou podporu, když to dělám z velké části pro Vás.\n\nVelice si vážím čehokoliv, co mi vypomáhá a udržuje můj server i mě samotného v provozu ☺️.\n\nPokud se Vám tento projekt líbí, podívejte se na mou stránku [na Patreon](https://www.patreon.com/nukesor) nebo mě podpořte přes [PayPal](https://www.paypal.me/arnebeer).\nKdybyste měli nějaké otázky, zastavte se u mé [skupiny podpory](https://t.me/nukesors_projects).\n\nPřeji Vám hezký den!\n"
+    start: "🌟Vítejte v *ULTIMATE* pollbotovi 🌟\n\nNapište /create nebo stiskněte tlačítko níže a začněte tvořit ankety. Vše je vysvětleno během tvorby.\n\n🌐 Můžete vybrat jiný jazyk pomocí /language 🌐\n❓Použijte /help pro více vysvětlivek❓\n\nPolud se Vám projekt líbí, zastavte se v mé [skupině podpory](https://t.me/nukesors_projects) nebo si prohlédněte mou stránku na [Patreonu](https://www.patreon.com/nukesor).\nTento bot je open-source na [GitHubu](https://github.com/Nukesor/ultimate-poll-bot).\n"
+    help:
+        intro: "Existuje pár nastavení pro Vaše ankety. \nZvolte kategorii, která Vás zajímá nebo si jednoduše pročtěte vše 😉.\n"
+        creation: "🌟*Tvorba:*\n\nK vytvoření nové ankety napište nebo stiskněte /create. Pro každou anketu můžete specifikovat někoik základních nastavení\n\n*Druh ankety:* Všemožné druhy anket jsou detailně popsány ve svém menu.\n*Anonymita:* Anketu můžete anonymizovat, což znamená, že u výsledků nebudou zobrazena jména! Toto je trvalé a platí pro všechny.\n*Viditelnost výsledků:* V tomto módu jsou výsledky viditelné až po uzavření ankety. To je užitečné k zamezení [taktickému hlasování — ENG](https://en.wikipedia.org/wiki/Tactical_voting) a vlivu [kotvení](https://cs.wikipedia.org/wiki/Kotven%C3%AD_(psychologie))\n\n-> *Pozor: uzavřená anketa s neviditelnými výsledky zůstává uzavřená!:*\nZnovuotevření ankety může uživateli, přesněji tvůrci ankety, dát možnost se podívat na hlasy a hlasovat způsobem, který pro něj může vyústit ve značnou výhodu (taktické hlasování).\n"
+        settings: "⚙️ *Nastavení:*\n\nDalší nastavení ankety mohou být upravena potom, co byla vytvořena:\n\n*Anonymita:* Anketa může být anonymizována zpětně.\n*Procenta:* Linka s procenty může být skryta v menu nastavení.\n*Možnosti:* Nové možnosti mohou být přidány a existující odstraněny v menu nastavení.\n*Uživatelské možnosti:* Můžete ostatním uživatelům povolit přidat možnost do ankety.\n*Pořadí:* Pořadí jmen a možností ve výsledcích může být změněno.\n*Datum uzavření:* Lze nastavit datum uzavření, kdy se anketa automaticky uzavře.\n"
+        notifications: "📣 *Oznámení:*\n\nKdyž zapnete pro chat upozornění, bot pošle zprávu 1 den, 6 hodin a 1 hodinu před zavřením ankety.\nTato funkce slouží k upozornění všech ve skupině, že se anketa brzy uzavírá a zjednodušení nalezení zprávy s anketou 😉.\n\nK zapnutí oznámení v chatu postupujte dle těchto kroků:\n*1.* Vytvořte anketu\n*2.* V menu nastavení vyberte datum uzavření\n*3.* Jděte do chatu, kde chcete upozornění\n*4.* Přidejte pollbota do skupiny\n*5.* Sdílejte v této skupině anketu\n*6.* Odpovězte /notify na zprávu s anketou vybranou přes @ultimate\\_pollbot\n*7.* Zvolte správnou anketu\n\nCelá tato procedura je bohužel zbytečně komplikovaná, protože Telegram nedovoluje detekci zpráv od botů ve skupinách 😐.\nProto nevíme která anketa je kam poslána a vše musí být provedeno ručně.\n"
+        management: "🕰 *Hledání starých anket:*\n\nPříkazy /list a /list\\_closed Vám dovolují spravovat Vaše staré ankety.\n\n\n⚠️ *Mazání anket:*\n\nMůžete mazat jednotlivé ankety v odpovídajícím menu ankety.\nTaké lze použít příkazy /delete\\_closed mazající všechny uzavřené ankety a /delete\\_all mazající VŠECHNY ankety.\n"
+        languages: "🌐 *Jazyk:*\n\nUltimate pollbot podporuje několik jazyků, ale jen angličtina je oficiálně udržována.\n\nK přidání nového jazyka mě prosím kontaktujte na @Nukesor!\nPoužívám službu [Lokalise](https://lokalise.co) pro lokalizaci, která mi poskytla open-source licenci pro překlad mých projektů.\nAby tato služba fungovala, budete mi muset poskytnout emailovou adresu (stačí i vedlejší adresa pro spam), abych Vám mohl poslat pozvánku.\n\nDávejte si prosím pozor na ponechání formátovacích symbolů (`**`, `__`, `${}`), jinak se některé funkce ve Vašem jazyce rozbijí.\nKdyž se něco pokazí, pokusím se to opravit, ale prosím pomozte předcházet těmto problémům. Jejich řešení vyžaduje snahu a čas, které šlo využít jinak. Podpora jazyků je řízena komunitou a rád ji podporuji, ale nemůžu sám podporovat více jazyků.\n\nČeský překlad vytvořil @IgnacRR\n"
+        bugs: "⚠️ *Je zde chyba, která nechce zmizet!!* 😩\n\nObvykle jsem upozorněn, když se něco pokazí, ale některé chyby mohou projít bez povšimnutí!\nPokud chyba není do dne až dvou opravena, napište mi na [GitHub](https://github.com/Nukesor/ultimate-poll-bot) nebo se zastavte v mé [skupině podpory](https://t.me/nukesors_projects).\n"
+    error: "Objevila se neznámá chyba. Nejspíše jsem již byl upozorněn a pokusím se ji co nejdříve opravit\nPokud chyba není do dne až dvou opravena, napište mi na [GitHub](https://github.com/Nukesor/ultimate-poll-bot) nebo se zastavte v mé [skupině podpory](https://t.me/nukesors_projects).\n"
