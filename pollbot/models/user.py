@@ -14,6 +14,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import relationship
 
 from pollbot.db import base
+from pollbot.helper.stats import increase_stat
 
 
 class User(base):
@@ -61,6 +62,7 @@ class User(base):
             session.add(user)
             try:
                 session.commit()
+                increase_stat(session, 'new_users')
             # Handle parallel user addition
             except IntegrityError as e:
                 session.rollback()

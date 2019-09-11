@@ -1,5 +1,6 @@
 """Poll creation helper."""
 from pollbot.i18n import i18n
+from pollbot.helper.stats import increase_stat
 from pollbot.helper.enums import ExpectedInput
 from pollbot.display.poll import get_poll_text
 from pollbot.telegram.keyboard import (
@@ -66,6 +67,8 @@ def create_poll(session, poll, user, chat, message=None):
     )
     session.add(reference)
     session.commit()
+
+    increase_stat(session, 'created_polls')
 
 
 def add_options(poll, text, is_date=False):

@@ -4,6 +4,7 @@ from sqlalchemy.exc import IntegrityError
 
 from pollbot.i18n import i18n
 from pollbot.helper import poll_allows_cumulative_votes
+from pollbot.helper.stats import increase_stat
 from pollbot.helper.enums import PollType, CallbackResult
 from pollbot.helper.update import update_poll_messages
 
@@ -52,6 +53,8 @@ def handle_vote(session, context):
     session.commit()
     if update_poll:
         update_poll_messages(session, context.bot, poll)
+
+    increase_stat(session, 'votes')
 
 
 def respond_to_vote(session, line, context, poll, remaining_votes=None, limited=False):

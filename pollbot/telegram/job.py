@@ -1,12 +1,12 @@
 """Handle messages."""
+from datetime import date, datetime, timedelta
 from sqlalchemy import func
 from sqlalchemy.orm import joinedload
-from datetime import datetime, timedelta
-from telegram.error import BadRequest, Unauthorized
 from telegram.ext import run_async
+from telegram.error import BadRequest, Unauthorized
 
 from pollbot.i18n import i18n
-from pollbot.models import Update, Notification, Poll
+from pollbot.models import Update, Notification, Poll, DailyStatistic
 from pollbot.helper.session import job_session_wrapper
 from pollbot.helper.update import send_updates, window_size, update_poll_messages
 
@@ -148,3 +148,18 @@ def delete_old_updates(context, session):
     session.query(Update) \
         .filter(Update.time_window <= ten_minutes_ago) \
         .delete()
+
+
+@run_async
+@job_session_wrapper()
+def create_daily_stats(context, session):
+    """Create the daily stats entity for today and tomorrow."""
+    today = date.today()
+    tomorrow = today + timedelta(days=1)
+    for stat_date in [today, tomorrow]:
+        statistic = session.query(DailyStatistic).get(stat_date)
+
+        if statistic is None:
+            statistic = DailyStatistic(stat_date)
+            session.add(statistic)
+            session.commit()

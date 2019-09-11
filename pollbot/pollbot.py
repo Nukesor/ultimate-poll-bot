@@ -17,6 +17,7 @@ from pollbot.telegram.job import (
     message_update_job,
     send_notifications,
     delete_old_updates,
+    create_daily_stats,
 )
 from pollbot.telegram.message_handler import handle_private_text
 from pollbot.telegram.callback_handler import handle_callback_query
@@ -87,9 +88,15 @@ dispatcher.add_handler(ChosenInlineResultHandler(handle_chosen_inline_result))
 minute = 60
 hour = 60 * minute
 job_queue = updater.job_queue
-job_queue.run_repeating(message_update_job, interval=1, first=0, name='Handle poll message update queue')
-job_queue.run_repeating(send_notifications, interval=5*minute, first=0, name='Handle notifications and due dates')
-job_queue.run_repeating(delete_old_updates, interval=hour, first=0, name='Remove old update entries.')
+job_queue.run_repeating(message_update_job, interval=1, first=0,
+                        name='Handle poll message update queue')
+job_queue.run_repeating(send_notifications, interval=5 * minute, first=0,
+                        name='Handle notifications and due dates')
+job_queue.run_repeating(delete_old_updates, interval=hour, first=0,
+                        name='Remove old update entries.')
+job_queue.run_repeating(create_daily_stats, interval=6 * hour, first=0,
+                        name='Create daily statistic entities')
+
 
 # Message handler
 dispatcher.add_handler(
