@@ -147,7 +147,8 @@ def get_doodle_buttons(poll):
 
         # If we don't have the compact button view, display the option name on it's own button row
         if not poll.compact_doodle_buttons:
-            option_row = [InlineKeyboardButton(f'{option.name}', callback_data=ignore_payload)]
+            option_row = [InlineKeyboardButton(f'{option.get_formatted_name()}',
+                                               callback_data=ignore_payload)]
             buttons.append(option_row)
             option_row = []
         else:
