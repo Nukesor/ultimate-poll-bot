@@ -96,7 +96,7 @@ def get_normal_buttons(poll):
                           count=len(option.votes),
                           locale=poll.locale)
         else:
-            text = f'{option_name}'
+            text = option_name
         buttons.append([InlineKeyboardButton(text, callback_data=payload)])
 
     return buttons
@@ -143,11 +143,10 @@ def get_doodle_buttons(poll):
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
         maybe_payload = f'{vote_button_type}:{option.id}:{vote_maybe}'
         no_payload = f'{vote_button_type}:{option.id}:{vote_no}'
-        option_row = [InlineKeyboardButton(f'{option.name}', callback_data=ignore_payload)]
 
         # If we don't have the compact button view, display the option name on it's own button row
         if not poll.compact_doodle_buttons:
-            option_row = [InlineKeyboardButton(f'{option.get_formatted_name()}',
+            option_row = [InlineKeyboardButton(option.get_formatted_name(),
                                                callback_data=ignore_payload)]
             buttons.append(option_row)
             option_row = []
