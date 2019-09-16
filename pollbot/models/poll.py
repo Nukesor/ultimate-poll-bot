@@ -50,7 +50,7 @@ class Poll(base):
     show_percentage = Column(Boolean, nullable=False, default=True)
     european_date_format = Column(Boolean, nullable=False, default=False)
     permanently_summarized = Column(Boolean, nullable=False, default=False)
-    compact_doodle_buttons = Column(Boolean, nullable=False, default=True, server_default='true')
+    compact_doodle_buttons = Column(Boolean, nullable=False, default=False)
     summarize = Column(Boolean, nullable=False, default=False)
     option_sorting = Column(String, nullable=False)
     user_sorting = Column(String, nullable=False)
