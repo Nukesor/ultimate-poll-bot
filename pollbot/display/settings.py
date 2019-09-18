@@ -1,6 +1,6 @@
 """The settings management text."""
 from pollbot.i18n import i18n
-from pollbot.helper import translate_poll_type
+from pollbot.helper import translate_poll_type, get_escaped_bot_name
 from pollbot.helper.enums import PollType, StartAction
 from pollbot.telegram.keyboard import get_start_button_payload
 
@@ -76,6 +76,7 @@ def get_settings_text(poll):
     text.append(i18n.t('settings.sharing_link', locale=locale, name=sorting_name))
 
     payload = get_start_button_payload(poll, StartAction.share_poll)
-    text.append(f'https://t.me/ultimate\_pollbot?start={payload}')
+    bot_name = get_escaped_bot_name()
+    text.append(f'https://t.me/{bot_name}?start={payload}')
 
     return '\n'.join(text)
