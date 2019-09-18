@@ -10,7 +10,10 @@ from pollbot.helper.session import session_wrapper
 from pollbot.helper.text import split_text
 from pollbot.display import compile_poll_text
 from pollbot.telegram.keyboard import get_main_keyboard
-from pollbot.telegram.keyboard.external import get_external_add_option_keyboard
+from pollbot.telegram.keyboard.external import (
+    get_external_add_option_keyboard,
+    get_external_share_keyboard,
+)
 
 
 @run_async
@@ -83,4 +86,10 @@ def start(bot, update, session, user):
             i18n.t('misc.start_after_results', locale=poll.locale),
             parse_mode='markdown',
             reply_markup=main_keyboard,
+        )
+
+    elif action == StartAction.share_poll:
+        update.message.chat.send_message(
+            i18n.t('external.share_poll', locale=poll.locale),
+            reply_markup=get_external_share_keyboard(poll)
         )

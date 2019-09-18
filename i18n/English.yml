@@ -162,6 +162,7 @@ settings:
   dont_summarize: "*Summarize votes*: Show all votes"
   permanently_summarized: "*Summarize votes*: Too many votes. Permanently summarized."
   change_language: Just click on a language to change it for this poll.
+  sharing_link: "Use this link to allow users to share the poll with other chats. *Be careful!* Once it's out there you cannot take it back:"
   anonymize: |
     Do you really want to anonymize this poll?
     ⚠️ This action is irrevertible. ⚠️
@@ -258,6 +259,7 @@ creation:
 
 external:
   canceled: Canceled
+  share_poll: To share this poll, just click the button and choose the chat you want to share the poll with.
   notification:
     pick_poll: Pick the correct poll to activate notifications
     activated: Notifications activated

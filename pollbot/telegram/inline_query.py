@@ -51,6 +51,12 @@ def search(bot, update, session, user):
             .limit(50) \
             .all()
 
+    # Try to find polls that are shared by external people via uuid
+    if len(polls) == 0 and len(query) == 36:
+        polls = session.query(Poll) \
+            .filter(Poll.uuid == query) \
+            .all()
+
     if len(polls) == 0:
         update.inline_query.answer(
             [], cache_time=0, is_personal=True,

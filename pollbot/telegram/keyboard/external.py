@@ -61,3 +61,17 @@ def get_external_add_option_keyboard(poll):
     keyboard = InlineKeyboardMarkup(buttons)
 
     return keyboard
+
+
+def get_external_share_keyboard(poll):
+    """Allow external users to share a poll."""
+    locale = poll.user.locale
+
+    buttons = [
+        [InlineKeyboardButton(
+            i18n.t('keyboard.share', locale=locale),
+            switch_inline_query=str(poll.uuid))]
+    ]
+    keyboard = InlineKeyboardMarkup(buttons)
+
+    return keyboard

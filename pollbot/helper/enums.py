@@ -24,6 +24,7 @@ class StartAction(Enum):
 
     new_option = 0
     show_results = 1
+    share_poll = 2
 
 
 @unique

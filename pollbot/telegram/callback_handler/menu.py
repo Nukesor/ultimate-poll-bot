@@ -69,7 +69,12 @@ def show_settings(session, context, poll):
     """Show the settings tab."""
     text = get_settings_text(poll)
     keyboard = get_settings_keyboard(poll)
-    context.query.message.edit_text(text, parse_mode='markdown', reply_markup=keyboard)
+    context.query.message.edit_text(
+        text,
+        parse_mode='markdown',
+        reply_markup=keyboard,
+        disable_web_page_preview=True,
+    )
     poll.in_settings = True
 
 

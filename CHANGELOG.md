@@ -1,4 +1,5 @@
 ## v1.2.0
+- Link in settings, which allows to share the poll with everybody
 - New doodle button layout in style settings
 - Remove percentage order option for doodle
 

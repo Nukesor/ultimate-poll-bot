@@ -25,7 +25,8 @@ def send_settings_message(context):
     context.query.message.edit_text(
         text=get_settings_text(context.poll),
         parse_mode='markdown',
-        reply_markup=get_settings_keyboard(context.poll)
+        reply_markup=get_settings_keyboard(context.poll),
+        disable_web_page_preview=True,
     )
 
 
