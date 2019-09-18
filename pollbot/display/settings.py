@@ -76,6 +76,6 @@ def get_settings_text(poll):
     text.append(i18n.t('settings.sharing_link', locale=locale, name=sorting_name))
 
     payload = get_start_button_payload(poll, StartAction.share_poll)
-    text.append(f'https://t.me/nukes\_test\_bot?start={payload}')
+    text.append(f'https://t.me/ultimate\_pollbot?start={payload}')
 
     return '\n'.join(text)
