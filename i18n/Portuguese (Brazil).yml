@@ -14,13 +14,13 @@ admin:
 datepicker:
     open: 'Abrir calendário'
     pick_date: 'Escolher esta data'
-    due_date: 'Definir data de vencimento'
-    remove_due_date: 'Remover data de encerramento'
+    due_date: 'Definir encerramento'
+    remove_due_date: 'Remover encerramento'
 poll:
     anonymous: 'A enquete é anônima!'
     results_not_visible: 'Resultados não são visíveis até que a enquete esteja fechada!'
     vote_times: "\nTodos os usuários podem votar *%{amount} vezes*"
-    due: "\n📅 Esta enquete deve ser feita em: %{date}"
+    due: "\n📅 Esta enquete é válida até %{date}"
     closed: "\n ⚠️ *Esta enquete está fechada* ⚠️"
     own_poll: 'Crie *sua própria* enquete [aqui](https://t.me/ultimate_pollbot)'
     many_users_voted: '*%{count} usuários* votaram até agora'
@@ -29,7 +29,7 @@ poll:
     remaining_votes: "\n Votos restantes:"
     remaining_votes_user: '%{name}: %{count} votos'
     summarized_users: '_e %{count} outras pessoas._'
-    too_many_votes: "⚠️ *Muitos votos no último minuto:* ⚠️\nSeus votos continuaram a ser registrados, mas esta mensagem apenas sera atualizada a cada 2 segundos.\n(Telegram não permite o envio/atualização de mais de um certo tanto de mensagens por minuto em um grupo por um bot.)\n"
+    too_many_votes: "⚠️ *Muitos votos no último minuto:* ⚠️\nSeus votos continuaram a ser registrados, mas esta mensagem apenas será atualizada a cada 2 segundos.\n(O Telegram não permite o envio/atualização de mais de um certo tanto de mensagens por minuto em um grupo por um bot.)\n"
     doodle:
         'yes': '- *Sim:*'
         maybe: '- *Talvez:*'
@@ -58,9 +58,9 @@ callback:
     date_changed: 'Data mudada: %{date}'
     date_already_picked: 'Data já escolhida'
     date_picked: 'Data escolhida: %{date}'
-    due_date_in_past: 'A data de vencimento está no passado'
+    due_date_in_past: 'O encerramento está no passado'
     vote:
-        votes_left: '(%{count} restante)'
+        votes_left: '(%{count} restantes!)'
         your_votes: 'Seus votos: '
         changed: 'Voto mudado!'
         removed: 'Voto removido!'
@@ -79,7 +79,7 @@ notification:
 keyboard:
     done: Concluído
     close: Fechar
-    back: Voltar
+    back: '↩️ Voltar'
     cancel: Cancelar
     delete: '❌ Apagar'
     reset: '🔨 Repor'
@@ -94,15 +94,15 @@ keyboard:
     permanently_delete: '⚠️ Excluir permanentemente a enquete! ⚠️'
     permanently_anonymize: '⚠️ Tornar enquete permanentemente anônima! ⚠️'
     anonymize: '🔍 Tornar os votos anônimos'
-    due_date: '📅 Definir data de encerramento'
+    due_date: '📅 Definir encerramento'
     hide_percentage: '○% Ocultar percentagem'
     show_percentage: '○% Mostrar percentagem'
     new_option: '＋ Adicione uma nova opção'
     remove_option: '－ Remover opções'
-    forbid_user_options: '🍺 Não permitir que os usuários adicionem novas opções'
-    allow_user_options: '🍻 Permitir que os usuários adicionem novas opções'
-    order_users: '*Classificação dos usuário*: %{name}'
-    order_options: 'Classificação das opções: %{name}'
+    forbid_user_options: '🍺 Não permitir que usuários adicionem opções'
+    allow_user_options: '🍻 Permitir que usuários adicionem opções'
+    order_users: 'Ordenar usuários: %{name}'
+    order_options: 'Ordenar opções: %{name}'
     show_results: '🔎 Exibir todos os votos'
     vote_with_count: '%{option_name} (%{count} votos)'
     help:
@@ -113,7 +113,7 @@ keyboard:
         languages: Idiomas
         bugs: Bugs
     styling: '🎀 Configurações de estilo'
-    summarize_votes: 'Resumir vários votos'
+    summarize_votes: 'Consolidar vários votos'
     dont_summarize_votes: 'Mostrar todos os votos'
     add_new_language: 'Adicionar um novo idioma'
     compact_doodle: 'Mostrar letras nos botões (teclado menor)'
@@ -130,8 +130,8 @@ settings:
     language: '*Idioma*: %{language}'
     anonymous: '*Anonimato*: os nomes não são visíveis'
     not_anonymous: '*Anonimato*: os nomes são visíveis'
-    due_date: '*Data de encerramento*: %{date}'
-    no_due_date: '*Data de encerramento*: Nenhum'
+    due_date: '*Encerramento*: %{date}'
+    no_due_date: '*Data de encerramento*: Nenhuma'
     results_visible: '*Resultados visíveis*: os resultados são visíveis'
     results_not_visible: '*Resultados visíveis*: os resultados não são visíveis até que a enquete seja fechada'
     user_options: '*Opções personalizadas do usuário*: qualquer um pode adicionar novas opções'
@@ -140,14 +140,14 @@ settings:
     no_percentage: '*Percentagem*: Oculta'
     euro_date_format: '*Formato da data*: DD.MM.AAAA'
     us_date_format: '*Formato da data*: AAAA-MM-DD'
-    user_sorting: '*Classificação dos usuário*: %{name}'
-    option_sorting: '*Classificação das opções*: %{name}'
+    user_sorting: '*Ordenar usuários*: %{name}'
+    option_sorting: '*Ordenar opções*: %{name}'
     change_language: 'Basta clicar em um idioma para alterá-lo para esta enquete.'
     anonymize: "Deseja realmente tornar anônima esta enquete? \n ⚠️ Esta ação é irreversível. ⚠️ \n"
     remove_options: 'Basta tocar nos botões abaixo para remover as opções desejadas.'
-    summarize: '*Resumir votos*: Resumir vários votos.'
-    dont_summarize: '*Resumir votos*: Mostrar todos os votos.'
-    permanently_summarized: '*Resumir votos*: Muitos votos. Resumido permanentemente.'
+    summarize: '*Consolidar votos*: Consolidar vários votos.'
+    dont_summarize: '*Consolidar votos*: Mostrar todos os votos.'
+    permanently_summarized: '*Consolidar votos*: Muitos votos. Permanentemente consolidado'
     sharing_link: 'Use este link para permitir que os usuários compartilhem a enquete em outras conversas. *Cuidado!* Uma vez compartilhado, não poderá voltar atrás:'
 management:
     permanently_close: "Deseja realmente fechar permanentemente esta enquete? \nOs resultados ficarão visíveis, mas as pessoas não poderão mais votar \n⚠️ Esta ação é irreversível. ⚠️\n"
@@ -158,7 +158,7 @@ creation:
     skip_description: Ignorar
     not_allowed: 'Você não tem mais permissão para adicionar novas opções'
     cancel: 'Cancelar a última criação'
-    vote_count_request: 'Envie-me a quantidade de votos permitidos por usuário.'
+    vote_count_request: 'Envie a quantidade de votos permitidos por usuário.'
     keyboard:
         change: 'Alterar o tipo de enquete'
         anonymity: 'Pesquisa anônima'
@@ -200,14 +200,14 @@ misc:
     start: "🌟Bem-vindo ao *ULTIMATE* pollbot 🌟 \n\nBasta enviar /create ou tocar no botão abaixo para começar a criar enquetes. Tudo será explicado no processo. \n\n🌐 Você pode escolher outro idioma enviando /language 🌐 \n❓Clique em /help para obter mais informações ❓ \n\nSe você gosta do projeto, confira o meu [grupo de suporte](https://t.me/nukesors_projects) ou consulte minha [página no Patreon] (https://www.patreon.com/nukesor). Este bot é de código aberto no [GitHub] (https://github.com/Nukesor/ultimate-poll-bot). \n"
     help:
         intro: "Existem algumas configurações para suas enquetes. \nBasta escolher a categoria ou apenas ler tudo 😉. \n\nCaso você queira apenas criar uma enquete, envie /create \n"
-        creation: "🌟 *Criação:* \n\n Para criar uma nova enquete, basta escrever ou tocar em /create. \n Para cada enquete, você pode especificar várias configurações iniciais \n\n*Tipo de enquete:* Os vários tipos são explicados em detalhes no menu tipo de enquete. \n*Anonimato:* Você pode deixar sua enquete anônima, o que resulta em nenhum nome sendo exibido! Isso é permanente e para todos.\n*Resultados visíveis:* Nesse modo, os votos somente se tornam visíveis após o encerramento da enquete. Isso é ótimo para evitar a possibilidade de [voto tático](https://pt.wikipedia.org/wiki/Voto_tático) e o efeito de [ancoragem](https://pt.wikipedia.org/wiki/Efeito_de_ancoragem) \n\n-> *Atenção: Uma enquete encerrada com resultados invisíveis permanecerá fechada!:* \nA reabertura de uma enquete permitiria a um usuário, especificamente ao criador da enquete, examinar os votos e colocar seu próprio voto de uma maneira que resultaria em uma possível vantagem para ele (voto tático). \n"
-        settings: "⚙️ *Configurações:* \n\nConfigurações adicionais da enquete podem ser ajustadas após sua criação: \n\n*Anonimato:* Uma pesquisa pode ser feita anonimamente. \n*Porcentagem:* A linha de porcentagem de cada opção pode ser ocultada no menu de configurações. \n*Opções:* Novas opções podem ser adicionadas e as opções existentes podem ser removidas no menu de configurações.\n*Opções do usuário:* Você pode permitir que outros usuários adicionem opções à sua enquete. \n*Ordem:* A ordem na qual os usuários e as opções são exibidos nos resultados pode ser alterada. \n*Data de encerramento:* É possível definir uma data de encerramento na qual a pesquisa será fechada automaticamente. \n"
+        creation: "🌟 *Criação:* \n\n Para criar uma enquete, basta escrever ou tocar em /create. \n Para cada enquete, você pode especificar várias configurações iniciais: \n\n*Tipo de enquete:* Os vários tipos são explicados em detalhes no menu tipo de enquete. \n*Anonimato:* Você pode deixar sua enquete anônima, o que resulta em nenhum nome sendo exibido! Isso é permanente e para todos.\n*Resultados visíveis:* Nesse modo, os votos somente se tornam visíveis após o encerramento da enquete. Isso é ótimo para evitar a possibilidade de [voto tático](https://pt.wikipedia.org/wiki/Voto_tático) e o efeito de [ancoragem](https://pt.wikipedia.org/wiki/Efeito_de_ancoragem) \n\n-> *Atenção: Uma enquete encerrada com resultados invisíveis permanecerá fechada!:* \nA reabertura de uma enquete permitiria a um usuário (especificamente ao criador da enquete), examinar o resultado e colocar seu próprio voto de maneira que resultaria em uma possível vantagem para ele (voto tático). \n"
+        settings: "⚙️ *Configurações:* \n\nConfigurações adicionais da enquete podem ser ajustadas após sua criação: \n\n*Anonimato:* Uma enquete pode ser feita anonimamente. \n*Porcentagem:* A linha de porcentagem de cada opção pode ser ocultada no menu de configurações. \n*Opções:* Novas opções podem ser adicionadas e as opções existentes podem ser removidas no menu de configurações.\n*Opções do usuário:* Você pode permitir que usuários adicionem opções à sua enquete. \n*Ordem:* A ordem na qual os usuários ou as opções são exibidos nos resultados pode ser alterada. \n*Data de encerramento:* É possível definir uma data de encerramento na qual a enquete será fechada automaticamente. \n"
         notifications: "📣 *Notificações:* \n\nSe você habilitar notificações para o seu chat, o bot vai mandar uma mensagem 1 dia, 6 horas e 1 hora antes de a enquete fechar.\nEste é apenas um recurso para lembrar todos do grupo que uma enquete irá fechar logo, e para deixar fácil de achar a mensagem da enquete novamente 😉.\n\nPara habilitar as notificações em seu chat siga os seguintes passos:\n*1.* Crie uma enquete;\n*2.* Coloque uma data de termino no menu de configurações;\n*3.* Vá para o chat que você deseja que seja notificado (o pollbot precisa estar no grupo antes de a enquete ser compartilhada ou você precisará compartilhar ela de novo);\n*4.* Responda com /notify na mensagem da enquete que voce selecionou via @ultimate\\_pollbot;\n*5.* Selecione a enquete correta.\n\nEste procedimento todo é infelizmente complicado, pois o Telegram não permite a detecção de mensagens de bots nos grupos 😐.\nAssim, nós não sabemos qual enquete é postada em cada grupo e tudo precisa ser feito manualmente.\n"
         management: "🕰 *Achar enquetes antigas:* \n\nHá dois comandos /list e /list\\_closed, que permite você achar e gerenciar suas enquetes antigas.\n\n⚠️ *Deletar enquetes:* \n\nVocê pode deletar enquetes individuais no respectivo menu de pesquisa.\nTambém há o comando /delete\\_closed, que deleta todas as enquetes fechadas e o comando /delete\\_all que deleta TODAS as enquetes.\n"
         languages: "🌐 *Idioma:* \n\nUltimate pollbot suporta vários idiomas, mas apenas o inglês é oficialmente mantido.\n\nPara adicionar um novo idioma ou atualizar um idioma atual, entre em contato comigo: @Nukesor! \nEstou usando o serviço de localização [Lokalise](https://lokalise.co), que concordou em me fornecer uma licença de código aberto para traduzir meus projetos.\nPara que este serviço funcione, você precisará me fornecer um endereço de email, pois preciso enviar um convite.\n\nPor favor, tenha cuidado para manter o estilo correto do Markdown (`**`, `__`, `${}`), caso contrário não funcionará no seu idioma. \nSe algo der errado, tentarei corrigi-lo, mas, por favor, me ajude a evitar isso. Leva  tempo e esforço para corrigir esses erros.\nO suporte a vários idiomas é um recurso voltado para a comunidade, que eu felizmente suporto, mas não posso cuidar de vários idiomas por conta própria. \n"
         bugs: "⚠️ *Há um bug desconhecido que não vai embora!!* 😩\n\nEu normalmente recebo notificações assim que algo quebra, mas podem haver alguns bugs que passam desapercebidos!\nCaso o bug não tenha sido corrigido em um ou dois dias, por favor escreva um ticket no [Github](https://github.com/Nukesor/ultimate-poll-bot) ou pelo meu [grupo de suporte](https://t.me/nukesors_projects).\n"
     error: "Ocorreu um erro desconhecido. Provavelmente recebi uma notificação sobre isso e tentarei corrigi-lo o mais rápido possível.\nCaso o bug não tenha sido corrigido em um ou dois dias, por favor envie um ticket no [Github](https://github.com/Nukesor/ultimate-poll-bot) ou no meu [grupo de suporte](https://t.me/nukesors_projects).\n"
     start_after_results: 'Ei! Basta enviar /create para criar sua própria enquete ☺️'
-    over_3000: "⚠️ Sua enquete já tem mais de *3.000 caracteres*; tente mantê-la curta e abaixo de 3.000, ou, melhor ainda, abaixo de 2.500 🙏. \n\nO Telegrama tem um máximo de 4.096 caracteres por mensagem e eu preciso exibir os votos além do seu texto inicial. Toda enquete com mais caracteres do que isso, simplesmente *irá parar de funcionar*. \nTentamos lidar com isso da melhor forma possível, resumindo os votos para economizar espaço, mas isso tem um limite. \n\nPara pesquisas com muito texto e com mais de 10 ou 15 opções, é melhor usar uma ferramenta externa como [Doodle](https://doodle.com/) \n"
+    over_3000: "⚠️ Sua enquete já tem mais de *3.000 caracteres*; tente mantê-la curta e abaixo de 3.000, ou, melhor ainda, abaixo de 2.500 🙏. \n\nO Telegrama tem um máximo de 4.096 caracteres por mensagem e eu preciso exibir os votos além do seu texto inicial. Toda enquete com mais caracteres do que isso, simplesmente *irá parar de funcionar*. \nTentamos lidar com isso da melhor forma possível, consolidando os votos para economizar espaço, mas isso tem um limite. \n\nPara pesquisas com muito texto e com mais de 10 ou 15 opções, é melhor usar uma ferramenta externa como [Doodle](https://doodle.com/) \n"
     over_4000: "⚠️ Sua enquete tem mais de *4.000 caracteres*. É muito grande para exibí-la em uma única mensagem. Por favor, tente mantê-la curto e com menos de 3.000 caracteres ou, melhor ainda, com menos de 2.500 🙏. \n\nO Telegrama tem um máximo de 4.096 caracteres por mensagem e ainda será necessário exibir os votos além do seu texto inicial. Toda enquete com mais caracteres do que isso simplesmente *irá parar de funcionar*. \nTentamos tratar isso da melhor forma possível, mas estou de mãos atadas nessa. \n\nPara pesquisas muito longas e com muitas opções, é melhor usar uma ferramenta externa como [Doodle](https://doodle.com/)\n"
     too_long: "Ei! \n\nSinto muito, mas sua enquete ficou muito longa. Você provavelmente enviou um grande número de opções ou adicionou um texto descritivo muito longo (ou ambos). 😬 \n\nComo o Telegram permite apenas 4096 caracteres por mensagem, não consigo mostrar nenhuma enquete maior que isso. 😐 \n\nPor favor, tente manter os textos das descrições e das opções curtos e, se você quiser usar enquetes com muitas opções, talvez seja melhor usar uma ferramenta externa como [Doodle] (https://doodle.com/). \n\nUma maneira de resolver esse problema pode ser removendo opções (o administrador pode fazer isso). \n\n 👇 Você ainda pode votar e ver os resultados abaixo. 👇\n \n \n"
