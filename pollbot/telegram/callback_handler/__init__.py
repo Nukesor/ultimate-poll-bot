@@ -220,7 +220,15 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.ignore: ignore,
     }
 
-    callback_functions[context.callback_type](session, context)
+    response = callback_functions[context.callback_type](session, context)
+
+    # Callback handler functions always return the callback answer
+    # The only exception is the vote function, which is way too complicated and
+    # implements its own callback query answer logic.
+    if response is not None and context.callback_type != CallbackType.vote:
+        context.query.answer(response)
+    else:
+        context.query.answer('')
 
     increase_stat(session, 'callback_calls')
 

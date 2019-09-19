@@ -157,14 +157,14 @@ def handle_limited_vote(session, context, option):
     if existing_vote:
         session.delete(existing_vote)
         vote_removed = i18n.t('callback.vote.removed', locale=locale)
-        respond_to_vote(session, vote_removed, context, option.poll, vote_count-1, True)
+        respond_to_vote(session, vote_removed, context, option.poll, vote_count - 1, True)
 
     # Add vote
     elif existing_vote is None and vote_count < option.poll.number_of_votes:
         vote = Vote(context.user, option)
         session.add(vote)
         vote_registered = i18n.t('callback.vote.registered', locale=locale)
-        respond_to_vote(session, vote_registered, context, option.poll, vote_count+1, True)
+        respond_to_vote(session, vote_registered, context, option.poll, vote_count + 1, True)
 
     # Max votes reached
     else:

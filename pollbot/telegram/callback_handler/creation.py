@@ -29,8 +29,6 @@ def skip_description(session, context, poll):
         reply_markup=get_open_datepicker_keyboard(poll)
     )
 
-    return
-
 
 @poll_required
 def show_poll_type_keyboard(session, context, poll):
@@ -49,8 +47,8 @@ def show_poll_type_keyboard(session, context, poll):
 def change_poll_type(session, context, poll):
     """Change the vote type."""
     if poll.created:
-        context.query.answer(i18n.t('callback.poll_created', locale=context.user.locale))
-        return
+        return i18n.t('callback.poll_created', locale=context.user.locale)
+
     poll.poll_type = PollType(context.action).name
 
     keyboard = get_init_keyboard(poll)
@@ -65,8 +63,8 @@ def change_poll_type(session, context, poll):
 def toggle_anonymity(session, context, poll):
     """Change the anonymity settings of a poll."""
     if poll.created:
-        context.query.answer(i18n.t('callback.poll_already_created', locale=context.user.locale))
-        return
+        return i18n.t('callback.poll_already_created', locale=context.user.locale)
+
     poll.anonymous = not poll.anonymous
 
     keyboard = get_init_keyboard(poll)
@@ -75,15 +73,16 @@ def toggle_anonymity(session, context, poll):
         parse_mode='markdown',
         reply_markup=keyboard
     )
-    context.query.answer(i18n.t('callback.anonymity_changed', locale=context.user.locale))
+
+    return i18n.t('callback.anonymity_changed', locale=context.user.locale)
 
 
 @poll_required
 def toggle_results_visible(session, context, poll):
     """Change the results visible settings of a poll."""
     if poll.created:
-        context.query.answer(i18n.t('callback.poll_already_created', locale=context.user.locale))
-        return
+        return i18n.t('callback.poll_already_created', locale=context.user.locale)
+
     poll.results_visible = not poll.results_visible
 
     keyboard = get_init_keyboard(poll)
@@ -92,7 +91,7 @@ def toggle_results_visible(session, context, poll):
         parse_mode='markdown',
         reply_markup=keyboard
     )
-    context.query.answer(i18n.t('callback.visibility_changed', locale=context.user.locale))
+    return i18n.t('callback.visibility_changed', locale=context.user.locale)
 
 
 @poll_required
@@ -131,8 +130,6 @@ def open_creation_datepicker(session, context, poll):
         reply_markup=keyboard
     )
 
-    return
-
 
 @poll_required
 def close_creation_datepicker(session, context, poll):
@@ -158,14 +155,11 @@ def close_creation_datepicker(session, context, poll):
         reply_markup=keyboard
     )
 
-    return
-
 
 def cancel_creation(session, context):
     """Cancel the creation of a bot."""
     if context.poll is None:
-        context.query.answer(i18n.t('delete.doesnt_exist', locale=context.user.locale))
-        return
+        return i18n.t('delete.doesnt_exist', locale=context.user.locale)
 
     session.delete(context.poll)
     context.query.message.edit_text(i18n.t('delete.previous_deleted', locale=context.user.locale))

@@ -44,7 +44,6 @@ def go_back(session, context, poll):
         reply_markup=keyboard,
         disable_web_page_preview=True,
     )
-    context.query.answer('')
 
     # Reset the expected input from the previous option
     context.user.expected_input = None

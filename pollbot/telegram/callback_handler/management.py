@@ -14,7 +14,8 @@ def delete_poll(session, context, poll):
     remove_poll_messages(session, context.bot, poll)
     session.delete(poll)
     session.commit()
-    context.query.answer(i18n.t('callback.deleted', locale=poll.user.locale))
+
+    return i18n.t('callback.deleted', locale=poll.user.locale)
 
 
 @poll_required
@@ -23,15 +24,15 @@ def close_poll(session, context, poll):
     poll.closed = True
     session.commit()
     update_poll_messages(session, context.bot, poll)
-    context.query.answer(i18n.t('callback.closed', locale=poll.user.locale))
+
+    return i18n.t('callback.closed', locale=poll.user.locale)
 
 
 @poll_required
 def reopen_poll(session, context, poll):
     """Reopen this poll."""
     if not poll.results_visible:
-        context.query.answer(i18n.t('callback.cannot_reopen', locale=poll.user.locale))
-        return
+        return i18n.t('callback.cannot_reopen', locale=poll.user.locale)
     poll.closed = False
 
     # Remove the due date if it's in the past
@@ -53,7 +54,8 @@ def reset_poll(session, context, poll):
         session.delete(vote)
     session.commit()
     update_poll_messages(session, context.bot, poll)
-    context.query.answer(i18n.t('callback.votes_removed', locale=poll.user.locale))
+
+    return i18n.t('callback.votes_removed', locale=poll.user.locale)
 
 
 @poll_required
@@ -68,4 +70,5 @@ def clone_poll(session, context, poll):
         reply_markup=get_management_keyboard(new_poll),
         disable_web_page_preview=True,
     )
-    context.query.answer(i18n.t('callback.cloned', locale=poll.user.locale))
+
+    return i18n.t('callback.cloned', locale=poll.user.locale)

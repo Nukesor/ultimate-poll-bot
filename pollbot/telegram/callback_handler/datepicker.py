@@ -45,8 +45,8 @@ def set_date(session, context, poll):
     """Show to vote type keyboard."""
     poll.current_date = date.fromisoformat(context.action)
     update_datepicker(context, poll)
-    context.query.answer(i18n.t('callback.date_changed', locale=poll.locale,
-                                date=poll.current_date.isoformat()))
+    return i18n.t('callback.date_changed', locale=poll.locale,
+                  date=poll.current_date.isoformat())
 
 
 @poll_required
@@ -54,8 +54,8 @@ def set_next_month(session, context, poll):
     """Show to vote type keyboard."""
     poll.current_date += relativedelta(months=1)
     update_datepicker(context, poll)
-    context.query.answer(i18n.t('callback.date_changed', locale=poll.locale,
-                                date=poll.current_date.isoformat()))
+    return i18n.t('callback.date_changed', locale=poll.locale,
+                  date=poll.current_date.isoformat())
 
 
 @poll_required
@@ -63,8 +63,8 @@ def set_previous_month(session, context, poll):
     """Show to vote type keyboard."""
     poll.current_date -= relativedelta(months=1)
     update_datepicker(context, poll)
-    context.query.answer(i18n.t('callback.date_changed', locale=poll.locale,
-                                date=poll.current_date.isoformat()))
+    return i18n.t('callback.date_changed', locale=poll.locale,
+                  date=poll.current_date.isoformat())
 
 
 @poll_required
@@ -73,11 +73,11 @@ def add_date(session, context, poll):
     option = poll.current_date.isoformat()
     added_options = add_options(poll, option, is_date=True)
     if len(added_options) == 0:
-        context.query.answer(i18n.t('callback.date_already_picked', locale=poll.locale))
+        return i18n.t('callback.date_already_picked', locale=poll.locale)
     else:
         update_datepicker(context, poll)
-        context.query.answer(i18n.t('callback.date_picked', locale=poll.locale,
-                                    date=poll.current_date.isoformat()))
+        return i18n.t('callback.date_picked', locale=poll.locale,
+                      date=poll.current_date.isoformat())
 
     if poll.created:
         update_poll_messages(session, context.bot, poll)

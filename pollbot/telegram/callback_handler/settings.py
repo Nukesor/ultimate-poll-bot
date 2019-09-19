@@ -80,11 +80,12 @@ def open_due_date_datepicker(session, context, poll):
 def pick_due_date(session, context, poll):
     """Add a date from the datepicker to the poll."""
     if poll.current_date <= date.today():
-        context.query.answer(
-            i18n.t('callback.due_date_in_past', locale=poll.user.locale),
-        )
-        return
+        return i18n.t('callback.due_date_in_past', locale=poll.user.locale)
+
     due_date = datetime.combine(poll.current_date, time(hour=12, minute=00))
+    if (due_date == poll.due_date):
+        return
+
     poll.set_due_date(due_date)
     context.query.message.edit_text(
         text=get_settings_text(context.poll),
