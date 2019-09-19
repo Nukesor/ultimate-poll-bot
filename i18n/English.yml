@@ -135,10 +135,10 @@ keyboard:
 
 sorting:
     user_chrono: chronologically
-    user_name: by name
+    user_name: alphabetically
     option_chrono: chronologically
     option_percentage: by percentage
-    option_name: by name
+    option_name: alphabetically
     doodle_sorting: by answer
 
 settings:
