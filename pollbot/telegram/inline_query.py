@@ -9,10 +9,9 @@ from telegram import (
 )
 
 from pollbot.i18n import i18n
+from pollbot.models import Poll
 from pollbot.display import get_poll_text_and_vote_keyboard
 from pollbot.helper.session import hidden_session_wrapper
-from pollbot.models import Poll
-from pollbot.telegram.keyboard import get_vote_keyboard
 
 
 @run_async

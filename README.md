@@ -84,7 +84,7 @@ Thanks to [cnpltdncsln](https://github.com/cnpltdncsln) for providing turkish tr
 Thanks to [tszalbot](https://github.com/tszalbot) for providing polish translations.  
 Thanks to [FedericoAntoniazzi](https://github.com/FedericoAntoniazzi) and [LBindustries](https://github.com/LBindustries) for providing italian translations.  
 Thanks to [balboag](https://github.com/balboag) for providing spanish translations.  
-Thanks to [gui258](https://github.com/gui258) for providing brazilian portuguese translations.  
+Thanks to [gui258](https://github.com/gui258) and Leonardo Frazao for providing brazilian portuguese translations.  
 
 
 Thanks to my patreons:

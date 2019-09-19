@@ -13,6 +13,7 @@ supported_languages = [
     'Czech',
     'Italian',
     'Polish',
+    'Portuguese (Brazil)',
     'Spanish',
     'Turkish',
 ]

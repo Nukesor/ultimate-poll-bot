@@ -15,6 +15,7 @@ datepicker:
     open: 'Selector de fechas'
     pick_date: 'Elegir esta fecha'
     due_date: 'Elegir fecha de vencimiento'
+    remove_due_date: 'Eliminar fecha de vencimiento'
 poll:
     anonymous: '¡La encuesta es anónima!'
     results_not_visible: '¡Resultados ocultos hasta el cierre de la encuesta!'
@@ -33,7 +34,11 @@ poll:
         'yes': '├ *Sí:*'
         maybe: '├ *Quizás:*'
         'no': '├ *No:*'
-    doodle_help: '*Haz clic* en los botones `a)`, `b)` abajo para ver los nombres de las opciones.'
+        yes_summarized: "├ *Sí:* %{count} votos\n"
+        maybe_summarized: '├ *Quizá:* %{count} votos'
+        no_summarized: '├ *No:* %{count} votos'
+    doodle_help: "*Haz clic* en los botones `a)`, `b)` abajo para ver los nombres de las opciones.\n"
+    please_wait: 'Por favor espera un segundo mientras el bot sincroniza las encuestas ☺️'
 deleted:
     poll: 'Encuesta eliminada.'
     polls: 'Todas las encuestas fueron eliminadas'
@@ -198,3 +203,4 @@ misc:
         languages: "🌐 *Idioma:*\n\nUltimate pollbot es compatible con varios idiomas, pero sólo se mantiene oficialmente el inglés. Para añadir un nuevo idioma, ve al repositorio GitHub, copia el archivo `english.yml`, renómbralo a tu idioma y ajusta todos los valores.\n\nTen cuidado de no estropear ningún estilo de Markdown (`**`, `__`, `${}`), de lo contrario las cosas se romperán en tu idioma. Si algo se rompe debido a traducciones rotas, por favor, arréglalo tú mismo. No voy a investigar estos temas.\n\nEl soporte multilingüe es una característica impulsada por la comunidad que con mucho gusto apoyo, pero no puedo soportar varios idiomas por mi cuenta.\n"
         bugs: "Por lo general, recibo una notificación tan pronto como algo se rompe, ¡pero puede haber algunos errores que pasen desapercibidos! \n\nEn caso de que un error no se solucione en un día o dos, abre un ticket en [GitHub](https://github.com/Nukesor/ultimate-poll-bot) o pasa por mi [grupo de soporte](https: //t.me/nukesors_projects).\n"
     error: "Ocurrió un error desconocido. Probablemente acabo de ser notificado sobre esto y trataré de arreglarlo lo más rápido posible.\n\nEn caso de que el error no se solucione en un día o dos, por favor, abre un ticket en [GitHub](https://github.com/Nukesor/ultimate-poll-bot) o ve a mi [grupo de soporte](https://t.me/nukesors_projects).\n"
+    start_after_results: '¡Ey! Escribe /create para crear tu encuesta ☺️'

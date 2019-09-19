@@ -1,4 +1,5 @@
 #!/bin/python
+import os
 import sys
 import json
 import urllib.request
@@ -28,6 +29,7 @@ payload = {
         "de",
         "it",
         "pl",
+        "pt_BR",
         "es",
         "tr",
     ],
@@ -59,3 +61,5 @@ urllib.request.urlretrieve(url, file_name)
 # Extract all the contents of zip file in i18n
 with ZipFile(file_name, 'r') as zipObj:
     zipObj.extractall('i18n')
+
+os.rename('i18n/Portuguese__28Brazil_29.yml', 'i18n/Portuguese (Brazil).yml')
