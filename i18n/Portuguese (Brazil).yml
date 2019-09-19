@@ -177,7 +177,7 @@ creation:
     results_visible: 'Os resultados são visíveis diretamente'
     anonymity: 'Nomes não visíveis'
     no_anonymity: 'Nomes visíveis'
-    init_text: "Olá! \nVocê está prestes a criar uma nova enquete 👌 \n\nAs configurações atuais desta enquete são: \n\n* Tipo de pesquisa*: %{poll_type} \n*Anonimato*: %{anonymity} \nResultados visíveis*: %{results_visible} \n\nPor favor, siga estes passos: \n1. Configure a enquete de acordo com suas necessidades \n2. Envie-me o título desta enquete. 👇 \n"
+    init_text: "Olá! \nVocê está prestes a criar uma nova enquete 👌 \n\nAs configurações atuais desta enquete são:\n\n* Tipo de pesquisa*: %{poll_type} \n*Anonimato*: %{anonymity} \n*Resultados visíveis*: %{results_visible} \n\nPor favor, siga estes passos: \n1. Configure a enquete de acordo com suas necessidades \n2. Envie-me o título desta enquete. 👇 \n"
     datepicker_text: "*Calendário:* \nPara adicionar uma data, selecione-a e toque em *Escolher esta data*. \nToque em *Concluído* quando terminar. \n\n*Opções atuais:* \n"
     error:
         limit_bigger_zero: 'Por favor, envie um número maior que 0'
@@ -192,7 +192,7 @@ external:
     share_poll: 'Para compartilhar esta enquete, basta clicar no botão e escolher a conversa com a qual deseja compartilhar a enquete.'
 delete:
     doesnt_exist: 'A enquete a ser excluída não existe'
-    previous_deleted: 'Enquete anterior excluída. Agora você pode enviar /create para criar uma nova.'
+    previous_deleted: 'Enquete anterior excluída. Agora você pode enviar /create para criar uma.'
 user:
     language_changed: 'Idioma alterado'
 misc:
