@@ -77,7 +77,7 @@ notification:
     six_hours: 'A enquete *%{name}* vai fechar automaticamente em seis horas'
     closed: 'A enquete *%{name}* está fechada agora'
 keyboard:
-    done: Feito
+    done: Concluído
     close: Fechar
     back: Voltar
     cancel: Cancelar
@@ -135,7 +135,7 @@ settings:
     results_visible: '*Resultados visíveis*: os resultados são visíveis'
     results_not_visible: '*Resultados visíveis*: os resultados não são visíveis até que a enquete seja fechada'
     user_options: '*Opções personalizadas do usuário*: qualquer um pode adicionar novas opções'
-    no_user_options: '*Opções personalizadas do usuário": Só você pode adicionar novas opções'
+    no_user_options: '*Opções personalizadas do usuário*: Só você pode adicionar novas opções'
     percentage: '*Percentagem*: Visível'
     no_percentage: '*Percentagem*: Oculta'
     euro_date_format: '*Formato da data*: DD.MM.AAAA'
