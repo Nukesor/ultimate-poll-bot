@@ -167,7 +167,7 @@ creation:
         results_not_visible: 'Ocultar resultados até a votação ser fechada'
     option:
         next: 'Você pode enviar uma mensagem para uma *nova opção* ou tocar em *abrir calendário" para escolher uma data (e adicioná-la como opção) ou ainda tocar em *Concluído* para terminar.'
-        first: "Por favor me envie uma opção. Você pode enviar várias opções ao mesmo tempo, cada opção em uma nova linha. \nVocê também pode adicionar uma descrição depois de um hífen. \nPor exemplo, `Hambúrguer - porque é delicioso` \n"
+        first: "Por favor me envie uma opção. Você pode enviar várias opções ao mesmo tempo, cada opção em uma nova linha. \nVocê também pode adicionar uma descrição depois de um hífen (por exemplo, `Hambúrguer - porque é delicioso`) \n"
         no_new: '❌ Nenhuma nova opção foi adicionada'
         single_added: "*%{option}* foi adicionado. 👍 \nVocê pode enviar uma mensagem para uma *nova opção* ou tocar em *abrir calendário\" para escolher uma data (e adicioná-la como opção) ou ainda tocar em *Concluído* para terminar."
         multiple_added: 'Opções adicionadas:'
@@ -177,7 +177,7 @@ creation:
     results_visible: 'Os resultados são visíveis diretamente'
     anonymity: 'Nomes não visíveis'
     no_anonymity: 'Nomes visíveis'
-    init_text: "Olá! \nVocê está prestes a criar uma nova enquete 👌 \n\nAs configurações atuais desta enquete são:\n\n* Tipo de pesquisa*: %{poll_type} \n*Anonimato*: %{anonymity} \n*Resultados visíveis*: %{results_visible} \n\nPor favor, siga estes passos: \n1. Configure a enquete de acordo com suas necessidades \n2. Envie-me o título desta enquete. 👇 \n"
+    init_text: "Olá! \nVocê está prestes a criar uma nova enquete 👌 \n\nAs configurações atuais desta enquete são:\n\n*Tipo de pesquisa*: %{poll_type} \n*Anonimato*: %{anonymity} \n*Resultados visíveis*: %{results_visible} \n\nPor favor, siga estes passos: \n1. Configure a enquete de acordo com suas necessidades \n2. Envie-me o título desta enquete. 👇 \n"
     datepicker_text: "*Calendário:* \nPara adicionar uma data, selecione-a e toque em *Escolher esta data*. \nToque em *Concluído* quando terminar. \n\n*Opções atuais:* \n"
     error:
         limit_bigger_zero: 'Por favor, envie um número maior que 0'
