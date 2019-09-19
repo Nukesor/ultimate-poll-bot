@@ -102,7 +102,7 @@ keyboard:
     forbid_user_options: '🍺 Não permitir que os usuários adicionem novas opções'
     allow_user_options: '🍻 Permitir que os usuários adicionem novas opções'
     order_users: '*Classificação dos usuário*: %{name}'
-    order_options: '*Classificação das opções*: %{name}'
+    order_options: 'Classificação das opções: %{name}'
     show_results: '🔎 Exibir todos os votos'
     vote_with_count: '%{option_name} (%{count} votos)'
     help:
