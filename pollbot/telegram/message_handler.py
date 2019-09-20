@@ -31,7 +31,11 @@ def handle_private_text(bot, update, session, user):
         return
 
     expected_input = ExpectedInput[user.expected_input]
-    ignored_expected_inputs = [ExpectedInput.date, ExpectedInput.due_date]
+    ignored_expected_inputs = [
+        ExpectedInput.date,
+        ExpectedInput.due_date,
+        ExpectedInput.votes,
+    ]
     # The user is currently not expecting input or no poll is set
     if user.current_poll is None or user.expected_input is None:
         return
