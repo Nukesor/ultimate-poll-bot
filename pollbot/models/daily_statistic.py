@@ -28,8 +28,9 @@ class DailyStatistic(base):
     callback_calls = Column(Integer, default=0, nullable=False)
     new_users = Column(Integer, default=0, nullable=False)
     created_polls = Column(Integer, default=0, nullable=False)
-    externally_shared = Column(Integer, default=0, nullable=False, server_default='0')
-    show_results = Column(Integer, default=0, nullable=False, server_default='0')
+    externally_shared = Column(Integer, default=0, nullable=False)
+    show_results = Column(Integer, default=0, nullable=False)
+    notifications = Column(Integer, default=0, nullable=False, server_default='0')
 
     def __init__(self, date):
         """Create a new dialy statistic."""

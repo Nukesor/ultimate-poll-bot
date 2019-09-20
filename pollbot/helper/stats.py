@@ -12,6 +12,7 @@ def increase_stat(session, name):
         'created_polls': DailyStatistic.created_polls,
         'externally_shared': DailyStatistic.externally_shared,
         'show_results': DailyStatistic.show_results,
+        'notifications': DailyStatistic.notifications,
     }
 
     column = mapping[name]

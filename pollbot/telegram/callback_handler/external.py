@@ -3,6 +3,7 @@ from pollbot.i18n import i18n
 from pollbot.helper import poll_required
 from pollbot.models import Notification
 from pollbot.helper.enums import ExpectedInput
+from pollbot.helper.stats import increase_stat
 from pollbot.display.creation import get_datepicker_text
 
 from pollbot.telegram.keyboard.external import (
@@ -33,7 +34,7 @@ def activate_notification(session, context, poll):
 
     # We already got a notification in this chat for this poll
     # Save the poll message id anyway
-    if existing_notification:
+    if existing_notification is not None:
         session.delete(notification)
         existing_notification.poll_message_id = notification.poll_message_id
     else:
@@ -41,6 +42,7 @@ def activate_notification(session, context, poll):
 
     session.commit()
     message.edit_text(i18n.t('external.notification.activated', locale=poll.locale))
+    increase_stat(session, 'notifications')
 
 
 @poll_required
@@ -59,8 +61,6 @@ def open_external_datepicker(session, context, poll):
         reply_markup=keyboard
     )
 
-    return
-
 
 @poll_required
 def open_external_menu(session, context, poll):
@@ -74,7 +74,6 @@ def open_external_menu(session, context, poll):
         parse_mode='markdown',
         reply_markup=get_external_add_option_keyboard(poll)
     )
-    return
 
 
 @poll_required
@@ -85,4 +84,3 @@ def external_cancel(session, context, poll):
     session.commit()
 
     context.query.message.edit_text(i18n.t('external.canceled', locale=poll.locale))
-    return
