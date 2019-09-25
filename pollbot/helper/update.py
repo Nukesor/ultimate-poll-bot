@@ -68,6 +68,7 @@ def update_poll_messages(session, bot, poll):
             # Get the update and work with this instance
             session.rollback()
             current_update = session.query(Update) \
+                .filter(Update.poll == poll) \
                 .filter(Update.time_window == time_window) \
                 .one()
 
