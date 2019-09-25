@@ -1,4 +1,5 @@
 """Inline query handler function."""
+import uuid
 from sqlalchemy import or_
 from telegram.ext import run_async
 from telegram import (
@@ -52,9 +53,14 @@ def search(bot, update, session, user):
 
     # Try to find polls that are shared by external people via uuid
     if len(polls) == 0 and len(query) == 36:
-        polls = session.query(Poll) \
-            .filter(Poll.uuid == query) \
-            .all()
+        try:
+            poll_uuid = uuid.UUID(query)
+            polls = session.query(Poll) \
+                .filter(Poll.uuid == poll_uuid) \
+                .all()
+        except ValueError:
+            print('geilo')
+            pass
 
     if len(polls) == 0:
         update.inline_query.answer(
