@@ -4,7 +4,7 @@ from pollbot.display.misc import get_help_text_and_keyboard
 
 
 def switch_help(session, context):
-    """Show to vote type keyboard."""
+    """Show the correct help section."""
     user = context.user
     text, keyboard = get_help_text_and_keyboard(user, context.action)
 

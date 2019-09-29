@@ -47,7 +47,7 @@ def broadcast(bot, update, session, user):
             pass
 
         # Sleep one second to not trigger flood prevention
-        time.sleep(1)
+        time.sleep(0.07)
 
     update.message.chat.send_message('All messages sent')
 
