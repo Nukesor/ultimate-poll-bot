@@ -160,7 +160,7 @@ def update_all(bot, update, session, user):
             bot.send_message(user.id, f'Updated {count} polls')
 
         update_poll_messages(session, bot, poll)
-        time.sleep(2)
+        time.sleep(0.2)
 
     return "Done"
 

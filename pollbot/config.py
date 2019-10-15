@@ -9,7 +9,6 @@ default_config = {
         "bot_name": 'your_bot_name',
         "api_key": "your_telegram_api_key",
         "worker_count": 20,
-        "flood_threshold": 8,
         "admin": 'nukesor',
     },
     'database': {

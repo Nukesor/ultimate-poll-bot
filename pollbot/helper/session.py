@@ -2,8 +2,10 @@
 import traceback
 from functools import wraps
 from telegram.error import (
+    BadRequest,
     TelegramError,
     Unauthorized,
+    TimedOut,
 )
 
 from pollbot.db import get_session
@@ -49,18 +51,17 @@ def hidden_session_wrapper():
                 func(context.bot, update, session, user)
 
                 session.commit()
-            # Raise all telegram errors and let the generic error_callback handle it
-#            except TelegramError as e:
-#                raise e
             # Handle all not telegram relatated exceptions
-            except:
-                traceback.print_exc()
-                sentry.captureException()
-                if hasattr(update, 'callback_query') and update.callback_query is not None:
-                    locale = 'English'
-                    if user is not None:
-                        locale = user.locale
-                    update.callback_query.answer(i18n.t('callback.error', locale=locale))
+            except Exception as e:
+                if not ignore_exception(e):
+                    traceback.print_exc()
+                    sentry.captureException()
+
+                    if hasattr(update, 'callback_query') and update.callback_query is not None:
+                        locale = 'English'
+                        if user is not None:
+                            locale = user.locale
+                        update.callback_query.answer(i18n.t('callback.error', locale=locale))
             finally:
                 session.close()
         return wrapper
@@ -95,12 +96,11 @@ def session_wrapper(send_message=True, private=False):
                 if hasattr(update, 'message') and response is not None:
                     message.chat.send_message(response)
 
-            # Raise all telegram errors and let the generic error_callback handle it
-#            except TelegramError as e:
-#                raise e
-
             # Handle all not telegram relatated exceptions
-            except:
+            except Exception as e:
+                if ignore_exception(e):
+                    pass
+
                 traceback.print_exc()
                 sentry.captureException()
                 if send_message:
@@ -145,3 +145,24 @@ def is_allowed(user, update, private=False):
         return False
 
     return True
+
+
+def ignore_exception(exception):
+    """Check whether we can safely ignore this exception."""
+    if isinstance(exception, BadRequest):
+        if exception.message.startswith('Query is too old') or \
+           exception.message.startswith('Message is not modified: specified new message content'):
+            return True
+
+    if isinstance(exception, Unauthorized):
+        if exception.message == 'Forbidden: bot was blocked by the user':
+            return True
+        if exception.message == 'Forbidden: MESSAGE_AUTHOR_REQUIRED':
+            return True
+        if exception.message == 'Forbidden: bot is not a member of the supergroup chat':
+            return True
+
+    if isinstance(exception, TimedOut):
+        return True
+
+    return False

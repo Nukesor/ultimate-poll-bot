@@ -2,7 +2,6 @@
 bot_name = "ultimate_pollbot"
 api_key = ""
 worker_count = 20
-flood_threshold = 8
 
 [database]
 sql_uri = "postgres://localhost/pollbot_test"

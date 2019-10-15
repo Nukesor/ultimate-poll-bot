@@ -21,6 +21,7 @@ def toggle_percentage(session, context, poll):
     poll = poll
     poll.show_percentage = not poll.show_percentage
 
+    session.commit()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)
 
@@ -31,6 +32,7 @@ def toggle_date_format(session, context, poll):
     poll.european_date_format = not poll.european_date_format
     poll.user.european_date_format = poll.european_date_format
 
+    session.commit()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)
 
@@ -40,6 +42,7 @@ def toggle_summerization(session, context, poll):
     """Toggle summarization of votes of a poll."""
     poll.summarize = not poll.summarize
 
+    session.commit()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)
 
@@ -49,6 +52,7 @@ def toggle_compact_doodle_buttons(session, context, poll):
     """Toggle the doodle poll button style."""
     poll.compact_doodle_buttons = not poll.compact_doodle_buttons
 
+    session.commit()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)
 
@@ -59,6 +63,7 @@ def set_option_order(session, context, poll):
     option_sorting = OptionSorting(context.action)
     poll.option_sorting = option_sorting.name
 
+    session.commit()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)
 
@@ -69,5 +74,6 @@ def set_user_order(session, context, poll):
     user_sorting = UserSorting(context.action)
     poll.user_sorting = user_sorting.name
 
+    session.commit()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)

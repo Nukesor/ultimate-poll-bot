@@ -79,5 +79,6 @@ def add_date(session, context, poll):
         return i18n.t('callback.date_picked', locale=poll.locale,
                       date=poll.current_date.isoformat())
 
+    session.commit()
     if poll.created:
         update_poll_messages(session, context.bot, poll)

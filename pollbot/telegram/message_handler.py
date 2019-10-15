@@ -181,7 +181,8 @@ def handle_user_option_addition(bot, update, session, user, text, poll, chat):
             text += f'\n*{option}*'
         chat.send_message(text, parse_mode='markdown')
 
-        # Upate all polls
+        # Update all polls
+        session.commit()
         update_poll_messages(session, bot, poll)
     else:
         chat.send_message(i18n.t('creation.option.no_new', locale=user.locale))

@@ -1,9 +1,8 @@
 """Update or delete poll messages."""
 from datetime import datetime, timedelta
-from telegram.error import BadRequest
-from sqlalchemy import func
-from sqlalchemy.exc import IntegrityError
 from psycopg2.errors import UniqueViolation
+from sqlalchemy.exc import IntegrityError
+from telegram.error import BadRequest, RetryAfter
 
 from pollbot.i18n import i18n
 from pollbot.telegram.keyboard import get_management_keyboard
@@ -13,96 +12,41 @@ from pollbot.display import (
 )
 from pollbot.models import Update
 
-flood_threshold = 60
-window_size = 2
-
 
 def update_poll_messages(session, bot, poll):
     """Logic for handling updates."""
-    # Round the current time to the nearest time window
     now = datetime.now()
-    time_window = now - timedelta(seconds=now.second % window_size, microseconds=now.microsecond)
-    one_minute_ago = time_window - timedelta(minutes=1)
-
     # Check whether we have a new window
     current_update = session.query(Update) \
         .filter(Update.poll == poll) \
-        .filter(Update.time_window == time_window) \
         .one_or_none()
 
-    updates_in_last_minute = session.query(func.sum(Update.count)) \
-        .filter(Update.poll == poll) \
-        .filter(Update.time_window >= one_minute_ago) \
-        .one()[0]
+    # Don't handle it in here, it's already handled in the job
+    if current_update is not None:
+        return
 
-    if updates_in_last_minute is None:
-        updates_in_last_minute = 0
-
-    # No window yet, we need to create it
-    if current_update is None:
+    try:
+        # Try to send updates
+        send_updates(session, bot, poll)
+    except RetryAfter as e:
+        # Schedule an update after the RetryAfter timeout + 1 second buffer
         try:
-            # Create and commit update.
-            # This automatically schedules the update and might result in a double
-            # update, if the job runs at practically the same time.
-            # The worst case scenario is a Message is not modified exception.
-            current_update = Update(poll, time_window)
-            session.add(current_update)
+            update = Update(poll, now + timedelta(seconds=int(e.retry_after) + 1))
+            session.add(update)
             session.commit()
-
-            # We are below the flood_limit, just update it
-            if updates_in_last_minute <= flood_threshold:
-                # Try to send updates
-                send_updates(session, bot, poll)
-
-                # If that succeeded, set updated to true and increase count
-                # Update inside of mysql to avoid race conditions between threads
-                session.query(Update) \
-                    .filter(Update.id == current_update.id) \
-                    .update({
-                        'count': Update.count + 1,
-                        'updated': True,
-                    })
-
-        except (IntegrityError, UniqueViolation):
-            # The update has been already created in another thread
-            # Get the update and work with this instance
+        except (UniqueViolation, IntegrityError):
             session.rollback()
-            current_update = session.query(Update) \
-                .filter(Update.poll == poll) \
-                .filter(Update.time_window == time_window) \
-                .one()
 
-    # The update should be updated again
-    elif current_update and current_update.updated:
+    except Exception as e:
+        # Something happened
+        # Schedule an update after two secondsj
         try:
-            # We are still below the flood_threshold, update directrly
-            if updates_in_last_minute <= flood_threshold:
-                if updates_in_last_minute == flood_threshold:
-                    send_updates(session, bot, poll, show_warning=True)
-                else:
-                    send_updates(session, bot, poll)
-
-                # Update inside of mysql to avoid race conditions between threads
-                session.query(Update) \
-                    .filter(Update.id == current_update.id) \
-                    .update({'count': Update.count + 1})
-
-            # Reschedule the update, the job will increment the count
-            else:
-                current_update.updated = False
-        except Exception as e:
-            # Some error occurred during updating of the message.
-            # Set the updated flag to False to reschedule the update!
-            current_update.updated = False
-            # Commit here for now and raise e. Just for temporary debugging and monitoring purposes
+            update = Update(poll, now + timedelta(seconds=3))
+            session.add(update)
             session.commit()
-            raise e
-
-    # The next update is already scheduled
-    elif current_update and not current_update.updated:
-        pass
-
-    session.commit()
+        except (UniqueViolation, IntegrityError):
+            # The update has already been added
+            session.rollback()
 
 
 def send_updates(session, bot, poll, show_warning=False):
