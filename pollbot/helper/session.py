@@ -3,7 +3,6 @@ import traceback
 from functools import wraps
 from telegram.error import (
     BadRequest,
-    TelegramError,
     Unauthorized,
     TimedOut,
 )
@@ -151,6 +150,7 @@ def ignore_exception(exception):
     """Check whether we can safely ignore this exception."""
     if isinstance(exception, BadRequest):
         if exception.message.startswith('Query is too old') or \
+           exception.message.startswith('Have no rights to send a message') or \
            exception.message.startswith('Message is not modified: specified new message content'):
             return True
 
