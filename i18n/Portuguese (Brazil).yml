@@ -167,7 +167,7 @@ creation:
         results_not_visible: 'Ocultar resultados até a votação ser fechada'
     option:
         next: 'Você pode enviar uma mensagem para adicionar uma *nova opção* ou tocar em *Abrir calendário* para escolher uma data e adicioná-la como opção ou ainda tocar em *Concluído* para terminar.'
-        first: "Por favor me envie uma opção.\nVocê pode enviar várias opções ao mesmo tempo, cada opção em uma nova linha. \nVocê também pode adicionar uma descrição depois de um hífen (por exemplo, `Hambúrguer - porque é delicioso`) \n"
+        first: "É possível enviar várias opções ao mesmo tempo, cada uma em uma linha. \nTambém é possível incluir uma descrição para a opção separando por um hífen. Exemplo: `Hambúrguer - porque é delicioso`\n*Agora, envie uma mensagem com a nova opção.* (Se quiser sugerir uma opção de data, toque em `Abrir calendário`)\n"
         no_new: '❌ Nenhuma nova opção foi adicionada'
         single_added: "*%{option}* adicionado. 👍\nVocê pode enviar uma mensagem para adicionar uma *nova opção* ou tocar em *Abrir calendário* para escolher uma data e adicioná-la como opção ou ainda tocar em *Concluído* para terminar."
         multiple_added: 'Opções adicionadas:'
