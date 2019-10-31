@@ -37,7 +37,7 @@ def update_poll_messages(session, bot, poll):
         except (UniqueViolation, IntegrityError):
             session.rollback()
 
-    except Exception as e:
+    except Exception:
         # Something happened
         # Schedule an update after two secondsj
         try:
@@ -94,8 +94,12 @@ def send_updates(session, bot, poll, show_warning=False):
                 raise
 
 
-def remove_poll_messages(session, bot, poll):
+def remove_poll_messages(session, bot, poll, remove_all=False):
     """Remove all messages (references) of a poll."""
+    if not remove_all:
+        poll.closed = True
+        send_updates(session, bot, poll)
+
     for reference in poll.references:
         try:
             # Admin poll management interface
@@ -106,13 +110,13 @@ def remove_poll_messages(session, bot, poll):
                     message_id=reference.admin_message_id,
                 )
 
-            # Edit message via inline_message_id
-            else:
-                # Create text and keyboard
+            # Remove message created via inline_message_id
+            elif remove_all:
                 bot.edit_message_text(
                     i18n.t('deleted.poll', locale=poll.locale),
                     inline_message_id=reference.inline_message_id,
                 )
+
         except BadRequest as e:
             if e.message.startswith('Message_id_invalid'):
                 pass

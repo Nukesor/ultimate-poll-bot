@@ -102,12 +102,16 @@ def get_close_confirmation(poll):
 
 def get_deletion_confirmation(poll):
     """Get the confirmation keyboard for poll deletion."""
-    payload = f'{CallbackType.delete.value}:{poll.id}:0'
+    delete_payload = f'{CallbackType.delete.value}:{poll.id}:0'
+    delete_all_payload = f'{CallbackType.delete_poll_with_messages.value}:{poll.id}:0'
     locale = poll.user.locale
     buttons = [
         [InlineKeyboardButton(
             i18n.t('keyboard.permanently_delete', locale=locale),
-            callback_data=payload)],
+            callback_data=delete_payload)],
+        [InlineKeyboardButton(
+            i18n.t('keyboard.permanently_delete_with_messages', locale=locale),
+            callback_data=delete_all_payload)],
         [get_back_to_management_button(poll)],
     ]
     return InlineKeyboardMarkup(buttons)

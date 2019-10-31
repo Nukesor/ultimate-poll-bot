@@ -33,6 +33,7 @@ from .menu import (
 )
 from .management import (
     delete_poll,
+    delete_poll_with_messages,
     close_poll,
     reopen_poll,
     reset_poll,
@@ -170,6 +171,7 @@ def handle_callback_query(bot, update, session, user):
 
         # Poll management
         CallbackType.delete: delete_poll,
+        CallbackType.delete_poll_with_messages: delete_poll_with_messages,
         CallbackType.close: close_poll,
         CallbackType.reopen: reopen_poll,
         CallbackType.reset: reset_poll,

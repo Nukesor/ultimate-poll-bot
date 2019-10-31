@@ -75,6 +75,7 @@ class CallbackType(Enum):
 
     # Poll management
     delete = 50
+    delete_poll_with_messages = 55
     close = 51
     reopen = 52
     clone = 53

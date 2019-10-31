@@ -104,7 +104,8 @@ keyboard:
   change_language: 🌐 Change language
   vote: ✉️ Vote
   permanently_close: ⚠️ Permanently close poll! ⚠️
-  permanently_delete: ⚠️ Permanently delete poll! ⚠️
+  permanently_delete: ⚠️ Delete poll! ⚠️
+  permanently_delete_with_messages: ⚠️ Delete poll and remove all messages! ⚠️
   permanently_anonymize: ⚠️ Permanently anonymize poll! ⚠️
   anonymize: 🔍 Make votes anonymous
   due_date: 📅 Set due date

@@ -12,6 +12,18 @@ from pollbot.telegram.keyboard import get_management_keyboard
 def delete_poll(session, context, poll):
     """Permanently delete the poll."""
     remove_poll_messages(session, context.bot, poll)
+    session.commit()
+    session.delete(poll)
+    session.commit()
+
+    return i18n.t('callback.deleted', locale=poll.user.locale)
+
+
+@poll_required
+def delete_poll_with_messages(session, context, poll):
+    """Permanently delete the poll."""
+    remove_poll_messages(session, context.bot, poll, remove_all=True)
+    session.commit()
     session.delete(poll)
     session.commit()
 
