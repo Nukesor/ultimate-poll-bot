@@ -174,7 +174,7 @@ creation:
     error:
         limit_bigger_zero: 'Inviami un numero maggiore di 0'
         limit_between: 'Inviami un numero compreso tra 1 e %{limit}'
-        markdown: "Non utilizzare nessuno dei simboli di markdown nei nomi, nella descrizione o nelle opzioni. Tali simboli sono _`,`*` e `[`.\nPer favore, invia nuovamente il messaggio senza quei simboli."
+        markdown: "Non utilizzare nessuno dei simboli di markdown nei nomi, nella descrizione o nelle opzioni. Tali simboli sono `_`,`*` e `[`.\nPer favore, invia nuovamente il messaggio senza quei simboli."
 external:
     canceled: Annullato
     notification:
