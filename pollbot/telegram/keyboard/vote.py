@@ -137,7 +137,7 @@ def get_doodle_buttons(poll):
     options = get_sorted_options(poll)
 
     buttons = []
-    letters = string.ascii_lowercase
+    letters = string.ascii_lowercase + '123456789'
     for index, option in enumerate(options):
         ignore_payload = f'{show_option_name}:{poll.id}:{option.id}'
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
