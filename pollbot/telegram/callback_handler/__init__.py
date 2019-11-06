@@ -77,10 +77,28 @@ from .external import (
 
 from .user import (
     change_user_language,
+    create_poll,
+    delete_all,
+    delete_all_confirmation,
+    delete_closed,
+    delete_closed_confirmation,
+    list_polls,
+    list_closed_polls,
+    open_help,
+    open_language_menu,
+    open_main_menu,
+    open_donation,
+    open_user_settings,
+    toggle_notification,
 )
 from .misc import (
     switch_help,
     show_option_name,
+)
+from .admin import (
+    open_admin_settings,
+    plot,
+    update_all,
 )
 
 
@@ -201,7 +219,25 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.settings_toggle_compact_buttons: toggle_compact_doodle_buttons,
 
         # User
+        CallbackType.create_poll: create_poll,
+        CallbackType.user_menu: open_main_menu,
+        CallbackType.user_settings: open_user_settings,
+        CallbackType.user_language_menu: open_language_menu,
         CallbackType.user_change_language: change_user_language,
+        CallbackType.user_toggle_notification: toggle_notification,
+        CallbackType.user_list_polls: list_polls,
+        CallbackType.user_list_closed_polls: list_closed_polls,
+        CallbackType.open_help: open_help,
+        CallbackType.donate: open_donation,
+        CallbackType.user_delete_all: delete_all,
+        CallbackType.user_delete_closed: delete_closed,
+        CallbackType.user_delete_all_confirmation: delete_all_confirmation,
+        CallbackType.user_delete_closed_confirmation: delete_closed_confirmation,
+
+        # Admin
+        CallbackType.admin_settings: open_admin_settings,
+        CallbackType.admin_plot: plot,
+        CallbackType.admin_update: update_all,
 
         # Datepicker
         CallbackType.set_date: set_date,

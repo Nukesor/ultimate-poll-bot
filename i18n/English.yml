@@ -7,7 +7,7 @@ poll_types:
   count_vote: Unlimited votes
 
 list:
-  polls: Click on any button to manage this specific poll
+  polls: Select a poll to manage
   no_polls: You don't own any open polls
   no_closed_polls: You don't own any closed polls
 
@@ -78,7 +78,6 @@ callback:
     doodle_changed: Vote changed to %{vote_type}
     doodle_registered: 'Vote registered (%{vote_type})'
 
-
 inline_query:
   create_first: Click here to create a poll first ;)
   create_poll: Click to create a new poll.
@@ -102,6 +101,8 @@ keyboard:
   close_poll: 🔒 Close
   settings: ⚙️ Settings
   change_language: 🌐 Change language
+  show_help: "🤔 Help"
+  help_me_out: ❤️ Learn about the project ❤️
   vote: ✉️ Vote
   permanently_close: ⚠️ Permanently close poll! ⚠️
   permanently_delete: ⚠️ Delete poll! ⚠️
@@ -125,6 +126,20 @@ keyboard:
   order_options: Order options %{name}
   add_new_language: Add a new language
   vote_with_count: '%{option_name} (%{count} votes)'
+  user:
+    create_poll: 🌟 Create new poll
+    list_polls: 🗓 List your polls
+    list_closed_polls: 🗓 List closed polls
+    enable_notifications: 💌 Enable notifications
+    disable_notifications: 🔇 Disable notifications
+    delete_all: ⚠️ Delete all polls
+    delete_all_closed : ⚠️ Delete all closed polls
+
+  admin:
+    settings: ⚙️ Admin Settings
+    stats: 📊 Statistics
+    plot: 📊 Plot statistics
+    update: Update all polls
   help:
     creation: Creation
     settings: Settings
@@ -168,6 +183,23 @@ settings:
     Do you really want to anonymize this poll?
     ⚠️ This action is irrevertible. ⚠️
   remove_options: Just click the buttons below to remove the unwanted options.
+
+  user:
+    notifications_enabled: "Notifications: enabled"
+    notifications_disabled: "Notifications: disabled"
+    delete_all: ⚠️ Delete ALL polls ⚠️
+    delete_closed: ⚠️ Delete all closed polls ⚠️
+    delete_all_confirmation: |
+      Do you really want to delete ALL your polls?
+      This affects polls that are currently open and closed polls.
+      ⚠️ *This action is irrevertible.* ⚠️
+    delete_closed_confirmation: |
+      Do you really want to delete all closed polls?
+      ⚠️ *This action is irrevertible.* ⚠️
+    language: "Default language: %{language}"
+    open_polls: "Open polls: %{count}"
+    closed_polls: "Closed polls: %{count}"
+
 
 management:
   permanently_close: |

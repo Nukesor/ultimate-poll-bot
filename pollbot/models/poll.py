@@ -18,7 +18,7 @@ from sqlalchemy.types import (
 from sqlalchemy.orm import relationship
 
 from pollbot.db import base
-from pollbot.helper.enums import PollType, UserSorting, OptionSorting
+from pollbot.helper.enums import PollType, UserSorting, OptionSorting, ExpectedInput
 
 
 class Poll(base):
@@ -83,6 +83,19 @@ class Poll(base):
 
         self.user_sorting = UserSorting.user_chrono.name
         self.option_sorting = OptionSorting.option_chrono.name
+
+    @staticmethod
+    def create(user, session):
+        """Create a poll from a user."""
+        poll = Poll(user)
+        poll.european_date_format = user.european_date_format
+        poll.locale = user.locale
+        user.current_poll = poll
+        user.expected_input = ExpectedInput.name.name
+        session.add(poll)
+        session.commit()
+
+        return poll
 
     def __repr__(self):
         """Print as string."""

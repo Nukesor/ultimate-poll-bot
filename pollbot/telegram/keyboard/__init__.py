@@ -4,16 +4,6 @@ from telegram import (
 )
 
 
-def get_main_keyboard():
-    """Get the main keyboard for the current user."""
-    buttons = [
-        ['/donations', '/list'],
-        ['/help', '/create'],
-    ]
-    keyboard = ReplyKeyboardMarkup(buttons, one_time_keyboard=True, resize_keyboard=True)
-    return keyboard
-
-
 def get_start_button_payload(poll, action):
     """Compile the /start action payload for a certain action."""
     # Compress the uuid a little and remove the 4 hypens
@@ -28,3 +18,4 @@ from .settings import * # noqa
 from .vote import * # noqa
 from .external import * # noqa
 from .user import * # noqa
+from .misc import * # noqa

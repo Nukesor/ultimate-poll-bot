@@ -33,13 +33,12 @@ def start(bot, update, session, user):
     except:
         text = ''
 
-    main_keyboard = get_main_keyboard()
     # We got an empty text, just send the start message
     if text == '':
         update.message.chat.send_message(
             i18n.t('misc.start', locale=user.locale),
             parse_mode='markdown',
-            reply_markup=main_keyboard,
+            reply_markup=get_main_keyboard(user),
             disable_web_page_preview=True,
         )
 

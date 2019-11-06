@@ -27,18 +27,13 @@ from pollbot.telegram.commands.poll import (
     create_poll,
     list_polls,
     list_closed_polls,
-    delete_all,
-    delete_all_closed,
 )
-from pollbot.telegram.commands.misc import send_help, send_donation_text, change_language
+from pollbot.telegram.commands.misc import send_help, send_donation_text
 from pollbot.telegram.commands.start import start
 from pollbot.telegram.commands.external import notify
 from pollbot.telegram.commands.admin import (
     broadcast,
     test_broadcast,
-    stats,
-    update_all,
-    plot,
 )
 
 logging.basicConfig(level=config['logging']['log_level'],
@@ -59,21 +54,18 @@ dispatcher.add_handler(CommandHandler('create', create_poll))
 
 # Misc commands
 dispatcher.add_handler(CommandHandler('start', start))
+dispatcher.add_handler(CommandHandler('settings', start))
 dispatcher.add_handler(CommandHandler('help', send_help))
 dispatcher.add_handler(CommandHandler('list', list_polls))
 dispatcher.add_handler(CommandHandler('list_closed', list_closed_polls))
-dispatcher.add_handler(CommandHandler('delete_all', delete_all))
-dispatcher.add_handler(CommandHandler('delete_closed', delete_all_closed))
 dispatcher.add_handler(CommandHandler('donations', send_donation_text))
+
+# External commands
 dispatcher.add_handler(CommandHandler('notify', notify))
-dispatcher.add_handler(CommandHandler('language', change_language))
 
 # Admin command
 dispatcher.add_handler(CommandHandler('broadcast', broadcast))
 dispatcher.add_handler(CommandHandler('test_broadcast', test_broadcast))
-dispatcher.add_handler(CommandHandler('stats', stats))
-dispatcher.add_handler(CommandHandler('update_all', update_all))
-dispatcher.add_handler(CommandHandler('plot', plot))
 
 # Callback handler
 dispatcher.add_handler(CallbackQueryHandler(handle_callback_query))

@@ -12,12 +12,12 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt  # noqa
 
 
-def send_plots(bot, update, session, user):
+def send_plots(session, chat):
     """Generate and send plots to the user."""
     image = get_user_activity(session)
-    update.message.chat.send_document(image, caption='User statistics')
+    chat.send_document(image, caption='User statistics')
     image = get_vote_activity(session)
-    update.message.chat.send_document(image, caption='Vote statistics')
+    chat.send_document(image, caption='Vote statistics')
     image.close()
 
 

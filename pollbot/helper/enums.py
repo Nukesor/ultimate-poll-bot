@@ -114,7 +114,28 @@ class CallbackType(Enum):
     switch_help = 120
 
     # User
-    user_change_language = 200
+    user_menu = 200
+    user_list_polls = 213
+    user_list_closed_polls = 215
+
+    # User Settings
+    user_settings = 202
+    user_language_menu = 203
+    user_change_language = 204
+    user_delete_all = 205
+    user_delete_closed = 206
+    user_delete_all_confirmation = 207
+    user_delete_closed_confirmation = 208
+    user_toggle_notification = 214
+
+    # Admin Settings
+    admin_settings = 209
+    admin_plot = 211
+    admin_update = 212
+
+    # Misc
+    open_help = 300
+    donate = 301
 
     # Date picker
     open_creation_datepicker = 501
@@ -123,6 +144,7 @@ class CallbackType(Enum):
     set_date = 504
     next_month = 505
     previous_month = 506
+    create_poll = 507
 
 
 @unique

@@ -29,3 +29,14 @@ def get_help_keyboard(user, categories, current_category):
     rows.append(current_row)
 
     return InlineKeyboardMarkup(rows)
+
+
+def get_donations_keyboard():
+    patreon_url = f'https://patreon.com/nukesor'
+    paypal_url = f'https://paypal.me/arnebeer/'
+    buttons = [
+        [InlineKeyboardButton(text='Patreon', url=patreon_url)],
+        [InlineKeyboardButton(text='Paypal', url=paypal_url)],
+    ]
+
+    return InlineKeyboardMarkup(buttons)

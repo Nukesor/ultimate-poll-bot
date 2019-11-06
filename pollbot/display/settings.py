@@ -80,3 +80,24 @@ def get_settings_text(poll):
     text.append(f'https://t.me/{bot_name}?start={payload}')
 
     return '\n'.join(text)
+
+
+def get_user_settings_text(user):
+    """Get information about the user."""
+    locale = user.locale
+
+    text = ["*Current settings:*\n"]
+
+    if user.notifications_enabled:
+        text.append(i18n.t('settings.user.notifications_enabled', locale=locale))
+    else:
+        text.append(i18n.t('settings.user.notifications_disabled', locale=locale))
+
+    text.append(i18n.t('settings.user.language', locale=locale, language=user.locale))
+
+    count = len(list(filter(lambda p: not p.closed and p.created, user.polls)))
+    text.append(i18n.t('settings.user.open_polls', locale=locale, count=count))
+    count = len(list(filter(lambda p: p.closed, user.polls)))
+    text.append(i18n.t('settings.user.closed_polls', locale=locale, count=count))
+
+    return "\n".join(text)
