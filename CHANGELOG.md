@@ -8,6 +8,9 @@
 - Lokalise integration
 - New language Italian
 - New language Spanish
+- New language Portuguese (Brazil)
+- New language Spanish
+- New language Czech
 - Text adjustments
 - Forbid polls which are longer than 4000 characters at point of creation
 - Send warning for polls which are longer than 3000 characters at point of creation
