@@ -85,7 +85,7 @@ def start(bot, update, session, user):
         update.message.chat.send_message(
             i18n.t('misc.start_after_results', locale=poll.locale),
             parse_mode='markdown',
-            reply_markup=main_keyboard,
+            reply_markup=get_main_keyboard(user),
         )
         increase_stat(session, 'show_results')
 
