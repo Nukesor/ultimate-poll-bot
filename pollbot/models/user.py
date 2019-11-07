@@ -25,17 +25,21 @@ class User(base):
     id = Column(BigInteger, primary_key=True)
     name = Column(String)
     username = Column(String)
-    admin = Column(Boolean, nullable=False, default=False, server_default='false')
-    notifications_enabled = Column(Boolean, nullable=False, default=True, server_default='true')
-    locale = Column(String, default='English')
+
+    # Flags
     started = Column(Boolean, nullable=False, default=False)
+    broadcast_sent = Column(Boolean, nullable=False, default=False)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 
-    expected_input = Column(String)
-
     # Permanent settings
+    admin = Column(Boolean, nullable=False, default=False)
+    locale = Column(String, default='English')
     european_date_format = Column(Boolean, nullable=False, default=False)
+    notifications_enabled = Column(Boolean, nullable=False, default=True)
+
+    # Chat logic
+    expected_input = Column(String)
 
     # Simple foreign key
     current_poll_id = Column(BigInteger, ForeignKey('poll.id', ondelete="set null", name='current_poll'), index=True)
