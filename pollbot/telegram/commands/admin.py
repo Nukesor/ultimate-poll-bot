@@ -26,12 +26,15 @@ def admin_required(function):
 @admin_required
 def broadcast(bot, update, session, user):
     """Broadcast a message to all users."""
+    chat = update.message.chat
     message = update.message.text.split(' ', 1)[1].strip()
     users = session.query(User) \
         .filter(User.notifications_enabled.is_(True)) \
+        .filter(User.started.is_(True)) \
         .all()
 
-    update.message.chat.send_message(f'Sending broadcast to {len(users)} chats.')
+    chat.send_message(f'Sending broadcast to {len(users)} chats.')
+    count = 0
     for user in users:
         try:
             bot.send_message(
@@ -52,8 +55,15 @@ def broadcast(bot, update, session, user):
             user.started = False
             pass
 
+        except TimeoutError:
+            pass
+
         # Sleep one second to not trigger flood prevention
         time.sleep(0.07)
+
+        count += 1
+        if count % 500 == 0:
+            chat.send_message(f'Sent to {count} users.')
 
     update.message.chat.send_message('All messages sent')
 

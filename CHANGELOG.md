@@ -2,26 +2,24 @@
 - Completely revamp the user settings and /start interface
 - Add /settings command as shortcut to settings submenu
 - Add a prompt when deleting all polls of a user
-- Option to delete specific a poll without removing all messages
-- Link in settings, which allows anybody to share the poll to arbitrary groups
+- Option to delete a specific poll without removing all messages
+- Link in poll settings, which allows anybody to share this poll to arbitrary groups
 - New doodle button layout. Old one can still be selected in poll styling settings
 
 - Lokalise integration
 - New language Italian
 - New language Spanish
 - New language Portuguese (Brazil)
-- New language Spanish
 - New language Czech
 - Text adjustments
-- Forbid polls which are longer than 4000 characters at point of creation
+- Forbid polls which are longer than 4000 characters at point of creation (Telegram limit)
 - Send warning for polls which are longer than 3000 characters at point of creation
 
-** Fixes: **
+**Fixes:**
 - Hide remaining votes in anonymous polls
 - Fixed a bug where messages couldn't be sent due to messages being too long
 - Fixed a bug where inline queries didn't work due to many very long polls.
-- Remove percentage order option for doodle
-
+- Percentage order option removed for doodle
 
 ## v1.1.0
 - Support for super long polls. Those polls now get summarized as soon as they reach a certain length and a new button appears.
