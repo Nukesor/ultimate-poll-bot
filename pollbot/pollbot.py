@@ -33,6 +33,7 @@ from pollbot.telegram.commands.start import start
 from pollbot.telegram.commands.external import notify
 from pollbot.telegram.commands.admin import (
     broadcast,
+    reset_broadcast,
     test_broadcast,
 )
 from pollbot.telegram.commands.user import (
@@ -68,6 +69,7 @@ dispatcher.add_handler(CommandHandler('notify', notify))
 
 # Admin command
 dispatcher.add_handler(CommandHandler('broadcast', broadcast))
+dispatcher.add_handler(CommandHandler('reset_broadcast', reset_broadcast))
 dispatcher.add_handler(CommandHandler('test_broadcast', test_broadcast))
 
 # Callback handler

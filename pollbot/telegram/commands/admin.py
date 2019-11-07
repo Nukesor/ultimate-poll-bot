@@ -24,6 +24,17 @@ def admin_required(function):
 @run_async
 @session_wrapper()
 @admin_required
+def reset_broadcast(bot, update, session, user):
+    """Reset the broadcast_sent flag for all users."""
+    session.query(User).update({'broadcast_sent': False})
+    session.commit()
+
+    return "All broadcast flags resetted"
+
+
+@run_async
+@session_wrapper()
+@admin_required
 def broadcast(bot, update, session, user):
     """Broadcast a message to all users."""
     chat = update.message.chat
@@ -31,6 +42,7 @@ def broadcast(bot, update, session, user):
     users = session.query(User) \
         .filter(User.notifications_enabled.is_(True)) \
         .filter(User.started.is_(True)) \
+        .filter(User.broadcast_sent.is_(False)) \
         .all()
 
     chat.send_message(f'Sending broadcast to {len(users)} chats.')
@@ -43,7 +55,8 @@ def broadcast(bot, update, session, user):
                 parse_mode='Markdown',
                 reply_markup=ReplyKeyboardRemove(),
             )
-            user.started = True
+            user.broadcast_sent = True
+            session.commit()
 
         # The chat doesn't exist any longer, delete it
         except BadRequest as e:

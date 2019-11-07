@@ -138,8 +138,8 @@ def delete_all(session, context):
     for poll in context.user.polls:
         remove_poll_messages(session, context.bot, poll)
         session.delete(poll)
+        session.commit()
 
-    session.commit()
     open_user_settings(session, context)
     return i18n.t('deleted.polls', locale=context.user.locale)
 
@@ -150,7 +150,7 @@ def delete_closed(session, context):
         if poll.closed:
             remove_poll_messages(session, context.bot, poll)
             session.delete(poll)
+            session.commit()
 
-    session.commit()
     open_user_settings(session, context)
     return i18n.t('deleted.closed_polls', locale=context.user.locale)
