@@ -108,6 +108,9 @@ def handle_set_vote_count(bot, update, session, user, text, poll, chat):
     if amount < 1 or (poll.poll_type == PollType.limited_vote.name and amount > len(poll.options)):
         return error_message
 
+    if amount > 2000000000:
+        return i18n.t('creation.error.too_big', locale=user.locale)
+
     poll.number_of_votes = amount
 
     create_poll(session, poll, user, chat)
