@@ -1,9 +1,10 @@
 ## v1.2.0
 - Completely revamp the user settings and /start interface
-- Add a prompt whenn deleting all polls of a user
-- Option to delete specific poll without removing all messages
+- Add /settings command as shortcut to settings submenu
+- Add a prompt when deleting all polls of a user
+- Option to delete specific a poll without removing all messages
 - Link in settings, which allows anybody to share the poll to arbitrary groups
-- New doodle button layout. Old one can still be selectd in style settings
+- New doodle button layout. Old one can still be selected in poll styling settings
 
 - Lokalise integration
 - New language Italian

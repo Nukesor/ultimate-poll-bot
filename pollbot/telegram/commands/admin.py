@@ -1,5 +1,6 @@
 """Admin related stuff."""
 import time
+from telegram import ReplyKeyboardRemove
 from telegram.ext import run_async
 from telegram.error import BadRequest, Unauthorized
 
@@ -33,7 +34,12 @@ def broadcast(bot, update, session, user):
     update.message.chat.send_message(f'Sending broadcast to {len(users)} chats.')
     for user in users:
         try:
-            bot.send_message(user.id, message, parse_mode='Markdown')
+            bot.send_message(
+                user.id,
+                message,
+                parse_mode='Markdown',
+                reply_markup=ReplyKeyboardRemove(),
+            )
             user.started = True
 
         # The chat doesn't exist any longer, delete it
@@ -59,4 +65,9 @@ def test_broadcast(bot, update, session, user):
     """Send the broadcast message to the admin for test purposes."""
     message = update.message.text.split(' ', 1)[1].strip()
 
-    bot.send_message(user.id, message, parse_mode='Markdown')
+    bot.send_message(
+        user.id,
+        message,
+        parse_mode='Markdown',
+        reply_markup=ReplyKeyboardRemove(),
+    )
