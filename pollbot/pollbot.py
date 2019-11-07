@@ -35,6 +35,9 @@ from pollbot.telegram.commands.admin import (
     broadcast,
     test_broadcast,
 )
+from pollbot.telegram.commands.user import (
+    open_user_settings_command,
+)
 
 logging.basicConfig(level=config['logging']['log_level'],
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -54,7 +57,7 @@ dispatcher.add_handler(CommandHandler('create', create_poll))
 
 # Misc commands
 dispatcher.add_handler(CommandHandler('start', start))
-dispatcher.add_handler(CommandHandler('settings', start))
+dispatcher.add_handler(CommandHandler('settings', open_user_settings_command))
 dispatcher.add_handler(CommandHandler('help', send_help))
 dispatcher.add_handler(CommandHandler('list', list_polls))
 dispatcher.add_handler(CommandHandler('list_closed', list_closed_polls))

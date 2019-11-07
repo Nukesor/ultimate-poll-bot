@@ -88,12 +88,12 @@ def get_user_settings_text(user):
 
     text = ["*Current settings:*\n"]
 
+    text.append(i18n.t('settings.user.language', locale=locale, language=user.locale))
+
     if user.notifications_enabled:
         text.append(i18n.t('settings.user.notifications_enabled', locale=locale))
     else:
         text.append(i18n.t('settings.user.notifications_disabled', locale=locale))
-
-    text.append(i18n.t('settings.user.language', locale=locale, language=user.locale))
 
     count = len(list(filter(lambda p: not p.closed and p.created, user.polls)))
     text.append(i18n.t('settings.user.open_polls', locale=locale, count=count))

@@ -92,6 +92,7 @@ Thanks to my patreons:
 ## Commands:
 
     /start          Start the bot
+    /settings       Open the user settings menu
     /create         Create a new poll
     /list           List all active polls and manage them
     /list_closed    List all closed polls and manage them
@@ -126,6 +127,7 @@ Get the latest revision with `poetry run alembic history` and change the current
 ## Botfather Commands
 
 start - Start the bot
+settings - Open the user settings menu
 create - Create a new poll
 language - Change the language
 list - List all active polls and manage them
