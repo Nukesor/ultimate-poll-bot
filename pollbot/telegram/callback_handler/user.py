@@ -62,17 +62,17 @@ def list_closed_polls(session, context):
 
 def open_donation(session, context):
     """Open the donations text."""
-    context.query.message.chat.send_message(
+    context.query.message.edit_text(
         i18n.t('misc.donation', locale=context.user.locale),
         parse_mode='Markdown',
-        reply_markup=get_donations_keyboard(),
+        reply_markup=get_donations_keyboard(context.user),
     )
 
 
 def open_help(session, context):
     """Open the donations text."""
     text, keyboard = get_help_text_and_keyboard(context.user, 'intro')
-    context.query.message.chat.send_message(
+    context.query.message.edit_text(
         text,
         parse_mode='Markdown',
         reply_markup=keyboard,

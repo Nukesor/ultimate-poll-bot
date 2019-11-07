@@ -28,5 +28,5 @@ def send_donation_text(bot, update, session, user):
     update.message.chat.send_message(
         i18n.t('misc.donation', locale=user.locale),
         parse_mode='Markdown',
-        reply_markup=get_donations_keyboard()
+        reply_markup=get_donations_keyboard(user)
     )

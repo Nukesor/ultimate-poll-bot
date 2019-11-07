@@ -4,6 +4,7 @@ from telegram import (
     InlineKeyboardButton,
 )
 
+from pollbot.telegram.keyboard import get_back_to_menu_button
 from pollbot.i18n import i18n
 from pollbot.helper.enums import CallbackType
 
@@ -27,11 +28,12 @@ def get_help_keyboard(user, categories, current_category):
             current_row = [button]
 
     rows.append(current_row)
+    rows.append([get_back_to_menu_button(user)])
 
     return InlineKeyboardMarkup(rows)
 
 
-def get_donations_keyboard():
+def get_donations_keyboard(user):
     buttons = [
         [InlineKeyboardButton(text='☺️ Buy me a coffee',
                               url='https://www.buymeacoffee.com/Nukesor')],
@@ -39,6 +41,7 @@ def get_donations_keyboard():
                               url='https://patreon.com/nukesor')],
         [InlineKeyboardButton(text='Paypal',
                               url='https://paypal.me/arnebeer/')],
+        [get_back_to_menu_button(user)]
     ]
 
     return InlineKeyboardMarkup(buttons)
