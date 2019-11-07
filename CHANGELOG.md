@@ -1,8 +1,9 @@
 ## v1.2.0
-- Option to delete poll without removing all messages
-- Link in settings, which allows to share the poll with everybody
-- New doodle button layout in style settings
-- Remove percentage order option for doodle
+- Completely revamp the user settings and /start interface
+- Add a prompt whenn deleting all polls of a user
+- Option to delete specific poll without removing all messages
+- Link in settings, which allows anybody to share the poll to arbitrary groups
+- New doodle button layout. Old one can still be selectd in style settings
 
 - Lokalise integration
 - New language Italian
@@ -12,10 +13,10 @@
 - Send warning for polls which are longer than 3000 characters at point of creation
 
 ** Fixes: **
-- Doodle button order not the same as text above when ordering by percentage
 - Hide remaining votes in anonymous polls
 - Fixed a bug where messages couldn't be sent due to messages being too long
 - Fixed a bug where inline queries didn't work due to many very long polls.
+- Remove percentage order option for doodle
 
 
 ## v1.1.0

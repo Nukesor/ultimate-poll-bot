@@ -15,9 +15,10 @@ Since no other telegram poll-/votebot offered the full feature set my friends an
 
 
 ## Features:
-Most features are implemented such as Deadlines, Notifications, a lot of Vote types, a datepicker and more stuff.
-There are still some things that can be improved and added, but in my opinion, it's already the best bot out there if you want to create and manage a polls.
+The Ultimate Pollbot delivers a full set of well-tested and battle proven features.
+It's capable of handling hundreds of voters for a single poll, while offering a high customizability and a wide range of different poll types to choose from.
 
+Here is a list of the most important features:
 
 **Poll types**
 
@@ -48,7 +49,10 @@ As soon as such a poll is closed, the results will be visible. **Beware!**: such
 - Polls can be cloned (New poll with same options, but without votes). Poll needs to be closed first
 
 
-**Convenience features:**
+**Misc:**
+- Internationalization
+- Polls sync between groups in realtime.
+- Polls can be shared via link. This allows other users to spread the poll to arbitrary groups.
 - A datepicker for easier creation of poll options
 - Specify a due date, at which the poll will be automatically closed.
 - Activate notifications in chats to notify users that the poll will close soon.
@@ -56,19 +60,10 @@ As soon as such a poll is closed, the results will be visible. **Beware!**: such
 
 **Sorting and Appearance:**
 
+- Results can be displayed in a detailed or summarized manner.
 - The percentage bar in the vote message can be disabled.
-- The bot allows to configure the sorting of the option list AND and the user list for each option.
+- The bot allows to configure the sorting of the option list and and the user list for each option.
 - Users can be sorted by vote date or username. Options can be sorted by highest percentage, name or by the order they've been added.
-
-
-**Flood controll prevention:**
-
-Telegram forbids to send more than a certain amount of messages per minute into the same group. This obviously leads to problems, if there are many people that vote on a single poll.
-
-Pollbot has a proper way of handling this problem.
-In case you hit a certain amount of votes for the current minute, the bot will stop updating the messages on each vote, but it will rather update all messages every five seconds.
-Votes will still be registered and you'll get feedback via button callback notification.
-With this mechanism you can keep spamming vote buttons and do as you like without crashing the bot or activating flood control limits.
 
 
 **Planned features:**
@@ -100,9 +95,7 @@ Thanks to my patreons:
     /create         Create a new poll
     /list           List all active polls and manage them
     /list_closed    List all closed polls and manage them
-    /notify         Activate notifications in a chat
-    /delete_closed  Delete all closed polls
-    /delete_all     Delete all polls (closed and unclosed)
+    /notify         Activate notifications in a external chats
     /help           Display the help
     /donations      Get me a coffee
 
@@ -137,8 +130,6 @@ create - Create a new poll
 language - Change the language
 list - List all active polls and manage them
 list_closed - List all closed polls and manage them
-notify - Activate notifications in a chat (Respond to the poll message)
-delete_closed - Delete all closed polls
-delete_all - Delete all polls (closed and unclosed)
+notify - Activate notifications in external chats
 help - Show the help text
 donations - Get me a coffee
