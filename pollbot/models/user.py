@@ -24,7 +24,7 @@ class User(base):
 
     id = Column(BigInteger, primary_key=True)
     name = Column(String)
-    username = Column(String, unique=True)
+    username = Column(String)
     admin = Column(Boolean, nullable=False, default=False, server_default='false')
     notifications_enabled = Column(Boolean, nullable=False, default=True, server_default='true')
     locale = Column(String, default='English')
