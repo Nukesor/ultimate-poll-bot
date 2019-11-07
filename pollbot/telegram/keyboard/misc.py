@@ -32,11 +32,13 @@ def get_help_keyboard(user, categories, current_category):
 
 
 def get_donations_keyboard():
-    patreon_url = f'https://patreon.com/nukesor'
-    paypal_url = f'https://paypal.me/arnebeer/'
     buttons = [
-        [InlineKeyboardButton(text='Patreon', url=patreon_url)],
-        [InlineKeyboardButton(text='Paypal', url=paypal_url)],
+        [InlineKeyboardButton(text='☺️ Buy me a coffee',
+                              url='https://www.buymeacoffee.com/Nukesor')],
+        [InlineKeyboardButton(text='❤️ Patreon ❤️',
+                              url='https://patreon.com/nukesor')],
+        [InlineKeyboardButton(text='Paypal',
+                              url='https://paypal.me/arnebeer/')],
     ]
 
     return InlineKeyboardMarkup(buttons)
