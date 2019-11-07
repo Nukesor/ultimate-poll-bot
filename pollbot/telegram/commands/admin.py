@@ -26,7 +26,9 @@ def admin_required(function):
 def broadcast(bot, update, session, user):
     """Broadcast a message to all users."""
     message = update.message.text.split(' ', 1)[1].strip()
-    users = session.query(User).all()
+    users = session.query(User) \
+        .filter(User.notifications_enabled.is_(True)) \
+        .all()
 
     update.message.chat.send_message(f'Sending broadcast to {len(users)} chats.')
     for user in users:
