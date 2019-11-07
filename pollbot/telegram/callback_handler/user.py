@@ -136,8 +136,8 @@ def delete_closed_confirmation(session, context):
 def delete_all(session, context):
     """Delete all polls of the user."""
     for poll in context.user.polls:
-        session.delete(poll)
         remove_poll_messages(session, context.bot, poll)
+        session.delete(poll)
 
     session.commit()
     open_user_settings(session, context)
@@ -148,8 +148,8 @@ def delete_closed(session, context):
     """Delete all closed polls of the user."""
     for poll in context.user.polls:
         if poll.closed:
-            session.delete(poll)
             remove_poll_messages(session, context.bot, poll)
+            session.delete(poll)
 
     session.commit()
     open_user_settings(session, context)
