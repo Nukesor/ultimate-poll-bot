@@ -6,7 +6,7 @@ poll_types:
     cumulative_vote: 'Voto cumulativo'
     count_vote: 'Votos ilimitados'
 list:
-    polls: 'Clique em qualquer botão para gerenciar esta enquete específica'
+    polls: 'Escolha uma enquete para configurar'
     no_polls: 'Você não possui nenhuma enquete aberta'
     no_closed_polls: 'Você não possui nenhuma enquete fechada'
 admin:
@@ -91,7 +91,7 @@ keyboard:
     change_language: '🌐 Alterar idioma'
     vote: '✉️ Votar'
     permanently_close: '⚠️ Encerrar permanentemente a enquete! ⚠️'
-    permanently_delete: '⚠️ Excluir permanentemente a enquete! ⚠️'
+    permanently_delete: '⚠️ Excluir a enquete! ⚠️'
     permanently_anonymize: '⚠️ Tornar enquete permanentemente anônima! ⚠️'
     anonymize: '🔍 Tornar os votos anônimos'
     due_date: '📅 Definir encerramento'
@@ -118,6 +118,22 @@ keyboard:
     add_new_language: 'Adicionar um novo idioma'
     compact_doodle: 'Mostrar letras nos botões (teclado menor)'
     no_compact_doodle: 'Mostrar texto das opções nos botões'
+    show_help: '🤔 Ajuda'
+    help_me_out: '❤️ Saiba mais sobre o projeto ❤️'
+    permanently_delete_with_messages: '⚠️ Excluir enquete e apagar todas as mensagens! ⚠️'
+    user:
+        create_poll: '🌟 Criar nova enquete'
+        list_polls: '🗓 Listar suas enquetes'
+        list_closed_polls: '🗓 Listar enquetes encerradas'
+        enable_notifications: '💌 Ativar notificações'
+        disable_notifications: '🔇 Desativar notificações'
+        delete_all: '⚠️ Excluir todas as enquetes'
+        delete_all_closed: '⚠️ Excluir todas as enquetes encerradas'
+    admin:
+        settings: '⚙️ Configurações de administrador'
+        stats: '📊 Estatísticas'
+        plot: '📊 Gerar estatísticas'
+        update: 'Atualizar todas as enquetes'
 sorting:
     user_chrono: cronologicamente
     user_name: 'por nome'
@@ -149,6 +165,16 @@ settings:
     dont_summarize: '*Consolidar votos*: Mostrar todos os votos.'
     permanently_summarized: '*Consolidar votos*: Muitos votos. Permanentemente consolidado'
     sharing_link: 'Use este link para permitir que os usuários compartilhem a enquete em outras conversas. *Cuidado!* Uma vez compartilhado, não poderá voltar atrás:'
+    user:
+        notifications_enabled: 'Notificações: ativadas'
+        notifications_disabled: 'Notificações: desativadas'
+        delete_all: '⚠️ Excluir TODAS as enquetes ⚠️'
+        delete_closed: '⚠️ Excluir todas as enquetes encerradas ⚠️'
+        delete_all_confirmation: "Deseja realmente excluir TODAS as suas enquetes? \nIsso afeta as enquetes que estão abertas e encerradas. \n⚠️ * Esta ação é irreversível.* ⚠️ \n"
+        delete_closed_confirmation: "Deseja realmente excluir todas as enquetes encerradas?\n⚠️ *Esta ação é irreversível.* ⚠️\n"
+        language: 'Idioma padrão: %{language}'
+        open_polls: 'Pesquisas abertas: %{count}'
+        closed_polls: 'Enquetes encerradas: %{count}'
 management:
     permanently_close: "Deseja realmente fechar permanentemente esta enquete? \nOs resultados ficarão visíveis, mas as pessoas não poderão mais votar \n⚠️ Esta ação é irreversível. ⚠️\n"
     delete: 'Deseja realmente excluir esta enquete?'
@@ -183,6 +209,7 @@ creation:
         limit_bigger_zero: 'Por favor, envie um número maior que 0'
         limit_between: 'Por favor, envie um número entre 1 and %{limit}'
         markdown: "Por favor, não use símbolos de formatação nos nomes, descrição ou opções. Esses símbolos são `_`, ` * ` e `[`. \nPor favor, envie-me a mensagem novamente sem esses símbolos. \n"
+        too_big: 'Por favor, envie um número menor. Você também pode usar uma enquete "Votos ilimitados"'
 external:
     canceled: Cancelado
     notification:
@@ -196,7 +223,7 @@ delete:
 user:
     language_changed: 'Idioma alterado'
 misc:
-    donation: "Olá! \n\nMeu nome é Arne Beer (@Nukesor). Sou o único desenvolvedor do Ultimate pollbot. \n\nA ideia de escrever o Ultimate pollbot foi formada quando meus amigos não puderam decidir pela enésima vez onde deveríamos almoçar. \nIsso já aconteceu tantas vezes e precisávamos desesperadamente de uma solução boa e estável dentro do Telegram para esse problema! \nFoi assim que nasceu o ULTIMATE pollbot. \n\nTodas as linhas de código deste projeto foram escritas no meu tempo livre e são totalmente gratuitas. \nEste projeto é de código aberto, sem fins lucrativos, no [GitHub](https://github.com/Nukesor/ultimate-poll-bot) e hospedado em um servidor que estou alugando com dinheiro do meu próprio bolso. \n\nAtualmente, tenho investido entre 2 e 10 horas por semana no desenvolvimento e manutenção de meus projetos e gostaria de obter algum apoio, já que estou fazendo isso em grande parte para vocês que estão aí.\n\nEu realmente apreciaria qualquer coisa que me ajudasse e que mantivesse meu servidor (e eu) executando ☺️. \n\nSe você gosta deste projeto, consulte minha [página no Patreon] https://www.patreon.com/nukesor) ou me apoie através do [PayPal](https://www.paypal.me/arnebeer). \nSe você tiver alguma dúvida, visite meu [grupo de suporte](https://t.me/nukesors_projects). \n\nTenha um ótimo dia!\n"
+    donation: "Olá! \n\nMeu nome é Arne Beer (@Nukesor). Sou o desenvolvedor do Ultimate pollbot. \n\nA ideia de criar o Ultimate pollbot foi formada quando meus amigos não puderam decidir pela enésima vez onde deveríamos almoçar. \nIsso já tinha acontecido tantas vezes que precisávamos desesperadamente de uma solução boa e estável dentro do Telegram para esse problema! \nFoi assim que nasceu o ULTIMATE pollbot. \n\nTodas as linhas de código deste projeto foram escritas no meu tempo livre e são totalmente gratuitas. \nEste projeto é de código aberto, sem fins lucrativos, publicado no [GitHub](https://github.com/Nukesor/ultimate-poll-bot) e hospedado em um servidor que estou alugando com dinheiro do meu próprio bolso. \n\nAtualmente, tenho investido entre 2 e 10 horas por semana no desenvolvimento e manutenção dos meus projetos e gostaria de obter algum apoio (afinal, estou fazendo isso em grande parte para vocês aí).\n\nEu realmente agradeceria muito qualquer suporte que me ajudasse e que mantivesse meu servidor (e eu) em funcionamento ☺️. \n\nSe você gosta deste projeto, consulte minha [página no Patreon] https://www.patreon.com/nukesor) ou me [compre um café](https://www.buymeacoffee.com/Nukesor). \nSe você tiver alguma dúvida, visite meu [grupo de suporte](https://t.me/nukesors_projects). \n\nTenha um ótimo dia!\n"
     start: "🌟Bem-vindo ao *ULTIMATE* pollbot 🌟 \n\nBasta enviar /create ou tocar no botão abaixo para começar a criar enquetes. Tudo será explicado no processo. \n\n🌐 Você pode escolher outro idioma enviando /language 🌐 \n❓Clique em /help para obter mais informações ❓ \n\nSe você gosta do projeto, confira o meu [grupo de suporte](https://t.me/nukesors_projects) ou consulte minha [página no Patreon] (https://www.patreon.com/nukesor). Este bot é de código aberto no [GitHub] (https://github.com/Nukesor/ultimate-poll-bot). \n"
     help:
         intro: "Existem algumas configurações para suas enquetes. \nBasta escolher a categoria ou apenas ler tudo 😉. \n\nCaso você queira apenas criar uma enquete, envie /create \n"
