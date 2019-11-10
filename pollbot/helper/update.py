@@ -2,7 +2,7 @@
 from datetime import datetime, timedelta
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
-from telegram.error import BadRequest, RetryAfter
+from telegram.error import BadRequest, RetryAfter, Unauthorized
 
 from pollbot.i18n import i18n
 from pollbot.telegram.keyboard import get_management_keyboard
@@ -60,14 +60,18 @@ def send_updates(session, bot, poll, show_warning=False):
                 if poll.user.expected_input != ExpectedInput.votes.name:
                     keyboard = get_management_keyboard(poll)
 
-                bot.edit_message_text(
-                    text,
-                    chat_id=reference.admin_chat_id,
-                    message_id=reference.admin_message_id,
-                    reply_markup=keyboard,
-                    parse_mode='markdown',
-                    disable_web_page_preview=True,
-                )
+                try:
+                    bot.edit_message_text(
+                        text,
+                        chat_id=reference.admin_chat_id,
+                        message_id=reference.admin_message_id,
+                        reply_markup=keyboard,
+                        parse_mode='markdown',
+                        disable_web_page_preview=True,
+                    )
+                except Unauthorized as e:
+                    if e.message == 'Forbidden: user is deactivated':
+                        session.delete(reference)
 
             # Edit message via inline_message_id
             elif reference.inline_message_id is not None:
