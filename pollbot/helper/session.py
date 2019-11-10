@@ -161,6 +161,8 @@ def ignore_exception(exception):
             return True
         if exception.message == 'Forbidden: bot is not a member of the supergroup chat':
             return True
+        if exception.message == 'Forbidden: user is deactivated':
+            return True
 
     if isinstance(exception, TimedOut):
         return True
