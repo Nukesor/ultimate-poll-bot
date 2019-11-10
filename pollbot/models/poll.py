@@ -70,7 +70,7 @@ class Poll(base):
 
     # OneToMany
     options = relationship('PollOption', order_by='asc(PollOption.id)', lazy='joined', passive_deletes='all')
-    votes = relationship('Vote', passive_deletes=True)
+    votes = relationship('Vote', passive_deletes='all')
     references = relationship('Reference', lazy='joined', passive_deletes='all')
     notifications = relationship('Notification', passive_deletes='all')
 
