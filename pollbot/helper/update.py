@@ -122,7 +122,8 @@ def remove_poll_messages(session, bot, poll, remove_all=False):
                 )
 
         except BadRequest as e:
-            if e.message.startswith('Message_id_invalid'):
+            if e.message.startswith('Message_id_invalid') or \
+                   e.message.startswith("Message to edit not found"):
                 pass
             else:
                 raise
