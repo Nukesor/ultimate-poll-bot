@@ -56,11 +56,11 @@ def hidden_session_wrapper():
                     traceback.print_exc()
                     sentry.captureException()
 
-                    if hasattr(update, 'callback_query') and update.callback_query is not None:
-                        locale = 'English'
-                        if user is not None:
-                            locale = user.locale
-                        update.callback_query.answer(i18n.t('callback.error', locale=locale))
+                if hasattr(update, 'callback_query') and update.callback_query is not None:
+                    locale = 'English'
+                    if user is not None:
+                        locale = user.locale
+                    update.callback_query.answer(i18n.t('callback.error', locale=locale))
             finally:
                 session.close()
         return wrapper
@@ -97,11 +97,10 @@ def session_wrapper(send_message=True, private=False):
 
             # Handle all not telegram relatated exceptions
             except Exception as e:
-                if ignore_exception(e):
-                    pass
+                if not ignore_exception(e):
+                    traceback.print_exc()
+                    sentry.captureException()
 
-                traceback.print_exc()
-                sentry.captureException()
                 if send_message:
                     locale = 'English'
                     if user is not None:
