@@ -15,6 +15,7 @@ datepicker:
     open: 'Apri il calendario'
     pick_date: 'Scegli questa data'
     due_date: 'Imposta la data di scadenza'
+    remove_due_date: 'Rimuovi la data di scadenza'
 poll:
     anonymous: 'Il sondaggio è anonimo!'
     results_not_visible: 'I risultati saranno visibili solo alla chiusura del sondaggio!'
@@ -33,7 +34,11 @@ poll:
         'yes': '├ *Sì:*'
         maybe: '├ *Forse:*'
         'no': '├ *No:*'
+        yes_summarized: '├ *Sì:* %{count} voti'
+        maybe_summarized: '├ *Forse:* %{count} voti'
+        no_summarized: '├ *No:* %{count} voti'
     doodle_help: '*Premi* sui pulsanti `a)`, `b)` sottostanti per vedere le opzioni'
+    please_wait: "\n\nPer favore, attendi mentre il bot sincronizza i sondaggi ☺️"
 deleted:
     poll: 'Il sondaggio è stato permanentemente cancellato'
     polls: 'Tutti i sondaggi sono stati cancellati'
@@ -111,6 +116,24 @@ keyboard:
     summarize_votes: 'Riassumi molti voti'
     dont_summarize_votes: 'Mostra tutti i voti'
     add_new_language: 'Aggiungi una nuova lingua'
+    compact_doodle: 'Mostra i pulsanti lettera (tastiera più piccola)'
+    no_compact_doodle: 'Mostra il nome delle opzioni nei pulsanti'
+    show_help: '🤔 Aiuto'
+    help_me_out: '❤️ Scopri di più sul progetto ❤️'
+    permanently_delete_with_messages: '⚠️ Elimina il sondaggio e rimuovi tutti i messaggi! ⚠️'
+    user:
+        create_poll: '🌟 Crea un nuovo sondaggio'
+        list_polls: '🗓 Elenco di tutti i sondaggi'
+        list_closed_polls: '🗓 Elenco dei sondaggi chiusi'
+        enable_notifications: '💌 Attiva le notifiche'
+        disable_notifications: '🔇 Disattiva le notifiche'
+        delete_all: '⚠️ Elimina tutti i sondaggi'
+        delete_all_closed: '⚠️ Elimina tutti i sondaggi chiusi'
+    admin:
+        settings: '⚙️ Pannello amministrativo'
+        stats: '📊 Statistiche'
+        plot: '📊 Grafica le statistiche'
+        update: 'Aggiorna tutti i sondaggi'
 sorting:
     user_chrono: 'ordine cronologico'
     user_name: 'per nome'
@@ -141,6 +164,17 @@ settings:
     summarize: '*Riassumi i voti*: Riassumi molti voti'
     dont_summarize: '*Riassumi i voti*: mostra tutti i voti'
     permanently_summarized: '*Riassumi i voti*: Troppi voti. Riassunti permanentemente.'
+    sharing_link: 'Usa questo link per permettere agli utenti di condividere il sondaggio con altri. *Fai attenzione!* Una volta che l''hai fatto non c''è modo di tornare indietro:'
+    user:
+        notifications_enabled: 'Notifiche: abilitate'
+        notifications_disabled: 'Notifiche: disabilitate'
+        delete_all: '⚠️ Elimina TUTTI i sondaggi ⚠️'
+        delete_closed: '⚠️ Elimina tutti i sondaggi chiusi ⚠️'
+        delete_all_confirmation: "Vuoi davvero eliminare TUTTI i tuoi sondaggi?\nQuesto riguarda sia i sondaggi aperti che quelli chiusi.\n⚠️ *Questa azione è irreversibile.* ⚠️"
+        delete_closed_confirmation: "Vuoi davvero eliminare tutti i sondaggi chiusi?\n⚠️ *Questa azione è irreversibile.* ⚠️"
+        language: 'Lingua predefinita:%{language}'
+        open_polls: 'Sondaggi aperti:%{count}'
+        closed_polls: 'Sondaggi chiusi:%{count}'
 management:
     permanently_close: "Vuoi davvero chiudere questo sondaggio?\nI risultati saranno visibili, ma non verranno registrati altri voti.\n⚠️ Questa azione è irreversibile. ⚠️\n"
     delete: 'Vuoi veramente eliminare questo sondaggio?'
@@ -175,12 +209,14 @@ creation:
         limit_bigger_zero: 'Inviami un numero maggiore di 0'
         limit_between: 'Inviami un numero compreso tra 1 e %{limit}'
         markdown: "Non utilizzare nessuno dei simboli di markdown nei nomi, nella descrizione o nelle opzioni. Tali simboli sono `_`,`*` e `[`.\nPer favore, invia nuovamente il messaggio senza quei simboli."
+        too_big: 'Per favore, invia un numero più piccolo. Potresti volere un sondaggio a "Voti illimitati".'
 external:
     canceled: Annullato
     notification:
         pick_poll: 'Scegli il sondaggio corretto per attivare le notifiche'
         activated: 'Notifiche attivate'
         new_notification_board: 'Per favore, usa la nuova bacheca di notifica.'
+    share_poll: 'Per condividere questo sondaggio, clicca sul pulsante apposito e scegli la chat a cui vuoi inoltrarlo.'
 delete:
     doesnt_exist: 'Il sondaggio da eliminare non esiste'
     previous_deleted: 'Il sondaggio precedente è stato eliminato. Ora puoi creare un nuovo sondaggio con /create.'
@@ -198,3 +234,7 @@ misc:
         languages: "🌐 *Lingue:*\n\nUltimate pollbot supporta diverse lingue, anche se l'unica ad essere mantenuta ufficialmente è la lingua Inglese.\n\nPer aggiungere una lingua, recati sul repository di Github, copia il file \"english.yml\", rinominalo con il nome della tua lingua ed esegui la traduzione.\nStai attento a non mandare a quel paese il Markdown (`**`, `__`, `${}`), altrimenti alcune cose tradotte nella tua lingua non funzioneranno.\n\nSe qualcosa si rompe, a causa di traduzioni errate, dovrai risolverlo da te. Non me ne occuperò io.\nIl supporto multilingue è una feature che viene mandata avanti dalla comunità che io supporto felicemente, ma non posso supportare più lingue da solo.\n"
         bugs: "⚠️ *C'è un bug ignoto che non se ne vuole andare!!* 😩\n\nDi solito ricevo una notifica quando qualcosa si rompe, ma alcuni bug potrebbero non venire rilevati!\nNel caso in cui un bug non sia stato risolto un uno o due giorni, puoi aprire un ticket di errore su [GitHub](https://github.com/Nukesor/ultimate-poll-bot) o di farlo presente sul [gruppo di supporto](https://t.me/nukesors_projects).\n"
     error: "Si è verificato un errore sconosciuto. Probabilmente ho già ricevuto una notifica a riguardo, e cercherò di risolverlo il prima possibile.\nNel caso in cui il bug non sia stato risolto entro uno o due giorni, puoi aprire un ticket di errore su [GitHub](https://github.com/Nukesor/ultimate-poll-bot) o di farlo presente sul [gruppo di supporto](https://t.me/nukesors_projects).\n"
+    start_after_results: 'Hey! Scrivi /create per creare il tuo sondaggio!'
+    over_3000: "⚠️ Il tuo sondaggio ha superato i *3000 caratteri*. E' troppo lungo per essere contenuto in un solo messaggio. Per favore, prova a tenerlo sotto i 3000 o, ancora meglio, sotto i 2500 🙏.\n\nTelegram forza un massimo di 4096 caratteri per messaggio e devo mostrare i voti sopra al tuo testo.\nQualsiasi sondaggio con più caratteri *non funzionerà*.\nHo già fatto del mio meglio per gestire la situazione e a riassumere i voti per risparmiare spazio, ma quest'ultimo non è infinito.\n\nPer sondaggi con 10-15 opzioni e un sacco di testo, forse faresti meglio a usare un tool esterno come [Doodle](https://doodle.com/)."
+    over_4000: "⚠️ Il tuo sondaggio ha superato i *4000 caratteri*. E' troppo lungo per essere contenuto in un solo messaggio. Per favore, prova a tenerlo sotto i 3000 o, ancora meglio, sotto i 2500 🙏.\n\nTelegram forza un massimo di 4096 caratteri per messaggio e devo mostrare i voti sopra al tuo testo.\nQualsiasi sondaggi con più caratteri *non funzionerà*.\nHo già fatto del mio meglio per gestire la situazione, ma ho le mani legate.\n\nPer sondaggi molto lunghi, forse faresti meglio a usare un tool esterno come [Doodle](https://doodle.com/)."
+    too_long: "Hey!\n\nSono spiacente, ma il tuo sondaggio è troppo lungo. Potresti aver messo troppe opzioni o aver scritto troppo testo (o entrambe le cose). 😬\n\nDato che telegram permette solo 4096 caratteri per messaggio, non posso mostrare sondaggi che superano questo limite. 😐\n\nPer favore, prova ad essere più sintetico con il nome, la descrizione e le opzioni e, se vuoi avere sondaggi con molte opzioni forse faresti meglio a usare un tool come [Doodle](https://doodle.com/).\n\n    Un modo per risolvere il problema potrebbe esser quello di rimuovere delle opzioni (può farlo l'amministratore)\n\n👇 Puoi ancora votare e vedere i risultati qui sotto. 👇\n"
