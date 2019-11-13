@@ -43,3 +43,13 @@ class Reference(base):
         self.inline_message_id = inline_message_id
         self.admin_chat_id = admin_chat_id
         self.admin_message_id = admin_message_id
+
+    def __repr__(self):
+        """Print as string."""
+        if self.inline_message_id is not None:
+            message = f', inline_message_id: {self.locale}'
+        else:
+            message = f'Reference: admin_id {self.admin_message_id}'
+            message += f', chat_id: {self.admin_chat_id}'
+
+        return message
