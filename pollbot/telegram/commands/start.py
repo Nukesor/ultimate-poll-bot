@@ -22,7 +22,9 @@ from pollbot.telegram.keyboard.external import (
 def start(bot, update, session, user):
     """Send a start text."""
     # Truncate the /start command
-    text = update.message.text[6:].strip()
+    text = ""
+    if update.message is not None:
+        text = update.message.text[6:].strip()
     user.started = True
 
     try:
