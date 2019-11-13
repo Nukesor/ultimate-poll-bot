@@ -48,6 +48,9 @@ class PollOption(base):
         """Get the name depending on whether the option is a date."""
         if self.is_date and self.poll.european_date_format:
             option_date = date.fromisoformat(self.name)
-            return option_date.strftime('%d.%m.%Y')
+            return option_date.strftime('%d.%m.%Y (%A)')
+        elif self.is_date:
+            option_date = date.fromisoformat(self.name)
+            return option_date.strftime('%Y-%m-%d (%A)')
 
         return self.name

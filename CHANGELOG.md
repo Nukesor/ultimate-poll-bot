@@ -1,3 +1,10 @@
+## v1.3.0
+- Display week day in vote buttons
+
+- Language updates
+- Improvement of internal error handling
+- Numerous minor bug fixes
+
 ## v1.2.0
 - Completely revamp the user settings and /start interface
 - Add /settings command as shortcut to settings submenu

@@ -1,3 +1,4 @@
+"""Poll text compilation for options."""
 import math
 import string
 from datetime import date
@@ -9,6 +10,7 @@ from .vote import get_vote_lines, get_doodle_vote_lines
 
 
 def get_option_information(session, poll, context, summarize):
+    """Compile all information about a poll option."""
     lines = []
     # Sort the options accordingly to the polls settings
     options = get_sorted_options(poll, context.total_user_count)
@@ -37,14 +39,7 @@ def get_option_information(session, poll, context, summarize):
 def get_option_line(session, option, index):
     """Get the line with vote count for this option."""
     # Special formating for polls with European date format
-    if option.is_date and option.poll.european_date_format:
-        option_date = date.fromisoformat(option.name)
-        option_name = option_date.strftime('%d.%m.%Y (%A)')
-    elif option.is_date:
-        option_date = date.fromisoformat(option.name)
-        option_name = option_date.strftime('%Y-%m-%d (%A)')
-    else:
-        option_name = option.name
+    option_name = option.get_formatted_name()
 
     prefix = ''
     if option.poll.poll_type == PollType.doodle.name:
