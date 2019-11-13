@@ -26,8 +26,8 @@ def get_main_keyboard(user):
     """User settings keyboard."""
     buttons = [
         [InlineKeyboardButton(
-            text=i18n.t('keyboard.user.create_poll', locale=user.locale),
-            callback_data=f'{CallbackType.create_poll.value}:0:0',
+            text=i18n.t('keyboard.user.init_poll', locale=user.locale),
+            callback_data=f'{CallbackType.init_poll.value}:0:0',
         )],
         [InlineKeyboardButton(
             text=i18n.t('keyboard.settings', locale=user.locale),
