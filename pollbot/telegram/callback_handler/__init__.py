@@ -77,7 +77,7 @@ from .external import (
 
 from .user import (
     change_user_language,
-    create_poll,
+    init_poll,
     delete_all,
     delete_all_confirmation,
     delete_closed,
@@ -219,7 +219,7 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.settings_toggle_compact_buttons: toggle_compact_doodle_buttons,
 
         # User
-        CallbackType.create_poll: create_poll,
+        CallbackType.init_poll: init_poll,
         CallbackType.user_menu: open_main_menu,
         CallbackType.user_settings: open_user_settings,
         CallbackType.user_language_menu: open_language_menu,

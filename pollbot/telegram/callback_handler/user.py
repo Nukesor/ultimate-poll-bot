@@ -80,7 +80,7 @@ def open_help(session, context):
     )
 
 
-def create_poll(session, context):
+def init_poll(session, context):
     """Start the creation of a new poll."""
     user = context.user
     chat = context.query.message.chat

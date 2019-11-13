@@ -17,6 +17,7 @@ from pollbot.display.creation import (
 )
 
 from pollbot.models import Poll
+from .user import init_poll
 
 
 @poll_required
@@ -162,4 +163,9 @@ def cancel_creation(session, context):
         return i18n.t('delete.doesnt_exist', locale=context.user.locale)
 
     session.delete(context.poll)
-    context.query.message.edit_text(i18n.t('delete.previous_deleted', locale=context.user.locale))
+    session.commit()
+    context.query.message.edit_text(
+        i18n.t('delete.previous_deleted', locale=context.user.locale)
+    )
+
+    init_poll(session, context)

@@ -144,7 +144,7 @@ class CallbackType(Enum):
     set_date = 504
     next_month = 505
     previous_month = 506
-    create_poll = 507
+    init_poll = 507
 
 
 @unique

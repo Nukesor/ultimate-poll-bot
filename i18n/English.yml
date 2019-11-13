@@ -301,7 +301,7 @@ external:
 
 delete:
   doesnt_exist: Poll to delete doesn't exist
-  previous_deleted: Previous poll deleted. You can now /create a new poll.
+  previous_deleted: Previous unfinished poll deleted.
 
 user:
   language_changed: Language changed
