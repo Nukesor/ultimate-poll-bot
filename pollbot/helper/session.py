@@ -162,6 +162,8 @@ def ignore_exception(exception):
             return True
         if exception.message == 'Forbidden: user is deactivated':
             return True
+        if exception.message == 'Forbidden: bot was kicked from the group chat':
+            return True
 
     if isinstance(exception, TimedOut):
         return True
