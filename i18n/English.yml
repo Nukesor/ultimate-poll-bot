@@ -22,7 +22,7 @@ datepicker:
 
 poll:
   anonymous: Poll is anonymous!
-  anonymous_warning: "*Be aware:* _People can still guess your votes by tracking the percentage/vote count and your online status._"
+  anonymous_warning: "*Be aware:* _People might be able to guess your votes by tracking the percentage/vote count and your online status._"
   results_not_visible: Results are not visible, until poll is closed!
   please_wait: "\n\nPlease wait a second, while the bot synchronizes the polls ☺️"
   vote_times: "\nEvery user can vote *%{amount} times*"
