@@ -352,8 +352,8 @@ misc:
 
     Just type /create or click the button below to start creating polls. Everything is explained underway.
 
-    🌐 You can pick another /language 🌐
-    ❓Click /help for more explanations ❓
+    🌐 You can pick another language under settings 🌐
+    ❓Click help for more explanations ❓
 
     If you like the project, stop by my [support group](https://t.me/nukesors_projects) or check out my [Patreon page](https://www.patreon.com/nukesor).
     This bot is open-source on [GitHub](https://github.com/Nukesor/ultimate-poll-bot).
@@ -450,13 +450,13 @@ misc:
     management: |
       🕰 *Find old polls:*
 
-      There are two commands /list and /list\_closed, which allow you to find and manage your old polls.
-
+      There is an option in your /start menu to find all open polls.
+      Closed polls can be listed in the /settings menu.
 
       ⚠️ *Delete polls:*
 
       You can delete individual polls in the respective poll menus.
-      There's also the /delete\_closed command, which deletes all closed polls and the /delete\_all command which deletes ALL polls.
+      There are also options delete all polls or all closed polls in the /settings menu.
 
     languages: |
       🌐 *Language:*
