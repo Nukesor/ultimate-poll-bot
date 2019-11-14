@@ -43,6 +43,8 @@ def show_anonymization_confirmation(session, context, poll):
 def make_anonymous(session, context, poll):
     """Change the anonymity settings of a poll."""
     poll.anonymous = True
+    if not poll.show_percentage and not poll.show_option_votes:
+        poll.show_percentage = True
 
     session.commit()
     update_poll_messages(session, context.bot, poll)

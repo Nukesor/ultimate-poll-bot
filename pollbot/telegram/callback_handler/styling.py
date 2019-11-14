@@ -20,7 +20,7 @@ def send_styling_message(session, context):
 @poll_required
 def toggle_percentage(session, context, poll):
     """Toggle the visibility of the percentage bar."""
-    if not poll.show_option_votes:
+    if poll.anonymous and not poll.show_option_votes:
         context.query.message.chat.send_message(
             text=i18n.t('settings.anonymity_warning', locale=context.user.locale),
         )
@@ -35,7 +35,7 @@ def toggle_percentage(session, context, poll):
 @poll_required
 def toggle_option_votes(session, context, poll):
     """Toggle the visibility of the vote overview on an option."""
-    if not poll.show_percentage:
+    if poll.anonymous and not poll.show_percentage:
         context.query.message.chat.send_message(
             text=i18n.t('settings.anonymity_warning', locale=context.user.locale),
         )
