@@ -1,3 +1,5 @@
+"""Callback handler for poll styling."""
+from pollbot.i18n import i18n
 from pollbot.helper import poll_required
 from pollbot.helper.enums import OptionSorting, UserSorting
 from pollbot.helper.update import update_poll_messages
@@ -18,8 +20,28 @@ def send_styling_message(session, context):
 @poll_required
 def toggle_percentage(session, context, poll):
     """Toggle the visibility of the percentage bar."""
-    poll = poll
+    if not poll.show_option_votes:
+        context.query.message.chat.send_message(
+            text=i18n.t('settings.anonymity_warning', locale=context.user.locale),
+        )
+        return
     poll.show_percentage = not poll.show_percentage
+
+    session.commit()
+    update_poll_messages(session, context.bot, poll)
+    send_styling_message(session, context)
+
+
+@poll_required
+def toggle_option_votes(session, context, poll):
+    """Toggle the visibility of the vote overview on an option."""
+    if not poll.show_percentage:
+        context.query.message.chat.send_message(
+            text=i18n.t('settings.anonymity_warning', locale=context.user.locale),
+        )
+        return
+
+    poll.show_option_votes = not poll.show_option_votes
 
     session.commit()
     update_poll_messages(session, context.bot, poll)

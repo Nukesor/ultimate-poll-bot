@@ -1,5 +1,8 @@
 ## v1.3.0
 - Display week day in vote buttons
+- Add explanations for most important options
+- Add warning about possible information leak via online status on anonymous polls
+- Add option to hide option count on polls.
 
 - Language updates
 - Improvement of internal error handling

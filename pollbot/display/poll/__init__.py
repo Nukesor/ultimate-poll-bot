@@ -1,6 +1,5 @@
 """Get the text describing the current state of the poll."""
 from pollbot.i18n import i18n
-from pollbot.helper.enums import PollType
 from pollbot.helper import (
     poll_has_limited_votes,
 )
@@ -23,13 +22,14 @@ from .vote import (
 
 
 class Context():
-    """Context for poll text creation
+    """Context for poll text creatio.
 
     This class contains all necessary information and flags, that
     are needed to decide in which way a poll should be displayed.
     """
 
     def __init__(self, session, poll):
+        """Contructor."""
         self.total_user_count = session.query(User.id) \
             .join(Vote) \
             .join(PollOption) \
@@ -63,7 +63,7 @@ def get_poll_text_and_vote_keyboard(
 
 
 def get_poll_text(session, poll, show_warning=False):
-    """Simple wrapper for if you really only want the poll text."""
+    """Only get the poll text."""
     text, summarize = get_poll_text_and_summarize(session, poll, show_warning=False)
     return text
 
@@ -108,6 +108,8 @@ def compile_poll_text(session, poll, show_warning=False, summarize=False, inline
         lines.append('')
     if context.anonymous:
         lines.append(f"_{i18n.t('poll.anonymous', locale=poll.locale)}_")
+        if context.show_results:
+            lines.append(i18n.t('poll.anonymous_warning', locale=poll.locale))
     if not context.show_results:
         lines.append(f"_{i18n.t('poll.results_not_visible', locale=poll.locale)}_")
 

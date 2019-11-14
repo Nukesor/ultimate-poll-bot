@@ -1,3 +1,4 @@
+"""Compilation of vote texts for each option."""
 from sqlalchemy import func
 
 from pollbot.i18n import i18n
@@ -20,7 +21,7 @@ from pollbot.models import (
 
 
 def get_doodle_vote_lines(poll, option, summarize):
-    "Return all vote related lines for this option."""
+    """Return all vote related lines for this option."""
     lines = []
     votes_by_answer = get_sorted_doodle_votes(poll, option.votes)
 
@@ -28,7 +29,8 @@ def get_doodle_vote_lines(poll, option, summarize):
     if summarize:
         for index, answer in enumerate(votes_by_answer.keys()):
             is_last = index == len(votes_by_answer.keys()) - 1
-            line = i18n.t(f'poll.doodle.{answer}_summarized', locale=poll.locale,
+            line = i18n.t(f'poll.doodle.{answer}_summarized',
+                          locale=poll.locale,
                           count=len(votes_by_answer[answer]))
 
             # Last line must be properly styled
@@ -93,7 +95,7 @@ def get_doodle_answer_lines(votes, summarize, is_last):
 
 
 def get_vote_lines(poll, option, summarize):
-    "Return all vote related lines for this option."""
+    """Return all vote related lines for this option."""
     lines = []
     threshold = 2
     # Sort the votes accordingly to the poll's settings

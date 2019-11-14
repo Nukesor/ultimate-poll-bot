@@ -101,6 +101,7 @@ class CallbackType(Enum):
     settings_toggle_summarization = 86
     settings_toggle_compact_buttons = 87
     settings_remove_due_date = 88
+    settings_toggle_option_votes = 89
 
     # Misc
     ignore = 100

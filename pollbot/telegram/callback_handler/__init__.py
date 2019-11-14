@@ -56,6 +56,7 @@ from .settings import (
 )
 from .styling import (
     toggle_percentage,
+    toggle_option_votes,
     toggle_date_format,
     toggle_summerization,
     set_option_order,
@@ -212,6 +213,7 @@ def handle_callback_query(bot, update, session, user):
 
         # Styling
         CallbackType.settings_toggle_percentage: toggle_percentage,
+        CallbackType.settings_toggle_option_votes: toggle_option_votes,
         CallbackType.settings_toggle_date_format: toggle_date_format,
         CallbackType.settings_toggle_summarization: toggle_summerization,
         CallbackType.settings_user_sorting: set_user_order,

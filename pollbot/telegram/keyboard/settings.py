@@ -88,13 +88,23 @@ def get_styling_settings_keyboard(poll):
     buttons = []
     locale = poll.user.locale
 
-    # Show/hide percentage
     if poll.results_visible:
+        # Show/hide percentage
         percentage_text = i18n.t('keyboard.show_percentage', locale=locale)
         if poll.show_percentage:
             percentage_text = i18n.t('keyboard.hide_percentage', locale=locale)
         percentage_payload = f'{CallbackType.settings_toggle_percentage.value}:{poll.id}:0'
         buttons.append([InlineKeyboardButton(text=percentage_text, callback_data=percentage_payload)])
+
+        # Show/hide option votes
+        option_votes_text = i18n.t('keyboard.show_option_votes', locale=locale)
+        if poll.show_option_votes:
+            option_votes_text = i18n.t('keyboard.hide_option_votes', locale=locale)
+        option_votes_payload = f'{CallbackType.settings_toggle_option_votes.value}:{poll.id}:0'
+        buttons.append([
+            InlineKeyboardButton(text=option_votes_text,
+                                 callback_data=option_votes_payload)
+        ])
 
     # Summarize votes in poll
     if poll.results_visible and not poll.permanently_summarized:

@@ -22,6 +22,7 @@ datepicker:
 
 poll:
   anonymous: Poll is anonymous!
+  anonymous_warning: "*Be aware:* _People can still guess your votes by tracking the percentage/vote count and your online status._"
   results_not_visible: Results are not visible, until poll is closed!
   please_wait: "\n\nPlease wait a second, while the bot synchronizes the polls ☺️"
   vote_times: "\nEvery user can vote *%{amount} times*"
@@ -114,6 +115,8 @@ keyboard:
   show_results: 🔎 View all votes
   hide_percentage: ○% Hide percentage
   show_percentage: ○% Show percentage
+  hide_option_votes: "# Hide total votes for option"
+  show_option_votes: "# Show total votes for option"
   summarize_votes: Summarize many votes
   dont_summarize_votes: Show all votes
   compact_doodle: Show letter buttons (smaller keyboard)
@@ -179,6 +182,9 @@ settings:
   permanently_summarized: "*Summarize votes*: Too many votes. Permanently summarized."
   change_language: Just click on a language to change it for this poll.
   sharing_link: "Use this link to allow users to share the poll with other chats. *Be careful!* Once it's out there you cannot take it back:"
+  anonymity_warning: |
+    You cannot hide votes and percentage on an annoymous poll.
+    This might give users the conception that the poll has hidden results, which isn't actually the case. If you want this behaviour, create the poll with hidden results enabled.
   anonymize: |
     Do you really want to anonymize this poll?
     ⚠️ This action is irrevertible. ⚠️
@@ -187,7 +193,7 @@ settings:
   poll:
     explanation:
       anonymity: "_In an anonymous poll no names will be displayed. It's not possible to see from which user a vote came from._"
-      visibility: "_A poll with hidden results won't show any votes or any percentages, until the poll is closed. Once the poll is closed, it stays closed forever. This is needed to avoid the possibility of_ [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) _and to prevent_ [Anchoring](https://en.wikipedia.org/wiki/Anchoring)."
+      visibility: "_A poll with hidden results won't show any votes or any percentages, until the poll is closed. Once the poll is closed, it stays closed forever. This is needed to avoid the possibility of_ [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) _and to prevent_ [anchoring](https://en.wikipedia.org/wiki/Anchoring)."
 
   user:
     notifications_enabled: "*Notifications:* enabled"
@@ -401,12 +407,25 @@ misc:
 
       Further settings of a poll can be adjusted after the poll has been created:
 
+      *Language:* The language for this specific poll can be changed.
       *Anonymity:* A poll can be made anonymous retrospectively.
-      *Percentage:* The percentage line of options can be hidden in the settings menu.
+      *Due date:* A due date at which the poll will be automatically closed can be set.
       *Options:* New options can be added and existing options can be removed in the settings menu.
       *User Options:* You can allow other users to add options to your poll.
-      *Order:* The order in which user names and options are displayed in the results can be changed.
-      *Due date:* A due date at which the poll will be automatically closed can be set.
+
+      *---- Styling submenu: ----*
+
+      *Percentage:*
+      _The percentage line of options can be hidden in the styling menu._
+
+      *Option votes:*
+      _The sum of all votes for an option can be hidden._
+
+      *Summarize votes:*
+      _If many people vote on your poll, the message might get crowded. Summarize the votes to have a better overview._
+
+      *Order:*
+      _The order in which user names and options are displayed in the results can be changed._
 
     notifications: |
       📣 *Notifications:*
