@@ -17,6 +17,8 @@ from .creation import (
     close_creation_datepicker,
     skip_description,
     cancel_creation,
+    back_to_creation_init,
+    open_init_anonymization_settings,
 )
 
 from .vote import (
@@ -176,6 +178,8 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.pick_date_option: add_date,
         CallbackType.skip_description: skip_description,
         CallbackType.cancel_creation: cancel_creation,
+        CallbackType.back_to_init: back_to_creation_init,
+        CallbackType.anonymity_settings: open_init_anonymization_settings,
 
         # Voting
         CallbackType.vote: handle_vote,

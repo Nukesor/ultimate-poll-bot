@@ -101,6 +101,7 @@ keyboard:
   share: Share this poll
   close_poll: 🔒 Close
   settings: ⚙️ Settings
+  anonymity_settings: ⚙️ Anonymity Settings
   change_language: 🌐 Change language
   show_help: "🤔 Help"
   help_me_out: ❤️ Learn about the project ❤️
@@ -284,14 +285,9 @@ creation:
     Hey there!
     You are about to create a new poll 👌
 
-    The current settings for this poll are:
-
     *Poll type*: %{poll_type}
     *Anonymity*: %{anonymity}
-    %{anonymityExplanation}
-
     *Visible results*: %{results_visible}
-    %{visibilityExplanation}
 
     Please follow these steps:
     1. Configure the poll to your needs 🙂

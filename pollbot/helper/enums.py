@@ -60,6 +60,8 @@ class CallbackType(Enum):
     all_options_entered = 4
     toggle_results_visible = 5
     cancel_creation = 6
+    back_to_init = 7
+    anonymity_settings = 8
 
     # Poll voting
     vote = 20

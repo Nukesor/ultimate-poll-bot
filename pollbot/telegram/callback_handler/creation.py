@@ -9,15 +9,48 @@ from pollbot.telegram.keyboard import (
     get_options_entered_keyboard,
     get_creation_datepicker_keyboard,
     get_open_datepicker_keyboard,
+    get_init_settings_keyboard,
 )
 from pollbot.display.creation import (
     get_init_text,
     get_poll_type_help_text,
     get_datepicker_text,
+    get_init_anonymziation_settings_text,
 )
 
 from pollbot.models import Poll
 from .user import init_poll
+
+
+def open_init_text(message, poll):
+    """Open the initial poll creation message."""
+    keyboard = get_init_keyboard(poll)
+    message.edit_text(
+        get_init_text(poll),
+        parse_mode='markdown',
+        reply_markup=keyboard,
+    )
+
+def open_anonymization_settings(message, poll):
+    """Open the initial poll anonymization settings."""
+    message.edit_text(
+        get_init_anonymziation_settings_text(poll),
+        parse_mode='markdown',
+        reply_markup=get_init_settings_keyboard(poll),
+        disable_web_page_preview=True,
+    )
+
+
+@poll_required
+def back_to_creation_init(session, context, poll):
+    """Open the initial poll creation message."""
+    open_init_text(context.query.message, poll)
+
+
+@poll_required
+def open_init_anonymization_settings(session, context, poll):
+    """Open the anonymization settings for this poll."""
+    open_anonymization_settings(context.query.message, poll)
 
 
 @poll_required
@@ -52,13 +85,7 @@ def change_poll_type(session, context, poll):
 
     poll.poll_type = PollType(context.action).name
 
-    keyboard = get_init_keyboard(poll)
-    context.query.message.edit_text(
-        get_init_text(poll),
-        parse_mode='markdown',
-        reply_markup=keyboard,
-        disable_web_page_preview=True,
-    )
+    open_init_text(context.query.message, poll)
 
 
 @poll_required
@@ -69,14 +96,7 @@ def toggle_anonymity(session, context, poll):
 
     poll.anonymous = not poll.anonymous
 
-    keyboard = get_init_keyboard(poll)
-    context.query.message.edit_text(
-        get_init_text(poll),
-        parse_mode='markdown',
-        reply_markup=keyboard,
-        disable_web_page_preview=True,
-    )
-
+    open_anonymization_settings(context.query.message, poll)
     return i18n.t('callback.anonymity_changed', locale=context.user.locale)
 
 
@@ -88,13 +108,7 @@ def toggle_results_visible(session, context, poll):
 
     poll.results_visible = not poll.results_visible
 
-    keyboard = get_init_keyboard(poll)
-    context.query.message.edit_text(
-        get_init_text(poll),
-        parse_mode='markdown',
-        reply_markup=keyboard,
-        disable_web_page_preview=True,
-    )
+    open_anonymization_settings(context.query.message, poll)
     return i18n.t('callback.visibility_changed', locale=context.user.locale)
 
 

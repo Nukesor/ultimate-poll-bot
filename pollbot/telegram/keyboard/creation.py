@@ -10,12 +10,34 @@ from pollbot.helper import translate_poll_type
 from pollbot.telegram.keyboard.date_picker import get_datepicker_buttons
 
 
+def get_back_to_init_button(poll):
+    """Get the button to go back to the init creation message."""
+    back_text = i18n.t('keyboard.back', locale=poll.locale)
+    anonymity_payload = f"{CallbackType.back_to_init.value}:{poll.id}:0"
+    return InlineKeyboardButton(back_text, callback_data=anonymity_payload)
+
+
 def get_init_keyboard(poll):
     """Get the initial inline keyboard for poll creation."""
     locale = poll.user.locale
     change_type = CallbackType.show_poll_type_keyboard.value
     change_type_payload = f"{change_type}:{poll.id}:0"
     change_type_text = i18n.t('creation.keyboard.change', locale=locale)
+
+    anonymity_text = i18n.t('keyboard.anonymity_settings', locale=locale)
+    anonymity_payload = f"{CallbackType.anonymity_settings.value}:{poll.id}:0"
+
+    buttons = [
+        [InlineKeyboardButton(change_type_text, callback_data=change_type_payload)],
+        [InlineKeyboardButton(anonymity_text, callback_data=anonymity_payload)],
+    ]
+
+    return InlineKeyboardMarkup(buttons)
+
+
+def get_init_settings_keyboard(poll):
+    """Get the keyboard for initial settings during poll creation."""
+    locale = poll.locale
 
     toggle_anonymity = CallbackType.toggle_anonymity.value
     toggle_anonymity_payload = f"{toggle_anonymity}:{poll.id}:0"
@@ -30,9 +52,9 @@ def get_init_keyboard(poll):
         toggle_results_visible_text = i18n.t('creation.keyboard.results_not_visible', locale=locale)
 
     buttons = [
-        [InlineKeyboardButton(change_type_text, callback_data=change_type_payload)],
         [InlineKeyboardButton(toggle_anonymity_text, callback_data=toggle_anonymity_payload)],
         [InlineKeyboardButton(toggle_results_visible_text, callback_data=toggle_results_visible_payload)],
+        [get_back_to_init_button(poll)],
     ]
 
     return InlineKeyboardMarkup(buttons)
@@ -49,6 +71,8 @@ def get_change_poll_type_keyboard(poll):
         payload = f'{change_type}:{poll.id}:{poll_type.value}'
         button = [InlineKeyboardButton(text, callback_data=payload)]
         buttons.append(button)
+
+    buttons.append([get_back_to_init_button(poll)])
 
     return InlineKeyboardMarkup(buttons)
 
