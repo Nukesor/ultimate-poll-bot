@@ -122,7 +122,7 @@ keyboard:
     help_me_out: '❤️ Saiba mais sobre o projeto ❤️'
     permanently_delete_with_messages: '⚠️ Excluir enquete e apagar todas as mensagens! ⚠️'
     user:
-        create_poll: '🌟 Criar nova enquete'
+        init_poll: '🌟 Criar nova enquete'
         list_polls: '🗓 Listar suas enquetes'
         list_closed_polls: '🗓 Listar enquetes encerradas'
         enable_notifications: '💌 Ativar notificações'

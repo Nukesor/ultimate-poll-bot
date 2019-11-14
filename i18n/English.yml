@@ -127,7 +127,7 @@ keyboard:
   add_new_language: Add a new language
   vote_with_count: '%{option_name} (%{count} votes)'
   user:
-    create_poll: 🌟 Create new poll
+    init_poll: 🌟 Create new poll
     list_polls: 🗓 List your polls
     list_closed_polls: 🗓 List closed polls
     enable_notifications: 💌 Enable notifications
