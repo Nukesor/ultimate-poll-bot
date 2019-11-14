@@ -192,7 +192,9 @@ settings:
 
   poll:
     explanation:
-      anonymity: "_In an anonymous poll no names will be displayed. It's not possible to see from which user a vote came from._"
+      anonymity: |
+        _In an anonymous poll no names will be displayed. It's not possible to see from which user a vote came from._
+        *Be aware:* _People might be able to guess your votes by tracking the percentage/vote count and your online status. To get an absolutely anonymous poll, also enable hidden results._
       visibility: "_A poll with hidden results won't show any votes or any percentages, until the poll is closed. Once the poll is closed, it stays closed forever. This is needed to avoid the possibility of_ [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) _and to prevent_ [anchoring](https://en.wikipedia.org/wiki/Anchoring)."
 
   user:
