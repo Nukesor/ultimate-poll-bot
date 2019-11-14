@@ -29,7 +29,12 @@ def create_poll(bot, update, session, user):
     text = get_init_text(poll)
     keyboard = get_init_keyboard(poll)
 
-    update.message.chat.send_message(text, parse_mode='markdown', reply_markup=keyboard)
+    update.message.chat.send_message(
+        text,
+        parse_mode='markdown',
+        reply_markup=keyboard,
+        disable_web_page_preview=True,
+    )
 
 
 @run_async

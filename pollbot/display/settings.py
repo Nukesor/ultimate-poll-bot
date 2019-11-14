@@ -20,16 +20,17 @@ def get_settings_text(poll):
     else:
         text.append(i18n.t('settings.not_anonymous', locale=locale))
 
-    if poll.due_date:
-        text.append(i18n.t('settings.due_date', locale=locale,
-                           date=poll.get_formatted_due_date()))
-    else:
-        text.append(i18n.t('settings.no_due_date', locale=locale))
 
     if poll.results_visible:
         text.append(i18n.t('settings.results_visible', locale=locale))
     else:
         text.append(i18n.t('settings.results_not_visible', locale=locale))
+
+    if poll.due_date:
+        text.append(i18n.t('settings.due_date', locale=locale,
+                           date=poll.get_formatted_due_date()))
+    else:
+        text.append(i18n.t('settings.no_due_date', locale=locale))
 
     text.append('')
 
@@ -89,11 +90,15 @@ def get_user_settings_text(user):
     text = ["*Current settings:*\n"]
 
     text.append(i18n.t('settings.user.language', locale=locale, language=user.locale))
+    text.append(i18n.t('settings.user.explanations.language', locale=locale))
+    text.append('')
 
     if user.notifications_enabled:
         text.append(i18n.t('settings.user.notifications_enabled', locale=locale))
     else:
         text.append(i18n.t('settings.user.notifications_disabled', locale=locale))
+    text.append(i18n.t('settings.user.explanations.notifications', locale=locale))
+    text.append('')
 
     count = len(list(filter(lambda p: not p.closed and p.created, user.polls)))
     text.append(i18n.t('settings.user.open_polls', locale=locale, count=count))

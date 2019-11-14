@@ -122,13 +122,13 @@ keyboard:
     help_me_out: '❤️ Scopri di più sul progetto ❤️'
     permanently_delete_with_messages: '⚠️ Elimina il sondaggio e rimuovi tutti i messaggi! ⚠️'
     user:
-        init_poll: '🌟 Crea un nuovo sondaggio'
         list_polls: '🗓 Elenco di tutti i sondaggi'
         list_closed_polls: '🗓 Elenco dei sondaggi chiusi'
         enable_notifications: '💌 Attiva le notifiche'
         disable_notifications: '🔇 Disattiva le notifiche'
         delete_all: '⚠️ Elimina tutti i sondaggi'
         delete_all_closed: '⚠️ Elimina tutti i sondaggi chiusi'
+        init_poll: '🌟 Crea un nuovo sondaggio'
     admin:
         settings: '⚙️ Pannello amministrativo'
         stats: '📊 Statistiche'

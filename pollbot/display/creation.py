@@ -27,9 +27,13 @@ def get_init_text(poll):
     if poll.anonymous:
         anonymity = i18n.t('creation.anonymity', locale=locale)
 
+    anonymity_explanation = i18n.t('settings.poll.explanation.anonymity', locale=locale)
+
     results_visible = i18n.t('creation.results_not_visible', locale=locale)
     if poll.results_visible:
         results_visible = i18n.t('creation.results_visible', locale=locale)
+
+    visibility_explanation = i18n.t('settings.poll.explanation.visibility', locale=locale)
 
     message = i18n.t(
         'creation.init_text',
@@ -37,6 +41,8 @@ def get_init_text(poll):
         poll_type=translate_poll_type(poll.poll_type, poll.locale),
         anonymity=anonymity,
         results_visible=results_visible,
+        anonymityExplanation=anonymity_explanation,
+        visibilityExplanation=visibility_explanation,
     )
     return message
 

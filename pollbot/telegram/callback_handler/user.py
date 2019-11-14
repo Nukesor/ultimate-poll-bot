@@ -94,7 +94,12 @@ def init_poll(session, context):
     text = get_init_text(poll)
     keyboard = get_init_keyboard(poll)
 
-    chat.send_message(text, parse_mode='markdown', reply_markup=keyboard)
+    chat.send_message(
+        text,
+        parse_mode='markdown',
+        reply_markup=keyboard,
+        disable_web_page_preview=True,
+    )
 
 
 def toggle_notification(session, context):

@@ -122,13 +122,13 @@ keyboard:
     help_me_out: '❤️ Saiba mais sobre o projeto ❤️'
     permanently_delete_with_messages: '⚠️ Excluir enquete e apagar todas as mensagens! ⚠️'
     user:
-        init_poll: '🌟 Criar nova enquete'
         list_polls: '🗓 Listar suas enquetes'
         list_closed_polls: '🗓 Listar enquetes encerradas'
         enable_notifications: '💌 Ativar notificações'
         disable_notifications: '🔇 Desativar notificações'
         delete_all: '⚠️ Excluir todas as enquetes'
         delete_all_closed: '⚠️ Excluir todas as enquetes encerradas'
+        init_poll: '🌟 Criar nova enquete'
     admin:
         settings: '⚙️ Configurações de administrador'
         stats: '📊 Estatísticas'

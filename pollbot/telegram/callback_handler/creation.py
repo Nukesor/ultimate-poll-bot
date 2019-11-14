@@ -56,7 +56,8 @@ def change_poll_type(session, context, poll):
     context.query.message.edit_text(
         get_init_text(poll),
         parse_mode='markdown',
-        reply_markup=keyboard
+        reply_markup=keyboard,
+        disable_web_page_preview=True,
     )
 
 
@@ -72,7 +73,8 @@ def toggle_anonymity(session, context, poll):
     context.query.message.edit_text(
         get_init_text(poll),
         parse_mode='markdown',
-        reply_markup=keyboard
+        reply_markup=keyboard,
+        disable_web_page_preview=True,
     )
 
     return i18n.t('callback.anonymity_changed', locale=context.user.locale)
@@ -90,7 +92,8 @@ def toggle_results_visible(session, context, poll):
     context.query.message.edit_text(
         get_init_text(poll),
         parse_mode='markdown',
-        reply_markup=keyboard
+        reply_markup=keyboard,
+        disable_web_page_preview=True,
     )
     return i18n.t('callback.visibility_changed', locale=context.user.locale)
 

@@ -129,7 +129,6 @@ Get the latest revision with `poetry run alembic history` and change the current
 start - Start the bot
 settings - Open the user settings menu
 create - Create a new poll
-language - Change the language
 list - List all active polls and manage them
 list_closed - List all closed polls and manage them
 notify - Activate notifications in external chats

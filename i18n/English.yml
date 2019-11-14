@@ -120,8 +120,8 @@ keyboard:
   no_compact_doodle: Show option names in buttons
   new_option: ＋ Add a new option
   remove_option: － Remove options
-  forbid_user_options: 🍺 Forbid users to add new options
-  allow_user_options: 🍻 Allow users to add new options
+  forbid_user_options: 🍺 Forbid others to add new options
+  allow_user_options: 🍻 Allow others to add new options
   order_users: Order users %{name}
   order_options: Order options %{name}
   add_new_language: Add a new language
@@ -184,9 +184,14 @@ settings:
     ⚠️ This action is irrevertible. ⚠️
   remove_options: Just click the buttons below to remove the unwanted options.
 
+  poll:
+    explanation:
+      anonymity: "_In an anonymous poll no names will be displayed. It's not possible to see from which user a vote came from._"
+      visibility: "_A poll with hidden results won't show any votes or any percentages, until the poll is closed. Once the poll is closed, it stays closed forever. This is needed to avoid the possibility of_ [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) _and to prevent_ [Anchoring](https://en.wikipedia.org/wiki/Anchoring)."
+
   user:
-    notifications_enabled: "Notifications: enabled"
-    notifications_disabled: "Notifications: disabled"
+    notifications_enabled: "*Notifications:* enabled"
+    notifications_disabled: "*Notifications:* disabled"
     delete_all: ⚠️ Delete ALL polls ⚠️
     delete_closed: ⚠️ Delete all closed polls ⚠️
     delete_all_confirmation: |
@@ -196,9 +201,12 @@ settings:
     delete_closed_confirmation: |
       Do you really want to delete all closed polls?
       ⚠️ *This action is irrevertible.* ⚠️
-    language: "Default language: %{language}"
-    open_polls: "Open polls: %{count}"
-    closed_polls: "Closed polls: %{count}"
+    language: "*Default language:* %{language}"
+    open_polls: "*Open polls:* %{count}"
+    closed_polls: "*Closed polls:* %{count}"
+    explanations:
+      language: "_This setting determines which language is used in your management interface and also determines the default language for your polls._"
+      notifications: "_I'll send a message from time to time, informing you about updates, changes or bugs._"
 
 
 management:
@@ -272,7 +280,10 @@ creation:
 
     *Poll type*: %{poll_type}
     *Anonymity*: %{anonymity}
+    %{anonymityExplanation}
+
     *Visible results*: %{results_visible}
+    %{visibilityExplanation}
 
     Please follow these steps:
     1. Configure the poll to your needs 🙂
@@ -380,7 +391,7 @@ misc:
 
       *Poll type:* The various types are explained in detail in the poll type menu.
       *Anonymity:* You can anonymize your poll, which results in no names being displayed! This is permanent and for all parties.
-      *Visible results:* In this mode, votes only become visible after closing the poll. This is great to avoid the possibility of [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) and the influence of [Anchoring](https://en.wikipedia.org/wiki/Anchoring)
+      *Visible results:* In this mode, votes only become visible after closing the poll. This is needed to avoid the possibility of [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) and to prevent [Anchoring](https://en.wikipedia.org/wiki/Anchoring)
 
       -> *Attention: A closed poll with invisible results stays closed!:*
       Reopening a poll would allow a user, specifically the poll creator, to look at the votes, and place his own vote in a manner, that would result in a possible advantage for him (tactical voting).
