@@ -183,7 +183,7 @@ settings:
   change_language: Just click on a language to change it for this poll.
   sharing_link: "Use this link to allow users to share the poll with other chats. *Be careful!* Once it's out there you cannot take it back:"
   anonymity_warning: |
-    You cannot hide votes and percentage on an annoymous poll.
+    You cannot hide votes and percentage on an anoymous poll.
     This might give users the conception that the poll has hidden results, which isn't actually the case. If you want this behaviour, create the poll with hidden results enabled.
   anonymize: |
     Do you really want to anonymize this poll?
