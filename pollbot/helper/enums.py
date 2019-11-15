@@ -37,6 +37,7 @@ class PollType(Enum):
     limited_vote = 30
     cumulative_vote = 40
     count_vote = 50
+    single_transferable_vote = 60
 
 
 @unique

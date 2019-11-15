@@ -20,6 +20,8 @@ from pollbot.helper.option import get_sorted_options
 
 from .management import get_back_to_management_button
 
+IGNORE_PAYLOAD = f'{CallbackType.ignore.value}:0:0'
+
 
 def get_vote_keyboard_with_summary(poll, show_back=False):
     """In case the poll has been summarized, add a deeplink to the bot."""
@@ -63,6 +65,8 @@ def get_vote_buttons(poll, show_back=False):
         buttons = get_cumulative_buttons(poll)
     elif poll.poll_type == PollType.doodle.name:
         buttons = get_doodle_buttons(poll)
+    elif poll.poll_type == PollType.single_transferable_vote.name:
+        buttons = get_stv_buttons(poll)
     else:
         buttons = get_normal_buttons(poll)
 
@@ -126,6 +130,28 @@ def get_cumulative_buttons(poll):
     return buttons
 
 
+def get_stv_buttons(poll):
+    buttons = []
+    options = get_sorted_options(poll)
+    for index, option in enumerate(options):
+        if not poll.compact_doodle_buttons:
+            name_row = [
+                InlineKeyboardButton(
+                    f"{index + 1}) {option.name}",
+                    callback_data=IGNORE_PAYLOAD
+                )
+            ]
+            buttons.append(name_row)
+        name_hint_payload = f'{CallbackType.show_option_name.value}:{poll.id}:{option.id}'
+        vote_row = [
+            InlineKeyboardButton(f"{index + 1}.", callback_data=name_hint_payload),
+            InlineKeyboardButton('▲', callback_data=IGNORE_PAYLOAD),
+            InlineKeyboardButton('▼', callback_data=IGNORE_PAYLOAD),
+        ]
+        buttons.append(vote_row)
+    return buttons
+
+
 def get_doodle_buttons(poll):
     """Get the doodle keyboard with yes, maybe and no button per option."""
     show_option_name = CallbackType.show_option_name.value
@@ -139,7 +165,7 @@ def get_doodle_buttons(poll):
     buttons = []
     letters = string.ascii_lowercase + '123456789'
     for index, option in enumerate(options):
-        ignore_payload = f'{show_option_name}:{poll.id}:{option.id}'
+        name_hint_payload = f'{show_option_name}:{poll.id}:{option.id}'
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
         maybe_payload = f'{vote_button_type}:{option.id}:{vote_maybe}'
         no_payload = f'{vote_button_type}:{option.id}:{vote_no}'
@@ -147,11 +173,11 @@ def get_doodle_buttons(poll):
         # If we don't have the compact button view, display the option name on it's own button row
         if not poll.compact_doodle_buttons:
             option_row = [InlineKeyboardButton(option.get_formatted_name(),
-                                               callback_data=ignore_payload)]
+                                               callback_data=name_hint_payload)]
             buttons.append(option_row)
             option_row = []
         else:
-            option_row = [InlineKeyboardButton(f'{letters[index]})', callback_data=ignore_payload)]
+            option_row = [InlineKeyboardButton(f'{letters[index]})', callback_data=name_hint_payload)]
 
         vote_row = [
             InlineKeyboardButton('✅', callback_data=yes_payload),

@@ -13,6 +13,7 @@ def translate_poll_type(poll_type, locale):
         PollType.limited_vote.name: i18n.t('poll_types.limited_vote', locale=locale),
         PollType.cumulative_vote.name: i18n.t('poll_types.cumulative_vote', locale=locale),
         PollType.count_vote.name: i18n.t('poll_types.count_vote', locale=locale),
+        PollType.single_transferable_vote.name: i18n.t('poll_types.single_transferable_vote', locale=locale),
     }
 
     return mapping[poll_type]

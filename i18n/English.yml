@@ -5,6 +5,7 @@ poll_types:
   limited_vote: Limited vote
   cumulative_vote: Cumulative vote
   count_vote: Unlimited votes
+  single_transferable_vote: Priority Vote
 
 list:
   polls: Select a poll to manage
