@@ -58,8 +58,11 @@ class Reference(base):
         """Print as string."""
         if self.inline_message_id is not None:
             message = f', inline_message_id: {self.locale}'
+        elif self.admin_user is not None:
+            message = f'Reference: admin_message_id {self.admin_message_id}'
+            message += f', admin_id: {self.admin_user.id}'
         else:
-            message = f'Reference: admin_id {self.admin_message_id}'
-            message += f', chat_id: {self.admin_chat_id}'
+            message = f'Reference: vote_message_id {self.admin_message_id}'
+            message += f', vote_user_id : {self.admin_user.id}'
 
         return message

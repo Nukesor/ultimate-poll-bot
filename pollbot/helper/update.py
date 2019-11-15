@@ -136,7 +136,7 @@ def remove_poll_messages(session, bot, poll, remove_all=False):
             if reference.inline_message_id is None:
                 bot.edit_message_text(
                     i18n.t('deleted.poll', locale=poll.locale),
-                    chat_id=reference.admin_chat_id,
+                    chat_id=reference.admin_user.id,
                     message_id=reference.admin_message_id,
                 )
 

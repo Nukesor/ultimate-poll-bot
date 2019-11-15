@@ -143,7 +143,7 @@ def handle_new_option(bot, update, session, user, text, poll, chat):
     # Delete old references
     references = session.query(Reference) \
         .filter(Reference.poll == poll) \
-        .filter(Reference.admin_chat_id == chat.id) \
+        .filter(Reference.admin_user.id == chat.id) \
         .all()
     for reference in references:
         try:
