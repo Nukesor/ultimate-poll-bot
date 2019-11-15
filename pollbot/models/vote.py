@@ -28,8 +28,10 @@ class Vote(base):
 
     id = Column(Integer, primary_key=True)
     type = Column(String, nullable=True)
+    priority = Column(Integer, nullable=True)
     poll_type = Column(String, nullable=True)
     vote_count = Column(Integer)
+
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 
