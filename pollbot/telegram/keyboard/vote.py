@@ -56,7 +56,7 @@ def get_vote_keyboard(poll, show_back=False):
 
 
 def get_vote_buttons(poll, show_back=False):
-    """Get the keyboard for actual voting."""
+    """Get the keyboard buttons for actual voting."""
     locale = poll.locale
 
     if poll_allows_cumulative_votes(poll):
@@ -77,7 +77,7 @@ def get_vote_buttons(poll, show_back=False):
 
 
 def get_normal_buttons(poll):
-    """Get the normal keyboard with one button per option."""
+    """Get the normal keyboard with one vote button per option."""
     buttons = []
     vote_button_type = CallbackType.vote.value
 
@@ -90,7 +90,7 @@ def get_normal_buttons(poll):
 
         result = CallbackResult.vote.value
         payload = f'{vote_button_type}:{option.id}:{result}'
-        if poll.should_show_result():
+        if poll.should_show_result() and poll.show_option_votes:
             text = i18n.t('keyboard.vote_with_count',
                           option_name=option_name,
                           count=len(option.votes),
