@@ -44,7 +44,7 @@ def handle_vote(session, context):
             update_poll = handle_cumulative_vote(session, context, option, limited=False)
         elif poll.poll_type == PollType.doodle.name:
             update_poll = handle_doodle_vote(session, context, option)
-        elif poll.poll_type == PollType.single_transferable_vote:
+        elif poll.poll_type == PollType.single_transferable_vote.name:
             update_poll = handle_ordered_vote(session, context, option)
         else:
             raise Exception("Unknown poll type")

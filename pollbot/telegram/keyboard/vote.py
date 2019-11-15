@@ -133,6 +133,9 @@ def get_cumulative_buttons(poll):
 def get_stv_buttons(poll):
     buttons = []
     options = get_sorted_options(poll)
+    vote_button_type = CallbackType.vote.value
+    vote_increase = CallbackResult.increase_priority.value
+    vote_decrease = CallbackResult.decrease_priority.value
     for index, option in enumerate(options):
         if not poll.compact_buttons:
             name_row = [
@@ -143,10 +146,12 @@ def get_stv_buttons(poll):
             ]
             buttons.append(name_row)
         name_hint_payload = f'{CallbackType.show_option_name.value}:{poll.id}:{option.id}'
+        increase_payload = f'{vote_button_type}:{option.id}:{vote_increase}'
+        decrease_payload = f'{vote_button_type}:{option.id}:{vote_decrease}'
         vote_row = [
             InlineKeyboardButton(f"{index + 1}.", callback_data=name_hint_payload),
-            InlineKeyboardButton('▲', callback_data=IGNORE_PAYLOAD),
-            InlineKeyboardButton('▼', callback_data=IGNORE_PAYLOAD),
+            InlineKeyboardButton('▲', callback_data=increase_payload),
+            InlineKeyboardButton('▼', callback_data=decrease_payload),
         ]
         buttons.append(vote_row)
     return buttons
