@@ -44,6 +44,8 @@ def handle_vote(session, context):
             update_poll = handle_cumulative_vote(session, context, option, limited=False)
         elif poll.poll_type == PollType.doodle.name:
             update_poll = handle_doodle_vote(session, context, option)
+        elif poll.poll_type == PollType.single_transferable_vote:
+            update_poll = handle_ordered_vote(session, context, option)
         else:
             raise Exception("Unknown poll type")
 
@@ -278,3 +280,31 @@ def handle_doodle_vote(session, context, option):
         context.query.answer(registered)
 
     return True
+
+def handle_ordered_vote(session, context, option):
+    vote = session.query(Vote) \
+        .filter(Vote.poll_option == option) \
+        .filter(Vote.user == context.user) \
+        .one()
+
+    if context.callback_result.name is None:
+        data = context.data # noqa
+        raise Exception("Unknown callback result")
+
+    if context.callback_result.name == CallbackResult.increase_priority:
+        direction = -1
+    else:
+        direction = 1
+
+    next_vote = session.query(Vote) \
+        .filter(Vote.user == context.user) \
+        .filter(Vote.poll == context.poll) \
+        .filter(Vote.priority == vote.priority + direction) \
+        .one()
+    vote.priority += direction
+    next_vote.priority -= direction
+
+    registered = i18n.t('callback.vote.registered', locale=option.poll.locale)
+    context.query.answer(registered)
+
+    return False

@@ -164,6 +164,8 @@ class CallbackResult(Enum):
     yes = 21
     no = 22
     maybe = 23
+    increase_priority = 24
+    decrease_priority = 25
 
     # Menu navigation
     main_menu = 40
