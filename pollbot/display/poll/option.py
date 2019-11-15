@@ -6,10 +6,14 @@ from pollbot.helper.enums import PollType
 from pollbot.helper import poll_allows_cumulative_votes
 from pollbot.helper.option import get_sorted_options, calculate_percentage
 from .vote import get_vote_lines, get_doodle_vote_lines
+from .single_transferable_vote import get_stv_result
 
 
 def get_option_information(session, poll, context, summarize):
     """Compile all information about a poll option."""
+    if poll.is_stv():
+        return get_stv_result(session, poll)
+
     lines = []
     # Sort the options accordingly to the polls settings
     options = get_sorted_options(poll, context.total_user_count)
