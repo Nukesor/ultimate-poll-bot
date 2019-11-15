@@ -123,6 +123,6 @@ def start(bot, update, session, user):
         session.add(reference)
 
         if poll.is_stv():
-            poll.init_votes(session. user)
+            poll.init_votes(session, user)
 
         session.commit()

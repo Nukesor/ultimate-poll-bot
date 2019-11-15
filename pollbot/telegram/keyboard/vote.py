@@ -167,6 +167,7 @@ def get_stv_buttons(poll, user):
         buttons.append(vote_row)
     return buttons
 
+
 def get_doodle_buttons(poll):
     """Get the doodle keyboard with yes, maybe and no button per option."""
     show_option_name = CallbackType.show_option_name.value
