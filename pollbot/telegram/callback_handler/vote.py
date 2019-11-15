@@ -291,14 +291,14 @@ def handle_ordered_vote(session, context, option):
         data = context.data # noqa
         raise Exception("Unknown callback result")
 
-    if context.callback_result.name == CallbackResult.increase_priority:
+    if context.callback_result.name == CallbackResult.increase_priority.name:
         direction = -1
     else:
         direction = 1
 
     next_vote = session.query(Vote) \
         .filter(Vote.user == context.user) \
-        .filter(Vote.poll == context.poll) \
+        .filter(Vote.poll == vote.poll) \
         .filter(Vote.priority == vote.priority + direction) \
         .one()
     vote.priority += direction
