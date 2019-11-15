@@ -52,7 +52,7 @@ def go_back(session, context, poll):
 @poll_required
 def show_vote_menu(session, context, poll):
     """Show the vote keyboard in the management interface."""
-    text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_back=True)
+    text, keyboard = get_poll_text_and_vote_keyboard(session, poll, user=context.user, show_back=True)
     # Set the expected_input to votes, since the user might want to vote multiple times
     context.user.expected_input = ExpectedInput.votes.name
     context.query.message.edit_text(
@@ -108,7 +108,7 @@ def show_menu(session, context, poll):
 
     reference = Reference(
         poll,
-        admin_chat_id=message.chat.id,
+        admin_user=context.user,
         admin_message_id=message.message_id
     )
     session.add(reference)

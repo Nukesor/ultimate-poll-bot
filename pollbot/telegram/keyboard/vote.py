@@ -23,59 +23,48 @@ from .management import get_back_to_management_button
 IGNORE_PAYLOAD = f'{CallbackType.ignore.value}:0:0'
 
 
-def get_vote_keyboard_with_summary(poll, show_back=False):
-    """In case the poll has been summarized, add a deeplink to the bot."""
-    payload = get_start_button_payload(poll, StartAction.show_results)
-    bot_name = config['telegram']['bot_name']
-    url = f'http://t.me/{bot_name}?start={payload}'
-    row = [InlineKeyboardButton(i18n.t('keyboard.show_results', locale=poll.locale), url=url)]
-
-    # If the poll is closed, only show the show results button
-    if poll.closed and not poll.anonymous:
-        buttons = [row]
-        return InlineKeyboardMarkup(buttons)
-
-    # Compile the keyboard from vote_buttons, back button and show summary button
-    buttons = get_vote_buttons(poll, show_back)
-    buttons.append(row)
-    if show_back:
-        buttons.append([get_back_to_management_button(poll)])
-
-    return InlineKeyboardMarkup(buttons)
-
-
-def get_vote_keyboard(poll, show_back=False):
+def get_vote_keyboard(poll, user, show_back=False, summary=False):
     """Get a plain vote keyboard."""
-    if poll.closed:
-        return None
+    buttons = []
 
-    buttons = get_vote_buttons(poll, show_back)
+    # If the poll is not closed yet, add the vote buttons and the button
+    # to add new options for new users (if enabled)
+    if not poll.closed:
+        buttons = get_vote_buttons(poll, user, show_back)
 
+        if poll.allow_new_options:
+            bot_name = config['telegram']['bot_name']
+            payload = get_start_button_payload(poll, StartAction.new_option)
+            url = f'http://t.me/{bot_name}?start={payload}'
+            buttons.append([InlineKeyboardButton(
+                i18n.t('keyboard.new_option', locale=poll.locale), url=url)])
+
+    # Add a button for to showing the summary, if the poll is too long for a single message
+    if summary:
+        payload = get_start_button_payload(poll, StartAction.show_results)
+        bot_name = config['telegram']['bot_name']
+        url = f'http://t.me/{bot_name}?start={payload}'
+        row = [InlineKeyboardButton(i18n.t('keyboard.show_results', locale=poll.locale), url=url)]
+
+    # Add a button to go back to the management interface (admin overview)
     if show_back:
         buttons.append([get_back_to_management_button(poll)])
 
     return InlineKeyboardMarkup(buttons)
 
 
-def get_vote_buttons(poll, show_back=False):
-    """Get the keyboard buttons for actual voting."""
+def get_vote_buttons(poll, user=None, show_back=False):
+    """Get the keyboard for actual voting."""
     locale = poll.locale
 
     if poll_allows_cumulative_votes(poll):
         buttons = get_cumulative_buttons(poll)
     elif poll.poll_type == PollType.doodle.name:
         buttons = get_doodle_buttons(poll)
-    elif poll.poll_type == PollType.single_transferable_vote.name:
-        buttons = get_stv_buttons(poll)
+    elif poll.is_stv():
+        buttons = get_stv_buttons(poll, user)
     else:
         buttons = get_normal_buttons(poll)
-
-    if poll.allow_new_options:
-        bot_name = config['telegram']['bot_name']
-        payload = get_start_button_payload(poll, StartAction.new_option)
-        url = f'http://t.me/{bot_name}?start={payload}'
-        buttons.append([InlineKeyboardButton(
-            i18n.t('keyboard.new_option', locale=locale), url=url)])
 
     return buttons
 
@@ -130,7 +119,17 @@ def get_cumulative_buttons(poll):
     return buttons
 
 
-def get_stv_buttons(poll):
+def get_stv_buttons(poll, user):
+    """Create the keyboard for stv poll. Only show the deeplink, if not in a direct conversation."""
+    if user is None:
+        bot_name = config['telegram']['bot_name']
+        payload = get_start_button_payload(poll, StartAction.vote)
+        url = f'http://t.me/{bot_name}?start={payload}'
+        buttons = [[InlineKeyboardButton(
+            i18n.t('keyboard.vote', locale=poll.locale), url=url)]]
+
+        return buttons
+
     buttons = []
     options = get_sorted_options(poll)
     vote_button_type = CallbackType.vote.value

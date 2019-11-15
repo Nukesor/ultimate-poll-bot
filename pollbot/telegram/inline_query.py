@@ -82,10 +82,10 @@ def search(bot, update, session, user):
         for poll in polls:
             text, keyboard = get_poll_text_and_vote_keyboard(
                 session, poll,
+                user=user,
                 inline_query=True
             )
-            if poll.closed:
-                keyboard = InlineKeyboardMarkup([[InlineKeyboardButton('Please ignore this', callback_data='100')]])
+            keyboard = InlineKeyboardMarkup([[InlineKeyboardButton('Please ignore this', callback_data='100')]])
 
             content = InputTextMessageContent(
                 text,

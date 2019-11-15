@@ -7,9 +7,7 @@ from telegram.error import BadRequest, RetryAfter, Unauthorized
 from pollbot.i18n import i18n
 from pollbot.telegram.keyboard import get_management_keyboard
 from pollbot.helper.enums import ExpectedInput
-from pollbot.display import (
-    get_poll_text_and_vote_keyboard,
-)
+from pollbot.display import get_poll_text_and_vote_keyboard
 from pollbot.models import Update
 
 
@@ -54,8 +52,14 @@ def send_updates(session, bot, poll, show_warning=False):
     for reference in poll.references:
         try:
             # Admin poll management interface
-            if reference.admin_message_id is not None and not poll.in_settings:
-                text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_warning, show_back=True)
+            if reference.admin_user is not None and not poll.in_settings:
+                text, keyboard = get_poll_text_and_vote_keyboard(
+                    session,
+                    poll,
+                    user=poll.user,
+                    show_warning=show_warning,
+                    show_back=True
+                )
 
                 if poll.user.expected_input != ExpectedInput.votes.name:
                     keyboard = get_management_keyboard(poll)
@@ -63,7 +67,7 @@ def send_updates(session, bot, poll, show_warning=False):
                 try:
                     bot.edit_message_text(
                         text,
-                        chat_id=reference.admin_chat_id,
+                        chat_id=reference.admin_user.id,
                         message_id=reference.admin_message_id,
                         reply_markup=keyboard,
                         parse_mode='markdown',
@@ -73,10 +77,32 @@ def send_updates(session, bot, poll, show_warning=False):
                     if e.message == 'Forbidden: user is deactivated':
                         session.delete(reference)
 
+            elif reference.vote_user is not None:
+                text, keyboard = get_poll_text_and_vote_keyboard(
+                    session,
+                    poll,
+                    user=reference.vote_user,
+                    show_warning=show_warning,
+                )
+
+                try:
+                    bot.edit_message_text(
+                        text,
+                        chat_id=reference.vote_user.id,
+                        message_id=reference.vote_message_id,
+                        reply_markup=keyboard,
+                        parse_mode='markdown',
+                        disable_web_page_preview=True,
+                    )
+                except Unauthorized as e:
+                    if e.message == 'Forbidden: user is deactivated':
+                        session.delete(reference)
+
+
             # Edit message via inline_message_id
             elif reference.inline_message_id is not None:
                 # Create text and keyboard
-                text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_warning)
+                text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_warning=show_warning)
 
                 bot.edit_message_text(
                     text,

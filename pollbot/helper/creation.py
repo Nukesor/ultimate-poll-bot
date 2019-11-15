@@ -62,7 +62,7 @@ def create_poll(session, poll, user, chat, message=None):
 
     reference = Reference(
         poll,
-        admin_chat_id=chat.id,
+        admin_user=user,
         admin_message_id=message.message_id
     )
     session.add(reference)

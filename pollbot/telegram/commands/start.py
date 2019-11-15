@@ -4,8 +4,11 @@ from uuid import UUID
 from telegram.ext import run_async
 
 from pollbot.i18n import i18n
-from pollbot.models import Poll
-from pollbot.display import compile_poll_text
+from pollbot.models import Poll, Reference
+from pollbot.display import (
+    compile_poll_text,
+    get_poll_text_and_vote_keyboard,
+)
 from pollbot.helper.enums import ExpectedInput, StartAction
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.text import split_text
@@ -97,3 +100,24 @@ def start(bot, update, session, user):
             reply_markup=get_external_share_keyboard(poll)
         )
         increase_stat(session, 'externally_shared')
+    elif action == StartAction.vote:
+        text, keyboard = get_poll_text_and_vote_keyboard(
+            session,
+            poll,
+            user=user,
+        )
+
+        sent_message = update.message.chat.send_message(
+            text,
+            reply_markup=keyboard,
+            parse_mode='markdown',
+            disable_web_page_preview=True,
+        )
+
+        reference = Reference(
+            poll,
+            vote_user=user,
+            vote_message_id=sent_message.message_id,
+        )
+        session.add(reference)
+        session.commit()
