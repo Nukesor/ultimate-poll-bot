@@ -52,6 +52,10 @@ def go_back(session, context, poll):
 @poll_required
 def show_vote_menu(session, context, poll):
     """Show the vote keyboard in the management interface."""
+    if poll.is_stv():
+        poll.init_votes(session, context.user)
+        session.commit()
+
     text, keyboard = get_poll_text_and_vote_keyboard(session, poll, user=context.user, show_back=True)
     # Set the expected_input to votes, since the user might want to vote multiple times
     context.user.expected_input = ExpectedInput.votes.name

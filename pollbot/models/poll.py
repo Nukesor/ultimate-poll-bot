@@ -1,4 +1,5 @@
 """The sqlalchemy model for a poll."""
+import random
 from datetime import datetime, timedelta
 from sqlalchemy import (
     Date,
@@ -170,3 +171,30 @@ class Poll(base):
             session.add(new_option)
 
         return poll
+
+    def init_votes(self, session, user):
+        """
+        Since STV votes always need priorities, call this to create a vote
+        for every option in the poll with a random priority for the given user
+        """
+        assert self.is_stv()
+
+        print('init votes')
+
+        from pollbot.models import Vote
+
+        votes_exist = session.query(Vote) \
+            .filter(Vote.user == user) \
+            .first() is not None
+
+        if votes_exist:
+            print('votes exist')
+            return
+
+        votes = []
+        for index, option in enumerate(random.sample(self.options, len(self.options))):
+            vote = Vote(user, option)
+            vote.priority = index
+            votes.append(vote)
+        session.add_all(votes)
+
