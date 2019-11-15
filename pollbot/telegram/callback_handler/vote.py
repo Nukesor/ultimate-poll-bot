@@ -307,4 +307,4 @@ def handle_ordered_vote(session, context, option):
     registered = i18n.t('callback.vote.registered', locale=option.poll.locale)
     context.query.answer(registered)
 
-    return False
+    return True

@@ -4,10 +4,13 @@ from telegram import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
 )
+from sqlalchemy.orm import joinedload
 
+from pollbot.models import Vote
 from pollbot.i18n import i18n
 from pollbot.config import config
 from pollbot.helper import poll_allows_cumulative_votes
+from pollbot.db import get_session
 from pollbot.helper.enums import (
     CallbackType,
     CallbackResult,
@@ -135,7 +138,16 @@ def get_stv_buttons(poll, user):
     vote_button_type = CallbackType.vote.value
     vote_increase = CallbackResult.increase_priority.value
     vote_decrease = CallbackResult.decrease_priority.value
-    for index, option in enumerate(options):
+    session = get_session()
+    votes = session.query(Vote) \
+        .filter(Vote.poll == poll) \
+        .filter(Vote.user == user) \
+        .order_by(Vote.priority.asc()) \
+        .options(joinedload(Vote.poll_option)) \
+        .all()
+
+    for index, vote in enumerate(votes):
+        option = vote.poll_option
         if not poll.compact_buttons:
             name_row = [
                 InlineKeyboardButton(
@@ -154,7 +166,6 @@ def get_stv_buttons(poll, user):
         ]
         buttons.append(vote_row)
     return buttons
-
 
 def get_doodle_buttons(poll):
     """Get the doodle keyboard with yes, maybe and no button per option."""
