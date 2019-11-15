@@ -120,9 +120,9 @@ def get_styling_settings_keyboard(poll):
         date_format_payload = f'{CallbackType.settings_toggle_date_format.value}:{poll.id}:0'
         buttons.append([InlineKeyboardButton(text=date_format_text, callback_data=date_format_payload)])
 
-    if poll.is_doodle():
+    if poll.is_doodle() or poll.is_stv():
         doodle_button_text = i18n.t('keyboard.compact_doodle', locale=locale)
-        if poll.compact_doodle_buttons:
+        if poll.compact_buttons:
             doodle_button_text = i18n.t('keyboard.no_compact_doodle', locale=locale)
         doodle_button_payload = f'{CallbackType.settings_toggle_compact_buttons.value}:{poll.id}:0'
         buttons.append([InlineKeyboardButton(text=doodle_button_text,

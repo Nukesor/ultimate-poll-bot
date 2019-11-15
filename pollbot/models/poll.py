@@ -51,7 +51,7 @@ class Poll(base):
     show_option_votes = Column(Boolean, nullable=False, default=True, server_default="true")
     european_date_format = Column(Boolean, nullable=False, default=False)
     permanently_summarized = Column(Boolean, nullable=False, default=False)
-    compact_doodle_buttons = Column(Boolean, nullable=False, default=False)
+    compact_buttons = Column(Boolean, nullable=False, default=False)
     summarize = Column(Boolean, nullable=False, default=False)
     option_sorting = Column(String, nullable=False)
     user_sorting = Column(String, nullable=False)
@@ -108,6 +108,9 @@ class Poll(base):
 
     def is_doodle(self):
         return self.poll_type == PollType.doodle.name
+
+    def is_stv(self):
+        return self.poll_type == PollType.single_transferable_vote.name
 
     def has_date_option(self):
         """Check whether this poll has a date option."""

@@ -134,7 +134,7 @@ def get_stv_buttons(poll):
     buttons = []
     options = get_sorted_options(poll)
     for index, option in enumerate(options):
-        if not poll.compact_doodle_buttons:
+        if not poll.compact_buttons:
             name_row = [
                 InlineKeyboardButton(
                     f"{index + 1}) {option.name}",
@@ -171,7 +171,7 @@ def get_doodle_buttons(poll):
         no_payload = f'{vote_button_type}:{option.id}:{vote_no}'
 
         # If we don't have the compact button view, display the option name on it's own button row
-        if not poll.compact_doodle_buttons:
+        if not poll.compact_buttons:
             option_row = [InlineKeyboardButton(option.get_formatted_name(),
                                                callback_data=name_hint_payload)]
             buttons.append(option_row)

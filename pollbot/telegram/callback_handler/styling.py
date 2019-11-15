@@ -70,9 +70,9 @@ def toggle_summerization(session, context, poll):
 
 
 @poll_required
-def toggle_compact_doodle_buttons(session, context, poll):
+def toggle_compact_buttons(session, context, poll):
     """Toggle the doodle poll button style."""
-    poll.compact_doodle_buttons = not poll.compact_doodle_buttons
+    poll.compact_buttons = not poll.compact_buttons
 
     session.commit()
     update_poll_messages(session, context.bot, poll)

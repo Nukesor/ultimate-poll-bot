@@ -63,7 +63,7 @@ from .styling import (
     toggle_summerization,
     set_option_order,
     set_user_order,
-    toggle_compact_doodle_buttons,
+    toggle_compact_buttons,
 )
 from .datepicker import (
     set_next_month,
@@ -222,7 +222,7 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.settings_toggle_summarization: toggle_summerization,
         CallbackType.settings_user_sorting: set_user_order,
         CallbackType.settings_option_sorting: set_option_order,
-        CallbackType.settings_toggle_compact_buttons: toggle_compact_doodle_buttons,
+        CallbackType.settings_toggle_compact_buttons: toggle_compact_buttons,
 
         # User
         CallbackType.init_poll: init_poll,
