@@ -39,6 +39,7 @@ poll:
         no_summarized: '├ *Não:* %{count} votos'
     doodle_help: '*Toque* nos botões `a)`, `b)` abaixo para ver o texto das opções.'
     please_wait: "\n\nPor favor, espere um instante enquanto o bot sincroniza as enquetes ☺️"
+    anonymous_warning: '*Lembre-se:* _As podem ser capazes de adivinhar o seu voto acompanhando a percentagem/contagem de votos e o seu status online._'
 deleted:
     poll: 'Esta enquete foi excluída permanentemente.'
     polls: 'Todas as enquetes foram deletadas.'
@@ -128,12 +129,14 @@ keyboard:
         disable_notifications: '🔇 Desativar notificações'
         delete_all: '⚠️ Excluir todas as enquetes'
         delete_all_closed: '⚠️ Excluir todas as enquetes encerradas'
-        init_poll: '🌟 Criar nova enquete'
+        init_poll: '🌟 Criar enquete'
     admin:
         settings: '⚙️ Configurações de administrador'
         stats: '📊 Estatísticas'
         plot: '📊 Gerar estatísticas'
         update: 'Atualizar todas as enquetes'
+    hide_option_votes: '# Esconder total de votos para a opção'
+    show_option_votes: '# Mostra o total de votos para a opção'
 sorting:
     user_chrono: cronologicamente
     user_name: 'por nome'
@@ -166,15 +169,23 @@ settings:
     permanently_summarized: '*Consolidar votos*: Muitos votos. Permanentemente consolidado'
     sharing_link: 'Use este link para permitir que os usuários compartilhem a enquete em outras conversas. *Cuidado!* Uma vez compartilhado, não poderá voltar atrás:'
     user:
-        notifications_enabled: 'Notificações: ativadas'
-        notifications_disabled: 'Notificações: desativadas'
+        notifications_enabled: '*Notificações*: ativadas'
+        notifications_disabled: '*Notificações*: desativadas'
         delete_all: '⚠️ Excluir TODAS as enquetes ⚠️'
         delete_closed: '⚠️ Excluir todas as enquetes encerradas ⚠️'
         delete_all_confirmation: "Deseja realmente excluir TODAS as suas enquetes? \nIsso afeta as enquetes que estão abertas e encerradas. \n⚠️ * Esta ação é irreversível.* ⚠️ \n"
         delete_closed_confirmation: "Deseja realmente excluir todas as enquetes encerradas?\n⚠️ *Esta ação é irreversível.* ⚠️\n"
-        language: 'Idioma padrão: %{language}'
-        open_polls: 'Pesquisas abertas: %{count}'
-        closed_polls: 'Enquetes encerradas: %{count}'
+        language: '*Idioma padrão*: %{language}'
+        open_polls: '*Enquetes abertas*: %{count}'
+        closed_polls: '*Enquetes encerradas*: %{count}'
+        explanations:
+            language: '_Essa configuração define o idioma que será utilizado no menu de administração e também o idioma padrão para a sua enquete._'
+            notifications: '_Enviarei uma mensagem de vez em quando informando sobre atualizações, mudanças ou bugs._'
+    poll:
+        explanation:
+            anonymity: "_Em uma enquete anônima não serão apresentados os nomes. Não é possível saber quem votou em uma determinada opção._\n*Lembre-se:* _As pessoas podem ser capazes de adivinhar seu voto acompanhando a percentagem/contagem de votos e o seu status online. Para obter uma enquete absolutamente anônima, oculte também os resultados._\n"
+            visibility: '_Uma enquete com resultados ocultos não mostra votos ou porcentagens até que a votação seja encerrada. Uma vez que a enquete seja encerrada, ela ficará assim para sempre. Isto ocorre para evitar a ocorrência de_ [voto tático](https://pt.wikipedia.org/wiki/Voto_tático) _e para prevenir_ [o efeito de ancoragem](https://pt.wikipedia.org/wiki/Efeito_de_ancoragem).'
+    anonymity_warning: "Não é possível ocultar os votos e a porcentagem em um enquete anônima.\nIsto pode dar aos usuários a ideia de que a enquete tem resultados escondidos, o que não é verdade. Se você deseja este comportamento, crie uma enquete com resultados ocultos.\n"
 management:
     permanently_close: "Deseja realmente fechar permanentemente esta enquete? \nOs resultados ficarão visíveis, mas as pessoas não poderão mais votar \n⚠️ Esta ação é irreversível. ⚠️\n"
     delete: 'Deseja realmente excluir esta enquete?'
@@ -203,7 +214,7 @@ creation:
     results_visible: 'Os resultados são visíveis diretamente'
     anonymity: 'Nomes não visíveis'
     no_anonymity: 'Nomes visíveis'
-    init_text: "Olá! \nVocê está prestes a criar uma nova enquete 👌 \n\nAs configurações atuais desta enquete são:\n\n*Tipo de pesquisa*: %{poll_type} \n*Anonimato*: %{anonymity} \n*Resultados visíveis*: %{results_visible} \n\nPor favor, siga estes passos: \n1. Configure a enquete de acordo com suas necessidades \n2. Envie-me o título desta enquete. 👇 \n"
+    init_text: "Olá! \nVocê está prestes a criar uma nova enquete 👌 \n\nAs configurações atuais desta enquete são:\n\n*Tipo de pesquisa*: %{poll_type} \n*Anonimato*: %{anonymity} \n%{anonymityExplanation}\n\n*Resultados visíveis*: %{results_visible} \n%{visibilityExplanation}\n\nPor favor, siga estes passos: \n1. Configure a enquete de acordo com suas necessidades 🙂\n2. 👇 Envie o título da enquete. 👇 \n"
     datepicker_text: "*Calendário:* \nPara adicionar uma data, selecione-a e toque em *Escolher esta data*. \nToque em *Concluído* quando terminar. \n\n*Opções atuais:* \n"
     error:
         limit_bigger_zero: 'Por favor, envie um número maior que 0'
@@ -219,18 +230,18 @@ external:
     share_poll: 'Para compartilhar esta enquete, basta clicar no botão e escolher a conversa com a qual deseja compartilhar a enquete.'
 delete:
     doesnt_exist: 'A enquete a ser excluída não existe'
-    previous_deleted: 'Enquete anterior excluída. Agora você pode enviar /create para criar uma.'
+    previous_deleted: 'Enquete anterior excluída.'
 user:
     language_changed: 'Idioma alterado'
 misc:
     donation: "Olá! \n\nMeu nome é Arne Beer (@Nukesor). Sou o desenvolvedor do Ultimate pollbot. \n\nA ideia de criar o Ultimate pollbot foi formada quando meus amigos não puderam decidir pela enésima vez onde deveríamos almoçar. \nIsso já tinha acontecido tantas vezes que precisávamos desesperadamente de uma solução boa e estável dentro do Telegram para esse problema! \nFoi assim que nasceu o ULTIMATE pollbot. \n\nTodas as linhas de código deste projeto foram escritas no meu tempo livre e são totalmente gratuitas. \nEste projeto é de código aberto, sem fins lucrativos, publicado no [GitHub](https://github.com/Nukesor/ultimate-poll-bot) e hospedado em um servidor que estou alugando com dinheiro do meu próprio bolso. \n\nAtualmente, tenho investido entre 2 e 10 horas por semana no desenvolvimento e manutenção dos meus projetos e gostaria de obter algum apoio (afinal, estou fazendo isso em grande parte para vocês aí).\n\nEu realmente agradeceria muito qualquer suporte que me ajudasse e que mantivesse meu servidor (e eu) em funcionamento ☺️. \n\nSe você gosta deste projeto, consulte minha [página no Patreon] https://www.patreon.com/nukesor) ou me [compre um café](https://www.buymeacoffee.com/Nukesor). \nSe você tiver alguma dúvida, visite meu [grupo de suporte](https://t.me/nukesors_projects). \n\nTenha um ótimo dia!\n"
-    start: "🌟Bem-vindo ao *ULTIMATE* pollbot 🌟 \n\nBasta enviar /create ou tocar no botão abaixo para começar a criar enquetes. Tudo será explicado no processo. \n\n🌐 Você pode escolher outro idioma enviando /language 🌐 \n❓Clique em /help para obter mais informações ❓ \n\nSe você gosta do projeto, confira o meu [grupo de suporte](https://t.me/nukesors_projects) ou consulte minha [página no Patreon] (https://www.patreon.com/nukesor). Este bot é de código aberto no [GitHub] (https://github.com/Nukesor/ultimate-poll-bot). \n"
+    start: "🌟Bem-vindo ao *ULTIMATE* pollbot 🌟 \n\nBasta enviar /create ou tocar no botão abaixo para começar a criar enquetes. Tudo será explicado no processo. \n\n🌐 Você pode escolher outro idioma nas configurações 🌐 \n❓Toque em help para obter mais informações ❓ \n\nSe você gosta do projeto, confira o meu [grupo de suporte](https://t.me/nukesors_projects) ou consulte minha [página no Patreon] (https://www.patreon.com/nukesor). Este bot é de código aberto no [GitHub] (https://github.com/Nukesor/ultimate-poll-bot). \n"
     help:
         intro: "Existem algumas configurações para suas enquetes. \nBasta escolher a categoria ou apenas ler tudo 😉. \n\nCaso você queira apenas criar uma enquete, envie /create \n"
-        creation: "🌟 *Criação:* \n\n Para criar uma enquete, basta escrever ou tocar em /create. \n Para cada enquete, você pode especificar várias configurações iniciais: \n\n*Tipo de enquete:* Os vários tipos são explicados em detalhes no menu tipo de enquete. \n*Anonimato:* Você pode deixar sua enquete anônima, o que resulta em nenhum nome sendo exibido! Isso é permanente e para todos.\n*Resultados visíveis:* Nesse modo, os votos somente se tornam visíveis após o encerramento da enquete. Isso é ótimo para evitar a possibilidade de [voto tático](https://pt.wikipedia.org/wiki/Voto_tático) e o efeito de [ancoragem](https://pt.wikipedia.org/wiki/Efeito_de_ancoragem) \n\n-> *Atenção: Uma enquete encerrada com resultados invisíveis permanecerá fechada!:* \nA reabertura de uma enquete permitiria a um usuário (especificamente ao criador da enquete), examinar o resultado e colocar seu próprio voto de maneira que resultaria em uma possível vantagem para ele (voto tático). \n"
-        settings: "⚙️ *Configurações:* \n\nConfigurações adicionais da enquete podem ser ajustadas após sua criação: \n\n*Anonimato:* Uma enquete pode ser feita anonimamente. \n*Porcentagem:* A linha de porcentagem de cada opção pode ser ocultada no menu de configurações. \n*Opções:* Novas opções podem ser adicionadas e as opções existentes podem ser removidas no menu de configurações.\n*Opções do usuário:* Você pode permitir que usuários adicionem opções à sua enquete. \n*Ordem:* A ordem na qual os usuários ou as opções são exibidos nos resultados pode ser alterada. \n*Data de encerramento:* É possível definir uma data de encerramento na qual a enquete será fechada automaticamente. \n"
+        creation: "🌟 *Criação:* \n\n Para criar uma enquete, basta escrever ou tocar em /create. \n Para cada enquete, você pode especificar várias configurações iniciais: \n\n*Tipo de enquete:* Os vários tipos são explicados em detalhes no menu tipo de enquete. \n*Anonimato:* Você pode deixar sua enquete anônima, o que resulta em nenhum nome sendo exibido! Isso é permanente e para todos.\n*Resultados visíveis:* Nesse modo, os votos somente se tornam visíveis após o encerramento da enquete. Isso é ótimo para evitar a possibilidade de [voto tático](https://pt.wikipedia.org/wiki/Voto_tático) e o efeito de [ancoragem](https://pt.wikipedia.org/wiki/Efeito_de_ancoragem) \n\n-> *Atenção: Uma enquete encerrada com resultados ocultos permanecerá fechada!:* \nA reabertura de uma enquete permitiria a um usuário (especificamente ao criador da enquete), examinar o resultado e colocar seu próprio voto de maneira que resultaria em uma possível vantagem para ele (voto tático). \n"
+        settings: "⚙️ *Configurações:* \n\nConfigurações adicionais da enquete podem ser ajustadas após sua criação: \n\n*Idioma*: É possível alterar o idioma somente para a enquete\n*Anonimato:* Uma enquete pode ser feita anonimamente. \n*Data de encerramento:* É possível definir uma data de encerramento na qual a enquete será encerrada automaticamente.\n*Opções:* Novas opções podem ser adicionadas à enquete e opções existentes podem ser removidas neste menu.\n*Opções do usuário:* Você pode permitir que usuários adicionem opções à sua enquete.\n\n*---- Submenu de estilo: ----*\n\n*Porcentagem:*\n_A linha de porcentagem de cada opção pode ser ocultada no menu de configurações. _\n\n*Votos em uma opção:*\n_É possível ocultar o total de votos em uma opção._\n\n*Consolidar votos:*\n_Caso sua enquete tenha muitos votos, a informação pode ficar muito confusa. Consolidar os votos trará uma visualização mais agradável._\n\n*Ordem:*\n_É possível alterar a ordem na qual usuários ou opções são exibidos nos resultados._ \n \n"
         notifications: "📣 *Notificações:* \n\nSe você habilitar notificações para o seu chat, o bot vai mandar uma mensagem 1 dia, 6 horas e 1 hora antes de a enquete fechar.\nEste é apenas um recurso para lembrar todos do grupo que uma enquete irá fechar logo, e para deixar fácil de achar a mensagem da enquete novamente 😉.\n\nPara habilitar as notificações em seu chat siga os seguintes passos:\n*1.* Crie uma enquete;\n*2.* Coloque uma data de termino no menu de configurações;\n*3.* Vá para o chat que você deseja que seja notificado (o pollbot precisa estar no grupo antes de a enquete ser compartilhada ou você precisará compartilhar ela de novo);\n*4.* Responda com /notify na mensagem da enquete que voce selecionou via @ultimate\\_pollbot;\n*5.* Selecione a enquete correta.\n\nEste procedimento todo é infelizmente complicado, pois o Telegram não permite a detecção de mensagens de bots nos grupos 😐.\nAssim, nós não sabemos qual enquete é postada em cada grupo e tudo precisa ser feito manualmente.\n"
-        management: "🕰 *Achar enquetes antigas:* \n\nHá dois comandos /list e /list\\_closed, que permite você achar e gerenciar suas enquetes antigas.\n\n⚠️ *Deletar enquetes:* \n\nVocê pode deletar enquetes individuais no respectivo menu de pesquisa.\nTambém há o comando /delete\\_closed, que deleta todas as enquetes fechadas e o comando /delete\\_all que deleta TODAS as enquetes.\n"
+        management: "🕰 *Achar enquetes antigas:* \n\nHá dois comandos /list e /list\\_closed, que permite você achar e gerenciar suas enquetes antigas.\n\n⚠️ *Apagar enquetes:* \n\nVocê pode apagar enquetes individualmente no respectivo menu da enquete.\nTambém há formas de apagar todas as enquetes no menu de configurações (comando /settings).\n"
         languages: "🌐 *Idioma:* \n\nUltimate pollbot suporta vários idiomas, mas apenas o inglês é oficialmente mantido.\n\nPara adicionar um novo idioma ou atualizar um idioma atual, entre em contato comigo: @Nukesor! \nEstou usando o serviço de localização [Lokalise](https://lokalise.co), que concordou em me fornecer uma licença de código aberto para traduzir meus projetos.\nPara que este serviço funcione, você precisará me fornecer um endereço de email, pois preciso enviar um convite.\n\nPor favor, tenha cuidado para manter o estilo correto do Markdown (`**`, `__`, `${}`), caso contrário não funcionará no seu idioma. \nSe algo der errado, tentarei corrigi-lo, mas, por favor, me ajude a evitar isso. Leva  tempo e esforço para corrigir esses erros.\nO suporte a vários idiomas é um recurso voltado para a comunidade, que eu felizmente suporto, mas não posso cuidar de vários idiomas por conta própria. \n"
         bugs: "⚠️ *Há um bug desconhecido que não vai embora!!* 😩\n\nEu normalmente recebo notificações assim que algo quebra, mas podem haver alguns bugs que passam desapercebidos!\nCaso o bug não tenha sido corrigido em um ou dois dias, por favor escreva um ticket no [Github](https://github.com/Nukesor/ultimate-poll-bot) ou pelo meu [grupo de suporte](https://t.me/nukesors_projects).\n"
     error: "Ocorreu um erro desconhecido. Provavelmente recebi uma notificação sobre isso e tentarei corrigi-lo o mais rápido possível.\nCaso o bug não tenha sido corrigido em um ou dois dias, por favor envie um ticket no [Github](https://github.com/Nukesor/ultimate-poll-bot) ou no meu [grupo de suporte](https://t.me/nukesors_projects).\n"

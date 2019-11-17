@@ -6,7 +6,7 @@ poll_types:
     cumulative_vote: 'Voto cumulativo'
     count_vote: 'Voti illimitati'
 list:
-    polls: 'Clicca su qualsiasi pulsante per gestire un sondaggio specifico'
+    polls: 'Seleziona un sondaggio per gestirlo'
     no_polls: 'Non hai alcun sondaggio aperto'
     no_closed_polls: 'Non hai alcun sondaggio chiuso'
 admin:
@@ -39,6 +39,7 @@ poll:
         no_summarized: '├ *No:* %{count} voti'
     doodle_help: '*Premi* sui pulsanti `a)`, `b)` sottostanti per vedere le opzioni'
     please_wait: "\n\nPer favore, attendi mentre il bot sincronizza i sondaggi ☺️"
+    anonymous_warning: '*Attenzione:* _Gli altri utenti possono indovinare il tuo voto tracciando il numero di voti (o la percentuale) e il tuo ultimo accesso_'
 deleted:
     poll: 'Il sondaggio è stato permanentemente cancellato'
     polls: 'Tutti i sondaggi sono stati cancellati'
@@ -134,6 +135,8 @@ keyboard:
         stats: '📊 Statistiche'
         plot: '📊 Grafica le statistiche'
         update: 'Aggiorna tutti i sondaggi'
+    hide_option_votes: '# Nascondi i voti totali per opzione'
+    show_option_votes: '# Mostra i voti totali per opzione'
 sorting:
     user_chrono: 'ordine cronologico'
     user_name: 'per nome'
@@ -175,6 +178,14 @@ settings:
         language: 'Lingua predefinita:%{language}'
         open_polls: 'Sondaggi aperti:%{count}'
         closed_polls: 'Sondaggi chiusi:%{count}'
+        explanations:
+            language: '_Questa impostazione determina la lingua utilizzata nell''interfaccia di gestione e determina anche la lingua predefinita per i sondaggi ._'
+            notifications: '_Ti invierò un messaggio di volta in volta per informarti sugli aggiornamenti, modifiche o bug._'
+    poll:
+        explanation:
+            anonymity: "_Nei sondaggi anonimi non verrà mostrato nessun nome. Non è quindi possibile vedere il voto di un utente._\n*Attenzione:* _Gli altri utenti possono dedurre i voti osservando l'aumento della percentuale o del numero di voti e dal tuo ultimo accesso. Per rendere i sondaggi completamente anonimi bisogna abilitare l'opzione per nascondere i risultati._"
+            visibility: '_Un sondaggio con risultati nascosti non mostrerà alcun voto o percentuale fino alla chiusura del sondaggio. Una volta chiuso, il sondaggio rimane chiuso per sempre. Ciò è necessario per evitare la possibilità di_ [voto tattico] (https://it.m.wikipedia.org/wiki/Voto_per_approvazione#Possibilità_di_voto_tattico) _e di prevenire_ [ancoraggio] (https://it.m.wikipedia.org/wiki/Ancoraggio_(PNL)).'
+    anonymity_warning: "Non puoi nascondere voti e percentuali su un sondaggio anonimo.\n Questo potrebbe dare agli utenti l'idea che il sondaggio abbia risultati nascosti, il che non è il caso. Se si desidera ciò, creare il sondaggio con risultati nascosti abilitati. \n"
 management:
     permanently_close: "Vuoi davvero chiudere questo sondaggio?\nI risultati saranno visibili, ma non verranno registrati altri voti.\n⚠️ Questa azione è irreversibile. ⚠️\n"
     delete: 'Vuoi veramente eliminare questo sondaggio?'
