@@ -172,6 +172,34 @@ class Poll(base):
 
         return poll
 
+    def init_votes_for_new_options(self, session):
+        """
+        When a new option is added, we need to create new votes
+        for all users that have already voted for this poll
+        """
+        assert self.is_stv()
+
+        from pollbot.models import User, Vote, PollOption
+        users = session.query(User) \
+            .join(User.votes) \
+            .filter(Vote.poll == self) \
+            .all()
+
+        new_options = session.query(PollOption) \
+            .filter(PollOption.poll == self) \
+            .outerjoin(Vote) \
+            .filter(Vote.id == None) \
+            .all()
+
+        existing_options_count = len(self.options) - len(new_options)
+
+        for user in users:
+            for index, option in enumerate(new_options):
+                print(option)
+                vote = Vote(user, option)
+                vote.priority = existing_options_count + index
+                user.votes.append(vote)
+
     def init_votes(self, session, user):
         """
         Since STV votes always need priorities, call this to create a vote

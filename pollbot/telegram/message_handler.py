@@ -125,6 +125,7 @@ def handle_new_option(bot, update, session, user, text, poll, chat):
         for option in added_options:
             text += f'\n*{option}*'
         chat.send_message(text, parse_mode='markdown')
+        poll.init_votes_for_new_options(session)
     else:
         chat.send_message(i18n.t('creation.option.no_new', locale=user.locale))
 
@@ -185,6 +186,7 @@ def handle_user_option_addition(bot, update, session, user, text, poll, chat):
         chat.send_message(text, parse_mode='markdown')
 
         # Update all polls
+        poll.init_votes_for_new_options(session)
         session.commit()
         update_poll_messages(session, bot, poll)
     else:
