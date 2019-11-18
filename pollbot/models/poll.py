@@ -185,6 +185,7 @@ class Poll(base):
 
         votes_exist = session.query(Vote) \
             .filter(Vote.user == user) \
+            .filter(Vote.poll == self) \
             .first() is not None
 
         if votes_exist:
