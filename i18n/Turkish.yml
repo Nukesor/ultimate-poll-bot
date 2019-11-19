@@ -111,6 +111,8 @@ keyboard:
     summarize_votes: 'Birçok oyu özetleyin'
     dont_summarize_votes: 'Tüm oyları göster'
     add_new_language: 'Yeni bir dil ekle'
+    hide_option_votes: '# Seçenek için toplam oyları gizle'
+    show_option_votes: '# Seçenek için toplam oyları göster'
 sorting:
     user_chrono: 'kronolojik olarak'
     user_name: 'isme göre'
@@ -141,6 +143,7 @@ settings:
     summarize: '*Oyları özetleyin*: Birçok oyu özetleyin'
     dont_summarize: '*Oyları özetleyin*: Tüm oyları göster'
     permanently_summarized: '*Oyları özetleyin*: Çok fazla oy. Kalıcı olarak özetlenir.'
+    anonymity_warning: "Anonim bir ankette yüzde ve oyları gizleyemezsiniz.\nBu, kullanıcılara anketin gizli sonuçları olduğu fikrini verebilir. Bunu hala istiyorsanız, gizli sonuçların etkinleştirildiği normal bir anket oluşturun."
 management:
     permanently_close: "Bu anketi gerçekten kalıcı olarak kapatmak istiyor musunuz?\nSonuçlar görünür olacak, ama insanlar artık oy veremeyecek\n⚠️ Bu işlem geri alınamaz. ⚠️"
     delete: 'Bu anketi gerçekten silmek istiyor musunuz?'
