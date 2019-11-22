@@ -40,7 +40,7 @@ def handle_vote(session, context):
         elif poll.poll_type == PollType.cumulative_vote.name:
             update_poll = handle_cumulative_vote(session, context, option)
         elif poll.poll_type == PollType.count_vote.name:
-            update_poll = handle_cumulative_vote(session, context, option, unlimited=True)
+            update_poll = handle_cumulative_vote(session, context, option, limited=False)
         elif poll.poll_type == PollType.doodle.name:
             update_poll = handle_doodle_vote(session, context, option)
         else:
@@ -152,19 +152,23 @@ def handle_limited_vote(session, context, option):
         .filter(Vote.poll == option.poll) \
         .filter(Vote.user == context.user) \
         .count()
+    allowed_votes = option.poll.number_of_votes
 
     # Remove vote
     if existing_vote:
         session.delete(existing_vote)
+
         vote_removed = i18n.t('callback.vote.removed', locale=locale)
-        respond_to_vote(session, vote_removed, context, option.poll, vote_count - 1, True)
+        remaining_votes = allowed_votes - (vote_count - 1)
+        respond_to_vote(session, vote_removed, context, option.poll, remaining_votes, True)
 
     # Add vote
     elif existing_vote is None and vote_count < option.poll.number_of_votes:
         vote = Vote(context.user, option)
         session.add(vote)
         vote_registered = i18n.t('callback.vote.registered', locale=locale)
-        respond_to_vote(session, vote_registered, context, option.poll, vote_count + 1, True)
+        remaining_votes = allowed_votes - (vote_count + 1)
+        respond_to_vote(session, vote_registered, context, option.poll, remaining_votes, True)
 
     # Max votes reached
     else:
@@ -175,7 +179,7 @@ def handle_limited_vote(session, context, option):
     return True
 
 
-def handle_cumulative_vote(session, context, option, unlimited=False):
+def handle_cumulative_vote(session, context, option, limited=True):
     """Handle a cumulative vote."""
     locale = option.poll.locale
     existing_vote = session.query(Vote) \
@@ -193,11 +197,11 @@ def handle_cumulative_vote(session, context, option, unlimited=False):
 
     action = context.callback_result
     allowed_votes = 10000000
-    if not unlimited:
+    if limited:
         allowed_votes = option.poll.number_of_votes
 
     # Upvote, but no votes left
-    if not unlimited and action == CallbackResult.yes and vote_count >= allowed_votes:
+    if limited and action == CallbackResult.yes and vote_count >= allowed_votes:
         no_left = i18n.t('callback.vote.no_left', locale=locale)
         respond_to_vote(session, no_left, context, option.poll)
         return False
