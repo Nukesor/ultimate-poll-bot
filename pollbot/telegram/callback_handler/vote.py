@@ -218,7 +218,7 @@ def handle_cumulative_vote(session, context, option, limited=True):
             session.commit()
             remaining_votes = allowed_votes - (vote_count + 1)
             vote_registered = i18n.t('callback.vote.registered', locale=locale)
-            respond_to_vote(session, vote_registered, context, option.poll, remaining_votes, not unlimited)
+            respond_to_vote(session, vote_registered, context, option.poll, remaining_votes, limited)
 
         # Remove from existing vote
         elif action == CallbackResult.no:
@@ -226,7 +226,7 @@ def handle_cumulative_vote(session, context, option, limited=True):
             session.commit()
             remaining_votes = allowed_votes - (vote_count - 1)
             vote_removed = i18n.t('callback.vote.removed', locale=locale)
-            respond_to_vote(session, vote_removed, context, option.poll, remaining_votes, not unlimited)
+            respond_to_vote(session, vote_removed, context, option.poll, remaining_votes, limited)
 
         # Delete vote if necessary
         if existing_vote.vote_count <= 0:
@@ -240,7 +240,7 @@ def handle_cumulative_vote(session, context, option, limited=True):
         session.commit()
         remaining_votes = allowed_votes - (vote_count + 1)
         vote_registered = i18n.t('callback.vote.registered', locale=locale)
-        respond_to_vote(session, vote_registered, context, option.poll, remaining_votes, not unlimited)
+        respond_to_vote(session, vote_registered, context, option.poll, remaining_votes, limited)
 
     return True
 
