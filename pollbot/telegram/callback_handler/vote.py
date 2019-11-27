@@ -1,6 +1,7 @@
 """Callback functions needed during creation of a Poll."""
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm.exc import ObjectDeletedError
 
 from pollbot.i18n import i18n
 from pollbot.helper import poll_allows_cumulative_votes
@@ -45,12 +46,17 @@ def handle_vote(session, context):
             update_poll = handle_doodle_vote(session, context, option)
         else:
             raise Exception("Unknown poll type")
+
+        session.commit()
     except IntegrityError:
         # Double vote. Rollback the transaction and ignore the second vote
         session.rollback()
         return
+    except ObjectDeletedError:
+        # Vote on already removed vote. Rollback the transaction and ignore
+        session.rollback()
+        return
 
-    session.commit()
     if update_poll:
         update_poll_messages(session, context.bot, poll)
 
