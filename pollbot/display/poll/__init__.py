@@ -100,6 +100,15 @@ def compile_poll_text(session, poll, show_warning=False, summarize=False, inline
     # Name and description
     lines = []
     lines.append(f'✉️ *{poll.name}*')
+
+    # Only send the name nad description, when using an inline_query
+    # Otherwise the result may be too larg (due to many large poll texts)
+    # and the inline query fails
+    if inline_query:
+        lines.append(i18n.t('poll.please_wait',
+                            locale=poll.locale))
+        return lines
+
     if poll.description is not None:
         lines.append(f'_{poll.description}_')
 
@@ -112,14 +121,6 @@ def compile_poll_text(session, poll, show_warning=False, summarize=False, inline
             lines.append(i18n.t('poll.anonymous_warning', locale=poll.locale))
     if not context.show_results:
         lines.append(f"_{i18n.t('poll.results_not_visible', locale=poll.locale)}_")
-
-    # Only send the name nad description, when using an inline_query
-    # Otherwise the result may be too larg (due to many large poll texts)
-    # and the inline query fails
-    if inline_query:
-        lines.append(i18n.t('poll.please_wait',
-                            locale=poll.locale))
-        return lines
 
     lines += get_option_information(session, poll, context, summarize)
     lines.append('')

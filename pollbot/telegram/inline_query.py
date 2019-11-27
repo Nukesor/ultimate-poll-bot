@@ -27,6 +27,13 @@ def search(bot, update, session, user):
         closed = True
         query = query.replace('closed_polls', '').strip()
 
+    offset = update.inline_query.offset
+
+    if offset == '':
+        offset = 0
+    else:
+        offset = int(offset)
+
     if query == '':
         # Just display all polls
         polls = session.query(Poll) \
@@ -34,7 +41,8 @@ def search(bot, update, session, user):
             .filter(Poll.closed.is_(closed)) \
             .filter(Poll.created.is_(True)) \
             .order_by(Poll.created_at.desc()) \
-            .limit(50) \
+            .limit(10) \
+            .offset(offset) \
             .all()
 
     else:
@@ -48,7 +56,8 @@ def search(bot, update, session, user):
                 Poll.description.ilike(f'%{query}%'),
             )) \
             .order_by(Poll.created_at.desc()) \
-            .limit(50) \
+            .limit(10) \
+            .offset(offset) \
             .all()
 
     # Try to find polls that are shared by external people via uuid
@@ -83,10 +92,11 @@ def search(bot, update, session, user):
                 parse_mode='markdown',
                 disable_web_page_preview=True,
             )
+            description = poll.description[:100] if poll.description is not None else None
             results.append(InlineQueryResultArticle(
                 poll.id,
                 poll.name,
-                description=poll.description,
+                description=description,
                 input_message_content=content,
                 reply_markup=keyboard,
             ))
@@ -94,5 +104,6 @@ def search(bot, update, session, user):
         update.inline_query.answer(
             results, cache_time=0, is_personal=True,
             switch_pm_text=i18n.t('inline_query.create_poll', locale=user.locale),
-            switch_pm_parameter='inline'
+            switch_pm_parameter='inline',
+            next_offset=str(offset+10),
         )
