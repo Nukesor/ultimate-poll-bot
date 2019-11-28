@@ -34,11 +34,11 @@ class PollType(Enum):
 
     single_vote = 0
     doodle = 10
+    priority = 60
+    count_vote = 50
     block_vote = 20
     limited_vote = 30
     cumulative_vote = 40
-    count_vote = 50
-    priority = 60
 
 
 @unique
