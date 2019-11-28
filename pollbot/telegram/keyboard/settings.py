@@ -88,7 +88,7 @@ def get_styling_settings_keyboard(poll):
     buttons = []
     locale = poll.user.locale
 
-    if poll.results_visible:
+    if poll.results_visible and not poll.is_stv():
         # Show/hide percentage
         percentage_text = i18n.t('keyboard.show_percentage', locale=locale)
         if poll.show_percentage:
@@ -107,7 +107,7 @@ def get_styling_settings_keyboard(poll):
         ])
 
     # Summarize votes in poll
-    if poll.results_visible and not poll.permanently_summarized:
+    if poll.results_visible and not poll.permanently_summarized and not poll.is_stv():
         summarize_text = i18n.t('keyboard.summarize_votes', locale=locale)
         if poll.summarize:
             summarize_text = i18n.t('keyboard.dont_summarize_votes', locale=locale)
