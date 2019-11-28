@@ -283,6 +283,7 @@ def handle_doodle_vote(session, context, option):
     return True
 
 def handle_priority_vote(session, context, option):
+    """Handle a priority vote"""
     vote = session.query(Vote) \
         .filter(Vote.poll_option == option) \
         .filter(Vote.user == context.user) \
