@@ -177,7 +177,8 @@ class Poll(base):
         When a new option is added, we need to create new votes
         for all users that have already voted for this poll
         """
-        assert self.is_priority()
+        if not self.is_priority():
+            return
 
         from pollbot.models import User, Vote, PollOption
         users = session.query(User) \
