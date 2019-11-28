@@ -84,7 +84,7 @@ def search(bot, update, session, user):
                 user=user,
                 inline_query=True
             )
-            keyboard = InlineKeyboardMarkup([[InlineKeyboardButton('Please ignore this', callback_data='100')]])
+            keyboard = InlineKeyboardMarkup([[InlineKeyboardButton('Please ignore this', callback_data='100:0:0')]])
 
             content = InputTextMessageContent(
                 text,
