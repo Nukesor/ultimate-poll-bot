@@ -6,7 +6,7 @@ from pollbot.helper.enums import PollType
 from pollbot.helper import poll_allows_cumulative_votes
 from pollbot.helper.option import get_sorted_options, calculate_percentage
 from .vote import get_vote_lines, get_doodle_vote_lines
-from .single_transferable_vote import get_stv_result
+from .ordered_vote_results import get_ordered_vote_result_lines
 
 
 def get_option_information(session, poll, context, summarize):

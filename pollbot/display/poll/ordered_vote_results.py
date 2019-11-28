@@ -1,7 +1,22 @@
 from pollbot.models import Vote, User, PollOption
-from sqlalchemy import func
 from collections import Counter
 
+
+def get_ordered_vote_result_lines(session, poll):
+    lines = []
+    lines.append('\nBorda count tally:')
+    lines.extend(get_borda_count_lines(poll))
+
+    return lines
+
+def get_borda_count_lines(poll):
+    option_count = len(poll.options)
+    counter = Counter({option: 0 for option in poll.options})
+    for option in poll.options:
+        counter[option] += sum([option_count - vote.priority for vote in option.votes])
+    return [f'{option.name}: {points} Points' for option, points in counter.most_common()]
+
+# this is not used at the moment, but maybe we'd like to add this feature later
 def get_stv_result(session, poll):
     # todo this query fetches all votes for the user, not only those belonging to the current poll
     users = session.query(User) \
@@ -41,9 +56,6 @@ def get_stv_result(session, poll):
             if id != last_id
         ]
 
-    lines.append('\nBorda count tally:')
-    lines.extend(get_borda_count_lines(session, poll))
-
     return lines
 
 def get_ranked_options(session, poll, option_ids, users):
@@ -57,10 +69,3 @@ def get_ranked_options(session, poll, option_ids, users):
                 break
 
     return option_votes.most_common()
-
-def get_borda_count_lines(session, poll):
-    option_count = len(poll.options)
-    counter = Counter({option: 0 for option in poll.options})
-    for option in poll.options:
-        counter[option] += sum([option_count - vote.priority for vote in option.votes])
-    return [f'{option.name}: {points} Points' for option, points in counter.most_common()]
