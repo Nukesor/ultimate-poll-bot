@@ -45,7 +45,10 @@ def get_option_line(session, option, index):
         letters = string.ascii_letters
         prefix = f'{letters[index]}) '
 
-    if len(option.votes) > 0 and option.poll.should_show_result() and option.poll.show_option_votes and not option.poll.is_stv():
+    if len(option.votes) > 0 and \
+       option.poll.should_show_result() and \
+       option.poll.show_option_votes and \
+       not option.poll.is_stv():
         if poll_allows_cumulative_votes(option.poll):
             vote_count = sum([vote.vote_count for vote in option.votes])
         else:
