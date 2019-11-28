@@ -45,7 +45,7 @@ def handle_vote(session, context):
         elif poll.poll_type == PollType.doodle.name:
             update_poll = handle_doodle_vote(session, context, option)
         elif poll.poll_type == PollType.single_transferable_vote.name:
-            update_poll = handle_ordered_vote(session, context, option)
+            update_poll = handle_priority_vote(session, context, option)
         else:
             raise Exception("Unknown poll type")
 
@@ -281,7 +281,7 @@ def handle_doodle_vote(session, context, option):
 
     return True
 
-def handle_ordered_vote(session, context, option):
+def handle_priority_vote(session, context, option):
     vote = session.query(Vote) \
         .filter(Vote.poll_option == option) \
         .filter(Vote.user == context.user) \

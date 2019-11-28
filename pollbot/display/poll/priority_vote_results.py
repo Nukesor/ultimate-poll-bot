@@ -2,7 +2,7 @@ from pollbot.models import Vote, User, PollOption
 from collections import Counter
 
 
-def get_ordered_vote_result_lines(session, poll):
+def get_priority_vote_result_lines(session, poll):
     lines = []
     lines.append('\nBorda count tally:')
     lines.extend(get_borda_count_lines(poll))

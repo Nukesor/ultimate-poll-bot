@@ -3,7 +3,7 @@ import pytest
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import exists
 
-class TestOrderedVote:
+class TestVote:
     def test_unique_ordering(self, session, user, poll):
         option = PollOption(poll, 'option 0')
         session.add(option)
