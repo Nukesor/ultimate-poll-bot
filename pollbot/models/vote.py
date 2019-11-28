@@ -64,3 +64,10 @@ Index(
     unique=True,
     postgresql_where=Vote.poll_type == 'single_vote',
 )
+
+Index(
+    'ix_unique_priority_vote',
+    Vote.user_id, Vote.poll_id, Vote.priority,
+    unique=True,
+    postgresql_where=Vote.poll_type == 'priority',
+)
