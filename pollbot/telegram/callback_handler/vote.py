@@ -49,7 +49,6 @@ def handle_vote(session, context):
         else:
             raise Exception("Unknown poll type")
 
-        session.commit()
     except IntegrityError:
         # Double vote. Rollback the transaction and ignore the second vote
         session.rollback()
@@ -58,6 +57,8 @@ def handle_vote(session, context):
         # Vote on already removed vote. Rollback the transaction and ignore
         session.rollback()
         return
+
+    session.commit()
 
     if update_poll:
         update_poll_messages(session, context.bot, poll)
