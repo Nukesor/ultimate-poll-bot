@@ -289,6 +289,10 @@ def handle_priority_vote(session, context, option):
         .filter(Vote.user == context.user) \
         .one()
 
+    previous_priority = vote.priority
+    # allow next vote to take this vote's place
+    vote.priority = -1
+
     if context.callback_result.name is None:
         data = context.data # noqa
         raise Exception("Unknown callback result")
@@ -301,10 +305,16 @@ def handle_priority_vote(session, context, option):
     next_vote = session.query(Vote) \
         .filter(Vote.user == context.user) \
         .filter(Vote.poll == vote.poll) \
-        .filter(Vote.priority == vote.priority + direction) \
-        .one()
-    vote.priority += direction
+        .filter(Vote.priority == previous_priority + direction) \
+        .one_or_none()
+
+    if next_vote is None:
+        session.rollback()
+        return
+
     next_vote.priority -= direction
+    session.commit()
+    vote.priority = previous_priority + direction
 
     registered = i18n.t('callback.vote.registered', locale=option.poll.locale)
     context.query.answer(registered)
