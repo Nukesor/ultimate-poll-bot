@@ -146,6 +146,7 @@ def get_stv_buttons(poll, user):
         .options(joinedload(Vote.poll_option)) \
         .all()
 
+    letters = string.ascii_lowercase + '123456789'
     for index, vote in enumerate(votes):
         option = vote.poll_option
         if not poll.compact_buttons:
@@ -159,11 +160,13 @@ def get_stv_buttons(poll, user):
         name_hint_payload = f'{CallbackType.show_option_name.value}:{poll.id}:{option.id}'
         increase_payload = f'{vote_button_type}:{option.id}:{vote_increase}'
         decrease_payload = f'{vote_button_type}:{option.id}:{vote_decrease}'
-        vote_row = [
-            InlineKeyboardButton(f"{index + 1}.", callback_data=name_hint_payload),
-            InlineKeyboardButton('▲', callback_data=increase_payload),
-            InlineKeyboardButton('▼', callback_data=decrease_payload),
-        ]
+
+        vote_row = []
+        if poll.compact_buttons:
+            vote_row.append(InlineKeyboardButton(f"{letters[index]})", callback_data=name_hint_payload))
+        vote_row.append(InlineKeyboardButton('▲', callback_data=increase_payload))
+        vote_row.append(InlineKeyboardButton('▼', callback_data=decrease_payload))
+
         buttons.append(vote_row)
     return buttons
 
