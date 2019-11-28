@@ -129,7 +129,7 @@ def get_styling_settings_keyboard(poll):
                                              callback_data=doodle_button_payload)])
 
     # Compile the possible options for user sorting
-    if not poll.anonymous and not poll.is_doodle():
+    if not poll.anonymous and not poll.is_doodle() and not poll.is_stv():
         for order in UserSorting:
             if order.name == poll.user_sorting:
                 continue
@@ -146,7 +146,7 @@ def get_styling_settings_keyboard(poll):
         if order.name == poll.option_sorting:
             continue
 
-        if order.name == OptionSorting.option_percentage.name and poll.is_doodle():
+        if order.name == OptionSorting.option_percentage.name and (poll.is_doodle() or poll.is_stv()):
             continue
 
         option_name = i18n.t(f'sorting.{order.name}', locale=locale)
