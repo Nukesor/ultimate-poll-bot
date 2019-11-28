@@ -152,7 +152,7 @@ def get_priority_buttons(poll, user):
         if not poll.compact_buttons:
             name_row = [
                 InlineKeyboardButton(
-                    f"{index + 1}) {option.name}",
+                    f"{option.name}",
                     callback_data=IGNORE_PAYLOAD
                 )
             ]

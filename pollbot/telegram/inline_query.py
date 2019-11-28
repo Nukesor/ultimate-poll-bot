@@ -68,7 +68,6 @@ def search(bot, update, session, user):
                 .filter(Poll.uuid == poll_uuid) \
                 .all()
         except ValueError:
-            print('geilo')
             pass
 
     if len(polls) == 0:

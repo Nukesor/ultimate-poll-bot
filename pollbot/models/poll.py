@@ -195,7 +195,6 @@ class Poll(base):
 
         for user in users:
             for index, option in enumerate(new_options):
-                print(option)
                 vote = Vote(user, option)
                 vote.priority = existing_options_count + index
                 user.votes.append(vote)
@@ -207,7 +206,6 @@ class Poll(base):
         """
         assert self.is_priority()
 
-        print('init votes')
 
         from pollbot.models import Vote
 
@@ -217,7 +215,6 @@ class Poll(base):
             .first() is not None
 
         if votes_exist:
-            print('votes exist')
             return
 
         votes = []
