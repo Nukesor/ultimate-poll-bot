@@ -274,9 +274,13 @@ creation:
     Every user gets a fixed number of votes they can distribute as they like (even multiple votes per option).
     This mode has a little more depth than limited vote, since it allows users to vote on a single option multiple times.
 
-    🛒 *Unlimited votes* (or the shopping list) 😎
+    🛒 *Unlimited Votes* (or the shopping list 😎):
     Every user can vote as often on any option as they want.
     This is great if you want to, for instance, determine how much stuff everyone wants for the next festival trip.
+
+    ↕ *Priority Vote*:
+    Every user ranks the options by preference. Options get points depending on their place in the ranking.
+    This helps to find good compromises, i.e. options that most people prefer over other options.
 
   results_not_visible: Results are not visible until poll is closed
   results_visible: Results are directly visible
