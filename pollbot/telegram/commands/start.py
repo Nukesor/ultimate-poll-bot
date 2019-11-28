@@ -102,6 +102,10 @@ def start(bot, update, session, user):
         increase_stat(session, 'externally_shared')
 
     elif action == StartAction.vote:
+        if poll.is_stv():
+            poll.init_votes(session, user)
+            session.commit()
+
         text, keyboard = get_poll_text_and_vote_keyboard(
             session,
             poll,
@@ -121,8 +125,5 @@ def start(bot, update, session, user):
             vote_message_id=sent_message.message_id,
         )
         session.add(reference)
-
-        if poll.is_stv():
-            poll.init_votes(session, user)
 
         session.commit()
