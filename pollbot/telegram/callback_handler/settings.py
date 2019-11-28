@@ -17,7 +17,7 @@ from pollbot.telegram.keyboard import (
     get_settings_language_keyboard,
 )
 from pollbot.helper.enums import ExpectedInput
-from pollbot.models import PollOption
+from pollbot.models import PollOption, User, Vote
 
 
 def send_settings_message(context):
@@ -162,7 +162,24 @@ def remove_option(session, context, poll):
     session.query(PollOption) \
         .filter(PollOption.id == context.action) \
         .delete()
-    session.commit()
+
+    if poll.is_priority():
+        users = session.query(User) \
+            .join(User.votes) \
+            .filter(Vote.poll == poll) \
+            .all()
+
+        for user in users:
+            votes = session.query(Vote) \
+                .filter(Vote.poll == poll) \
+                .filter(Vote.user == user) \
+                .order_by(Vote.priority.asc()) \
+                .all()
+
+            for index, vote in enumerate(votes):
+                vote.priority = index
+
+        session.commit()
 
     keyboard = get_remove_option_keyboard(poll)
     context.query.message.edit_reply_markup(reply_markup=keyboard)
