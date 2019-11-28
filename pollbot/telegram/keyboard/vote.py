@@ -160,12 +160,21 @@ def get_priority_buttons(poll, user):
         name_hint_payload = f'{CallbackType.show_option_name.value}:{poll.id}:{option.id}'
         increase_payload = f'{vote_button_type}:{option.id}:{vote_increase}'
         decrease_payload = f'{vote_button_type}:{option.id}:{vote_decrease}'
+        ignore_payload = f'{CallbackType.ignore.value}:0:0'
 
         vote_row = []
         if poll.compact_buttons:
             vote_row.append(InlineKeyboardButton(f"{letters[index]})", callback_data=name_hint_payload))
-        vote_row.append(InlineKeyboardButton('▲', callback_data=increase_payload))
-        vote_row.append(InlineKeyboardButton('▼', callback_data=decrease_payload))
+
+        if index != len(votes) - 1:
+            vote_row.append(InlineKeyboardButton('▼', callback_data=decrease_payload))
+        else:
+            vote_row.append(InlineKeyboardButton(' ', callback_data=ignore_payload))
+
+        if index != 0:
+            vote_row.append(InlineKeyboardButton('▲', callback_data=increase_payload))
+        else:
+            vote_row.append(InlineKeyboardButton(' ', callback_data=ignore_payload))
 
         buttons.append(vote_row)
     return buttons
