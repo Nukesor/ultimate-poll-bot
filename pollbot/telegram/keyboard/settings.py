@@ -88,7 +88,7 @@ def get_styling_settings_keyboard(poll):
     buttons = []
     locale = poll.user.locale
 
-    if poll.results_visible and not poll.is_stv():
+    if poll.results_visible and not poll.is_priority():
         # Show/hide percentage
         percentage_text = i18n.t('keyboard.show_percentage', locale=locale)
         if poll.show_percentage:
@@ -107,7 +107,7 @@ def get_styling_settings_keyboard(poll):
         ])
 
     # Summarize votes in poll
-    if poll.results_visible and not poll.permanently_summarized and not poll.is_stv():
+    if poll.results_visible and not poll.permanently_summarized and not poll.is_priority():
         summarize_text = i18n.t('keyboard.summarize_votes', locale=locale)
         if poll.summarize:
             summarize_text = i18n.t('keyboard.dont_summarize_votes', locale=locale)
@@ -120,7 +120,7 @@ def get_styling_settings_keyboard(poll):
         date_format_payload = f'{CallbackType.settings_toggle_date_format.value}:{poll.id}:0'
         buttons.append([InlineKeyboardButton(text=date_format_text, callback_data=date_format_payload)])
 
-    if poll.is_doodle() or poll.is_stv():
+    if poll.is_doodle() or poll.is_priority():
         doodle_button_text = i18n.t('keyboard.compact_doodle', locale=locale)
         if poll.compact_buttons:
             doodle_button_text = i18n.t('keyboard.no_compact_doodle', locale=locale)
@@ -129,7 +129,7 @@ def get_styling_settings_keyboard(poll):
                                              callback_data=doodle_button_payload)])
 
     # Compile the possible options for user sorting
-    if not poll.anonymous and not poll.is_doodle() and not poll.is_stv():
+    if not poll.anonymous and not poll.is_doodle() and not poll.is_priority():
         for order in UserSorting:
             if order.name == poll.user_sorting:
                 continue
@@ -146,7 +146,7 @@ def get_styling_settings_keyboard(poll):
         if order.name == poll.option_sorting:
             continue
 
-        if order.name == OptionSorting.option_percentage.name and (poll.is_doodle() or poll.is_stv()):
+        if order.name == OptionSorting.option_percentage.name and (poll.is_doodle() or poll.is_priority()):
             continue
 
         option_name = i18n.t(f'sorting.{order.name}', locale=locale)

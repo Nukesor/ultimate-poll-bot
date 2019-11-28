@@ -64,8 +64,8 @@ def get_vote_buttons(poll, user=None, show_back=False):
         buttons = get_cumulative_buttons(poll)
     elif poll.poll_type == PollType.doodle.name:
         buttons = get_doodle_buttons(poll)
-    elif poll.is_stv():
-        buttons = get_stv_buttons(poll, user)
+    elif poll.is_priority():
+        buttons = get_priority_buttons(poll, user)
     else:
         buttons = get_normal_buttons(poll)
 
@@ -122,8 +122,8 @@ def get_cumulative_buttons(poll):
     return buttons
 
 
-def get_stv_buttons(poll, user):
-    """Create the keyboard for stv poll. Only show the deeplink, if not in a direct conversation."""
+def get_priority_buttons(poll, user):
+    """Create the keyboard for priority poll. Only show the deeplink, if not in a direct conversation."""
     if user is None:
         bot_name = config['telegram']['bot_name']
         payload = get_start_button_payload(poll, StartAction.vote)

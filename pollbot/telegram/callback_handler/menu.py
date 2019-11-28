@@ -52,7 +52,7 @@ def go_back(session, context, poll):
 @poll_required
 def show_vote_menu(session, context, poll):
     """Show the vote keyboard in the management interface."""
-    if poll.is_stv():
+    if poll.is_priority():
         poll.init_votes(session, context.user)
         session.commit()
 

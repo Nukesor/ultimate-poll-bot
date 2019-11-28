@@ -25,7 +25,7 @@ def get_option_information(session, poll, context, summarize):
             lines.append(get_percentage_line(option, context))
 
         # Add the names of the voters to the respective options
-        if context.show_results and not context.anonymous and len(option.votes) > 0 and not poll.is_stv():
+        if context.show_results and not context.anonymous and len(option.votes) > 0 and not poll.is_priority():
             # Sort the votes accordingly to the poll's settings
             if poll.poll_type == PollType.doodle.name:
                 lines += get_doodle_vote_lines(poll, option, summarize)
@@ -41,14 +41,14 @@ def get_option_line(session, option, index):
     option_name = option.get_formatted_name()
 
     prefix = ''
-    if option.poll.poll_type in [PollType.doodle.name, PollType.single_transferable_vote.name]:
+    if option.poll.poll_type in [PollType.doodle.name, PollType.priority.name]:
         letters = string.ascii_letters
         prefix = f'{letters[index]}) '
 
     if len(option.votes) > 0 and \
        option.poll.should_show_result() and \
        option.poll.show_option_votes and \
-       not option.poll.is_stv():
+       not option.poll.is_priority():
         if poll_allows_cumulative_votes(option.poll):
             vote_count = sum([vote.vote_count for vote in option.votes])
         else:
@@ -62,13 +62,13 @@ def get_percentage_line(option, context):
     """Get the percentage line for each option."""
 
     poll = option.poll
-    if len(option.votes) == 0 or poll.anonymous or poll.is_stv():
+    if len(option.votes) == 0 or poll.anonymous or poll.is_priority():
         line = '└ '
     else:
         line = '│ '
 
 
-    if not poll.is_stv():
+    if not poll.is_priority():
         percentage = calculate_percentage(option, context.total_user_count)
         filled_slots = math.floor(percentage / 10)
         line += filled_slots * '▬'

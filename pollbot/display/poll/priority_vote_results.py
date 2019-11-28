@@ -3,7 +3,7 @@ from collections import Counter
 
 
 # this is not used at the moment, but maybe we'd like to add this feature later
-def get_stv_result(session, poll):
+def get_priority_result(session, poll):
     # todo this query fetches all votes for the user, not only those belonging to the current poll
     users = session.query(User) \
         .join(User.votes) \
@@ -12,13 +12,13 @@ def get_stv_result(session, poll):
 
     lines = []
 
-    lines.append('\nSTV Tally:')
+    lines.append('\nPriority Tally:')
     option_ids = [option.id for option in poll.options]
     print('init ids', option_ids)
     for _ in range(len(option_ids) - 1):
         if (len(option_ids) <= 1):
             winning_option = session.query(PollOption).get(option_ids[0])
-            lines.append(f'STV Winner: {winning_option.name}')
+            lines.append(f'Priority Winner: {winning_option.name}')
             break
 
         ranked_options = get_ranked_options(session, poll, option_ids, users)

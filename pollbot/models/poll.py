@@ -110,8 +110,8 @@ class Poll(base):
     def is_doodle(self):
         return self.poll_type == PollType.doodle.name
 
-    def is_stv(self):
-        return self.poll_type == PollType.single_transferable_vote.name
+    def is_priority(self):
+        return self.poll_type == PollType.priority.name
 
     def has_date_option(self):
         """Check whether this poll has a date option."""
@@ -177,7 +177,7 @@ class Poll(base):
         When a new option is added, we need to create new votes
         for all users that have already voted for this poll
         """
-        assert self.is_stv()
+        assert self.is_priority()
 
         from pollbot.models import User, Vote, PollOption
         users = session.query(User) \
@@ -202,10 +202,10 @@ class Poll(base):
 
     def init_votes(self, session, user):
         """
-        Since STV votes always need priorities, call this to create a vote
+        Since Priority votes always need priorities, call this to create a vote
         for every option in the poll with a random priority for the given user
         """
-        assert self.is_stv()
+        assert self.is_priority()
 
         print('init votes')
 

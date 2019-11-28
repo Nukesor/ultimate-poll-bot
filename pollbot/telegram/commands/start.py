@@ -102,7 +102,7 @@ def start(bot, update, session, user):
         increase_stat(session, 'externally_shared')
 
     elif action == StartAction.vote:
-        if poll.is_stv():
+        if poll.is_priority():
             poll.init_votes(session, user)
             session.commit()
 

@@ -68,7 +68,7 @@ As soon as such a poll is closed, the results will be visible. **Beware!**: such
 
 **Planned features:**
 
-- A STV poll
+- A Priority poll
 
 
 # Acknowledgements
