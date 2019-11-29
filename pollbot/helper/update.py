@@ -115,7 +115,8 @@ def send_updates(session, bot, poll, show_warning=False):
             if e.message.startswith('Message_id_invalid') or \
                    e.message.startswith("Message can't be edited") or \
                    e.message.startswith("Message to edit not found") or \
-                   e.message.startswith("Chat not found"):
+                   e.message.startswith("Chat not found") \
+                   e.message.startswith("MESSAGE_AUTHOR_REQUIRED"):
                 session.delete(reference)
                 session.commit()
             elif e.message.startswith('Message is not modified'):
