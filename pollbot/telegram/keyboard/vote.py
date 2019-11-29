@@ -49,6 +49,7 @@ def get_vote_keyboard(poll, user, show_back=False, summary=False):
         bot_name = config['telegram']['bot_name']
         url = f'http://t.me/{bot_name}?start={payload}'
         row = [InlineKeyboardButton(i18n.t('keyboard.show_results', locale=poll.locale), url=url)]
+        buttons.append(row)
 
     # Add a button to go back to the management interface (admin overview)
     if show_back:
