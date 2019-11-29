@@ -124,7 +124,7 @@ def send_updates(session, bot, poll, show_warning=False):
                 raise
 
         except Unauthorized as e:
-            if e.message.startswith("FMESSAGE_AUTHOR_REQUIRED"):
+            if e.message.startswith("Forbidden: MESSAGE_AUTHOR_REQUIRED"):
                 session.delete(reference)
                 session.commit()
             else:
