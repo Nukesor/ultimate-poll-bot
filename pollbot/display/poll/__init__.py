@@ -1,5 +1,4 @@
 """Get the text describing the current state of the poll."""
-from pollbot.i18n import i18n
 from pollbot.helper import (
     poll_has_limited_votes,
 )
@@ -7,11 +6,6 @@ from pollbot.models import (
     User,
     PollOption,
     Vote,
-)
-from .option import get_option_information
-from .vote import (
-    get_vote_information_line,
-    get_remaining_votes_lines,
 )
 
 

@@ -194,10 +194,6 @@ def get_doodle_buttons(poll):
     buttons = []
     indices = get_option_indices(options)
 
-    print(len(indices))
-    print(len(options))
-    print('rofl')
-
     for index, option in enumerate(options):
         name_hint_payload = f'{show_option_name}:{poll.id}:{option.id}'
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
