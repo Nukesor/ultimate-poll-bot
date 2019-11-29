@@ -133,11 +133,18 @@ def remove_poll_messages(session, bot, poll, remove_all=False):
     for reference in poll.references:
         try:
             # Admin poll management interface
-            if reference.inline_message_id is None:
+            if reference.admin_user is not None:
                 bot.edit_message_text(
                     i18n.t('deleted.poll', locale=poll.locale),
                     chat_id=reference.admin_user.id,
                     message_id=reference.admin_message_id,
+                )
+
+            elif reference.vote_user is not None:
+                bot.edit_message_text(
+                    i18n.t('deleted.poll', locale=poll.locale),
+                    chat_id=reference.vote_user.id,
+                    message_id=reference.vote_message_id,
                 )
 
             # Remove message created via inline_message_id
