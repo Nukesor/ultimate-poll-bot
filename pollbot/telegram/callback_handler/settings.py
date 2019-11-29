@@ -180,11 +180,11 @@ def remove_option(session, context, poll):
                 vote.priority = index
                 session.commit()
 
+    session.commit()
 
     keyboard = get_remove_option_keyboard(poll)
     context.query.message.edit_reply_markup(reply_markup=keyboard)
 
-    session.commit()
     update_poll_messages(session, context.bot, poll)
 
 
