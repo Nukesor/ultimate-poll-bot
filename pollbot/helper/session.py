@@ -152,6 +152,7 @@ def ignore_exception(exception):
            exception.message.startswith('Have no rights to send a message') or \
            exception.message.startswith('Message_id_invalid') or \
            exception.message.startswith('Message identifier not specified') or \
+           exception.message.startswith('Schedule_date_invalid') or \
            exception.message.startswith('Message is not modified: specified new message content'):
             return True
 
