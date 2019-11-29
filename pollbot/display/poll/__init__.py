@@ -8,7 +8,6 @@ from pollbot.models import (
     PollOption,
     Vote,
 )
-from pollbot.telegram.keyboard.vote import get_vote_keyboard
 from .option import get_option_information
 from .vote import (
     get_vote_information_line,
@@ -37,26 +36,6 @@ class Context():
         self.show_results = poll.should_show_result()
         self.show_percentage = poll.show_percentage
         self.limited_votes = poll_has_limited_votes(poll)
-
-
-def get_poll_text_and_vote_keyboard(
-    session,
-    poll,
-    user=None,
-    show_warning=False,
-    show_back=False,
-    inline_query=False
-):
-    """Get the text and the vote keyboard."""
-    text, summarize = get_poll_text_and_summarize(
-        session, poll,
-        show_warning=False,
-        inline_query=inline_query
-    )
-
-    keyboard = get_vote_keyboard(poll, user, show_back, summary=summarize)
-
-    return text, keyboard
 
 
 def get_poll_text(session, poll, show_warning=False):

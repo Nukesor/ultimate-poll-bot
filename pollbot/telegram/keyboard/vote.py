@@ -20,6 +20,7 @@ from pollbot.helper.enums import (
 )
 from pollbot.telegram.keyboard import get_start_button_payload
 from pollbot.helper.option import get_sorted_options
+from pollbot.display.poll.indices import get_option_indices
 
 from .management import get_back_to_management_button
 
@@ -146,7 +147,7 @@ def get_priority_buttons(poll, user):
         .options(joinedload(Vote.poll_option)) \
         .all()
 
-    letters = string.ascii_lowercase + '123456789'
+    indices = get_option_indices(options)
     for index, vote in enumerate(votes):
         option = vote.poll_option
         if not poll.compact_buttons:
@@ -164,7 +165,7 @@ def get_priority_buttons(poll, user):
 
         vote_row = []
         if poll.compact_buttons:
-            vote_row.append(InlineKeyboardButton(f"{letters[index]})", callback_data=name_hint_payload))
+            vote_row.append(InlineKeyboardButton(f"{indices[index]})", callback_data=name_hint_payload))
 
         if index != len(votes) - 1:
             vote_row.append(InlineKeyboardButton('▼', callback_data=decrease_payload))
@@ -191,7 +192,12 @@ def get_doodle_buttons(poll):
     options = get_sorted_options(poll)
 
     buttons = []
-    letters = string.ascii_lowercase + '123456789'
+    indices = get_option_indices(options)
+
+    print(len(indices))
+    print(len(options))
+    print('rofl')
+
     for index, option in enumerate(options):
         name_hint_payload = f'{show_option_name}:{poll.id}:{option.id}'
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
@@ -205,7 +211,7 @@ def get_doodle_buttons(poll):
             buttons.append(option_row)
             option_row = []
         else:
-            option_row = [InlineKeyboardButton(f'{letters[index]})', callback_data=name_hint_payload)]
+            option_row = [InlineKeyboardButton(f'{indices[index]})', callback_data=name_hint_payload)]
 
         vote_row = [
             InlineKeyboardButton('✅', callback_data=yes_payload),

@@ -1,10 +1,10 @@
 """Poll text compilation for options."""
 import math
-import string
 
 from pollbot.helper.enums import PollType
 from pollbot.helper import poll_allows_cumulative_votes
 from pollbot.helper.option import get_sorted_options, calculate_percentage
+from pollbot.display.poll.indices import get_option_indices
 from .vote import get_vote_lines, get_doodle_vote_lines
 
 
@@ -42,8 +42,8 @@ def get_option_line(session, option, index):
 
     prefix = ''
     if option.poll.poll_type in [PollType.doodle.name, PollType.priority.name]:
-        letters = string.ascii_letters
-        prefix = f'{letters[index]}) '
+        indices = get_option_indices(option.poll.options)
+        prefix = f'{indices[index]}) '
 
     if len(option.votes) > 0 and \
        option.poll.should_show_result() and \
