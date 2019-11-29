@@ -3,12 +3,11 @@ from pollbot.i18n import i18n
 from pollbot.models import Reference
 from pollbot.helper import poll_required
 from pollbot.helper.enums import CallbackResult, ExpectedInput
-from pollbot.display import (
-    get_settings_text,
-    get_poll_text,
+from pollbot.display import get_settings_text
+from pollbot.display.poll.compilation import (
+    get_poll_text_and_vote_keyboard,
+    get_poll_text
 )
-
-from pollbot.display.poll.wrapper import get_poll_text_and_vote_keyboard
 from pollbot.telegram.keyboard import (
     get_change_poll_type_keyboard,
     get_deletion_confirmation,

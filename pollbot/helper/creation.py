@@ -2,7 +2,7 @@
 from pollbot.i18n import i18n
 from pollbot.helper.stats import increase_stat
 from pollbot.helper.enums import ExpectedInput
-from pollbot.display.poll import get_poll_text
+from pollbot.display.poll.compilation import get_poll_text
 from pollbot.telegram.keyboard import (
     get_options_entered_keyboard,
     get_management_keyboard,

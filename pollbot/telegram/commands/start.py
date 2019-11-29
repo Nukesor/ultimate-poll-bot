@@ -5,8 +5,10 @@ from telegram.ext import run_async
 
 from pollbot.i18n import i18n
 from pollbot.models import Poll, Reference
-from pollbot.display import compile_poll_text
-from pollbot.display.poll.wrapper import get_poll_text_and_vote_keyboard
+from pollbot.display.poll.compilation import (
+    get_poll_text_and_vote_keyboard,
+    compile_poll_text
+)
 from pollbot.helper.enums import ExpectedInput, StartAction
 from pollbot.helper.session import session_wrapper
 from pollbot.helper.text import split_text

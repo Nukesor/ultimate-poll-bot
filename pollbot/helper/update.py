@@ -7,7 +7,7 @@ from telegram.error import BadRequest, RetryAfter, Unauthorized
 from pollbot.i18n import i18n
 from pollbot.telegram.keyboard import get_management_keyboard
 from pollbot.helper.enums import ExpectedInput
-from pollbot.display.poll.wrapper import get_poll_text_and_vote_keyboard
+from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
 from pollbot.models import Update
 
 
