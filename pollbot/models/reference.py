@@ -35,7 +35,7 @@ class Reference(base):
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 
     # ManyToOne
-    poll_id = Column(Integer, ForeignKey('poll.id', ondelete='cascade', ), nullable=False, index=True)
+    poll_id = Column(Integer, ForeignKey('poll.id', ondelete='cascade', name="reference_poll"), nullable=False, index=True)
     poll = relationship('Poll')
 
     def __init__(
@@ -57,12 +57,12 @@ class Reference(base):
     def __repr__(self):
         """Print as string."""
         if self.inline_message_id is not None:
-            message = f', inline_message_id: {self.locale}'
+            message = f'Reference {self.id}: inline_message_id {self.inline_message_id}'
         elif self.admin_user is not None:
-            message = f'Reference: admin_message_id {self.admin_message_id}'
+            message = f'Reference {self.id}: admin_message_id {self.admin_message_id}'
             message += f', admin_id: {self.admin_user.id}'
         else:
-            message = f'Reference: vote_message_id {self.admin_message_id}'
-            message += f', vote_user_id : {self.admin_user.id}'
+            message = f'Reference {self.id}: vote_message_id {self.vote_message_id}'
+            message += f', vote_user_id : {self.vote_user.id}'
 
         return message
