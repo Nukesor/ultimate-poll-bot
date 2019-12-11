@@ -37,17 +37,19 @@ def stats(session):
     # Poll types
     single = session.query(Poll).filter(Poll.poll_type == 'single_vote').count()
     doodle = session.query(Poll).filter(Poll.poll_type == 'doodle').count()
+    count = session.query(Poll).filter(Poll.poll_type == 'count_vote').count()
+    priority = session.query(Poll).filter(Poll.poll_type == 'priority').count()
     block = session.query(Poll).filter(Poll.poll_type == 'block_vote').count()
     limited = session.query(Poll).filter(Poll.poll_type == 'limited_vote').count()
     cumulative = session.query(Poll).filter(Poll.poll_type == 'cumulative_vote').count()
-    count = session.query(Poll).filter(Poll.poll_type == 'count_vote').count()
 
     single_percent = single / total_polls * 100
     doodle_percent = doodle / total_polls * 100
+    count_percent = count / total_polls * 100
+    priority_percent = priority / total_polls * 100
     block_percent = block / total_polls * 100
     limited_percent = limited / total_polls * 100
     cumulative_percent = cumulative / total_polls * 100
-    count_percent = count / total_polls * 100
 
     message = f"""Users:
     Total: {total_users}
@@ -66,10 +68,11 @@ Polls:
 Types:
     Single:  {single} ({single_percent:.2f}%)
     Doodle: {doodle} ({doodle_percent:.2f}%)
+    Count: {count} ({count_percent:.2f}%)
+    Priority: {priority} ({priority_percent:.2f}%)
     Block: {block} ({block_percent:.2f}%)
     Limited: {limited} ({limited_percent:.2f}%)
     Cumulative: {cumulative} ({cumulative_percent:.2f}%)
-    Count: {count} ({count_percent:.2f}%)
 """
 
     return message
