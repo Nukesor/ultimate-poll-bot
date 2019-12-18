@@ -20,7 +20,6 @@ from pollbot.telegram.job import (
 )
 from pollbot.telegram.message_handler import handle_private_text
 from pollbot.telegram.callback_handler import handle_callback_query
-from pollbot.telegram.error_handler import error_callback
 from pollbot.telegram.inline_query import search
 from pollbot.telegram.inline_result_handler import handle_chosen_inline_result
 from pollbot.telegram.commands.poll import (
@@ -98,6 +97,3 @@ dispatcher.add_handler(
         Filters.text & Filters.private & (~Filters.update.edited_message) & (~Filters.reply),
         handle_private_text
     ))
-
-# Error handler
-dispatcher.add_error_handler(error_callback)
