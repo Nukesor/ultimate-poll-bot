@@ -7,6 +7,7 @@ from telegram.error import (
     Unauthorized,
 )
 
+from pollbot.config import config
 from pollbot.i18n import i18n
 from pollbot.sentry import sentry
 
@@ -21,7 +22,8 @@ def error_callback(update, context):
         if str(e) == 'Query_id_invalid': # noqa
             return
 
-        traceback.print_exc()
+        if config['logging']['debug']:
+            traceback.print_exc()
         sentry.captureException()
     # A user banned the bot Just ignore this.
     # This probably happens due to sending a message during maintenance work
@@ -33,5 +35,6 @@ def error_callback(update, context):
     except: # noqa
         if hasattr(update, 'callback_query') and update.callback_query is not None:
             update.callback_query.answer(i18n.t('callback.error'))
-        traceback.print_exc()
+        if config['logging']['debug']:
+            traceback.print_exc()
         sentry.captureException()

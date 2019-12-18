@@ -7,6 +7,7 @@ from telegram.error import (
     TimedOut,
 )
 
+from pollbot.config import config
 from pollbot.db import get_session
 from pollbot.sentry import sentry
 from pollbot.models import User
@@ -26,7 +27,8 @@ def job_session_wrapper():
                 session.commit()
             except: # noqa
                 # Capture all exceptions from jobs. We need to handle those inside the jobs
-                traceback.print_exc()
+                if config['logging']['debug']:
+                    traceback.print_exc()
                 sentry.captureException()
             finally:
                 session.close()
@@ -53,7 +55,8 @@ def hidden_session_wrapper():
             # Handle all not telegram relatated exceptions
             except Exception as e:
                 if not ignore_exception(e):
-                    traceback.print_exc()
+                    if config['logging']['debug']:
+                        traceback.print_exc()
                     sentry.captureException()
 
                 if hasattr(update, 'callback_query') and update.callback_query is not None:
@@ -98,7 +101,8 @@ def session_wrapper(send_message=True, private=False):
             # Handle all not telegram relatated exceptions
             except Exception as e:
                 if not ignore_exception(e):
-                    traceback.print_exc()
+                    if config['logging']['debug']:
+                        traceback.print_exc()
                     sentry.captureException()
 
                 if send_message:
