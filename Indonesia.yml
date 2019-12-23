@@ -1,84 +1,83 @@
 poll_types:
-  single_vote: Single vote
+  single_vote: Sekali vote
   doodle: Doodle
-  block_vote: Block vote
-  limited_vote: Limited vote
-  cumulative_vote: Cumulative vote
-  count_vote: Unlimited votes
-  priority: Priority Vote
+  block_vote: Blok vote
+  limited_vote: Vote terbatas
+  cumulative_vote: Vote kumulatif
+  count_vote: Vote tidak terbatas
+  priority: Vote prioritas
 
 list:
-  polls: Select a poll to manage
-  no_polls: You don't own any open polls
-  no_closed_polls: You don't own any closed polls
+  polls: Pilih pemungutan suara untuk diatur
+  no_polls: Kamu tidak mempunyai pemungutan suara
+  no_closed_polls: Kamu tidak memiliki pemungutan suara yang telah berakhir
 
 admin:
-  not_allowed: You are not allowed to do this. Admin only!
-
+  not_allowed: Kamu tidak di ijinkan untuk melakukan ini. Hanya pengurus!
 datepicker:
-  open:  Open datepicker
-  pick_date: Pick this date
-  due_date: Set due date
-  remove_due_date: Remove due date
+  open:  Buka pemilih tanggal
+  pick_date: Pilih tanggal ini
+  due_date: Atur tanggal jatuh tempo
+  remove_due_date: Hapus tanggal jatuh tempo
 
 poll:
-  anonymous: Poll is anonymous!
-  anonymous_warning: "*Be aware:* _People might be able to guess your votes by tracking the percentage/vote count and your online status._"
-  results_not_visible: Results are not visible, until poll is closed!
-  please_wait: "\n\nPlease wait a second, while the bot synchronizes the polls ☺️"
-  vote_times: "\nEvery user can vote *%{amount} times*"
-  due: "\n📅 This poll is due at: %{date}"
-  closed: "\n⚠️ *This poll is closed* ⚠️"
-  own_poll: "Create *your own* poll over [here](https://t.me/ultimate_pollbot)"
-  doodle_help: "*Click* on the `a)`, `b)` buttons below to see the option names."
-  many_users_voted: "*%{count} users* voted so far"
-  one_user_voted: "*One user* voted so far"
-  total_votes: " (%{count} votes)"
-  remaining_votes: "\nRemaining votes:"
-  remaining_votes_user: "%{name}: %{count} votes"
-  summarized_users: "_and %{count} other people._"
+  anonymous: Pemungutan di rahasiakan!
+  anonymous_warning: "*Waspada:* _Orang lain mungkin bisa menebak pilihanmu dengan melacak hitungan persentasi dan status keaktifan._"
+  results_not_visible: Hasil tidak di tampilkan hingga pemilihan ditutup!
+  please_wait: "\n\nHarap tunggu sebentar, sementara bot sinkron dengan pemilihan ☺️"
+  vote_times: "\nSetiap pengguna dapat memilih *%{amount} kali*"
+  due: "\n📅 Pemilihan ini berakhir pada: %{date}"
+  closed: "\n⚠️ *Pemilihan ini telah ditutup* ⚠️"
+  own_poll: "Buat pemilihanmu sendiri [di sini](https://t.me/ultimate_pollbot)"
+  doodle_help: "*Klik* pada tombol `a)`, `b)` dibawah untuk melihat nama pilihan."
+  many_users_voted: "Sejauh ini *%{count} pengguna* telah memilih"
+  one_user_voted: "Senauh ini *Satu orang* telah memilih"
+  total_votes: " (%{count} pemilih)"
+  remaining_votes: "\nSisa pemilih:"
+  remaining_votes_user: "%{name}: %{count} pemilih"
+  summarized_users: "_dan %{count} pemilih lain._"
   doodle:
-    'yes': "├ *Yes:*"
-    maybe: "├ *Maybe:*"
-    'no': "├ *No:*"
-    yes_summarized: "├ *Yes:* %{count} votes"
-    maybe_summarized: "├ *Maybe:* %{count} votes"
-    no_summarized: "├ *No:* %{count} votes"
+    'yes': "├ *Ya:*"
+    maybe: "├ *Mungkin:*"
+    'no': "├ *Tidak:*"
+    yes_summarized: "├ *Ya:* %{count} pemilih"
+    maybe_summarized: "├ *Mungkin:* %{count} pemilih"
+    no_summarized: "├ *Tidak:* %{count} pemilih"
   too_many_votes: |
-        ⚠️ *Too many votes in the last minute:* ⚠️
-        Your votes will still be registered, but this message will only update every 2 seconds.
-        (Telegram doesn't allow to send/update more than a certain amount of messages per minute in a group by a bot.)
+        ⚠️ *Terlalu banyak pemilih dalam satu menit terakhir:* ⚠️
+        Pilihanmu masih akan didaftarkan, tapi tulisan ini hanya akan diperbaharui tiap 2 detik.
+        (Telegram tidak mengijinkan BOT untuk mengirim/memperbaharui pesan di dalam grup lebih dari jumlah tertentu setiap menitnya.)
 
 deleted:
-  poll: This poll has been permanently deleted.
-  polls: All polls have been deleted
-  closed_polls: All closed polls have been deleted
+  poll: Pemungutan suara ini telah dihapus secara permanen
+  polls: Semua pemungutan suara telah dihapus
+  closed_polls: Semua pemungutan suara yang sudah berakhir telah dihapus
 
 callback:
-  error: An error occurred. It'll be fixed soon!
-  closed: Poll closed
-  cannot_reopen: Poll cannot be reopened
-  cloned: Poll cloned
-  deleted: Poll deleted
-  poll_created: The poll has already been created
-  poll_already_created: The poll has already been created
-  poll_no_longer_exists: This poll no longer exists.
-  votes_removed: All votes have been removed
-  anonymity_changed: Anonymity setting changed
-  visibility_changed: Visibility setting changed
-  date_changed: "Date changed: %{date}"
-  date_already_picked: Date already picked
-  date_picked: "Date picked: %{date}"
-  due_date_in_past: The due date is in the past
+  error: Telah terjadi kesalahan. Akan segera diperbaiki!
+  closed: Pemungutan suara ditutup
+  cannot_reopen: Pemungutan suara tidak bisa dibuka kembali
+  cloned: Pemungutan suara dikloning
+  deleted: Pemungutan suara dihapus
+  poll_created: Pemungutan suara telah dibuat
+  poll_already_created: Pemungutan suara sudah ada
+  poll_no_longer_exists: Pemungutan suara ini sudah tidak ada.
+  votes_removed: Semua pemilihan telah dihapus
+  anonymity_changed: Pengaturan kerahasiaan telah diubah
+  visibility_changed: Pengaturan keterlihatan telah diubah
+  date_changed: "Tanggal diubah: %{date}"
+  date_already_picked: Tanggal telah dipilih
+  date_picked: "Tanggal dipilih: %{date}"
+  due_date_in_past: Tanggal jatuh tempo telah lewat
   vote:
-    votes_left: '(%{count} left)!'
-    your_votes : ' Your votes:'
-    changed: Vote changed!
-    removed: Vote removed!
-    registered: Vote registered!
-    no_left: No votes left!
-    doodle_changed: Vote changed to %{vote_type}
-    doodle_registered: 'Vote registered (%{vote_type})'
+    votes_left: '(%{count} sisa)!'
+    your_votes : ' Pilihanmu:'
+    changed: Pilihan berubah!
+    removed: Tidak jadi memilih!
+    registered: Pilihan terdaftar!
+    no_left: Tidak ada pilihan lagi!
+    doodle_changed: Pemilihan berubah menjadi %{vote_type}
+    doodle_registered: 'Pemilihan terdaftar (%{vote_type})'
 
 inline_query:
   create_first: Click here to create a poll first ;)
