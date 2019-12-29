@@ -99,7 +99,7 @@ def get_user_activity(session):
         ax = group.plot(ax=ax, kind='line', x='date', y='users', label=key)
         ax.xaxis.set_major_locator(months)
         ax.xaxis.set_major_formatter(months_fmt)
-        ax.yaxis.set_ticks(np.arange(0, max_number, 1000))
+        ax.yaxis.set_ticks(np.arange(0, max_number, 5000))
 
     image = image_from_figure(fig)
     image.name = 'user_statistics.png'
