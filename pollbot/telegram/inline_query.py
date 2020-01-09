@@ -73,8 +73,6 @@ def search(bot, update, session, user):
     if len(polls) == 0:
         update.inline_query.answer(
             [], cache_time=0, is_personal=True,
-            switch_pm_text=i18n.t('inline_query.create_first', locale=user.locale),
-            switch_pm_parameter='inline',
         )
     else:
         results = []
@@ -102,7 +100,5 @@ def search(bot, update, session, user):
 
         update.inline_query.answer(
             results, cache_time=0, is_personal=True,
-            switch_pm_text=i18n.t('inline_query.create_poll', locale=user.locale),
-            switch_pm_parameter='inline',
             next_offset=str(offset+10),
         )
