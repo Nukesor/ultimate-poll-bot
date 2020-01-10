@@ -4,7 +4,7 @@ version = "1.0.0"
 description = "A telegram bot for creating all kinds of polls."
 authors = ["Arne Beer <contact@arne.beer>"]
 license = "MIT"
-repository = "https://github.com/nukesor/poll-bot"
+repository = "https://github.com/nukesor/ultimate-poll-bot"
 
 [tool.poetry.dependencies]
 python = ">=3.6"

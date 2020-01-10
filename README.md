@@ -111,12 +111,12 @@ Dependencies:
 
 1. Clone the repository:
 
-        % git clone git@github.com:nukesor/ultimate_pollbot pollbot && cd pollbot
+        % git clone git@github.com:nukesor/ultimate-poll-bot pollbot && cd pollbot
 
 2. Execute `poetry install` to install all dependencies.
-3. Either start the pollbot once with `poetry run main.py` or copy the `pollbot.toml` manually to `~/.config/pollbot.toml` and adjust all necessary values.
-4. Run `poetry run initdb.py` to initialize the database.
-5. Start the bot `poetry run main.py`
+3. Either start the pollbot once with `poetry run python main.py` or copy the `pollbot.toml` manually to `~/.config/pollbot.toml` and adjust all necessary values.
+4. Run `poetry run python initdb.py` to initialize the database.
+5. Start the bot `poetry run python main.py`
 
 6. If you plan to keep up to date, you need to set the current alemibic revision manually.
 Get the latest revision with `poetry run alembic history` and change the current head to the newest revision with `poetry run alembic stamp <revision>`.
@@ -126,11 +126,11 @@ Get the latest revision with `poetry run alembic history` and change the current
 
 ## Botfather Commands
 
-start - Start the bot
-settings - Open the user settings menu
-create - Create a new poll
-list - List all active polls and manage them
-list_closed - List all closed polls and manage them
-notify - Activate notifications in external chats
-help - Show the help text
-donations - Get me a coffee
+    start - Start the bot
+    settings - Open the user settings menu
+    create - Create a new poll
+    list - List all active polls and manage them
+    list_closed - List all closed polls and manage them
+    notify - Activate notifications in external chats
+    help - Show the help text
+    donations - Get me a coffee
