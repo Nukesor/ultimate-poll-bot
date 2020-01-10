@@ -1,5 +1,5 @@
 [telegram]
-bot_name = "your_bots_at_name"
+bot_name = "your_bots_@_name"
 api_key = "your_telegram_api_key"
 worker_count = 20
 
