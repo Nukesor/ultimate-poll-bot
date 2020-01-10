@@ -22,7 +22,7 @@ Here is a list of the most important features:
 
 **Poll types**
 
-This bot has 6 different vote modi. Each mode is useful for various scenarious. Choose wisely.
+This bot has 6 different vote modi. Each mode is useful for various scenarios. Choose wisely.
 
 - Single vote: User get a single vote to allot
 - Doodle: Users can vote with `yes`, `no` and `maybe` for each option.
@@ -37,7 +37,7 @@ Polls can be configured to be anonymous, with the result that names of users are
 Polls can be made anonymous subsequently, but as soon as a poll is anonymous it stays that way forever!
 
 Further it's possible to hide the results of the poll until it gets closed.
-As soon as such a poll is closed, the results will be visible. **Beware!**: such an poll cannot be reopened.
+As soon as such a poll is closed, the results will be visible. **Beware!**: such a poll cannot be reopened.
 
 **Poll Management:**
 - Addition and removal of options
@@ -118,7 +118,7 @@ Dependencies:
 4. Run `poetry run python initdb.py` to initialize the database.
 5. Start the bot `poetry run python main.py`
 
-6. If you plan to keep up to date, you need to set the current alemibic revision manually.
+6. If you plan to keep up to date, you need to set the current alembic revision manually.
 Get the latest revision with `poetry run alembic history` and change the current head to the newest revision with `poetry run alembic stamp <revision>`.
 7. Now you can just execute `poetry run alembic upgrade head`, whenever you are updating from a previous version.
 
