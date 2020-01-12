@@ -51,8 +51,6 @@ from .settings import (
     toggle_allow_new_options,
     open_new_option_datepicker,
     open_due_date_datepicker,
-    pick_due_date,
-    remove_due_date,
     open_language_picker,
     change_poll_language,
 )
@@ -66,10 +64,14 @@ from .styling import (
     toggle_compact_buttons,
 )
 from .datepicker import (
+    pick_creation_date,
+    pick_creation_weekday,
+    pick_additional_date,
+    pick_additional_weekday,
+    pick_due_date,
+    pick_external_date,
     set_next_month,
     set_previous_month,
-    set_date,
-    add_date,
 )
 from .external import (
     activate_notification,
@@ -113,16 +115,15 @@ class CallbackContext():
         self.bot = bot
         self.query = query
         self.user = user
-        data = self.query.data
 
         # Extract the callback type, task id
-        data = data.split(':')
-        self.callback_type = CallbackType(int(data[0]))
-        self.payload = data[1]
+        self.data = self.query.data.split(':')
+        self.callback_type = CallbackType(int(self.data[0]))
+        self.payload = self.data[1]
         try:
-            self.action = int(data[2])
+            self.action = int(self.data[2])
         except:
-            self.action = data[2]
+            self.action = self.data[2]
 
         self.poll = session.query(Poll).get(self.payload)
 
@@ -175,7 +176,6 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.toggle_results_visible: toggle_results_visible,
         CallbackType.open_creation_datepicker: open_creation_datepicker,
         CallbackType.close_creation_datepicker: close_creation_datepicker,
-        CallbackType.pick_date_option: add_date,
         CallbackType.skip_description: skip_description,
         CallbackType.cancel_creation: cancel_creation,
         CallbackType.back_to_init: back_to_creation_init,
@@ -210,8 +210,6 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.settings_toggle_allow_new_options: toggle_allow_new_options,
         CallbackType.settings_open_add_option_datepicker: open_new_option_datepicker,
         CallbackType.settings_open_due_date_datepicker: open_due_date_datepicker,
-        CallbackType.settings_pick_due_date: pick_due_date,
-        CallbackType.settings_remove_due_date: remove_due_date,
         CallbackType.settings_open_language_picker: open_language_picker,
         CallbackType.settings_change_poll_language: change_poll_language,
 
@@ -246,7 +244,12 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.admin_update: update_all,
 
         # Datepicker
-        CallbackType.set_date: set_date,
+        CallbackType.pick_creation_date: pick_creation_date,
+        CallbackType.pick_creation_weekday: pick_creation_weekday,
+        CallbackType.pick_additional_date: pick_additional_date,
+        CallbackType.pick_additional_weekday: pick_additional_weekday,
+        CallbackType.pick_due_date: pick_due_date,
+        CallbackType.pick_external_date: pick_external_date,
         CallbackType.next_month: set_next_month,
         CallbackType.previous_month: set_previous_month,
 

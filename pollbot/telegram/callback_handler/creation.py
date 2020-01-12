@@ -1,8 +1,9 @@
 """Callback functions needed during creation of a Poll."""
+from datetime import date
 from pollbot.i18n import i18n
 from pollbot.helper import poll_required
 from pollbot.helper.creation import create_poll
-from pollbot.helper.enums import PollType, ExpectedInput
+from pollbot.helper.enums import PollType, ExpectedInput, DatepickerContext
 from pollbot.telegram.keyboard import (
     get_change_poll_type_keyboard,
     get_init_keyboard,
@@ -133,7 +134,7 @@ def all_options_entered(session, context, poll):
 @poll_required
 def open_creation_datepicker(session, context, poll):
     """All options are entered the poll is created."""
-    keyboard = get_creation_datepicker_keyboard(poll)
+    keyboard = get_creation_datepicker_keyboard(poll, date.today())
     # Switch from new option by text to new option via datepicker
     message = context.query.message
     if context.user.expected_input != ExpectedInput.options.name:

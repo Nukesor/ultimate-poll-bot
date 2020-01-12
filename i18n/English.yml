@@ -69,7 +69,9 @@ callback:
   date_changed: "Date changed: %{date}"
   date_already_picked: Date already picked
   date_picked: "Date picked: %{date}"
+  date_removed: "Date removed: %{date}"
   due_date_in_past: The due date is in the past
+  due_date_removed: Due date removed
   vote:
     votes_left: '(%{count} left)!'
     your_votes : ' Your votes:'
@@ -314,6 +316,7 @@ creation:
 
 external:
   canceled: Canceled
+  done: Finished
   share_poll: To share this poll, just click the button and choose the chat you want to share the poll with.
   notification:
     pick_poll: Pick the correct poll to activate notifications

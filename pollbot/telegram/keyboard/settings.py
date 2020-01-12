@@ -192,51 +192,6 @@ def get_add_option_keyboard(poll):
     return keyboard
 
 
-def get_add_option_datepicker_keyboard(poll):
-    """Get the done keyboard for options during poll creation."""
-    locale = poll.user.locale
-    datepicker_buttons = get_datepicker_buttons(poll)
-    # Add back and pick buttons
-    pick_payload = f'{CallbackType.pick_date_option.value}:{poll.id}:0'
-    row = [
-        get_back_to_settings_button(poll),
-        InlineKeyboardButton(
-            i18n.t('datepicker.pick_date', locale=locale),
-            callback_data=pick_payload),
-    ]
-    datepicker_buttons.append(row)
-
-    return InlineKeyboardMarkup(datepicker_buttons)
-
-
-def get_due_date_datepicker_keyboard(poll):
-    """Get the done keyboard for options during poll creation."""
-    locale = poll.user.locale
-    datepicker_buttons = get_datepicker_buttons(poll)
-    pick_payload = f'{CallbackType.settings_pick_due_date.value}:{poll.id}:0'
-
-    # Add remove due date button
-    if poll.due_date is not None:
-        remove_payload = f'{CallbackType.settings_remove_due_date.value}:{poll.id}:0'
-        row = [
-            InlineKeyboardButton(
-                i18n.t('datepicker.remove_due_date', locale=locale),
-                callback_data=remove_payload),
-        ]
-        datepicker_buttons.append(row)
-
-    # Add back and pick buttons
-    row = [
-        get_back_to_settings_button(poll),
-        InlineKeyboardButton(
-            i18n.t('datepicker.due_date', locale=locale),
-            callback_data=pick_payload),
-    ]
-    datepicker_buttons.append(row)
-
-    return InlineKeyboardMarkup(datepicker_buttons)
-
-
 def get_settings_language_keyboard(poll):
     """Get a keyboard for sorting options."""
     buttons = []

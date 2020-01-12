@@ -121,26 +121,3 @@ def get_options_entered_keyboard(poll):
     ]]
 
     return InlineKeyboardMarkup(buttons)
-
-
-def get_creation_datepicker_keyboard(poll):
-    """Get the done keyboard for options during poll creation."""
-    locale = poll.user.locale
-    datepicker_buttons = get_datepicker_buttons(poll)
-
-    # Create back and done buttons
-    close_payload = f'{CallbackType.close_creation_datepicker.value}:{poll.id}:0'
-    buttons = [InlineKeyboardButton(i18n.t('keyboard.close', locale=locale),
-                                    callback_data=close_payload)]
-    if len(poll.options) > 0:
-        done_payload = f'{CallbackType.all_options_entered.value}:{poll.id}:0'
-        buttons.append(InlineKeyboardButton(i18n.t('keyboard.done', locale=locale),
-                                            callback_data=done_payload))
-    datepicker_buttons.append(buttons)
-
-    # Create pick button
-    pick_payload = f'{CallbackType.pick_date_option.value}:{poll.id}:0'
-    datepicker_buttons.append([InlineKeyboardButton(i18n.t('datepicker.pick_date', locale=locale),
-                                                    callback_data=pick_payload)])
-
-    return InlineKeyboardMarkup(datepicker_buttons)

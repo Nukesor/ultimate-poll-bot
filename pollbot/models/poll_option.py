@@ -54,3 +54,9 @@ class PollOption(base):
             return option_date.strftime('%Y-%m-%d (%A)')
 
         return self.name
+
+    def as_date(self):
+        """Either return the option as date or None."""
+        if not self.is_date:
+            return None
+        return date.fromisoformat(self.name)

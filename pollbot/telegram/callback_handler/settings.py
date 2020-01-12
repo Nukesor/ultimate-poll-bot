@@ -1,5 +1,5 @@
 """Callback functions needed during creation of a Poll."""
-from datetime import datetime, date, time
+from datetime import date
 from pollbot.i18n import i18n
 from pollbot.helper import poll_required
 from pollbot.helper.update import update_poll_messages
@@ -16,7 +16,7 @@ from pollbot.telegram.keyboard import (
     get_due_date_datepicker_keyboard,
     get_settings_language_keyboard,
 )
-from pollbot.helper.enums import ExpectedInput
+from pollbot.helper.enums import ExpectedInput, DatepickerContext
 from pollbot.models import PollOption, User, Vote
 
 
@@ -74,39 +74,9 @@ def change_poll_language(session, context, poll):
 def open_due_date_datepicker(session, context, poll):
     """Open the datepicker for setting a due date."""
     poll.user.expected_input = ExpectedInput.due_date.name
+    keyboard = get_due_date_datepicker_keyboard(poll, date.today())
     context.query.message.edit_reply_markup(
-        reply_markup=get_due_date_datepicker_keyboard(poll)
-    )
-
-
-@poll_required
-def pick_due_date(session, context, poll):
-    """Add a date from the datepicker to the poll."""
-    if poll.current_date <= date.today():
-        return i18n.t('callback.due_date_in_past', locale=poll.user.locale)
-
-    due_date = datetime.combine(poll.current_date, time(hour=12, minute=00))
-    if (due_date == poll.due_date):
-        return
-
-    poll.set_due_date(due_date)
-    context.query.message.edit_text(
-        text=get_settings_text(context.poll),
-        parse_mode='markdown',
-        reply_markup=get_due_date_datepicker_keyboard(poll)
-    )
-
-
-@poll_required
-def remove_due_date(session, context, poll):
-    """Remove the due date from a poll."""
-    poll.due_date = None
-    poll.next_notification = None
-    poll.user.expected_input = ExpectedInput.due_date.name
-    context.query.message.edit_text(
-        text=get_settings_text(context.poll),
-        parse_mode='markdown',
-        reply_markup=get_due_date_datepicker_keyboard(poll)
+        reply_markup=keyboard
     )
 
 
@@ -138,10 +108,11 @@ def expect_new_option(session, context, poll):
 @poll_required
 def open_new_option_datepicker(session, context, poll):
     """Send a text and tell the user that we expect a new option."""
+    keyboard = get_add_option_datepicker_keyboard(poll, date.today())
     context.query.message.edit_text(
         text=get_datepicker_text(poll),
         parse_mode='markdown',
-        reply_markup=get_add_option_datepicker_keyboard(poll),
+        reply_markup=keyboard,
     )
 
 

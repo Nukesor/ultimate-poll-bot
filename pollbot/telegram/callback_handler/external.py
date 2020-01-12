@@ -1,4 +1,5 @@
 """Option for setting the current date of the picker."""
+from datetime import date
 from pollbot.i18n import i18n
 from pollbot.helper import poll_required
 from pollbot.models import Notification
@@ -6,7 +7,7 @@ from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.stats import increase_stat
 from pollbot.display.creation import get_datepicker_text
 
-from pollbot.telegram.keyboard.external import (
+from pollbot.telegram.keyboard import (
     get_external_datepicker_keyboard,
     get_external_add_option_keyboard,
 )
@@ -48,7 +49,7 @@ def activate_notification(session, context, poll):
 @poll_required
 def open_external_datepicker(session, context, poll):
     """All options are entered the poll is created."""
-    keyboard = get_external_datepicker_keyboard(poll)
+    keyboard = get_external_datepicker_keyboard(poll, date.today())
     # Switch from new option by text to new option via datepicker
     message = context.query.message
     if context.user.expected_input != ExpectedInput.new_user_option.name:
@@ -83,4 +84,4 @@ def external_cancel(session, context, poll):
     context.user.current_poll = None
     session.commit()
 
-    context.query.message.edit_text(i18n.t('external.canceled', locale=poll.locale))
+    context.query.message.edit_text(i18n.t('external.done', locale=poll.locale))

@@ -2,7 +2,6 @@
 import random
 from datetime import datetime, timedelta
 from sqlalchemy import (
-    Date,
     Column,
     func,
     ForeignKey,
@@ -64,7 +63,6 @@ class Poll(base):
     # Chat state variables
     expected_input = Column(String)
     in_settings = Column(Boolean, nullable=False, default=False)
-    current_date = Column(Date, server_default=func.now(), nullable=False)
 
     # OneToOne
     user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade', name='user'), nullable=False, index=True)
@@ -119,6 +117,13 @@ class Poll(base):
             if option.is_date:
                 return True
         return False
+
+    def get_date_option(self, check_date):
+        """Return whether an option with this date already exists."""
+        for option in self.options:
+            if option.is_date and option.as_date() == check_date:
+                return option
+        return None
 
     def get_formatted_due_date(self):
         """Get the formatted date."""
@@ -189,7 +194,7 @@ class Poll(base):
         new_options = session.query(PollOption) \
             .filter(PollOption.poll == self) \
             .outerjoin(Vote) \
-            .filter(Vote.id == None) \
+            .filter(Vote.id.is_(None)) \
             .all()
 
         existing_options_count = len(self.options) - len(new_options)
@@ -206,7 +211,6 @@ class Poll(base):
         for every option in the poll with a random priority for the given user
         """
         assert self.is_priority()
-
 
         from pollbot.models import Vote
 

@@ -5,33 +5,9 @@ from telegram import (
 )
 
 from pollbot.i18n import i18n
-from pollbot.telegram.keyboard.date_picker import get_datepicker_buttons
 from pollbot.helper.enums import (
     CallbackType,
 )
-
-
-def get_external_datepicker_keyboard(poll):
-    """Get the done keyboard for options during poll creation."""
-    datepicker_buttons = get_datepicker_buttons(poll)
-
-    # Add back and pick buttons
-    pick_payload = f'{CallbackType.pick_date_option.value}:{poll.id}:0'
-    back_payload = f'{CallbackType.external_open_menu.value}:{poll.id}:0'
-    cancel_payload = f'{CallbackType.external_cancel.value}:{poll.id}:0'
-    rows = [
-        [
-            InlineKeyboardButton(i18n.t('keyboard.back', locale=poll.locale),
-                                 callback_data=back_payload),
-            InlineKeyboardButton(i18n.t('keyboard.cancel', locale=poll.locale),
-                                 callback_data=cancel_payload)
-        ],
-        [InlineKeyboardButton(i18n.t('datepicker.pick_date', locale=poll.locale),
-                              callback_data=pick_payload)],
-    ]
-    datepicker_buttons += rows
-
-    return InlineKeyboardMarkup(datepicker_buttons)
 
 
 def get_notify_keyboard(polls):
@@ -53,10 +29,11 @@ def get_external_add_option_keyboard(poll):
     datepicker_payload = f'{CallbackType.external_open_datepicker.value}:{poll.id}:0'
     cancel_payload = f'{CallbackType.external_cancel.value}:{poll.id}:0'
     buttons = [
-        [InlineKeyboardButton(i18n.t('keyboard.cancel', locale=poll.locale),
-                              callback_data=cancel_payload)],
         [InlineKeyboardButton(i18n.t('datepicker.open', locale=locale),
-                              callback_data=datepicker_payload)]]
+                              callback_data=datepicker_payload)],
+        [InlineKeyboardButton(i18n.t('keyboard.done', locale=poll.locale),
+                              callback_data=cancel_payload)],
+    ]
 
     keyboard = InlineKeyboardMarkup(buttons)
 

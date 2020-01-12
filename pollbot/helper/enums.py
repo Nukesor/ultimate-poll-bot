@@ -104,7 +104,6 @@ class CallbackType(Enum):
     settings_change_poll_language = 85
     settings_toggle_summarization = 86
     settings_toggle_compact_buttons = 87
-    settings_remove_due_date = 88
     settings_toggle_option_votes = 89
 
     # Misc
@@ -141,15 +140,27 @@ class CallbackType(Enum):
     # Misc
     open_help = 300
     donate = 301
+    init_poll = 302
 
-    # Date picker
+    # Datepicker
     open_creation_datepicker = 501
     close_creation_datepicker = 502
-    pick_date_option = 503
-    set_date = 504
-    next_month = 505
-    previous_month = 506
-    init_poll = 507
+    next_month = 503
+    previous_month = 504
+
+    # Datepicker in creation menu
+    pick_creation_date = 505
+    pick_creation_weekday = 506
+
+    # Datepicker for adding options by external users
+    pick_external_date = 507
+
+    # Datepicker in settings after poll creation
+    pick_additional_date = 508
+    pick_additional_weekday = 509
+
+    # Datepicker for poll due date
+    pick_due_date = 510
 
 
 @unique
@@ -188,3 +199,14 @@ class OptionSorting(Enum):
     option_chrono = 10
     option_percentage = 11
     option_name = 12
+
+
+@unique
+class DatepickerContext(Enum):
+    """We reuse the datepicker in several places, this Enum lists the various context it's used in."""
+
+    creation = 0
+    additional_option = 1
+    external_add_option = 2
+
+    due_date = 10
