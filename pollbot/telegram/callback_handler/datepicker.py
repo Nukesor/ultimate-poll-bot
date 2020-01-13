@@ -18,19 +18,21 @@ from pollbot.telegram.keyboard.date_picker import (
 
 def update_datepicker(context, poll, datepicker_context, current_date):
     """Update the creation datepicker."""
+    message = get_datepicker_text(context.poll)
     if datepicker_context == DatepickerContext.creation:
         keyboard = get_creation_datepicker_keyboard(poll, current_date)
-    elif datepicker_context == DatepickerContext.due_date:
-        keyboard = get_due_date_datepicker_keyboard(poll, current_date)
     elif datepicker_context == DatepickerContext.additional_option:
         keyboard = get_add_option_datepicker_keyboard(poll, current_date)
     elif datepicker_context == DatepickerContext.external_add_option:
         keyboard = get_external_datepicker_keyboard(poll, current_date)
+    elif datepicker_context == DatepickerContext.due_date:
+        message = get_settings_text(poll)
+        keyboard = get_due_date_datepicker_keyboard(poll, current_date)
     else:
         raise Exception('Unknown DatepickerContext')
 
     context.query.message.edit_text(
-        get_datepicker_text(context.poll),
+        message,
         parse_mode='markdown',
         reply_markup=keyboard
     )
