@@ -165,7 +165,7 @@ def resolve_context(poll, context):
         return (
             CallbackType.pick_due_date.value,
             CallbackType.ignore.value,
-            DatepickerContext.due_date,
+            DatepickerContext.due_date.value,
             due_date,
         )
     else:
