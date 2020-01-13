@@ -34,7 +34,8 @@ def update_datepicker(context, poll, datepicker_context, current_date):
     context.query.message.edit_text(
         message,
         parse_mode='markdown',
-        reply_markup=keyboard
+        reply_markup=keyboard,
+        disable_web_page_preview=True
     )
 
 
