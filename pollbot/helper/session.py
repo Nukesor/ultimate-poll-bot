@@ -25,11 +25,12 @@ def job_session_wrapper():
                 func(context, session)
 
                 session.commit()
-            except:
+            except Exception as e:
                 # Capture all exceptions from jobs. We need to handle those inside the jobs
-                if config['logging']['debug']:
-                    traceback.print_exc()
-                sentry.captureException()
+                if not ignore_hidden_exception(e):
+                    if config['logging']['debug']:
+                        traceback.print_exc()
+                    sentry.captureException()
             finally:
                 session.close()
         return wrapper
@@ -52,7 +53,7 @@ def hidden_session_wrapper():
                 func(context.bot, update, session, user)
 
                 session.commit()
-            except:
+            except Exception as e:
                 if not ignore_exception(e):
                     if config['logging']['debug']:
                         traceback.print_exc()
@@ -97,7 +98,7 @@ def session_wrapper(send_message=True, private=False):
                 if hasattr(update, 'message') and response is not None:
                     message.chat.send_message(response)
 
-            except:
+            except Exception as e:
                 if not ignore_exception(e):
                     if config['logging']['debug']:
                         traceback.print_exc()
@@ -174,6 +175,14 @@ def ignore_exception(exception):
         if exception.message == 'Forbidden: CHAT_WRITE_FORBIDDEN':
             return True
 
+    if isinstance(exception, TimedOut):
+        return True
+
+    return False
+
+
+def ignore_hidden_exception(exception):
+    """Check whether we can safely ignore this exception."""
     if isinstance(exception, TimedOut):
         return True
 
