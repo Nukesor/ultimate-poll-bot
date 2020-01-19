@@ -151,7 +151,7 @@ def is_allowed(user, update, private=False):
 def ignore_exception(exception):
     """Check whether we can safely ignore this exception."""
     if isinstance(exception, BadRequest):
-        if exception.message.startswith('Query is too old') or \
+        if 'Query is too old' in exception.message or \
            exception.message.startswith('Have no rights to send a message') or \
            exception.message.startswith('Message_id_invalid') or \
            exception.message.startswith('Message identifier not specified') or \
