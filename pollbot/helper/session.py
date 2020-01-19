@@ -25,7 +25,7 @@ def job_session_wrapper():
                 func(context, session)
 
                 session.commit()
-            except: # noqa
+            except:
                 # Capture all exceptions from jobs. We need to handle those inside the jobs
                 if config['logging']['debug']:
                     traceback.print_exc()
@@ -52,8 +52,7 @@ def hidden_session_wrapper():
                 func(context.bot, update, session, user)
 
                 session.commit()
-            # Handle all not telegram relatated exceptions
-            except Exception as e:
+            except:
                 if not ignore_exception(e):
                     if config['logging']['debug']:
                         traceback.print_exc()
@@ -98,8 +97,7 @@ def session_wrapper(send_message=True, private=False):
                 if hasattr(update, 'message') and response is not None:
                     message.chat.send_message(response)
 
-            # Handle all not telegram relatated exceptions
-            except Exception as e:
+            except:
                 if not ignore_exception(e):
                     if config['logging']['debug']:
                         traceback.print_exc()
