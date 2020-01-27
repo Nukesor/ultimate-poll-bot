@@ -35,16 +35,13 @@ def update_poll_messages(session, bot, poll):
         except (UniqueViolation, IntegrityError):
             session.rollback()
 
-    except Exception:
-        # Something happened
-        # Schedule an update after two secondsj
-        try:
-            update = Update(poll, now + timedelta(seconds=3))
-            session.add(update)
-            session.commit()
-        except (UniqueViolation, IntegrityError):
-            # The update has already been added
-            session.rollback()
+    except Exception as e:
+        # We encountered an unknown error
+        # Since we don't want to continuously tro to send this update, and spam sentry, delete the update
+        session.delete(current_update)
+        session.commit()
+
+        raise e
 
 
 def send_updates(session, bot, poll, show_warning=False):
