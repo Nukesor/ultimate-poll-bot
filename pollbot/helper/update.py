@@ -2,7 +2,7 @@
 from datetime import datetime, timedelta
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
-from telegram.error import BadRequest, RetryAfter, Unauthorized
+from telegram.error import BadRequest, RetryAfter, Unauthorized, TimedOut
 
 from pollbot.i18n import i18n
 from pollbot.telegram.keyboard import get_management_keyboard
@@ -26,7 +26,7 @@ def update_poll_messages(session, bot, poll):
     try:
         # Try to send updates
         send_updates(session, bot, poll)
-    except RetryAfter as e:
+    except (TimedOut, RetryAfter) as e:
         # Schedule an update after the RetryAfter timeout + 1 second buffer
         try:
             update = Update(poll, now + timedelta(seconds=int(e.retry_after) + 1))
