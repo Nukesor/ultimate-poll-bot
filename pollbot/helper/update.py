@@ -28,8 +28,13 @@ def update_poll_messages(session, bot, poll):
         send_updates(session, bot, poll)
     except (TimedOut, RetryAfter) as e:
         # Schedule an update after the RetryAfter timeout + 1 second buffer
+        if isinstance(e, RetryAfter):
+            retry_after = int(e.retry_after) + 1
+        else:
+            retry_after = 2
+
         try:
-            update = Update(poll, now + timedelta(seconds=int(e.retry_after) + 1))
+            update = Update(poll, now + timedelta(seconds=retry_after))
             session.add(update)
             session.commit()
         except (UniqueViolation, IntegrityError):
