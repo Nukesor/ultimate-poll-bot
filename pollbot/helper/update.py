@@ -43,7 +43,8 @@ def update_poll_messages(session, bot, poll):
     except Exception as e:
         # We encountered an unknown error
         # Since we don't want to continuously tro to send this update, and spam sentry, delete the update
-        session.delete(current_update)
+        if current_update is not None:
+            session.delete(current_update)
         session.commit()
 
         raise e
