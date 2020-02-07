@@ -160,19 +160,19 @@ def ignore_exception(exception):
             return True
 
     if isinstance(exception, Unauthorized):
-        if exception.message == 'Forbidden: bot was blocked by the user':
+        if exception.message.lower() == 'forbidden: bot was blocked by the user':
             return True
-        if exception.message == 'Forbidden: MESSAGE_AUTHOR_REQUIRED':
+        if exception.message.lower() == 'forbidden: message_author_required':
             return True
-        if exception.message == 'Forbidden: bot is not a member of the supergroup chat':
+        if exception.message.lower() == 'forbidden: bot is not a member of the supergroup chat':
             return True
-        if exception.message == 'Forbidden: user is deactivated':
+        if exception.message.lower() == 'forbidden: user is deactivated':
             return True
-        if exception.message == 'Forbidden: bot was kicked from the group chat':
+        if exception.message.lower() == 'forbidden: bot was kicked from the group chat':
             return True
-        if exception.message == 'Forbidden: bot was kicked from the supergroup chat':
+        if exception.message.lower() == 'forbidden: bot was kicked from the supergroup chat':
             return True
-        if exception.message == 'Forbidden: CHAT_WRITE_FORBIDDEN':
+        if exception.message.lower() == 'forbidden: chat_write_forbidden':
             return True
 
     if isinstance(exception, TimedOut):
