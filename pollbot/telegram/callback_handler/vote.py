@@ -77,10 +77,6 @@ def handle_vote(session, context):
 
 def respond_to_vote(session, line, context, poll, remaining_votes=None, limited=False):
     """Get the formatted response for a user."""
-    try:
-        session.commit()
-    except Stael:
-
     locale = poll.locale
     votes = session.query(Vote) \
         .filter(Vote.user == context.user) \
