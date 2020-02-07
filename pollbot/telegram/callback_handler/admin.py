@@ -23,21 +23,29 @@ def open_admin_settings(session, context):
 def update_all(session, context):
     """Update all polls."""
     chat = context.query.message.chat
-    polls = session.query(Poll) \
+
+    updated = 0
+    poll_count = session.query(Poll) \
         .filter(Poll.created.is_(True)) \
-        .order_by(Poll.id.desc()) \
-        .all()
+        .count()
+    chat.send_message(f'Updating {poll_count} polls')
+    print(f'Updating {poll_count} polls')
 
-    chat.send_message(f'Updating {len(polls)} polls')
-    count = 0
+    while updated < poll_count:
+        polls = session.query(Poll) \
+            .filter(Poll.created.is_(True)) \
+            .order_by(Poll.id.desc()) \
+            .offset(updated) \
+            .limit(100) \
+            .all()
 
-    for poll in polls:
-        count += 1
-        if count % 500 == 0:
-            chat.send_message(f'Updated {count} polls')
+        if updated % 500 == 0:
+            chat.send_message(f'Updated {updated} polls')
+        updated += len(polls)
 
-        update_poll_messages(session, context.bot, poll)
-        time.sleep(0.2)
+        for poll in polls:
+            update_poll_messages(session, context.bot, poll)
+            time.sleep(0.2)
 
     return "Done"
 
