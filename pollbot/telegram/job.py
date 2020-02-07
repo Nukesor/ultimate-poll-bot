@@ -19,21 +19,32 @@ def message_update_job(context, session):
         context.job.enabled = False
         now = datetime.now()
 
-        updates = session.query(Update) \
+        update_count = session.query(Update) \
             .filter(Update.next_update <= now) \
-            .options(joinedload(Update.poll)) \
-            .order_by(Update.next_update.asc()) \
-            .all()
+            .count()
 
-        for update in updates:
-            try:
-                send_updates(session, context.bot, update.poll, show_warning=True)
-                session.delete(update)
-                session.commit()
-            except RetryAfter as e:
-                # Schedule an update after the RetryAfter timeout + 1 second buffer
-                update.next_update = now + timedelta(seconds=int(e.retry_after) + 1)
-                session.commit()
+        while update_count > 0:
+            updates = session.query(Update) \
+                .filter(Update.next_update <= now) \
+                .options(joinedload(Update.poll)) \
+                .order_by(Update.next_update.asc()) \
+                .limit(50)
+
+            for update in updates:
+                try:
+                    send_updates(session, context.bot, update.poll, show_warning=True)
+                    session.delete(update)
+                    session.commit()
+                except RetryAfter as e:
+                    # Schedule an update after the RetryAfter timeout + 1 second buffer
+                    update.next_update = now + timedelta(seconds=int(e.retry_after) + 1)
+                    session.commit()
+
+            # Update the count again.
+            # Updates can be removed by normal operation as well
+            update_count = session.query(Update) \
+                .filter(Update.next_update <= now) \
+                .count()
 
     finally:
         context.job.enabled = True
