@@ -1,7 +1,10 @@
 """Callback functions needed during creation of a Poll."""
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm.exc import ObjectDeletedError
+from sqlalchemy.orm.exc import (
+    ObjectDeletedError,
+    StaleDataError,
+)
 
 from pollbot.i18n import i18n
 from pollbot.helper import poll_allows_cumulative_votes
@@ -57,6 +60,12 @@ def handle_vote(session, context):
         # Vote on already removed vote. Rollback the transaction and ignore
         session.rollback()
         return
+    except StaleDataError:
+        # Try to edit a vote that has already been deleted.
+        # This happens, if users spam the vote buttons.
+        # Rollback the transaction and ignore
+        session.rollback()
+        return
 
     session.commit()
 
@@ -68,6 +77,10 @@ def handle_vote(session, context):
 
 def respond_to_vote(session, line, context, poll, remaining_votes=None, limited=False):
     """Get the formatted response for a user."""
+    try:
+        session.commit()
+    except Stael:
+
     locale = poll.locale
     votes = session.query(Vote) \
         .filter(Vote.user == context.user) \
