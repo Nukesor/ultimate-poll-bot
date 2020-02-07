@@ -136,6 +136,7 @@ class Poll(base):
         """Set the due date and the next notification."""
         if date is None:
             self.due_date = None
+            self.next_notification = None
             return
 
         # Calculate the next_notification date depending

@@ -8,7 +8,11 @@
 
 - Language updates
 - Improvement of internal error handling
+
+**Fixes:**
+- Fixed poll notifications and due dates
 - Numerous minor bug fixes
+
 
 ## v1.2.0
 - Completely revamp the user settings and /start interface

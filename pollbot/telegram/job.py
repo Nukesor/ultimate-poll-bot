@@ -1,5 +1,6 @@
 """Handle messages."""
 from datetime import date, datetime, timedelta
+from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
 from telegram.ext import run_async
 from telegram.error import BadRequest, Unauthorized, RetryAfter
@@ -44,8 +45,10 @@ def message_update_job(context, session):
 def send_notifications(context, session):
     """Notify the users about the poll being closed soon."""
     polls = session.query(Poll) \
-        .join(Notification.poll) \
-        .filter(Poll.next_notification <= datetime.now()) \
+        .filter(or_(
+            Poll.next_notification <= datetime.now(),
+            Poll.due_date <= datetime.now(),
+        )) \
         .filter(Poll.closed.is_(False)) \
         .all()
 
@@ -67,15 +70,15 @@ def send_notifications(context, session):
             poll.next_notification = poll.due_date
 
         # Send the closed notification, remove all notifications and close the poll
-        elif poll.due_date == poll.next_notification:
+        elif poll.due_date <= datetime.now():
             poll.closed = True
             update_poll_messages(session, context.bot, poll)
 
             send_notifications_for_poll(context, session, poll, 'notification.closed')
             for notification in poll.notifications:
                 session.delete(notification)
+            session.commit()
 
-        session.commit()
 
 
 def send_notifications_for_poll(context, session, poll, message_key):
