@@ -4,7 +4,7 @@ from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
 from telegram.ext import run_async
 from telegram.error import BadRequest, Unauthorized, RetryAfter
-from sqlalchemy.orm.exc import ObjectDeletedError
+from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 
 from pollbot.i18n import i18n
 from pollbot.models import Update, Poll, DailyStatistic
@@ -43,7 +43,11 @@ def message_update_job(context, session):
                 except RetryAfter as e:
                     # Schedule an update after the RetryAfter timeout + 1 second buffer
                     update.next_update = now + timedelta(seconds=int(e.retry_after) + 1)
-                    session.commit()
+                    try:
+                        session.commit()
+                    except StaleDataError:
+                        # The update has already been handled somewhere else
+                        session.rollback()
 
             # Update the count again.
             # Updates can be removed by normal operation as well
