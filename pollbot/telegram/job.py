@@ -4,9 +4,10 @@ from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
 from telegram.ext import run_async
 from telegram.error import BadRequest, Unauthorized, RetryAfter
+from sqlalchemy.orm.exc import ObjectDeletedError
 
 from pollbot.i18n import i18n
-from pollbot.models import Update, Notification, Poll, DailyStatistic
+from pollbot.models import Update, Poll, DailyStatistic
 from pollbot.helper.session import job_session_wrapper
 from pollbot.helper.update import send_updates, update_poll_messages
 
@@ -35,6 +36,10 @@ def message_update_job(context, session):
                     send_updates(session, context.bot, update.poll, show_warning=True)
                     session.delete(update)
                     session.commit()
+                except ObjectDeletedError:
+                    # The update has already been handled somewhere else.
+                    # This could be either a job or a person that voted in this very moment
+                    session.rollback()
                 except RetryAfter as e:
                     # Schedule an update after the RetryAfter timeout + 1 second buffer
                     update.next_update = now + timedelta(seconds=int(e.retry_after) + 1)
