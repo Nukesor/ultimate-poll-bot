@@ -80,6 +80,7 @@ def send_updates(session, bot, poll, show_warning=False):
                     if e.message == 'Forbidden: user is deactivated':
                         session.delete(reference)
 
+            # User that votes in private chat (priority vote)
             elif reference.vote_user is not None:
                 text, keyboard = get_poll_text_and_vote_keyboard(
                     session,
@@ -101,8 +102,7 @@ def send_updates(session, bot, poll, show_warning=False):
                     if e.message == 'Forbidden: user is deactivated':
                         session.delete(reference)
 
-
-            # Edit message via inline_message_id
+            # Edit message created via inline query
             elif reference.inline_message_id is not None:
                 # Create text and keyboard
                 text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_warning=show_warning)
@@ -150,6 +150,7 @@ def remove_poll_messages(session, bot, poll, remove_all=False):
                     message_id=reference.admin_message_id,
                 )
 
+            # User that votes in private chat (priority vote)
             elif reference.vote_user is not None:
                 bot.edit_message_text(
                     i18n.t('deleted.poll', locale=poll.locale),
