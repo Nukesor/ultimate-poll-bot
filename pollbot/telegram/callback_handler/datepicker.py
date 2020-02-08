@@ -120,7 +120,7 @@ def pick_due_date(session, context, poll):
 
     due_date = datetime.combine(picked_date, time(hour=12, minute=00))
     if (due_date == poll.due_date):
-        poll.due_date = None
+        poll.set_due_date(None)
         context.query.answer(
             i18n.t('callback.due_date_removed', locale=poll.user.locale)
         )
