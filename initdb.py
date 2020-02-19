@@ -9,7 +9,8 @@ db_url = engine.url
 if not database_exists(db_url):
     create_database(db_url)
 
+    base.metadata.create_all()
+
     with engine.connect() as con:
         con.execute('CREATE EXTENSION IF NOT EXISTS pgcrypto;')
 
-    base.metadata.create_all()
