@@ -81,7 +81,7 @@ def add_options(poll, text, is_date=False):
         # Extract the description if existing
         if not is_date and '-' in option_to_add:
             # Extract and strip the description
-            splitted = option_to_add.split('-', 1)
+            splitted = option_to_add.split('-')
             option_to_add = splitted[0].strip()
             description = splitted[1].strip()
             if description == '':
