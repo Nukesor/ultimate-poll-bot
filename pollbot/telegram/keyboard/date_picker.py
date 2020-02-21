@@ -1,7 +1,7 @@
 """Reply keyboards."""
 import calendar
 from datetime import date
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telethon import Button
 
 from pollbot.i18n import i18n
 from pollbot.helper.enums import CallbackType, DatepickerContext
@@ -10,60 +10,57 @@ from pollbot.helper.enums import CallbackType, DatepickerContext
 def get_creation_datepicker_keyboard(poll, current_date):
     """Get the done keyboard for options during poll creation."""
     locale = poll.user.locale
-    datepicker_buttons = get_datepicker_buttons(poll, current_date, DatepickerContext.creation)
+    buttons = get_buttons(poll, current_date, DatepickerContext.creation)
 
     # Create back and done buttons
     close_payload = f'{CallbackType.close_creation_datepicker.value}:{poll.id}:0'
-    buttons = [InlineKeyboardButton(i18n.t('keyboard.close', locale=locale),
-                                    callback_data=close_payload)]
+    buttons = [Button.inline(i18n.t('keyboard.close', locale=locale), data=close_payload)]
     if len(poll.options) > 0:
         done_payload = f'{CallbackType.all_options_entered.value}:{poll.id}:0'
-        buttons.append(InlineKeyboardButton(i18n.t('keyboard.done', locale=locale),
-                                            callback_data=done_payload))
-    datepicker_buttons.append(buttons)
+        buttons.append(Button.inline(i18n.t('keyboard.done', locale=locale), data=done_payload))
+    buttons.append(buttons)
 
-    return InlineKeyboardMarkup(datepicker_buttons)
+    return buttons
 
 
 def get_add_option_datepicker_keyboard(poll, current_date):
     """Get the done keyboard for options during poll creation."""
     from pollbot.telegram.keyboard.settings import get_back_to_settings_button
 
-    datepicker_buttons = get_datepicker_buttons(poll, current_date, DatepickerContext.additional_option)
+    buttons = get_buttons(poll, current_date, DatepickerContext.additional_option)
     # Add back to settings button
     row = [get_back_to_settings_button(poll)]
-    datepicker_buttons.append(row)
+    buttons.append(row)
 
-    return InlineKeyboardMarkup(datepicker_buttons)
+    return buttons
 
 
 def get_due_date_datepicker_keyboard(poll, current_date):
     """Get the done keyboard for options during poll creation."""
     from pollbot.telegram.keyboard.settings import get_back_to_settings_button
 
-    datepicker_buttons = get_datepicker_buttons(poll, current_date, DatepickerContext.due_date)
+    buttons = get_buttons(poll, current_date, DatepickerContext.due_date)
     # Add back to settings button
     row = [get_back_to_settings_button(poll)]
-    datepicker_buttons.append(row)
+    buttons.append(row)
 
-    return InlineKeyboardMarkup(datepicker_buttons)
+    return buttons
 
 
 def get_external_datepicker_keyboard(poll, current_date):
     """Get the done keyboard for options during poll creation."""
-    datepicker_buttons = get_datepicker_buttons(poll, current_date, DatepickerContext.external_add_option)
+    buttons = get_buttons(poll, current_date, DatepickerContext.external_add_option)
 
     # Add back and pick buttons
     back_payload = f'{CallbackType.external_open_menu.value}:{poll.id}:0'
-    cancel_payload = f'{CallbackType.external_cancel.value}:{poll.id}:0'
-    rows = [[InlineKeyboardButton(i18n.t('keyboard.back', locale=poll.locale),
-                                  callback_data=back_payload)]]
-    datepicker_buttons += rows
+    rows = [[Button.inline(i18n.t('keyboard.back', locale=poll.locale),
+                           data=back_payload)]]
+    buttons += rows
 
-    return InlineKeyboardMarkup(datepicker_buttons)
+    return buttons
 
 
-def get_datepicker_buttons(poll, current_date, datetime_context):
+def get_buttons(poll, current_date, datetime_context):
     """Get the buttons for the datepicker.
 
     Since the datepicker is used in several different scenarios, we allow to dynamically
@@ -82,13 +79,13 @@ def get_datepicker_buttons(poll, current_date, datetime_context):
 
     # Add headline
     headline = f'{calendar.month_name[current_date.month]} {current_date.year}'
-    buttons.append([InlineKeyboardButton(headline, callback_data=ignore_payload)])
+    buttons.append([Button.inline(headline, data=ignore_payload)])
 
     # Create the week-day column description
     row = []
     for day in ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]:
         weekday_payload = f'{weekday_type}:{poll.id}:{month.isoformat()}:{day}'
-        row.append(InlineKeyboardButton(day, callback_data=ignore_payload))
+        row.append(Button.inline(day, data=ignore_payload))
     buttons.append(row)
 
     # Iterate through all days and create respective buttons
@@ -105,11 +102,11 @@ def get_datepicker_buttons(poll, current_date, datetime_context):
 
             # Only create real buttons for actual days of the month
             if(day == 0):
-                row.append(InlineKeyboardButton(" ", callback_data=ignore_payload))
+                row.append(Button.inline(" ", data=ignore_payload))
             else:
                 day_date = date(current_date.year, current_date.month, day)
                 payload = f'{pick_type}:{poll.id}:{day_date.isoformat()}'
-                row.append(InlineKeyboardButton(day_text, callback_data=payload))
+                row.append(Button.inline(day_text, data=payload))
 
         buttons.append(row)
 
@@ -120,8 +117,8 @@ def get_datepicker_buttons(poll, current_date, datetime_context):
     previous_payload = f'{CallbackType.previous_month.value}:{poll.id}:{month.isoformat()}:{context}'
     next_payload = f'{CallbackType.next_month.value}:{poll.id}:{month.isoformat()}:{context}'
     buttons.append([
-        InlineKeyboardButton('<', callback_data=previous_payload),
-        InlineKeyboardButton('>', callback_data=next_payload),
+        Button.inline('<', data=previous_payload),
+        Button.inline('>', data=next_payload),
     ])
 
     return buttons

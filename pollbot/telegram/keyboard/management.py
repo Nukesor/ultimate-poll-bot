@@ -1,8 +1,5 @@
 """Reply keyboards."""
-from telegram import (
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-)
+from telethon import Button
 
 from pollbot.i18n import i18n
 from pollbot.helper.enums import CallbackType, CallbackResult
@@ -12,7 +9,7 @@ def get_back_to_management_button(poll):
     """Get the back to management menu button for management sub menus."""
     locale = poll.user.locale
     payload = f'{CallbackType.menu_back.value}:{poll.id}:{CallbackResult.main_menu.value}'
-    return InlineKeyboardButton(i18n.t('keyboard.back', locale=locale), callback_data=payload)
+    return Button.inline(i18n.t('keyboard.back', locale=locale), data=payload)
 
 
 def get_management_keyboard(poll):
@@ -21,35 +18,27 @@ def get_management_keyboard(poll):
     delete_payload = f'{CallbackType.menu_delete.value}:{poll.id}:0'
 
     if poll.closed and not poll.results_visible:
-        return InlineKeyboardMarkup([[InlineKeyboardButton(
+        return [[Button.inline(
             i18n.t('keyboard.delete', locale=locale),
-            callback_data=delete_payload)]])
+            data=delete_payload)]]
     elif poll.closed:
         reopen_payload = f'{CallbackType.reopen.value}:{poll.id}:0'
         reset_payload = f'{CallbackType.reset.value}:{poll.id}:0'
         clone_payload = f'{CallbackType.clone.value}:{poll.id}:0'
         buttons = [
             [
-                InlineKeyboardButton(
-                    i18n.t('keyboard.reset', locale=locale),
-                    callback_data=reset_payload),
-                InlineKeyboardButton(
-                    i18n.t('keyboard.clone', locale=locale),
-                    callback_data=clone_payload),
+                Button.inline(i18n.t('keyboard.reset', locale=locale), data=reset_payload),
+                Button.inline(i18n.t('keyboard.clone', locale=locale), data=clone_payload),
             ],
             [
-                InlineKeyboardButton(
-                    i18n.t('keyboard.delete', locale=locale),
-                    callback_data=delete_payload),
-                InlineKeyboardButton(
-                    i18n.t('keyboard.share', locale=locale),
-                    switch_inline_query=f'{poll.name} closed_polls'),
+                Button.inline(i18n.t('keyboard.delete', locale=locale), data=delete_payload),
+                Button.switch_inline(i18n.t('keyboard.share', locale=locale), query=f'{poll.name} closed_polls'),
             ],
-            [InlineKeyboardButton(
+            [Button.inline(
                 i18n.t('keyboard.reopen', locale=locale),
-                callback_data=reopen_payload)]
+                data=reopen_payload)]
         ]
-        return InlineKeyboardMarkup(buttons)
+        return buttons
 
     vote_payload = f'{CallbackType.menu_vote.value}:{poll.id}:0'
     option_payload = f'{CallbackType.menu_option.value}:{poll.id}:0'
@@ -62,29 +51,19 @@ def get_management_keyboard(poll):
 
     buttons = [
         [
-            InlineKeyboardButton(
-                i18n.t('keyboard.share', locale=locale),
-                switch_inline_query=poll.name),
+            Button.switch_inline(i18n.t('keyboard.share', locale=locale), query=poll.name),
         ],
         [
-            InlineKeyboardButton(
-                i18n.t('keyboard.vote', locale=locale),
-                callback_data=vote_payload),
-            InlineKeyboardButton(
-                i18n.t('keyboard.settings', locale=locale),
-                callback_data=option_payload),
+            Button.inline(i18n.t('keyboard.vote', locale=locale), data=vote_payload),
+            Button.inline(i18n.t('keyboard.settings', locale=locale), data=option_payload),
         ],
         [
-            InlineKeyboardButton(
-                i18n.t('keyboard.delete', locale=locale),
-                callback_data=delete_payload),
-            InlineKeyboardButton(
-                i18n.t('keyboard.close_poll', locale=locale),
-                callback_data=close_payload),
+            Button.inline(i18n.t('keyboard.delete', locale=locale), data=delete_payload),
+            Button.inline(i18n.t('keyboard.close_poll', locale=locale), data=close_payload),
         ],
     ]
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_close_confirmation(poll):
@@ -92,12 +71,12 @@ def get_close_confirmation(poll):
     payload = f'{CallbackType.close.value}:{poll.id}:0'
     locale = poll.user.locale
     buttons = [
-        [InlineKeyboardButton(
+        [Button.inline(
             i18n.t('keyboard.permanently_close', locale=locale),
-            callback_data=payload)],
+            data=payload)],
         [get_back_to_management_button(poll)],
     ]
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_deletion_confirmation(poll):
@@ -106,15 +85,15 @@ def get_deletion_confirmation(poll):
     delete_all_payload = f'{CallbackType.delete_poll_with_messages.value}:{poll.id}:0'
     locale = poll.user.locale
     buttons = [
-        [InlineKeyboardButton(
+        [Button.inline(
             i18n.t('keyboard.permanently_delete', locale=locale),
-            callback_data=delete_payload)],
-        [InlineKeyboardButton(
+            data=delete_payload)],
+        [Button.inline(
             i18n.t('keyboard.permanently_delete_with_messages', locale=locale),
-            callback_data=delete_all_payload)],
+            data=delete_all_payload)],
         [get_back_to_management_button(poll)],
     ]
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_poll_list_keyboard(polls):
@@ -122,6 +101,6 @@ def get_poll_list_keyboard(polls):
     buttons = []
     for poll in polls:
         payload = f'{CallbackType.menu_show.value}:{poll.id}:0'
-        buttons.append([InlineKeyboardButton(poll.name, callback_data=payload)])
+        buttons.append([Button.inline(poll.name, data=payload)])
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons

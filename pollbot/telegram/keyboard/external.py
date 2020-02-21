@@ -1,8 +1,5 @@
 """All keyboards for external users that don't own the poll."""
-from telegram import (
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-)
+from telethon import Button
 
 from pollbot.i18n import i18n
 from pollbot.helper.enums import (
@@ -16,11 +13,9 @@ def get_notify_keyboard(polls):
     buttons = []
     for poll in polls:
         pick_payload = f'{CallbackType.activate_notification.value}:{poll.id}:0'
-        buttons.append([
-            InlineKeyboardButton(poll.name, callback_data=pick_payload),
-        ])
+        buttons.append([Button.inline(poll.name, data=pick_payload)])
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_external_add_option_keyboard(poll):
@@ -29,13 +24,11 @@ def get_external_add_option_keyboard(poll):
     datepicker_payload = f'{CallbackType.external_open_datepicker.value}:{poll.id}:0'
     cancel_payload = f'{CallbackType.external_cancel.value}:{poll.id}:0'
     buttons = [
-        [InlineKeyboardButton(i18n.t('datepicker.open', locale=locale),
-                              callback_data=datepicker_payload)],
-        [InlineKeyboardButton(i18n.t('keyboard.done', locale=poll.locale),
-                              callback_data=cancel_payload)],
+        [Button.inline(i18n.t('datepicker.open', locale=locale), data=datepicker_payload)],
+        [Button.inline(i18n.t('keyboard.done', locale=poll.locale), data=cancel_payload)],
     ]
 
-    keyboard = InlineKeyboardMarkup(buttons)
+    keyboard = buttons
 
     return keyboard
 
@@ -45,10 +38,8 @@ def get_external_share_keyboard(poll):
     locale = poll.user.locale
 
     buttons = [
-        [InlineKeyboardButton(
-            i18n.t('keyboard.share', locale=locale),
-            switch_inline_query=str(poll.uuid))]
+        [Button.inline(i18n.t('keyboard.share', locale=locale), switch_inline_query=str(poll.uuid))]
     ]
-    keyboard = InlineKeyboardMarkup(buttons)
+    keyboard = buttons
 
     return keyboard

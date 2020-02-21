@@ -1,20 +1,16 @@
 """Reply keyboards."""
-from telegram import (
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-)
+from telethon import Button
 
 from pollbot.i18n import i18n
 from pollbot.helper.enums import CallbackType, PollType
 from pollbot.helper import translate_poll_type
-from pollbot.telegram.keyboard.date_picker import get_datepicker_buttons
 
 
 def get_back_to_init_button(poll):
     """Get the button to go back to the init creation message."""
     back_text = i18n.t('keyboard.back', locale=poll.locale)
     anonymity_payload = f"{CallbackType.back_to_init.value}:{poll.id}:0"
-    return InlineKeyboardButton(back_text, callback_data=anonymity_payload)
+    return Button.inline(back_text, data=anonymity_payload)
 
 
 def get_init_keyboard(poll):
@@ -28,11 +24,11 @@ def get_init_keyboard(poll):
     anonymity_payload = f"{CallbackType.anonymity_settings.value}:{poll.id}:0"
 
     buttons = [
-        [InlineKeyboardButton(change_type_text, callback_data=change_type_payload)],
-        [InlineKeyboardButton(anonymity_text, callback_data=anonymity_payload)],
+        [Button.inline(change_type_text, data=change_type_payload)],
+        [Button.inline(anonymity_text, data=anonymity_payload)],
     ]
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_init_settings_keyboard(poll):
@@ -52,12 +48,12 @@ def get_init_settings_keyboard(poll):
         toggle_results_visible_text = i18n.t('creation.keyboard.results_not_visible', locale=locale)
 
     buttons = [
-        [InlineKeyboardButton(toggle_anonymity_text, callback_data=toggle_anonymity_payload)],
-        [InlineKeyboardButton(toggle_results_visible_text, callback_data=toggle_results_visible_payload)],
+        [Button.inline(toggle_anonymity_text, data=toggle_anonymity_payload)],
+        [Button.inline(toggle_results_visible_text, data=toggle_results_visible_payload)],
         [get_back_to_init_button(poll)],
     ]
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_change_poll_type_keyboard(poll):
@@ -69,43 +65,39 @@ def get_change_poll_type_keyboard(poll):
     for poll_type in PollType:
         text = translate_poll_type(poll_type.name, poll.locale)
         payload = f'{change_type}:{poll.id}:{poll_type.value}'
-        button = [InlineKeyboardButton(text, callback_data=payload)]
+        button = [Button.inline(text, data=payload)]
         buttons.append(button)
 
     buttons.append([get_back_to_init_button(poll)])
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_open_datepicker_keyboard(poll):
     """Get the done keyboard for options during poll creation."""
+    locale = poll.user.locale
     payload = f'{CallbackType.open_creation_datepicker.value}:{poll.id}:0'
-    buttons = [[InlineKeyboardButton(
-        i18n.t('datepicker.open', locale=poll.user.locale),
-        callback_data=payload,
-    )]]
+    buttons = [[Button.inline(i18n.t('datepicker.open', locale=locale), data=payload)]]
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_cancel_creation_keyboard(poll):
     """Get the cancel creation button."""
+    locale = poll.user.locale
     payload = f'{CallbackType.cancel_creation.value}:{poll.id}:0'
-    buttons = [[InlineKeyboardButton(
-        i18n.t('creation.cancel', locale=poll.user.locale),
-        callback_data=payload)]]
+    buttons = [[Button.inline(i18n.t('creation.cancel', locale=locale), data=payload)]]
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_skip_description_keyboard(poll):
     """Get the keyboard for skipping the description."""
+    locale = poll.user.locale
     payload = f'{CallbackType.skip_description.value}:{poll.id}:0'
-    buttons = [[InlineKeyboardButton(
-        i18n.t('creation.skip_description', locale=poll.user.locale),
-        callback_data=payload)]]
+    buttons = [[Button.inline(i18n.t('creation.skip_description', locale=locale), data=payload)]]
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_options_entered_keyboard(poll):
@@ -114,10 +106,8 @@ def get_options_entered_keyboard(poll):
     datepicker_payload = f'{CallbackType.open_creation_datepicker.value}:{poll.id}:0'
     done_payload = f'{CallbackType.all_options_entered.value}:{poll.id}:0'
     buttons = [[
-        InlineKeyboardButton(i18n.t('datepicker.open', locale=locale),
-                             callback_data=datepicker_payload),
-        InlineKeyboardButton(i18n.t('keyboard.done', locale=locale),
-                             callback_data=done_payload),
+        Button.inline(i18n.t('datepicker.open', locale=locale), data=datepicker_payload),
+        Button.inline(i18n.t('keyboard.done', locale=locale), data=done_payload),
     ]]
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons

@@ -1,8 +1,5 @@
 """User related keyboards."""
-from telegram import (
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-)
+from telethon import Button
 
 from pollbot.i18n import supported_languages, i18n
 from pollbot.helper.enums import CallbackType
@@ -11,67 +8,61 @@ from pollbot.helper.enums import CallbackType
 def get_back_to_menu_button(user):
     """Get the back to options menu button for option sub menus."""
     payload = f'{CallbackType.user_menu.value}:0:0'
-    return InlineKeyboardButton(text=i18n.t('keyboard.back', locale=user.locale),
-                                callback_data=payload)
+    return Button.inline(text=i18n.t('keyboard.back', locale=user.locale), data=payload)
 
 
 def get_back_to_settings_button(user):
     """Get the back to options settings button for settings sub menus."""
     payload = f'{CallbackType.user_settings.value}:0:0'
-    return InlineKeyboardButton(text=i18n.t('keyboard.back', locale=user.locale),
-                                callback_data=payload)
+    return Button.inline(text=i18n.t('keyboard.back', locale=user.locale), data=payload)
 
 
 def get_main_keyboard(user):
     """User settings keyboard."""
     buttons = [
-        [InlineKeyboardButton(
+        [Button.inline(
             text=i18n.t('keyboard.user.init_poll', locale=user.locale),
-            callback_data=f'{CallbackType.init_poll.value}:0:0',
+            data=f'{CallbackType.init_poll.value}:0:0',
         )],
-        [InlineKeyboardButton(
+        [Button.inline(
             text=i18n.t('keyboard.settings', locale=user.locale),
-            callback_data=f'{CallbackType.user_settings.value}:0:0'
+            data=f'{CallbackType.user_settings.value}:0:0'
         )]
     ]
 
     if user.admin:
-        buttons.append([InlineKeyboardButton(
+        buttons.append([Button.inline(
             text=i18n.t('keyboard.admin.settings', locale=user.locale),
-            callback_data=f'{CallbackType.admin_settings.value}:0:0',
+            data=f'{CallbackType.admin_settings.value}:0:0',
         )])
 
-    buttons.append([InlineKeyboardButton(
+    buttons.append([Button.inline(
         text=i18n.t('keyboard.user.list_polls', locale=user.locale),
-        callback_data=f'{CallbackType.user_list_polls.value}:0:0'
+        data=f'{CallbackType.user_list_polls.value}:0:0'
     )])
-    buttons.append([InlineKeyboardButton(
+    buttons.append([Button.inline(
         text=i18n.t('keyboard.show_help', locale=user.locale),
-        callback_data=f'{CallbackType.open_help.value}:0:0',
+        data=f'{CallbackType.open_help.value}:0:0',
     )])
-    buttons.append([InlineKeyboardButton(
+    buttons.append([Button.inline(
         text=i18n.t('keyboard.help_me_out', locale=user.locale),
-        callback_data=f'{CallbackType.donate.value}:0:0',
+        data=f'{CallbackType.donate.value}:0:0',
     )])
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_admin_settings_keyboard(user):
     """Keyboard for admin operations."""
+    plot_data = f'{CallbackType.admin_plot.value}:0:0'
+    update_data = f'{CallbackType.admin_update.value}:0:0'
     buttons = [
-        [InlineKeyboardButton(
-            text=i18n.t('keyboard.admin.plot', locale=user.locale),
-            callback_data=f'{CallbackType.admin_plot.value}:0:0',
-        )],
-        [InlineKeyboardButton(
-            text=i18n.t('keyboard.admin.update', locale=user.locale),
-            callback_data=f'{CallbackType.admin_update.value}:0:0',
-        )],
+        [Button.inline(text=i18n.t('keyboard.admin.plot', locale=user.locale), data=plot_data)],
+        [Button.inline(text=i18n.t('keyboard.admin.update', locale=user.locale), data=update_data)],
         [get_back_to_menu_button(user)],
     ]
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_user_settings_keyboard(user):
@@ -81,31 +72,25 @@ def get_user_settings_keyboard(user):
     else:
         notification_text = i18n.t('keyboard.user.enable_notifications')
 
+    language_data = f'{CallbackType.user_language_menu.value}:0:0'
+    notification_data = f'{CallbackType.user_toggle_notification.value}:0:0'
+    list_closed_data = f'{CallbackType.user_list_closed_polls.value}:0:0'
+    delete_all_data = f'{CallbackType.user_delete_all_confirmation.value}:0:0'
+    delete_closed_data = f'{CallbackType.user_delete_closed_confirmation.value}:0:0'
     buttons = [
-        [InlineKeyboardButton(
-            text=i18n.t('keyboard.change_language', locale=user.locale),
-            callback_data=f'{CallbackType.user_language_menu.value}:0:0',
-        )],
-        [InlineKeyboardButton(
-            text=notification_text,
-            callback_data=f'{CallbackType.user_toggle_notification.value}:0:0',
-        )],
-        [InlineKeyboardButton(
-            text=i18n.t('keyboard.user.list_closed_polls', locale=user.locale),
-            callback_data=f'{CallbackType.user_list_closed_polls.value}:0:0',
-        )],
-        [InlineKeyboardButton(
-            text=i18n.t('keyboard.user.delete_all', locale=user.locale),
-            callback_data=f'{CallbackType.user_delete_all_confirmation.value}:0:0',
-        )],
-        [InlineKeyboardButton(
-            text=i18n.t('keyboard.user.delete_all_closed', locale=user.locale),
-            callback_data=f'{CallbackType.user_delete_closed_confirmation.value}:0:0',
-        )],
+        [Button.inline(text=i18n.t('keyboard.change_language', locale=user.locale),
+                       data=language_data)],
+        [Button.inline(text=notification_text, data=notification_data)],
+        [Button.inline(text=i18n.t('keyboard.user.list_closed_polls', locale=user.locale),
+                       data=list_closed_data)],
+        [Button.inline(text=i18n.t('keyboard.user.delete_all', locale=user.locale),
+                       data=delete_all_data)],
+        [Button.inline(text=i18n.t('keyboard.user.delete_all_closed', locale=user.locale),
+                       data=delete_closed_data)],
         [get_back_to_menu_button(user)],
     ]
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_user_language_keyboard(user):
@@ -113,15 +98,13 @@ def get_user_language_keyboard(user):
     buttons = []
     # Compile the possible options for user sorting
     for language in supported_languages:
-        button = InlineKeyboardButton(
-            language,
-            callback_data=f'{CallbackType.user_change_language.value}:{user.id}:{language}'
-        )
+        data = f'{CallbackType.user_change_language.value}:{user.id}:{language}'
+        button = Button.inline(language, data=data)
         buttons.append([button])
 
     buttons.append([get_back_to_settings_button(user)])
 
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_delete_all_confirmation_keyboard(user, closed=False):
@@ -135,7 +118,7 @@ def get_delete_all_confirmation_keyboard(user, closed=False):
         text = i18n.t('settings.user.delete_all', locale=locale)
 
     buttons = [
-        [InlineKeyboardButton(text, callback_data=payload)],
+        [Button.inline(text, data=payload)],
         [get_back_to_settings_button(user)],
     ]
-    return InlineKeyboardMarkup(buttons)
+    return buttons
