@@ -1,16 +1,17 @@
 """The start command handler."""
 import time
 from uuid import UUID
-from telegram.ext import run_async
+from telethon import events
 
 from pollbot.i18n import i18n
+from pollbot.client import client
 from pollbot.models import Poll, Reference
 from pollbot.display.poll.compilation import (
     get_poll_text_and_vote_keyboard,
     compile_poll_text
 )
 from pollbot.helper.enums import ExpectedInput, StartAction
-from pollbot.helper.session import session_wrapper
+from pollbot.helper.session import message_wrapper
 from pollbot.helper.text import split_text
 from pollbot.helper.stats import increase_stat
 from pollbot.telegram.keyboard import get_main_keyboard
@@ -20,14 +21,13 @@ from pollbot.telegram.keyboard.external import (
 )
 
 
-@run_async
-@session_wrapper()
-def start(bot, update, session, user):
+@client.on(events.NewMessage(incoming=True, pattern='/start.*'))
+@message_wrapper(private=True)
+async def start(event, session, user):
     """Send a start text."""
     # Truncate the /start command
     text = ""
-    if update.message is not None:
-        text = update.message.text[6:].strip()
+    text = event.text[6:].strip()
     user.started = True
 
     try:
@@ -40,17 +40,17 @@ def start(bot, update, session, user):
 
     # We got an empty text, just send the start message
     if text == '':
-        update.message.chat.send_message(
+        await event.respond(
             i18n.t('misc.start', locale=user.locale),
-            parse_mode='markdown',
-            reply_markup=get_main_keyboard(user),
-            disable_web_page_preview=True,
+            buttons=get_main_keyboard(user),
+            link_preview=False,
         )
 
-        return
+        raise events.StopPropagation
 
     if poll is None:
-        return 'This poll no longer exists.'
+        await event.respond('This poll no longer exists.')
+        raise events.StopPropagation
 
     if action == StartAction.new_option:
         # Update the expected input and set the current poll
@@ -58,10 +58,9 @@ def start(bot, update, session, user):
         user.current_poll = poll
         session.commit()
 
-        update.message.chat.send_message(
+        await event.respond(
             i18n.t('creation.option.first', locale=poll.locale),
-            parse_mode='markdown',
-            reply_markup=get_external_add_option_keyboard(poll)
+            buttons=get_external_add_option_keyboard(poll)
         )
     elif action == StartAction.show_results:
         # Get all lines of the poll
@@ -72,32 +71,23 @@ def start(bot, update, session, user):
         for chunk in chunks:
             message = '\n'.join(chunk)
             try:
-                update.message.chat.send_message(
-                    message,
-                    parse_mode='markdown',
-                    disable_web_page_preview=True,
-                )
+                await event.respond(message, link_preview=False)
             # Retry for Timeout error (happens quite often when sending large messages)
             except TimeoutError:
                 time.sleep(2)
-                update.message.chat.send_message(
-                    message,
-                    parse_mode='markdown',
-                    disable_web_page_preview=True,
-                )
+                await event.respond(message, link_preview=False)
             time.sleep(1)
 
-        update.message.chat.send_message(
+        await event.respond(
             i18n.t('misc.start_after_results', locale=poll.locale),
-            parse_mode='markdown',
-            reply_markup=get_main_keyboard(user),
+            buttons=get_main_keyboard(user),
         )
         increase_stat(session, 'show_results')
 
     elif action == StartAction.share_poll:
-        update.message.chat.send_message(
+        await event.respond(
             i18n.t('external.share_poll', locale=poll.locale),
-            reply_markup=get_external_share_keyboard(poll)
+            buttons=get_external_share_keyboard(poll)
         )
         increase_stat(session, 'externally_shared')
 
@@ -112,12 +102,7 @@ def start(bot, update, session, user):
             user=user,
         )
 
-        sent_message = update.message.chat.send_message(
-            text,
-            reply_markup=keyboard,
-            parse_mode='markdown',
-            disable_web_page_preview=True,
-        )
+        sent_message = await event.respond(text, buttons=keyboard, link_preview=False)
 
         reference = Reference(
             poll,
@@ -127,3 +112,5 @@ def start(bot, update, session, user):
         session.add(reference)
 
         session.commit()
+
+    raise events.StopPropagation

@@ -1,32 +1,30 @@
 """Misc commands."""
-from telegram.ext import run_async
+from telethon import events
 
 from pollbot.i18n import i18n
-from pollbot.helper.session import session_wrapper
+from pollbot.client import client
+from pollbot.helper.session import message_wrapper
 from pollbot.display.misc import get_help_text_and_keyboard
 from pollbot.telegram.keyboard import get_donations_keyboard
 
 
-@run_async
-@session_wrapper()
-def send_help(bot, update, session, user):
+@client.on(events.NewMessage(incoming=True, pattern='/help'))
+@message_wrapper(private=True)
+async def send_help(event, session, user):
     """Send a help text."""
     text, keyboard = get_help_text_and_keyboard(user, 'intro')
 
-    update.message.chat.send_message(
-        text,
-        parse_mode='Markdown',
-        reply_markup=keyboard,
-        disable_web_page_preview=True,
-    )
+    await event.respond(text, buttons=keyboard, link_preview=False)
+    raise events.StopPropagation
 
 
-@run_async
-@session_wrapper()
-def send_donation_text(bot, update, session, user):
+@client.on(events.NewMessage(incoming=True, pattern='/donations'))
+@message_wrapper(private=True)
+async def send_donation_text(event, session, user):
     """Send the donation text."""
-    update.message.chat.send_message(
+    await event.respond(
         i18n.t('misc.donation', locale=user.locale),
-        parse_mode='Markdown',
-        reply_markup=get_donations_keyboard(user)
+        buttons=get_donations_keyboard(user),
+        link_preview=False
     )
+    raise events.StopPropagation

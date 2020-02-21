@@ -1,5 +1,6 @@
 from telethon import events
 
+from pollbot.client import client
 from pollbot.helper.session import message_wrapper
 from pollbot.display.settings import get_user_settings_text
 from pollbot.telegram.keyboard import (
@@ -7,12 +8,12 @@ from pollbot.telegram.keyboard import (
 )
 
 
-@client.on(events.NewMessage(incoming=True, pattern='/reset_broadcast'))
+@client.on(events.NewMessage(incoming=True, pattern='/settings'))
 @message_wrapper(private=True)
-def open_user_settings_command(event, session, user):
+async def open_user_settings_command(event, session, user):
     """Open the settings menu for the user."""
-    event.respond(
+    await event.respond(
         get_user_settings_text(user),
-        reply_markup=get_user_settings_keyboard(user),
-        parse_mode='markdown',
+        buttons=get_user_settings_keyboard(user),
     )
+    raise events.StopPropagation

@@ -7,7 +7,7 @@ license = "MIT"
 repository = "https://github.com/nukesor/ultimate-poll-bot"
 
 [tool.poetry.dependencies]
-python = ">=3.6"
+python = ">=3.8"
 raven = "^6"
 alembic = "^1"
 telethon = "^1.11.0"

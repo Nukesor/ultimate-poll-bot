@@ -57,10 +57,7 @@ async def broadcast(event, session, user):
     count = 0
     for user in users:
         try:
-            await client.send_message(
-                user.id,
-                message,
-            )
+            await client.send_message(user.id, message, link_preview=False)
             user.broadcast_sent = True
             session.commit()
 

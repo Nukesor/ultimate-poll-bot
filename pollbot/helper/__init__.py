@@ -1,4 +1,6 @@
 """Some static stuff or helper functions."""
+from telethon import types
+
 from pollbot.i18n import i18n
 from pollbot.config import config
 from .enums import PollType
@@ -74,3 +76,15 @@ def get_escaped_bot_name():
     escaped = name.replace('_', '\_')
 
     return escaped
+
+
+def get_peer_information(peer):
+    """Get the id depending on the chat type."""
+    if isinstance(peer, types.PeerUser):
+        return peer.user_id, 'user'
+    elif isinstance(peer, types.PeerChat):
+        return peer.chat_id, 'peer'
+    elif isinstance(peer, types.PeerChannel):
+        return peer.channel_id, 'channel'
+    else:
+        raise Exception("Unknown chat type")

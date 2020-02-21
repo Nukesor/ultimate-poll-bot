@@ -1,7 +1,6 @@
 """Session helper functions."""
 import traceback
 from functools import wraps
-from telethon import types
 from telethon.events import StopPropagation
 from telethon.errors.rpcbaseerrors import (
     ForbiddenError,
@@ -15,6 +14,7 @@ from pollbot.sentry import sentry
 from pollbot.models import User
 from pollbot.i18n import i18n
 from pollbot.helper.stats import increase_stat
+from pollbot.helper import get_peer_information
 
 
 def job_session_wrapper():
@@ -220,15 +220,3 @@ def ignore_job_exception(exception):
         return True
 
     return False
-
-
-def get_peer_information(peer):
-    """Get the id depending on the chat type."""
-    if isinstance(peer, types.PeerUser):
-        return peer.user_id, 'user'
-    elif isinstance(peer, types.PeerChat):
-        return peer.chat_id, 'peer'
-    elif isinstance(peer, types.PeerChannel):
-        return peer.channel_id, 'channel'
-    else:
-        raise Exception("Unknown chat type")

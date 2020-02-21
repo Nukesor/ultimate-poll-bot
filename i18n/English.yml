@@ -319,6 +319,7 @@ external:
   done: Finished
   share_poll: To share this poll, just click the button and choose the chat you want to share the poll with.
   notification:
+    no_active_poll: You don't have any active polls.
     pick_poll: Pick the correct poll to activate notifications
     activated: Notifications activated
     new_notification_board: Please use the newer notification board.
