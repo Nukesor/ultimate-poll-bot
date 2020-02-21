@@ -61,5 +61,6 @@ target/
 #Ipython Notebook
 .ipynb_checkpoints
 
-# Repository kram
-pollbot.db
+
+# Telethon stuff
+*session*

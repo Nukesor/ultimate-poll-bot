@@ -10,11 +10,9 @@ from sqlalchemy.types import (
     DateTime,
     String,
 )
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import relationship
 
 from pollbot.db import base
-from pollbot.helper.stats import increase_stat
 
 
 class User(base):
@@ -58,51 +56,3 @@ class User(base):
     def __repr__(self):
         """Print as string."""
         return f'User with Id: {self.id}, name: {self.name}, locale: {self.locale}'
-
-    @staticmethod
-    def get_or_create(session, tg_user):
-        """Get or create a new user."""
-        user = session.query(User).get(tg_user.id)
-        if not user:
-            user = User(tg_user.id, tg_user.username)
-            session.add(user)
-            try:
-                session.commit()
-                increase_stat(session, 'new_users')
-            # Handle parallel user addition
-            except IntegrityError as e:
-                session.rollback()
-                user = session.query(User).get(tg_user.id)
-                if user is None:
-                    raise e
-
-        # Allways update the username in case the username changed
-        if tg_user.username is not None:
-            user.username = tg_user.username.lower()
-
-        # Allways update the name in case something changed
-        name = User.get_name_from_tg_user(tg_user)
-        user.name = name
-
-        return user
-
-    @staticmethod
-    def get_name_from_tg_user(tg_user):
-        """Return the best possible name for a User."""
-        name = ''
-        if tg_user.first_name is not None:
-            name = tg_user.first_name
-            name += ' '
-        if tg_user.last_name is not None:
-            name += tg_user.last_name
-
-        if tg_user.username is not None and name == '':
-            name = tg_user.username
-
-        if name == '':
-            name = str(tg_user.id)
-
-        for character in ['[', ']', '_', '*']:
-            name = name.replace(character, '')
-
-        return name.strip()
