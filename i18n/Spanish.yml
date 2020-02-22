@@ -19,25 +19,25 @@ datepicker:
 poll:
     anonymous: '¡La encuesta es anónima!'
     results_not_visible: '¡Resultados ocultos hasta el cierre de la encuesta!'
-    vote_times: "\nCada usuario puede votar *%{amount} veces*"
+    vote_times: "\nCada usuario puede votar **%{amount} veces**"
     due: "\n📅 Esta encuesta vence el: %{date}"
-    closed: "\n⚠️ *Encuesta cerrada* ⚠️"
-    own_poll: 'Crea *tu propia* encuesta [aquí](https://t.me/ultimate_pollbot)'
-    many_users_voted: '*%{count} usuarios* han votado'
-    one_user_voted: '*1 usuario* ha votado'
+    closed: "\n⚠️ **Encuesta cerrada** ⚠️"
+    own_poll: 'Crea **tu propia** encuesta [aquí](https://t.me/ultimate_pollbot)'
+    many_users_voted: '**%{count} usuarios** han votado'
+    one_user_voted: '**1 usuario** ha votado'
     total_votes: ' (%{count} votos)'
     remaining_votes: "\nVotos restantes:"
     remaining_votes_user: '%{name}: %{count} votos'
-    summarized_users: '_y %{count} personas más._'
-    too_many_votes: "⚠️ *Demasiados votos en el último minuto:* ⚠️\nTus votos seguirán siendo registrados, pero este mensaje sólo se actualizará cada 2 segundos.\n(Telegram no permite enviar/actualizar más de una cierta cantidad de mensajes por minuto en un grupo por parte de un bot.)\n"
+    summarized_users: '__y %{count} personas más.__'
+    too_many_votes: "⚠️ **Demasiados votos en el último minuto:** ⚠️\nTus votos seguirán siendo registrados, pero este mensaje sólo se actualizará cada 2 segundos.\n(Telegram no permite enviar/actualizar más de una cierta cantidad de mensajes por minuto en un grupo por parte de un bot.)\n"
     doodle:
-        'yes': '├ *Sí:*'
-        maybe: '├ *Quizás:*'
-        'no': '├ *No:*'
-        yes_summarized: "├ *Sí:* %{count} votos\n"
-        maybe_summarized: '├ *Quizá:* %{count} votos'
-        no_summarized: '├ *No:* %{count} votos'
-    doodle_help: "*Haz clic* en los botones `a)`, `b)` abajo para ver los nombres de las opciones.\n"
+        'yes': '├ **Sí:**'
+        maybe: '├ **Quizás:**'
+        'no': '├ **No:**'
+        yes_summarized: "├ **Sí:** %{count} votos\n"
+        maybe_summarized: '├ **Quizá:** %{count} votos'
+        no_summarized: '├ **No:** %{count} votos'
+    doodle_help: "**Haz clic** en los botones `a)`, `b)` abajo para ver los nombres de las opciones.\n"
     please_wait: 'Por favor espera un segundo mientras el bot sincroniza las encuestas ☺️'
 deleted:
     poll: 'Encuesta eliminada.'
@@ -72,10 +72,10 @@ inline_query:
     create_first: 'Haz clic aquí para crear una encuesta primero ;)'
     create_poll: 'Haz clic para crear una nueva encuesta'
 notification:
-    one_week: 'La encuesta *%{name}* se cerrará automáticamente en una semana'
-    one_day: 'La encuesta %{name}* se cerrará automáticamente en un día'
-    six_hours: 'La encuesta *%{name}* se cerrará automáticamente en seis horas'
-    closed: 'La encuesta *%{name}* ahora está cerrada'
+    one_week: 'La encuesta **%{name}** se cerrará automáticamente en una semana'
+    one_day: 'La encuesta %{name}** se cerrará automáticamente en un día'
+    six_hours: 'La encuesta **%{name}** se cerrará automáticamente en seis horas'
+    closed: 'La encuesta **%{name}** ahora está cerrada'
 keyboard:
     done: Hecho
     close: Cerrar
@@ -132,28 +132,28 @@ sorting:
     option_name: 'por nombre'
     doodle_sorting: 'por respuesta'
 settings:
-    poll_type: '*Tipo de encuesta*: %{poll_type}'
-    language: '*Idioma*: %{language}'
-    anonymous: '*Nombres*: Ocultos'
-    not_anonymous: '*Nombres*: Visibles'
-    due_date: '*Fecha de vencimiento*: %{date}'
-    no_due_date: '*Fecha de vencimiento*: Ninguna'
-    results_visible: '*Resultados*: Visibles'
-    results_not_visible: '*Resultados*: Ocultos'
-    user_options: '*Opciones de usuario personalizadas*: Todos pueden añadir nuevas opciones'
-    no_user_options: '*Opciones de usuario personalizadas*: Solo tú puedes añadir nuevas opciones'
-    percentage: '*Porcentaje*: Visible'
-    no_percentage: '*Porcentaje*: Oculto'
-    euro_date_format: '*Formato de fecha*: DD.MM.YYYY'
-    us_date_format: '*Formato de fecha*: YYYY-MM-DD'
-    user_sorting: '*Orden de usuarios*: %{name}'
-    option_sorting: '*Orden de opciones*: %{name}'
+    poll_type: '**Tipo de encuesta**: %{poll_type}'
+    language: '**Idioma**: %{language}'
+    anonymous: '**Nombres**: Ocultos'
+    not_anonymous: '**Nombres**: Visibles'
+    due_date: '**Fecha de vencimiento**: %{date}'
+    no_due_date: '**Fecha de vencimiento**: Ninguna'
+    results_visible: '**Resultados**: Visibles'
+    results_not_visible: '**Resultados**: Ocultos'
+    user_options: '**Opciones de usuario personalizadas**: Todos pueden añadir nuevas opciones'
+    no_user_options: '**Opciones de usuario personalizadas**: Solo tú puedes añadir nuevas opciones'
+    percentage: '**Porcentaje**: Visible'
+    no_percentage: '**Porcentaje**: Oculto'
+    euro_date_format: '**Formato de fecha**: DD.MM.YYYY'
+    us_date_format: '**Formato de fecha**: YYYY-MM-DD'
+    user_sorting: '**Orden de usuarios**: %{name}'
+    option_sorting: '**Orden de opciones**: %{name}'
     change_language: 'Haz clic en un idioma para cambiarlo para esta encuesta.'
     anonymize: "¿Quieres anonimizar esta encuesta?\n\n⚠️ Esta acción es irreversible. ⚠️\n"
     remove_options: 'Haz clic en los botones de abajo para eliminar las opciones no deseadas.'
-    summarize: '*Resumir votos*: Resumir si hay muchos votos'
-    dont_summarize: '*Resumir votos*: Mostrar todos los votos'
-    permanently_summarized: '*Resumir los votos*: Demasiados votos. Resumido permanentemente.'
+    summarize: '**Resumir votos**: Resumir si hay muchos votos'
+    dont_summarize: '**Resumir votos**: Mostrar todos los votos'
+    permanently_summarized: '**Resumir los votos**: Demasiados votos. Resumido permanentemente.'
 management:
     permanently_close: "¿Quieres cerrar esta encuesta para siempre?\n\nLos resultados se harán visibles, pero las personas ya no podrán votar\n⚠️ Esta acción es irreversible. ⚠️\n"
     delete: '¿Quieres eliminar esta encuesta?'
@@ -171,23 +171,23 @@ creation:
         results_visible: 'Mostrar resultados en la encuesta'
         results_not_visible: 'Ocultar resultados hasta su cierre'
     option:
-        next: 'Envía *otra opción*, elige una fecha y añádela como opción o haz clic en *Hecho* cuando hayas terminado.'
+        next: 'Envía **otra opción**, elige una fecha y añádela como opción o haz clic en **Hecho** cuando hayas terminado.'
         first: "Por favor, envíame una opción. Puedes enviar varias opciones a la vez, cada opción en una nueva línea. \n\nTambién puedes añadir una descripción después de un guion.\nPor ejemplo `Hamburguesa - porque es sabrosa`\n"
         no_new: '❌ No se añadió una nueva opción'
-        single_added: "*%{option}* fue añadida. 👍\nEnvía *otra opción*, elige una fecha y añádela como opción o haz clic en *Hecho* cuando hayas terminado."
+        single_added: "**%{option}** fue añadida. 👍\nEnvía **otra opción**, elige una fecha y añádela como opción o haz clic en **Hecho** cuando hayas terminado."
         multiple_added: 'Se añadieron opciones:'
         finished: 'Ya se añadieron todas las opciones'
-    poll_type_help: "Tipo de encuesta actual: *%{poll_type}*\n\n👍 *Voto único Vote:*\nCada usuario tiene un solo voto. El modo de votación por defecto y normal.\n\n📅 *Doodle:*\nLos usuarios pueden votar `sí`, `no` o `quizás` para cada opción. Perfecto para elegir una fecha.\n\n🎮 *Voto en bloque:*\nCada usuario puede votar todas las opciones (o menos). Útil para encontrar las opciones más buscadas en un grupo, por ejemplo, juegos que deben jugarse en una LAN-Party.\n\n🎮 *Voto limitado:*\nCada usuario obtiene un número fijo de votos que puede distribuir, pero solo una vez por opción.\nEs como el voto en bloque, pero la gente tiene que priorizar.\nEste modo es bueno para limitar la cantidad de posibles ganadores, por ejemplo, si sólo quieres un máximo de 4 juegos en tu LAN-Party.\n\n📊 *Voto acumulativo:*\nCada usuario obtiene un número fijo de votos que puede distribuir como quiera (incluso varios votos por opción).\nEste modo tiene un poco más de profundidad que el voto limitado, ya que permite a los usuarios votar en una sola opción varias veces.\n\n🛒 *Votos ilimitados* (o la lista de compras) 😎\nCada usuario puede votar tantas veces como quiera en cualquier opción.\nEsto es perfecto si quieres, por ejemplo, conocer la cantidad de cosas que todos quieren para el próximo viaje de festival.\n"
+    poll_type_help: "Tipo de encuesta actual: **%{poll_type}**\n\n👍 **Voto único Vote:**\nCada usuario tiene un solo voto. El modo de votación por defecto y normal.\n\n📅 **Doodle:**\nLos usuarios pueden votar `sí`, `no` o `quizás` para cada opción. Perfecto para elegir una fecha.\n\n🎮 **Voto en bloque:**\nCada usuario puede votar todas las opciones (o menos). Útil para encontrar las opciones más buscadas en un grupo, por ejemplo, juegos que deben jugarse en una LAN-Party.\n\n🎮 **Voto limitado:**\nCada usuario obtiene un número fijo de votos que puede distribuir, pero solo una vez por opción.\nEs como el voto en bloque, pero la gente tiene que priorizar.\nEste modo es bueno para limitar la cantidad de posibles ganadores, por ejemplo, si sólo quieres un máximo de 4 juegos en tu LAN-Party.\n\n📊 **Voto acumulativo:**\nCada usuario obtiene un número fijo de votos que puede distribuir como quiera (incluso varios votos por opción).\nEste modo tiene un poco más de profundidad que el voto limitado, ya que permite a los usuarios votar en una sola opción varias veces.\n\n🛒 **Votos ilimitados** (o la lista de compras) 😎\nCada usuario puede votar tantas veces como quiera en cualquier opción.\nEsto es perfecto si quieres, por ejemplo, conocer la cantidad de cosas que todos quieren para el próximo viaje de festival.\n"
     results_not_visible: Ocultos
     results_visible: Visibles
     anonymity: Ocultos
     no_anonymity: Visibles
-    init_text: "Creemos una nueva encuesta 👌\n\nAjustes de la encuesta:\n*Tipo*: %{poll_type}\n*Nombres*: %{anonymity}\n*Resultados*: %{results_visible}\n\nPor favor, sigue estos pasos:\n1. Configúrala a tu gusto 🙂\n2. Envíame la pregunta 👇\n"
-    datepicker_text: "*Selector de fechas:*\nPara añadir una fecha, selecciónala y haz clic en *Elegir esta fecha*. Haz clic en *Hecho* cuando hayas terminado.\n\n*Opciones actuales:*\n"
+    init_text: "Creemos una nueva encuesta 👌\n\nAjustes de la encuesta:\n**Tipo**: %{poll_type}\n**Nombres**: %{anonymity}\n**Resultados**: %{results_visible}\n\nPor favor, sigue estos pasos:\n1. Configúrala a tu gusto 🙂\n2. Envíame la pregunta 👇\n"
+    datepicker_text: "**Selector de fechas:**\nPara añadir una fecha, selecciónala y haz clic en **Elegir esta fecha**. Haz clic en **Hecho** cuando hayas terminado.\n\n**Opciones actuales:**\n"
     error:
         limit_bigger_zero: 'Por favor envíame un número mayor que 0'
         limit_between: 'Por favor, envíame un número entre 1 y %{limit}'
-        markdown: "Por favor, no uses símbolos de markdown en tus nombres, descripciones u opciones. Tales símbolos son `_`,`*` and `[`.\nPor favor, envíame el mensaje de nuevo sin estos símbolos.\n"
+        markdown: "Por favor, no uses símbolos de markdown en tus nombres, descripciones u opciones. Tales símbolos son `_`,`**` and `[`.\nPor favor, envíame el mensaje de nuevo sin estos símbolos.\n"
 external:
     canceled: Cancelado
     notification:
@@ -201,14 +201,14 @@ user:
     language_changed: 'Idioma cambiado'
 misc:
     donation: "¡Hola!\n\nMi nombre es Arne Beer (@Nukesor). Soy el único desarrollador del Ultimate PollBot.\n\nLa idea de escribir Ultimate PollBot surgió cuando mis amigos de nuevo no pudieron decidir dónde ir a almorzar. ¡Ocurrió tantas veces que necesitábamos encontrar desesperadamente una solución buena y estable dentro de Telegram! Así es como nace ULTIMATE PollBot.\n\nCada línea de código en este proyecto fue escrita en mi tiempo libre y es completamente gratis. Este proyecto no tiene fines de lucro, es de código abierto en [GitHub](https://github.com/Nukesor/ultimate-poll-bot) y está alojado en un servidor que estoy alquilando con mi propio dinero.\n\nAhora mismo suelo invertir entre 2 y 10 horas a la semana en el desarrollo y mantenimiento de mis proyectos y me encantaría recibir apoyo, ya que estoy haciendo esto en gran parte para ti. Realmente agradezco cualquier cosa que me ayude y que mantenga a mi servidor y a mí funcionando. ☺️\n\nSi te gusta este proyecto, echa un vistazo a mi [página de Patreon](https://www.patreon.com/nukesor) o apóyame vía [PayPal](https://www.paypal.me/arnebeer).\n\nSi tienes alguna pregunta, pasa por mi [grupo de soporte](https://t.me/nukesors_projects).\n\n¡Que tengas un buen día!\n"
-    start: "🌟Te damos la bienvenida a *ULTIMATE* PollBot\n\nEnvía /create o haz clic en el botón de abajo para crear una encuesta. Te explicaremos su funcionamiento sobre la marcha.\n\n🌐 Elegir un idioma /language\n❓ Más información /help\n\nSi te gusta el proyecto, pásate por mi [grupo de soporte](https://t.me/nukesors_projects) o echa un vistazo a mi [página de Patreon](https://www.patreon.com/nukesor).\n\nEste bot es de código abierto en [GitHub](https://github.com/Nukesor/ultimate-poll-bot).\n"
+    start: "🌟Te damos la bienvenida a **ULTIMATE** PollBot\n\nEnvía /create o haz clic en el botón de abajo para crear una encuesta. Te explicaremos su funcionamiento sobre la marcha.\n\n🌐 Elegir un idioma /language\n❓ Más información /help\n\nSi te gusta el proyecto, pásate por mi [grupo de soporte](https://t.me/nukesors_projects) o echa un vistazo a mi [página de Patreon](https://www.patreon.com/nukesor).\n\nEste bot es de código abierto en [GitHub](https://github.com/Nukesor/ultimate-poll-bot).\n"
     help:
         intro: "Existen diferentes tipos ajustes para tus encuestas. Elige la categoría que te interese o léelo todo. 😉\n"
-        creation: "🌟 *Creación:*\n\nPara crear una encuesta, simplemente envía o haz clic en /create.\nPara cada encuesta puedes elegir varias configuraciones iniciales\n\n*Tipo de encuesta:* Los diferentes tipos se explican en detalle en el menú de tipo de encuesta.\n*Anonimato:* Puedes anonimizar tu encuesta, lo que significa que no se mostrarán los nombres. Esto es permanente y para todas las partes.\n*Resultados visibles:* En este modo, los votos solo se hacen visibles después de cerrar la encuesta. Esto es perfecto para evitar la posibilidad de [votación táctica](https://en.wikipedia.org/wiki/Tactical_voting) y la influencia del [anclaje](https://en.wikipedia.org/wiki/Anchoring)\n\n-> *Atención: ¡Una encuesta cerrada con resultados invisibles permanece cerrada!:*\nReabrir una encuesta permitiría a un usuario, específicamente al creador de la encuesta, ver los votos, y colocar su propio voto de una manera que resultaría en una posible ventaja para él (votación táctica).\n"
-        settings: "⚙️ *Ajustes:*\n\nLos ajustes adicionales de una encuesta pueden ser ajustados después de que la encuesta haya sido creada:\n\n*Anonimato:* Una encuesta puede hacerse anónima retrospectivamente.\n*Porcentaje:* La línea de porcentaje de opciones se puede ocultar en el menú de ajustes.\n*Opciones:* Se pueden añadir nuevas opciones y eliminar las existentes en el menú de ajustes.\n*Opciones de usuario:* Puedes permitir que otros usuarios añadan opciones a tu encuesta.\n*Orden:* Se puede cambiar el orden en el que se muestran los nombres de los usuarios y las opciones en los resultados.\n*Fecha de vencimiento:* Se puede establecer una fecha de vencimiento en la que la encuesta se cerrará automáticamente.\n"
-        notifications: "📣 *Avisos:*\n\nSi habilitas los avisos para tu chat, el bot enviará un mensaje 1 día, 6 horas y 1 hora antes de que se cierre la encuesta. Esta es una función para recordar a todos los miembros de un grupo que una encuesta se cerrará pronto, y para facilitar encontrar nuevamente el mensaje de la encuesta 😉\n\nPara activar los avisos en un chat, sigue estos pasos:\n*1.* Crea una encuesta\n*2.* Establece una fecha de vencimiento en el menú de ajustes\n*3.* Ve al chat en el que quieres que se notifique (El bot necesita ser añadido al grupo antes de que la encuesta sea compartida o tendrás que compartirla nuevamente).\n*4.* Responde con /notify al mensaje de la encuesta que elegiste vía @ultimate\\_pollbot\n*5.* Elige la encuesta correcta\n\nLamentablemente todo este procedimiento es demasiado complicado, ya que el Telegram no permite detectar mensajes de bots en grupos. 😐 Por lo tanto, no sabemos qué encuesta se publica en cada grupo y todo tiene que hacerse manualmente.\n"
-        management: "🕰 *Encontrar encuestas antiguas:*\n\nHay dos comandos /list y /list\\_closed, que te permiten encontrar y administrar tus encuestas antiguas.\n\n\n⚠️ *Borrar encuestas:*\n\nPuedes borrar encuestas individuales en los respectivos menús de las encuestas.\nTambién existe el comando /delete\\_closed, que borra todas las encuestas cerradas, y el comando /delete\\_all que borra TODAS las encuestas.\n"
-        languages: "🌐 *Idioma:*\n\nUltimate pollbot es compatible con varios idiomas, pero sólo se mantiene oficialmente el inglés. Para añadir un nuevo idioma, ve al repositorio GitHub, copia el archivo `english.yml`, renómbralo a tu idioma y ajusta todos los valores.\n\nTen cuidado de no estropear ningún estilo de Markdown (`**`, `__`, `${}`), de lo contrario las cosas se romperán en tu idioma. Si algo se rompe debido a traducciones rotas, por favor, arréglalo tú mismo. No voy a investigar estos temas. \n\nEl soporte multilingüe es una característica impulsada por la comunidad que con mucho gusto apoyo, pero no puedo soportar varios idiomas por mi cuenta.\n"
+        creation: "🌟 **Creación:**\n\nPara crear una encuesta, simplemente envía o haz clic en /create.\nPara cada encuesta puedes elegir varias configuraciones iniciales\n\n**Tipo de encuesta:** Los diferentes tipos se explican en detalle en el menú de tipo de encuesta.\n**Anonimato:** Puedes anonimizar tu encuesta, lo que significa que no se mostrarán los nombres. Esto es permanente y para todas las partes.\n**Resultados visibles:** En este modo, los votos solo se hacen visibles después de cerrar la encuesta. Esto es perfecto para evitar la posibilidad de [votación táctica](https://en.wikipedia.org/wiki/Tactical_voting) y la influencia del [anclaje](https://en.wikipedia.org/wiki/Anchoring)\n\n-> **Atención: ¡Una encuesta cerrada con resultados invisibles permanece cerrada!:**\nReabrir una encuesta permitiría a un usuario, específicamente al creador de la encuesta, ver los votos, y colocar su propio voto de una manera que resultaría en una posible ventaja para él (votación táctica).\n"
+        settings: "⚙️ **Ajustes:**\n\nLos ajustes adicionales de una encuesta pueden ser ajustados después de que la encuesta haya sido creada:\n\n**Anonimato:** Una encuesta puede hacerse anónima retrospectivamente.\n**Porcentaje:** La línea de porcentaje de opciones se puede ocultar en el menú de ajustes.\n**Opciones:** Se pueden añadir nuevas opciones y eliminar las existentes en el menú de ajustes.\n**Opciones de usuario:** Puedes permitir que otros usuarios añadan opciones a tu encuesta.\n**Orden:** Se puede cambiar el orden en el que se muestran los nombres de los usuarios y las opciones en los resultados.\n**Fecha de vencimiento:** Se puede establecer una fecha de vencimiento en la que la encuesta se cerrará automáticamente.\n"
+        notifications: "📣 **Avisos:**\n\nSi habilitas los avisos para tu chat, el bot enviará un mensaje 1 día, 6 horas y 1 hora antes de que se cierre la encuesta. Esta es una función para recordar a todos los miembros de un grupo que una encuesta se cerrará pronto, y para facilitar encontrar nuevamente el mensaje de la encuesta 😉\n\nPara activar los avisos en un chat, sigue estos pasos:\n**1.** Crea una encuesta\n**2.** Establece una fecha de vencimiento en el menú de ajustes\n**3.** Ve al chat en el que quieres que se notifique (El bot necesita ser añadido al grupo antes de que la encuesta sea compartida o tendrás que compartirla nuevamente).\n**4.** Responde con /notify al mensaje de la encuesta que elegiste vía @ultimate\\_pollbot\n**5.** Elige la encuesta correcta\n\nLamentablemente todo este procedimiento es demasiado complicado, ya que el Telegram no permite detectar mensajes de bots en grupos. 😐 Por lo tanto, no sabemos qué encuesta se publica en cada grupo y todo tiene que hacerse manualmente.\n"
+        management: "🕰 **Encontrar encuestas antiguas:**\n\nHay dos comandos /list y /list\\_closed, que te permiten encontrar y administrar tus encuestas antiguas.\n\n\n⚠️ **Borrar encuestas:**\n\nPuedes borrar encuestas individuales en los respectivos menús de las encuestas.\nTambién existe el comando /delete\\_closed, que borra todas las encuestas cerradas, y el comando /delete\\_all que borra TODAS las encuestas.\n"
+        languages: "🌐 **Idioma:**\n\nUltimate pollbot es compatible con varios idiomas, pero sólo se mantiene oficialmente el inglés. Para añadir un nuevo idioma, ve al repositorio GitHub, copia el archivo `english.yml`, renómbralo a tu idioma y ajusta todos los valores.\n\nTen cuidado de no estropear ningún estilo de Markdown (`****`, `__`, `${}`), de lo contrario las cosas se romperán en tu idioma. Si algo se rompe debido a traducciones rotas, por favor, arréglalo tú mismo. No voy a investigar estos temas. \n\nEl soporte multilingüe es una característica impulsada por la comunidad que con mucho gusto apoyo, pero no puedo soportar varios idiomas por mi cuenta.\n"
         bugs: "Por lo general, recibo una notificación tan pronto como algo se rompe, ¡pero puede haber algunos errores que pasen desapercibidos! \n\nEn caso de que un error no se solucione en un día o dos, abre un ticket en [GitHub](https://github.com/Nukesor/ultimate-poll-bot) o pasa por mi [grupo de soporte](https: //t.me/nukesors_projects).\n"
     error: "Ocurrió un error desconocido. Probablemente acabo de ser notificado sobre esto y trataré de arreglarlo lo más rápido posible.\n\nEn caso de que el error no se solucione en un día o dos, por favor, abre un ticket en [GitHub](https://github.com/Nukesor/ultimate-poll-bot) o ve a mi [grupo de soporte](https://t.me/nukesors_projects).\n"
     start_after_results: '¡Ey! Escribe /create para crear tu encuesta ☺️'

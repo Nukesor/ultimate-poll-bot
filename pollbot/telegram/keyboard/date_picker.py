@@ -14,11 +14,11 @@ def get_creation_datepicker_keyboard(poll, current_date):
 
     # Create back and done buttons
     close_payload = f'{CallbackType.close_creation_datepicker.value}:{poll.id}:0'
-    buttons = [Button.inline(i18n.t('keyboard.close', locale=locale), data=close_payload)]
+    row = [Button.inline(i18n.t('keyboard.close', locale=locale), data=close_payload)]
     if len(poll.options) > 0:
         done_payload = f'{CallbackType.all_options_entered.value}:{poll.id}:0'
-        buttons.append(Button.inline(i18n.t('keyboard.done', locale=locale), data=done_payload))
-    buttons.append(buttons)
+        row.append(Button.inline(i18n.t('keyboard.done', locale=locale), data=done_payload))
+    buttons.append(row)
 
     return buttons
 
@@ -53,9 +53,9 @@ def get_external_datepicker_keyboard(poll, current_date):
 
     # Add back and pick buttons
     back_payload = f'{CallbackType.external_open_menu.value}:{poll.id}:0'
-    rows = [[Button.inline(i18n.t('keyboard.back', locale=poll.locale),
-                           data=back_payload)]]
-    buttons += rows
+    row = [Button.inline(i18n.t('keyboard.back', locale=poll.locale),
+                         data=back_payload)]
+    buttons.append(row)
 
     return buttons
 
@@ -94,7 +94,7 @@ def get_buttons(poll, current_date, datetime_context):
         row = []
         for day in week:
             # Format the text. The currently chosen day should be surrounded by brackets e.g (26)
-            day_text = day
+            day_text = str(day)
             if day > 0:
                 this_date = date(year=current_date.year, month=current_date.month, day=day)
                 if this_date in picked_dates:

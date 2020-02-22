@@ -11,8 +11,8 @@ from pollbot.telegram.job import (
     send_notifications,
     create_daily_stats,
 )
-#from pollbot.telegram.message_handler import handle_private_text
-#from pollbot.telegram.callback_handler import handle_callback_query
+from pollbot.telegram.message_handler import handle_private_text
+from pollbot.telegram.callback_handler import handle_callback_query
 #from pollbot.telegram.inline_query import search
 #from pollbot.telegram.inline_result_handler import handle_chosen_inline_result
 from pollbot.telegram.commands.poll import (
@@ -37,11 +37,3 @@ logging.basicConfig(level=config['logging']['log_level'],
 loop.create_task(message_update_job())
 loop.create_task(send_notifications())
 loop.create_task(create_daily_stats())
-
-
-# Message handler
-#dispatcher.add_handler(
-#    MessageHandler(
-#        Filters.text & Filters.private & (~Filters.update.edited_message) & (~Filters.reply),
-#        handle_private_text
-#    ))

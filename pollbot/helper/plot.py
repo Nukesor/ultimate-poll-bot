@@ -6,18 +6,29 @@ import matplotlib.dates as mdates
 import numpy as np
 from sqlalchemy import func, Date, cast, Integer
 
+from pollbot.client import client
 from pollbot.models import User, Vote
 
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt  # noqa
 
 
-def send_plots(session, chat):
+async def send_plots(session, event):
     """Generate and send plots to the user."""
     image = get_user_activity(session)
-    chat.send_document(image, caption='User statistics')
+    await client.send_file(
+        (await event.get_message()).to_id,
+        image,
+        caption='User statistics',
+        force_document=True,
+    )
     image = get_vote_activity(session)
-    chat.send_document(image, caption='Vote statistics')
+    await client.send_file(
+        (await event.get_message()).to_id,
+        image,
+        caption='Vote statistics',
+        force_document=True,
+    )
     image.close()
 
 

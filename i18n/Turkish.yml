@@ -18,22 +18,22 @@ datepicker:
 poll:
     anonymous: Anonim!
     results_not_visible: 'Sonuçlar anket kapanana kadar gösterilmez!'
-    vote_times: "\nHer kullanıcı *%{amount} kez* oy verebilir"
+    vote_times: "\nHer kullanıcı **%{amount} kez** oy verebilir"
     due: "\n📅 Bu anket şu tarihte bitiyor: %{date}"
-    closed: "\n⚠️ *Bu anket kapalı* ⚠️"
-    own_poll: '*Kendi* anketinizi [buradan](https://t.me/ultimate_pollbot) oluşturun'
-    many_users_voted: 'Şimdiye kadar *%{count} kullanıcı* oy verdi'
-    one_user_voted: 'Şimdiye kadar *1 kullanıcı* oy verdi'
+    closed: "\n⚠️ **Bu anket kapalı** ⚠️"
+    own_poll: '**Kendi** anketinizi [buradan](https://t.me/ultimate_pollbot) oluşturun'
+    many_users_voted: 'Şimdiye kadar **%{count} kullanıcı** oy verdi'
+    one_user_voted: 'Şimdiye kadar **1 kullanıcı** oy verdi'
     total_votes: ' (%{count} oy)'
     remaining_votes: "\nKalan oylar:"
     remaining_votes_user: '%{name}: %{count} oy'
-    summarized_users: '_ve %{count} diğer kişi._'
-    too_many_votes: "⚠️ *Son dakika içinde çok fazla oy:* ⚠️\nOylarınız hala kayıtlı, ama bu mesaj her 2 saniyede güncellenecek\n(Telegram bir grupta bot tarafından aynı dakika içinde birden fazla mesajı göndermeye/güncellemeye izin vermiyor)\n"
+    summarized__users: '__ve %{count} diğer kişi.__'
+    too_many_votes: "⚠️ **Son dakika içinde çok fazla oy:** ⚠️\nOylarınız hala kayıtlı, ama bu mesaj her 2 saniyede güncellenecek\n(Telegram bir grupta bot tarafından aynı dakika içinde birden fazla mesajı göndermeye/güncellemeye izin vermiyor)\n"
     doodle:
-        'yes': '├ *Evet:*'
-        maybe: '├ *Belki:*'
-        'no': '├ *Hayır:*'
-    doodle_help: 'Seçenek adlarını görmek için aşağıdaki `a)`, `b)` butonlarına *tıklayın*.'
+        'yes': '├ **Evet:**'
+        maybe: '├ **Belki:**'
+        'no': '├ **Hayır:**'
+    doodle_help: 'Seçenek adlarını görmek için aşağıdaki `a)`, `b)` butonlarına **tıklayın**.'
 deleted:
     poll: 'Bu anket kalıcı olarak silindi'
     polls: 'Tüm anketler silindi'
@@ -67,10 +67,10 @@ inline_query:
     create_first: 'İlk olarak bir anket oluşturmak için buraya tıklayın ;)'
     create_poll: 'Yeni bir anket oluşturmak için tıklayın.'
 notification:
-    one_week: '*%{name}* anketi bir hafta içinde otomatik olarak kapanacak'
-    one_day: '*%{name}* anketi bir gün içinde otomatik olaak kapatılacak'
-    six_hours: '*%{name}* anketi altı saat içinde otomatik olarak kapatılacak'
-    closed: '*%{name}* anketi artık kapalı'
+    one_week: '**%{name}** anketi bir hafta içinde otomatik olarak kapanacak'
+    one_day: '**%{name}** anketi bir gün içinde otomatik olaak kapatılacak'
+    six_hours: '**%{name}** anketi altı saat içinde otomatik olarak kapatılacak'
+    closed: '**%{name}** anketi artık kapalı'
 keyboard:
     done: Bitti
     close: Kapat
@@ -121,28 +121,28 @@ sorting:
     option_name: 'isme göre'
     doodle_sorting: 'cevaba göre'
 settings:
-    poll_type: '*Anket tipi*: %{poll_type}'
-    language: '*Dil*: %{language}'
-    anonymous: '*Anonimlik*: İsimler gösterilmez'
-    not_anonymous: '*Anonimlik*: İsimler gösterilir'
-    due_date: '*Bitiş tarihi*: %{date}'
-    no_due_date: '*Bitiş tarihi*: Yok'
-    results_visible: '*Sonuç görünürlüğü*: Sonuçlar direkt olarak gösterilir'
-    results_not_visible: '*Sonuç görünürlüğü*: Sonuçlar anket kapanana kadar gösterilmez'
-    user_options: '*Özel kullanıcı seçenekleri*: Herkes yeni seçenekler ekleyebilir'
-    no_user_options: '*Özel kullanıcı seçenekleri*: Yalnızca siz yeni seçenekler ekleyebilirsiniz'
-    percentage: '*Yüzde*: Görünür'
-    no_percentage: '*Yüzde*: Gizli'
-    euro_date_format: '*Tarih biçimi*: DD.MM.YYYY'
-    us_date_format: '*Tarih biçimi*: YYYY-MM-DD'
-    user_sorting: '*Kullanıcı Sıralaması*: %{name}'
-    option_sorting: '*Seçenek Sıralaması*: %{name}'
+    poll_type: '**Anket tipi**: %{poll_type}'
+    language: '**Dil**: %{language}'
+    anonymous: '**Anonimlik**: İsimler gösterilmez'
+    not_anonymous: '**Anonimlik**: İsimler gösterilir'
+    due_date: '**Bitiş tarihi**: %{date}'
+    no_due_date: '**Bitiş tarihi**: Yok'
+    results_visible: '**Sonuç görünürlüğü**: Sonuçlar direkt olarak gösterilir'
+    results_not_visible: '**Sonuç görünürlüğü**: Sonuçlar anket kapanana kadar gösterilmez'
+    user_options: '**Özel kullanıcı seçenekleri**: Herkes yeni seçenekler ekleyebilir'
+    no_user_options: '**Özel kullanıcı seçenekleri**: Yalnızca siz yeni seçenekler ekleyebilirsiniz'
+    percentage: '**Yüzde**: Görünür'
+    no_percentage: '**Yüzde**: Gizli'
+    euro_date_format: '**Tarih biçimi**: DD.MM.YYYY'
+    us_date_format: '**Tarih biçimi**: YYYY-MM-DD'
+    user_sorting: '**Kullanıcı Sıralaması**: %{name}'
+    option_sorting: '**Seçenek Sıralaması**: %{name}'
     change_language: 'Bu anket için değiştirmek içinbir dile tıklayın'
     anonymize: "Bu anketi gerçekten anonim yapmak istiyor musunuz?\n⚠️ Bu işlem geri alınamaz. ⚠️\n"
     remove_options: 'İstediğiniz seçenekleri kaldırmak için aşağıdaki butonları kullanın'
-    summarize: '*Oyları özetleyin*: Birçok oyu özetleyin'
-    dont_summarize: '*Oyları özetleyin*: Tüm oyları göster'
-    permanently_summarized: '*Oyları özetleyin*: Çok fazla oy. Kalıcı olarak özetlenir.'
+    summarize: '**Oyları özetleyin**: Birçok oyu özetleyin'
+    dont_summarize: '**Oyları özetleyin**: Tüm oyları göster'
+    permanently_summarized: '**Oyları özetleyin**: Çok fazla oy. Kalıcı olarak özetlenir.'
     anonymity_warning: "Anonim bir ankette yüzde ve oyları gizleyemezsiniz.\nBu, kullanıcılara anketin gizli sonuçları olduğu fikrini verebilir. Bunu hala istiyorsanız, gizli sonuçların etkinleştirildiği normal bir anket oluşturun."
 management:
     permanently_close: "Bu anketi gerçekten kalıcı olarak kapatmak istiyor musunuz?\nSonuçlar görünür olacak, ama insanlar artık oy veremeyecek\n⚠️ Bu işlem geri alınamaz. ⚠️"
@@ -161,23 +161,23 @@ creation:
         results_visible: 'Sonuçları kalıcı olarak göster'
         results_not_visible: 'Anket kapanana kadar sonuçları gizle'
     option:
-        next: '*Başka bir seçenek* ekleyin ya da *bitti*ye tıklayın'
+        next: '**Başka bir seçenek** ekleyin ya da **bitti**ye tıklayın'
         first: "Lütfen bana bir seçenek gönderin. Tek seferde (her seçenek için yeni satır) birden fazla seçenek gönderebilirsiniz.\nAyrıca kısa çizgi arkasına açıklama ekleyebilirsiniz.\nÖrneğin `Burger - çünkü lezzetli`\n"
         no_new: '❌ Hiç yeni seçenek eklenmedi'
-        single_added: "*%{option}* eklendi. 👍\n*Başka bir seçenek* gönderin ya da *bitti*ye tıklayın."
+        single_added: "**%{option}** eklendi. 👍\n**Başka bir seçenek** gönderin ya da **bitti**ye tıklayın."
         multiple_added: 'Seçenekler eklendi:'
         finished: 'Tüm seçenekler zaten eklendi'
-    poll_type_help: "Şu anki anket tipi: *%{poll_type}*\n\n*Tekli oy:*\nHer kullanıcı tek oy verir. Varsayılan ve normal oylama modu.\n\n*Karalama:*\nHer kullanıcı her seçenek için `evet`, `hayır` ya da `belki` gibi oy verebilir. Bir tarih bulmak için harikadır.\n\n*Toplu oy:*\nHer kullanıcı tüm (ya da daha az) seçeneklere oy verebilir. Bir grupta en çok istenen seçeneği bulmak için kullanışlıdır, örneğin bir LAN partisinde oynanması gereken oyunlar.\n\n*Sınırlı oy:*\nHer kullanıcı dağıtabilecekleri sabit sayıda oyu verir, ama seçenek başına bir kez.\nToplu oya çok benziyor, ama insanların öncelik vermesi gerekiyor.\nBu mod olası kazanan miktarını sınırlandırmak için iyidir, örneğin LAN partisinde sadece 4 oyun istiyorsanız.\n\n*Kümülatif oy:*\nHer kullanıcı istedikleri gibi dağıtabilecekleri sabit sayıda bir oy verir (seçenek başına birden fazla oy bile).\nBu mod, sınırlı oylamadan biraz daha fazla derinliğe sahiptir, çünkü kullanıcıların tek bir seçenek üzerinde birden fazla oy kullanmasına izin verir.\n\n*Sınırsız oy* (veya alışveriş listesi)\nHer kullanıcı istediği herhangi bir seçeneğe istediği sıklıkta oy verebilir.\nİstiyorsanız harika, örneğin, bir sonraki festival yolculuğunu herkesi ne kadar istediğini belirlemek.\n"
+    poll_type_help: "Şu anki anket tipi: **%{poll_type}**\n\n**Tekli oy:**\nHer kullanıcı tek oy verir. Varsayılan ve normal oylama modu.\n\n**Karalama:**\nHer kullanıcı her seçenek için `evet`, `hayır` ya da `belki` gibi oy verebilir. Bir tarih bulmak için harikadır.\n\n**Toplu oy:**\nHer kullanıcı tüm (ya da daha az) seçeneklere oy verebilir. Bir grupta en çok istenen seçeneği bulmak için kullanışlıdır, örneğin bir LAN partisinde oynanması gereken oyunlar.\n\n**Sınırlı oy:**\nHer kullanıcı dağıtabilecekleri sabit sayıda oyu verir, ama seçenek başına bir kez.\nToplu oya çok benziyor, ama insanların öncelik vermesi gerekiyor.\nBu mod olası kazanan miktarını sınırlandırmak için iyidir, örneğin LAN partisinde sadece 4 oyun istiyorsanız.\n\n**Kümülatif oy:**\nHer kullanıcı istedikleri gibi dağıtabilecekleri sabit sayıda bir oy verir (seçenek başına birden fazla oy bile).\nBu mod, sınırlı oylamadan biraz daha fazla derinliğe sahiptir, çünkü kullanıcıların tek bir seçenek üzerinde birden fazla oy kullanmasına izin verir.\n\n**Sınırsız oy** (veya alışveriş listesi)\nHer kullanıcı istediği herhangi bir seçeneğe istediği sıklıkta oy verebilir.\nİstiyorsanız harika, örneğin, bir sonraki festival yolculuğunu herkesi ne kadar istediğini belirlemek.\n"
     results_not_visible: 'Sonuçlar anket kapanana kadar gösterilmez'
     results_visible: 'Sonuçlar direkt olarak gösterilir'
     anonymity: 'İsimler gösterilmez'
     no_anonymity: 'İsimler gösterilir'
-    init_text: "Merhaba!\nYeni bir anket oluşturmak üzeresiniz 👌\n\nBu anket için şu anki ayarlar:\n\n*Anket tipi*: %{poll_type}\n*Anonimlik*: %{anonymity}\n*Sonuç görünürlüğü*: %{results_visible}\n\nLütfen bu adımları izleyin:\n1. İhtiyaçlarınıza göre anketinizi yapılandırın 🙂\n2. 👇 Bana bu anketin adını gönderin. 👇\n"
-    datepicker_text: "*Tarih seçici:*\nTarih eklemek için, onu seçin ve _Bu tarihi seç_e tıklayın.\n\n*Şu anki seçenekler:*\n"
+    init_text: "Merhaba!\nYeni bir anket oluşturmak üzeresiniz 👌\n\nBu anket için şu anki ayarlar:\n\n**Anket tipi**: %{poll_type}\n**Anonimlik**: %{anonymity}\n**Sonuç görünürlüğü**: %{results_visible}\n\nLütfen bu adımları izleyin:\n1. İhtiyaçlarınıza göre anketinizi yapılandırın 🙂\n2. 👇 Bana bu anketin adını gönderin. 👇\n"
+    datepicker_text: "**Tarih seçici:**\nTarih eklemek için, onu seçin ve _Bu tarihi seç_e tıklayın.\n\n**Şu anki seçenekler:**\n"
     error:
         limit_bigger_zero: 'Lütfen bana 0''dan büyük bir sayı gönderin'
         limit_between: 'Lütfen bana 1 ile %{limit} arasında bir sayı gönderin'
-        markdown: "Lütfen isim, açıklama ve seçeneklerinizde markdown sembolleri kullanmayın. Söz konusu semboller `_`,`*` ve `[` gibidir.\nLütfen mesajı bu semboller olmadan tekrar gönderin.\n"
+        markdown: "Lütfen isim, açıklama ve seçeneklerinizde markdown sembolleri kullanmayın. Söz konusu semboller `_`,`**` ve `[` gibidir.\nLütfen mesajı bu semboller olmadan tekrar gönderin.\n"
 external:
     canceled: 'İptal edildi'
     notification:
@@ -192,5 +192,5 @@ user:
 misc:
     donation: "Merhaba!\n\nBenim adım Arne Beer (@Nukesor) Ultimate PollBot'un tek geliştiricisiyim.\n\nUltimate Pollbot'u yazma fikri, arkadaşlarım öğle yemeğinde nereye gideceklerine karar veremediği zaman şekillendi.\nBu zaten birçok kez oluyordu ve bu sorun için Telegram'ın içinde iyi ve kararlı bir çözüme ihtiyacımız vardı!\nİşte ULTIMATE Pollbot böyle doğdu.\n\nBu projedeki her kod satırı boş zamanlarımda yazıldı ve tamamen ücretsiz.\nBu proje kar amacı gütmeyen, [Github](https://github.com/Nukesor/ultimate-poll-bot)'ta açık kaynaklı ve kendi paramla kiraladığım sunucumda barınan bir projedir.\n\nŞu an genellikle haftada 2-10 saatimi projelerimi geliştirmeye ve sürdürmeye yatırıyorum ve biraz destek almayı isterdim, çünkü bunun büyük bir bölümünü sizin için yapıyorum.\n\nBana yardım eden, sunucumun ve benim çalışmamızı sürdüren her şeyi takdir ediyorum ☺️.\n\nBu projeyi sevdiyseniz, [Patreon](https://www.patreon.com/nukesor) sayfamı kontrol edin ya da beni [Paypal](https://www.paypal.me/arnebeer) ile destekleyin.\n\nİyi günler!\n"
     help:
-        management: "*Eski anketleri bul:*\n\nEski anketlerinizi bulmak ve yönetmek için /list ve /list\\_closed olarak iki komut var.\n\n\n*Anketleri sil:*\n\nBireysel anketleri ilgili anket menülerinden silebilirsiniz.\nAyrıca tüm kapalı anketleri silmek için /delete\\_closed komutu\nve tüm anketleri silmek için /delete\\_all komutu var.\n"
-        bugs: "*Gitmeyen bir hata var!!*\n\nGenellikle bir şey bozulur bozulmaz bir bildirim alırım, haberim olmayan bazı hatalar olabilir!\nHata bir veya iki gün içinde çözülmezse, lütfen [Github](https://github.com/Nukesor/ultimate-poll-bot)'tan bir konu açın.\n"
+        management: "**Eski anketleri bul:**\n\nEski anketlerinizi bulmak ve yönetmek için /list ve /list\\_closed olarak iki komut var.\n\n\n**Anketleri sil:**\n\nBireysel anketleri ilgili anket menülerinden silebilirsiniz.\nAyrıca tüm kapalı anketleri silmek için /delete\\_closed komutu\nve tüm anketleri silmek için /delete\\_all komutu var.\n"
+        bugs: "**Gitmeyen bir hata var!!**\n\nGenellikle bir şey bozulur bozulmaz bir bildirim alırım, haberim olmayan bazı hatalar olabilir!\nHata bir veya iki gün içinde çözülmezse, lütfen [Github](https://github.com/Nukesor/ultimate-poll-bot)'tan bir konu açın.\n"

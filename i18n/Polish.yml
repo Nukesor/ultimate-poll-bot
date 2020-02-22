@@ -16,15 +16,15 @@ datepicker:
 poll:
     anonymous: 'Ankieta jest anonimowa!'
     results_not_visible: 'Wyniki są niewidoczne, dopóki ankieta zostanie zamknięta!'
-    vote_times: "\nKażdy użytkownik może głosować *%{amount} razy*"
+    vote_times: "\nKażdy użytkownik może głosować **%{amount} razy**"
     due: "\n📅 Data zakończenia ankiety: %{date}"
-    closed: "\n⚠️ *Ta ankieta jest zamknięta* ⚠️"
-    many_users_voted: '*%{count} osób* zagłosowało'
-    one_user_voted: '*Jedna osoba* zagłosowała'
+    closed: "\n⚠️ **Ta ankieta jest zamknięta** ⚠️"
+    many_users_voted: '**%{count} osób** zagłosowało'
+    one_user_voted: '**Jedna osoba** zagłosowała'
     total_votes: ' (%{count} głosów)'
     remaining_votes: "\nPozostałe głosy:"
     remaining_votes_user: '%{name}: %{count} głosów'
-    too_many_votes: "⚠️ *Za dużo głosów w przeciągu minuty:* ⚠️\nTwoje głosy nadal będą rejestrowane, Ale ta informacja będzie odświeżana co 2 sekundy.\n(Telegram nie pozwala botom na wysyłanie/odświeżanie wiadomości w grupach zbyt dużo razy na minutę.)\n"
+    too_many_votes: "⚠️ **Za dużo głosów w przeciągu minuty:** ⚠️\nTwoje głosy nadal będą rejestrowane, Ale ta informacja będzie odświeżana co 2 sekundy.\n(Telegram nie pozwala botom na wysyłanie/odświeżanie wiadomości w grupach zbyt dużo razy na minutę.)\n"
 deleted:
     poll: 'Ankieta została usunięta.'
     polls: 'Wszystkie ankiety zostały usunięte'
@@ -58,9 +58,9 @@ inline_query:
     create_first: 'Kliknij tutaj aby najpierw stworzyć ankietę ;)'
     create_poll: 'Kliknij aby stworzyć ankietę.'
 notification:
-    one_day: 'Ankieta *%{name}* zostanie zamknięta automatycznie za 1 dzień'
-    six_hours: 'Ankieta *%{name}* zostanie zamknięta automatycznie za 6 godzin'
-    closed: 'Ankieta *%{name}* została zamknięta'
+    one_day: 'Ankieta **%{name}** zostanie zamknięta automatycznie za 1 dzień'
+    six_hours: 'Ankieta **%{name}** zostanie zamknięta automatycznie za 6 godzin'
+    closed: 'Ankieta **%{name}** została zamknięta'
 keyboard:
     done: Gotowe
     close: Zamknij
@@ -97,22 +97,22 @@ sorting:
     option_name: 'po nazwie'
     doodle_sorting: 'według odpowiedzi'
 settings:
-    poll_type: '*Typ ankiety*: %{poll_type}'
-    language: '*Język*: %{language}'
-    anonymous: '*Anonimowość*: Nazwy nie widoczne'
-    not_anonymous: '*Anonimowość*: Nazwy widoczne'
-    due_date: '*Deadline*: %{date}'
-    no_due_date: '*Deadline*: Brak'
-    results_visible: '*Widoczne wyniki*: Wyniki są widoczne bezpośrednio'
-    results_not_visible: '*Widoczne wyniki*: Wyniki nie są widoczne dopóki ankieta nie jest zamknięta'
-    user_options: '*Własne odpowiedzi*: Każdy może dodawać nowe opcje'
-    no_user_options: '*Własne odpowiedzi*: Tylko ty możesz dodawać nowe opcje'
-    percentage: '*Procenty*: Widoczne'
-    no_percentage: '*Procenty*: Niewidoczne'
-    euro_date_format: '*Format daty*: DD.MM.YYYY'
-    us_date_format: '*Format daty*: YYYY-MM-DD'
-    user_sorting: '*Sortowanie*: %{name}'
-    option_sorting: '*Sortowanie opcji*: %{name}'
+    poll_type: '**Typ ankiety**: %{poll_type}'
+    language: '**Język**: %{language}'
+    anonymous: '**Anonimowość**: Nazwy nie widoczne'
+    not_anonymous: '**Anonimowość**: Nazwy widoczne'
+    due_date: '**Deadline**: %{date}'
+    no_due_date: '**Deadline**: Brak'
+    results_visible: '**Widoczne wyniki**: Wyniki są widoczne bezpośrednio'
+    results_not_visible: '**Widoczne wyniki**: Wyniki nie są widoczne dopóki ankieta nie jest zamknięta'
+    user_options: '**Własne odpowiedzi**: Każdy może dodawać nowe opcje'
+    no_user_options: '**Własne odpowiedzi**: Tylko ty możesz dodawać nowe opcje'
+    percentage: '**Procenty**: Widoczne'
+    no_percentage: '**Procenty**: Niewidoczne'
+    euro_date_format: '**Format daty**: DD.MM.YYYY'
+    us_date_format: '**Format daty**: YYYY-MM-DD'
+    user_sorting: '**Sortowanie**: %{name}'
+    option_sorting: '**Sortowanie opcji**: %{name}'
     change_language: 'Kliknij na język aby go zmienić dla tej ankiety.'
     anonymize: "Czy na pewno chcesz aby ta ankieta była anonimowa?\n⚠️ Ta akcja jest nieodwracalna. ⚠️\n"
     remove_options: 'Kliknij przycisk poniżej aby usunąć niepożądane opcje.'
@@ -133,23 +133,23 @@ creation:
         results_visible: 'Pokaż wyniki cały czas'
         results_not_visible: 'Ukryj nazwy do zamknięcia ankiety'
     option:
-        next: 'Wyślij *kolejną opcję*, wybierz datę i dodaj ją jako opcje, lub kliknij *Gotowe* aby stworzyć ankietę.'
+        next: 'Wyślij **kolejną opcję**, wybierz datę i dodaj ją jako opcje, lub kliknij **Gotowe** aby stworzyć ankietę.'
         first: "Wyślij opcję. Możesz wysłać ich kilka naraz, Każdą w nowej linii.\nMożesz też dodać opis opcji po myślniku.\nNa przykład `Hamburger - bo jest smaczny`\n"
         no_new: '❌ Nie została dodana żadna nowa opcja'
-        single_added: "*%{option}* zostało dodane. 👍\nWyślij *kolejną opcję*, wybierz datę i dodaj ją jako opcje, lub kliknij *Gotowe* aby stworzyć ankietę."
+        single_added: "**%{option}** zostało dodane. 👍\nWyślij **kolejną opcję**, wybierz datę i dodaj ją jako opcje, lub kliknij **Gotowe** aby stworzyć ankietę."
         multiple_added: 'Dodano opcje:'
         finished: 'Wszystkie opcje zostały już dodane'
-    poll_type_help: "Obecny typ ankiety: *%{poll_type}*\n\n*Pojedyńczy głos:*\nKażda osoba ma jeden głos. Domyślne głosowanie.\n\n*Doodle:*\nOsoby mogą głosować na `tak`, `nie`, albo `może` dla każdej z odpowiedzi. Idealne dla znalezienia daty.\n\n*Głosy blokowe:*\nKażdy może głosować na każdą (lub mniej) opcji. Przydaje się w celu znalezienia najbardziej pożądanych opcji w grupie, np. gry które powinny znaleźć się na LAN-Party.\n\n*Limitowane głosy:*\nKażdy dostaje daną ilość głosów, które może użyć na kilku opcjach, ale tylko raz na opcję.\nPodobne do głosowania blokowego, ale każdy ilość głosów jest ograniczona.\nTen typ jest dobry dla limitowania zwycięskich opcji np. jeżeli chcesz mieć tylko 4 gry na LAN-Party.\n\n*Kumulacyjne głosy:*\nKażdy dostaje daną ilość głosów, które może użyć na kilku opcjach (nawet kilka razy na opcję).\nTen typ jest podobny do limitowanego głosowania, z tym że pozwala na głosowanie kilka razy na jedną opcję.\n\n*Nieskonczoność głosów:* (lista zakupów)\nKażdy może głosować tyle razy ile chce na każdą z opcji.\nPrzydaje sie w przypadku, gdy np. chcesz dowiedzieć się ile rzeczy każdy chce ze sobą zabrać na koncert.\n"
+    poll_type_help: "Obecny typ ankiety: **%{poll_type}**\n\n**Pojedyńczy głos:**\nKażda osoba ma jeden głos. Domyślne głosowanie.\n\n**Doodle:**\nOsoby mogą głosować na `tak`, `nie`, albo `może` dla każdej z odpowiedzi. Idealne dla znalezienia daty.\n\n**Głosy blokowe:**\nKażdy może głosować na każdą (lub mniej) opcji. Przydaje się w celu znalezienia najbardziej pożądanych opcji w grupie, np. gry które powinny znaleźć się na LAN-Party.\n\n**Limitowane głosy:**\nKażdy dostaje daną ilość głosów, które może użyć na kilku opcjach, ale tylko raz na opcję.\nPodobne do głosowania blokowego, ale każdy ilość głosów jest ograniczona.\nTen typ jest dobry dla limitowania zwycięskich opcji np. jeżeli chcesz mieć tylko 4 gry na LAN-Party.\n\n**Kumulacyjne głosy:**\nKażdy dostaje daną ilość głosów, które może użyć na kilku opcjach (nawet kilka razy na opcję).\nTen typ jest podobny do limitowanego głosowania, z tym że pozwala na głosowanie kilka razy na jedną opcję.\n\n**Nieskonczoność głosów:** (lista zakupów)\nKażdy może głosować tyle razy ile chce na każdą z opcji.\nPrzydaje sie w przypadku, gdy np. chcesz dowiedzieć się ile rzeczy każdy chce ze sobą zabrać na koncert.\n"
     results_not_visible: 'Wyniki nie są widoczne aż do zamknięcia ankiety'
     results_visible: 'Wyniki są bezpośrednio widoczne'
     anonymity: 'Nazwy nie są widoczne'
     no_anonymity: 'Nazwy są widoczne'
-    init_text: "Cześć!\nZa chwilę stworzysz swoją własną ankietę 👌\n\nObecne ustawienia ankiety:\n\n*Typ ankiety*: %{poll_type}\n*Anonimowość*: %{anonymity}\n*Widoczność wyników*: %{results_visible}\n\nNastępne kroki:\n1. Skonfiguruj ankietę według uznania 🙂\n2. 👇 Wyślij mi nazwę ankiety. 👇\n"
-    datepicker_text: "*Wybór daty:*\nAby dodać datę, wybierz ją i kliknij *Wybierz tę datę*.\nPotem kliknij *Gotowe*.\n\n*Obecne opcje:*\n"
+    init_text: "Cześć!\nZa chwilę stworzysz swoją własną ankietę 👌\n\nObecne ustawienia ankiety:\n\n**Typ ankiety**: %{poll_type}\n**Anonimowość**: %{anonymity}\n**Widoczność wyników**: %{results_visible}\n\nNastępne kroki:\n1. Skonfiguruj ankietę według uznania 🙂\n2. 👇 Wyślij mi nazwę ankiety. 👇\n"
+    datepicker_text: "**Wybór daty:**\nAby dodać datę, wybierz ją i kliknij **Wybierz tę datę**.\nPotem kliknij **Gotowe**.\n\n**Obecne opcje:**\n"
     error:
         limit_bigger_zero: 'Wpisz numer większy od 0'
         limit_between: 'Wpisz numer między 1, a %{limit}'
-        markdown: "Proszę nie używać w nazwie, opisie i odpowiedziach znaków specjalnych, takich jak `_`,`*` i `[`.\nWyślij wiadomość na nowo bez tych znaków.\n"
+        markdown: "Proszę nie używać w nazwie, opisie i odpowiedziach znaków specjalnych, takich jak `_`,`**` i `[`.\nWyślij wiadomość na nowo bez tych znaków.\n"
 external:
     canceled: Anulowano
     notification:

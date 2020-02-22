@@ -1,10 +1,14 @@
 """Session helper functions."""
 import asyncio
+from datetime import datetime, timedelta
 import traceback
 from functools import wraps
 from telethon.events import StopPropagation
 from telethon.errors.rpcbaseerrors import (
     ForbiddenError,
+)
+from telethon.errors.rpcerrorlist import (
+    MessageNotModifiedError,
 )
 from sqlalchemy.exc import IntegrityError
 
@@ -55,12 +59,13 @@ def callback_wrapper():
     def real_decorator(func):
         """Parametrized decorator closure."""
         @wraps(func)
-        async def wrapper(update, context):
+        async def wrapper(event):
             session = get_session()
             try:
-                user = get_user(session, update)
+                user = None
+                user = await get_user(session, event.query.user_id)
 
-                await func(context.bot, update, session, user)
+                await func(session, event, user)
 
                 session.commit()
             except Exception as e:
@@ -69,11 +74,10 @@ def callback_wrapper():
                         traceback.print_exc()
                     sentry.captureException()
 
-                if hasattr(update, 'callback_query') and update.callback_query is not None:
-                    locale = 'English'
-                    if user is not None:
-                        locale = user.locale
-                    update.callback_query.answer(i18n.t('callback.error', locale=locale))
+                locale = 'English'
+                if user is not None:
+                    locale = user.locale
+                await event.answer(i18n.t('callback.error', locale=locale))
             finally:
                 session.close()
         return wrapper
@@ -99,9 +103,7 @@ def message_wrapper(respond_on_error=True, private=False):
 
                 # Get the current user.
                 # User can be None, if the message was sent from a chat
-                user = await get_message_user(event, session)
-                if user is None:
-                    return
+                user = await get_user(session, event.from_id)
 
                 if not await ensure_private(event, user, private=private):
                     return
@@ -113,7 +115,6 @@ def message_wrapper(respond_on_error=True, private=False):
                     # close the session and raise the exception
                     session.commit()
                     raise e
-                return response
 
                 session.commit()
                 # Respond to user
@@ -137,7 +138,6 @@ def message_wrapper(respond_on_error=True, private=False):
                     locale = 'English'
                     if user is not None:
                         locale = user.locale
-                    session.close()
                     await event.respond(
                         i18n.t('misc.error', locale=locale),
                         link_preview=False,
@@ -151,32 +151,35 @@ def message_wrapper(respond_on_error=True, private=False):
     return real_decorator
 
 
-async def get_message_user(event, session):
-    """Get the user from the update.
-
-        Return None, if there is no user.
-    """
-    user_id = event.from_id
+async def get_user(session, user_id):
+    """Get the user from the event."""
     user = session.query(User).get(user_id)
-    if user is not None:
+    tg_user = None
+    if user is None:
+        tg_user = await client.get_entity(user_id)
+        user = User(user_id, tg_user.username)
+        session.add(user)
+        try:
+            session.commit()
+            increase_stat(session, 'new_users')
+        # Handle race condition for parallel user addition
+        # Return the user that has already been created
+        # in another session
+        except IntegrityError as e:
+            session.rollback()
+            user = session.query(User).get(user_id)
+            if user is None:
+                raise e
+            return user
+
+    # Update user info (username etc.) if the user hasn't been updated
+    # in the last three days
+    three_days_ago = datetime.now() - timedelta(days=3)
+    if user.last_update is not None and user.last_update >= three_days_ago:
         return user
 
-    tg_user = await client.get_entity(user_id)
-    user = User(user_id, tg_user.username)
-    session.add(user)
-
-    try:
-        session.commit()
-        increase_stat(session, 'new_users')
-    # Handle race condition for parallel user addition
-    # Return the user that has already been created
-    # in another session
-    except IntegrityError as e:
-        session.rollback()
-        user = session.query(User).get(user_id)
-        if user is None:
-            raise e
-        return user
+    if tg_user is None:
+        tg_user = await client.get_entity(user_id)
 
     user.username = tg_user.username.lower()
     name = get_name_from_tg_user(tg_user)
@@ -218,6 +221,8 @@ async def ensure_private(event, user, private=False):
 def ignore_exception(exception):
     """Check whether we can safely ignore this exception."""
     if isinstance(exception, ForbiddenError):
+        return True
+    if isinstance(exception, MessageNotModifiedError):
         return True
 
     return False

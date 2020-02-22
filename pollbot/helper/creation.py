@@ -10,7 +10,7 @@ from pollbot.telegram.keyboard import (
 from pollbot.models import PollOption, Reference
 
 
-def next_option(tg_chat, poll, options):
+async def next_option(event, poll, options):
     """Send the options message during the creation ."""
     locale = poll.user.locale
     poll.user.expected_input = ExpectedInput.options.name
@@ -21,13 +21,13 @@ def next_option(tg_chat, poll, options):
     else:
         text = i18n.t('creation.option.multiple_added', locale=locale)
         for option in options:
-            text += f'\n*{option}*'
+            text += f'\n**{option}**'
         text += '\n\n' + i18n.t('creation.option.next', locale=locale)
 
-    tg_chat.send_message(text, reply_markup=keyboard, parse_mode='Markdown')
+    await event.respond(text, buttons=keyboard)
 
 
-def create_poll(session, poll, user, chat, message=None):
+async def create_poll(session, poll, user, event, message=None):
     """Finish the poll creation."""
     poll.created = True
     user.expected_input = None
@@ -37,33 +37,31 @@ def create_poll(session, poll, user, chat, message=None):
 
     if len(text) > 4000:
         error_message = i18n.t('misc.over_4000', locale=user.locale)
-        message = chat.send_message(error_message, parse_mode='markdown')
+        await event.respond(error_message)
         session.delete(poll)
         return
 
     if message:
-        message = message.edit_text(
+        message = await message.edit(
             text,
-            parse_mode='markdown',
-            reply_markup=get_management_keyboard(poll),
-            disable_web_page_preview=True,
+            buttons=get_management_keyboard(poll),
+            link_preview=False,
         )
     else:
-        message = chat.send_message(
+        message = await event.respond(
             text,
-            parse_mode='markdown',
-            reply_markup=get_management_keyboard(poll),
-            disable_web_page_preview=True,
+            buttons=get_management_keyboard(poll),
+            link_preview=False,
         )
 
     if len(text) > 3000:
         error_message = i18n.t('misc.over_3000', locale=user.locale)
-        message = chat.send_message(error_message, parse_mode='markdown')
+        await event.respond(error_message)
 
     reference = Reference(
         poll,
         admin_user=user,
-        admin_message_id=message.message_id
+        admin_message_id=message.id
     )
     session.add(reference)
     session.commit()

@@ -18,16 +18,16 @@ from pollbot.telegram.keyboard import (
 
 
 @poll_required
-def show_poll_type_keyboard(session, context, poll):
+async def show_poll_type_keyboard(session, context, event, poll):
     """Change the initial keyboard to vote type keyboard."""
     keyboard = get_change_poll_type_keyboard(poll)
-    context.query.message.edit_text(
-        reply_markup=keyboard
+    await event.edit(
+        buttons=keyboard
     )
 
 
 @poll_required
-def go_back(session, context, poll):
+async def go_back(session, context, event, poll):
     """Go back to the original step."""
     if context.callback_result == CallbackResult.main_menu:
         text = get_poll_text(session, poll)
@@ -38,82 +38,74 @@ def go_back(session, context, poll):
         text = get_settings_text(poll)
         keyboard = get_settings_keyboard(poll)
 
-    context.query.message.edit_text(
-        text,
-        parse_mode='markdown',
-        reply_markup=keyboard,
-        disable_web_page_preview=True,
-    )
+    await event.edit(text, buttons=keyboard, link_preview=False)
 
     # Reset the expected input from the previous option
     context.user.expected_input = None
 
 
 @poll_required
-def show_vote_menu(session, context, poll):
+async def show_vote_menu(session, context, event, poll):
     """Show the vote keyboard in the management interface."""
     if poll.is_priority():
-        poll.init_votes(session, context.user)
+        poll.init_votes(session, context, event.user)
         session.commit()
 
-    text, keyboard = get_poll_text_and_vote_keyboard(session, poll, user=context.user, show_back=True)
+    text, keyboard = get_poll_text_and_vote_keyboard(
+        session,
+        poll,
+        user=context.user,
+        show_back=True,
+    )
     # Set the expected_input to votes, since the user might want to vote multiple times
     context.user.expected_input = ExpectedInput.votes.name
-    context.query.message.edit_text(
-        text,
-        parse_mode='markdown',
-        reply_markup=keyboard,
-        disable_web_page_preview=True,
-    )
+    await event.edit(text, buttons=keyboard, link_preview=False)
 
 
 @poll_required
-def show_settings(session, context, poll):
+async def show_settings(session, context, event, poll):
     """Show the settings tab."""
     text = get_settings_text(poll)
     keyboard = get_settings_keyboard(poll)
-    context.query.message.edit_text(
+    await event.edit(
         text,
-        parse_mode='markdown',
-        reply_markup=keyboard,
-        disable_web_page_preview=True,
+        buttons=keyboard,
+        link_preview=False,
     )
     poll.in_settings = True
 
 
 @poll_required
-def show_deletion_confirmation(session, context, poll):
+async def show_deletion_confirmation(session, context, event, poll):
     """Show the delete confirmation message."""
-    context.query.message.edit_text(
+    await event.edit(
         i18n.t('management.delete', locale=poll.user.locale),
-        reply_markup=get_deletion_confirmation(poll),
+        buttons=get_deletion_confirmation(poll),
     )
 
 
 @poll_required
-def show_close_confirmation(session, context, poll):
+async def show_close_confirmation(session, context, event, poll):
     """Show the permanent close confirmation message."""
-    context.query.message.edit_text(
+    await event.edit(
         i18n.t('management.permanently_close', locale=poll.user.locale),
-        reply_markup=get_close_confirmation(poll),
+        buttons=get_close_confirmation(poll),
     )
 
 
 @poll_required
-def show_menu(session, context, poll):
+async def show_menu(session, context, event, poll):
     """Replace the current message with the main poll menu."""
-    message = context.query.message
-    message.edit_text(
+    await event.edit(
         get_poll_text(session, poll),
-        parse_mode='markdown',
-        reply_markup=get_management_keyboard(poll),
-        disable_web_page_preview=True,
+        buttons=get_management_keyboard(poll),
+        link_preview=False,
     )
 
     reference = Reference(
         poll,
         admin_user=context.user,
-        admin_message_id=message.message_id
+        admin_message_id=event.message_id,
     )
     session.add(reference)
     session.commit()

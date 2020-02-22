@@ -19,27 +19,27 @@ datepicker:
 poll:
     anonymous: 'Il sondaggio è anonimo!'
     results_not_visible: 'I risultati saranno visibili solo alla chiusura del sondaggio!'
-    vote_times: "\nOgni utente può votare solo *%{amount} volte*"
+    vote_times: "\nOgni utente può votare solo **%{amount} volte**"
     due: "\n📅 Questo sondaggio scadrà il: %{date}"
-    closed: "\n⚠️ * Questo sondaggio è chiuso * ⚠️"
-    own_poll: 'Crea *il tuo* sondaggio cliccando [qui](https://t.me/ultimate_pollbot)'
-    many_users_voted: 'Finora, *%{count} utenti* hanno votato'
-    one_user_voted: 'Finora, *un utente* ha votato'
+    closed: "\n⚠️ ** Questo sondaggio è chiuso ** ⚠️"
+    own_poll: 'Crea **il tuo** sondaggio cliccando [qui](https://t.me/ultimate_pollbot)'
+    many_users_voted: 'Finora, **%{count} utenti** hanno votato'
+    one_user_voted: 'Finora, **un utente** ha votato'
     total_votes: ' (%{count} voti)'
     remaining_votes: "\nVoti rimanenti:"
     remaining_votes_user: '%{name}:%{count} voti'
     summarized_users: '_e %{count} altre persone_'
-    too_many_votes: "⚠️ *Troppi voti nell'ultimo minuto:* ⚠️\nI voti saranno comunque registrati, ma questo messaggio si aggiornerà ogni due secondi.\n(Telegram non permette a un bot d'inviare/aggiornare più di un determinato quantitativo di messaggi al minuto)\n"
+    too_many_votes: "⚠️ **Troppi voti nell'ultimo minuto:** ⚠️\nI voti saranno comunque registrati, ma questo messaggio si aggiornerà ogni due secondi.\n(Telegram non permette a un bot d'inviare/aggiornare più di un determinato quantitativo di messaggi al minuto)\n"
     doodle:
-        'yes': '├ *Sì:*'
-        maybe: '├ *Forse:*'
-        'no': '├ *No:*'
-        yes_summarized: '├ *Sì:* %{count} voti'
-        maybe_summarized: '├ *Forse:* %{count} voti'
-        no_summarized: '├ *No:* %{count} voti'
-    doodle_help: '*Premi* sui pulsanti `a)`, `b)` sottostanti per vedere le opzioni'
+        'yes': '├ **Sì:**'
+        maybe: '├ **Forse:**'
+        'no': '├ **No:**'
+        yes_summarized: '├ **Sì:** %{count} voti'
+        maybe_summarized: '├ **Forse:** %{count} voti'
+        no_summarized: '├ **No:** %{count} voti'
+    doodle_help: '**Premi** sui pulsanti `a)`, `b)` sottostanti per vedere le opzioni'
     please_wait: "\n\nPer favore, attendi mentre il bot sincronizza i sondaggi ☺️"
-    anonymous_warning: '*Attenzione:* _Gli altri utenti possono indovinare il tuo voto tracciando il numero di voti (o la percentuale) e il tuo ultimo accesso_'
+    anonymous__warning: '**Attenzione:** __Gli altri utenti possono indovinare il tuo voto tracciando il numero di voti (o la percentuale) e il tuo ultimo accesso__'
 deleted:
     poll: 'Il sondaggio è stato permanentemente cancellato'
     polls: 'Tutti i sondaggi sono stati cancellati'
@@ -73,10 +73,10 @@ inline_query:
     create_first: 'Clicca qui per creare il sondaggio, innanzi tutto ;)'
     create_poll: 'Clicca per creare un nuovo sondaggio'
 notification:
-    one_week: 'Il sondaggio *%{name}* chiuderà in una settimana'
-    one_day: 'Il sondaggio *%{name}* chiuderà in un giorno'
-    six_hours: 'Il sondaggio *%{name}* chiuderà automaticamente tra sei ore'
-    closed: 'Il sondaggio *%{name}* è ora chiuso'
+    one_week: 'Il sondaggio **%{name}** chiuderà in una settimana'
+    one_day: 'Il sondaggio **%{name}** chiuderà in un giorno'
+    six_hours: 'Il sondaggio **%{name}** chiuderà automaticamente tra sei ore'
+    closed: 'Il sondaggio **%{name}** è ora chiuso'
 keyboard:
     done: Fine
     close: Chiudi
@@ -145,46 +145,46 @@ sorting:
     option_name: 'per nome'
     doodle_sorting: 'per risposta'
 settings:
-    poll_type: '* Tipo di sondaggio *: %{poll_type}'
-    language: '*Lingua *: %{language}'
-    anonymous: '*Anonimato*: I nomi non sono visibili'
-    not_anonymous: '*Anonimato*: I nomi sono visibili'
-    due_date: '*Data di scadenza*:%{date}'
-    no_due_date: '*Data di scadenza*: Nessuna'
-    results_visible: '*Visibilità risultati*: I risultati sono visibili fin da subito'
-    results_not_visible: '*Visibilità risultati*: I risultati saranno visibili a sondaggio terminato'
-    user_options: '*Opzioni personalizzate degli utenti*: Chiunque può aggiungere opzioni'
-    no_user_options: '*Opzioni personalizzate degli utenti*: Solo tu puoi aggiungere opzioni'
-    percentage: '*Percentuale*: Visibile'
-    no_percentage: '*Percentuale*: Nascosta'
-    euro_date_format: '*Formato data*: GG.MM.AAAA'
-    us_date_format: '*Formato data*: AAAA-MM-GG'
-    user_sorting: '*Ordinamento degli utenti*:%{name}'
-    option_sorting: '*Ordinamento delle opzioni*:%{name}'
+    poll_type: '** Tipo di sondaggio **: %{poll_type}'
+    language: '**Lingua **: %{language}'
+    anonymous: '**Anonimato**: I nomi non sono visibili'
+    not_anonymous: '**Anonimato**: I nomi sono visibili'
+    due_date: '**Data di scadenza**:%{date}'
+    no_due_date: '**Data di scadenza**: Nessuna'
+    results_visible: '**Visibilità risultati**: I risultati sono visibili fin da subito'
+    results_not_visible: '**Visibilità risultati**: I risultati saranno visibili a sondaggio terminato'
+    user_options: '**Opzioni personalizzate degli utenti**: Chiunque può aggiungere opzioni'
+    no_user_options: '**Opzioni personalizzate degli utenti**: Solo tu puoi aggiungere opzioni'
+    percentage: '**Percentuale**: Visibile'
+    no_percentage: '**Percentuale**: Nascosta'
+    euro_date_format: '**Formato data**: GG.MM.AAAA'
+    us_date_format: '**Formato data**: AAAA-MM-GG'
+    user_sorting: '**Ordinamento degli utenti**:%{name}'
+    option_sorting: '**Ordinamento delle opzioni**:%{name}'
     change_language: 'Clicca su una lingua per cambiarla per questo sondaggio.'
     anonymize: "Vuoi veramente anonimizzare questo sondaggio?\n⚠️ Questa azione è irreversibile. ⚠️\n"
     remove_options: 'Clicca sui pulsanti sottostanti per eliminare le opzioni indesiderate.'
-    summarize: '*Riassumi i voti*: Riassumi molti voti'
-    dont_summarize: '*Riassumi i voti*: mostra tutti i voti'
-    permanently_summarized: '*Riassumi i voti*: Troppi voti. Riassunti permanentemente.'
-    sharing_link: 'Usa questo link per permettere agli utenti di condividere il sondaggio con altri. *Fai attenzione!* Una volta che l''hai fatto non c''è modo di tornare indietro:'
+    summarize: '**Riassumi i voti**: Riassumi molti voti'
+    dont_summarize: '**Riassumi i voti**: mostra tutti i voti'
+    permanently_summarized: '**Riassumi i voti**: Troppi voti. Riassunti permanentemente.'
+    sharing_link: 'Usa questo link per permettere agli utenti di condividere il sondaggio con altri. **Fai attenzione!** Una volta che l''hai fatto non c''è modo di tornare indietro:'
     user:
         notifications_enabled: 'Notifiche: abilitate'
         notifications_disabled: 'Notifiche: disabilitate'
         delete_all: '⚠️ Elimina TUTTI i sondaggi ⚠️'
         delete_closed: '⚠️ Elimina tutti i sondaggi chiusi ⚠️'
-        delete_all_confirmation: "Vuoi davvero eliminare TUTTI i tuoi sondaggi?\nQuesto riguarda sia i sondaggi aperti che quelli chiusi.\n⚠️ *Questa azione è irreversibile.* ⚠️"
-        delete_closed_confirmation: "Vuoi davvero eliminare tutti i sondaggi chiusi?\n⚠️ *Questa azione è irreversibile.* ⚠️"
+        delete_all_confirmation: "Vuoi davvero eliminare TUTTI i tuoi sondaggi?\nQuesto riguarda sia i sondaggi aperti che quelli chiusi.\n⚠️ **Questa azione è irreversibile.** ⚠️"
+        delete_closed_confirmation: "Vuoi davvero eliminare tutti i sondaggi chiusi?\n⚠️ **Questa azione è irreversibile.** ⚠️"
         language: 'Lingua predefinita:%{language}'
         open_polls: 'Sondaggi aperti:%{count}'
         closed_polls: 'Sondaggi chiusi:%{count}'
         explanations:
-            language: '_Questa impostazione determina la lingua utilizzata nell''interfaccia di gestione e determina anche la lingua predefinita per i sondaggi ._'
-            notifications: '_Ti invierò un messaggio di volta in volta per informarti sugli aggiornamenti, modifiche o bug._'
+            language: '__Questa impostazione determina la lingua utilizzata nell''interfaccia di gestione e determina anche la lingua predefinita per i sondaggi .__'
+            notifications: '__Ti invierò un messaggio di volta in volta per informarti sugli aggiornamenti, modifiche o bug.__'
     poll:
         explanation:
-            anonymity: "_Nei sondaggi anonimi non verrà mostrato nessun nome. Non è quindi possibile vedere il voto di un utente._\n*Attenzione:* _Gli altri utenti possono dedurre i voti osservando l'aumento della percentuale o del numero di voti e dal tuo ultimo accesso. Per rendere i sondaggi completamente anonimi bisogna abilitare l'opzione per nascondere i risultati._"
-            visibility: '_Un sondaggio con risultati nascosti non mostrerà alcun voto o percentuale fino alla chiusura del sondaggio. Una volta chiuso, il sondaggio rimane chiuso per sempre. Ciò è necessario per evitare la possibilità di_ [voto tattico] (https://it.m.wikipedia.org/wiki/Voto_per_approvazione#Possibilità_di_voto_tattico) _e di prevenire_ [ancoraggio] (https://it.m.wikipedia.org/wiki/Ancoraggio_(PNL)).'
+            anonymity: "__Nei sondaggi anonimi non verrà mostrato nessun nome. Non è quindi possibile vedere il voto di un utente.__\n**Attenzione:** __Gli altri utenti possono dedurre i voti osservando l'aumento della percentuale o del numero di voti e dal tuo ultimo accesso. Per rendere i sondaggi completamente anonimi bisogna abilitare l'opzione per nascondere i risultati.__"
+            visibility: '__Un sondaggio con risultati nascosti non mostrerà alcun voto o percentuale fino alla chiusura del sondaggio. Una volta chiuso, il sondaggio rimane chiuso per sempre. Ciò è necessario per evitare la possibilità di__ [voto tattico] (https://it.m.wikipedia.org/wiki/Voto__per__approvazione#Possibilità__di__voto__tattico) __e di prevenire__ [ancoraggio] (https://it.m.wikipedia.org/wiki/Ancoraggio__(PNL)).'
     anonymity_warning: "Non puoi nascondere voti e percentuali su un sondaggio anonimo.\n Questo potrebbe dare agli utenti l'idea che il sondaggio abbia risultati nascosti, il che non è il caso. Se si desidera ciò, creare il sondaggio con risultati nascosti abilitati. \n"
 management:
     permanently_close: "Vuoi davvero chiudere questo sondaggio?\nI risultati saranno visibili, ma non verranno registrati altri voti.\n⚠️ Questa azione è irreversibile. ⚠️\n"
@@ -203,23 +203,23 @@ creation:
         results_visible: 'Mostra permanentemente i risultati'
         results_not_visible: 'Nascondi i risultati fino alla chiusura del sondaggio'
     option:
-        next: 'Invia *un''altra opzione*, seleziona una data e aggiungila come opzione, oppure clicca *Fine* quando avrai finito.'
+        next: 'Invia **un''altra opzione**, seleziona una data e aggiungila come opzione, oppure clicca **Fine** quando avrai finito.'
         first: "Per favore, inviami un opzione. Puoi inviarne diverse alla volta, con ciascuna su una linea differente.\nPuoi aggiungere una descrizione dopo un trattino.\nAd esempio, `Hamburger - perchè sono buoni`"
         no_new: '❌ Non è stata aggiunta alcuna opzione'
-        single_added: "*%{option}* è stata aggiunta. 👍\nInvia *un'altra opzione*, seleziona una data e aggiungila come opzione, oppure clicca su *Fine* quando avrai finito."
+        single_added: "**%{option}** è stata aggiunta. 👍\nInvia **un'altra opzione**, seleziona una data e aggiungila come opzione, oppure clicca su **Fine** quando avrai finito."
         multiple_added: 'Sono state aggiunte queste opzioni:'
         finished: 'Tutte le opzioni sono già state aggiunte'
-    poll_type_help: "Tipo di sondaggio attuale: %{poll_type}\n\n👍 *Voto singolo:*\nOgni utente vota una volta sola. E' il tipo di sondaggio predefinito.\n\n📅 *Doodle:*\nGli utenti possono votare 'sì', 'no' o 'forse' per ogni opzione. Ideale per mettersi d'accordo su una data.\n\n🎮 *Votazione a blocco:*\nOgni utente può votare per tutte (o meno) le opzioni. Ideale per trovare le scelte più popolari in un gruppo, ad esempio i giochi che dovrebbero venir giocati al lan party.\n\n🎮 *Voto limitato:*\nOgni utente ha un numero fisso (e limitato) di voti da distribuire, uno per opzione.\nCome il voto a blocco, ma con scelte limitate. Ideale per limitare il numero di possibili vincitori del sondaggio (ad esempio, solo 4 giochi per il lan party).\n\n📊 *Voto comulativo:*\nOgni utente ha un numero di voti fisso (e limitato) che può distribuire come preferiscono (anche dandone di più a una opzione). Ha più profondità di un voto limitato, dato che permette agli utenti di votare più volte la stessa opzione.\n\n🛒 *Voti illimitati* (o lista della spesa) 😎\nOgni utente può votare tante volte quanto vuole qualsiasi opzione.\nIdeale per capire quanta roba servirà per tutti al prossimo giro al festival.\n"
+    poll_type_help: "Tipo di sondaggio attuale: %{poll_type}\n\n👍 **Voto singolo:**\nOgni utente vota una volta sola. E' il tipo di sondaggio predefinito.\n\n📅 **Doodle:**\nGli utenti possono votare 'sì', 'no' o 'forse' per ogni opzione. Ideale per mettersi d'accordo su una data.\n\n🎮 **Votazione a blocco:**\nOgni utente può votare per tutte (o meno) le opzioni. Ideale per trovare le scelte più popolari in un gruppo, ad esempio i giochi che dovrebbero venir giocati al lan party.\n\n🎮 **Voto limitato:**\nOgni utente ha un numero fisso (e limitato) di voti da distribuire, uno per opzione.\nCome il voto a blocco, ma con scelte limitate. Ideale per limitare il numero di possibili vincitori del sondaggio (ad esempio, solo 4 giochi per il lan party).\n\n📊 **Voto comulativo:**\nOgni utente ha un numero di voti fisso (e limitato) che può distribuire come preferiscono (anche dandone di più a una opzione). Ha più profondità di un voto limitato, dato che permette agli utenti di votare più volte la stessa opzione.\n\n🛒 **Voti illimitati** (o lista della spesa) 😎\nOgni utente può votare tante volte quanto vuole qualsiasi opzione.\nIdeale per capire quanta roba servirà per tutti al prossimo giro al festival.\n"
     results_not_visible: 'I risultati saranno visibili solo alla chiusura del sondaggio'
     results_visible: 'I risultati sono visibili fin da subito'
     anonymity: 'I nomi non sono visibili'
     no_anonymity: 'I nomi sono visibili'
-    init_text: "Ehilà!\nStai per creare un nuovo sondaggio 👌\n\nLe impostazioni attuali sono:\n\n*Tipo sondaggio*:%{poll_type}\n*Anonimato*:%{anonymity}\n*Visibilità risultati:*%{results_visible}\n\nPer favore, segui i seguenti passaggi:\n1. Configura il sondaggio in base ai tuoi bisogni 🙂\n2. 👇 Mandami il nome di questo sondaggio. 👇\n"
-    datepicker_text: "*Datepicker:*\nPer aggiungere la data, selezionala e clicca su \"Seleziona questa data\".\nClicca su \"Fine\" quando avrai finito.\n\n*Opzioni correnti:*"
+    init_text: "Ehilà!\nStai per creare un nuovo sondaggio 👌\n\nLe impostazioni attuali sono:\n\n**Tipo sondaggio**:%{poll_type}\n**Anonimato**:%{anonymity}\n**Visibilità risultati:**%{results_visible}\n\nPer favore, segui i seguenti passaggi:\n1. Configura il sondaggio in base ai tuoi bisogni 🙂\n2. 👇 Mandami il nome di questo sondaggio. 👇\n"
+    datepicker_text: "**Datepicker:**\nPer aggiungere la data, selezionala e clicca su \"Seleziona questa data\".\nClicca su \"Fine\" quando avrai finito.\n\n**Opzioni correnti:**"
     error:
         limit_bigger_zero: 'Inviami un numero maggiore di 0'
         limit_between: 'Inviami un numero compreso tra 1 e %{limit}'
-        markdown: "Non utilizzare nessuno dei simboli di markdown nei nomi, nella descrizione o nelle opzioni. Tali simboli sono `_`,`*` e `[`.\nPer favore, invia nuovamente il messaggio senza quei simboli."
+        markdown: "Non utilizzare nessuno dei simboli di markdown nei nomi, nella descrizione o nelle opzioni. Tali simboli sono `_`,`**` e `[`.\nPer favore, invia nuovamente il messaggio senza quei simboli."
         too_big: 'Per favore, invia un numero più piccolo. Potresti volere un sondaggio a "Voti illimitati".'
 external:
     canceled: Annullato
@@ -235,17 +235,17 @@ user:
     language_changed: 'La lingua è stata cambiata'
 misc:
     donation: "Salve!\n\nMi chiamo Arne Beer (@Nukesor). Sono l'unico sviluppatore dell'Ultimate Pollbot.\n\nL'idea di sviluppare questo bot è nata dall'inabilità dei miei amici di decidere il luogo in cui avremmo dovuto pranzare. Questo evento si è ripetuto talmente tante volte da rendere necessaria la ricerca di una buona e stabile soluzione all'interno di Telegram del nostro problema.\nUltimate Pollbot è nato proprio da questa esigenza.\n\nOgni linea di codice di questo progetto è stata scritta nel tempo libero e in modo non retribuito.\nQuesto progetto è no-profit, open-source su [Github](https://github.com/Nukesor/ultimate-poll-bot) ed è hostato su un server pagato da me.\n\nAl momento investo dalle 2 alle 10 ore a settimana per sviluppare e mantenere i miei progetti, e adorerei ricevere del supporto, dal momento che buona parte di quello che faccio lo sto facendo per voialtri.\n\nApprezzo qualsiasi cosa che mi aiuti e che tenga me e il mio server in carreggiata ☺️.\n\nSe ti piace questo progetto, dai un'occhiata al mio [Patreon](https://www.patreon.com/nukesor) o supportami direttamente tramite [Paypal](https://www.paypal.me/arnebeer).\nSe hai domande da rivolgermi, visita il mio [gruppo di supporto](https://t.me/nukesors_projects).\n\nTi auguro un buon proseguimento!\n"
-    start: "🌟 Benvenuto all' *ULTIMATE* PollBot 🌟\n\nScrivi /create o clicca sul pulsante qui sotto per iniziare a creare sondaggi. Tutto è spiegato di seguito.\n\n🌐 Puoi scegliere un altra lingua con /language 🌐\n❓ Clicca /help per maggiori informazioni ❓\n\nSe ti piace questo progetto, fai un giro nel mio [gruppo di supporto](https://t.me/nukesors_projects) o visita il mio [Patreon](https://www.patreon.com/nukesor).\nQuesto bot è open-source su [Github](https://github.com/Nukesor/ultimate-poll-bot).\n"
+    start: "🌟 Benvenuto all' **ULTIMATE** PollBot 🌟\n\nScrivi /create o clicca sul pulsante qui sotto per iniziare a creare sondaggi. Tutto è spiegato di seguito.\n\n🌐 Puoi scegliere un altra lingua con /language 🌐\n❓ Clicca /help per maggiori informazioni ❓\n\nSe ti piace questo progetto, fai un giro nel mio [gruppo di supporto](https://t.me/nukesors_projects) o visita il mio [Patreon](https://www.patreon.com/nukesor).\nQuesto bot è open-source su [Github](https://github.com/Nukesor/ultimate-poll-bot).\n"
     help:
         intro: "C'è un discreto numero d'impostazioni per i tuoi sondaggi.\nBasta scegliere la categoria che ti interessa, oppure leggiti tutto 😉."
-        creation: "🌟*Creazione:*\n\nPer creare un nuovo sondaggio, scrivi o clicca /create.\nPer ogni sondaggio puoi specificare diverse impostazioni iniziali.\n\n*Tipo sondaggio:* I vari tipi sono spiegati nel dettaglio nel menu a loro dedicato\n*Anonimato:* Puoi anonimizzare il sondaggio, il che nasconde i nomi di chi vota. Questo è permanente e per chiunque.\n*Visibilità risultati*: In questa modalità, il risultato viene reso visibile solo a votazione conclusa. Questo è ottimo per evitare il [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) e l'influenza dell' [Anchoring](https://en.wikipedia.org/wiki/Anchoring)\n\n-> *Attenzione: un sondaggio chiuso con risultati invisibili rimane chiuso!:*\nRiaprire un sondaggio permetterebbe ad un utente, in particolare il creatore del sondaggio, di vedere i voti e piazzare il suo voto in un modo che lo potrebbe avvantaggiare (tactical voting).\n"
-        settings: "⚙️ *Impostazioni:*\n\nAltre impostazioni possono essere modificate una volta che il sondaggio è stato creato:\n\n*Anonimato:* Un sondaggio può esser reso anonimo retrospettivamente.\n*Percentuale:* La linea che indica la percentuale può venire nascosta dal menu delle impostazioni.\n*Opzioni:* Possono venire aggiunte e rimosse opzioni al sondaggio.\n*Opzioni degli utenti:* Puoi permettere agli utenti di aggiungere opzioni al sondaggio.\n*Ordine:* L'ordine con il quale le opzioni e i nomi degli utenti vengono mostrati nei risultati.\n*Data di scadenza:* Una data oltre la quale il sondaggio verrà chiuso\n"
-        notifications: "📣 *Notifiche:*\n\nSe abiliti le notifiche per la tua chat, il bot ti invierà un messaggio un giorno, 6 ore e 1 ora prima della chiusura del sondaggio.\nQuesta funzione serve per ricordare a tutti in un gruppo l'imminente chiusura di un sondaggio, e rende più facile ritrovarlo nuovamente 😉.\n\nPer abilitare le notifiche nella chat, segui i seguenti passaggi:\n*1.* Crea il sondaggio\n*2.* Imposta una data di termine nel menu delle impostazioni\n*3.* Vai nella chat all'interno della quale vuoi essere notificato (il bot ha bisogno di essere aggiunto al gruppo prima che tu abbia condiviso il sondaggio, altrimenti dovrai ri-condividerlo)\n*4.* Rispondi al messaggio che hai selezionato tramite @ultimate\\_pollbot con il comando /notify\n*5.* Seleziona il sondaggio corretto\n*6.* Rispondi al messaggio del sondaggio che hai selezionato tramite @ultimate\\_pollbot con /notify \n*7.* Seleziona il sondaggio corretto\n\nQuesta procedura è, tristemente, inutilmente complessa, ma è necessaria in quanto telegram non permette ai bot di rilevare messaggi nei gruppi 😐.\nPertanto non sappiamo quale sondaggio si trova in quale gruppo e va fatto quindi manualmente."
-        management: "🕰 *Trova i vecchi sondaggi:*\n\nI due comandi /list e /list\\_closed permettono di trovare e gestire vecchi sondaggi.\n\n⚠️ *Elimina i sondaggi:*\n\nPuoi cancellare sondaggi individuali nei menu ad essi legati.\nInoltre, esisite anche il comando /delete\\_closed, che elimina tutti i sondaggi già chiusi, e il comando /delete\\_all che li elimina tutti.\n"
-        languages: "🌐 *Lingue:*\n\nUltimate pollbot supporta diverse lingue, anche se l'unica ad essere mantenuta ufficialmente è la lingua Inglese.\n\nPer aggiungere una lingua, recati sul repository di Github, copia il file \"english.yml\", rinominalo con il nome della tua lingua ed esegui la traduzione.\nStai attento a non mandare a quel paese il Markdown (`**`, `__`, `${}`), altrimenti alcune cose tradotte nella tua lingua non funzioneranno.\n\nSe qualcosa si rompe, a causa di traduzioni errate, dovrai risolverlo da te. Non me ne occuperò io.\nIl supporto multilingue è una feature che viene mandata avanti dalla comunità che io supporto felicemente, ma non posso supportare più lingue da solo.\n"
-        bugs: "⚠️ *C'è un bug ignoto che non se ne vuole andare!!* 😩\n\nDi solito ricevo una notifica quando qualcosa si rompe, ma alcuni bug potrebbero non venire rilevati!\nNel caso in cui un bug non sia stato risolto un uno o due giorni, puoi aprire un ticket di errore su [GitHub](https://github.com/Nukesor/ultimate-poll-bot) o di farlo presente sul [gruppo di supporto](https://t.me/nukesors_projects).\n"
+        creation: "🌟**Creazione:**\n\nPer creare un nuovo sondaggio, scrivi o clicca /create.\nPer ogni sondaggio puoi specificare diverse impostazioni iniziali.\n\n**Tipo sondaggio:** I vari tipi sono spiegati nel dettaglio nel menu a loro dedicato\n**Anonimato:** Puoi anonimizzare il sondaggio, il che nasconde i nomi di chi vota. Questo è permanente e per chiunque.\n**Visibilità risultati**: In questa modalità, il risultato viene reso visibile solo a votazione conclusa. Questo è ottimo per evitare il [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) e l'influenza dell' [Anchoring](https://en.wikipedia.org/wiki/Anchoring)\n\n-> **Attenzione: un sondaggio chiuso con risultati invisibili rimane chiuso!:**\nRiaprire un sondaggio permetterebbe ad un utente, in particolare il creatore del sondaggio, di vedere i voti e piazzare il suo voto in un modo che lo potrebbe avvantaggiare (tactical voting).\n"
+        settings: "⚙️ **Impostazioni:**\n\nAltre impostazioni possono essere modificate una volta che il sondaggio è stato creato:\n\n**Anonimato:** Un sondaggio può esser reso anonimo retrospettivamente.\n**Percentuale:** La linea che indica la percentuale può venire nascosta dal menu delle impostazioni.\n**Opzioni:** Possono venire aggiunte e rimosse opzioni al sondaggio.\n**Opzioni degli utenti:** Puoi permettere agli utenti di aggiungere opzioni al sondaggio.\n**Ordine:** L'ordine con il quale le opzioni e i nomi degli utenti vengono mostrati nei risultati.\n**Data di scadenza:** Una data oltre la quale il sondaggio verrà chiuso\n"
+        notifications: "📣 **Notifiche:**\n\nSe abiliti le notifiche per la tua chat, il bot ti invierà un messaggio un giorno, 6 ore e 1 ora prima della chiusura del sondaggio.\nQuesta funzione serve per ricordare a tutti in un gruppo l'imminente chiusura di un sondaggio, e rende più facile ritrovarlo nuovamente 😉.\n\nPer abilitare le notifiche nella chat, segui i seguenti passaggi:\n**1.** Crea il sondaggio\n**2.** Imposta una data di termine nel menu delle impostazioni\n**3.** Vai nella chat all'interno della quale vuoi essere notificato (il bot ha bisogno di essere aggiunto al gruppo prima che tu abbia condiviso il sondaggio, altrimenti dovrai ri-condividerlo)\n**4.** Rispondi al messaggio che hai selezionato tramite @ultimate\\_pollbot con il comando /notify\n**5.** Seleziona il sondaggio corretto\n**6.** Rispondi al messaggio del sondaggio che hai selezionato tramite @ultimate\\_pollbot con /notify \n**7.** Seleziona il sondaggio corretto\n\nQuesta procedura è, tristemente, inutilmente complessa, ma è necessaria in quanto telegram non permette ai bot di rilevare messaggi nei gruppi 😐.\nPertanto non sappiamo quale sondaggio si trova in quale gruppo e va fatto quindi manualmente."
+        management: "🕰 **Trova i vecchi sondaggi:**\n\nI due comandi /list e /list\\_closed permettono di trovare e gestire vecchi sondaggi.\n\n⚠️ **Elimina i sondaggi:**\n\nPuoi cancellare sondaggi individuali nei menu ad essi legati.\nInoltre, esisite anche il comando /delete\\_closed, che elimina tutti i sondaggi già chiusi, e il comando /delete\\_all che li elimina tutti.\n"
+        languages: "🌐 **Lingue:**\n\nUltimate pollbot supporta diverse lingue, anche se l'unica ad essere mantenuta ufficialmente è la lingua Inglese.\n\nPer aggiungere una lingua, recati sul repository di Github, copia il file \"english.yml\", rinominalo con il nome della tua lingua ed esegui la traduzione.\nStai attento a non mandare a quel paese il Markdown (`****`, `__`, `${}`), altrimenti alcune cose tradotte nella tua lingua non funzioneranno.\n\nSe qualcosa si rompe, a causa di traduzioni errate, dovrai risolverlo da te. Non me ne occuperò io.\nIl supporto multilingue è una feature che viene mandata avanti dalla comunità che io supporto felicemente, ma non posso supportare più lingue da solo.\n"
+        bugs: "⚠️ **C'è un bug ignoto che non se ne vuole andare!!** 😩\n\nDi solito ricevo una notifica quando qualcosa si rompe, ma alcuni bug potrebbero non venire rilevati!\nNel caso in cui un bug non sia stato risolto un uno o due giorni, puoi aprire un ticket di errore su [GitHub](https://github.com/Nukesor/ultimate-poll-bot) o di farlo presente sul [gruppo di supporto](https://t.me/nukesors_projects).\n"
     error: "Si è verificato un errore sconosciuto. Probabilmente ho già ricevuto una notifica a riguardo, e cercherò di risolverlo il prima possibile.\nNel caso in cui il bug non sia stato risolto entro uno o due giorni, puoi aprire un ticket di errore su [GitHub](https://github.com/Nukesor/ultimate-poll-bot) o di farlo presente sul [gruppo di supporto](https://t.me/nukesors_projects).\n"
     start_after_results: 'Hey! Scrivi /create per creare il tuo sondaggio!'
-    over_3000: "⚠️ Il tuo sondaggio ha superato i *3000 caratteri*. E' troppo lungo per essere contenuto in un solo messaggio. Per favore, prova a tenerlo sotto i 3000 o, ancora meglio, sotto i 2500 🙏.\n\nTelegram forza un massimo di 4096 caratteri per messaggio e devo mostrare i voti sopra al tuo testo.\nQualsiasi sondaggio con più caratteri *non funzionerà*.\nHo già fatto del mio meglio per gestire la situazione e a riassumere i voti per risparmiare spazio, ma quest'ultimo non è infinito.\n\nPer sondaggi con 10-15 opzioni e un sacco di testo, forse faresti meglio a usare un tool esterno come [Doodle](https://doodle.com/)."
-    over_4000: "⚠️ Il tuo sondaggio ha superato i *4000 caratteri*. E' troppo lungo per essere contenuto in un solo messaggio. Per favore, prova a tenerlo sotto i 3000 o, ancora meglio, sotto i 2500 🙏.\n\nTelegram forza un massimo di 4096 caratteri per messaggio e devo mostrare i voti sopra al tuo testo.\nQualsiasi sondaggi con più caratteri *non funzionerà*.\nHo già fatto del mio meglio per gestire la situazione, ma ho le mani legate.\n\nPer sondaggi molto lunghi, forse faresti meglio a usare un tool esterno come [Doodle](https://doodle.com/)."
+    over_3000: "⚠️ Il tuo sondaggio ha superato i **3000 caratteri**. E' troppo lungo per essere contenuto in un solo messaggio. Per favore, prova a tenerlo sotto i 3000 o, ancora meglio, sotto i 2500 🙏.\n\nTelegram forza un massimo di 4096 caratteri per messaggio e devo mostrare i voti sopra al tuo testo.\nQualsiasi sondaggio con più caratteri **non funzionerà**.\nHo già fatto del mio meglio per gestire la situazione e a riassumere i voti per risparmiare spazio, ma quest'ultimo non è infinito.\n\nPer sondaggi con 10-15 opzioni e un sacco di testo, forse faresti meglio a usare un tool esterno come [Doodle](https://doodle.com/)."
+    over_4000: "⚠️ Il tuo sondaggio ha superato i **4000 caratteri**. E' troppo lungo per essere contenuto in un solo messaggio. Per favore, prova a tenerlo sotto i 3000 o, ancora meglio, sotto i 2500 🙏.\n\nTelegram forza un massimo di 4096 caratteri per messaggio e devo mostrare i voti sopra al tuo testo.\nQualsiasi sondaggi con più caratteri **non funzionerà**.\nHo già fatto del mio meglio per gestire la situazione, ma ho le mani legate.\n\nPer sondaggi molto lunghi, forse faresti meglio a usare un tool esterno come [Doodle](https://doodle.com/)."
     too_long: "Hey!\n\nSono spiacente, ma il tuo sondaggio è troppo lungo. Potresti aver messo troppe opzioni o aver scritto troppo testo (o entrambe le cose). 😬\n\nDato che telegram permette solo 4096 caratteri per messaggio, non posso mostrare sondaggi che superano questo limite. 😐\n\nPer favore, prova ad essere più sintetico con il nome, la descrizione e le opzioni e, se vuoi avere sondaggi con molte opzioni forse faresti meglio a usare un tool come [Doodle](https://doodle.com/).\n\n    Un modo per risolvere il problema potrebbe esser quello di rimuovere delle opzioni (può farlo l'amministratore)\n\n👇 Puoi ancora votare e vedere i risultati qui sotto. 👇\n"

@@ -20,27 +20,27 @@ datepicker:
 poll:
     anonymous: 'Anketa je anonymní!'
     results_not_visible: 'Výsledky nejsou viditelné, dokud se anketa neuzavře!'
-    vote_times: "\nPočat hlasů na uživatele: *%{amount}*"
+    vote_times: "\nPočat hlasů na uživatele: **%{amount}**"
     due: "\n📅 Datum uzavření ankety: %{date}"
-    closed: "\n⚠️ *Tato anketa je uzavřena* ⚠️"
-    own_poll: 'Vytvořte si *svou vlastní* anketu přímo [zde](https://t.me/ultimate_pollbot)'
-    many_users_voted: 'Počet uživatelů, kteří hlasovali: *%{count}*'
-    one_user_voted: 'Zatím hlasoval jen *jeden uživatel*'
+    closed: "\n⚠️ **Tato anketa je uzavřena** ⚠️"
+    own_poll: 'Vytvořte si **svou vlastní** anketu přímo [zde](https://t.me/ultimate_pollbot)'
+    many_users_voted: 'Počet uživatelů, kteří hlasovali: **%{count}**'
+    one_user_voted: 'Zatím hlasoval jen **jeden uživatel**'
     total_votes: ' (Počet hlasů: %{count})'
     remaining_votes: "\nZbylé hlasy:"
     remaining_votes_user: '%{name}, hlasů: %{count}'
-    summarized_users: '_a další lidé (%{count})_'
-    too_many_votes: "⚠️ *Příliš mnoho hlasů v poslední minutě:* ⚠️\nVaše hlasy budou přidány, ale tato zpráva se bude doplňovat každé 2 vteřiny.\n(Telegram neumožňuje botům ve skupinách, aby zasílali/upravovalivíce zpráv, než je daný limit.)\n"
+    summarized__users: '__a další lidé (%{count})__'
+    too_many_votes: "⚠️ **Příliš mnoho hlasů v poslední minutě:** ⚠️\nVaše hlasy budou přidány, ale tato zpráva se bude doplňovat každé 2 vteřiny.\n(Telegram neumožňuje botům ve skupinách, aby zasílali/upravovalivíce zpráv, než je daný limit.)\n"
     doodle:
-        'yes': '├ *Ano:*'
-        maybe: '├ *Možná:*'
-        'no': '├ *Ne:*'
-        yes_summarized: '├ *Ano:* hlasy: %{count}'
-        maybe_summarized: '├ *Možná:* hlasy: %{count}'
-        no_summarized: '├ *Ne:* hlasy: %{count}'
-    doodle_help: '*Klikněte* na tlačítka `a)`, `b)` níže pro zobrazení názvů možností.'
+        'yes': '├ **Ano:**'
+        maybe: '├ **Možná:**'
+        'no': '├ **Ne:**'
+        yes_summarized: '├ **Ano:** hlasy: %{count}'
+        maybe_summarized: '├ **Možná:** hlasy: %{count}'
+        no_summarized: '├ **Ne:** hlasy: %{count}'
+    doodle_help: '**Klikněte** na tlačítka `a)`, `b)` níže pro zobrazení názvů možností.'
     please_wait: "\n\nPočkejte prosím chvíli, než bot synchronizuje ankety ☺️"
-    anonymous_warning: "*Dejte si pozor:*\n_Lidé mohou být schopni odhadnout Váš hlas pomocí sledování procent, hlasů a Vašeho online statusu._"
+    anonymous__warning: "**Dejte si pozor:**\n__Lidé mohou být schopni odhadnout Váš hlas pomocí sledování procent, hlasů a Vašeho online statusu.__"
 deleted:
     poll: 'Tato anketa byla natrvalo smazána.'
     polls: 'Všechny ankety byly smazány.'
@@ -74,10 +74,10 @@ inline_query:
     create_first: 'Klepni sem a vytvoř anketu ;)'
     create_poll: 'Klepněte pro vytvoření nové ankety.'
 notification:
-    one_week: 'Anketa *%{name}* se do týdne automaticky uzavře'
-    one_day: 'Anketa *%{name}* se během jednoho dne automaticky uzavře'
-    six_hours: 'Anketa *%{name}* se během šesti hodin automaticky uzavře'
-    closed: 'Anketa *%{name}* je nyní uzavřena'
+    one_week: 'Anketa **%{name}** se do týdne automaticky uzavře'
+    one_day: 'Anketa **%{name}** se během jednoho dne automaticky uzavře'
+    six_hours: 'Anketa **%{name}** se během šesti hodin automaticky uzavře'
+    closed: 'Anketa **%{name}** je nyní uzavřena'
 keyboard:
     done: Hotovo
     close: Zavřít
@@ -147,46 +147,46 @@ sorting:
     option_name: abecedně
     doodle_sorting: 'dle odpovědi'
 settings:
-    poll_type: '*Druh ankety*: %{poll_type}'
-    language: '*Jazyk*: %{language}'
-    anonymous: '*Anonymita*: Jména nejsou viditelná'
-    not_anonymous: '*Anonymita*: Jména jsou viditelná'
-    due_date: '*Datum uzavření*: %{date}'
-    no_due_date: '*Datum uzavření*: Žádné'
-    results_visible: '*Viditelnost výsledků*: Výsledky jsou přímo viditelné'
-    results_not_visible: '*Viditelnost výsledků*: Výsledky nejsou viditelné do uzavření ankety'
-    user_options: '*Tvorba možností*: Kdokoliv může přidat novou možnost'
-    no_user_options: '*Tvorba možností*: Jen Vy smíte přidávat nové možnosti'
-    percentage: '*Procenta*: Viditelná'
-    no_percentage: '*Procenta*: Skrytá'
-    euro_date_format: '*Formát data*: DD.MM.RRRR'
-    us_date_format: '*Formát data*: RRRR-MM-DD'
-    user_sorting: '*Řazení uživatelů*: %{name}'
-    option_sorting: '*Řazení možností*: %{name}'
+    poll_type: '**Druh ankety**: %{poll_type}'
+    language: '**Jazyk**: %{language}'
+    anonymous: '**Anonymita**: Jména nejsou viditelná'
+    not_anonymous: '**Anonymita**: Jména jsou viditelná'
+    due_date: '**Datum uzavření**: %{date}'
+    no_due_date: '**Datum uzavření**: Žádné'
+    results_visible: '**Viditelnost výsledků**: Výsledky jsou přímo viditelné'
+    results_not_visible: '**Viditelnost výsledků**: Výsledky nejsou viditelné do uzavření ankety'
+    user_options: '**Tvorba možností**: Kdokoliv může přidat novou možnost'
+    no_user_options: '**Tvorba možností**: Jen Vy smíte přidávat nové možnosti'
+    percentage: '**Procenta**: Viditelná'
+    no_percentage: '**Procenta**: Skrytá'
+    euro_date_format: '**Formát data**: DD.MM.RRRR'
+    us_date_format: '**Formát data**: RRRR-MM-DD'
+    user_sorting: '**Řazení uživatelů**: %{name}'
+    option_sorting: '**Řazení možností**: %{name}'
     change_language: 'Klepněte na jazyk, abyste ho pro tuto anketu změnili.'
     anonymize: "Opravdu chcete anonymizovat tuto anketu?\n⚠️ Tento krok je nevratný. ⚠️\n"
     remove_options: 'Klikněte na tlačítka níže pro odstranění nehodících se možností.'
-    summarize: '*Sumarizace hlasů*: Sumarizovat hodně hlasů'
-    dont_summarize: '*Sumarizace hlasů*: Ukázat všechny hlasy'
-    permanently_summarized: '*Sumarizace hlasů*: Příliš mnoho hlasů. Přímo sumarizováno.'
-    sharing_link: 'Použijte tento odkaz k sdílení ankety s dalšími chaty. *Buďte opatrní!* Pokud odkaz někam pošlete, nelze to vzít zpět:'
+    summarize: '**Sumarizace hlasů**: Sumarizovat hodně hlasů'
+    dont_summarize: '**Sumarizace hlasů**: Ukázat všechny hlasy'
+    permanently_summarized: '**Sumarizace hlasů**: Příliš mnoho hlasů. Přímo sumarizováno.'
+    sharing_link: 'Použijte tento odkaz k sdílení ankety s dalšími chaty. **Buďte opatrní!** Pokud odkaz někam pošlete, nelze to vzít zpět:'
     user:
-        notifications_enabled: '*Oznámení:* povolena'
-        notifications_disabled: '*Oznámení:* vypnuta'
+        notifications_enabled: '**Oznámení:** povolena'
+        notifications_disabled: '**Oznámení:** vypnuta'
         delete_all: '⚠️ Smazat VŠECHNY ankety⚠️'
         delete_closed: '⚠️ Smazat všechny uzavřené ankety⚠️'
-        delete_all_confirmation: "Opravdu chcete smazat VŠECHNY své ankety?\nTýká se to všech aktuálně otevřených i uzavřených anket.\n⚠️ *Tento krok je nevratný a nezrušitelný.* ⚠️\n"
-        delete_closed_confirmation: "Opravdu chcete smazat všechny uzavřené ankety?\n⚠️ *Tento krok je nevratný.* ⚠️\n"
-        language: '*Výchozí jazyk:* %{language}'
-        open_polls: '*Otevřené ankety:* %{count}'
-        closed_polls: '*Uzavřené ankety:* %{count}'
+        delete_all_confirmation: "Opravdu chcete smazat VŠECHNY své ankety?\nTýká se to všech aktuálně otevřených i uzavřených anket.\n⚠️ **Tento krok je nevratný a nezrušitelný.** ⚠️\n"
+        delete_closed_confirmation: "Opravdu chcete smazat všechny uzavřené ankety?\n⚠️ **Tento krok je nevratný.** ⚠️\n"
+        language: '**Výchozí jazyk:** %{language}'
+        open_polls: '**Otevřené ankety:** %{count}'
+        closed_polls: '**Uzavřené ankety:** %{count}'
         explanations:
-            language: '_Toto nastavení určuje jazyk použitý v rozhraní a výchozí jazyk, Vašich anket._'
-            notifications: '_Jednou za čas pošlu zprávu informující o aktualizacích, změnách a chybách._'
+            language: '__Toto nastavení určuje jazyk použitý v rozhraní a výchozí jazyk, Vašich anket.__'
+            notifications: '__Jednou za čas pošlu zprávu informující o aktualizacích, změnách a chybách.__'
     poll:
         explanation:
-            anonymity: "_V anonymní anketě nebudou zobrazována žádná jména, není možné vidět, od kterého uživatele hlas přišel._\n*Dejte si pozor:* _Lidé mohou Váš hlas odhadnout sledováním procent, počtu hlasů nebo Vašeho online statusu. Pro zcela anonymní hlasování také zapněte skryté výsledky._\n"
-            visibility: '_V anketě se skrytými výsledky nelze vidět procenta ani hlasy, dokud není uzavřena. Ve chvíli, kdy uzavřena je, zůstane tak navždy. To je nutné k zamezení [taktickému hlasování](https://cs.qwertyu.wiki/wiki/Tactical_voting) a vlivu [kotvení](https://cs.m.wikipedia.org/wiki/Kotven%C3%AD_(psychologie\))'
+            anonymity: "__V anonymní anketě nebudou zobrazována žádná jména, není možné vidět, od kterého uživatele hlas přišel.__\n**Dejte si pozor:** __Lidé mohou Váš hlas odhadnout sledováním procent, počtu hlasů nebo Vašeho online statusu. Pro zcela anonymní hlasování také zapněte skryté výsledky.__\n"
+            visibility: 'V anketě se skrytými výsledky nelze vidět procenta ani hlasy, dokud není uzavřena. Ve chvíli, kdy uzavřena je, zůstane tak navždy. To je nutné k zamezení [taktickému hlasování](https://cs.qwertyu.wiki/wiki/Tactical_voting) a vlivu [kotvení](https://cs.m.wikipedia.org/wiki/Kotven%C3%AD_(psychologie\))'
     anonymity_warning: "Nemůžete skrýt hlasy a procenta v anonymní anketě. To by mohlo vytvořit v uživatelích pocit, že anketa má skryté výsledky, což není pravda. Pokud chcete tyto funkce, vytvořte anketu se skrytými výsledky.\n"
 management:
     permanently_close: "Opravdu chcete trvale uzavřít tuto anketu?\nVýsledky budou viditelné, ale již nebude možno dále hlasovat\n⚠️ Tento krok je nevratný. ⚠️\n"
@@ -205,23 +205,23 @@ creation:
         results_visible: 'Trvale zobrazovat výsledky'
         results_not_visible: 'Skrýt výsledky do uzavření ankety'
     option:
-        next: 'Pošlete *jinou možnost*, zvolte datum a přidejte ho jako možnost, nebo stiskněte *Hotovo*, když jste hotovi.'
+        next: 'Pošlete **jinou možnost**, zvolte datum a přidejte ho jako možnost, nebo stiskněte **Hotovo**, když jste hotovi.'
         first: "Pošlete mi prosím možnost. Můžete zaslat více možností najednou, každou na nový řádek.\nMůžete také přidat popisek za spojovník. \nNapříklad `Burger - protože je chutný`\n"
         no_new: '❌ Nebyla přidána žádná nová možnost'
-        single_added: "Možnost *%{option}* byla přidána. 👍\nPošlete *jinou možnost*, vyberte datum a přidejte ho jako možnost, nebo stiskněte *Hotovo*, když jste hotovi."
+        single_added: "Možnost **%{option}** byla přidána. 👍\nPošlete **jinou možnost**, vyberte datum a přidejte ho jako možnost, nebo stiskněte **Hotovo**, když jste hotovi."
         multiple_added: 'Možnosti byly přidány:'
         finished: 'Všechny možnosti již byly přidány'
-    poll_type_help: "Aktuální druh ankety: *%{poll_type}*\n\n👍 *Jeden hlas:*\nKaždý uživatel dostane jediný hlas. Výchozí a normální systém. \n\n📅 *Ano/Ne:*\nUživatel může hlasovat pro `ano`, `ne`, nebo `možná` u každé možnosti. Dobré pro hledání vhodného data.\n\n↕ *Prioritní hlasování:*\nKaždý uživatel možnosti seřadí podle svých preferencí. Body se rozdělí podle umístění v seřazených možnostech. Tato možnost je skvělá k hledání kompromisů — varianty, kterou většina lidí preferuje před ostatními. Například vítěz pěveckého klání Eurovize je vybírán podobně. \n\n🛒 *Neomezené hlasy* (nebo Nákupní seznam) 😎\nKaždý uživatel může pro každou možnost hlasovat kolikrát chce.\nTo je dobré například, když chcete vědět, jaké věci je potřeba nakoupit nebo kolik kterých věcí vzít s sebou.\n\n🎮 *Blokové hlasy:*\nKaždý uživatel může hlasovat pro všechny (nebo méně) možností. Využitelné při hledání nejžádanější varianty, např. hry, kterou by chtělo hrát nejvíce lidí.\n\n🎮 *Omezené hlasy:*\nKaždý uživatel dostane daný počet hlasů, které může rozdělit, ale vždy jen jeden pro každou z možností.\nVelmi podobné Blokovým hlasům, ale lidé si musí určit priority. Tento systém je dobrý pro omezení počtu možných výherců.\n\n📊 *Kumulativní hlasy:*\nKaždý uživatel dostane daný počet hlasů, které může rozdělit, jak se mu zachce (takže lze hlasovat vícekrát pro stejnou možnost).\nTento systém dává hodnotnější informace než Omezené hlasy díky tomu, že lze dát více hlasů stejné možnosti.\n"
+    poll_type_help: "Aktuální druh ankety: **%{poll_type}**\n\n👍 **Jeden hlas:**\nKaždý uživatel dostane jediný hlas. Výchozí a normální systém. \n\n📅 **Ano/Ne:**\nUživatel může hlasovat pro `ano`, `ne`, nebo `možná` u každé možnosti. Dobré pro hledání vhodného data.\n\n↕ **Prioritní hlasování:**\nKaždý uživatel možnosti seřadí podle svých preferencí. Body se rozdělí podle umístění v seřazených možnostech. Tato možnost je skvělá k hledání kompromisů — varianty, kterou většina lidí preferuje před ostatními. Například vítěz pěveckého klání Eurovize je vybírán podobně. \n\n🛒 **Neomezené hlasy** (nebo Nákupní seznam) 😎\nKaždý uživatel může pro každou možnost hlasovat kolikrát chce.\nTo je dobré například, když chcete vědět, jaké věci je potřeba nakoupit nebo kolik kterých věcí vzít s sebou.\n\n🎮 **Blokové hlasy:**\nKaždý uživatel může hlasovat pro všechny (nebo méně) možností. Využitelné při hledání nejžádanější varianty, např. hry, kterou by chtělo hrát nejvíce lidí.\n\n🎮 **Omezené hlasy:**\nKaždý uživatel dostane daný počet hlasů, které může rozdělit, ale vždy jen jeden pro každou z možností.\nVelmi podobné Blokovým hlasům, ale lidé si musí určit priority. Tento systém je dobrý pro omezení počtu možných výherců.\n\n📊 **Kumulativní hlasy:**\nKaždý uživatel dostane daný počet hlasů, které může rozdělit, jak se mu zachce (takže lze hlasovat vícekrát pro stejnou možnost).\nTento systém dává hodnotnější informace než Omezené hlasy díky tomu, že lze dát více hlasů stejné možnosti.\n"
     results_not_visible: 'Výsledky nejsou viditelné do uzavření ankety'
     results_visible: 'Výsledky jsou přímo viditelné'
     anonymity: 'Jména nejsou viditelná'
     no_anonymity: 'Jména jsou viditelná'
-    init_text: "Ahoj! \nPrávě se chystáte vytvořit novou anketu👌\n\nAktuální nastavení:\n\n*Druh ankety*: %{poll_type}\n*Anonymita*: %{anonymity}\n*Viditelnost výsledků*: %{results_visible}\n\nPostupujte prosím dle těchto kroků:\n1. Nakonfigurujte anketu dle svých potřeb 🙂\n2. 👇 Zašlete mi název této ankety. 👇\n"
-    datepicker_text: "*Výběr data:*\nK přidání data toto datum vyberte a stiskněte *Vybrat toto datum*.\nKlikněte na *Hotovo*, když jste hotovi.\n\n*Aktuální možnosti:*\n"
+    init_text: "Ahoj! \nPrávě se chystáte vytvořit novou anketu👌\n\nAktuální nastavení:\n\n**Druh ankety**: %{poll_type}\n**Anonymita**: %{anonymity}\n**Viditelnost výsledků**: %{results_visible}\n\nPostupujte prosím dle těchto kroků:\n1. Nakonfigurujte anketu dle svých potřeb 🙂\n2. 👇 Zašlete mi název této ankety. 👇\n"
+    datepicker_text: "**Výběr data:**\nK přidání data toto datum vyberte a stiskněte **Vybrat toto datum**.\nKlikněte na **Hotovo**, když jste hotovi.\n\n**Aktuální možnosti:**\n"
     error:
         limit_bigger_zero: 'Zašlete mi prosím číslo větší než 0'
         limit_between: 'Pošlete mi prosím číslo mezi 1 a %{limit}'
-        markdown: "Nepoužívejte prosím v názvech, popisech ani možnostech formátovací symboly. Tyto symboly jsou podtržítko `_`, hvězdička `*` a hranatá závorka `[`.\nPošlete mi prosím zprávu znovu bez těchto symbolů. \n"
+        markdown: "Nepoužívejte prosím v názvech, popisech ani možnostech formátovací symboly. Tyto symboly jsou podtržítko `_`, hvězdička `**` a hranatá závorka `[`.\nPošlete mi prosím zprávu znovu bez těchto symbolů. \n"
         too_big: 'Pošlete mi prosím menší číslo. Také je možné použít druh ankety "Neomezené hlasy"'
 external:
     canceled: Zrušeno
@@ -237,17 +237,17 @@ user:
     language_changed: 'Jazyk změněn'
 misc:
     donation: "Ahoj!\n\nMé jméno je Arne Beer (@Nukesor). Jsem jediným vývojářem Ultimate pollbot.\n\nNápad k vytvoření Ultimate pollbota se zformoval, když se mí přátelé opět nedokázali rozhodnout, kam jít na oběd.\nUž se to stalo tolikrát a naléhavě jsme potřebovali  dobré a stabilní řešení tohoto problému uvnitř Telegramu!\nA tak se zrodil ULTIMATE pollbot.\n\nKaždý řádek kódu v tomto projektu jsem napsal ve svém volném čase a zcela zadarmo.\nTento projekt je nevýdělečný, open-source na [GitHubu](https://github.com/Nukesor/ultimate-poll-bot) a hostovaný na serveru, který si pronajímám.\n\nPrávě teď obvykle trávím 5-20 hodin týdně vývojem a údržbou mých projektů a byl bych moc rád za nějakou podporu. \nKdyž jí bude dost, snad se mi podaří na vývoj a údžbu projektů získat více času. Možná dokomce zkusím uskutečnit některé mé nápady! \n\nVelice si vážím čehokoliv, co mi vypomáhá a udržuje můj server v provozu ☺️.\n\nPokud se Vám tento projekt líbí, podívejte se na mou stránku [na Patreon](https://www.patreon.com/nukesor) nebo mi [kupte kávu](https://www.buymeacoffee.com/Nukesor).\nKdybyste měli nějaké otázky, zastavte se u mé [skupiny podpory](https://t.me/nukesors_projects).\n\nPřeji Vám hezký den!\n"
-    start: "🌟Vítejte v *ULTIMATE* pollbotovi 🌟\n\nNapište /create nebo stiskněte tlačítko níže a začněte tvořit ankety. Vše je vysvětleno během tvorby.\n\n🌐 Můžete vybrat jiný jazyk v nastavení 🌐\n❓Stiskněte Pomoc pro více vysvětlivek❓\n\nPolud se Vám projekt líbí, zastavte se v mé [skupině podpory](https://t.me/nukesors_projects) nebo si prohlédněte mou stránku na [Patreonu](https://www.patreon.com/nukesor).\nTento bot je open-source na [GitHubu](https://github.com/Nukesor/ultimate-poll-bot).\n"
+    start: "🌟Vítejte v **ULTIMATE** pollbotovi 🌟\n\nNapište /create nebo stiskněte tlačítko níže a začněte tvořit ankety. Vše je vysvětleno během tvorby.\n\n🌐 Můžete vybrat jiný jazyk v nastavení 🌐\n❓Stiskněte Pomoc pro více vysvětlivek❓\n\nPolud se Vám projekt líbí, zastavte se v mé [skupině podpory](https://t.me/nukesors_projects) nebo si prohlédněte mou stránku na [Patreonu](https://www.patreon.com/nukesor).\nTento bot je open-source na [GitHubu](https://github.com/Nukesor/ultimate-poll-bot).\n"
     help:
         intro: "Existuje pár nastavení pro Vaše ankety. \nZvolte kategorii, která Vás zajímá nebo si jednoduše pročtěte vše 😉.\n\nChcete-li pouze vytvořit anketu, napište /create\n"
-        creation: "🌟*Tvorba:*\n\nK vytvoření nové ankety napište nebo stiskněte /create. Pro každou anketu můžete specifikovat několik základních nastavení\n\n*Druh ankety:* Všemožné druhy anket jsou detailně popsány ve svém menu.\n*Anonymita:* Anketu můžete anonymizovat, což znamená, že u výsledků nebudou zobrazena jména! Toto je trvalé a platí pro všechny.\n*Viditelnost výsledků:* V tomto módu jsou výsledky viditelné až po uzavření ankety. To je užitečné k zamezení [taktickému hlasování](https://cs.qwertyu.wiki/wiki/Tactical_voting) a vlivu [kotvení](https://cs.m.wikipedia.org/wiki/Kotven%C3%AD_(psychologie\\))\n\n-> *Pozor: uzavřená anketa s neviditelnými výsledky zůstává uzavřená!:*\nZnovuotevření ankety by mohlo uživateli, přesněji tvůrci ankety, dát možnost se podívat na hlasy a hlasovat způsobem, který pro něj může vyústit ve značnou výhodu (taktické hlasování).\n"
-        settings: "⚙️ *Nastavení:*\n\nDalší nastavení mohou být upravena potom, co anketa byla vytvořena:\n\n*Jazyk:* Lze změnit jazyk jen pro určitou anketu.\n*Anonymita:* Anketu lze anonymizovat i zpětně.\n*Datum uzavření:* Je možné zvolit datum uzavření, kdy se anketa automaticky uzavře.\n*Možnosti:* V menu nastavení lze přidávat a odebírat možnosti.\n*Uživatelské možnosti:* Můžete ostatním uživatelům umožnit přidávat možnosti do ankety.\n\n*---- Podnabídka stylizace: ----*\n\n*Procenta:*\n_Procentuální čára výsledků může být skryta menu stylizace._\n\n*Hlasy možnosti:*\n_Suma všech hlasů pro možnost může být skryta._\n\n*Sumarizace hlasů:*\n_Pokud ve Vaší anketě hlasuje hodně lidí, zpráva se lehce může přeplnit. Sumarizujte hlasy pro udržení větší přehlednosti._\n\n*Řazení:*\n_Systém řazení jmen uživatelů a možností ve výsledcích lze změnit._\n"
-        notifications: "📣 *Oznámení:*\n\nKdyž zapnete pro chat upozornění, bot pošle zprávu 1 den, 6 hodin a 1 hodinu před zavřením ankety.\nTato funkce slouží k upozornění všech ve skupině, že se anketa brzy uzavírá a zjednodušení nalezení zprávy s anketou 😉.\n\nK zapnutí oznámení v chatu postupujte dle těchto kroků:\n*1.* Vytvořte anketu\n*2.* V menu nastavení vyberte datum uzavření\n*3.* Jděte do chatu, kde chcete upozornění\n*4.* Přidejte pollbota do skupiny\n*5.* Sdílejte v této skupině anketu\n*6.* Odpovězte /notify na zprávu s anketou vybranou přes @ultimate\\_pollbot\n*7.* Zvolte správnou anketu\n\nCelá tato procedura je bohužel zbytečně komplikovaná, protože Telegram nedovoluje detekci zpráv od botů ve skupinách 😐.\nProto nevíme která anketa je kam poslána a vše musí být provedeno ručně.\n"
-        management: "🕰 *Nalezení starých anket:*\n\nExistuje možnost v menu /start k nalezení všech otevřených anket.\nUzavřené ankety si lze nechat vypsat v menu nastavení /settings \n\n⚠️ *Smazání anket:*\n\nMůžete mazat jednotlivé ankety v jejich odpovídajících nabídkách.\nLze využít také funkce smazání všech anket nebo všech uzavřených anket v menu nastavení /settings\n"
-        languages: "🌐 *Jazyk:*\n\nUltimate pollbot podporuje několik jazyků, ale jen angličtina je oficiálně udržována.\n\nK přidání nového jazyka mě prosím kontaktujte na @Nukesor!\nPoužívám službu [Lokalise](https://lokalise.co) pro lokalizaci, která mi poskytla open-source licenci pro překlad mých projektů.\nAby tato služba fungovala, budete mi muset poskytnout emailovou adresu (stačí i vedlejší adresa pro spam), abych Vám mohl poslat pozvánku.\n\nDávejte si prosím pozor na ponechání formátovacích symbolů (`**`, `__`, `${}`), jinak se některé funkce ve Vašem jazyce rozbijí.\nKdyž se něco pokazí, pokusím se to opravit, ale prosím pomozte předcházet těmto problémům. Jejich řešení vyžaduje snahu a čas, které šlo využít jinak. Podpora jazyků je řízena komunitou a rád ji podporuji, ale nemůžu sám podporovat více jazyků.\n\nČeský překlad vytvořil @IgnacRR\nPokud se v něm vyskytla nějaká chyba či překlep, kontaktujte jej.\n"
-        bugs: "⚠️ *Je zde chyba, která nechce zmizet!!* 😩\n\nObvykle jsem upozorněn, když se něco pokazí, ale některé chyby mohou projít bez povšimnutí!\nPokud chyba není do dne až dvou opravena, napište mi na [GitHub](https://github.com/Nukesor/ultimate-poll-bot) nebo se zastavte v mé [skupině podpory](https://t.me/nukesors_projects).\n\nChyby v českém překladu hlaste @IgnacRR\n"
+        creation: "🌟**Tvorba:**\n\nK vytvoření nové ankety napište nebo stiskněte /create. Pro každou anketu můžete specifikovat několik základních nastavení\n\n**Druh ankety:** Všemožné druhy anket jsou detailně popsány ve svém menu.\n**Anonymita:** Anketu můžete anonymizovat, což znamená, že u výsledků nebudou zobrazena jména! Toto je trvalé a platí pro všechny.\n**Viditelnost výsledků:** V tomto módu jsou výsledky viditelné až po uzavření ankety. To je užitečné k zamezení [taktickému hlasování](https://cs.qwertyu.wiki/wiki/Tactical_voting) a vlivu [kotvení](https://cs.m.wikipedia.org/wiki/Kotven%C3%AD_(psychologie\\))\n\n-> **Pozor: uzavřená anketa s neviditelnými výsledky zůstává uzavřená!:**\nZnovuotevření ankety by mohlo uživateli, přesněji tvůrci ankety, dát možnost se podívat na hlasy a hlasovat způsobem, který pro něj může vyústit ve značnou výhodu (taktické hlasování).\n"
+        settings: "⚙️ **Nastavení:**\n\nDalší nastavení mohou být upravena potom, co anketa byla vytvořena:\n\n**Jazyk:** Lze změnit jazyk jen pro určitou anketu.\n**Anonymita:** Anketu lze anonymizovat i zpětně.\n**Datum uzavření:** Je možné zvolit datum uzavření, kdy se anketa automaticky uzavře.\n**Možnosti:** V menu nastavení lze přidávat a odebírat možnosti.\n**Uživatelské možnosti:** Můžete ostatním uživatelům umožnit přidávat možnosti do ankety.\n\n**---- Podnabídka stylizace: ----**\n\n**Procenta:**\n__Procentuální čára výsledků může být skryta menu stylizace.__\n\n**Hlasy možnosti:**\n__Suma všech hlasů pro možnost může být skryta.__\n\n**Sumarizace hlasů:**\n__Pokud ve Vaší anketě hlasuje hodně lidí, zpráva se lehce může přeplnit. Sumarizujte hlasy pro udržení větší přehlednosti.__\n\n**Řazení:**\n__Systém řazení jmen uživatelů a možností ve výsledcích lze změnit.__\n"
+        notifications: "📣 **Oznámení:**\n\nKdyž zapnete pro chat upozornění, bot pošle zprávu 1 den, 6 hodin a 1 hodinu před zavřením ankety.\nTato funkce slouží k upozornění všech ve skupině, že se anketa brzy uzavírá a zjednodušení nalezení zprávy s anketou 😉.\n\nK zapnutí oznámení v chatu postupujte dle těchto kroků:\n**1.** Vytvořte anketu\n**2.** V menu nastavení vyberte datum uzavření\n**3.** Jděte do chatu, kde chcete upozornění\n**4.** Přidejte pollbota do skupiny\n**5.** Sdílejte v této skupině anketu\n**6.** Odpovězte /notify na zprávu s anketou vybranou přes @ultimate\\_pollbot\n**7.** Zvolte správnou anketu\n\nCelá tato procedura je bohužel zbytečně komplikovaná, protože Telegram nedovoluje detekci zpráv od botů ve skupinách 😐.\nProto nevíme která anketa je kam poslána a vše musí být provedeno ručně.\n"
+        management: "🕰 **Nalezení starých anket:**\n\nExistuje možnost v menu /start k nalezení všech otevřených anket.\nUzavřené ankety si lze nechat vypsat v menu nastavení /settings \n\n⚠️ **Smazání anket:**\n\nMůžete mazat jednotlivé ankety v jejich odpovídajících nabídkách.\nLze využít také funkce smazání všech anket nebo všech uzavřených anket v menu nastavení /settings\n"
+        languages: "🌐 **Jazyk:**\n\nUltimate pollbot podporuje několik jazyků, ale jen angličtina je oficiálně udržována.\n\nK přidání nového jazyka mě prosím kontaktujte na @Nukesor!\nPoužívám službu [Lokalise](https://lokalise.co) pro lokalizaci, která mi poskytla open-source licenci pro překlad mých projektů.\nAby tato služba fungovala, budete mi muset poskytnout emailovou adresu (stačí i vedlejší adresa pro spam), abych Vám mohl poslat pozvánku.\n\nDávejte si prosím pozor na ponechání formátovacích symbolů (`****`, `__`, `${}`), jinak se některé funkce ve Vašem jazyce rozbijí.\nKdyž se něco pokazí, pokusím se to opravit, ale prosím pomozte předcházet těmto problémům. Jejich řešení vyžaduje snahu a čas, které šlo využít jinak. Podpora jazyků je řízena komunitou a rád ji podporuji, ale nemůžu sám podporovat více jazyků.\n\nČeský překlad vytvořil @IgnacRR\nPokud se v něm vyskytla nějaká chyba či překlep, kontaktujte jej.\n"
+        bugs: "⚠️ **Je zde chyba, která nechce zmizet!!** 😩\n\nObvykle jsem upozorněn, když se něco pokazí, ale některé chyby mohou projít bez povšimnutí!\nPokud chyba není do dne až dvou opravena, napište mi na [GitHub](https://github.com/Nukesor/ultimate-poll-bot) nebo se zastavte v mé [skupině podpory](https://t.me/nukesors_projects).\n\nChyby v českém překladu hlaste @IgnacRR\n"
     error: "Objevila se neznámá chyba. Nejspíše jsem již byl upozorněn a pokusím se ji co nejdříve opravit\nPokud chyba není do dne až dvou opravena, napište mi na [GitHub](https://github.com/Nukesor/ultimate-poll-bot) nebo se zastavte v mé [skupině podpory](https://t.me/nukesors_projects).\n"
     start_after_results: 'Ahoj! Stačí napsat /create a vytvořit si vlastní anketu ☺️'
-    over_3000: "⚠️ Vaše anketa již obsahuje přes *3000 znaků*, prosím zkraťte ji alespoň na 3000, lépe pod 2500 znaků 🙏.\n\nTelegram umožňuje maximálně 4096 znaků na zprávu a já ještě potřebuji zobrazit hlasy. Každá anketa s více znaly jednoduše *přestane pracovat*.\nJiž se to snažím řešit co nejlépe to jde a sumarizovat hlasy k ušetření místa, ale i přesto je místo omezeno.\n\nPro ankety s dlouhým textem a více než 10-15 odpověďmi by mohlo být lepší použít externí nástroj jako [Doodle](https://doodle.com/)\n"
-    over_4000: "⚠️ Vaše anketa již obsahuje přes *4000 znaků*, to je příliš na zobrazení v jedné zprávě. Prosím zkraťte ji alespoň na 3000, lépe pod 2500 znaků 🙏.\n\nTelegram umožňuje maximálně 4096 znaků na zprávu a já ještě potřebuji zobrazit hlasy. Každá anketa s více znaly jednoduše *přestane pracovat*.\nJiž se to snažím řešit co nejlépe to jde a sumarizovat hlasy k ušetření místa, ale i přesto je místo omezeno.\n\nPro ankety s dlouhým textem a více než 10-15 odpověďmi by mohlo být lepší použít externí nástroj jako [Doodle](https://doodle.com/)\n"
+    over_3000: "⚠️ Vaše anketa již obsahuje přes **3000 znaků**, prosím zkraťte ji alespoň na 3000, lépe pod 2500 znaků 🙏.\n\nTelegram umožňuje maximálně 4096 znaků na zprávu a já ještě potřebuji zobrazit hlasy. Každá anketa s více znaly jednoduše **přestane pracovat**.\nJiž se to snažím řešit co nejlépe to jde a sumarizovat hlasy k ušetření místa, ale i přesto je místo omezeno.\n\nPro ankety s dlouhým textem a více než 10-15 odpověďmi by mohlo být lepší použít externí nástroj jako [Doodle](https://doodle.com/)\n"
+    over_4000: "⚠️ Vaše anketa již obsahuje přes **4000 znaků**, to je příliš na zobrazení v jedné zprávě. Prosím zkraťte ji alespoň na 3000, lépe pod 2500 znaků 🙏.\n\nTelegram umožňuje maximálně 4096 znaků na zprávu a já ještě potřebuji zobrazit hlasy. Každá anketa s více znaly jednoduše **přestane pracovat**.\nJiž se to snažím řešit co nejlépe to jde a sumarizovat hlasy k ušetření místa, ale i přesto je místo omezeno.\n\nPro ankety s dlouhým textem a více než 10-15 odpověďmi by mohlo být lepší použít externí nástroj jako [Doodle](https://doodle.com/)\n"
     too_long: "Ahoj!\n\nMoc se omlovám, ale tato anketa je příliš dlouhá. Nejspíš má mnoho možností odpovědi nebo dlouhý popis (nebo obojí). 😬\n\nTelegram umožňuje maximálně 4096 znaků na zprávu, delší ankety proto prostě zobrazit nelze. 😐\n\nSnažte se prosím popis i odpovědi udržovat krátké a pokud chcete používat ankety s mnoha možnostmi, může být lepší externí nástroj jako [Doodle](https://doodle.com/).\n\n    Jednou možností vyřešení tohoto problému by mohlo být odstranění možností odpovědi (to ke umožněno administrátorovi).\n\n👇 Stále můžete hlasovat a níže vidět výsledky. 👇\n"

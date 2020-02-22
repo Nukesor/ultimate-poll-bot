@@ -19,7 +19,7 @@ def get_option_information(session, poll, context, summarize):
         lines.append('')
         lines.append(get_option_line(session, option, index))
         if option.description is not None:
-            lines.append(f'┆ _{option.description}_')
+            lines.append(f'┆ __{option.description}__')
 
         if context.show_results and context.show_percentage:
             lines.append(get_percentage_line(option, context))
@@ -53,9 +53,9 @@ def get_option_line(session, option, index):
             vote_count = sum([vote.vote_count for vote in option.votes])
         else:
             vote_count = len(option.votes)
-        return f'┌ {prefix}*{option_name}* ({vote_count} votes)'
+        return f'┌ {prefix}**{option_name}** ({vote_count} votes)'
     else:
-        return f'┌ {prefix}*{option_name}*'
+        return f'┌ {prefix}**{option_name}**'
 
 
 def get_percentage_line(option, context):

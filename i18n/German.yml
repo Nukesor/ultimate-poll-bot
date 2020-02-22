@@ -20,27 +20,27 @@ datepicker:
 poll:
     anonymous: 'Diese Umfrage ist anonym!'
     results_not_visible: 'Die Ergebnisse sind nicht sichtbar, bis die Umfrage geschlossen wird!'
-    vote_times: "\nJeder Nutzer kann *%{amount} mal abstimmen*"
+    vote_times: "\nJeder Nutzer kann **%{amount} mal abstimmen**"
     due: "\n📅 Diese Umfrage wird beendet am: %{date}"
-    closed: "\n⚠️ *Diese Umfrage ist geschlossen* ⚠️"
-    own_poll: 'Erstelle [hier](https://t.me/ultimate_pollbot) *deine eigene* Umfrage.'
-    many_users_voted: '*%{count} Nutzer* haben bereits abgestimmt'
-    one_user_voted: '*Ein Nutzer* hat bereits abgestimmt'
+    closed: "\n⚠️ **Diese Umfrage ist geschlossen** ⚠️"
+    own_poll: 'Erstelle [hier](https://t.me/ultimate_pollbot) **deine eigene** Umfrage.'
+    many_users_voted: '**%{count} Nutzer** haben bereits abgestimmt'
+    one_user_voted: '**Ein Nutzer** hat bereits abgestimmt'
     total_votes: ' (%{count} Stimmen)'
     remaining_votes: "\nVerbleibende Stimmen:"
     remaining_votes_user: '%{name}: %{count} Stimmen'
     summarized_users: 'und %{count} andere Leute.'
-    too_many_votes: "⚠️ *Zu viele Abstimmungen in der letzten Minute* ⚠️\nDie Abstimmungen werden weiterhin registriert, aber die Nachricht wird sich nur ca. alle zwei Sekunden aktualisieren\n(Telegram erlaubt es Bots nicht, mehr als eine bestimmte Anzahl an Nachrichten pro Minute zu senden/aktualisieren.)\n"
+    too_many_votes: "⚠️ **Zu viele Abstimmungen in der letzten Minute** ⚠️\nDie Abstimmungen werden weiterhin registriert, aber die Nachricht wird sich nur ca. alle zwei Sekunden aktualisieren\n(Telegram erlaubt es Bots nicht, mehr als eine bestimmte Anzahl an Nachrichten pro Minute zu senden/aktualisieren.)\n"
     doodle:
-        'yes': '├ *Ja:*'
-        maybe: '├ *Vielleicht:*'
-        'no': '├ *Nein:*'
-        yes_summarized: '├ *Ja:* %{count} Stimmen'
-        maybe_summarized: '├ *Vielleicht:* %{count} Stimmen'
-        no_summarized: '├ *Nein:* %{count} Stimmen'
-    doodle_help: '*Klick* auf die untenstehenden Buttons `a)`, `b)`, um die Namen der Optionen anzuzeigen.'
+        'yes': '├ **Ja:**'
+        maybe: '├ **Vielleicht:**'
+        'no': '├ **Nein:**'
+        yes_summarized: '├ **Ja:** %{count} Stimmen'
+        maybe_summarized: '├ **Vielleicht:** %{count} Stimmen'
+        no_summarized: '├ **Nein:** %{count} Stimmen'
+    doodle_help: '**Klick** auf die untenstehenden Buttons `a)`, `b)`, um die Namen der Optionen anzuzeigen.'
     please_wait: "\n\nBitte warte eine Sekunde, während der Bot die Umfragen synchronisiert ☺️"
-    anonymous_warning: '*Aufpassen:* _Andere können möglicherweise deine Stimmen erraten, indem sie den Prozentsatz bzw. die Stimmenanzahl und deinen Online-Status verfolgen._'
+    anonymous__warning: '**Aufpassen:** __Andere können möglicherweise deine Stimmen erraten, indem sie den Prozentsatz bzw. die Stimmenanzahl und deinen Online-Status verfolgen.__'
 deleted:
     poll: 'Diese Umfrage wurde dauerhaft gelöscht'
     polls: 'Alle Umfragen wurden gelöscht'
@@ -74,10 +74,10 @@ inline_query:
     create_first: 'Erstelle zuerst hier eine Umfrage ;)'
     create_poll: 'Klicke hier, um eine Umfrage zu erstellen.'
 notification:
-    one_week: 'Die Umfrage *%{name}* wird automatisch in einer Woche geschlossen'
-    one_day: 'Die Umfrage *%{name}* wird automatisch in einem Tag geschlossen'
-    six_hours: 'Die Umfrage *%{name}* wird automatisch in sechs Stunden geschlossen'
-    closed: 'Die Umfrage *%{name}* ist nun geschlossen'
+    one_week: 'Die Umfrage **%{name}** wird automatisch in einer Woche geschlossen'
+    one_day: 'Die Umfrage **%{name}** wird automatisch in einem Tag geschlossen'
+    six_hours: 'Die Umfrage **%{name}** wird automatisch in sechs Stunden geschlossen'
+    closed: 'Die Umfrage **%{name}** ist nun geschlossen'
 keyboard:
     done: Fertig
     close: Schließen
@@ -147,46 +147,46 @@ sorting:
     option_name: 'nach Name'
     doodle_sorting: 'nach Antwort'
 settings:
-    poll_type: '*Umfragetyp*: %{poll_type}'
-    language: '*Sprache*: %{language}'
-    anonymous: '*Anonymität*: Namen sind nicht sichtbar'
-    not_anonymous: '*Anonymität*: Namen sind sichtbar'
-    due_date: '*Fälligkeitsdatum*: %{date}'
-    no_due_date: '*Fälligkeitsdatum*: Keins'
-    results_visible: '*Sichtbarkeit*: Resultate sind direkt sichtbar'
-    results_not_visible: '*Sichtbarkeit*: Resultate sind erst sichtbar, nachdem die Umfrage geschlossen wurde'
-    user_options: '*Nutzer-Optionen*: Jeder darf neue Optionen hinzufügen'
-    no_user_options: '*Nutzer-Optionen*: Nur du darfst neue Optionen hinzufügen'
-    percentage: '*Prozent*: Sichtbar'
-    no_percentage: '*Prozent*: Versteckt'
-    euro_date_format: '*Datumsformat*: DD.MM.YYYY'
-    us_date_format: '*Datumsformat*: YYYY-MM-DD'
-    user_sorting: '*Nutzersortierung*: %{name}'
-    option_sorting: '*Optionssortierung*: %{name}'
+    poll_type: '**Umfragetyp**: %{poll_type}'
+    language: '**Sprache**: %{language}'
+    anonymous: '**Anonymität**: Namen sind nicht sichtbar'
+    not_anonymous: '**Anonymität**: Namen sind sichtbar'
+    due_date: '**Fälligkeitsdatum**: %{date}'
+    no_due_date: '**Fälligkeitsdatum**: Keins'
+    results_visible: '**Sichtbarkeit**: Resultate sind direkt sichtbar'
+    results_not_visible: '**Sichtbarkeit**: Resultate sind erst sichtbar, nachdem die Umfrage geschlossen wurde'
+    user_options: '**Nutzer-Optionen**: Jeder darf neue Optionen hinzufügen'
+    no_user_options: '**Nutzer-Optionen**: Nur du darfst neue Optionen hinzufügen'
+    percentage: '**Prozent**: Sichtbar'
+    no_percentage: '**Prozent**: Versteckt'
+    euro_date_format: '**Datumsformat**: DD.MM.YYYY'
+    us_date_format: '**Datumsformat**: YYYY-MM-DD'
+    user_sorting: '**Nutzersortierung**: %{name}'
+    option_sorting: '**Optionssortierung**: %{name}'
     change_language: 'Klick einfach auf eine Sprache, um sie für diese Umfrage zu ändern'
     anonymize: "Willst du diese Umfrage wirklich anonymisieren?\n⚠️ Diese Aktion ist unwiderruflich. ⚠️\n"
     remove_options: 'Klicke einfach auf die Buttons, um die unerwünschten Optionen zu löschen.'
-    summarize: '*Zusammengefasste Stimmen*: Viele Stimmen zusammenfassen'
-    dont_summarize: '*Zusammengefasste Stimmen*: Alle Stimmen anzeigen'
-    permanently_summarized: '*Zusammengefasste Stimmen*: Zu viele Stimmen. Dauerhaft zusammengefasst.'
-    sharing_link: 'Verwende diesen Link, um Benutzern zu ermöglichen, die Umfrage mit anderen Chats zu teilen. *Sei vorsichtig!* Sobald er einmal geteilt wurde, gibt es kein Zurück:'
+    summarize: '**Zusammengefasste Stimmen**: Viele Stimmen zusammenfassen'
+    dont_summarize: '**Zusammengefasste Stimmen**: Alle Stimmen anzeigen'
+    permanently_summarized: '**Zusammengefasste Stimmen**: Zu viele Stimmen. Dauerhaft zusammengefasst.'
+    sharing_link: 'Verwende diesen Link, um Benutzern zu ermöglichen, die Umfrage mit anderen Chats zu teilen. **Sei vorsichtig!** Sobald er einmal geteilt wurde, gibt es kein Zurück:'
     user:
-        notifications_enabled: '*Benachrichtigungen:* sind aktiviert'
-        notifications_disabled: '*Benachrichtigungen:* sind deaktiviert'
+        notifications_enabled: '**Benachrichtigungen:** sind aktiviert'
+        notifications_disabled: '**Benachrichtigungen:** sind deaktiviert'
         delete_all: '⚠️ ALLE Umfragen löschen ⚠️'
         delete_closed: '⚠️ Alle geschlossenen Umfragen löschen ⚠️'
-        delete_all_confirmation: "Möchtest du wirklich ALLE deine Umfragen löschen?\nDies betrifft alle Umfragen, die derzeit offene oder geschlossene sind!\n⚠️ *Diese Aktion ist unwiderruflich.* ⚠️\n"
-        delete_closed_confirmation: "Möchtest du wirklich alle geschlossenen Umfragen löschen?\n⚠️ *Diese Aktion ist unwiderruflich.* ⚠️\n"
-        language: '*Standard-Sprache:* %{language}'
-        open_polls: '*Offene Umfragen:* %{count}'
-        closed_polls: '*Abgeschlossene Umfragen:* %{count}'
+        delete_all_confirmation: "Möchtest du wirklich ALLE deine Umfragen löschen?\nDies betrifft alle Umfragen, die derzeit offene oder geschlossene sind!\n⚠️ **Diese Aktion ist unwiderruflich.** ⚠️\n"
+        delete_closed_confirmation: "Möchtest du wirklich alle geschlossenen Umfragen löschen?\n⚠️ **Diese Aktion ist unwiderruflich.** ⚠️\n"
+        language: '**Standard-Sprache:** %{language}'
+        open_polls: '**Offene Umfragen:** %{count}'
+        closed_polls: '**Abgeschlossene Umfragen:** %{count}'
         explanations:
-            language: '_Diese Einstellung bestimmt, welche Sprache in deiner Verwaltungsoberfläche verwendet wird, und bestimmt auch die Standardsprache für deine Umfragen._'
-            notifications: '_Von Zeit zu Zeit sende ich eine Nachricht, die dich über Aktualisierungen, Änderungen oder Fehler informiert._'
+            language: '__Diese Einstellung bestimmt, welche Sprache in deiner Verwaltungsoberfläche verwendet wird, und bestimmt auch die Standardsprache für deine Umfragen.__'
+            notifications: '__Von Zeit zu Zeit sende ich eine Nachricht, die dich über Aktualisierungen, Änderungen oder Fehler informiert.__'
     poll:
         explanation:
-            anonymity: "_In einer anonymen Umfrage werden keine Namen angezeigt. Es ist nicht möglich zu sehen, von welchem Benutzer eine Stimme stammt. \n *Aufpassen:* _Andere können möglicherweise Stimmen erraten, indem sie den Prozentsatz bzw. die Stimmenanzahl und Ihren Onlinestatus beobachten. Um eine absolut anonyme Umfrage zu erhalten, deaktiviere auch die Sichtbarkeit der Ergebnisse._\n"
-            visibility: '_Eine Umfrage mit ausgeblendeten Ergebnissen zeigt keine Stimmen oder Prozentsätze an, bis die Umfrage geschlossen wird. Sobald die Umfrage ein mal geschlossen ist, bleibt sie für immer geschlossen. Dies ist erforderlich, um [taktisches Abstimmen](https://en.wikipedia.org/wiki/Tactical_voting) und [Anchoring](https://en.wikipedia.org/wiki/Anchoring) zu vermeiden.'
+            anonymity: "__In einer anonymen Umfrage werden keine Namen angezeigt. Es ist nicht möglich zu sehen, von welchem Benutzer eine Stimme stammt. \n **Aufpassen:** __Andere können möglicherweise Stimmen erraten, indem sie den Prozentsatz bzw. die Stimmenanzahl und Ihren Onlinestatus beobachten. Um eine absolut anonyme Umfrage zu erhalten, deaktiviere auch die Sichtbarkeit der Ergebnisse.__\n"
+            visibility: '__Eine Umfrage mit ausgeblendeten Ergebnissen zeigt keine Stimmen oder Prozentsätze an, bis die Umfrage geschlossen wird. Sobald die Umfrage ein mal geschlossen ist, bleibt sie für immer geschlossen. Dies ist erforderlich, um [taktisches Abstimmen](https://en.wikipedia.org/wiki/Tactical__voting) und [Anchoring](https://en.wikipedia.org/wiki/Anchoring) zu vermeiden.'
     anonymity_warning: "Du kannst nicht gleichzeitig Stimmen und Prozentsätze bei einer anonymen Umfrage verstecken.\nDies könnte den Nutzern die Vorstellung vermitteln, dass die Umfrage nicht sichtbare Resultate hat, was jedoch nicht der Fall ist. Wenn du dieses Verhalten wünschst, erstelle bitte die Umfrage mit versteckten Resultaten.\n"
 management:
     permanently_close: "Willst du diese Umfrage wirklich dauerhaft schließen? Die Ergebnisse werden angezeigt, es können aber keine Stimmen mehr abgegeben werden.\n⚠️ Diese Aktion ist unwiderruflich. ⚠️\n"
@@ -205,23 +205,23 @@ creation:
         results_visible: 'Resultate dauerhaft anzeigen'
         results_not_visible: 'Resultate verbergen, bis die Umfrage geschlossen wird'
     option:
-        next: 'Schicke mir *noch eine Option*, wähle ein Datum als Option aus, oder klicke auf *Fertig*, wenn du alles erledigt hast.'
+        next: 'Schicke mir **noch eine Option**, wähle ein Datum als Option aus, oder klicke auf **Fertig**, wenn du alles erledigt hast.'
         first: "Bitte sende mir eine Option. Sie können mehrere Optionen auf einmal senden, wobei jede Option auf einer neuen Zeile sein muss.\nSie können außerdem eine Beschreibung für eine Option hinzufügen, die von einem Bindestrich getrennt sein muss.\nz.B.: `Burger – weil die echt lecker sind`\n"
         no_new: '❌ Keine neue Option wurde hinzugefügt'
-        single_added: "*%{option}* wurde hinzugefügt. 👍\nSchicke mir *noch eine Option*, wähle ein Datum als Option aus, oder klicke auf *Fertig*, wenn du alles erledigt hast."
+        single_added: "**%{option}** wurde hinzugefügt. 👍\nSchicke mir **noch eine Option**, wähle ein Datum als Option aus, oder klicke auf **Fertig**, wenn du alles erledigt hast."
         multiple_added: 'Optionen wurden hinzugefügt:'
         finished: 'Alle Optionen wurden bereits hinzugefügt'
-    poll_type_help: "Aktueller Umfragetyp: *%{poll_type}*\n\n👍 *Einzelabstimmung:*\nJeder Nutzer erhält eine einzige Stimme. Der Standardabstimmungsmodus.\n\n📅 *Doodle:*\nBenutzer können für jede Option für `ja`, `nein` oder `vielleicht` stimmen. Ideal, um ein Datum zu finden.\n\n↕ *Rang-Wahl*:\nJeder Nutzer ordnet die Optionen in Wunschreihenfolge. Je nach Platzierung bekommt jede Option Punkte zugeteilt.\nDamit lassen sich gute Kompromisse finden, z.\_B. Optionen, die von allen als wichtiger als andere Optionen befunden werden.\nUnter anderem beim Eurovision Song Contest wird der Gewinner anhand einer Rang-Wahl bestimmt.\n\n🛒 *Unbegrenzte Abstimmung* (oder die Einkaufsliste) 😎\nJeder Benutzer kann beliebig oft für jede Option abstimmen.\nDas ist großartig, wenn man z.\_B. bestimmen will, wie viel Kram man für das nächste Festival besorgen muss.\n\n🎮 *Blockabstimmung:*\nJeder Benutzer kann für alle (oder weniger) Optionen stimmen. Wie ein Doodle, aber man kann nur mit `ja` stimmen.\nNützlich, um die am häufigsten gewünschten Optionen in einer Gruppe zu finden, z.\_B. Spiele, die auf einer LAN-Party gespielt werden sollen.\n\n🎮 *Begrenzte Abstimmung:*\nJeder Benutzer erhält eine feste Anzahl von Stimmen, die er verteilen kann, aber nur einmal pro Option.\nZiemlich genau wie Blockabstimmung, aber die Leute müssen Prioritäten setzen.\nDieser Modus ist gut geeignet, um die Anzahl der möglichen Gewinner zu begrenzen, z.\_B. wenn du nur max. 4 Spiele auf deiner LAN-Party haben willst.\n\n📊 *Kumulative Abstimmung:*\nJeder Benutzer erhält eine feste Anzahl von Stimmen, die er beliebig verteilen kann (sogar mehrere Stimmen pro Option).\nDieser Modus hat etwas mehr Tiefe als die Eingeschränkte Abstimmung, da es den Benutzern ermöglicht, für eine einzige Option mehrfach abzustimmen.\n"
+    poll_type_help: "Aktueller Umfragetyp: **%{poll_type}**\n\n👍 **Einzelabstimmung:**\nJeder Nutzer erhält eine einzige Stimme. Der Standardabstimmungsmodus.\n\n📅 **Doodle:**\nBenutzer können für jede Option für `ja`, `nein` oder `vielleicht` stimmen. Ideal, um ein Datum zu finden.\n\n↕ **Rang-Wahl**:\nJeder Nutzer ordnet die Optionen in Wunschreihenfolge. Je nach Platzierung bekommt jede Option Punkte zugeteilt.\nDamit lassen sich gute Kompromisse finden, z.\_B. Optionen, die von allen als wichtiger als andere Optionen befunden werden.\nUnter anderem beim Eurovision Song Contest wird der Gewinner anhand einer Rang-Wahl bestimmt.\n\n🛒 **Unbegrenzte Abstimmung** (oder die Einkaufsliste) 😎\nJeder Benutzer kann beliebig oft für jede Option abstimmen.\nDas ist großartig, wenn man z.\_B. bestimmen will, wie viel Kram man für das nächste Festival besorgen muss.\n\n🎮 **Blockabstimmung:**\nJeder Benutzer kann für alle (oder weniger) Optionen stimmen. Wie ein Doodle, aber man kann nur mit `ja` stimmen.\nNützlich, um die am häufigsten gewünschten Optionen in einer Gruppe zu finden, z.\_B. Spiele, die auf einer LAN-Party gespielt werden sollen.\n\n🎮 **Begrenzte Abstimmung:**\nJeder Benutzer erhält eine feste Anzahl von Stimmen, die er verteilen kann, aber nur einmal pro Option.\nZiemlich genau wie Blockabstimmung, aber die Leute müssen Prioritäten setzen.\nDieser Modus ist gut geeignet, um die Anzahl der möglichen Gewinner zu begrenzen, z.\_B. wenn du nur max. 4 Spiele auf deiner LAN-Party haben willst.\n\n📊 **Kumulative Abstimmung:**\nJeder Benutzer erhält eine feste Anzahl von Stimmen, die er beliebig verteilen kann (sogar mehrere Stimmen pro Option).\nDieser Modus hat etwas mehr Tiefe als die Eingeschränkte Abstimmung, da es den Benutzern ermöglicht, für eine einzige Option mehrfach abzustimmen.\n"
     results_not_visible: 'Resultate sind nicht sichtbar, bis die Umfrage geschlossen wird.'
     results_visible: 'Resultate sind immer sichtbar'
     anonymity: 'Namen sind nicht sichtbar'
     no_anonymity: 'Namen sind sichtbar'
-    init_text: "Moinsen!\nDu bist gerade dabei eine neue Umfrage zu erstellen 👌\n\n*Umfragetyp*: %{poll_type}\n*Anonymität*: %{anonymity}\n*Sichtbarkeit*: %{results_visible}\n\nBitte folge diesen Schritten:\n1. Konfiguriere alles, bis du zufrieden bist🙂\n2. 👇 Sende mir den Namen/Titel der Umfrage. 👇\n"
-    datepicker_text: "*Datumswähler:*\nUm ein Datum hinzuzufügen, wähle es aus und klicke auf *Datum auswählen*\nKlicke *Fertig*, wenn du alles ausgewählt hast.\n\n*Momentane Optionen:*\n"
+    init_text: "Moinsen!\nDu bist gerade dabei eine neue Umfrage zu erstellen 👌\n\n**Umfragetyp**: %{poll_type}\n**Anonymität**: %{anonymity}\n**Sichtbarkeit**: %{results_visible}\n\nBitte folge diesen Schritten:\n1. Konfiguriere alles, bis du zufrieden bist🙂\n2. 👇 Sende mir den Namen/Titel der Umfrage. 👇\n"
+    datepicker_text: "**Datumswähler:**\nUm ein Datum hinzuzufügen, wähle es aus und klicke auf **Datum auswählen**\nKlicke **Fertig**, wenn du alles ausgewählt hast.\n\n**Momentane Optionen:**\n"
     error:
         limit_bigger_zero: 'Bitte sende mir eine Zahl größer als 0'
         limit_between: 'Bitte sende mir eine Zahl zwischen 1 und %{limit}'
-        markdown: "Bitte sende mir keine Markdown-Symbole in deinen Namen, Beschreibungen und Optionen.\nSolche Symbole sind: `_`,`*` und `[`\nBitte sende mir die Nachricht erneut, ohne diese Symbole.\n"
+        markdown: "Bitte sende mir keine Markdown-Symbole in deinen Namen, Beschreibungen und Optionen.\nSolche Symbole sind: `_`,`**` und `[`\nBitte sende mir die Nachricht erneut, ohne diese Symbole.\n"
         too_big: 'Bitte sende uns eine kleinere Nummer. Vielleicht möchtest du auch eine Umfrage „Unbegrenzte Abstimmung“ verwenden.'
 external:
     canceled: Abgebrochen
@@ -237,17 +237,17 @@ user:
     language_changed: 'Sprache geändert.'
 misc:
     donation: "Moinsen!\n\nMein Name ist Arne Beer (@Nukesor). Ich bin der alleinige Entwickler des Ultimate Pollbots.\n\nDie Idee, den Ultimate Pollbot zu schreiben, entstand, als meine Freunde sich (mal wieder) nicht entscheiden konnten, wohin wir zum Mittagessen gehen sollten.\nDas war schon viel zu häufig passiert und wir brauchten dringend eine gute und stabile Lösung innerhalb von Telegram, um das zu klären!\nSo fing die Erstellung des ULTIMATE Pollbot an.\n\nJede Zeile Code in diesem Projekt wurde in meiner Freizeit geschrieben und ist komplett kostenlos.\nDieses Projekt ist gemeinnützig, Open-Source auf [GitHub](https://github.com/Nukesor/ultimate-poll-bot) und wird auf einem Server gehostet, den ich selbst miete.\n\nIm Moment investiere ich in der Regel zwischen 5-20 Stunden pro Woche in die Entwicklung und Pflege meiner Projekte und würde mich super über jegliche Unterstützung freuen.\nWenn sich was ansammelt, bietet sich vielleicht die Möglichkeit, mich mehr um meine Projekte zu kümmern. Vielleicht kann ich sogar einige meiner Ideen ausprobieren!\n\nIch freue mich über alles, was mir hilft und meinen Server am Laufen hält. ☺️\n\nWenn dir dieses Projekt gefällt, schau dir meine [Patreon-Seite](https://www.patreon.com/nukesor) an oder [kauf mir nen Kaffee](https://www.buymeacoffee.com/Nukesor).\nWenn du irgendwelche Fragen hast, schau einfach bei meiner [Supportgruppe](https://t.me/nukesors_projects) vorbei.\n\nDir noch nen wunderschönen Tag!\n"
-    start: "🌟Wilkommen beim *ULTIMATE* Pollbot 🌟\n\nGib einfach /create ein oder klick auf die Schaltfläche unten, um mit der Erstellung von Umfragen zu beginnen. Alles wird im Laufe der Erstellung erklärt.\n\n🌐 Du kannst eine andere Sprache unter Einstellungen wählen 🌐\n❓ Klick Hilfe für weitere Erklärungen ❓\n\nWenn dir das Projekt gefällt, besuch meine [Supportgruppe](https://t.me/nukesors_projects) oder meine [Patreon-Seite](https://www.patreon.com/nukesor).\nDieser Bot ist Open-Source auf [GitHub](https://github.com/Nukesor/ultimate-poll-bot).\n"
+    start: "🌟Wilkommen beim **ULTIMATE** Pollbot 🌟\n\nGib einfach /create ein oder klick auf die Schaltfläche unten, um mit der Erstellung von Umfragen zu beginnen. Alles wird im Laufe der Erstellung erklärt.\n\n🌐 Du kannst eine andere Sprache unter Einstellungen wählen 🌐\n❓ Klick Hilfe für weitere Erklärungen ❓\n\nWenn dir das Projekt gefällt, besuch meine [Supportgruppe](https://t.me/nukesors_projects) oder meine [Patreon-Seite](https://www.patreon.com/nukesor).\nDieser Bot ist Open-Source auf [GitHub](https://github.com/Nukesor/ultimate-poll-bot).\n"
     help:
         intro: "Es gibt eine ganze Reihe von Einstellungen für deine Umfragen.\nWähle einfach die Kategorie, die dich interessiert, oder lies einfach alles 😉.\n\nWenn du nur eine Umfrage erstellen möchtest, gib /create ein."
-        creation: "🌟*Erstellung:*\n\nUm eine neue Umfrage zu erstellen, schreib /create oder klick einfach auf den Button.\nFür jede Umfrage kannst du mehrere Grundeinstellungen festlegen.\n\n*Umfragetyp:* Die verschiedenen Typen werden im Menü Umfragetyp ausführlich erläutert.\n*Anonymität:* Du kannst diene Umfrage anonymisieren, was dazu führt, dass keine Namen angezeigt werden! Dies ist dauerhaft und für alle Parteien.\n*Sichtbare Ergebnisse:* In diesem Modus werden Stimmen erst nach dem Schließen der Umfrage sichtbar. Dies ist notwendig, um die Möglichkeit der[taktischen Abstimmung](https://en.wikipedia.org/wiki/Tactical_voting) zu vermeiden und um [Verankerung](https://en.wikipedia.org/wiki/Anchoring) zu verhindern.\n\n-> *Achtung: Eine geschlossene Umfrage mit unsichtbaren Ergebnissen bleibt geschlossen:*\nDie Wiedereröffnung einer Umfrage würde es einem Benutzer, insbesondere dem Ersteller der Umfrage, ermöglichen, sich die Stimmen anzusehen und seine eigene Stimme in einer Weise abzugeben, die ihm einen Vorteil verspricht (taktische Abstimmung).\n"
-        settings: "⚙️ * Einstellungen: * \n\n Weitere Einstellungen einer Umfrage können angepasst werden, nachdem die Umfrage erstellt wurde: \n\n *Sprache:* Die Sprache für diese Umfrage kann geändert werden. \n *Anonymität:* Eine Umfrage kann nachträglich anonymisiert werden. \n *Fälligkeitsdatum:* Es kann ein Fälligkeitsdatum festgelegt werden, an dem die Umfrage automatisch geschlossen wird. \n *Optionen:* Neue Optionen können hinzugefügt und vorhandene Optionen im Einstellungsmenü entfernt werden. \n *Benutzeroptionen:* Du kannst anderen Benutzern erlauben, Ihrer Umfrage Optionen hinzuzufügen. \n\n *---- Styling-Untermenü: ----* \n\n *Prozentsatz:* \n _Die Prozentzeile der Optionen kann im Styling-Menü ausgeblendet werden._ \n\n *Stimmen pro Option:* \n _Die Summe aller Stimmen für eine Option kann ausgeblendet werden._\n\n *Stimmen zusammenfassen:* \n _Wenn viele Personen über Ihre Umfrage abstimmen, wird die Nachricht möglicherweise unübersichtlich. Fass die Stimmen zusammen, um einen besseren Überblick zu haben._ \n\n *Reihenfolge:* \n _Die Reihenfolge, in der Benutzernamen und Optionen in den Ergebnissen angezeigt werden, kann geändert werden._\n"
-        notifications: "📣 *Benachrichtigungen:*\n\nWenn du Benachrichtigungen für deinen Chat aktivierst, sendet der Bot eine Nachricht jeweils einen Tag, 6 Stunden und eine Stunde vor dem Ende der Umfrage.\nDies ist nur eine Funktion, um jeden in einer Gruppe daran zu erinnern, dass eine Umfrage bald beendet wird, und um es einfach zu machen, die Umfragenachricht wiederzufinden 😉.\n\nUm Benachrichtigungen in einem Chat zu aktivieren, führ diese Schritte aus:\n*1.* Erstelle eine Umfrage.\n*2.* Setz ein Fälligkeitsdatum im Einstellungsmenü.\n*3.* Gehe zu dem Chat, den du benachrichtigen möchtest.\n*4.* Füge den Bot zur Gruppe hinzu.\n*5.* Teile die Umfrage mit dieser Gruppe.\n*6.* Antworte mit /notify auf die Umfrage-Nachricht, die du über @ultimate\\_pollbot ausgewählt hast.\n*7.* Wähle die richtige Umfrage aus\n\nDieses ganze Verfahren ist unglücklicherweise etwas kompliziert, da Telegram es nicht erlaubt, Nachrichten von Bots in Gruppen zu erkennen. 😐\nDadurch wissen wir nicht, welche Umfrage in welcher Gruppe veröffentlicht wird und alles muss manuell gemacht werden.\n"
-        management: "🕰 *Finde alte Umfragen:*\n\nEs gibt eine Option in deinem /start-Menü, um alle offenen Umfragen zu finden.\nGeschlossene Umfragen können im Menü /settings aufgelistet werden.\n\n⚠️ *Umfragen löschen:*\n\nDu kannst einzelne Umfragen in den jeweiligen Umfrage-Menüs löschen.\nEs gibt auch Optionen zum Löschen aller Umfragen oder aller geschlossenen Umfragen im Menü /settings.\n"
-        languages: "🌐 *Sprache:*\n\nUltimate Pollbot unterstützt mehrere Sprachen, aber nur Englisch wird offiziell gepflegt.\n\nUm eine neue Sprache hinzuzufügen oder eine aktuelle Sprache zu aktualisieren, kontaktiere mich bitte unter @Nukesor!\nIch benutze den Übersetzungsservice [Lokalise] (https://lokalise.co), der mir eine Open-Source-Lizenz für die Übersetzung meiner Projekte zur Verfügung gestellt hat.\nDamit dieser Dienst funktioniert, musst du mir eine E-Mail-Adresse angeben (jede Spam-Adresse genügt), da ich dir eine Einladung per E-Mail schicken muss.\n\nBitte achte darauf, dass du das richtige Markdown-Styling (`**`, `__`, `${}`) beibehalten, da sonst Kram für diese Sprache kaputtgeht.\nWenn etwas kaputtgeht, werde ich versuchen, es zu reparieren, aber bitte hilf mir, dies zu verhindern. Es braucht jede Menge Zeit und Mühe, um solche Fehler zu finden und zu beheben.\nDie Mehrsprachenunterstützung ist ein Community-Feature, das ich gerne unterstütze, aber ich kann allein nicht mehrere Sprachen unterstützen.\n"
-        bugs: "*Hier ist ein Fehler, der nicht weggehen will!!*\n\nNormalerweise bekomme ich eine Benachrichtigung, wenn was kaputt geht, aber es kann passieren, dass ich etwas nicht mitbekomme!\nFalls ein Bug nicht innerhalb von ein paar Tagen verschwindet, schreibt gerne ein Ticket auf [Github](https://github.com/Nukesor/ultimate-poll-bot) oder schaut in der [Support Gruppe](https://t.me/nukesors_projects) vorbei.\n"
+        creation: "🌟**Erstellung:**\n\nUm eine neue Umfrage zu erstellen, schreib /create oder klick einfach auf den Button.\nFür jede Umfrage kannst du mehrere Grundeinstellungen festlegen.\n\n**Umfragetyp:** Die verschiedenen Typen werden im Menü Umfragetyp ausführlich erläutert.\n**Anonymität:** Du kannst diene Umfrage anonymisieren, was dazu führt, dass keine Namen angezeigt werden! Dies ist dauerhaft und für alle Parteien.\n**Sichtbare Ergebnisse:** In diesem Modus werden Stimmen erst nach dem Schließen der Umfrage sichtbar. Dies ist notwendig, um die Möglichkeit der[taktischen Abstimmung](https://en.wikipedia.org/wiki/Tactical_voting) zu vermeiden und um [Verankerung](https://en.wikipedia.org/wiki/Anchoring) zu verhindern.\n\n-> **Achtung: Eine geschlossene Umfrage mit unsichtbaren Ergebnissen bleibt geschlossen:**\nDie Wiedereröffnung einer Umfrage würde es einem Benutzer, insbesondere dem Ersteller der Umfrage, ermöglichen, sich die Stimmen anzusehen und seine eigene Stimme in einer Weise abzugeben, die ihm einen Vorteil verspricht (taktische Abstimmung).\n"
+        settings: "⚙️ ** Einstellungen: ** \n\n Weitere Einstellungen einer Umfrage können angepasst werden, nachdem die Umfrage erstellt wurde: \n\n **Sprache:** Die Sprache für diese Umfrage kann geändert werden. \n **Anonymität:** Eine Umfrage kann nachträglich anonymisiert werden. \n **Fälligkeitsdatum:** Es kann ein Fälligkeitsdatum festgelegt werden, an dem die Umfrage automatisch geschlossen wird. \n **Optionen:** Neue Optionen können hinzugefügt und vorhandene Optionen im Einstellungsmenü entfernt werden. \n **Benutzeroptionen:** Du kannst anderen Benutzern erlauben, Ihrer Umfrage Optionen hinzuzufügen. \n\n **---- Styling-Untermenü: ----** \n\n **Prozentsatz:** \n __Die Prozentzeile der Optionen kann im Styling-Menü ausgeblendet werden.__ \n\n **Stimmen pro Option:** \n __Die Summe aller Stimmen für eine Option kann ausgeblendet werden.__\n\n **Stimmen zusammenfassen:** \n __Wenn viele Personen über Ihre Umfrage abstimmen, wird die Nachricht möglicherweise unübersichtlich. Fass die Stimmen zusammen, um einen besseren Überblick zu haben.__ \n\n **Reihenfolge:** \n __Die Reihenfolge, in der Benutzernamen und Optionen in den Ergebnissen angezeigt werden, kann geändert werden.__\n"
+        notifications: "📣 **Benachrichtigungen:**\n\nWenn du Benachrichtigungen für deinen Chat aktivierst, sendet der Bot eine Nachricht jeweils einen Tag, 6 Stunden und eine Stunde vor dem Ende der Umfrage.\nDies ist nur eine Funktion, um jeden in einer Gruppe daran zu erinnern, dass eine Umfrage bald beendet wird, und um es einfach zu machen, die Umfragenachricht wiederzufinden 😉.\n\nUm Benachrichtigungen in einem Chat zu aktivieren, führ diese Schritte aus:\n**1.** Erstelle eine Umfrage.\n**2.** Setz ein Fälligkeitsdatum im Einstellungsmenü.\n**3.** Gehe zu dem Chat, den du benachrichtigen möchtest.\n**4.** Füge den Bot zur Gruppe hinzu.\n**5.** Teile die Umfrage mit dieser Gruppe.\n**6.** Antworte mit /notify auf die Umfrage-Nachricht, die du über @ultimate\\_pollbot ausgewählt hast.\n**7.** Wähle die richtige Umfrage aus\n\nDieses ganze Verfahren ist unglücklicherweise etwas kompliziert, da Telegram es nicht erlaubt, Nachrichten von Bots in Gruppen zu erkennen. 😐\nDadurch wissen wir nicht, welche Umfrage in welcher Gruppe veröffentlicht wird und alles muss manuell gemacht werden.\n"
+        management: "🕰 **Finde alte Umfragen:**\n\nEs gibt eine Option in deinem /start-Menü, um alle offenen Umfragen zu finden.\nGeschlossene Umfragen können im Menü /settings aufgelistet werden.\n\n⚠️ **Umfragen löschen:**\n\nDu kannst einzelne Umfragen in den jeweiligen Umfrage-Menüs löschen.\nEs gibt auch Optionen zum Löschen aller Umfragen oder aller geschlossenen Umfragen im Menü /settings.\n"
+        languages: "🌐 **Sprache:**\n\nUltimate Pollbot unterstützt mehrere Sprachen, aber nur Englisch wird offiziell gepflegt.\n\nUm eine neue Sprache hinzuzufügen oder eine aktuelle Sprache zu aktualisieren, kontaktiere mich bitte unter @Nukesor!\nIch benutze den Übersetzungsservice [Lokalise] (https://lokalise.co), der mir eine Open-Source-Lizenz für die Übersetzung meiner Projekte zur Verfügung gestellt hat.\nDamit dieser Dienst funktioniert, musst du mir eine E-Mail-Adresse angeben (jede Spam-Adresse genügt), da ich dir eine Einladung per E-Mail schicken muss.\n\nBitte achte darauf, dass du das richtige Markdown-Styling (`****`, `__`, `${}`) beibehalten, da sonst Kram für diese Sprache kaputtgeht.\nWenn etwas kaputtgeht, werde ich versuchen, es zu reparieren, aber bitte hilf mir, dies zu verhindern. Es braucht jede Menge Zeit und Mühe, um solche Fehler zu finden und zu beheben.\nDie Mehrsprachenunterstützung ist ein Community-Feature, das ich gerne unterstütze, aber ich kann allein nicht mehrere Sprachen unterstützen.\n"
+        bugs: "**Hier ist ein Fehler, der nicht weggehen will!!**\n\nNormalerweise bekomme ich eine Benachrichtigung, wenn was kaputt geht, aber es kann passieren, dass ich etwas nicht mitbekomme!\nFalls ein Bug nicht innerhalb von ein paar Tagen verschwindet, schreibt gerne ein Ticket auf [Github](https://github.com/Nukesor/ultimate-poll-bot) oder schaut in der [Support Gruppe](https://t.me/nukesors_projects) vorbei.\n"
     error: "Ein unbekannter Fehler ist aufgetreten. Ich habe wahrscheinlich schon eine Benachrichtigung bekommen und werde versuchen das so schnell wie möglich zu beheben!\nFalls der Bug nicht innerhalb von ein paar Tagen verschwindet, schreibt gerne ein Ticket auf [GitHub](https://github.com/Nukesor/ultimate-poll-bot) oder schaut in der [Support Gruppe](https://t.me/nukesors_projects) vorbei.\n"
     start_after_results: 'Hallo! Gib einfach /create ein, um deine eigene Umfrage zu machen ☺️'
-    over_3000: "⚠️ Deine Umfrage ist bereits über * 3000 Zeichen * lang. Versuche, sie zu kürzen und mindestens unter 3000 oder noch besser unter 2500 🙏 zu halten. \n\nTelegram erzwingt ein Maximum von 4096 Zeichen pro Nachricht und ich muss die Stimmen unter Ihrem Ausgangstext anzeigen. Jede Umfrage mit mehr Zeichen *wird nicht mehr richtig angezeigt*.\nIch versuche bereits, das so gut wie möglich zu handhaben, aber mit diesem Limit sind mir die Hände gebunden.\n\nFür wirklich lange Umfragen mit vielen Optionen ist es vielleicht besser, ein externes Tool wie [Doodle](https://doodle.com/) zu verwenden."
-    over_4000: "⚠️ Deine Umfrage ist über *4000 Zeichen* lang. Dies ist zu lang, um es in einer einzigen Nachricht anzuzeigen. Bitte versuche, es kurz und knapp unter 3000 Zeichen zu halten, oder noch besser unter 2500 🙏.\n\nTelegramm erzwingt ein Maximum von 4096 Zeichen pro Nachricht und ich muss die Stimmen unter deinem Ausgangstext anzeigen. Jede Umfrage mit mehr Zeichen *wird nicht mehr richtig angezeigt*.\nIch versuche bereits, das so gut wie möglich zu handhaben, aber mit diesem Limit sind mir die Hände gebunden.\n\nFür wirklich lange Umfragen mit vielen Optionen ist es vielleicht besser, ein externes Tool wie [Doodle](https://doodle.com/) zu verwenden.\n"
+    over_3000: "⚠️ Deine Umfrage ist bereits über ** 3000 Zeichen ** lang. Versuche, sie zu kürzen und mindestens unter 3000 oder noch besser unter 2500 🙏 zu halten. \n\nTelegram erzwingt ein Maximum von 4096 Zeichen pro Nachricht und ich muss die Stimmen unter Ihrem Ausgangstext anzeigen. Jede Umfrage mit mehr Zeichen **wird nicht mehr richtig angezeigt**.\nIch versuche bereits, das so gut wie möglich zu handhaben, aber mit diesem Limit sind mir die Hände gebunden.\n\nFür wirklich lange Umfragen mit vielen Optionen ist es vielleicht besser, ein externes Tool wie [Doodle](https://doodle.com/) zu verwenden."
+    over_4000: "⚠️ Deine Umfrage ist über **4000 Zeichen** lang. Dies ist zu lang, um es in einer einzigen Nachricht anzuzeigen. Bitte versuche, es kurz und knapp unter 3000 Zeichen zu halten, oder noch besser unter 2500 🙏.\n\nTelegramm erzwingt ein Maximum von 4096 Zeichen pro Nachricht und ich muss die Stimmen unter deinem Ausgangstext anzeigen. Jede Umfrage mit mehr Zeichen **wird nicht mehr richtig angezeigt**.\nIch versuche bereits, das so gut wie möglich zu handhaben, aber mit diesem Limit sind mir die Hände gebunden.\n\nFür wirklich lange Umfragen mit vielen Optionen ist es vielleicht besser, ein externes Tool wie [Doodle](https://doodle.com/) zu verwenden.\n"
     too_long: "Hallo!\n\nEs tut mir sehr leid, aber deine Umfrage ist einfach zu lang. Du hast wahrscheinlich eine Menge Optionen oder einen sehr langen Beschreibungstext (oder beides) hinzugefügt. 😬\n\nDa das Telegramm nur 4096 Zeichen pro Nachricht erlaubt, kann ich einfach keine Umfragen anzeigen, die länger werden. 😐\n\nBitte versuche, die Beschreibung und die Namen der Optionen kurz zu halten, und wenn du eine Umfrage mit vielen Optionen möchtest, verwende lieber ein externes Tool wie [Doodle](https://doodle.com/).\n\nEine Möglichkeit, dieses Problem zu lösen, besteht darin, Optionen zu entfernen. (Das kann der Ersteller der Umfrage.)\n\n👇 Du kannst aber trotzdem noch abstimmen und die Ergebnisse unten einsehen. 👇\n"

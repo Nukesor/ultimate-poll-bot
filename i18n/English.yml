@@ -23,29 +23,29 @@ datepicker:
 
 poll:
   anonymous: Poll is anonymous!
-  anonymous_warning: "*Be aware:* _People might be able to guess your votes by tracking the percentage/vote count and your online status._"
+  anonymous__warning: "**Be aware:** __People might be able to guess your votes by tracking the percentage/vote count and your online status.__"
   results_not_visible: Results are not visible, until poll is closed!
   please_wait: "\n\nPlease wait a second, while the bot synchronizes the polls ☺️"
-  vote_times: "\nEvery user can vote *%{amount} times*"
+  vote_times: "\nEvery user can vote **%{amount} times**"
   due: "\n📅 This poll is due at: %{date}"
-  closed: "\n⚠️ *This poll is closed* ⚠️"
-  own_poll: "Create *your own* poll over [here](https://t.me/ultimate_pollbot)"
-  doodle_help: "*Click* on the `a)`, `b)` buttons below to see the option names."
-  many_users_voted: "*%{count} users* voted so far"
-  one_user_voted: "*One user* voted so far"
+  closed: "\n⚠️ **This poll is closed** ⚠️"
+  own_poll: "Create **your own** poll over [here](https://t.me/ultimate_pollbot)"
+  doodle_help: "**Click** on the `a)`, `b)` buttons below to see the option names."
+  many_users_voted: "**%{count} users** voted so far"
+  one_user_voted: "**One user** voted so far"
   total_votes: " (%{count} votes)"
   remaining_votes: "\nRemaining votes:"
   remaining_votes_user: "%{name}: %{count} votes"
-  summarized_users: "_and %{count} other people._"
+  summarized__users: "__and %{count} other people.__"
   doodle:
-    'yes': "├ *Yes:*"
-    maybe: "├ *Maybe:*"
-    'no': "├ *No:*"
-    yes_summarized: "├ *Yes:* %{count} votes"
-    maybe_summarized: "├ *Maybe:* %{count} votes"
-    no_summarized: "├ *No:* %{count} votes"
+    'yes': "├ **Yes:**"
+    maybe: "├ **Maybe:**"
+    'no': "├ **No:**"
+    yes_summarized: "├ **Yes:** %{count} votes"
+    maybe_summarized: "├ **Maybe:** %{count} votes"
+    no_summarized: "├ **No:** %{count} votes"
   too_many_votes: |
-        ⚠️ *Too many votes in the last minute:* ⚠️
+        ⚠️ **Too many votes in the last minute:** ⚠️
         Your votes will still be registered, but this message will only update every 2 seconds.
         (Telegram doesn't allow to send/update more than a certain amount of messages per minute in a group by a bot.)
 
@@ -87,10 +87,10 @@ inline_query:
   create_poll: Click to create a new poll.
 
 notification:
-  one_week: "The poll *%{name}* will automatically close in one week"
-  one_day: "The poll *%{name}* will automatically close in one day"
-  six_hours: "The poll *%{name}* will automatically close in six hours"
-  closed: "The poll *%{name}* is now closed"
+  one_week: "The poll **%{name}** will automatically close in one week"
+  one_day: "The poll **%{name}** will automatically close in one day"
+  six_hours: "The poll **%{name}** will automatically close in six hours"
+  closed: "The poll **%{name}** is now closed"
 
 keyboard:
   done: Done
@@ -165,27 +165,27 @@ sorting:
     doodle_sorting: by answer
 
 settings:
-  poll_type: "*Poll type*: %{poll_type}"
-  language: "*Language*: %{language}"
-  anonymous: "*Anonymity*: Names are not visible"
-  not_anonymous: "*Anonymity*: Names are visible"
-  due_date: "*Due date*: %{date}"
-  no_due_date: "*Due date*: None"
-  results_visible: "*Visible results*: Results are directly visible"
-  results_not_visible: "*Visible results*: Results are not visible until poll is closed"
-  user_options: "*Custom user options*: Anyone can add new options"
-  no_user_options: "*Custom user options*: Only you can add new options"
-  percentage: "*Percentage*: Visible"
-  no_percentage: "*Percentage*: Hidden"
-  euro_date_format: "*Date format*: DD.MM.YYYY"
-  us_date_format: "*Date format*: YYYY-MM-DD"
-  user_sorting: "*User sorting*: %{name}"
-  option_sorting: "*Option sorting*: %{name}"
-  summarize: "*Summarize votes*: Summarize many votes"
-  dont_summarize: "*Summarize votes*: Show all votes"
-  permanently_summarized: "*Summarize votes*: Too many votes. Permanently summarized."
+  poll_type: "**Poll type**: %{poll_type}"
+  language: "**Language**: %{language}"
+  anonymous: "**Anonymity**: Names are not visible"
+  not_anonymous: "**Anonymity**: Names are visible"
+  due_date: "**Due date**: %{date}"
+  no_due_date: "**Due date**: None"
+  results_visible: "**Visible results**: Results are directly visible"
+  results_not_visible: "**Visible results**: Results are not visible until poll is closed"
+  user_options: "**Custom user options**: Anyone can add new options"
+  no_user_options: "**Custom user options**: Only you can add new options"
+  percentage: "**Percentage**: Visible"
+  no_percentage: "**Percentage**: Hidden"
+  euro_date_format: "**Date format**: DD.MM.YYYY"
+  us_date_format: "**Date format**: YYYY-MM-DD"
+  user_sorting: "**User sorting**: %{name}"
+  option_sorting: "**Option sorting**: %{name}"
+  summarize: "**Summarize votes**: Summarize many votes"
+  dont_summarize: "**Summarize votes**: Show all votes"
+  permanently_summarized: "**Summarize votes**: Too many votes. Permanently summarized."
   change_language: Just click on a language to change it for this poll.
-  sharing_link: "Use this link to allow users to share the poll with other chats. *Be careful!* Once it's out there you cannot take it back:"
+  sharing_link: "Use this link to allow users to share the poll with other chats. **Be careful!** Once it's out there you cannot take it back:"
   anonymity_warning: |
     You cannot hide votes and percentage on an anoymous poll.
     This might give users the conception that the poll has hidden results, which isn't actually the case. If you want this behaviour, create the poll with hidden results enabled.
@@ -197,28 +197,28 @@ settings:
   poll:
     explanation:
       anonymity: |
-        _In an anonymous poll no names will be displayed. It's not possible to see from which user a vote came from._
-        *Be aware:* _People might be able to guess your votes by tracking the percentage/vote count and your online status. To get an absolutely anonymous poll, also enable hidden results._
-      visibility: "_A poll with hidden results won't show any votes or any percentages, until the poll is closed. Once the poll is closed, it stays closed forever. This is needed to avoid the possibility of_ [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) _and to prevent_ [anchoring](https://en.wikipedia.org/wiki/Anchoring)."
+        __In an anonymous poll no names will be displayed. It's not possible to see from which user a vote came from.__
+        **Be aware:** __People might be able to guess your votes by tracking the percentage/vote count and your online status. To get an absolutely anonymous poll, also enable hidden results.__
+      visibility: "__A poll with hidden results won't show any votes or any percentages, until the poll is closed. Once the poll is closed, it stays closed forever. This is needed to avoid the possibility of__ [tactical voting](https://en.wikipedia.org/wiki/Tactical__voting) __and to prevent__ [anchoring](https://en.wikipedia.org/wiki/Anchoring)."
 
   user:
-    notifications_enabled: "*Notifications:* enabled"
-    notifications_disabled: "*Notifications:* disabled"
+    notifications_enabled: "**Notifications:** enabled"
+    notifications_disabled: "**Notifications:** disabled"
     delete_all: ⚠️ Delete ALL polls ⚠️
     delete_closed: ⚠️ Delete all closed polls ⚠️
     delete_all_confirmation: |
       Do you really want to delete ALL your polls?
       This affects polls that are currently open and closed polls.
-      ⚠️ *This action is irrevertible.* ⚠️
+      ⚠️ **This action is irrevertible.** ⚠️
     delete_closed_confirmation: |
       Do you really want to delete all closed polls?
-      ⚠️ *This action is irrevertible.* ⚠️
-    language: "*Default language:* %{language}"
-    open_polls: "*Open polls:* %{count}"
-    closed_polls: "*Closed polls:* %{count}"
+      ⚠️ **This action is irrevertible.** ⚠️
+    language: "**Default language:** %{language}"
+    open_polls: "**Open polls:** %{count}"
+    closed_polls: "**Closed polls:** %{count}"
     explanations:
-      language: "_This setting determines which language is used in your management interface and also determines the default language for your polls._"
-      notifications: "_I'll send a message from time to time, informing you about updates, changes or bugs._"
+      language: "__This setting determines which language is used in your management interface and also determines the default language for your polls.__"
+      notifications: "__I'll send a message from time to time, informing you about updates, changes or bugs.__"
 
 
 management:
@@ -244,44 +244,44 @@ creation:
     results_not_visible: Hide results until poll is closed
 
   option:
-    next: "Send *another option*, pick a date and add it as an option, or click *Done* when you're finished."
+    next: "Send **another option**, pick a date and add it as an option, or click **Done** when you're finished."
     first: |
       Please send me an option. You can send multiple options at once, each option on a new line.
       You can also add a description behind a hyphen.
       For instance `Burger - because it is tasty`
     no_new: ❌ No new option has been added
-    single_added: "*%{option}* has been added. 👍\nSend *another option*, pick a date and add it as an option, or click *Done* when you're finished."
+    single_added: "**%{option}** has been added. 👍\nSend **another option**, pick a date and add it as an option, or click **Done** when you're finished."
     multiple_added: "Options have been added:"
     finished: All options have already been added
 
   poll_type_help: |
-    Current poll type: *%{poll_type}*
+    Current poll type: **%{poll_type}**
 
-    👍 *Single Vote:*
+    👍 **Single Vote:**
     Every user gets a single vote. The default and normal voting mode.
 
-    📅 *Doodle:*
+    📅 **Doodle:**
     Users can vote for `yes`, `no`, or `maybe` for each option. Great for finding a date.
 
-    ↕ *Priority Vote*:
+    ↕ **Priority Vote**:
     Every user ranks the options by preference. Options get points depending on their place in the ranking.
     This helps to find good compromises, i.e. options that most people prefer over other options.
     For instance, the Eurovision Song Contest chooses their winner with a form of priority voting.
 
-    🛒 *Unlimited Votes* (or the shopping list 😎):
+    🛒 **Unlimited Votes** (or the shopping list 😎):
     Every user can vote as often on any option as they want.
     This is great if you want to, for instance, determine how much stuff everyone wants for the next festival trip.
 
-    🎮 *Block Vote:*
+    🎮 **Block Vote:**
     Every user can vote for all (or less) options. Like a doodle, but you can only vote `yes`.
     Useful for finding the most wanted options in a group, e.g. games that should be played on a LAN-Party.
 
-    🎮 *Limited Vote:*
+    🎮 **Limited Vote:**
     Every user gets a fixed number of votes they can distribute, but only once per option.
     Pretty much like block vote, but people need to prioritize.
     This mode is good for limiting the amount of possible winners e.g. if you only want max 4 games on your LAN-Party.
 
-    📊 *Cumulative Vote:*
+    📊 **Cumulative Vote:**
     Every user gets a fixed number of votes they can distribute as they like (even multiple votes per option).
     This mode has a little more depth than limited vote, since it allows users to vote on a single option multiple times.
 
@@ -293,25 +293,25 @@ creation:
     Hey there!
     You are about to create a new poll 👌
 
-    *Poll type*: %{poll_type}
-    *Anonymity*: %{anonymity}
-    *Visible results*: %{results_visible}
+    **Poll type**: %{poll_type}
+    **Anonymity**: %{anonymity}
+    **Visible results**: %{results_visible}
 
     Please follow these steps:
     1. Configure the poll to your needs 🙂
     2. 👇 Send me the name of this poll. 👇
   datepicker_text: |
-    *Datepicker:*
-    To add date, select it and click *Pick this date*.
-    Click *Done* when you're finished.
+    **Datepicker:**
+    To add date, select it and click **Pick this date**.
+    Click **Done** when you're finished.
 
-    *Current options:*
+    **Current options:**
   error:
     limit_bigger_zero: Please send me a number bigger than 0
     limit_between: Please send me a number between 1 and %{limit}
     too_big: 'Please send a smaller number. You also might want to use an "Unlimited votes" poll'
     markdown: |
-      Please don't use markdown symbols in your names, description or options. Such symbols are `_`,`*` and `[`.
+      Please don't use markdown symbols in your names, description or options. Such symbols are `_`,`**` and `[`.
       Please send me the message again without these symbols.
 
 external:
@@ -354,7 +354,7 @@ misc:
 
     Have great day!
   start: |
-    🌟Welcome to the *ULTIMATE* pollbot 🌟
+    🌟Welcome to the **ULTIMATE** pollbot 🌟
 
     Just type /create or click the button below to start creating polls. Everything is explained underway.
 
@@ -366,16 +366,16 @@ misc:
 
   start_after_results: Hey! Just type /create to make your own poll ☺️
   over_3000: |
-    ⚠️ Your poll is already over *3000 characters* long, please try to keep it short and at least under 3000, or even better under 2500 🙏.
+    ⚠️ Your poll is already over **3000 characters** long, please try to keep it short and at least under 3000, or even better under 2500 🙏.
 
-    Telegram enforces a maximum of 4096 characters per messages and I need to display votes on top of your initial text. Every poll with more characters than that *will just stop working*.
+    Telegram enforces a maximum of 4096 characters per messages and I need to display votes on top of your initial text. Every poll with more characters than that **will just stop working**.
     I already try to handle this as good as possible and summarize votes to save space, but there's only so much space.
 
     For polls with a lot of text and over 10-15 options, you might be better off using an external tool like [Doodle](https://doodle.com/)
   over_4000: |
-    ⚠️ Your poll is over *4000 characters* long. This is too long to display it in a single message. Please try to keep it short and under 3000 characters, or even better under 2500 🙏.
+    ⚠️ Your poll is over **4000 characters** long. This is too long to display it in a single message. Please try to keep it short and under 3000 characters, or even better under 2500 🙏.
 
-    Telegram enforces a maximum of 4096 characters per messages and I need to display votes on top of your initial text. Every poll with more characters than that *will just stop working*.
+    Telegram enforces a maximum of 4096 characters per messages and I need to display votes on top of your initial text. Every poll with more characters than that **will just stop working**.
     I already try to handle this as good as possible, but my hands are tied with this one.
 
     For really long polls with many options, you are better off using an external tool like [Doodle](https://doodle.com/)
@@ -398,74 +398,74 @@ misc:
 
       In case you just want to create a poll, type /create
     creation: |
-      🌟*Creation:*
+      🌟**Creation:**
 
       To create a new poll, just write or click /create.
       For each poll you can specify several initial settings
 
-      *Poll type:* The various types are explained in detail in the poll type menu.
-      *Anonymity:* You can anonymize your poll, which results in no names being displayed! This is permanent and for all parties.
-      *Visible results:* In this mode, votes only become visible after closing the poll. This is needed to avoid the possibility of [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) and to prevent [Anchoring](https://en.wikipedia.org/wiki/Anchoring)
+      **Poll type:** The various types are explained in detail in the poll type menu.
+      **Anonymity:** You can anonymize your poll, which results in no names being displayed! This is permanent and for all parties.
+      **Visible results:** In this mode, votes only become visible after closing the poll. This is needed to avoid the possibility of [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) and to prevent [Anchoring](https://en.wikipedia.org/wiki/Anchoring)
 
-      -> *Attention: A closed poll with invisible results stays closed!:*
+      -> **Attention: A closed poll with invisible results stays closed!:**
       Reopening a poll would allow a user, specifically the poll creator, to look at the votes, and place his own vote in a manner, that would result in a possible advantage for him (tactical voting).
 
     settings: |
-      ⚙️ *Settings:*
+      ⚙️ **Settings:**
 
       Further settings of a poll can be adjusted after the poll has been created:
 
-      *Language:* The language for this specific poll can be changed.
-      *Anonymity:* A poll can be made anonymous retrospectively.
-      *Due date:* A due date at which the poll will be automatically closed can be set.
-      *Options:* New options can be added and existing options can be removed in the settings menu.
-      *User Options:* You can allow other users to add options to your poll.
+      **Language:** The language for this specific poll can be changed.
+      **Anonymity:** A poll can be made anonymous retrospectively.
+      **Due date:** A due date at which the poll will be automatically closed can be set.
+      **Options:** New options can be added and existing options can be removed in the settings menu.
+      **User Options:** You can allow other users to add options to your poll.
 
-      *---- Styling submenu: ----*
+      **---- Styling submenu: ----**
 
-      *Percentage:*
-      _The percentage line of options can be hidden in the styling menu._
+      **Percentage:**
+      __The percentage line of options can be hidden in the styling menu.__
 
-      *Option votes:*
-      _The sum of all votes for an option can be hidden._
+      **Option votes:**
+      __The sum of all votes for an option can be hidden.__
 
-      *Summarize votes:*
-      _If many people vote on your poll, the message might get crowded. Summarize the votes to have a better overview._
+      **Summarize votes:**
+      __If many people vote on your poll, the message might get crowded. Summarize the votes to have a better overview.__
 
-      *Order:*
-      _The order in which user names and options are displayed in the results can be changed._
+      **Order:**
+      __The order in which user names and options are displayed in the results can be changed.__
 
     notifications: |
-      📣 *Notifications:*
+      📣 **Notifications:**
 
       If you enable notifications for your chat, the bot will send a message 1 day, 6 hours, and 1 hour before the poll closes.
       This is just a feature to remind everyone in a group that a poll will close soon, and to make it easy to find the poll message again 😉.
 
       To enable notifications in a chat follow these steps:
-      *1.* Create a poll
-      *2.* Set a due date in the settings menu
-      *3.* Go to the chat you want to be notified
-      *4.* Add the pollbot to the group
-      *5.* Share the poll to this group
-      *6.* Reply with /notify to the poll message you selected via @ultimate\_pollbot
-      *7.* Pick the correct poll
+      **1.** Create a poll
+      **2.** Set a due date in the settings menu
+      **3.** Go to the chat you want to be notified
+      **4.** Add the pollbot to the group
+      **5.** Share the poll to this group
+      **6.** Reply with /notify to the poll message you selected via @ultimate\_pollbot
+      **7.** Pick the correct poll
 
       This whole procedure is unhappily overly complicated, since telegram doesn't allow to detect messages from bots in groups 😐.
       Thereby we don't know which poll is posted in which group and everything needs to be done manually.
 
     management: |
-      🕰 *Find old polls:*
+      🕰 **Find old polls:**
 
       There is an option in your /start menu to find all open polls.
       Closed polls can be listed in the /settings menu.
 
-      ⚠️ *Delete polls:*
+      ⚠️ **Delete polls:**
 
       You can delete individual polls in the respective poll menus.
       There are also options delete all polls or all closed polls in the /settings menu.
 
     languages: |
-      🌐 *Language:*
+      🌐 **Language:**
 
       Ultimate pollbot supports multiple languages, but only English is officially maintained.
 
@@ -478,7 +478,7 @@ misc:
       The multi language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
 
     bugs: |
-      ⚠️ *There is an unknown bug that won't go away!!* 😩
+      ⚠️ **There is an unknown bug that won't go away!!** 😩
 
       I usually get a notification as soon as something breaks, but there might be some bugs that go unnoticed!
       In case a bug isn't fixed in a day or two, please write a ticket on [GitHub](https://github.com/Nukesor/ultimate-poll-bot) or stop by my [support group](https://t.me/nukesors_projects).

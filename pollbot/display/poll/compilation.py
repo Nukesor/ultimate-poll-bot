@@ -66,7 +66,7 @@ def compile_poll_text(session, poll, show_warning=False, summarize=False, inline
 
     # Name and description
     lines = []
-    lines.append(f'✉️ *{poll.name}*')
+    lines.append(f'✉️ **{poll.name}**')
 
     # Only send the name nad description, when using an inline_query
     # Otherwise the result may be too larg (due to many large poll texts)
@@ -77,17 +77,17 @@ def compile_poll_text(session, poll, show_warning=False, summarize=False, inline
         return lines
 
     if poll.description is not None:
-        lines.append(f'_{poll.description}_')
+        lines.append(f'__{poll.description}__')
 
     # Anonymity information
     if not context.show_results or context.anonymous:
         lines.append('')
     if context.anonymous:
-        lines.append(f"_{i18n.t('poll.anonymous', locale=poll.locale)}_")
+        lines.append(f"__{i18n.t('poll.anonymous', locale=poll.locale)}__")
         if context.show_results:
             lines.append(i18n.t('poll.anonymous_warning', locale=poll.locale))
     if not context.show_results:
-        lines.append(f"_{i18n.t('poll.results_not_visible', locale=poll.locale)}_")
+        lines.append(f"__{i18n.t('poll.results_not_visible', locale=poll.locale)}__")
 
     lines += get_option_information(session, poll, context, summarize)
     lines.append('')

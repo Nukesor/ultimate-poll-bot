@@ -3,20 +3,15 @@ from pollbot.models import PollOption
 from pollbot.display.misc import get_help_text_and_keyboard
 
 
-def switch_help(session, context):
+async def switch_help(session, context, event):
     """Show the correct help section."""
     user = context.user
     text, keyboard = get_help_text_and_keyboard(user, context.action)
 
-    context.query.message.edit_text(
-        text,
-        parse_mode='Markdown',
-        reply_markup=keyboard,
-        disable_web_page_preview=True,
-    )
+    await event.edit(text, buttons=keyboard, link_preview=False)
 
 
-def show_option_name(session, context):
+async def show_option_name(session, context, event):
     """Return the option name via callback query."""
     option = session.query(PollOption).get(context.action)
 

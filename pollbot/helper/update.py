@@ -11,7 +11,7 @@ from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
 from pollbot.models import Update
 
 
-def update_poll_messages(session, poll):
+async def update_poll_messages(session, poll):
     """Logic for handling updates."""
     now = datetime.now()
     # Check whether we have a new window
@@ -25,7 +25,7 @@ def update_poll_messages(session, poll):
 
     try:
         # Try to send updates
-        send_updates(session, poll)
+        await send_updates(session, poll)
 #    except (TimedOut, RetryAfter) as e:
 #        # Schedule an update after the RetryAfter timeout + 1 second buffer
 #        if isinstance(e, RetryAfter):
@@ -50,7 +50,7 @@ def update_poll_messages(session, poll):
         raise e
 
 
-def send_updates(session, poll, show_warning=False):
+async def send_updates(session, poll, show_warning=False):
     """Actually update all messages."""
     for reference in poll.references:
 #        try:
@@ -67,17 +67,17 @@ def send_updates(session, poll, show_warning=False):
             if poll.user.expected_input != ExpectedInput.votes.name:
                 keyboard = get_management_keyboard(poll)
 
-            try:
-                client.edit_message(
-                    reference.admin_user.id,
-                    message=reference.admin_message_id,
-                    text=text,
-                    buttons=keyboard,
-                    link_preview=False,
-                )
-            except Unauthorized as e:
-                if e.message == 'Forbidden: user is deactivated':
-                    session.delete(reference)
+#            try:
+            await client.edit_message(
+                reference.admin_user.id,
+                message=reference.admin_message_id,
+                text=text,
+                buttons=keyboard,
+                link_preview=False,
+            )
+#            except Unauthorized as e:
+#                if e.message == 'Forbidden: user is deactivated':
+#                    session.delete(reference)
 
         # User that votes in private chat (priority vote)
         elif reference.vote_user is not None:
@@ -89,7 +89,7 @@ def send_updates(session, poll, show_warning=False):
             )
 
             try:
-                client.edit_message(
+                await client.edit_message(
                     reference.vote_user.id,
                     message=reference.vote_message_id,
                     text=text,
@@ -106,7 +106,7 @@ def send_updates(session, poll, show_warning=False):
             # Create text and keyboard
             text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_warning=show_warning)
 
-            client.edit_message(
+            await client.edit_message(
                 reference.inline_message_id,
                 text=text,
                 buttons=keyboard,
@@ -132,17 +132,17 @@ def send_updates(session, poll, show_warning=False):
 #                raise
 
 
-def remove_poll_messages(session, poll, remove_all=False):
+async def remove_poll_messages(session, poll, remove_all=False):
     """Remove all messages (references) of a poll."""
     if not remove_all:
         poll.closed = True
-        send_updates(session, poll)
+        await send_updates(session, poll)
 
     for reference in poll.references:
         #        try:
         # Admin poll management interface
         if reference.admin_user is not None:
-            client.edit_message(
+            await client.edit_message(
                 reference.admin_user.id,
                 message=reference.admin_message_id,
                 text=i18n.t('deleted.poll', locale=poll.locale),
@@ -150,7 +150,7 @@ def remove_poll_messages(session, poll, remove_all=False):
 
             # User that votes in private chat (priority vote)
         elif reference.vote_user is not None:
-            client.edit_message(
+            await client.edit_message(
                 reference.vote_user.id,
                 message=reference.vote_message_id,
                 text=i18n.t('deleted.poll', locale=poll.locale),
@@ -158,7 +158,7 @@ def remove_poll_messages(session, poll, remove_all=False):
 
             # Remove message created via inline_message_id
         elif remove_all:
-            client.edit_message(
+            await client.edit_message(
                 reference.inline_message_id,
                 text=i18n.t('deleted.poll', locale=poll.locale),
             )

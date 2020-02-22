@@ -9,27 +9,24 @@ from pollbot.models import Poll
 from pollbot.display.admin import stats
 
 
-def open_admin_settings(session, context):
+async def open_admin_settings(session, context, event):
     """Open the main menu."""
     keyboard = get_admin_settings_keyboard(context.user)
-    context.query.message.edit_text(
+    await event.edit(
         stats(session),
-        reply_markup=keyboard,
+        buttons=keyboard,
         parse_mode='Markdown',
-        disable_web_page_preview=True,
+        link_preview=False,
     )
 
 
-def update_all(session, context):
+async def update_all(session, context, event):
     """Update all polls."""
-    chat = context.query.message.chat
-
     updated = 0
     poll_count = session.query(Poll) \
         .filter(Poll.created.is_(True)) \
         .count()
-    chat.send_message(f'Updating {poll_count} polls')
-    print(f'Updating {poll_count} polls')
+    await event.respond(f'Updating {poll_count} polls')
 
     while updated < poll_count:
         polls = session.query(Poll) \
@@ -40,16 +37,16 @@ def update_all(session, context):
             .all()
 
         if updated % 500 == 0:
-            chat.send_message(f'Updated {updated} polls')
+            await event.respond(f'Updated {updated} polls')
         updated += len(polls)
 
         for poll in polls:
-            update_poll_messages(session, context.bot, poll)
+            await update_poll_messages(session, poll)
             time.sleep(0.2)
 
     return "Done"
 
 
-def plot(session, context):
+async def plot(session, context, event):
     """Plot interesting statistics."""
-    send_plots(session, context.query.message.chat)
+    await send_plots(session, context, event)
