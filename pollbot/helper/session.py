@@ -1,4 +1,5 @@
 """Session helper functions."""
+import asyncio
 import traceback
 from functools import wraps
 from telethon.events import StopPropagation
@@ -17,41 +18,49 @@ from pollbot.helper.stats import increase_stat
 from pollbot.helper import get_peer_information
 
 
-def job_session_wrapper():
-    """Create a session, handle permissions and exceptions for jobs."""
+def job_wrapper(wait=1):
+    """Create a session and handle exceptions for jobs."""
     def real_decorator(func):
         """Parametrized decorator closure."""
         @wraps(func)
-        def wrapper(context):
+        async def wrapper():
             session = get_session()
-            try:
-                func(context, session)
+            # Run the job in an endless loop
+            # Catch exceptions and report them to sentry.
+            # Also wait for a specified amount of time between every loop
+            while True:
+                try:
+                    await func(session)
 
-                session.commit()
-            except Exception as e:
-                # Capture all exceptions from jobs. We need to handle those inside the jobs
-                if not ignore_job_exception(e):
-                    if config['logging']['debug']:
-                        traceback.print_exc()
-                    sentry.captureException()
-            finally:
-                session.close()
+                    session.commit()
+                except Exception as e:
+                    # Capture all exceptions from jobs. We need to handle those inside the jobs
+                    if not ignore_job_exception(e):
+                        if config['logging']['debug']:
+                            traceback.print_exc()
+                        sentry.captureException()
+                    session.rollback()
+                finally:
+                    session.close()
+
+                await asyncio.sleep(wait)
+
         return wrapper
 
     return real_decorator
 
 
-def hidden_session_wrapper():
+def callback_wrapper():
     """Create a session, handle permissions and exceptions."""
     def real_decorator(func):
         """Parametrized decorator closure."""
         @wraps(func)
-        def wrapper(update, context):
+        async def wrapper(update, context):
             session = get_session()
             try:
                 user = get_user(session, update)
 
-                func(context.bot, update, session, user)
+                await func(context.bot, update, session, user)
 
                 session.commit()
             except Exception as e:
