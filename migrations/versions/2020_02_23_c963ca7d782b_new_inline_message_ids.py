@@ -28,7 +28,7 @@ def upgrade():
 
 
 def downgrade():
-    op.drop_column('reference', 'legacy_inline_message_id')
+    op.drop_column('reference', 'inline_message_id')
     op.drop_column('reference', 'inline_message_dc_id')
     op.drop_column('reference', 'inline_message_access_hash')
     op.alter_column(
