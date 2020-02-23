@@ -1,22 +1,27 @@
 """Handle inline query results."""
-from telegram.ext import run_async
+from telethon import events, types
 
-from pollbot.helper.update import update_poll_messages
-from pollbot.helper.session import hidden_session_wrapper
+from pollbot.client import client
 from pollbot.models import Poll, Reference
+from pollbot.helper.update import update_poll_messages
+from pollbot.helper.session import inline_query_wrapper
 
 
-@run_async
-@hidden_session_wrapper()
-def handle_chosen_inline_result(bot, update, session, user):
+@client.on(events.Raw(types.UpdateBotInlineSend))
+@inline_query_wrapper
+async def handle_chosen_inline_result(session, event, user):
     """Save the chosen inline result."""
-    result = update.chosen_inline_result
-    poll_id = result.result_id
+    poll_id = event.id
 
     poll = session.query(Poll).get(poll_id)
 
-    reference = Reference(poll, inline_message_id=result.inline_message_id)
+    reference = Reference(
+        poll,
+        inline_message_id=event.msg_id.id,
+        inline_message_dc_id=event.msg_id.dc_id,
+        inline_message_access_hash=event.msg_id.access_hash,
+    )
     session.add(reference)
     session.commit()
 
-    update_poll_messages(session, bot, poll)
+    await update_poll_messages(session, poll)

@@ -54,6 +54,29 @@ def job_wrapper(wait=1):
     return real_decorator
 
 
+def inline_query_wrapper(func):
+    """Create a session, and handle exceptions."""
+    async def wrapper(event):
+        session = get_session()
+        try:
+            user = None
+            if not isinstance(event.query, str):
+                user = await get_user(session, event.query.user_id)
+            else:
+                user = await get_user(session, event.user_id)
+
+            await func(session, event, user)
+            session.commit()
+        except Exception as e:
+            if not ignore_exception(e):
+                if config['logging']['debug']:
+                    traceback.print_exc()
+                sentry.captureException()
+        finally:
+            session.close()
+    return wrapper
+
+
 def callback_wrapper():
     """Create a session, handle permissions and exceptions."""
     def real_decorator(func):

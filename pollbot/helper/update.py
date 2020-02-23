@@ -2,6 +2,11 @@
 from datetime import datetime, timedelta
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
+from telethon.tl.types import InputBotInlineMessageID
+from telethon.utils import resolve_inline_message_id
+from telethon.errors.rpcerrorlist import (
+    MessageIdInvalidError,
+)
 
 from pollbot.i18n import i18n
 from pollbot.client import client
@@ -53,42 +58,37 @@ async def update_poll_messages(session, poll):
 async def send_updates(session, poll, show_warning=False):
     """Actually update all messages."""
     for reference in poll.references:
-#        try:
-        # Admin poll management interface
-        if reference.admin_user is not None and not poll.in_settings:
-            text, keyboard = get_poll_text_and_vote_keyboard(
-                session,
-                poll,
-                user=poll.user,
-                show_warning=show_warning,
-                show_back=True
-            )
+        try:
+            # Admin poll management interface
+            if reference.admin_user is not None and not poll.in_settings:
+                text, keyboard = get_poll_text_and_vote_keyboard(
+                    session,
+                    poll,
+                    user=poll.user,
+                    show_warning=show_warning,
+                    show_back=True
+                )
 
-            if poll.user.expected_input != ExpectedInput.votes.name:
-                keyboard = get_management_keyboard(poll)
+                if poll.user.expected_input != ExpectedInput.votes.name:
+                    keyboard = get_management_keyboard(poll)
 
-#            try:
-            await client.edit_message(
-                reference.admin_user.id,
-                message=reference.admin_message_id,
-                text=text,
-                buttons=keyboard,
-                link_preview=False,
-            )
-#            except Unauthorized as e:
-#                if e.message == 'Forbidden: user is deactivated':
-#                    session.delete(reference)
+                await client.edit_message(
+                    reference.admin_user.id,
+                    message=reference.admin_message_id,
+                    text=text,
+                    buttons=keyboard,
+                    link_preview=False,
+                )
 
-        # User that votes in private chat (priority vote)
-        elif reference.vote_user is not None:
-            text, keyboard = get_poll_text_and_vote_keyboard(
-                session,
-                poll,
-                user=reference.vote_user,
-                show_warning=show_warning,
-            )
+            # User that votes in private chat (priority vote)
+            elif reference.vote_user is not None:
+                text, keyboard = get_poll_text_and_vote_keyboard(
+                    session,
+                    poll,
+                    user=reference.vote_user,
+                    show_warning=show_warning,
+                )
 
-            try:
                 await client.edit_message(
                     reference.vote_user.id,
                     message=reference.vote_message_id,
@@ -97,21 +97,21 @@ async def send_updates(session, poll, show_warning=False):
                     link_preview=False,
                 )
 
-            except Unauthorized as e:
-                if e.message == 'Forbidden: user is deactivated':
-                    session.delete(reference)
+            # Edit message created via inline query
+            else:
+                # Create text and keyboard
+                text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_warning=show_warning)
 
-        # Edit message created via inline query
-        elif reference.inline_message_id is not None:
-            # Create text and keyboard
-            text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_warning=show_warning)
+                message_id = inline_message_id_from_reference(reference)
+                await client.edit_message(
+                    message_id,
+                    text,
+                    buttons=keyboard,
+                    link_preview=False,
+                )
 
-            await client.edit_message(
-                reference.inline_message_id,
-                text=text,
-                buttons=keyboard,
-                link_preview=False,
-            )
+        except MessageIdInvalidError:
+            session.delete(reference)
 #        except BadRequest as e:
 #            if e.message.startswith('Message_id_invalid') or \
 #                   e.message.startswith("Message can't be edited") or \
@@ -137,35 +137,50 @@ async def remove_poll_messages(session, poll, remove_all=False):
     if not remove_all:
         poll.closed = True
         await send_updates(session, poll)
+        return
 
     for reference in poll.references:
-        #        try:
-        # Admin poll management interface
-        if reference.admin_user is not None:
-            await client.edit_message(
-                reference.admin_user.id,
-                message=reference.admin_message_id,
-                text=i18n.t('deleted.poll', locale=poll.locale),
-            )
+        try:
+            # Admin poll management interface
+            if reference.admin_user is not None:
+                await client.edit_message(
+                    reference.admin_user.id,
+                    message=reference.admin_message_id,
+                    text=i18n.t('deleted.poll', locale=poll.locale),
+                    link_preview=False,
+                )
 
-            # User that votes in private chat (priority vote)
-        elif reference.vote_user is not None:
-            await client.edit_message(
-                reference.vote_user.id,
-                message=reference.vote_message_id,
-                text=i18n.t('deleted.poll', locale=poll.locale),
-            )
+                # User that votes in private chat (priority vote)
+            elif reference.vote_user is not None:
+                await client.edit_message(
+                    reference.vote_user.id,
+                    message=reference.vote_message_id,
+                    text=i18n.t('deleted.poll', locale=poll.locale),
+                    link_preview=False,
+                )
 
-            # Remove message created via inline_message_id
-        elif remove_all:
-            await client.edit_message(
-                reference.inline_message_id,
-                text=i18n.t('deleted.poll', locale=poll.locale),
-            )
+                # Remove message created via inline_message_id
+            else:
+                message_id = inline_message_id_from_reference(reference)
+                await client.edit_message(
+                    message_id,
+                    i18n.t('deleted.poll', locale=poll.locale),
+                    link_preview=False,
+                )
 
-#        except BadRequest as e:
-#            if e.message.startswith('Message_id_invalid') or \
-        #                   e.message.startswith("Message to edit not found"):
-#                pass
-#            else:
-#                raise
+        except MessageIdInvalidError:
+            pass
+
+
+def inline_message_id_from_reference(reference):
+    """Helper to create a inline from references and legacy bot api references."""
+    if reference.legacy_inline_message_id is not None:
+        message_id, peer, dc_id, access_hash = resolve_inline_message_id(reference.legacy_inline_message_id)
+        return InputBotInlineMessageID(dc_id, message_id, access_hash)
+
+    else:
+        return InputBotInlineMessageID(
+            reference.inline_message_dc_id,
+            reference.inline_message_id,
+            reference.inline_message_access_hash,
+        )

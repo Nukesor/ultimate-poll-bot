@@ -21,7 +21,10 @@ class Reference(base):
     __tablename__ = 'reference'
 
     id = Column(Integer, primary_key=True)
-    inline_message_id = Column(String)
+    legacy_inline_message_id = Column(String)
+    inline_message_id = Column(BigInteger)
+    inline_message_dc_id = Column(BigInteger)
+    inline_message_access_hash = Column(BigInteger)
 
     admin_message_id = Column(BigInteger)
     admin_user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade', name='admin_user'), nullable=True, index=True)
@@ -41,6 +44,8 @@ class Reference(base):
     def __init__(
         self, poll,
         inline_message_id=None,
+        inline_message_dc_id=None,
+        inline_message_access_hash=None,
         admin_user=None,
         admin_message_id=None,
         vote_user=None,
@@ -49,6 +54,8 @@ class Reference(base):
         """Create a new poll."""
         self.poll = poll
         self.inline_message_id = inline_message_id
+        self.inline_message_dc_id = inline_message_dc_id
+        self.inline_message_access_hash = inline_message_access_hash
         self.admin_user = admin_user
         self.admin_message_id = admin_message_id
         self.vote_user = vote_user

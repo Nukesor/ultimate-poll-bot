@@ -1,25 +1,22 @@
 """Inline query handler function."""
 import uuid
+from telethon import events, Button
+from telethon.tl.types import InputWebDocument
 from sqlalchemy import or_
-from telegram.ext import run_async
-from telegram import (
-    InlineQueryResultArticle,
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-    InputTextMessageContent,
-)
 
 from pollbot.i18n import i18n
 from pollbot.models import Poll
+from pollbot.client import client
 from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
-from pollbot.helper.session import hidden_session_wrapper
+from pollbot.helper.session import inline_query_wrapper
 
 
-@run_async
-@hidden_session_wrapper()
-def search(bot, update, session, user):
+@client.on(events.InlineQuery)
+@inline_query_wrapper
+async def search(session, event, user):
     """Handle inline queries for sticker search."""
-    query = update.inline_query.query.strip()
+    query = event.query.query.strip()
+    builder = event.builder
 
     # Also search for closed polls if the `closed_polls` keyword is found
     closed = False
@@ -27,7 +24,7 @@ def search(bot, update, session, user):
         closed = True
         query = query.replace('closed_polls', '').strip()
 
-    offset = update.inline_query.offset
+    offset = event.query.offset
 
     if offset == '':
         offset = 0
@@ -71,9 +68,7 @@ def search(bot, update, session, user):
             pass
 
     if len(polls) == 0:
-        update.inline_query.answer(
-            [], cache_time=0, is_personal=True,
-        )
+        await event.answer([], cache_time=0, private=True)
     else:
         results = []
         for poll in polls:
@@ -90,23 +85,21 @@ def search(bot, update, session, user):
                 user=user,
                 inline_query=True
             )
-            keyboard = InlineKeyboardMarkup([[InlineKeyboardButton('Please ignore this', callback_data='100:0:0')]])
+            keyboard = [[Button.inline('Please ignore this', data='100:0:0')]]
 
-            content = InputTextMessageContent(
-                text,
-                parse_mode='markdown',
-                disable_web_page_preview=True,
-            )
             description = poll.description[:100] if poll.description is not None else None
-            results.append(InlineQueryResultArticle(
-                poll.id,
+            results.append(builder.article(
                 poll.name,
+                text=text,
                 description=description,
-                input_message_content=content,
-                reply_markup=keyboard,
+                id=str(poll.id),
+                buttons=keyboard,
+                link_preview=False,
             ))
 
-        update.inline_query.answer(
-            results, cache_time=0, is_personal=True,
+        await event.answer(
+            results,
+            cache_time=0,
+            private=True,
             next_offset=str(offset+10),
         )

@@ -13,8 +13,8 @@ from pollbot.telegram.job import (
 )
 from pollbot.telegram.message_handler import handle_private_text
 from pollbot.telegram.callback_handler import handle_callback_query
-#from pollbot.telegram.inline_query import search
-#from pollbot.telegram.inline_result_handler import handle_chosen_inline_result
+from pollbot.telegram.inline_query import search
+from pollbot.telegram.inline_result_handler import handle_chosen_inline_result
 from pollbot.telegram.commands.poll import (
     create_poll,
     list_polls,
