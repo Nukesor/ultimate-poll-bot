@@ -140,11 +140,11 @@ async def handle_new_option(event, session, user, text, poll):
     # Delete old references
     references = session.query(Reference) \
         .filter(Reference.poll == poll) \
-        .filter(Reference.admin_user_id == event.to_id) \
+        .filter(Reference.admin_user_id == event.from_id) \
         .all()
     for reference in references:
         try:
-            await client.delete_messages(event.to_id, reference.admin_message_id)
+            await client.delete_messages(event.from_id, reference.admin_message_id)
         except:
             pass
         session.delete(reference)
@@ -153,7 +153,7 @@ async def handle_new_option(event, session, user, text, poll):
     reference = Reference(
         poll,
         admin_user=user,
-        admin_message_id=message.message_id
+        admin_message_id=message.id
     )
     session.add(reference)
     session.commit()
@@ -161,7 +161,7 @@ async def handle_new_option(event, session, user, text, poll):
     await update_poll_messages(session, poll)
 
 
-async def handle_user_option_addition(event, session, user, text, poll, chat):
+async def handle_user_option_addition(event, session, user, text, poll):
     """Handle the addition of options from and arbitrary user."""
     if not poll.allow_new_options:
         user.current_poll = None
@@ -178,7 +178,7 @@ async def handle_user_option_addition(event, session, user, text, poll, chat):
         # Send message
         text = i18n.t('creation.option.multiple_added', locale=user.locale) + '\n'
         for option in added_options:
-            text += f'\n*{option}*'
+            text += f'\n**{option}**'
         await event.respond(text)
 
         # Update all polls

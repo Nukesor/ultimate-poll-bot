@@ -33,20 +33,19 @@ async def create_poll(event, session, user):
     await event.respond(text, buttons=keyboard, link_preview=False)
     raise events.StopPropagation
 
+@client.on(events.NewMessage(incoming=True, pattern='/list_closed'))
+@message_wrapper(private=True)
+async def list_closed_polls(event, session, user):
+    """Get a list of all closed polls."""
+    text, keyboard = get_poll_list(session, user, closed=True)
+    await event.respond(text, buttons=keyboard)
+    raise events.StopPropagation
+
 
 @client.on(events.NewMessage(incoming=True, pattern='/list'))
 @message_wrapper(private=True)
 async def list_polls(event, session, user):
     """Get a list of all active polls."""
     text, keyboard = get_poll_list(session, user)
-    await event.respond(text, buttons=keyboard)
-    raise events.StopPropagation
-
-
-@client.on(events.NewMessage(incoming=True, pattern='/list_closed'))
-@message_wrapper(private=True)
-async def list_closed_polls(event, session, user):
-    """Get a list of all closed polls."""
-    text, keyboard = get_poll_list(session, user, closed=True)
     await event.respond(text, buttons=keyboard)
     raise events.StopPropagation

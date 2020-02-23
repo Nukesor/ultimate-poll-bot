@@ -35,15 +35,14 @@ def get_vote_keyboard(poll, user, show_back=False, summary=False):
             bot_name = config['telegram']['bot_name']
             payload = get_start_button_payload(poll, StartAction.new_option)
             url = f'http://t.me/{bot_name}?start={payload}'
-            buttons.append([Button.inline(
-                i18n.t('keyboard.new_option', locale=poll.locale), url=url)])
+            buttons.append([Button.url(i18n.t('keyboard.new_option', locale=poll.locale), url)])
 
     # Add a button for to showing the summary, if the poll is too long for a single message
     if summary:
         payload = get_start_button_payload(poll, StartAction.show_results)
         bot_name = config['telegram']['bot_name']
         url = f'http://t.me/{bot_name}?start={payload}'
-        row = [Button.inline(i18n.t('keyboard.show_results', locale=poll.locale), url=url)]
+        row = [Button.url(i18n.t('keyboard.show_results', locale=poll.locale), url)]
         buttons.append(row)
 
     # Add a button to go back to the management interface (admin overview)
@@ -123,8 +122,7 @@ def get_priority_buttons(poll, user):
         bot_name = config['telegram']['bot_name']
         payload = get_start_button_payload(poll, StartAction.vote)
         url = f'http://t.me/{bot_name}?start={payload}'
-        buttons = [[Button.inline(
-            i18n.t('keyboard.vote', locale=poll.locale), url=url)]]
+        buttons = [[Button.url(i18n.t('keyboard.vote', locale=poll.locale), url)]]
 
         return buttons
 

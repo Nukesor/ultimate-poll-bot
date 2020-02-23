@@ -73,7 +73,7 @@ async def open_due_date_datepicker(session, context, event, poll):
     """Open the datepicker for setting a due date."""
     poll.user.expected_input = ExpectedInput.due_date.name
     keyboard = get_due_date_datepicker_keyboard(poll, date.today())
-    context.query.message.edit_buttons(
+    await event.edit(
         buttons=keyboard
     )
 
@@ -148,8 +148,7 @@ async def remove_option(session, context, event, poll):
     session.commit()
 
     keyboard = get_remove_option_keyboard(poll)
-    context.query.message.edit_buttons(buttons=keyboard)
-
+    await event.edit(buttons=keyboard)
     await update_poll_messages(session, poll)
 
 
