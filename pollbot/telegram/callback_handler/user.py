@@ -47,13 +47,13 @@ async def open_language_menu(session, context, event):
 
 async def list_polls(session, context, event):
     """List all open polls of a user."""
-    text, keyboard = get_poll_list(session, context, context.user)
+    text, keyboard = get_poll_list(session, context.user)
     await event.respond(text, buttons=keyboard)
 
 
 async def list_closed_polls(session, context, event):
     """List all open polls of a user."""
-    text, keyboard = get_poll_list(session, context, context.user, closed=True)
+    text, keyboard = get_poll_list(session, context.user, closed=True)
     await event.respond(text, buttons=keyboard)
 
 
