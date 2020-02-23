@@ -64,3 +64,4 @@ target/
 
 # Telethon stuff
 *.session
+*.session-journal

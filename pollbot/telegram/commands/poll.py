@@ -33,6 +33,7 @@ async def create_poll(event, session, user):
     await event.respond(text, buttons=keyboard, link_preview=False)
     raise events.StopPropagation
 
+
 @client.on(events.NewMessage(incoming=True, pattern='/list_closed'))
 @message_wrapper(private=True)
 async def list_closed_polls(event, session, user):
