@@ -102,7 +102,7 @@ async def send_updates(session, poll, show_warning=False):
                 )
 
             # Edit message created via inline query
-            else:
+            elif reference.legacy_inline_message_id is not None or reference.inline_message_id is not None:
                 # Create text and keyboard
                 text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_warning=show_warning)
 
