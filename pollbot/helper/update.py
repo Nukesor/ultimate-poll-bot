@@ -4,10 +4,11 @@ from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
 from telethon.tl.types import InputBotInlineMessageID
 from telethon.utils import resolve_inline_message_id
-from telethon.errors.rpcerrorlist import (
-    MessageIdInvalidError,
+from telethon.errors.rpcbaseerrors import (
+    ForbiddenError,
 )
 from telethon.errors.rpcerrorlist import (
+    MessageIdInvalidError,
     MessageNotModifiedError,
 )
 
@@ -117,27 +118,9 @@ async def send_updates(session, poll, show_warning=False):
             session.delete(reference)
         except MessageNotModifiedError:
             pass
-        except Exception as e:
-            print(e)
+        except ForbiddenError:
+            session.delete(reference)
 
-#        except BadRequest as e:
-#            if e.message.startswith('Message_id_invalid') or \
-#                   e.message.startswith("Message can't be edited") or \
-#                   e.message.startswith("Message to edit not found") or \
-#                   e.message.startswith("Chat not found"):
-#                session.delete(reference)
-#                session.commit()
-#            elif e.message.startswith('Message is not modified'):
-#                pass
-#            else:
-#                raise
-#
-#        except Unauthorized as e:
-#            if e.message.startswith("Forbidden: MESSAGE_AUTHOR_REQUIRED"):
-#                session.delete(reference)
-#                session.commit()
-#            else:
-#                raise
 
 
 async def remove_poll_messages(session, poll, remove_all=False):
@@ -176,10 +159,13 @@ async def remove_poll_messages(session, poll, remove_all=False):
                     link_preview=False,
                 )
 
+        except ForbiddenError:
+            session.delete(reference)
         except MessageIdInvalidError:
-            pass
+            session.delete(reference)
         except MessageNotModifiedError:
             pass
+
 
 def inline_message_id_from_reference(reference):
     """Helper to create a inline from references and legacy bot api references."""
