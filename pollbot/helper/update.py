@@ -7,6 +7,9 @@ from telethon.utils import resolve_inline_message_id
 from telethon.errors.rpcerrorlist import (
     MessageIdInvalidError,
 )
+from telethon.errors.rpcerrorlist import (
+    MessageNotModifiedError,
+)
 
 from pollbot.i18n import i18n
 from pollbot.client import client
@@ -112,6 +115,11 @@ async def send_updates(session, poll, show_warning=False):
 
         except MessageIdInvalidError:
             session.delete(reference)
+        except MessageNotModifiedError:
+            pass
+        except Exception as e:
+            print(e)
+
 #        except BadRequest as e:
 #            if e.message.startswith('Message_id_invalid') or \
 #                   e.message.startswith("Message can't be edited") or \
@@ -170,13 +178,18 @@ async def remove_poll_messages(session, poll, remove_all=False):
 
         except MessageIdInvalidError:
             pass
-
+        except MessageNotModifiedError:
+            pass
 
 def inline_message_id_from_reference(reference):
     """Helper to create a inline from references and legacy bot api references."""
     if reference.legacy_inline_message_id is not None:
         message_id, peer, dc_id, access_hash = resolve_inline_message_id(reference.legacy_inline_message_id)
-        return InputBotInlineMessageID(dc_id, message_id, access_hash)
+        return InputBotInlineMessageID(
+            int(dc_id),
+            int(message_id),
+            int(access_hash)
+        )
 
     else:
         return InputBotInlineMessageID(

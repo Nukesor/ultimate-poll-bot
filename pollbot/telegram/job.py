@@ -94,7 +94,7 @@ async def send_notifications(session):
         # Send the closed notification, remove all notifications and close the poll
         elif poll.due_date <= datetime.now():
             poll.closed = True
-            update_poll_messages(session, poll)
+            await update_poll_messages(session, poll)
 
             send_notifications_for_poll(session, poll, 'notification.closed')
             for notification in poll.notifications:
