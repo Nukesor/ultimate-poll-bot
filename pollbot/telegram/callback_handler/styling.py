@@ -10,7 +10,7 @@ from pollbot.telegram.keyboard import get_styling_settings_keyboard
 async def send_styling_message(session, context, event):
     """Update the current styling menu message."""
     await event.edit(
-        text=get_poll_text(session, context, event.poll),
+        text=get_poll_text(session, context.poll),
         buttons=get_styling_settings_keyboard(context.poll),
         link_preview=False,
     )
