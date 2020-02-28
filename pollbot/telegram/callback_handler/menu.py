@@ -48,7 +48,7 @@ async def go_back(session, context, event, poll):
 async def show_vote_menu(session, context, event, poll):
     """Show the vote keyboard in the management interface."""
     if poll.is_priority():
-        poll.init_votes(session, context, event.user)
+        poll.init_votes(session, context.user)
         session.commit()
 
     text, keyboard = get_poll_text_and_vote_keyboard(

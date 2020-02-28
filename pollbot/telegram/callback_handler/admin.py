@@ -49,4 +49,4 @@ async def update_all(session, context, event):
 
 async def plot(session, context, event):
     """Plot interesting statistics."""
-    await send_plots(session, context, event)
+    await send_plots(session, event)
