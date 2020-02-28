@@ -76,7 +76,7 @@ async def clone_poll(session, context, event, poll):
     new_poll = poll.clone(session)
     session.commit()
 
-    event.respond(
+    await event.respond(
         get_poll_text(session, new_poll),
         buttons=get_management_keyboard(new_poll),
         link_preview=False,
