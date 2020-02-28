@@ -82,7 +82,7 @@ async def open_due_date_datepicker(session, context, event, poll):
 async def show_styling_menu(session, context, event, poll):
     """Show the menu for sorting settings."""
     await event.edit(
-        get_poll_text(session, context, event.poll),
+        get_poll_text(session, context, poll),
         buttons=get_styling_settings_keyboard(poll),
         link_preview=False,
     )
