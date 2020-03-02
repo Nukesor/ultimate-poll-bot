@@ -2,7 +2,11 @@
 from pollbot.i18n import i18n
 from pollbot.models import Reference
 from pollbot.helper import poll_required
-from pollbot.helper.enums import CallbackResult, ExpectedInput
+from pollbot.helper.enums import (
+    CallbackResult,
+    ExpectedInput,
+    ReferenceType,
+)
 from pollbot.display import get_settings_text
 from pollbot.display.poll.compilation import (
     get_poll_text_and_vote_keyboard,
@@ -104,8 +108,9 @@ async def show_menu(session, context, event, poll):
 
     reference = Reference(
         poll,
-        admin_user=context.user,
-        admin_message_id=event.message_id,
+        Reference.admin.name,
+        user=context.user,
+        message_id=event.message_id,
     )
     session.add(reference)
     session.commit()

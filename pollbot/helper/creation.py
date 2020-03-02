@@ -1,7 +1,7 @@
 """Poll creation helper."""
 from pollbot.i18n import i18n
 from pollbot.helper.stats import increase_stat
-from pollbot.helper.enums import ExpectedInput
+from pollbot.helper.enums import ExpectedInput, ReferenceType
 from pollbot.display.poll.compilation import get_poll_text
 from pollbot.telegram.keyboard import (
     get_options_entered_keyboard,
@@ -60,8 +60,9 @@ async def create_poll(session, poll, user, event, message=None):
 
     reference = Reference(
         poll,
-        admin_user=user,
-        admin_message_id=message.id
+        ReferenceType.admin.name,
+        user=user,
+        message_id=message.id
     )
     session.add(reference)
     session.commit()

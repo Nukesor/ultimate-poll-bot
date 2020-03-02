@@ -29,6 +29,9 @@ def job_wrapper(wait=1):
         @wraps(func)
         async def wrapper():
             session = get_session()
+            # Always wait a few seconds in the beginning
+            # We don't want to start the jobs, before the tcp connection is up
+            await asyncio.sleep(5)
             # Run the job in an endless loop
             # Catch exceptions and report them to sentry.
             # Also wait for a specified amount of time between every loop

@@ -41,14 +41,14 @@ async def message_update_job(session):
                     # The update has already been handled somewhere else.
                     # This could be either a job or a person that voted in this very moment
                     session.rollback()
-                except RetryAfter as e:
-                    # Schedule an update after the RetryAfter timeout + 1 second buffer
-                    update.next_update = now + timedelta(seconds=int(e.retry_after) + 1)
-                    try:
-                        session.commit()
-                    except StaleDataError:
-                        # The update has already been handled somewhere else
-                        session.rollback()
+#                except RetryAfter as e:
+#                    # Schedule an update after the RetryAfter timeout + 1 second buffer
+#                    update.next_update = now + timedelta(seconds=int(e.retry_after) + 1)
+#                    try:
+#                        session.commit()
+#                    except StaleDataError:
+#                        # The update has already been handled somewhere else
+#                        session.rollback()
 
             # Update the count again.
             # Updates can be removed by normal operation as well

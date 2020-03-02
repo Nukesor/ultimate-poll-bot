@@ -10,7 +10,11 @@ from pollbot.display.poll.compilation import (
     get_poll_text_and_vote_keyboard,
     compile_poll_text
 )
-from pollbot.helper.enums import ExpectedInput, StartAction
+from pollbot.helper.enums import (
+    ExpectedInput,
+    StartAction,
+    ReferenceType,
+)
 from pollbot.helper.session import message_wrapper
 from pollbot.helper.text import split_text
 from pollbot.helper.stats import increase_stat
@@ -106,8 +110,9 @@ async def start(event, session, user):
 
         reference = Reference(
             poll,
-            vote_user=user,
-            vote_message_id=sent_message.message_id,
+            ReferenceType.private_vote.name,
+            user=user,
+            message_id=sent_message.id,
         )
         session.add(reference)
 

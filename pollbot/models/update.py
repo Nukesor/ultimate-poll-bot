@@ -1,15 +1,12 @@
 """The sqlalchemy model for a vote."""
 from sqlalchemy import (
     Column,
-    func,
     ForeignKey,
     UniqueConstraint
 )
 from sqlalchemy.types import (
-    Boolean,
     DateTime,
     Integer,
-    String,
 )
 from sqlalchemy.orm import relationship
 

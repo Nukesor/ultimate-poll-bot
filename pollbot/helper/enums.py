@@ -42,6 +42,15 @@ class PollType(Enum):
 
 
 @unique
+class ReferenceType(Enum):
+    """Helper enum to specify the different types of possible votes."""
+
+    inline = 1
+    admin = 2
+    private_vote = 3
+
+
+@unique
 class VoteResultType(Enum):
     """Helper enum to specify the different types of possible votes."""
 

@@ -15,7 +15,7 @@ from telethon.errors.rpcerrorlist import (
 from pollbot.i18n import i18n
 from pollbot.client import client
 from pollbot.telegram.keyboard import get_management_keyboard
-from pollbot.helper.enums import ExpectedInput
+from pollbot.helper.enums import ExpectedInput, ReferenceType
 from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
 from pollbot.models import Update
 
@@ -64,7 +64,7 @@ async def send_updates(session, poll, show_warning=False):
     for reference in poll.references:
         try:
             # Admin poll management interface
-            if reference.admin_user is not None and not poll.in_settings:
+            if reference.type == ReferenceType.admin.name and not poll.in_settings:
                 text, keyboard = get_poll_text_and_vote_keyboard(
                     session,
                     poll,
@@ -77,32 +77,32 @@ async def send_updates(session, poll, show_warning=False):
                     keyboard = get_management_keyboard(poll)
 
                 await client.edit_message(
-                    reference.admin_user.id,
-                    message=reference.admin_message_id,
+                    reference.user.id,
+                    message=reference.message_id,
                     text=text,
                     buttons=keyboard,
                     link_preview=False,
                 )
 
             # User that votes in private chat (priority vote)
-            elif reference.vote_user is not None:
+            elif reference.type == ReferenceType.private_vote.name:
                 text, keyboard = get_poll_text_and_vote_keyboard(
                     session,
                     poll,
-                    user=reference.vote_user,
+                    user=reference.user,
                     show_warning=show_warning,
                 )
 
                 await client.edit_message(
-                    reference.vote_user.id,
-                    message=reference.vote_message_id,
+                    reference.user.id,
+                    message=reference.message_id,
                     text=text,
                     buttons=keyboard,
                     link_preview=False,
                 )
 
             # Edit message created via inline query
-            elif reference.legacy_inline_message_id is not None or reference.inline_message_id is not None:
+            elif reference.type == ReferenceType.inline.name:
                 # Create text and keyboard
                 text, keyboard = get_poll_text_and_vote_keyboard(session, poll, show_warning=show_warning)
 
@@ -116,10 +116,13 @@ async def send_updates(session, poll, show_warning=False):
 
         except MessageIdInvalidError:
             session.delete(reference)
-        except MessageNotModifiedError:
-            pass
         except ForbiddenError:
             session.delete(reference)
+        except ValueError:
+            # Could not find input entity
+            session.delete(reference)
+        except MessageNotModifiedError:
+            pass
 
 
 
@@ -133,19 +136,19 @@ async def remove_poll_messages(session, poll, remove_all=False):
     for reference in poll.references:
         try:
             # Admin poll management interface
-            if reference.admin_user is not None:
+            if reference.type == ReferenceType.admin.name:
                 await client.edit_message(
-                    reference.admin_user.id,
-                    message=reference.admin_message_id,
+                    reference.user.id,
+                    message=reference.message_id,
                     text=i18n.t('deleted.poll', locale=poll.locale),
                     link_preview=False,
                 )
 
                 # User that votes in private chat (priority vote)
-            elif reference.vote_user is not None:
+            elif reference.type == ReferenceType.private_vote.name:
                 await client.edit_message(
-                    reference.vote_user.id,
-                    message=reference.vote_message_id,
+                    reference.user.id,
+                    message=reference.message_id,
                     text=i18n.t('deleted.poll', locale=poll.locale),
                     link_preview=False,
                 )
@@ -163,6 +166,9 @@ async def remove_poll_messages(session, poll, remove_all=False):
             session.delete(reference)
         except MessageIdInvalidError:
             session.delete(reference)
+        except ValueError:
+            # Could not find input entity
+            session.delete(reference)
         except MessageNotModifiedError:
             pass
 
@@ -179,7 +185,7 @@ def inline_message_id_from_reference(reference):
 
     else:
         return InputBotInlineMessageID(
-            reference.inline_message_dc_id,
-            reference.inline_message_id,
-            reference.inline_message_access_hash,
+            reference.message_dc_id,
+            reference.message_id,
+            reference.message_access_hash,
         )

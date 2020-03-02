@@ -4,7 +4,11 @@ from telethon import events
 from pollbot.i18n import i18n
 from pollbot.client import client
 from pollbot.helper.session import message_wrapper
-from pollbot.helper.enums import ExpectedInput, PollType
+from pollbot.helper.enums import (
+    ExpectedInput,
+    PollType,
+    ReferenceType,
+)
 from pollbot.display import get_settings_text
 from pollbot.helper.update import update_poll_messages
 from pollbot.helper.creation import create_poll
@@ -140,7 +144,7 @@ async def handle_new_option(event, session, user, text, poll):
     # Delete old references
     references = session.query(Reference) \
         .filter(Reference.poll == poll) \
-        .filter(Reference.admin_user_id == event.from_id) \
+        .filter(Reference.user_id == event.from_id) \
         .all()
     for reference in references:
         try:
@@ -152,8 +156,9 @@ async def handle_new_option(event, session, user, text, poll):
     # Create new reference
     reference = Reference(
         poll,
-        admin_user=user,
-        admin_message_id=message.id
+        ReferenceType.admin.name,
+        user=user,
+        message_id=message.id
     )
     session.add(reference)
     session.commit()

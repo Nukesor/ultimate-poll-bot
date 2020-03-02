@@ -3,6 +3,7 @@ from telethon import events, types
 
 from pollbot.client import client
 from pollbot.models import Poll, Reference
+from pollbot.helper.enums import ReferenceType
 from pollbot.helper.update import update_poll_messages
 from pollbot.helper.session import inline_query_wrapper
 
@@ -17,9 +18,10 @@ async def handle_chosen_inline_result(session, event, user):
 
     reference = Reference(
         poll,
-        inline_message_id=event.msg_id.id,
-        inline_message_dc_id=event.msg_id.dc_id,
-        inline_message_access_hash=event.msg_id.access_hash,
+        ReferenceType.inline.name,
+        message_id=event.msg_id.id,
+        message_dc_id=event.msg_id.dc_id,
+        message_access_hash=event.msg_id.access_hash,
     )
     session.add(reference)
     session.commit()
