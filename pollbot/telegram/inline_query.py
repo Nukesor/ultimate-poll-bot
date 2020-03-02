@@ -28,6 +28,9 @@ async def search(session, event, user):
 
     if offset == '':
         offset = 0
+    if offset == 'Done':
+        await event.answer([], cache_time=0, private=True)
+        return
     else:
         offset = int(offset)
 
@@ -80,12 +83,8 @@ async def search(session, event, user):
             if inline_reference_count > 20:
                 continue
 
-            text, keyboard = get_poll_text_and_vote_keyboard(
-                session, poll,
-                user=user,
-                inline_query=True
-            )
-            keyboard = [[Button.inline('Please ignore this', data='100:0:0')]]
+            text = i18n.t('poll.please_wait', locale=poll.locale)
+            keyboard = [[Button.inline('Please wait', data='100:0:0')]]
 
             description = poll.description[:100] if poll.description is not None else None
             results.append(builder.article(
@@ -97,9 +96,14 @@ async def search(session, event, user):
                 link_preview=False,
             ))
 
+        if len(polls) < 10:
+            offset = 'Done'
+        else:
+            offset+10
+
         await event.answer(
             results,
             cache_time=0,
             private=True,
-            next_offset=str(offset+10),
+            next_offset=str(offset),
         )
