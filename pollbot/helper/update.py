@@ -132,6 +132,9 @@ def send_updates(session, bot, poll, show_warning=False):
                 session.commit()
             else:
                 raise
+        except TimedOut:
+            # Ignore timeouts during updates for now
+            pass
 
 
 def remove_poll_messages(session, bot, poll, remove_all=False):
