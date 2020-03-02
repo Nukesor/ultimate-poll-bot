@@ -29,7 +29,8 @@ def message_update_job(context, session):
                 .filter(Update.next_update <= now) \
                 .options(joinedload(Update.poll)) \
                 .order_by(Update.next_update.asc()) \
-                .limit(50)
+                .limit(50) \
+                .all()
 
             for update in updates:
                 try:
@@ -54,6 +55,9 @@ def message_update_job(context, session):
             update_count = session.query(Update) \
                 .filter(Update.next_update <= now) \
                 .count()
+
+    except Exception as e:
+        raise e
 
     finally:
         context.job.enabled = True
