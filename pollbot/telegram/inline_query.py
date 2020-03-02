@@ -77,6 +77,14 @@ def search(bot, update, session, user):
     else:
         results = []
         for poll in polls:
+            inline_reference_count = 0
+            for reference in poll.references:
+                if reference.inline_message_id is not None:
+                    inline_reference_count += 1
+
+            if inline_reference_count > 20:
+                continue
+
             text, keyboard = get_poll_text_and_vote_keyboard(
                 session, poll,
                 user=user,
