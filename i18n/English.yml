@@ -29,7 +29,6 @@ poll:
   vote_times: "\nEvery user can vote **%{amount} times**"
   due: "\n📅 This poll is due at: %{date}"
   closed: "\n⚠️ **This poll is closed** ⚠️"
-  own_poll: "Create **your own** poll over [here](https://t.me/ultimate_pollbot)"
   doodle_help: "**Click** on the `a)`, `b)` buttons below to see the option names."
   many_users_voted: "**%{count} users** voted so far"
   one_user_voted: "**One user** voted so far"

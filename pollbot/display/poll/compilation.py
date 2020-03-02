@@ -104,9 +104,6 @@ def compile_poll_text(session, poll, show_warning=False, summarize=False):
         lines.append(i18n.t('poll.doodle_help', locale=poll.locale))
         lines.append('')
 
-    # Own poll note
-    lines.append(i18n.t('poll.own_poll', locale=poll.locale))
-
     # Notify users that poll is closed
     if poll.closed:
         lines.append(i18n.t('poll.closed', locale=poll.locale))
