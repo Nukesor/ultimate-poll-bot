@@ -108,7 +108,7 @@ async def show_menu(session, context, event, poll):
 
     reference = Reference(
         poll,
-        Reference.admin.name,
+        ReferenceType.admin.name,
         user=context.user,
         message_id=event.message_id,
     )

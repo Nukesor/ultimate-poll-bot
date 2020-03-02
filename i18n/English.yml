@@ -185,7 +185,9 @@ settings:
   dont_summarize: "**Summarize votes**: Show all votes"
   permanently_summarized: "**Summarize votes**: Too many votes. Permanently summarized."
   change_language: Just click on a language to change it for this poll.
-  sharing_link: "Use this link to allow users to share the poll with other chats. **Be careful!** Once it's out there you cannot take it back:"
+  sharing_link: "Use this link to allow users to share the poll with other chats:"
+  private_vote_link: "With this link users can vote in a private conversation."
+  link_warning: "**Be careful!** Once those links are out there you cannot take them back. Everybody with this link can vote on your poll."
   anonymity_warning: |
     You cannot hide votes and percentage on an anoymous poll.
     This might give users the conception that the poll has hidden results, which isn't actually the case. If you want this behaviour, create the poll with hidden results enabled.

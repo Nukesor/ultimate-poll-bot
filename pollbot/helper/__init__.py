@@ -70,14 +70,6 @@ def calculate_total_votes(poll):
     return total
 
 
-def get_escaped_bot_name():
-    """Get the bot name escaped for markdown."""
-    name = config['telegram']['bot_name']
-    escaped = name.replace('_', '\_')
-
-    return escaped
-
-
 def get_peer_information(peer):
     """Get the id depending on the chat type."""
     if isinstance(peer, types.PeerUser):
