@@ -119,10 +119,6 @@ def get_user_language_keyboard(user):
         )
         buttons.append([button])
 
-    github_url = 'https://github.com/Nukesor/ultimate-poll-bot/tree/master/i18n'
-    new_language = i18n.t('keyboard.add_new_language', locale=user.locale)
-    buttons.append([InlineKeyboardButton(text=new_language, url=github_url)])
-
     buttons.append([get_back_to_settings_button(user)])
 
     return InlineKeyboardMarkup(buttons)
