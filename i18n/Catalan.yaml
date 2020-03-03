@@ -1,0 +1,488 @@
+poll_types:
+  single_vote: Vot únic
+  doodle: Doodle
+  block_vote: Vot en bloc
+  limited_vote: Vot limitat
+  cumulative_vote: Vot acumulatiu
+  count_vote: Vots il·limitats
+  priority: Vot prioritari
+
+list:
+  polls: "Fes clic a un botó per a administrar l'enquesta"
+  no_polls: No tens enquestes obertes
+  no_closed_polls: No tens enquestes tancades
+
+admin:
+  not_allowed: No tens permisos per a fer això. Només per a administradors!
+
+datepicker:
+  open: Selector de dates
+  pick_date: Triar aquesta data
+  due_date: Triat data de caducitat
+  remove_due_date: Eliminar data de caducitat
+
+poll:
+  anonymous: "L'enquesta és anònima!"
+  anonymous_warning: "*Ves amb compte:* _La gent podria endevinar els teus vots mirant el nombre/percentatge de vots i el teu estat online._"
+  results_not_visible: Resultats ocults fins al tancament de l'enquesta!
+  please_wait: "\n\nSi us plau espera un moment mentre el bot sincronitza les enquestes ☺️"
+  vote_times: "\nCada usuari pot votar *%{amount} vegades*"
+  due: "\n📅 Aquesta enquesta acaba el: %{date}"
+  closed: "\n⚠️ *Enquesta tancada* ⚠️"
+  own_poll: "Crea *la teva propia* enquesta [aquí](https://t.me/ultimate_pollbot)"
+  doodle_help: "*Clica* als botons `a)`, `b)` a sota per a veure el nom de les opcions."
+  many_users_voted: "*%{count} usuaris* han votat"
+  one_user_voted: "*1 usuari* ha votat"
+  total_votes: " (%{count} vots)"
+  remaining_votes: "\nVots restants:"
+  remaining_votes_user: "%{name}: %{count} vots"
+  summarized_users: "_i %{count} persones més._"
+  doodle:
+    'yes': "├ *Sí:*"
+    maybe: "├ *Potser:*"
+    'no': "├ *No:*"
+    yes_summarized: "├ *Sí:* %{count} vots\n"
+    maybe_summarized: "├ *Potser:* %{count} vots"
+    no_summarized: "├ *No:* %{count} vots"
+  too_many_votes: |
+        ⚠️ *Masses vots en l'últim minut:* ⚠️
+        Els teus vots seguiràn sent enregistrats, però aquest missatge s'actualizarà només cada 2 segons.
+        (Telegram no permet enviar/actualizar més d'una certa quantitat de missatges per minut en un grup per part d'un bot.)
+
+deleted:
+  poll: Enquesta eliminada.
+  polls: Totes les enquestes han estat eliminades
+  closed_polls: Totes les enquestes tancades han estat eliminades
+
+callback:
+  error: Hi ha hagut un error. Serà solucionat aviat!
+  closed: Enquesta tancada
+  cannot_reopen: "L'enquesta no es pot reobrir"
+  cloned: Enquesta clonada
+  deleted: Enquesta eliminada
+  poll_created: "L'enquesta ha estat creada"
+  poll_already_created: "L'enquesta ja ha estat creada"
+  poll_no_longer_exists: Aquesta enquesta ja no existeix.
+  votes_removed: Tots els vots han estat eliminats
+  anonymity_changed: "Configuració d'anonimat canviat"
+  visibility_changed: Configuració de visibilitat canviat
+  date_changed: "Data canviada: %{date}"
+  date_already_picked: Data ja triada
+  date_picked: "Data triada: %{date}"
+  date_removed: "Data eliminada: %{date}"
+  due_date_in_past: La data de caducitat està en el passat
+  due_date_removed: Data de caducitat eliminada
+  vote:
+    votes_left: '(queden %{count})!'
+    your_votes: ' Els teus vots:'
+    changed: Vot canviat!
+    removed: Vot eliminat!
+    registered: Vot enregistrat!
+    no_left: No queden vots!
+    doodle_changed: Vot canviat a %{vote_type}
+    doodle_registered: 'Vot enregistrat (%{vote_type})'
+
+inline_query:
+  create_first: Fes clic aquí per a crear una enquesta primer ;)
+  create_poll: Fes clic per a crear una nova enquesta
+
+notification:
+  one_week: "L'enquesta *%{name}* es tancarà automàticament en una setmana"
+  one_day: "L'enquesta %{name}* es tancarà automàticament en un dia"
+  six_hours: "L'enquesta *%{name}* es tancarà automàticament en sis hores"
+  closed: "L'enquesta *%{name}* està tancada"
+
+keyboard:
+  done: Fet
+  close: Tancar
+  back: Enrere
+  cancel: Cancel·lar
+  delete: ❌ Eliminar
+  reset: 🔨 Restablir
+  clone: 🧬 Clonar
+  reopen: 🔓 Reobrir enquesta
+  share: Compartir enquesta
+  close_poll: 🔒 Tancar
+  settings: ⚙️ Configuració
+  anonymity_settings: "⚙️ Configuració de l'anonimat"
+  change_language: 🌐 Canviar idioma
+  show_help: "🤔 Ajuda"
+  help_me_out: ❤️ Coneix el projecte ❤️
+  vote: ✉️ Votar
+  permanently_close: "⚠️ Tancar permanentment l'enquesta! ⚠️"
+  permanently_delete: ⚠️ Eliminar enquesta! ⚠️
+  permanently_delete_with_messages: ⚠️ Eliminar enquesta i tots els missatges! ⚠️
+  permanently_anonymize: ⚠️ Anonimitzar enquesta! ⚠️
+  anonymize: 🔍 Fes els vots anònims
+  due_date: 📅 Triar data de caducitat
+  styling: "🎀 Configuració d'estils"
+  show_results: 🔎 Veure tots els vots
+  hide_percentage: '○% Amagar percentatge'
+  show_percentage: '○% Mostrar percentatge'
+  hide_option_votes: "# Amagar vots de les opcions"
+  show_option_votes: "# Mostrar vots de les opcions"
+  summarize_votes: Resumir els vots
+  dont_summarize_votes: Mostrar tots els vots
+  compact_doodle: Mostrar botons amb lletres (teclat més petit)
+  no_compact_doodle: Mostrar noms als botons
+  new_option: '＋ Afegir una nova opció'
+  remove_option: '－ Eliminar opcions'
+  forbid_user_options: "🍺 Prohibir a l'usuari afegir opcions"
+  allow_user_options: "🍻 Permetre a l'usuari afegir opcions"
+  order_users: "Ordenar usuaris %{name}"
+  order_options: "Opcions d'ordre %{name}"
+  show_results: "🔎 Veure tots els vots"
+  vote_with_count: "%{option_name} (%{count} vots)"
+  user:
+    init_poll: 🌟 Crear una nova enquesta
+    list_polls: 🗓 Llistat les meves enquestes
+    list_closed_polls: 🗓 Llistar enquestes tancades
+    enable_notifications: 💌 Activar notificacions
+    disable_notifications: 🔇 Desactivar notificacions
+    delete_all: ⚠️ Eliminar totes les enquestes
+    delete_all_closed : ⚠️ Eliminar totes les enquestes tancades
+
+  admin:
+    settings: "⚙️ Configuració d'administrador"
+    stats: 📊 Estadístiques
+    plot: "📊 Gràfic d'estadístiques"
+    update: Actualitzar totes les enquestes
+  help:
+    creation: Creació
+    settings: Configuració
+    notifications: Notificacions
+    management: Gestió
+    languages: Idioma
+    bugs: Errors/Bugs
+
+
+sorting:
+  user_chrono: cronològic
+  user_name: 'per nom'
+  option_chrono: cronològic
+  option_percentage: 'per percentatge'
+  option_name: 'per nom'
+  doodle_sorting: 'per resposta'
+
+settings:
+  poll_type: "*Tipus d'enquesta*: %{poll_type}"
+  language: '*Idioma*: %{language}'
+  anonymous: '*Noms*: Ocults'
+  not_anonymous: '*Noms*: Visibles'
+  due_date: '*Data de caducitat*: %{date}'
+  no_due_date: '*Data de caducitat*: Cap'
+  results_visible: '*Resultats*: Visibles'
+  results_not_visible: '*Resultats*: Ocults'
+  user_options: "*Opcions d'usuari personalitzades*: Tothom pot afegir noves opcions"
+  no_user_options: "*Opcions d'usuari personalitzades*: Només tu pots afegir noves opcions"
+  percentage: '*Percentatge*: Visible'
+  no_percentage: '*Percentatge*: Ocult'
+  euro_date_format: '*Format de data*: DD.MM.YYYY'
+  us_date_format: '*Format de data*: YYYY-MM-DD'
+  user_sorting: "*Ordre d'usuaris*: %{name}"
+  option_sorting: "*Ordre d'opcions*: %{name}"
+  summarize: "*Resumir vots*: Resumir si hi ha molts vots"
+  dont_summarize: "*Resumir vots*: Mostrar tots els vots"
+  permanently_summarized: "*Resumir els vots*: Masses vots. Resumit permanentment."
+  change_language: "Fes clic a un idioma per a canviar-lo per aquesta enquesta."
+  sharing_link: "Fes servir aquest link per a permetre als usuaris compartir l'enquesta a altres grups/chats. *Ves amb compte!* Un cop facis això no pots tornar enrera:"
+  anonymity_warning: |
+    No pots amagar vots i percentatge a una enquesta anònima.
+    Això podria donar al usuaris la sensció que l'enquesta té resultats ocults, que no és el cas. Si vols realment això, crea una enquesta amb resultats amagats.
+  anonymize: |
+    Vols anonimitzar aquesta enquesta?
+    ⚠️ Aquesta acció és irreversible. ⚠️
+  remove_options: "Fes clic als botons de sota per a eliminar les opcions no desitjades."
+
+  poll:
+    explanation:
+      anonymity: |
+        _En una enquesta anònima no es mostraràn els noms. No és possible saber d'on ve el vot._
+        *Ves amb compte:* _La gent podria endevinar d'on venen els vots mirant si estàs online o no quan canvien els resultats. Si vols que sigui 100% anònim, amaga també els resultats._
+      visibility: "_Una enquesta amb resultats ocults no mostrarà els vots ni els percentatges fins que es tanqui. Un cop tancada, romandrà tancada per sempre. Això és necessari per a evitar la possibilitat de_ [vot tàctic](https://en.wikipedia.org/wiki/Tactical_voting) _i per evitar_ [l'efecte Focus](https://ca.wikipedia.org/wiki/Efecte_focus)."
+
+user:
+    notifications_enabled: "*Notificacions:* activat"
+    notifications_disabled: "*Notificacions:* desactivat"
+    delete_all: ⚠️ Esborra TOTES les enquestes ⚠️
+    delete_closed: ⚠️ Esborra totes les enquestes tancades ⚠️
+    delete_all_confirmation: |
+      Vols esborrar realment TOTES les teves enquestes?
+      Això afectat a les enquestes obertes i tancades.
+      ⚠️ *Aquesta acció és irreversible.* ⚠️
+    delete_closed_confirmation: |
+      Vols esborrar realment totes les teves enquestes tancades?
+      ⚠️ *Aquesta acció és irreversible.* ⚠️
+    language: "*Idioma per defecte:* %{language}"
+    open_polls: "*Enquestes obertes:* %{count}"
+    closed_polls: "*Enquestes tancades:* %{count}"
+    explanations:
+      language: "_Aquesta configuració determina quin idioma es fa servir a la teva interfície de gestió i també determina l'idioma predeterminat per les teves enquestes._"
+      notifications: "_T'enviaré un missatge de tant en tant, per a informar-te sobre actualitzacions, canvis i error._"
+
+
+management:
+  permanently_close: |
+    Vols tancar aquesta enquesta per sempre?
+    Els resultats es faràn visibles, però les persones ja no podràn votar
+    ⚠️ Aquesta acció és irreversible. ⚠️
+  delete: Vols eliminar aquesta enquesta?
+
+creation:
+  already_creating: "Ja estàs creant una enquesta. Cancel·la primer la creació de l'enquesta anterior"
+  description: "Ara envia'm la descripció"
+  skip_description: Ometre
+  not_allowed: "Ja no se't permet afegir noves opcions"
+  cancel: "Cancel·lar la creació anterior"
+  vote_count_request: "Envia'm la quantitat de vots permesos per usuari."
+
+  keyboard:
+    change: "Canviar tipus d'enquesta"
+    anonymity: "Amagar noms a l'enquesta"
+    no_anonymity: "Mostrar noms a l'enquesta"
+    results_visible: "Mostrar resultats a l'enquesta"
+    results_not_visible: "Amagar resultats fins al tancament"
+
+  option:
+    next: "Envia *una altra opció*, tria una data i afegeix-la com a opció o fes clic a *Fet* quan hagis acabat."
+    first: |
+      Si us plau, envia'm una opció. Pots enviar divereses opcions a la vegada, cada opció en una nova línia.
+      També pots afegir una descripció després d'un guió.
+      Per exemple `Hamburguesa - perque és deliciosa`
+    no_new: "❌ No s'ha afegit cap nova opció"
+    single_added: "*%{option}* ha estat afegida. 👍\nEnvia *una altra opció*, tria una data i afegeix-la com a opció o fes clic a *Fet* quan hagis acabat."
+    multiple_added: "S'han afegit les opcions:"
+    finished: "Ja s'han afegit totes les opcions"
+
+  poll_type_help: |
+    Tipus d'enquesta actual: *%{poll_type}*
+
+    👍 *Vot únic:*
+    Cada usuari té només un vot. És el tipus de votació per defecte i més habitual.
+
+    📅 *Doodle:*
+    Els usuaris poden votar `sí`, `no` o `potser` per a cada opció. Perfecte per a triar una data.
+
+    ↕ *Vot Prioritari*:
+    Cada usuari ordena les opcions segons la seva preferència. Les opcions obtenen punts en funció de la seva posició en el rànking.
+    Això ajuda a trobar bons acords, per exemple, les opcions que la majoria de gent prefereix.
+    Per exemple, a Eurovisió es tria el guanyador fent servir un tipus de vot prioritari.
+
+    🛒 *Vots il·limitats* (o la llista de la compra) 😎
+    Cada usuari pot votar tants cops com vulgui qualsevol opció.
+    Això és perfecte si vols, per exemple, conèixer la quantitat de coses que la gent vol per al proper viatge.
+
+    🎮 *Vot en bloc:*
+    Cada usuari pot triar múltiples opcions (fins i tot tirar-les totes). Com un Doodle on només es pot votar Sí.
+    Útil per a trobar les opcions més buscades en un grup, per exemple, jocs que es jugaràn a una LAN-Party.
+
+    🎮 *Vot limitat:*
+    Cada usuari té un nombre pre-establert de vots que pot distribuir, però només un cop per opció.
+    És com el vot en bloc, però la gent ha de prioritzar.
+    Aquest tipus és bo per a limitar la quantitat de possibles guanyadors, per exemple, si només vols un màxim de 4 jocs a la teva LAN-Party.
+
+    📊 *Vot acumulatiu:*
+    Cada usuari obté un nombre pre-establert de vots que pot distribuir com vulgui (fins i tot votar més d'un cop una opció).
+    Aquest tipus d'enquesta té una mica més de profunditat que el vot limitat, ja que permet als usuaris votar una sola opció divereses vegades.
+
+  results_not_visible: Ocults
+  results_visible: Visibles
+  anonymity: Ocults
+  no_anonymity: Visibles
+  init_text: |
+    Hola!
+    Anem a crear una nova enquesta 👌
+
+    *Tipus*: %{poll_type}
+    *Noms*: %{anonymity}
+    *Resultats*: %{results_visible}
+
+    Si us plau, segueix aquests passos:
+    1. Configúrala al teu gust 🙂
+    2. Envia'm la pregunta 👇\n"
+  datepicker_text: |
+    *Selector de dates:*
+    Per a afegir una data, selecciona-la i fes clic a *Triar aquesta data*.
+    Fes clic a *Fet* quan hagis acabat.
+
+    *Opcions actuals:*
+  error:
+    limit_bigger_zero: "Si us plau envia'm un nombre més gran que zero"
+    limit_between: "Si us plau, envia'm un nombre entre 1 i %{limit}"
+    too_big: "Si us plau, envia un nombre més petit. També pots fer ús de les enquestes de "Vots il·limitats"
+    markdown: |
+      Si us plau, no facis servir símbols de markdown als teus noms o descripcions. Com ara `_`, `*` i `[`.
+      Si us plau, envia'm el missatge novament sense aquests símbols.
+
+external:
+  canceled: Cancel·lat
+  done: Finalitzat
+  share_poll: "Per a compartir aquesta enquesta, simplement fes clic al botó i tria el chat on t'agradaria compartir-la."
+  notification:
+    pick_poll: "Tria l'enquesta per a activar les notificacions"
+    activated: Notificacions activades
+    new_notification_board: Si us plau, fes ús del nou taulell de notificacions
+
+delete:
+  doesnt_exist: "L'enquesta a eliminar no existeix"
+  previous_deleted: Enquesta eliminada. Envia /create per a crear-ne una de nova.
+
+user:
+  language_changed: Idioma canviat
+
+misc:
+  donation: |
+    Hola!
+
+    El meu nom és Arne Beer (@Nukesor). Sóc l'únic desenvolupador de l'Ultimate PollBot.
+
+    La idea de crear Ultimate PollBot va sorgir quan els meus amics no podien decidir on anar a dinar (per enèsima vegada!).
+    Ens passava tants cops que necessitàvem trobar desesperadament una solució bona i estable dins de Telegram!
+    Així va néixer ULTIMATE PollBot.
+
+    Cada línia de codi d'aquest projecte l'he escrit durant el meu temps lliure i és completament gratuït.
+    Aquest projecte no té afany de lucre, és de codi obert a [GitHub](https://github.com/Nukesor/ultimate-poll-bot) i està allotjat a un servidor que jo mateix llogo.
+
+    Ara mateix inverteix-ho entre 2 i 10 hores a la setmana en el desenvolupament i manteniment dels meus projectes i m'encantaria rebre ajuda, ja que si faig això és en part per a tu. Realment agraeixo qualsevol cosa que m'ajudi i que mantingui el meu servidor i a mi funcionant. ☺️
+    Si aconsegueix-ho més ajuda potser puc trobar més temps per a mantenir i desenvolupar els meus projectes. Fins i tot podria provar idees noves!
+
+    Estaré agraït de qualsevol cosa que m'ajudi a mantenir el servei funcionant ☺️.
+
+    Si t'agrada aquest projecte visita el meu [lloc a Patreon](https://www.patreon.com/nukesor) o pots [comprar-me un cafè](https://www.buymeacoffee.com/Nukesor).
+    Si tens alguna pregunta, passa pel meu [grup de suport](https://t.me/nukesors_projects).
+
+    Que tinguis un bon dia!
+  start: |
+    🌟Et donem la benvinguda a *ULTIMATE* PollBot🌟
+
+    Envia /create o fes clic al botó de sota per a crear una enquesta. T'explicaré el funcionamient sobre la marcha.
+
+    🌐 Pots canviar l'idioma a Configuració 🌐
+    ❓ Clica a /help per a més informació ❓
+
+    Si t'agrada el projecte, passa't pel meu [grup de suport](https://t.me/nukesors_projects) o fes un cop d'ull a la meva [pàgina de Patreon](https://www.patreon.com/nukesor).
+    Aquest bot és de codi lliure a [GitHub](https://github.com/Nukesor/ultimate-poll-bot).
+
+  start_after_results: "Ei! Escriu /create per a crear la teva enquesta ☺️"
+  over_3000: |
+    ⚠️ La teva enquesta ja té més de *3000 caràcters*, si us plau intenta escurçar-ho per sota de 3000, o si pots per sota de 2500 🙏.
+
+    Telegram té un límit de 4096 caràcters per als missatges, i necessito mostar els vots després del teu text inicial. Si l'enquesta sobrepassa el límit aleshores *deixarà de funcionar*.
+    Ja intento ser breu amb els vots quan cal però tot i així l'espai és molt limitat.
+
+    Per a enquestes amb molt de text i més de 10-15 opcions, potser és millor que facis servir un servei extern com ara [Doodle](https://doodle.com/)
+  over_4000: |
+    ⚠️ La teva enquesta ja té més de *4000 caràcters*. És massa text per a mostrar-lo tot de cop. Si us plau intenta escurçar-ho per sota de 3000, o si pots per sota de 2500 🙏.
+
+    Telegram té un límit de 4096 caràcters per als missatges, i necessito mostar els vots després del teu text inicial. Si l'enquesta sobrepassa el límit aleshores *deixarà de funcionar*.
+    Ja intento ser breu amb els vots quan cal però tot i així no puc fer-hi res si el missatge és tan llarg.
+
+    Per a enquestes molt llargues i amb moltes opcions, potser seria millor que fecis servir un servei com ara [Doodle](https://doodle.com/)
+  too_long: |
+    Hola!
+
+    Ho sento, però la teva enquesta és massa llarga. Probablement vas afegir moltes opcions i/o un text molt llarg (o les dues coses!). 😬
+
+    Donat que Telegram només permet missatges de 4096 caràcters o menys, no m'és possible mostrar enquestes tan llargues.
+
+    Si us plau intenta escriure una descripció i unes opcions més curtes, o potser podries fer servir [Doodle](https://doodle.com/).
+
+        Una manera de solucionar el problema podria ser eliminar altres opcions (l'administrador pot fer-ho).
+
+    👇 En qualsevol cas encara pots votar i veure els resultats. 👇
+  help:
+    intro: |
+      Hi ha diferents tipus de configuracions per a les teves enquestes.
+      Tria la categoria en la que estàs interessat o llegeix-ho tot de cop. 😉
+
+      Si simplement vols crear una nova enquesta, escriu /create
+    creation: |
+      🌟 *Creació:*
+
+      Per a crear una enquesta, simplement envia o fes clic a /create.
+      Per a cada enquesta pots triar d'entre diverses configuracions inicials
+
+      *Tipus d'enquesta:* Els diferents tipus s'expliquen en detall al menú de tipus d'enquesta.
+      *Anonimat:* Pots anonimitzar la teva enquesta per a que no es mostrin els noms dels votants. Aquest canvi és permanent per a tothom.
+      *Resultats visibles:* En aquest mode, els vots només es fan visibles un cop tancada l'enquesta. Això és perfecte per a evitar la possibilitat de [votació tàctica](https://en.wikipedia.org/wiki/Tactical_voting) i la influència de [l'efecte Focus](https://ca.wikipedia.org/wiki/Efecte_focus)
+
+      -> *Atenció: Una enquesta tancada amb resultats invisibles romandrà tancada!:*
+      Reobrir una enquesta permetria a un usuari, específicament al creador de l'enquesta, veure els vots, i emetre el seu propi vot de manera que tingui avantage respecte a la resta (votació tàctica).
+
+    settings: |
+      ⚙️ *Configuració:*
+
+      La configuració addicional d'una enquesta pot ser ajustada després que l'enquesta hagi sigut creada:
+
+      *Anonimat:* Una enquesta pot fer-se anònima retrospectivament.
+      *Opcions:* Es poden afegir noves opcions i eliminar les existents al menú de configuració.
+      *Opcions d'usuari:* Pots permetre que altres usuaris afegeixin opcions a la teva enquesta.
+      *Ordre:* Es pot canviar l'ordre en el que es mostren els noms dels usuaris i les opcions als resultats.
+      *Data de caducitat:* Es pot establir una data de caducitat i l'enquesta es tancarà automàticament.
+
+      *---- Styling submenu: ----*
+
+      *Percentatge:*
+      _La línia de percentage de les opcions es pot amagar al menú d'estils._
+
+      *Vots a una opció:*
+      _La suma de tots els vots per a una opció es pot amagar._
+
+      *Sumari de vots:*
+      _Si molta gent vota a la teva enquesta, el missatge es podria atapeir de gent. Pots resumir els vots per a tenir una millor visió general._
+
+      *Ordre:*
+      _L'ordre en que es mostren els noms i les opcions es pot canviar._
+
+    notifications: |
+      📣 *Notificacions:*
+
+      Si actives les notificacions per al teu chat, el bot enviarà un missatge 1 dia, 6 hores i 1 hora abans de tancar l'enquesta.
+      Aquesta es una funcionalitat per a recordar a tots els membres d'un grup que una enquesta tancarà aviat, i per a facilitar trobar el missatge de l'enquesta 😉
+
+      Per a activar les notificacions a un chat, segueix aquests passos:
+      *1.* Crea una enquesta
+      *2.* Configura una data de caducitat al menú de configuració
+      *3.* Ves al chat al que vols que es notifiqui
+      *4.* Afegeix el bot al grup
+      *5.* Comparteix l'enquesta amb el grup
+      *6.* Respon amb /notify al missatge de l'enquesta que has triat via @ultimate\\_pollbot
+      *7.* Tria l'enquesta correcta
+
+      Lamentablement aquest procediment és massa complicat degut a que Telegram no permet detectar missatges de bots als grupos. 😐
+      Per tant no tenim ni idea de quina enquesta es publica a cada grup i tot això s'ha de fer manualment.
+
+    management: |
+      🕰 *Trobar enquestes antigues:*
+
+      Hi ha una opció al menú /start per a trobar totes les enquestes obertes.
+      Les tancades es poden veure també al menú /settings.
+
+      ⚠️ *Esborrar enquestes:*
+
+      Pots eliminar enquestes individuals als respectius menús de les enquestes.
+      També hi ha opcions per a esborrar totes les enquestes o totes les enquestes tancades al menú /settings.
+
+    languages: |
+      🌐 *Idioma:*
+
+      Ultimate pollbot és compatible amb diferents idiomes, però només és dóna suport oficial a l'anglès.
+
+      Per a afegir un nou idioma, o canviar un idioma existent, si us plau contacta'm @Nukesor!
+      Faig servir el servei de localització [Lokalise](https://lokalise.co), el qual s'ha compromès a donar-me una llicència lliure per a traduir els meus projectes.
+      Per a fer-ho servir, hauràs de donar-me una adreça d'email (cualsevol email em serveix), ja que t'he d'enviar una invitació per email.
+
+      Ves amb compte de no trencar els estils Markdown (`**`, `__`, `${}`), de no ser així les coses es trencaràn al teu idioma.
+      Si es trenca alguna cosa, intentaré arreglar-ho, però si us plau, ajuda'm a evitar que això passi. Arreglar errors requereix de temps i esforç.
+      El suport multilingüe és una característica impulsada per la comunitat que recolzo amb molt de gust, però a la que no puc donar suport pel meu compte.
+
+    bugs: |
+      ⚠️ *He trobat un error (bug) que no s'arregla de cap manera!!* 😩
+
+      Normalment rebo una notificació tant bon punt es trenca alguna cosa, però hi ha errors que passen desapercebuts.
+      En cas que un error no sigui arreglat en un dia o dos, si us plau escriu un ticket a [GitHub](https://github.com/Nukesor/ultimate-poll-bot) o passa't pel meu [grup de suport](https://t.me/nukesors_projects).
+
+  error: |
+    Hi ha hagut un error desconegut. Probablement m'ho acaben de notificar i intentaré arreglar-ho el més aviat possible.
+    En cas que l'error no es solucioni en un dia o dos, si us plau, obre un ticket a [GitHub](https://github.com/Nukesor/ultimate-poll-bot) o ves al meu [grup de suport](https://t.me/nukesors_projects).
+
