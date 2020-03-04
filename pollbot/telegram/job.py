@@ -25,33 +25,26 @@ async def message_update_job(session):
             .count()
 
         while update_count > 0:
-            updates = session.query(Update) \
+            # Query the next update
+            # We only get one at a time, since we want to get the newest
+            # update count. (updating stuff might take a while)
+            update = session.query(Update) \
                 .filter(Update.next_update <= now) \
                 .options(joinedload(Update.poll)) \
                 .order_by(Update.next_update.asc()) \
-                .limit(50) \
-                .all()
+                .limit(1) \
+                .one()
 
-            for update in updates:
-                try:
-                    send_updates(session, update.poll, show_warning=True)
-                    session.delete(update)
-                    session.commit()
-                except ObjectDeletedError:
-                    # The update has already been handled somewhere else.
-                    # This could be either a job or a person that voted in this very moment
-                    session.rollback()
-#                except RetryAfter as e:
-#                    # Schedule an update after the RetryAfter timeout + 1 second buffer
-#                    update.next_update = now + timedelta(seconds=int(e.retry_after) + 1)
-#                    try:
-#                        session.commit()
-#                    except StaleDataError:
-#                        # The update has already been handled somewhere else
-#                        session.rollback()
+            await send_updates(session, update.poll, show_warning=True)
+            # Delete the update by count
+            # If another request bumped the count, all messages
+            # will be updated in the next run again.
+            session.query(Update) \
+                .filter(Update.count == update.count) \
+                .delete()
+            session.commit()
 
-            # Update the count again.
-            # Updates can be removed by normal operation as well
+            # Update the count, check if we got some updates left.
             update_count = session.query(Update) \
                 .filter(Update.next_update <= now) \
                 .count()

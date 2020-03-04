@@ -23,6 +23,7 @@ class Update(base):
 
     id = Column(Integer, primary_key=True)
     next_update = Column(DateTime, nullable=False)
+    count = Column(Integer, nullable=False)
 
     poll_id = Column(Integer, ForeignKey('poll.id', ondelete='cascade'),
                      nullable=False, index=True)

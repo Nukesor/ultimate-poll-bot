@@ -21,7 +21,6 @@ from pollbot.display.poll.indices import get_option_indices
 from .management import get_back_to_management_button
 
 
-
 def get_vote_keyboard(poll, user, show_back=False, summary=False):
     """Get a plain vote keyboard."""
     buttons = []

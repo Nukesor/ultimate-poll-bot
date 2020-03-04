@@ -21,42 +21,44 @@ from pollbot.models import Update
 
 
 async def update_poll_messages(session, poll):
-    """Logic for handling updates."""
+    """Logic for handling updates.
+
+    The message the original call has been made from will be updated instantly.
+    The updates on all other messages will be scheduled in the background.
+    """
+    text, keyboard = get_poll_text_and_vote_keyboard(session, poll)
     now = datetime.now()
-    # Check whether we have a new window
-    current_update = session.query(Update) \
+
+    # Check whether there already is a scheduled update
+    new_update = False
+    update = session.query(Update) \
         .filter(Update.poll == poll) \
         .one_or_none()
 
-    # Don't handle it in here, it's already handled in the job
-    if current_update is not None:
-        return
+    # If there's no update yet, create a new one
+    if update is None:
+        try:
+            update = Update(poll, now)
+            session.add(update)
+            session.commit()
+            new_update = True
+        except (UniqueViolation, IntegrityError):
+            # Some other function already created the update
+            session.rollback()
+            update = session.query(Update) \
+                .filter(Update.poll == poll) \
+                .one()
 
-    try:
-        # Try to send updates
-        await send_updates(session, poll)
-#    except (TimedOut, RetryAfter) as e:
-#        # Schedule an update after the RetryAfter timeout + 1 second buffer
-#        if isinstance(e, RetryAfter):
-#            retry_after = int(e.retry_after) + 1
-#        else:
-#            retry_after = 2
-#
-#        try:
-#            update = Update(poll, now + timedelta(seconds=retry_after))
-#            session.add(update)
-#            session.commit()
-#        except (UniqueViolation, IntegrityError):
-#            session.rollback()
-
-    except Exception as e:
-        # We encountered an unknown error
-        # Since we don't want to continuously tro to send this update, and spam sentry, delete the update
-        if current_update is not None:
-            session.delete(current_update)
-        session.commit()
-
-        raise e
+    if not new_update:
+        # Increase the counter and update the next_update date
+        # This will result in a new update in the background job.
+        # + The update will be scheduled at the end
+        session.query(Update) \
+            .filter(Update.poll == poll) \
+            .update({
+                'count': Update.count + 1,
+                'next_update': datetime.now(),
+            })
 
 
 async def send_updates(session, poll, show_warning=False):
@@ -123,7 +125,6 @@ async def send_updates(session, poll, show_warning=False):
             session.delete(reference)
         except MessageNotModifiedError:
             pass
-
 
 
 async def remove_poll_messages(session, poll, remove_all=False):
