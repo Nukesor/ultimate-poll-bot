@@ -14,7 +14,7 @@ from pollbot.helper.session import job_wrapper
 from pollbot.helper.update import send_updates, update_poll_messages
 
 
-@job_wrapper(wait=2)
+@job_wrapper(wait=5)
 async def message_update_job(session):
     """Update all messages if necessary."""
     try:
