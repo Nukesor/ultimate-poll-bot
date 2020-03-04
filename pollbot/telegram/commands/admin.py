@@ -89,5 +89,5 @@ async def test_broadcast(event, session, user):
     """Send the broadcast message to the admin for test purposes."""
     message = event.text.split(' ', 1)[1].strip()
 
-    await event.respond(message)
+    await event.respond(message, link_preview=False)
     raise events.StopPropagation
