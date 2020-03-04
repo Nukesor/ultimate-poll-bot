@@ -207,7 +207,8 @@ async def get_user(session, user_id):
     if tg_user is None:
         tg_user = await client.get_entity(user_id)
 
-    user.username = tg_user.username.lower()
+    if user.username is not None:
+        user.username = tg_user.username.lower()
     name = get_name_from_tg_user(tg_user)
     user.name = name
 
