@@ -1,10 +1,12 @@
 """Admin related stuff."""
 import re
-import time
 import asyncio
 from telethon import events
 from telethon.errors.rpcbaseerrors import (
     ForbiddenError,
+)
+from telethon.errors import (
+    UserIsBlockedError,
 )
 
 from pollbot.client import client
@@ -64,6 +66,9 @@ async def broadcast(event, session, user):
 
         # We are not allowed to contact this user.
         except ForbiddenError:
+            user.started = False
+            pass
+        except UserIsBlockedError:
             user.started = False
             pass
 

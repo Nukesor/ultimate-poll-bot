@@ -3,10 +3,11 @@ from datetime import datetime
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
 from telethon.utils import resolve_inline_message_id
-from telethon.errors.rpcbaseerrors import (
-    ForbiddenError,
+from telethon.errors import (
+    UserIsBlockedError,
 )
 from telethon.errors.rpcerrorlist import (
+    ForbiddenError,
     MessageIdInvalidError,
     MessageNotModifiedError,
 )
@@ -140,6 +141,8 @@ async def update_reference(session, poll, reference, show_warning=False):
     except MessageIdInvalidError:
         session.delete(reference)
     except ForbiddenError:
+        session.delete(reference)
+    except UserIsBlockedError:
         session.delete(reference)
     except ValueError:
         # Could not find input entity
