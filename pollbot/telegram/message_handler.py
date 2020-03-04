@@ -3,6 +3,7 @@ from telethon import events
 
 from pollbot.i18n import i18n
 from pollbot.client import client
+from pollbot.helper.poll import remove_old_references
 from pollbot.helper.session import message_wrapper
 from pollbot.helper.enums import (
     ExpectedInput,
@@ -141,17 +142,7 @@ async def handle_new_option(event, session, user, text, poll):
     keyboard = get_settings_keyboard(poll)
     message = await event.respond(text, buttons=keyboard)
 
-    # Delete old references
-    references = session.query(Reference) \
-        .filter(Reference.poll == poll) \
-        .filter(Reference.user_id == event.from_id) \
-        .all()
-    for reference in references:
-        try:
-            await client.delete_messages(event.from_id, reference.admin_message_id)
-        except:
-            pass
-        session.delete(reference)
+    await remove_old_references(session, poll, user)
 
     # Create new reference
     reference = Reference(
@@ -163,7 +154,7 @@ async def handle_new_option(event, session, user, text, poll):
     session.add(reference)
     session.commit()
 
-    await update_poll_messages(session, poll, user, event)
+    await update_poll_messages(session, poll)
 
 
 async def handle_user_option_addition(event, session, user, text, poll):
