@@ -38,7 +38,7 @@ def get_external_share_keyboard(poll):
     locale = poll.user.locale
 
     buttons = [
-        [Button.inline(i18n.t('keyboard.share', locale=locale), switch_inline_query=str(poll.uuid))]
+        [Button.switch_inline(i18n.t('keyboard.share', locale=locale), query=str(poll.uuid))]
     ]
     keyboard = buttons
 
