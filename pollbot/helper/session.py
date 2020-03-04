@@ -62,7 +62,6 @@ def inline_query_wrapper(func):
     async def wrapper(event):
         session = get_session()
         try:
-            user = None
             if not isinstance(event.query, str):
                 user = await get_user(session, event.query.user_id)
             else:
@@ -87,8 +86,8 @@ def callback_wrapper():
         @wraps(func)
         async def wrapper(event):
             session = get_session()
+            user = None
             try:
-                user = None
                 user = await get_user(session, event.query.user_id)
 
                 await func(session, event, user)
