@@ -9,9 +9,10 @@ i18n.load_path.append('./i18n/')
 
 supported_languages = [
     'English',
-    'German',
     'Czech',
+    'Catalan',
     'Italian',
+    'German',
     'Polish',
     'Portuguese (Brazil)',
     'Spanish',

@@ -25,6 +25,7 @@ payload = {
     "replace_breaks": False,
     "export_sort": "first_added",
     "filter_langs": [
+        "ca",
         "cs",
         "de",
         "it",
