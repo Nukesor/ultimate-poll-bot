@@ -7,6 +7,7 @@ from telethon.errors.rpcbaseerrors import (
 )
 from telethon.errors import (
     UserIsBlockedError,
+    InputUserDeactivatedError,
 )
 
 from pollbot.client import client
@@ -65,10 +66,11 @@ async def broadcast(event, session, user):
             session.commit()
 
         # We are not allowed to contact this user.
-        except ForbiddenError:
-            user.started = False
-            pass
-        except UserIsBlockedError:
+        except (
+            UserIsBlockedError,
+            InputUserDeactivatedError,
+            ForbiddenError,
+        ):
             user.started = False
             pass
 

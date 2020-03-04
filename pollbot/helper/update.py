@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from telethon.utils import resolve_inline_message_id
 from telethon.errors import (
     UserIsBlockedError,
+    InputUserDeactivatedError,
 )
 from telethon.errors.rpcerrorlist import (
     ForbiddenError,
@@ -138,11 +139,12 @@ async def update_reference(session, poll, reference, show_warning=False):
                 link_preview=False,
             )
 
-    except MessageIdInvalidError:
-        session.delete(reference)
-    except ForbiddenError:
-        session.delete(reference)
-    except UserIsBlockedError:
+    except (
+        MessageIdInvalidError,
+        ForbiddenError,
+        UserIsBlockedError,
+        InputUserDeactivatedError,
+    ):
         session.delete(reference)
     except ValueError:
         # Could not find input entity
