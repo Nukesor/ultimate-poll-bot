@@ -27,13 +27,14 @@ poll:
     total_votes: ' (%{count} oy)'
     remaining_votes: "\nKalan oylar:"
     remaining_votes_user: '%{name}: %{count} oy'
-    summarized__users: '__ve %{count} diğer kişi.__'
+    summarized_users: '_ve %{count} diğer kişi._'
     too_many_votes: "⚠️ **Son dakika içinde çok fazla oy:** ⚠️\nOylarınız hala kayıtlı, ama bu mesaj her 2 saniyede güncellenecek\n(Telegram bir grupta bot tarafından aynı dakika içinde birden fazla mesajı göndermeye/güncellemeye izin vermiyor)\n"
     doodle:
         'yes': '├ **Evet:**'
         maybe: '├ **Belki:**'
         'no': '├ **Hayır:**'
     doodle_help: 'Seçenek adlarını görmek için aşağıdaki `a)`, `b)` butonlarına **tıklayın**.'
+    summarized__users: '__ve %{count} diğer kişi.__'
 deleted:
     poll: 'Bu anket kalıcı olarak silindi'
     polls: 'Tüm anketler silindi'

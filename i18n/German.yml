@@ -40,6 +40,7 @@ poll:
         no_summarized: '├ **Nein:** %{count} Stimmen'
     doodle_help: '**Klick** auf die untenstehenden Buttons `a)`, `b)`, um die Namen der Optionen anzuzeigen.'
     please_wait: "\n\nBitte warte eine Sekunde, während der Bot die Umfragen synchronisiert ☺️"
+    anonymous_warning: '*Aufpassen:* _Andere können möglicherweise deine Stimmen erraten, indem sie den Prozentsatz bzw. die Stimmenanzahl und deinen Online-Status verfolgen._'
     anonymous__warning: '**Aufpassen:** __Andere können möglicherweise deine Stimmen erraten, indem sie den Prozentsatz bzw. die Stimmenanzahl und deinen Online-Status verfolgen.__'
 deleted:
     poll: 'Diese Umfrage wurde dauerhaft gelöscht'

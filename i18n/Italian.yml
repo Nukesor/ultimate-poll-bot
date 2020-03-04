@@ -39,6 +39,7 @@ poll:
         no_summarized: '├ **No:** %{count} voti'
     doodle_help: '**Premi** sui pulsanti `a)`, `b)` sottostanti per vedere le opzioni'
     please_wait: "\n\nPer favore, attendi mentre il bot sincronizza i sondaggi ☺️"
+    anonymous_warning: '*Attenzione:* _Gli altri utenti possono indovinare il tuo voto tracciando il numero di voti (o la percentuale) e il tuo ultimo accesso_'
     anonymous__warning: '**Attenzione:** __Gli altri utenti possono indovinare il tuo voto tracciando il numero di voti (o la percentuale) e il tuo ultimo accesso__'
 deleted:
     poll: 'Il sondaggio è stato permanentemente cancellato'

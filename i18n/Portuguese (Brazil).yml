@@ -29,7 +29,7 @@ poll:
     total_votes: '(%{count} votos)'
     remaining_votes: "\n Votos restantes:"
     remaining_votes_user: '%{name}: %{count} votos'
-    summarized__users: '__e %{count} outras pessoas.__'
+    summarized_users: '_e %{count} outras pessoas._'
     too_many_votes: "⚠️ **Muitos votos no último minuto:** ⚠️\nSeus votos continuaram a ser registrados, mas esta mensagem apenas será atualizada a cada 2 segundos.\n(O Telegram não permite o envio/atualização de mais de um certo tanto de mensagens por minuto em um grupo por um bot.)\n"
     doodle:
         'yes': '- **Sim:**'
@@ -40,7 +40,9 @@ poll:
         no_summarized: '├ **Não:** %{count} votos'
     doodle_help: '**Toque** nos botões `a)`, `b)` abaixo para ver o texto das opções.'
     please_wait: "\n\nPor favor, espere um instante enquanto o bot sincroniza as enquetes ☺️"
+    anonymous_warning: '*Lembre-se:* _As podem ser capazes de adivinhar o seu voto acompanhando a percentagem/contagem de votos e o seu status online._'
     anonymous__warning: '**Lembre-se:** __As podem ser capazes de adivinhar o seu voto acompanhando a percentagem/contagem de votos e o seu status online.__'
+    summarized__users: '__e %{count} outras pessoas.__'
 deleted:
     poll: 'Esta enquete foi excluída permanentemente.'
     polls: 'Todas as enquetes foram deletadas.'
