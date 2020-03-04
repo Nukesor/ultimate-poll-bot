@@ -70,6 +70,7 @@ async def broadcast(event, session, user):
             UserIsBlockedError,
             InputUserDeactivatedError,
             ForbiddenError,
+            ValueError,
         ):
             user.started = False
             pass
