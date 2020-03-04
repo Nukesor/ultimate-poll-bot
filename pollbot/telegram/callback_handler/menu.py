@@ -1,5 +1,6 @@
 """Callback functions needed during creation of a Poll."""
 from pollbot.i18n import i18n
+from pollbot.client import client
 from pollbot.models import Reference
 from pollbot.helper import poll_required
 from pollbot.helper.enums import (
@@ -105,6 +106,18 @@ async def show_menu(session, context, event, poll):
         buttons=get_management_keyboard(poll),
         link_preview=False,
     )
+
+    # Delete old references
+    references = session.query(Reference) \
+        .filter(Reference.poll == poll) \
+        .filter(Reference.user_id == event.from_id) \
+        .all()
+    for reference in references:
+        try:
+            await client.delete_messages(event.from_id, reference.admin_message_id)
+        except:
+            pass
+        session.delete(reference)
 
     reference = Reference(
         poll,
