@@ -128,7 +128,7 @@ async def delete_all(session, context, event):
     """Delete all polls of the user."""
     for poll in context.user.polls:
         try:
-            await remove_poll_messages(session, context, event.bot, poll)
+            await remove_poll_messages(session, poll)
             session.delete(poll)
             session.commit()
         except StaleDataError:
