@@ -121,6 +121,7 @@ Dependencies:
 6. If you plan to keep up to date, you need to set the current alembic revision manually.
 Get the latest revision with `poetry run alembic history` and change the current head to the newest revision with `poetry run alembic stamp <revision>`.
 7. Now you can just execute `poetry run alembic upgrade head`, whenever you are updating from a previous version.
+8. **Important** Enable the inline mode for your bot and set `Inline Feedback` to 100% in the @BotFather menu.
 
 
 
