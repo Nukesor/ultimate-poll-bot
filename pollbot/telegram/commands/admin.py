@@ -76,7 +76,7 @@ async def broadcast(event, session, user):
             pass
 
         # Sleep one second to not trigger flood prevention
-        await asyncio.sleep(0.10)
+        await asyncio.sleep(0.20)
 
         count += 1
         if count % 500 == 0:
