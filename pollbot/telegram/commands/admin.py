@@ -1,6 +1,7 @@
 """Admin related stuff."""
 import re
 import time
+import asyncio
 from telethon import events
 from telethon.errors.rpcbaseerrors import (
     ForbiddenError,
@@ -61,18 +62,13 @@ async def broadcast(event, session, user):
             user.broadcast_sent = True
             session.commit()
 
-#        # The chat doesn't exist any longer, delete it
-#        except BadRequest as e:
-#            if e.message == 'Chat not found':  # noqa
-#                pass
-
         # We are not allowed to contact this user.
         except ForbiddenError:
             user.started = False
             pass
 
         # Sleep one second to not trigger flood prevention
-        time.sleep(0.07)
+        await asyncio.sleep(0.10)
 
         count += 1
         if count % 500 == 0:
