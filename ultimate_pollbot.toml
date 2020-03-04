@@ -5,6 +5,7 @@ api_id = your_api_id
 api_hash = "your_api_hash"
 admin = "Your name"
 max_shared_per_poll = 20
+allow_private_votes = false
 
 [database]
 sql_uri = "postgres://localhost/pollbot"

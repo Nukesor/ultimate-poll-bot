@@ -5,6 +5,7 @@ api_id = 0
 api_hash = ""
 admin = "Nukesor"
 max_shared_per_poll = 20
+allow_private_votes = false
 
 [database]
 sql_uri = "postgres://localhost/pollbot_test"

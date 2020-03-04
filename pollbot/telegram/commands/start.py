@@ -5,6 +5,7 @@ from telethon import events
 
 from pollbot.i18n import i18n
 from pollbot.client import client
+from pollbot.config import config
 from pollbot.models import Poll, Reference
 from pollbot.display.poll.compilation import (
     get_poll_text_and_vote_keyboard,
@@ -96,6 +97,9 @@ async def start(event, session, user):
         increase_stat(session, 'externally_shared')
 
     elif action == StartAction.vote:
+        if not config['telegram']['allow_private_votes'] and not poll.is_priority():
+            return
+
         if poll.is_priority():
             poll.init_votes(session, user)
             session.commit()

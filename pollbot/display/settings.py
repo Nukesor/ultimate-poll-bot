@@ -80,10 +80,11 @@ def get_settings_text(poll):
     payload = get_start_button_payload(poll, StartAction.share_poll)
     text.append(f'https://t.me/{bot_name}?start={payload}')
 
-    text.append('')
-    text.append(i18n.t('settings.private_vote_link', locale=locale))
-    payload = get_start_button_payload(poll, StartAction.vote)
-    text.append(f'https://t.me/{bot_name}?start={payload}')
+    if config['telegram']['allow_private_votes']:
+        text.append('')
+        text.append(i18n.t('settings.private_vote_link', locale=locale))
+        payload = get_start_button_payload(poll, StartAction.vote)
+        text.append(f'https://t.me/{bot_name}?start={payload}')
 
     text.append('')
     text.append(i18n.t('settings.link_warning', locale=locale))
