@@ -4,6 +4,7 @@ from telethon import events, Button
 from sqlalchemy import or_
 
 from pollbot.i18n import i18n
+from pollbot.config import config
 from pollbot.models import Poll
 from pollbot.client import client
 from pollbot.helper.enums import ReferenceType
@@ -79,7 +80,7 @@ async def search(session, event, user):
                 if reference.type == ReferenceType.inline.name:
                     inline_reference_count += 1
 
-            if inline_reference_count > 20:
+            if inline_reference_count > config['telegram']['max_shared_per_poll']:
                 continue
 
             text = i18n.t('poll.please_wait', locale=poll.locale)

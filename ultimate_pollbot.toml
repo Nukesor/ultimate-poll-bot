@@ -1,22 +1,18 @@
 [telegram]
 bot_name = "your_bots_@_name"
-api_key = "your_telegram_api_key"
-worker_count = 20
+bot_token = "your_telegram_bot_token"
+api_id = your_api_id
+api_hash = "your_api_hash"
+admin = "Your name"
+max_shared_per_poll = 20
 
 [database]
 sql_uri = "postgres://localhost/pollbot"
-connection_count = 10
-overflow_count = 5
+connection_count = 20
+overflow_count = 10
 
 [logging]
 sentry_enabled = false
 sentry_token = ""
 log_level = 20
 debug = false
-
-[webhook]
-enabled = false
-domain = "https://localhost"
-token = "pollbot"
-cert_path = "/path/to/cert.pem"
-port = 7000

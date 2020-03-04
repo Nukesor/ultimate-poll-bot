@@ -11,7 +11,7 @@ default_config = {
         "api_id": "my.telegram.org_api_id",
         "api_hash": "my.telegram.org_api_hash",
         "admin": 'nukesor',
-        "max_shared_per_poll": '20',
+        "max_shared_per_poll": 20,
     },
     'database': {
         "sql_uri": 'postgres://localhost/pollbot',
