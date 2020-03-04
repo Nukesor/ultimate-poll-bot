@@ -1,13 +1,12 @@
 """Inline query handler function."""
 import uuid
 from telethon import events, Button
-from telethon.tl.types import InputWebDocument
 from sqlalchemy import or_
 
 from pollbot.i18n import i18n
 from pollbot.models import Poll
 from pollbot.client import client
-from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
+from pollbot.helper.enums import ReferenceType
 from pollbot.helper.session import inline_query_wrapper
 
 
@@ -77,7 +76,7 @@ async def search(session, event, user):
         for poll in polls:
             inline_reference_count = 0
             for reference in poll.references:
-                if reference.inline_message_id is not None:
+                if reference.type == ReferenceType.inline.name:
                     inline_reference_count += 1
 
             if inline_reference_count > 20:
