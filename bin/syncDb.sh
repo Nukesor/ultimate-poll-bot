@@ -1,4 +1,5 @@
 #!/usr/bin/bash
+set -euo pipefail
 
 host=nuke@jarvis
 
@@ -13,6 +14,9 @@ createdb pollbot
 
 echo 'Restoring DB'
 pg_restore -O -j 4 -F c -d pollbot /tmp/pollbot.dump
+
+echo 'Run migrations'
+poetry run alembic upgrade head
 
 echo 'Deleting dumps'
 rm /tmp/pollbot.dump
