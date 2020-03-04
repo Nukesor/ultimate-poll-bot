@@ -35,7 +35,7 @@ async def close_poll(session, context, event, poll):
     """Close this poll."""
     poll.closed = True
     session.commit()
-    await update_poll_messages(session, poll)
+    await update_poll_messages(session, poll, event)
 
     return i18n.t('callback.closed', locale=poll.user.locale)
 
@@ -56,7 +56,7 @@ async def reopen_poll(session, context, event, poll):
         poll.set_due_date(poll.due_date)
 
     session.commit()
-    await update_poll_messages(session, poll)
+    await update_poll_messages(session, poll, event)
 
 
 @poll_required
@@ -65,7 +65,7 @@ async def reset_poll(session, context, event, poll):
     for vote in poll.votes:
         session.delete(vote)
     session.commit()
-    await update_poll_messages(session, poll)
+    await update_poll_messages(session, poll, event)
 
     return i18n.t('callback.votes_removed', locale=poll.user.locale)
 

@@ -70,7 +70,7 @@ async def handle_vote(session, context, event):
         return
 
     if update_poll:
-        await update_poll_messages(session, poll)
+        await update_poll_messages(session, poll, event)
 
     increase_stat(session, 'votes')
 

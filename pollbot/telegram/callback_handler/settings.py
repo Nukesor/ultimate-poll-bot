@@ -149,7 +149,7 @@ async def remove_option(session, context, event, poll):
 
     keyboard = get_remove_option_keyboard(poll)
     await event.edit(buttons=keyboard)
-    await update_poll_messages(session, poll)
+    await update_poll_messages(session, poll, event)
 
 
 @poll_required

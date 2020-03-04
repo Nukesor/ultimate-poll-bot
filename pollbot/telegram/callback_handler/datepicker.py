@@ -59,7 +59,7 @@ async def owner_pick_date_option(session, context, event, poll, datepicker_conte
 
     await update_datepicker(context, poll, datepicker_context, picked_date.replace(day=1))
     if poll.created:
-        await update_poll_messages(session, poll)
+        await update_poll_messages(session, poll, event)
 
 
 @poll_required
