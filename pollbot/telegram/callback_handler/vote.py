@@ -17,17 +17,10 @@ from pollbot.models import PollOption, Vote
 
 async def handle_vote(session, context, event):
     """Handle any clicks on vote buttons."""
-    # Remove the poll, in case it got deleted, but we didn't manage to kill all references
     option = session.query(PollOption).get(context.payload)
+    # Might have just been deleted, ignore it
     if option is None:
-        if context.query.message is not None:
-            await event.edit(i18n.t('deleted.polls', locale=context.user.locale))
-        else:
-            context.bot.edit_message_text(
-                i18n.t('deleted.polls', locale=context.user.locale),
-                inline_message_id=context.query.inline_message_id,
-            )
-        return
+        return i18n.t('deleted.option', locale=context.user.locale)
 
     poll = option.poll
     try:

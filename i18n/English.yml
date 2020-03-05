@@ -49,6 +49,7 @@ poll:
         (Telegram doesn't allow to send/update more than a certain amount of messages per minute in a group by a bot.)
 
 deleted:
+  option: "This option no longer exists"
   poll: This poll has been permanently deleted.
   polls: All polls have been deleted
   closed_polls: All closed polls have been deleted
