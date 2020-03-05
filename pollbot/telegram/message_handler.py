@@ -180,6 +180,6 @@ async def handle_user_option_addition(event, session, user, text, poll):
         # Update all polls
         poll.init_votes_for_new_options(session)
         session.commit()
-        await update_poll_messages(session, poll, event)
+        await update_poll_messages(session, poll)
     else:
         await event.respond(i18n.t('creation.option.no_new', locale=user.locale))
