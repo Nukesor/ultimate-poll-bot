@@ -1,9 +1,8 @@
 """Poll related commands."""
-from telethon import events
+from telegram.ext import run_async
 
 from pollbot.i18n import i18n
-from pollbot.client import client
-from pollbot.helper.session import message_wrapper
+from pollbot.helper.session import session_wrapper
 from pollbot.display.creation import get_init_text
 from pollbot.display.misc import get_poll_list
 from pollbot.telegram.keyboard import (
@@ -14,39 +13,41 @@ from pollbot.telegram.keyboard import (
 from pollbot.models import Poll
 
 
-@client.on(events.NewMessage(incoming=True, pattern='/create'))
-@message_wrapper(private=True)
-async def create_poll(event, session, user):
+@run_async
+@session_wrapper(private=True)
+def create_poll(bot, update, session, user):
     """Create a new poll."""
     # The previous unfinished poll will be removed
     user.started = True
     if user.current_poll is not None and not user.current_poll.created:
-        await event.respond(
+        update.message.chat.send_message(
             i18n.t('creation.already_creating', locale=user.locale),
-            buttons=get_cancel_creation_keyboard(user.current_poll))
-        raise events.StopPropagation
+            reply_markup=get_cancel_creation_keyboard(user.current_poll))
+        return
 
     poll = Poll.create(user, session)
     text = get_init_text(poll)
     keyboard = get_init_keyboard(poll)
 
-    await event.respond(text, buttons=keyboard, link_preview=False)
-    raise events.StopPropagation
+    update.message.chat.send_message(
+        text,
+        parse_mode='markdown',
+        reply_markup=keyboard,
+        disable_web_page_preview=True,
+    )
 
 
-@client.on(events.NewMessage(incoming=True, pattern='/list_closed'))
-@message_wrapper(private=True)
-async def list_closed_polls(event, session, user):
-    """Get a list of all closed polls."""
-    text, keyboard = get_poll_list(session, user, closed=True)
-    await event.respond(text, buttons=keyboard)
-    raise events.StopPropagation
-
-
-@client.on(events.NewMessage(incoming=True, pattern='/list'))
-@message_wrapper(private=True)
-async def list_polls(event, session, user):
+@run_async
+@session_wrapper(private=True)
+def list_polls(bot, update, session, user):
     """Get a list of all active polls."""
     text, keyboard = get_poll_list(session, user)
-    await event.respond(text, buttons=keyboard)
-    raise events.StopPropagation
+    update.message.chat.send_message(text, reply_markup=keyboard)
+
+
+@run_async
+@session_wrapper(private=True)
+def list_closed_polls(bot, update, session, user):
+    """Get a list of all closed polls."""
+    text, keyboard = get_poll_list(session, user, closed=True)
+    update.message.chat.send_message(text, reply_markup=keyboard)

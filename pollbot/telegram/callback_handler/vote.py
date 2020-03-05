@@ -15,37 +15,42 @@ from pollbot.helper.update import update_poll_messages
 from pollbot.models import PollOption, Vote
 
 
-async def handle_vote(session, context, event):
+def handle_vote(session, context):
     """Handle any clicks on vote buttons."""
+    # Remove the poll, in case it got deleted, but we didn't manage to kill all references
     option = session.query(PollOption).get(context.payload)
-    # Might have just been deleted, ignore it
     if option is None:
-        return i18n.t('deleted.option', locale=context.user.locale)
+        if context.query.message is not None:
+            context.query.message.edit_text(i18n.t('deleted.polls', locale=context.user.locale))
+        else:
+            context.bot.edit_message_text(
+                i18n.t('deleted.polls', locale=context.user.locale),
+                inline_message_id=context.query.inline_message_id,
+            )
+        return
 
     poll = option.poll
     try:
         # Single vote
         if poll.poll_type == PollType.single_vote.name:
-            update_poll = await handle_single_vote(session, context, event, option)
+            update_poll = handle_single_vote(session, context, option)
         # Block vote
         elif poll.poll_type == PollType.block_vote.name:
-            update_poll = await handle_block_vote(session, context, event, option)
+            update_poll = handle_block_vote(session, context, option)
         # Limited vote
         elif poll.poll_type == PollType.limited_vote.name:
-            update_poll = await handle_limited_vote(session, context, event, option)
+            update_poll = handle_limited_vote(session, context, option)
         # Cumulative vote
         elif poll.poll_type == PollType.cumulative_vote.name:
-            update_poll = await handle_cumulative_vote(session, context, event, option)
+            update_poll = handle_cumulative_vote(session, context, option)
         elif poll.poll_type == PollType.count_vote.name:
-            update_poll = await handle_cumulative_vote(session, context, event, option, limited=False)
+            update_poll = handle_cumulative_vote(session, context, option, limited=False)
         elif poll.poll_type == PollType.doodle.name:
-            update_poll = await handle_doodle_vote(session, context, event, option)
+            update_poll = handle_doodle_vote(session, context, option)
         elif poll.poll_type == PollType.priority.name:
-            update_poll = await handle_priority_vote(session, context, event, option)
+            update_poll = handle_priority_vote(session, context, option)
         else:
             raise Exception("Unknown poll type")
-
-        session.commit()
 
     except IntegrityError:
         # Double vote. Rollback the transaction and ignore the second vote
@@ -62,20 +67,15 @@ async def handle_vote(session, context, event):
         session.rollback()
         return
 
+    session.commit()
+
     if update_poll:
-        await update_poll_messages(session, poll, event)
+        update_poll_messages(session, context.bot, poll)
 
     increase_stat(session, 'votes')
 
 
-async def respond_to_vote(
-    session,
-    line,
-    context,
-    poll,
-    remaining_votes=None,
-    limited=False
-):
+def respond_to_vote(session, line, context, poll, remaining_votes=None, limited=False):
     """Get the formatted response for a user."""
     locale = poll.locale
     votes = session.query(Vote) \
@@ -101,10 +101,10 @@ async def respond_to_vote(
     if len(message) > 190:
         message = message[0:190]
 
-    await context.event.answer(message)
+    context.query.answer(message)
 
 
-async def handle_single_vote(session, context, event, option):
+def handle_single_vote(session, context, option):
     """Handle a single vote."""
     locale = option.poll.locale
     existing_vote = session.query(Vote) \
@@ -116,25 +116,25 @@ async def handle_single_vote(session, context, event, option):
     if existing_vote and existing_vote.poll_option != option:
         existing_vote.poll_option = option
         vote_changed = i18n.t('callback.vote.changed', locale=locale)
-        await respond_to_vote(session, vote_changed, context, option.poll)
+        respond_to_vote(session, vote_changed, context, option.poll)
 
     # Voted for the same thing again
     elif existing_vote and existing_vote.poll_option == option:
         session.delete(existing_vote)
         vote_removed = i18n.t('callback.vote.removed', locale=locale)
-        await event.answer(vote_removed)
+        context.query.answer(vote_removed)
 
     # First vote on this poll
     elif existing_vote is None:
         vote = Vote(context.user, option)
         session.add(vote)
         vote_registered = i18n.t('callback.vote.registered', locale=locale)
-        await respond_to_vote(session, vote_registered, context, option.poll)
+        respond_to_vote(session, vote_registered, context, option.poll)
 
     return True
 
 
-async def handle_block_vote(session, context, event, option):
+def handle_block_vote(session, context, option):
     """Handle a block vote."""
     locale = option.poll.locale
     existing_vote = session.query(Vote) \
@@ -146,19 +146,19 @@ async def handle_block_vote(session, context, event, option):
     if existing_vote:
         session.delete(existing_vote)
         vote_removed = i18n.t('callback.vote.removed', locale=locale)
-        await respond_to_vote(session, vote_removed, context, option.poll)
+        respond_to_vote(session, vote_removed, context, option.poll)
 
     # Add vote
     elif existing_vote is None:
         vote = Vote(context.user, option)
         session.add(vote)
         vote_registered = i18n.t('callback.vote.registered', locale=locale)
-        await respond_to_vote(session, vote_registered, context, option.poll)
+        respond_to_vote(session, vote_registered, context, option.poll)
 
     return True
 
 
-async def handle_limited_vote(session, context, event, option):
+def handle_limited_vote(session, context, option):
     """Handle a limited vote."""
     locale = option.poll.locale
     existing_vote = session.query(Vote) \
@@ -178,7 +178,7 @@ async def handle_limited_vote(session, context, event, option):
 
         vote_removed = i18n.t('callback.vote.removed', locale=locale)
         remaining_votes = allowed_votes - (vote_count - 1)
-        await respond_to_vote(session, vote_removed, context, option.poll, remaining_votes, True)
+        respond_to_vote(session, vote_removed, context, option.poll, remaining_votes, True)
 
     # Add vote
     elif existing_vote is None and vote_count < option.poll.number_of_votes:
@@ -186,18 +186,18 @@ async def handle_limited_vote(session, context, event, option):
         session.add(vote)
         vote_registered = i18n.t('callback.vote.registered', locale=locale)
         remaining_votes = allowed_votes - (vote_count + 1)
-        await respond_to_vote(session, vote_registered, context, option.poll, remaining_votes, True)
+        respond_to_vote(session, vote_registered, context, option.poll, remaining_votes, True)
 
     # Max votes reached
     else:
         no_left = i18n.t('callback.vote.no_left', locale=locale)
-        await respond_to_vote(session, no_left, context, option.poll)
+        respond_to_vote(session, no_left, context, option.poll)
         return False
 
     return True
 
 
-async def handle_cumulative_vote(session, context, event, option, limited=True):
+def handle_cumulative_vote(session, context, option, limited=True):
     """Handle a cumulative vote."""
     locale = option.poll.locale
     existing_vote = session.query(Vote) \
@@ -221,12 +221,12 @@ async def handle_cumulative_vote(session, context, event, option, limited=True):
     # Upvote, but no votes left
     if limited and action == CallbackResult.yes and vote_count >= allowed_votes:
         no_left = i18n.t('callback.vote.no_left', locale=locale)
-        await respond_to_vote(session, no_left, context, option.poll)
+        respond_to_vote(session, no_left, context, option.poll)
         return False
 
     # Early return if downvote on non existing vote
     if existing_vote is None and action == CallbackResult.no:
-        await respond_to_vote(session, 'Cannot downvote this option.', context, option.poll)
+        respond_to_vote(session, 'Cannot downvote this option.', context, option.poll)
         return False
 
     if existing_vote:
@@ -236,7 +236,7 @@ async def handle_cumulative_vote(session, context, event, option, limited=True):
             session.commit()
             remaining_votes = allowed_votes - (vote_count + 1)
             vote_registered = i18n.t('callback.vote.registered', locale=locale)
-            await respond_to_vote(session, vote_registered, context, option.poll, remaining_votes, limited)
+            respond_to_vote(session, vote_registered, context, option.poll, remaining_votes, limited)
 
         # Remove from existing vote
         elif action == CallbackResult.no:
@@ -244,7 +244,7 @@ async def handle_cumulative_vote(session, context, event, option, limited=True):
             session.commit()
             remaining_votes = allowed_votes - (vote_count - 1)
             vote_removed = i18n.t('callback.vote.removed', locale=locale)
-            await respond_to_vote(session, vote_removed, context, option.poll, remaining_votes, limited)
+            respond_to_vote(session, vote_removed, context, option.poll, remaining_votes, limited)
 
         # Delete vote if necessary
         if existing_vote.vote_count <= 0:
@@ -258,12 +258,12 @@ async def handle_cumulative_vote(session, context, event, option, limited=True):
         session.commit()
         remaining_votes = allowed_votes - (vote_count + 1)
         vote_registered = i18n.t('callback.vote.registered', locale=locale)
-        await respond_to_vote(session, vote_registered, context, option.poll, remaining_votes, limited)
+        respond_to_vote(session, vote_registered, context, option.poll, remaining_votes, limited)
 
     return True
 
 
-async def handle_doodle_vote(session, context, event, option):
+def handle_doodle_vote(session, context, option):
     """Handle a doodle vote."""
     locale = option.poll.locale
     vote = session.query(Vote) \
@@ -271,11 +271,15 @@ async def handle_doodle_vote(session, context, event, option):
         .filter(Vote.user == context.user) \
         .one_or_none()
 
+    if context.callback_result.name is None:
+        data = context.data # noqa
+        raise Exception("Unknown callback result")
+
     # Remove vote
     if vote is not None:
         vote.type = context.callback_result.name
         changed = i18n.t('callback.vote.doodle_changed', locale=locale, vote_type=vote.type)
-        await event.answer(changed)
+        context.query.answer(changed)
 
     # Add vote
     else:
@@ -283,12 +287,11 @@ async def handle_doodle_vote(session, context, event, option):
         vote.type = context.callback_result.name
         session.add(vote)
         registered = i18n.t('callback.vote.doodle_registered', locale=locale, vote_type=vote.type)
-        await event.answer(registered)
+        context.query.answer(registered)
 
     return True
 
-
-async def handle_priority_vote(session, context, event, option):
+def handle_priority_vote(session, context, option):
     """Handle a priority vote"""
     vote = session.query(Vote) \
         .filter(Vote.poll_option == option) \
@@ -298,6 +301,10 @@ async def handle_priority_vote(session, context, event, option):
     previous_priority = vote.priority
     # allow next vote to take this vote's place
     vote.priority = -1
+
+    if context.callback_result.name is None:
+        data = context.data # noqa
+        raise Exception("Unknown callback result")
 
     if context.callback_result.name == CallbackResult.increase_priority.name:
         direction = -1
@@ -319,6 +326,6 @@ async def handle_priority_vote(session, context, event, option):
     vote.priority = previous_priority + direction
 
     registered = i18n.t('callback.vote.registered', locale=option.poll.locale)
-    await event.answer(registered)
+    context.query.answer(registered)
 
     return True

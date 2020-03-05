@@ -1,7 +1,7 @@
 """Poll creation helper."""
 from pollbot.i18n import i18n
 from pollbot.helper.stats import increase_stat
-from pollbot.helper.enums import ExpectedInput, ReferenceType
+from pollbot.helper.enums import ExpectedInput
 from pollbot.display.poll.compilation import get_poll_text
 from pollbot.telegram.keyboard import (
     get_options_entered_keyboard,
@@ -10,7 +10,7 @@ from pollbot.telegram.keyboard import (
 from pollbot.models import PollOption, Reference
 
 
-async def next_option(event, poll, options):
+def next_option(tg_chat, poll, options):
     """Send the options message during the creation ."""
     locale = poll.user.locale
     poll.user.expected_input = ExpectedInput.options.name
@@ -21,13 +21,13 @@ async def next_option(event, poll, options):
     else:
         text = i18n.t('creation.option.multiple_added', locale=locale)
         for option in options:
-            text += f'\n**{option}**'
+            text += f'\n*{option}*'
         text += '\n\n' + i18n.t('creation.option.next', locale=locale)
 
-    await event.respond(text, buttons=keyboard)
+    tg_chat.send_message(text, reply_markup=keyboard, parse_mode='Markdown')
 
 
-async def create_poll(session, poll, user, event, message=None):
+def create_poll(session, poll, user, chat, message=None):
     """Finish the poll creation."""
     poll.created = True
     user.expected_input = None
@@ -37,32 +37,33 @@ async def create_poll(session, poll, user, event, message=None):
 
     if len(text) > 4000:
         error_message = i18n.t('misc.over_4000', locale=user.locale)
-        await event.respond(error_message)
+        message = chat.send_message(error_message, parse_mode='markdown')
         session.delete(poll)
         return
 
     if message:
-        message = await message.edit(
+        message = message.edit_text(
             text,
-            buttons=get_management_keyboard(poll),
-            link_preview=False,
+            parse_mode='markdown',
+            reply_markup=get_management_keyboard(poll),
+            disable_web_page_preview=True,
         )
     else:
-        message = await event.respond(
+        message = chat.send_message(
             text,
-            buttons=get_management_keyboard(poll),
-            link_preview=False,
+            parse_mode='markdown',
+            reply_markup=get_management_keyboard(poll),
+            disable_web_page_preview=True,
         )
 
     if len(text) > 3000:
         error_message = i18n.t('misc.over_3000', locale=user.locale)
-        await event.respond(error_message)
+        message = chat.send_message(error_message, parse_mode='markdown')
 
     reference = Reference(
         poll,
-        ReferenceType.admin.name,
-        user=user,
-        message_id=message.id
+        admin_user=user,
+        admin_message_id=message.message_id
     )
     session.add(reference)
     session.commit()
@@ -78,9 +79,9 @@ def add_options(poll, text, is_date=False):
     for option_to_add in options_to_add:
         description = None
         # Extract the description if existing
-        if not is_date and '--' in option_to_add:
+        if not is_date and '-' in option_to_add:
             # Extract and strip the description
-            splitted = option_to_add.split('--', 1)
+            splitted = option_to_add.split('-', 1)
             option_to_add = splitted[0].strip()
             description = splitted[1].strip()
             if description == '':

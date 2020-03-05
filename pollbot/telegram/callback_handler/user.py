@@ -1,6 +1,4 @@
 """User related callback handler."""
-from sqlalchemy.orm.exc import StaleDataError
-
 from pollbot.i18n import i18n
 from pollbot.helper.update import remove_poll_messages
 from pollbot.display.creation import get_init_text
@@ -21,135 +19,143 @@ from pollbot.telegram.keyboard import (
 )
 
 
-async def open_main_menu(session, context, event):
+def open_main_menu(session, context):
     """Open the main menu."""
     keyboard = get_main_keyboard(context.user)
-    await event.edit(
+    context.query.message.edit_text(
         i18n.t('misc.start', locale=context.user.locale),
-        buttons=keyboard,
-        link_preview=False,
+        reply_markup=keyboard,
+        parse_mode='Markdown',
+        disable_web_page_preview=True,
     )
 
 
-async def open_user_settings(session, context, event):
+def open_user_settings(session, context):
     """Open the user settings."""
     keyboard = get_user_settings_keyboard(context.user)
     text = get_user_settings_text(context.user)
-    await event.edit(text, buttons=keyboard)
+    context.query.message.edit_text(text, reply_markup=keyboard,
+                                    parse_mode='Markdown')
 
 
-async def open_language_menu(session, context, event):
+def open_language_menu(session, context):
     """Open the user language selection menu."""
     keyboard = get_user_language_keyboard(context.user)
-    await event.edit(
+    context.query.message.edit_text(
         i18n.t('settings.change_language', locale=context.user.locale),
-        buttons=keyboard,
+        parse_mode='markdown',
+        reply_markup=keyboard,
     )
 
 
-async def list_polls(session, context, event):
+def list_polls(session, context):
     """List all open polls of a user."""
     text, keyboard = get_poll_list(session, context.user)
-    await event.respond(text, buttons=keyboard)
+    context.query.message.chat.send_message(text, reply_markup=keyboard)
 
 
-async def list_closed_polls(session, context, event):
+def list_closed_polls(session, context):
     """List all open polls of a user."""
     text, keyboard = get_poll_list(session, context.user, closed=True)
-    await event.respond(text, buttons=keyboard)
+    context.query.message.chat.send_message(text, reply_markup=keyboard)
 
 
-async def open_donation(session, context, event):
+def open_donation(session, context):
     """Open the donations text."""
-    await event.edit(
+    context.query.message.edit_text(
         i18n.t('misc.donation', locale=context.user.locale),
-        buttons=get_donations_keyboard(context.user),
+        parse_mode='Markdown',
+        reply_markup=get_donations_keyboard(context.user),
     )
 
 
-async def open_help(session, context, event):
+def open_help(session, context):
     """Open the donations text."""
     text, keyboard = get_help_text_and_keyboard(context.user, 'intro')
-    await event.edit(text, buttons=keyboard, link_preview=False)
+    context.query.message.edit_text(
+        text,
+        parse_mode='Markdown',
+        reply_markup=keyboard,
+        disable_web_page_preview=True,
+    )
 
 
-async def init_poll(session, context, event):
+def init_poll(session, context):
     """Start the creation of a new poll."""
     user = context.user
+    chat = context.query.message.chat
     if user.current_poll is not None and not user.current_poll.created:
-        await event.respond(
+        chat.send_message(
             i18n.t('creation.already_creating', locale=user.locale),
-            buttons=get_cancel_creation_keyboard(user.current_poll))
+            reply_markup=get_cancel_creation_keyboard(user.current_poll))
         return
 
     poll = Poll.create(user, session)
     text = get_init_text(poll)
     keyboard = get_init_keyboard(poll)
 
-    await event.respond(text, buttons=keyboard, link_preview=False)
+    chat.send_message(
+        text,
+        parse_mode='markdown',
+        reply_markup=keyboard,
+        disable_web_page_preview=True,
+    )
 
 
-async def toggle_notification(session, context, event):
+def toggle_notification(session, context):
     """Toggle the notification settings of the user."""
     user = context.user
     user.notifications_enabled = not user.notifications_enabled
     session.commit()
-    await open_user_settings(session, context, event)
+    open_user_settings(session, context)
 
 
-async def change_user_language(session, context, event):
+def change_user_language(session, context):
     """Open the language picker."""
     context.user.locale = context.action
     session.commit()
-    await open_user_settings(session, context, event)
+    open_user_settings(session, context)
     return i18n.t('user.language_changed', locale=context.user.locale)
 
 
-async def delete_all_confirmation(session, context, event):
+def delete_all_confirmation(session, context):
     keyboard = get_delete_all_confirmation_keyboard(context.user)
-    await event.edit(
-        i18n.t('settings.user.delete_all_confirmation',
-               locale=context.user.locale),
-        buttons=keyboard,
-    )
-
-
-async def delete_closed_confirmation(session, context, event):
-    keyboard = get_delete_all_confirmation_keyboard(context.user, closed=True)
-    await event.edit(
+    context.query.message.edit_text(
         i18n.t('settings.user.delete_all_confirmation',
                locale=context.user.locale),
         parse_mode='markdown',
-        buttons=keyboard,
+        reply_markup=keyboard,
     )
 
 
-async def delete_all(session, context, event):
+def delete_closed_confirmation(session, context):
+    keyboard = get_delete_all_confirmation_keyboard(context.user, closed=True)
+    context.query.message.edit_text(
+        i18n.t('settings.user.delete_all_confirmation',
+               locale=context.user.locale),
+        parse_mode='markdown',
+        reply_markup=keyboard,
+    )
+
+
+def delete_all(session, context):
     """Delete all polls of the user."""
     for poll in context.user.polls:
-        try:
-            await remove_poll_messages(session, poll)
-            session.delete(poll)
-            session.commit()
-        except StaleDataError:
-            session.rollback()
-            session.expire_all()
+        remove_poll_messages(session, context.bot, poll)
+        session.delete(poll)
+        session.commit()
 
-    await open_user_settings(session, context, event)
+    open_user_settings(session, context)
     return i18n.t('deleted.polls', locale=context.user.locale)
 
 
-async def delete_closed(session, context, event):
+def delete_closed(session, context):
     """Delete all closed polls of the user."""
     for poll in context.user.polls:
         if poll.closed:
-            try:
-                await remove_poll_messages(session, context, poll)
-                session.delete(poll)
-                session.commit()
-            except StaleDataError:
-                session.rollback()
-                session.expire_all()
+            remove_poll_messages(session, context.bot, poll)
+            session.delete(poll)
+            session.commit()
 
-    await open_user_settings(session, context, event)
+    open_user_settings(session, context)
     return i18n.t('deleted.closed_polls', locale=context.user.locale)

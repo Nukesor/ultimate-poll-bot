@@ -1,12 +1,15 @@
 """The sqlalchemy model for a vote."""
 from sqlalchemy import (
     Column,
+    func,
     ForeignKey,
     UniqueConstraint
 )
 from sqlalchemy.types import (
+    Boolean,
     DateTime,
     Integer,
+    String,
 )
 from sqlalchemy.orm import relationship
 
@@ -23,7 +26,6 @@ class Update(base):
 
     id = Column(Integer, primary_key=True)
     next_update = Column(DateTime, nullable=False)
-    count = Column(Integer, nullable=False)
 
     poll_id = Column(Integer, ForeignKey('poll.id', ondelete='cascade'),
                      nullable=False, index=True)

@@ -1,24 +1,13 @@
-## v2.0.0
-**Migration to Telethon**
-
-**Features:**
+## v1.3.0
 - Priority vote poll
+- Streamline all datepickers (breaking changes)
+- Display week day in vote buttons
+- Add explanations for most important options
+- Add warning about possible information leak via online status on anonymous polls
 - Add option to hide option count on polls.
 
-**Improvements:**
-- Streamline all datepickers (breaking changes)
 - Language updates
-- Catalan language
 - Improvement of internal error handling
-- Add explanations for most important options
-- Display week day in vote buttons
-- Add warning about possible information leak via online status on anonymous polls
-
-**Internal:**
-- Configurable amount for max shared messages via inline query per poll
-- Add option to allow voting in private chats
-- Slow async background updating of poll in other chats, while instantly updating the message the user voted on.
-- Removal of duplicate poll messages in private chats
 
 **Fixes:**
 - Fixed poll notifications and due dates

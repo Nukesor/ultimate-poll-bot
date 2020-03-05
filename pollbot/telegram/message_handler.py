@@ -1,18 +1,11 @@
 """Handle messages."""
-from telethon import events
 
 from pollbot.i18n import i18n
-from pollbot.client import client
-from pollbot.helper.poll import remove_old_references
-from pollbot.helper.session import message_wrapper
-from pollbot.helper.enums import (
-    ExpectedInput,
-    PollType,
-    ReferenceType,
-)
+from pollbot.helper.session import session_wrapper
+from pollbot.helper.enums import ExpectedInput, PollType
 from pollbot.display import get_settings_text
 from pollbot.helper.update import update_poll_messages
-from pollbot.helper.creation import create_poll
+from pollbot.telegram.callback_handler.creation import create_poll
 
 from pollbot.helper.creation import (
     next_option,
@@ -27,12 +20,12 @@ from pollbot.telegram.keyboard import (
 from pollbot.models import Reference
 
 
-@client.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
-@message_wrapper(private=True)
-async def handle_private_text(event, session, user):
+@session_wrapper()
+def handle_private_text(bot, update, session, user):
     """Read all private messages and the creation of polls."""
-    text = event.text.strip()
+    text = update.message.text.strip()
     poll = user.current_poll
+    chat = update.message.chat
 
     if user.expected_input is None:
         return
@@ -57,35 +50,37 @@ async def handle_private_text(event, session, user):
             ExpectedInput.new_option: handle_new_option,
             ExpectedInput.new_user_option: handle_user_option_addition,
         }
-        if '*' in text or '_' in text or '[' in text or '`' in text:
-            await event.respond(i18n.t('creation.error.markdown', locale=user.locale))
+        if '*' in text or '_' in text or '[' in text:
+            chat.send_message(i18n.t('creation.error.markdown', locale=user.locale),
+                              parse_mode='Markdown')
             return
 
-        return await actions[expected_input](event, session, user, text, poll)
+        return actions[expected_input](bot, update, session, user, text, poll, chat)
 
 
-async def handle_set_name(event, session, user, text, poll):
+def handle_set_name(bot, update, session, user, text, poll, chat):
     """Set the name of the poll."""
     poll.name = text
     user.expected_input = ExpectedInput.description.name
     keyboard = get_skip_description_keyboard(poll)
-    await event.respond(
+    chat.send_message(
         i18n.t('creation.description', locale=user.locale),
-        buttons=keyboard,
+        reply_markup=keyboard,
     )
 
 
-async def handle_set_description(event, session, user, text, poll):
+def handle_set_description(bot, update, session, user, text, poll, chat):
     """Set the description of the poll."""
     poll.description = text
     user.expected_input = ExpectedInput.options.name
-    await event.respond(
+    chat.send_message(
         i18n.t('creation.option.first', locale=user.locale),
-        buttons=get_open_datepicker_keyboard(poll),
+        reply_markup=get_open_datepicker_keyboard(poll),
+        parse_mode='markdown'
     )
 
 
-async def handle_create_options(event, session, user, text, poll):
+def handle_create_options(bot, update, session, user, text, poll, chat):
     """Add options to the poll."""
     # Multiple options can be sent at once separated by newline
     # Strip them and ignore empty lines
@@ -94,10 +89,10 @@ async def handle_create_options(event, session, user, text, poll):
     if len(added_options) == 0:
         return i18n.t('creation.option.no_new', locale=user.locale)
 
-    await next_option(event, poll, added_options)
+    next_option(chat, poll, added_options)
 
 
-async def handle_set_vote_count(event, session, user, text, poll):
+def handle_set_vote_count(bot, update, session, user, text, poll, chat):
     """Set the amount of possible votes for this poll."""
     if poll.poll_type == PollType.limited_vote.name:
         error_message = i18n.t('creation.error.limit_between', locale=user.locale, limit=len(poll.options))
@@ -118,10 +113,10 @@ async def handle_set_vote_count(event, session, user, text, poll):
 
     poll.number_of_votes = amount
 
-    await create_poll(session, poll, user, event)
+    create_poll(session, poll, user, chat)
 
 
-async def handle_new_option(event, session, user, text, poll):
+def handle_new_option(bot, update, session, user, text, poll, chat):
     """Add a new option after poll creation."""
     added_options = add_options(poll, text)
 
@@ -129,10 +124,10 @@ async def handle_new_option(event, session, user, text, poll):
         text = i18n.t('creation.option.multiple_added', locale=user.locale) + '\n'
         for option in added_options:
             text += f'\n*{option}*'
-        await event.respond(text)
+        chat.send_message(text, parse_mode='markdown')
         poll.init_votes_for_new_options(session)
     else:
-        await event.respond(i18n.t('creation.option.no_new', locale=user.locale))
+        chat.send_message(i18n.t('creation.option.no_new', locale=user.locale))
 
     # Reset expected input
     user.current_poll = None
@@ -140,29 +135,42 @@ async def handle_new_option(event, session, user, text, poll):
 
     text = get_settings_text(poll)
     keyboard = get_settings_keyboard(poll)
-    message = await event.respond(text, buttons=keyboard)
+    message = chat.send_message(
+        text,
+        parse_mode='markdown',
+        reply_markup=keyboard,
+    )
 
-    await remove_old_references(session, poll, user)
+    # Delete old references
+    references = session.query(Reference) \
+        .filter(Reference.poll == poll) \
+        .filter(Reference.admin_user_id == chat.id) \
+        .all()
+    for reference in references:
+        try:
+            bot.delete_message(chat.id, reference.admin_message_id)
+        except:
+            pass
+        session.delete(reference)
 
     # Create new reference
     reference = Reference(
         poll,
-        ReferenceType.admin.name,
-        user=user,
-        message_id=message.id
+        admin_user=user,
+        admin_message_id=message.message_id
     )
     session.add(reference)
     session.commit()
 
-    await update_poll_messages(session, poll)
+    update_poll_messages(session, bot, poll)
 
 
-async def handle_user_option_addition(event, session, user, text, poll):
+def handle_user_option_addition(bot, update, session, user, text, poll, chat):
     """Handle the addition of options from and arbitrary user."""
     if not poll.allow_new_options:
         user.current_poll = None
         user.expected_input = None
-        await event.respond(i18n.t('creation.not_allowed', locale=user.locale))
+        chat.send_message(i18n.t('creation.not_allowed', locale=user.locale))
 
     added_options = add_options(poll, text)
 
@@ -174,12 +182,12 @@ async def handle_user_option_addition(event, session, user, text, poll):
         # Send message
         text = i18n.t('creation.option.multiple_added', locale=user.locale) + '\n'
         for option in added_options:
-            text += f'\n**{option}**'
-        await event.respond(text)
+            text += f'\n*{option}*'
+        chat.send_message(text, parse_mode='markdown')
 
         # Update all polls
         poll.init_votes_for_new_options(session)
         session.commit()
-        await update_poll_messages(session, poll)
+        update_poll_messages(session, bot, poll)
     else:
-        await event.respond(i18n.t('creation.option.no_new', locale=user.locale))
+        chat.send_message(i18n.t('creation.option.no_new', locale=user.locale))

@@ -1,17 +1,16 @@
 """The start command handler."""
-from telethon import events
+from telegram.ext import run_async
+from telegram.error import BadRequest
 
 from pollbot.i18n import i18n
-from pollbot.client import client
-from pollbot.helper.session import message_wrapper
-from pollbot.helper import get_peer_information
+from pollbot.helper.session import session_wrapper
 from pollbot.models import Poll, Notification
 from pollbot.telegram.keyboard.external import get_notify_keyboard
 
 
-@client.on(events.NewMessage(incoming=True, pattern='/notify'))
-@message_wrapper()
-async def notify(event, session, user):
+@run_async
+@session_wrapper()
+def notify(bot, update, session, user):
     """Activate notifications for polls with due date."""
     polls = session.query(Poll) \
         .filter(Poll.user == user) \
@@ -19,18 +18,16 @@ async def notify(event, session, user):
         .filter(Poll.due_date.isnot(None)) \
         .all()
 
-    if len(polls) == 0:
-        await event.respond(i18n.t('external.notification.no_active_poll', locale=user.locale))
-        raise events.StopPropagation
-
-    select_message = await event.respond(
+    select_message = update.message.chat.send_message(
         i18n.t('external.notification.pick_poll', locale=user.locale),
-        buttons=get_notify_keyboard(polls)
+        parse_mode='markdown',
+        reply_markup=get_notify_keyboard(polls)
     )
-    peer_id, _ = get_peer_information(event.to_id)
+
+    message = update.message
 
     notification = session.query(Notification) \
-        .filter(Notification.chat_id == peer_id) \
+        .filter(Notification.chat_id == message.chat.id) \
         .filter(Notification.poll_id.is_(None)) \
         .one_or_none()
 
@@ -38,18 +35,25 @@ async def notify(event, session, user):
     # If this fails, the old message has probably been deleted.
     # Because of this, just ignore this exception in case a BadRequest appears.
     if notification is not None:
-        await client.edit_message(
-            notification.select_message_id,
-            i18n.t('external.notification.new_notification_board', locale=user.locale),
-        )
+        try:
+            bot.edit_message_text(
+                i18n.t('external.notification.new_notification_board', locale=user.locale),
+                message.chat.id,
+                notification.select_message_id,
+            )
+        except BadRequest:
+            pass
 
     else:
         # Create a new notification to save the reply_to message_id
         # The poll will be created later on
-        notification = Notification(peer_id)
+        notification = Notification(message.chat.id)
         session.add(notification)
 
-    notification.poll_message_id = event.reply_to_msg_id
-    notification.select_message_id = select_message.id
+    if message.reply_to_message is not None:
+        poll_message = message.reply_to_message
+        notification.poll_message_id = poll_message.message_id
+    else:
+        notification.poll_message_id = None
 
-    raise events.StopPropagation
+    notification.select_message_id = select_message.message_id

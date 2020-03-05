@@ -14,14 +14,15 @@ from pollbot.telegram.keyboard import (
 
 
 @poll_required
-async def activate_notification(session, context, event, poll):
+def activate_notification(session, context, poll):
     """Show to vote type keyboard."""
     user = context.user
     if user != poll.user:
         return "You aren't allowed to do this"
 
+    message = context.query.message
     notification = session.query(Notification) \
-        .filter(Notification.select_message_id == event.message_id) \
+        .filter(Notification.select_message_id == message.message_id) \
         .one_or_none()
 
     if notification is None:
@@ -29,7 +30,7 @@ async def activate_notification(session, context, event, poll):
 
     existing_notification = session.query(Notification) \
         .filter(Notification.poll == poll) \
-        .filter(Notification.chat_id == event.get_message().to_id) \
+        .filter(Notification.chat_id == message.chat_id) \
         .one_or_none()
 
     # We already got a notification in this chat for this poll
@@ -41,40 +42,46 @@ async def activate_notification(session, context, event, poll):
         notification.poll = poll
 
     session.commit()
-    await event.edit(i18n.t('external.notification.activated', locale=poll.locale))
+    message.edit_text(i18n.t('external.notification.activated', locale=poll.locale))
     increase_stat(session, 'notifications')
 
 
 @poll_required
-async def open_external_datepicker(session, context, event, poll):
+def open_external_datepicker(session, context, poll):
     """All options are entered the poll is created."""
     keyboard = get_external_datepicker_keyboard(poll, date.today())
     # Switch from new option by text to new option via datepicker
+    message = context.query.message
     if context.user.expected_input != ExpectedInput.new_user_option.name:
-        await event.edit(i18n.t('creation.option.finished', locale=context.user.locale))
+        message.edit_text(i18n.t('creation.option.finished', locale=context.user.locale))
         return
 
-    await event.edit(get_datepicker_text(poll), buttons=keyboard)
+    message.edit_text(
+        get_datepicker_text(poll),
+        parse_mode='markdown',
+        reply_markup=keyboard
+    )
 
 
 @poll_required
-async def open_external_menu(session, context, event, poll):
+def open_external_menu(session, context, poll):
     """All options are entered the poll is created."""
     context.user.expected_input = ExpectedInput.new_user_option.name
     context.user.current_poll = poll
     session.commit()
 
-    await event.edit(
+    context.query.message.edit_text(
         i18n.t('creation.option.first', locale=poll.locale),
-        buttons=get_external_add_option_keyboard(poll)
+        parse_mode='markdown',
+        reply_markup=get_external_add_option_keyboard(poll)
     )
 
 
 @poll_required
-async def external_cancel(session, context, event, poll):
+def external_cancel(session, context, poll):
     """All options are entered the poll is created."""
     context.user.expected_input = None
     context.user.current_poll = None
     session.commit()
 
-    await event.edit(i18n.t('external.done', locale=poll.locale))
+    context.query.message.edit_text(i18n.t('external.done', locale=poll.locale))

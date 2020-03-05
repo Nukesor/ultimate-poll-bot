@@ -1,11 +1,7 @@
 [telegram]
 bot_name = "ultimate_pollbot"
-bot_token = ""
-api_id = 0
-api_hash = ""
-admin = "Nukesor"
-max_shared_per_poll = 20
-allow_private_votes = false
+api_key = ""
+worker_count = 20
 
 [database]
 sql_uri = "postgres://localhost/pollbot_test"
@@ -16,4 +12,11 @@ overflow_count = 10
 sentry_enabled = false
 sentry_token = ""
 log_level = 20
-debug = true
+debug = false
+
+[webhook]
+enabled = false
+domain = "https://localhost"
+token = "pollbot"
+cert_path = "/path/to/cert.pem"
+port = 7000

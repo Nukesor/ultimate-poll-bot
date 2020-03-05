@@ -6,13 +6,10 @@ import logging
 
 default_config = {
     'telegram': {
-        "bot_name": 'your_bot_username(without the @)',
-        "bot_token": "your_botfather_token",
-        "api_id": "my.telegram.org_api_id",
-        "api_hash": "my.telegram.org_api_hash",
+        "bot_name": 'your_bot_@_username',
+        "api_key": "your_telegram_api_key",
+        "worker_count": 20,
         "admin": 'nukesor',
-        "max_shared_per_poll": 20,
-        "allow_private_votes": False,
     },
     'database': {
         "sql_uri": 'postgres://localhost/pollbot',
@@ -25,6 +22,13 @@ default_config = {
         "log_level": logging.INFO,
         "debug": False,
     },
+    'webhook': {
+        "enabled": False,
+        "domain": "https://localhost",
+        "token": "pollbot",
+        "cert_path": '/path/to/cert.pem',
+        "port": 7000,
+    }
 }
 
 config_path = os.path.expanduser('~/.config/ultimate_pollbot.toml')

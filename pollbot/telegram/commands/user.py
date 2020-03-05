@@ -1,19 +1,18 @@
-from telethon import events
+from telegram.ext import run_async
 
-from pollbot.client import client
-from pollbot.helper.session import message_wrapper
+from pollbot.helper.session import session_wrapper
 from pollbot.display.settings import get_user_settings_text
 from pollbot.telegram.keyboard import (
     get_user_settings_keyboard,
 )
 
 
-@client.on(events.NewMessage(incoming=True, pattern='/settings'))
-@message_wrapper(private=True)
-async def open_user_settings_command(event, session, user):
+@run_async
+@session_wrapper()
+def open_user_settings_command(bot, update, session, user):
     """Open the settings menu for the user."""
-    await event.respond(
+    update.message.chat.send_message(
         get_user_settings_text(user),
-        buttons=get_user_settings_keyboard(user),
+        reply_markup=get_user_settings_keyboard(user),
+        parse_mode='markdown',
     )
-    raise events.StopPropagation

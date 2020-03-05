@@ -65,6 +65,30 @@ As soon as such a poll is closed, the results will be visible. **Beware!**: such
 - The bot allows to configure the sorting of the option list and and the user list for each option.
 - Users can be sorted by vote date or username. Options can be sorted by highest percentage, name or by the order they've been added.
 
+
+**Planned features:**
+
+- A Priority poll
+
+
+# Acknowledgements
+
+First of all, thanks to [Lokalise](https://lokalise.co) for providing my projects with a free license for open-source development!
+
+Thanks to [cnpltdncsln](https://github.com/cnpltdncsln) for providing turkish translations.  
+Thanks to [tszalbot](https://github.com/tszalbot) for providing polish translations.  
+Thanks to [FedericoAntoniazzi](https://github.com/FedericoAntoniazzi) and [LBindustries](https://github.com/LBindustries) for providing italian translations.  
+Thanks to [balboag](https://github.com/balboag) for providing spanish translations.  
+Thanks to [gui258](https://github.com/gui258) and Leonardo Frazao for providing brazilian portuguese translations.  
+
+
+Thanks to my patreons:
+
+- [Svenstaro](https://github.com/Svenstaro)
+- [Prior99](https://github.com/prior99)
+- Sgit Kene
+
+
 ## Commands:
 
     /start          Start the bot
@@ -97,7 +121,6 @@ Dependencies:
 6. If you plan to keep up to date, you need to set the current alembic revision manually.
 Get the latest revision with `poetry run alembic history` and change the current head to the newest revision with `poetry run alembic stamp <revision>`.
 7. Now you can just execute `poetry run alembic upgrade head`, whenever you are updating from a previous version.
-8. **Important** Enable the inline mode for your bot and set `Inline Feedback` to 100% in the @BotFather menu.
 
 
 
@@ -111,43 +134,3 @@ Get the latest revision with `poetry run alembic history` and change the current
     notify - Activate notifications in external chats
     help - Show the help text
     donations - Get me a coffee
-
-
-# Acknowledgements
-
-First of all, thanks to [Lokalise](https://lokalise.co) for providing my projects with a free license for open-source development!
-
-Thanks to the Turkish translator:
-- [cnpltdncsln](https://github.com/cnpltdncsln)
-
-Thanks to the Polish translator:
-- [tszalbot](https://github.com/tszalbot)
-
-Thanks to all Italian translators:
-- [FedericoAntoniazzi](https://github.com/FedericoAntoniazzi)
-- [LBindustries](https://github.com/LBindustries) for providing italian translations.  
-
-Thanks to all Spanish translators:
-- [balboag](https://github.com/balboag)
-- [davidgfnet](https://github.com/davidgfnet)
-- Miguel Antunez 
-
-Thanks to all Brazilian Portuguese translators:
-- [gui258](https://github.com/gui258)
-- Leonardo Frazao
-
-Thanks to all German translators:
-- Thorsten Schlaberg 
-- [KnorpelSenf](https://github.com/KnorpelSenf)
-
-Thanks to the Catalan translator:
-- [davidgfnet](https://github.com/davidgfnet)
-
-Thanks to the Czech translator:
-- Ignac (IgnacRR)
-
-Thanks to my patreons:
-
-- [Svenstaro](https://github.com/Svenstaro)
-- [Prior99](https://github.com/prior99)
-- 憧れ

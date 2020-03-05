@@ -13,7 +13,6 @@ from sqlalchemy.types import (
 from sqlalchemy.orm import relationship
 
 from pollbot.db import base
-from pollbot.helper.enums import ReferenceType
 
 
 class Reference(base):
@@ -22,14 +21,15 @@ class Reference(base):
     __tablename__ = 'reference'
 
     id = Column(Integer, primary_key=True)
-    type = Column(String)
-    message_id = Column(BigInteger)
-    message_dc_id = Column(BigInteger)
-    message_access_hash = Column(BigInteger)
-    legacy_inline_message_id = Column(String)
+    inline_message_id = Column(String)
 
-    user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade', name='user_fk'), nullable=True, index=True)
-    user = relationship('User', foreign_keys='Reference.user_id')
+    admin_message_id = Column(BigInteger)
+    admin_user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade', name='admin_user'), nullable=True, index=True)
+    admin_user = relationship('User', foreign_keys='Reference.admin_user_id')
+
+    vote_message_id = Column(BigInteger)
+    vote_user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade', name='vote_user'), nullable=True, index=True)
+    vote_user = relationship('User', foreign_keys='Reference.vote_user_id')
 
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
@@ -39,29 +39,30 @@ class Reference(base):
     poll = relationship('Poll')
 
     def __init__(
-        self,
-        poll,
-        reference_type,
-        user=None,
-        message_id=None,
-        message_dc_id=None,
-        message_access_hash=None,
+        self, poll,
+        inline_message_id=None,
+        admin_user=None,
+        admin_message_id=None,
+        vote_user=None,
+        vote_message_id=None
     ):
         """Create a new poll."""
         self.poll = poll
-        self.type = reference_type
-        self.user = user
-        self.message_id = message_id
-        self.message_dc_id = message_dc_id
-        self.message_access_hash = message_access_hash
+        self.inline_message_id = inline_message_id
+        self.admin_user = admin_user
+        self.admin_message_id = admin_message_id
+        self.vote_user = vote_user
+        self.vote_message_id = vote_message_id
 
     def __repr__(self):
         """Print as string."""
-        if self.type == ReferenceType.inline.name:
-            message = f'Reference {self.id}: message_id {self.message_id}'
-        elif self.type == ReferenceType.admin.name:
-            message = f'Reference {self.id}: message_id {self.message_id}, admin: {self.user.id}'
+        if self.inline_message_id is not None:
+            message = f'Reference {self.id}: inline_message_id {self.inline_message_id}'
+        elif self.admin_user is not None:
+            message = f'Reference {self.id}: admin_message_id {self.admin_message_id}'
+            message += f', admin_id: {self.admin_user.id}'
         else:
-            message = f'Reference {self.id}: message_id {self.message_id}, user: {self.user.id}'
+            message = f'Reference {self.id}: vote_message_id {self.vote_message_id}'
+            message += f', vote_user_id : {self.vote_user.id}'
 
         return message

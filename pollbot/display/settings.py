@@ -1,7 +1,6 @@
 """The settings management text."""
 from pollbot.i18n import i18n
-from pollbot.config import config
-from pollbot.helper import translate_poll_type
+from pollbot.helper import translate_poll_type, get_escaped_bot_name
 from pollbot.helper.enums import PollType, StartAction
 from pollbot.telegram.keyboard import get_start_button_payload
 
@@ -20,6 +19,7 @@ def get_settings_text(poll):
         text.append(i18n.t('settings.anonymous', locale=locale))
     else:
         text.append(i18n.t('settings.not_anonymous', locale=locale))
+
 
     if poll.results_visible:
         text.append(i18n.t('settings.results_visible', locale=locale))
@@ -73,21 +73,13 @@ def get_settings_text(poll):
     sorting_name = i18n.t(f'sorting.{poll.option_sorting}', locale=locale)
     text.append(i18n.t('settings.option_sorting', locale=locale, name=sorting_name))
 
-    bot_name = config['telegram']['bot_name']
-
     text.append('')
-    text.append(i18n.t('settings.sharing_link', locale=locale))
+    text.append(i18n.t('settings.sharing_link', locale=locale, name=sorting_name))
+
     payload = get_start_button_payload(poll, StartAction.share_poll)
+    bot_name = get_escaped_bot_name()
     text.append(f'https://t.me/{bot_name}?start={payload}')
 
-    if config['telegram']['allow_private_votes']:
-        text.append('')
-        text.append(i18n.t('settings.private_vote_link', locale=locale))
-        payload = get_start_button_payload(poll, StartAction.vote)
-        text.append(f'https://t.me/{bot_name}?start={payload}')
-
-    text.append('')
-    text.append(i18n.t('settings.link_warning', locale=locale))
     return '\n'.join(text)
 
 

@@ -1,6 +1,7 @@
 """Simple wrapper around sentry that allows for lazy initilization."""
 from raven import Client
 from pollbot.config import config
+from telegram.error import TimedOut
 
 
 class Sentry(object):
@@ -17,6 +18,9 @@ class Sentry(object):
             self.initialized = True
             self.sentry = Client(
                 config['logging']['sentry_token'],
+                ignore_exceptions=[
+                    TimedOut
+                ],
             )
 
     def captureMessage(self, *args, **kwargs):

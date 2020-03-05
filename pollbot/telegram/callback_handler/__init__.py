@@ -1,10 +1,9 @@
 """Callback query handling."""
-from telethon import events
+from telegram.ext import run_async
 from raven import breadcrumbs
 
-from pollbot.client import client
 from pollbot.helper.stats import increase_stat
-from pollbot.helper.session import callback_wrapper
+from pollbot.helper.session import hidden_session_wrapper
 from pollbot.helper.enums import CallbackType, CallbackResult
 from pollbot.models import Poll
 
@@ -111,13 +110,14 @@ from .admin import (
 class CallbackContext():
     """Contains all important information for handling with callbacks."""
 
-    def __init__(self, session, event, user):
+    def __init__(self, session, bot, query, user):
         """Create a new CallbackContext from a query."""
-        self.event = event
+        self.bot = bot
+        self.query = query
         self.user = user
 
         # Extract the callback type, task id
-        self.data = self.event.data.decode('utf-8').split(':')
+        self.data = self.query.data.split(':')
         self.callback_type = CallbackType(int(self.data[0]))
         self.payload = self.data[1]
         try:
@@ -134,6 +134,10 @@ class CallbackContext():
         except (ValueError, KeyError):
             pass
 
+        if self.query.message:
+            # Get chat entity and telegram chat
+            self.tg_chat = self.query.message.chat
+
     def __repr__(self):
         """Print as string."""
         representation = f'Context: query-{self.data}, poll-({self.poll}), user-({self.user}), '
@@ -142,16 +146,16 @@ class CallbackContext():
         return representation
 
 
-@client.on(events.CallbackQuery)
-@callback_wrapper()
-async def handle_callback_query(session, event, user):
+@run_async
+@hidden_session_wrapper()
+def handle_callback_query(bot, update, session, user):
     """Handle callback queries from inline keyboards."""
-    context = CallbackContext(session, event, user)
+    context = CallbackContext(session, bot, update.callback_query, user)
 
     breadcrumbs.record(
         data={
-            'query': event,
-            'data': context.data,
+            'query': update.callback_query,
+            'data': update.callback_query.data,
             'user': user,
             'callback_type': context.callback_type,
             'callback_result': context.callback_result,
@@ -160,8 +164,8 @@ async def handle_callback_query(session, event, user):
         category='callbacks',
     )
 
-    async def ignore(session, context, event):
-        await event.answer("This button doesn't do anything and is just for styling.")
+    def ignore(session, context):
+        context.query.answer("This button doesn't do anything and is just for styling.")
 
     callback_functions = {
         # Creation
@@ -263,15 +267,15 @@ async def handle_callback_query(session, event, user):
         CallbackType.ignore: ignore,
     }
 
-    response = await callback_functions[context.callback_type](session, context, event)
+    response = callback_functions[context.callback_type](session, context)
 
     # Callback handler functions always return the callback answer
     # The only exception is the vote function, which is way too complicated and
     # implements its own callback query answer logic.
     if response is not None and context.callback_type != CallbackType.vote:
-        await event.answer(response)
+        context.query.answer(response)
     else:
-        await event.answer('')
+        context.query.answer('')
 
     increase_stat(session, 'callback_calls')
 

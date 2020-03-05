@@ -1,6 +1,4 @@
 """Some static stuff or helper functions."""
-from telethon import types
-
 from pollbot.i18n import i18n
 from pollbot.config import config
 from .enums import PollType
@@ -23,11 +21,11 @@ def translate_poll_type(poll_type, locale):
 
 def poll_required(function):
     """Return if the poll does not exist in the context object."""
-    async def wrapper(session, context, event):
+    def wrapper(session, context):
         if context.poll is None:
             return i18n.t('callback.poll_no_longer_exists', locale=context.user.locale)
 
-        return await function(session, context, event, context.poll)
+        return function(session, context, context.poll)
 
     return wrapper
 
@@ -70,13 +68,9 @@ def calculate_total_votes(poll):
     return total
 
 
-def get_peer_information(peer):
-    """Get the id depending on the chat type."""
-    if isinstance(peer, types.PeerUser):
-        return peer.user_id, 'user'
-    elif isinstance(peer, types.PeerChat):
-        return peer.chat_id, 'peer'
-    elif isinstance(peer, types.PeerChannel):
-        return peer.channel_id, 'channel'
-    else:
-        raise Exception("Unknown chat type")
+def get_escaped_bot_name():
+    """Get the bot name escaped for markdown."""
+    name = config['telegram']['bot_name']
+    escaped = name.replace('_', '\_')
+
+    return escaped

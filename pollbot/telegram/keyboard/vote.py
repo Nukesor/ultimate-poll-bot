@@ -1,5 +1,9 @@
 """Reply keyboards."""
-from telethon import Button
+import string
+from telegram import (
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+)
 from sqlalchemy.orm import joinedload
 
 from pollbot.models import Vote
@@ -20,6 +24,8 @@ from pollbot.display.poll.indices import get_option_indices
 
 from .management import get_back_to_management_button
 
+IGNORE_PAYLOAD = f'{CallbackType.ignore.value}:0:0'
+
 
 def get_vote_keyboard(poll, user, show_back=False, summary=False):
     """Get a plain vote keyboard."""
@@ -34,25 +40,28 @@ def get_vote_keyboard(poll, user, show_back=False, summary=False):
             bot_name = config['telegram']['bot_name']
             payload = get_start_button_payload(poll, StartAction.new_option)
             url = f'http://t.me/{bot_name}?start={payload}'
-            buttons.append([Button.url(i18n.t('keyboard.new_option', locale=poll.locale), url)])
+            buttons.append([InlineKeyboardButton(
+                i18n.t('keyboard.new_option', locale=poll.locale), url=url)])
 
     # Add a button for to showing the summary, if the poll is too long for a single message
     if summary:
         payload = get_start_button_payload(poll, StartAction.show_results)
         bot_name = config['telegram']['bot_name']
         url = f'http://t.me/{bot_name}?start={payload}'
-        row = [Button.url(i18n.t('keyboard.show_results', locale=poll.locale), url)]
+        row = [InlineKeyboardButton(i18n.t('keyboard.show_results', locale=poll.locale), url=url)]
         buttons.append(row)
 
     # Add a button to go back to the management interface (admin overview)
     if show_back:
         buttons.append([get_back_to_management_button(poll)])
 
-    return buttons
+    return InlineKeyboardMarkup(buttons)
 
 
 def get_vote_buttons(poll, user=None, show_back=False):
     """Get the keyboard for actual voting."""
+    locale = poll.locale
+
     if poll_allows_cumulative_votes(poll):
         buttons = get_cumulative_buttons(poll)
     elif poll.poll_type == PollType.doodle.name:
@@ -86,7 +95,7 @@ def get_normal_buttons(poll):
                           locale=poll.locale)
         else:
             text = option_name
-        buttons.append([Button.inline(text, data=payload)])
+        buttons.append([InlineKeyboardButton(text, callback_data=payload)])
 
     return buttons
 
@@ -108,8 +117,8 @@ def get_cumulative_buttons(poll):
         yes_payload = f'{vote_button_type}:{option.id}:{vote_yes}'
         no_payload = f'{vote_button_type}:{option.id}:{vote_no}'
         buttons.append([
-            Button.inline(f'－ {option_name}', data=no_payload),
-            Button.inline(f'＋ {option_name}', data=yes_payload),
+            InlineKeyboardButton(f'－ {option_name}', callback_data=no_payload),
+            InlineKeyboardButton(f'＋ {option_name}', callback_data=yes_payload),
         ])
 
     return buttons
@@ -121,7 +130,8 @@ def get_priority_buttons(poll, user):
         bot_name = config['telegram']['bot_name']
         payload = get_start_button_payload(poll, StartAction.vote)
         url = f'http://t.me/{bot_name}?start={payload}'
-        buttons = [[Button.url(i18n.t('keyboard.vote', locale=poll.locale), url)]]
+        buttons = [[InlineKeyboardButton(
+            i18n.t('keyboard.vote', locale=poll.locale), url=url)]]
 
         return buttons
 
@@ -138,32 +148,35 @@ def get_priority_buttons(poll, user):
         .options(joinedload(Vote.poll_option)) \
         .all()
 
-    ignore_payload = f'{CallbackType.ignore.value}:0:0'
     indices = get_option_indices(options)
     for index, vote in enumerate(votes):
         option = vote.poll_option
         if not poll.compact_buttons:
             name_row = [
-                Button.inline(f"{option.name}", data=ignore_payload)
+                InlineKeyboardButton(
+                    f"{option.name}",
+                    callback_data=IGNORE_PAYLOAD
+                )
             ]
             buttons.append(name_row)
         name_hint_payload = f'{CallbackType.show_option_name.value}:{poll.id}:{option.id}'
         increase_payload = f'{vote_button_type}:{option.id}:{vote_increase}'
         decrease_payload = f'{vote_button_type}:{option.id}:{vote_decrease}'
+        ignore_payload = f'{CallbackType.ignore.value}:0:0'
 
         vote_row = []
         if poll.compact_buttons:
-            vote_row.append(Button.inline(f"{indices[index]})", data=name_hint_payload))
+            vote_row.append(InlineKeyboardButton(f"{indices[index]})", callback_data=name_hint_payload))
 
         if index != len(votes) - 1:
-            vote_row.append(Button.inline('▼', data=decrease_payload))
+            vote_row.append(InlineKeyboardButton('▼', callback_data=decrease_payload))
         else:
-            vote_row.append(Button.inline(' ', data=ignore_payload))
+            vote_row.append(InlineKeyboardButton(' ', callback_data=ignore_payload))
 
         if index != 0:
-            vote_row.append(Button.inline('▲', data=increase_payload))
+            vote_row.append(InlineKeyboardButton('▲', callback_data=increase_payload))
         else:
-            vote_row.append(Button.inline(' ', data=ignore_payload))
+            vote_row.append(InlineKeyboardButton(' ', callback_data=ignore_payload))
 
         buttons.append(vote_row)
     return buttons
@@ -190,16 +203,17 @@ def get_doodle_buttons(poll):
 
         # If we don't have the compact button view, display the option name on it's own button row
         if not poll.compact_buttons:
-            option_row = [Button.inline(option.get_formatted_name(), data=name_hint_payload)]
+            option_row = [InlineKeyboardButton(option.get_formatted_name(),
+                                               callback_data=name_hint_payload)]
             buttons.append(option_row)
             option_row = []
         else:
-            option_row = [Button.inline(f'{indices[index]})', data=name_hint_payload)]
+            option_row = [InlineKeyboardButton(f'{indices[index]})', callback_data=name_hint_payload)]
 
         vote_row = [
-            Button.inline('✅', data=yes_payload),
-            Button.inline('❔', data=maybe_payload),
-            Button.inline('❌', data=no_payload),
+            InlineKeyboardButton('✅', callback_data=yes_payload),
+            InlineKeyboardButton('❔', callback_data=maybe_payload),
+            InlineKeyboardButton('❌', callback_data=no_payload),
         ]
 
         buttons.append(option_row + vote_row)

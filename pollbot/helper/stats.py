@@ -1,5 +1,5 @@
 """Statistics handler."""
-from datetime import date
+from datetime import date, timedelta
 
 
 def increase_stat(session, name):
