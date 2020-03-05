@@ -68,9 +68,9 @@ def get_admin_settings_keyboard(user):
 def get_user_settings_keyboard(user):
     """Keyboard for admin operations."""
     if user.notifications_enabled:
-        notification_text = i18n.t('keyboard.user.disable_notifications')
+        notification_text = i18n.t('keyboard.user.disable_notifications', locale=user.locale)
     else:
-        notification_text = i18n.t('keyboard.user.enable_notifications')
+        notification_text = i18n.t('keyboard.user.enable_notifications', locale=user.locale)
 
     language_data = f'{CallbackType.user_language_menu.value}:0:0'
     notification_data = f'{CallbackType.user_toggle_notification.value}:0:0'
