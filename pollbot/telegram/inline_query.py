@@ -64,9 +64,19 @@ def search(bot, update, session, user):
     if len(polls) == 0 and len(query) == 36:
         try:
             poll_uuid = uuid.UUID(query)
-            polls = session.query(Poll) \
+            poll = session.query(Poll) \
                 .filter(Poll.uuid == poll_uuid) \
-                .all()
+                .offset(offset) \
+                .one_or_none()
+
+            if poll is not None:
+                # Check if sharin is enabled
+                # If not, check if the owner issued the query
+                if not poll.allow_sharing and user != poll.user:
+                    polls = []
+                else:
+                    polls = [poll]
+
         except ValueError:
             pass
 
