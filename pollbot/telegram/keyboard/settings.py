@@ -77,6 +77,14 @@ def get_settings_keyboard(poll):
         allow_new_option_text = i18n.t('keyboard.forbid_user_options', locale=locale)
     allow_new_option_payload = f'{CallbackType.settings_toggle_allow_new_options.value}:{poll.id}:0'
     buttons.append([InlineKeyboardButton(text=allow_new_option_text, callback_data=allow_new_option_payload)])
+
+    # Allow others to share the poll
+    allow_sharing_text = i18n.t('keyboard.allow_sharing', locale=locale)
+    if poll.allow_sharing:
+        allow_sharing_text = i18n.t('keyboard.forbid_sharing', locale=locale)
+    allow_sharing_payload = f'{CallbackType.settings_toggle_allow_sharing.value}:{poll.id}:0'
+    buttons.append([InlineKeyboardButton(text=allow_sharing_text, callback_data=allow_sharing_payload)])
+
     # Back button
     buttons.append([get_back_to_management_button(poll)])
 

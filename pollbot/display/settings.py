@@ -73,12 +73,13 @@ def get_settings_text(poll):
     sorting_name = i18n.t(f'sorting.{poll.option_sorting}', locale=locale)
     text.append(i18n.t('settings.option_sorting', locale=locale, name=sorting_name))
 
-    text.append('')
-    text.append(i18n.t('settings.sharing_link', locale=locale, name=sorting_name))
+    if poll.allow_sharing:
+        text.append('')
+        text.append(i18n.t('settings.sharing_link', locale=locale, name=sorting_name))
 
-    payload = get_start_button_payload(poll, StartAction.share_poll)
-    bot_name = get_escaped_bot_name()
-    text.append(f'https://t.me/{bot_name}?start={payload}')
+        payload = get_start_button_payload(poll, StartAction.share_poll)
+        bot_name = get_escaped_bot_name()
+        text.append(f'https://t.me/{bot_name}?start={payload}')
 
     return '\n'.join(text)
 

@@ -105,6 +105,7 @@ class CallbackType(Enum):
     settings_toggle_summarization = 86
     settings_toggle_compact_buttons = 87
     settings_toggle_option_votes = 89
+    settings_toggle_allow_sharing = 90
 
     # Misc
     ignore = 100

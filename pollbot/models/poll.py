@@ -45,6 +45,7 @@ class Poll(base):
     due_date = Column(DateTime, nullable=True)
     next_notification = Column(DateTime, nullable=True)
     allow_new_options = Column(Boolean, nullable=False, default=False)
+    allow_sharing = Column(Boolean, nullable=False, default=False, server_default="FALSE")
 
     # Styling
     show_percentage = Column(Boolean, nullable=False, default=True)

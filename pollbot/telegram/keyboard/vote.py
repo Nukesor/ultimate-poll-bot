@@ -36,12 +36,17 @@ def get_vote_keyboard(poll, user, show_back=False, summary=False):
     if not poll.closed:
         buttons = get_vote_buttons(poll, user, show_back)
 
+        bot_name = config['telegram']['bot_name']
         if poll.allow_new_options:
-            bot_name = config['telegram']['bot_name']
             payload = get_start_button_payload(poll, StartAction.new_option)
             url = f'http://t.me/{bot_name}?start={payload}'
             buttons.append([InlineKeyboardButton(
                 i18n.t('keyboard.new_option', locale=poll.locale), url=url)])
+        if poll.allow_sharing:
+            payload = get_start_button_payload(poll, StartAction.share_poll)
+            url = f'http://t.me/{bot_name}?start={payload}'
+            buttons.append([InlineKeyboardButton(
+                i18n.t('keyboard.share', locale=poll.locale), url=url)])
 
     # Add a button for to showing the summary, if the poll is too long for a single message
     if summary:
@@ -60,8 +65,6 @@ def get_vote_keyboard(poll, user, show_back=False, summary=False):
 
 def get_vote_buttons(poll, user=None, show_back=False):
     """Get the keyboard for actual voting."""
-    locale = poll.locale
-
     if poll_allows_cumulative_votes(poll):
         buttons = get_cumulative_buttons(poll)
     elif poll.poll_type == PollType.doodle.name:

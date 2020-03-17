@@ -94,7 +94,7 @@ def start(bot, update, session, user):
         )
         increase_stat(session, 'show_results')
 
-    elif action == StartAction.share_poll:
+    elif action == StartAction.share_poll and poll.allow_sharing:
         update.message.chat.send_message(
             i18n.t('external.share_poll', locale=poll.locale),
             reply_markup=get_external_share_keyboard(poll)

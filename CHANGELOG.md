@@ -5,6 +5,7 @@
 - Add explanations for most important options
 - Add warning about possible information leak via online status on anonymous polls
 - Add option to hide option count on polls.
+- Add option to allow/forbid sharing of polls
 
 - Language updates
 - Improvement of internal error handling
@@ -12,6 +13,7 @@
 **Fixes:**
 - Fixed poll notifications and due dates
 - Numerous minor bug fixes
+- Fix some security issues which allowed adding and sharing polls without explicit permission
 
 
 ## v1.2.0

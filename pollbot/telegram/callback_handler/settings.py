@@ -167,3 +167,13 @@ def toggle_allow_new_options(session, context, poll):
     session.commit()
     update_poll_messages(session, context.bot, poll)
     send_settings_message(context)
+
+
+@poll_required
+def toggle_allow_sharing(session, context, poll):
+    """Toggle the visibility of the percentage bar."""
+    poll.allow_sharing = not poll.allow_sharing
+
+    session.commit()
+    update_poll_messages(session, context.bot, poll)
+    send_settings_message(context)

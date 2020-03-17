@@ -129,6 +129,8 @@ keyboard:
   remove_option: － Remove options
   forbid_user_options: 🍺 Forbid others to add new options
   allow_user_options: 🍻 Allow others to add new options
+  allow_sharing: 🔗 Allow others to share the poll
+  forbid_sharing: 🔗 Forbid others to share the poll
   order_users: Order users %{name}
   order_options: Order options %{name}
   add_new_language: Add a new language
