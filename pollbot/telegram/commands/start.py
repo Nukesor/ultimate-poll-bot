@@ -52,7 +52,7 @@ def start(bot, update, session, user):
     if poll is None:
         return 'This poll no longer exists.'
 
-    if action == StartAction.new_option:
+    if action == StartAction.new_option and poll.allow_new_options:
         # Update the expected input and set the current poll
         user.expected_input = ExpectedInput.new_user_option.name
         user.current_poll = poll
