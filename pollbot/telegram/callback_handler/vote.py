@@ -241,15 +241,15 @@ def handle_cumulative_vote(session, context, option, limited=True):
         # Remove from existing vote
         elif action == CallbackResult.no:
             existing_vote.vote_count -= 1
+
+            # Delete vote if necessary
+            if existing_vote.vote_count <= 0:
+                session.delete(existing_vote)
+
             session.commit()
             remaining_votes = allowed_votes - (vote_count - 1)
             vote_removed = i18n.t('callback.vote.removed', locale=locale)
             respond_to_vote(session, vote_removed, context, option.poll, remaining_votes, limited)
-
-        # Delete vote if necessary
-        if existing_vote.vote_count <= 0:
-            session.delete(existing_vote)
-            session.commit()
 
     # Add new vote
     elif existing_vote is None and action == CallbackResult.yes:
