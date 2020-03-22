@@ -309,6 +309,7 @@ creation:
 
     *Current options:*
   error:
+    invalid_poll_name: Your poll name probably contains invalid characters. Please try again.
     limit_bigger_zero: Please send me a number bigger than 0
     limit_between: Please send me a number between 1 and %{limit}
     too_big: 'Please send a smaller number. You also might want to use an "Unlimited votes" poll'
