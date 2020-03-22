@@ -1,5 +1,6 @@
 """Callback functions needed during creation of a Poll."""
 from datetime import datetime
+from sqlalchemy.orm.exc import ObjectDeletedError
 
 from pollbot.i18n import i18n
 from pollbot.helper import poll_required
@@ -14,7 +15,12 @@ def delete_poll(session, context, poll):
     remove_poll_messages(session, context.bot, poll)
     session.commit()
     session.delete(poll)
-    session.commit()
+    try:
+        session.commit()
+    except ObjectDeletedError:
+        # User spams the button and issues multiple deletes
+        pass
+
 
     return i18n.t('callback.deleted', locale=poll.user.locale)
 
@@ -25,7 +31,11 @@ def delete_poll_with_messages(session, context, poll):
     remove_poll_messages(session, context.bot, poll, remove_all=True)
     session.commit()
     session.delete(poll)
-    session.commit()
+    try:
+        session.commit()
+    except ObjectDeletedError:
+        # User spams the button and issues multiple deletes
+        pass
 
     return i18n.t('callback.deleted', locale=poll.user.locale)
 

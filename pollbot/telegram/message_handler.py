@@ -61,8 +61,10 @@ def handle_private_text(bot, update, session, user):
 def handle_set_name(bot, update, session, user, text, poll, chat):
     """Set the name of the poll."""
     poll.name = text
+
     if poll.name is None:
         return i18n.t('creation.error.invalid_poll_name', locale=user.locale)
+
     user.expected_input = ExpectedInput.description.name
     keyboard = get_skip_description_keyboard(poll)
     chat.send_message(
