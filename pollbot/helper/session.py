@@ -2,6 +2,7 @@
 import traceback
 from functools import wraps
 from telegram.error import (
+    TelegramError,
     BadRequest,
     Unauthorized,
     TimedOut,
@@ -59,7 +60,9 @@ def hidden_session_wrapper():
                         traceback.print_exc()
                     sentry.captureException()
 
-                if hasattr(update, 'callback_query') and update.callback_query is not None:
+                if not isinstance(e, TelegramError) and \
+                   hasattr(update, 'callback_query') and \
+                   update.callback_query is not None:
                     locale = 'English'
                     if user is not None:
                         locale = user.locale
@@ -151,7 +154,7 @@ def is_allowed(user, update, private=False):
 def ignore_exception(exception):
     """Check whether we can safely ignore this exception."""
     if isinstance(exception, BadRequest):
-        if 'Query is too old' in exception.message or \
+        if exception.message.startswith('Query is too old') or \
            exception.message.startswith('Have no rights to send a message') or \
            exception.message.startswith('Message_id_invalid') or \
            exception.message.startswith('Message identifier not specified') or \
