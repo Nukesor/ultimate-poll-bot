@@ -16,16 +16,21 @@ def get_option_information(session, poll, context, summarize):
 
     # All options with their respective people percentage
     for index, option in enumerate(options):
-        lines.append('')
+        lines.append("")
         lines.append(get_option_line(session, option, index))
         if option.description is not None:
-            lines.append(f'┆ _{option.description}_')
+            lines.append(f"┆ _{option.description}_")
 
         if context.show_results and context.show_percentage:
             lines.append(get_percentage_line(option, context))
 
         # Add the names of the voters to the respective options
-        if context.show_results and not context.anonymous and len(option.votes) > 0 and not poll.is_priority():
+        if (
+            context.show_results
+            and not context.anonymous
+            and len(option.votes) > 0
+            and not poll.is_priority()
+        ):
             # Sort the votes accordingly to the poll's settings
             if poll.poll_type == PollType.doodle.name:
                 lines += get_doodle_vote_lines(poll, option, summarize)
@@ -40,22 +45,24 @@ def get_option_line(session, option, index):
     # Special formating for polls with European date format
     option_name = option.get_formatted_name()
 
-    prefix = ''
+    prefix = ""
     if option.poll.poll_type in [PollType.doodle.name, PollType.priority.name]:
         indices = get_option_indices(option.poll.options)
-        prefix = f'{indices[index]}) '
+        prefix = f"{indices[index]}) "
 
-    if len(option.votes) > 0 and \
-       option.poll.should_show_result() and \
-       option.poll.show_option_votes and \
-       not option.poll.is_priority():
+    if (
+        len(option.votes) > 0
+        and option.poll.should_show_result()
+        and option.poll.show_option_votes
+        and not option.poll.is_priority()
+    ):
         if poll_allows_cumulative_votes(option.poll):
             vote_count = sum([vote.vote_count for vote in option.votes])
         else:
             vote_count = len(option.votes)
-        return f'┌ {prefix}*{option_name}* ({vote_count} votes)'
+        return f"┌ {prefix}*{option_name}* ({vote_count} votes)"
     else:
-        return f'┌ {prefix}*{option_name}*'
+        return f"┌ {prefix}*{option_name}*"
 
 
 def get_percentage_line(option, context):
@@ -63,20 +70,19 @@ def get_percentage_line(option, context):
 
     poll = option.poll
     if len(option.votes) == 0 or poll.anonymous or poll.is_priority():
-        line = '└ '
+        line = "└ "
     else:
-        line = '│ '
-
+        line = "│ "
 
     if not poll.is_priority():
         percentage = calculate_percentage(option, context.total_user_count)
         filled_slots = math.floor(percentage / 10)
-        line += filled_slots * '▬'
-        line += (10 - filled_slots) * '▭'
-        line += f' ({percentage:.0f}%)'
+        line += filled_slots * "▬"
+        line += (10 - filled_slots) * "▭"
+        line += f" ({percentage:.0f}%)"
     else:
         option_count = len(poll.options)
         points = sum([option_count - vote.priority for vote in option.votes])
-        line += f' {points} Points'
+        line += f" {points} Points"
 
-    return ''.join(line)
+    return "".join(line)

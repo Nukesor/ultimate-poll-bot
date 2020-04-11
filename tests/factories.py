@@ -10,6 +10,7 @@ def user_factory(session, user_id, name, admin=False):
 
     return user
 
+
 def poll_factory(session, user):
     poll = Poll(user)
     session.add(poll)

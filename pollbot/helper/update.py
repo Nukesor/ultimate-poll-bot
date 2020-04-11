@@ -82,7 +82,7 @@ def update_reference(session, bot, poll, reference, show_warning=False):
                 chat_id=reference.user.id,
                 message_id=reference.message_id,
                 reply_markup=keyboard,
-                parse_mode='markdown',
+                parse_mode="markdown",
                 disable_web_page_preview=True,
             )
 
@@ -97,7 +97,7 @@ def update_reference(session, bot, poll, reference, show_warning=False):
                 chat_id=reference.user.id,
                 message_id=reference.message_id,
                 reply_markup=keyboard,
-                parse_mode='markdown',
+                parse_mode="markdown",
                 disable_web_page_preview=True,
             )
 
@@ -112,19 +112,21 @@ def update_reference(session, bot, poll, reference, show_warning=False):
                 text,
                 inline_message_id=reference.bot_inline_message_id,
                 reply_markup=keyboard,
-                parse_mode='markdown',
+                parse_mode="markdown",
                 disable_web_page_preview=True,
             )
 
     except BadRequest as e:
-        if e.message.startswith('Message_id_invalid') or \
-               e.message.startswith("Message can't be edited") or \
-               e.message.startswith("Message to edit not found") or \
-               e.message.startswith("Chat not found") or \
-               e.message.startswith("Can't access the chat"):
+        if (
+            e.message.startswith("Message_id_invalid")
+            or e.message.startswith("Message can't be edited")
+            or e.message.startswith("Message to edit not found")
+            or e.message.startswith("Chat not found")
+            or e.message.startswith("Can't access the chat")
+        ):
             session.delete(reference)
             session.commit()
-        elif e.message.startswith('Message is not modified'):
+        elif e.message.startswith("Message is not modified"):
             pass
         else:
             raise
@@ -151,9 +153,12 @@ def remove_poll_messages(session, bot, poll, remove_all=False):
         try:
             # 1. Admin poll management interface
             # 2. User that votes in private chat (priority vote)
-            if reference.type in [ReferenceType.admin.name, ReferenceType.private_vote.name]:
+            if reference.type in [
+                ReferenceType.admin.name,
+                ReferenceType.private_vote.name,
+            ]:
                 bot.edit_message_text(
-                    i18n.t('deleted.poll', locale=poll.locale),
+                    i18n.t("deleted.poll", locale=poll.locale),
                     chat_id=reference.user.id,
                     message_id=reference.message_id,
                 )
@@ -161,14 +166,14 @@ def remove_poll_messages(session, bot, poll, remove_all=False):
             # Remove message created via inline_message_id
             else:
                 bot.edit_message_text(
-                    i18n.t('deleted.poll', locale=poll.locale),
+                    i18n.t("deleted.poll", locale=poll.locale),
                     inline_message_id=reference.bot_inline_message_id,
                 )
 
         except BadRequest as e:
-            if e.message.startswith('Message_id_invalid') or \
-                   e.message.startswith("Message to edit not found"):
+            if e.message.startswith("Message_id_invalid") or e.message.startswith(
+                "Message to edit not found"
+            ):
                 pass
             else:
                 raise
-

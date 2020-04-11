@@ -10,7 +10,7 @@ def switch_help(session, context):
 
     context.query.message.edit_text(
         text,
-        parse_mode='Markdown',
+        parse_mode="Markdown",
         reply_markup=keyboard,
         disable_web_page_preview=True,
     )

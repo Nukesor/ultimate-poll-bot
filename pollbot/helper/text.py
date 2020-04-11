@@ -1,5 +1,3 @@
-
-
 def split_text(lines):
     """Split a text devided by newline into chunks of about 4000 characters."""
     chunks = []

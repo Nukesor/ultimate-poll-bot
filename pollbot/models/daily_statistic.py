@@ -1,11 +1,5 @@
 """The sqlalchemy model for a statistics."""
-from sqlalchemy import (
-    Column,
-    Date,
-    func,
-    ForeignKey,
-    UniqueConstraint
-)
+from sqlalchemy import Column, Date, func, ForeignKey, UniqueConstraint
 from sqlalchemy.types import (
     Boolean,
     DateTime,
@@ -20,7 +14,7 @@ from pollbot.db import base
 class DailyStatistic(base):
     """The model for a Update."""
 
-    __tablename__ = 'daily_statistic'
+    __tablename__ = "daily_statistic"
 
     date = Column(Date, primary_key=True)
 
@@ -30,7 +24,7 @@ class DailyStatistic(base):
     created_polls = Column(Integer, default=0, nullable=False)
     externally_shared = Column(Integer, default=0, nullable=False)
     show_results = Column(Integer, default=0, nullable=False)
-    notifications = Column(Integer, default=0, nullable=False, server_default='0')
+    notifications = Column(Integer, default=0, nullable=False, server_default="0")
 
     def __init__(self, date):
         """Create a new dialy statistic."""

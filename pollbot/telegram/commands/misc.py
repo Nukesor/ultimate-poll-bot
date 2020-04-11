@@ -11,11 +11,11 @@ from pollbot.telegram.keyboard import get_donations_keyboard
 @message_wrapper()
 def send_help(bot, update, session, user):
     """Send a help text."""
-    text, keyboard = get_help_text_and_keyboard(user, 'intro')
+    text, keyboard = get_help_text_and_keyboard(user, "intro")
 
     update.message.chat.send_message(
         text,
-        parse_mode='Markdown',
+        parse_mode="Markdown",
         reply_markup=keyboard,
         disable_web_page_preview=True,
     )
@@ -26,7 +26,7 @@ def send_help(bot, update, session, user):
 def send_donation_text(bot, update, session, user):
     """Send the donation text."""
     update.message.chat.send_message(
-        i18n.t('misc.donation', locale=user.locale),
-        parse_mode='Markdown',
-        reply_markup=get_donations_keyboard(user)
+        i18n.t("misc.donation", locale=user.locale),
+        parse_mode="Markdown",
+        reply_markup=get_donations_keyboard(user),
     )

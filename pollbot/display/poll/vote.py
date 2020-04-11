@@ -11,9 +11,7 @@ from pollbot.helper.vote import (
     get_sorted_votes,
     get_sorted_doodle_votes,
 )
-from pollbot.helper.enums import (
-    PollType,
-)
+from pollbot.helper.enums import PollType
 from pollbot.models import (
     User,
     Vote,
@@ -29,13 +27,15 @@ def get_doodle_vote_lines(poll, option, summarize):
     if summarize:
         for index, answer in enumerate(votes_by_answer.keys()):
             is_last = index == len(votes_by_answer.keys()) - 1
-            line = i18n.t(f'poll.doodle.{answer}_summarized',
-                          locale=poll.locale,
-                          count=len(votes_by_answer[answer]))
+            line = i18n.t(
+                f"poll.doodle.{answer}_summarized",
+                locale=poll.locale,
+                count=len(votes_by_answer[answer]),
+            )
 
             # Last line must be properly styled
             if is_last:
-                line = line.replace('├', '└')
+                line = line.replace("├", "└")
 
             lines.append(line)
 
@@ -44,10 +44,10 @@ def get_doodle_vote_lines(poll, option, summarize):
     # Create the default or simple summarized vote lines
     for index, answer in enumerate(votes_by_answer.keys()):
         is_last = index == len(votes_by_answer.keys()) - 1
-        lines.append(i18n.t(f'poll.doodle.{answer}', locale=poll.locale))
+        lines.append(i18n.t(f"poll.doodle.{answer}", locale=poll.locale))
         lines += get_doodle_answer_lines(votes_by_answer[answer], summarize, is_last)
         if not is_last:
-            lines += '┆'
+            lines += "┆"
 
     return lines
 
@@ -65,7 +65,7 @@ def get_doodle_answer_lines(votes, summarize, is_last):
     threshold = 30
     votes_displayed = 0
     lines = []
-    current_line = '┆ '
+    current_line = "┆ "
     characters = len(current_line)
     for index, vote in enumerate(votes):
         # Only the characters of the username count (not the mention)
@@ -74,13 +74,13 @@ def get_doodle_answer_lines(votes, summarize, is_last):
         # Don't stop here, if the first name of the line already is too long
         if characters > threshold and (2 + len(vote.user.name)) != characters:
             lines.append(current_line)
-            current_line = '┆ '
+            current_line = "┆ "
             characters = len(current_line)
 
-        user_mention = f'[{vote.user.name}](tg://user?id={vote.user.id})'
+        user_mention = f"[{vote.user.name}](tg://user?id={vote.user.id})"
         # Add a comma at the end of the user mention if it's not the last one
         if index != (len(votes) - 1):
-            user_mention += ', '
+            user_mention += ", "
 
         current_line += user_mention
         votes_displayed += 1
@@ -88,7 +88,7 @@ def get_doodle_answer_lines(votes, summarize, is_last):
     # Add the last line.
     # Replace the start character of the first line, to keep the styling correct
     if is_last:
-        current_line = current_line.replace('┆', '└')
+        current_line = current_line.replace("┆", "└")
     lines.append(current_line)
 
     return lines
@@ -105,9 +105,9 @@ def get_vote_lines(poll, option, summarize):
         # and summarize all remaining votes in a single line.
         if summarize and index == threshold:
             count = len(option.votes) - threshold
-            lines.append('└ ' + i18n.t('poll.summarized_users',
-                                       locale=poll.locale,
-                                       count=count))
+            lines.append(
+                "└ " + i18n.t("poll.summarized_users", locale=poll.locale, count=count)
+            )
             break
 
         vote_line = get_vote_line(poll, option, vote, index)
@@ -118,16 +118,16 @@ def get_vote_lines(poll, option, summarize):
 
 def get_vote_line(poll, option, vote, index):
     """Get the line showing an actual vote."""
-    user_mention = f'[{vote.user.name}](tg://user?id={vote.user.id})'
+    user_mention = f"[{vote.user.name}](tg://user?id={vote.user.id})"
     if index == (len(option.votes) - 1):
-        vote_line = f'└ {user_mention}'
+        vote_line = f"└ {user_mention}"
     else:
-        vote_line = f'├ {user_mention}'
+        vote_line = f"├ {user_mention}"
 
     if poll_allows_cumulative_votes(poll):
-        vote_line += f' ({vote.vote_count} votes)'
+        vote_line += f" ({vote.vote_count} votes)"
     elif poll.poll_type == PollType.doodle.name:
-        vote_line += f' ({vote.type})'
+        vote_line += f" ({vote.type})"
 
     return vote_line
 
@@ -136,41 +136,47 @@ def get_vote_information_line(poll, context):
     """Get line that shows information about total user votes."""
     vote_information = None
     if context.total_user_count > 1:
-        vote_information = i18n.t('poll.many_users_voted',
-                                  locale=poll.locale,
-                                  count=context.total_user_count)
+        vote_information = i18n.t(
+            "poll.many_users_voted", locale=poll.locale, count=context.total_user_count
+        )
     elif context.total_user_count == 1:
-        vote_information = i18n.t('poll.one_user_voted', locale=poll.locale)
+        vote_information = i18n.t("poll.one_user_voted", locale=poll.locale)
 
     if vote_information is not None and poll_allows_multiple_votes(poll):
         total_count = calculate_total_votes(poll)
-        vote_information += i18n.t('poll.total_votes',
-                                   locale=poll.locale,
-                                   count=total_count)
+        vote_information += i18n.t(
+            "poll.total_votes", locale=poll.locale, count=total_count
+        )
 
     return vote_information
 
 
 def get_remaining_votes_lines(session, poll):
     """Get the remaining votes for a poll."""
-    user_vote_count = func.sum(Vote.vote_count).label('user_vote_count')
-    remaining_user_votes = session.query(User.name, user_vote_count) \
-        .join(Vote) \
-        .filter(Vote.poll == poll) \
-        .group_by(User.name) \
-        .having(user_vote_count < poll.number_of_votes) \
-        .order_by(User.name) \
+    user_vote_count = func.sum(Vote.vote_count).label("user_vote_count")
+    remaining_user_votes = (
+        session.query(User.name, user_vote_count)
+        .join(Vote)
+        .filter(Vote.poll == poll)
+        .group_by(User.name)
+        .having(user_vote_count < poll.number_of_votes)
+        .order_by(User.name)
         .all()
+    )
 
     if len(remaining_user_votes) == 0:
         return []
 
     lines = []
-    lines.append(i18n.t('poll.remaining_votes', locale=poll.locale))
+    lines.append(i18n.t("poll.remaining_votes", locale=poll.locale))
     for user_votes in remaining_user_votes:
-        lines.append(i18n.t('poll.remaining_votes_user',
-                            locale=poll.locale,
-                            name=user_votes[0],
-                            count=poll.number_of_votes - user_votes[1]))
+        lines.append(
+            i18n.t(
+                "poll.remaining_votes_user",
+                locale=poll.locale,
+                name=user_votes[0],
+                count=poll.number_of_votes - user_votes[1],
+            )
+        )
 
     return lines

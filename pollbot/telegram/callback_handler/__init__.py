@@ -21,9 +21,7 @@ from .creation import (
     open_init_anonymization_settings,
 )
 
-from .vote import (
-    handle_vote,
-)
+from .vote import handle_vote
 
 from .menu import (
     go_back,
@@ -108,7 +106,7 @@ from .admin import (
 )
 
 
-class CallbackContext():
+class CallbackContext:
     """Contains all important information for handling with callbacks."""
 
     def __init__(self, session, bot, query, user):
@@ -118,7 +116,7 @@ class CallbackContext():
         self.user = user
 
         # Extract the callback type, task id
-        self.data = self.query.data.split(':')
+        self.data = self.query.data.split(":")
         self.callback_type = CallbackType(int(self.data[0]))
         self.payload = self.data[1]
         try:
@@ -141,8 +139,10 @@ class CallbackContext():
 
     def __repr__(self):
         """Print as string."""
-        representation = f'Context: query-{self.data}, poll-({self.poll}), user-({self.user}), '
-        representation += f'type-{self.callback_type}, action-{self.action}'
+        representation = (
+            f"Context: query-{self.data}, poll-({self.poll}), user-({self.user}), "
+        )
+        representation += f"type-{self.callback_type}, action-{self.action}"
 
         return representation
 
@@ -155,14 +155,14 @@ def handle_callback_query(bot, update, session, user):
 
     breadcrumbs.record(
         data={
-            'query': update.callback_query,
-            'data': update.callback_query.data,
-            'user': user,
-            'callback_type': context.callback_type,
-            'callback_result': context.callback_result,
-            'poll': context.poll,
+            "query": update.callback_query,
+            "data": update.callback_query.data,
+            "user": user,
+            "callback_type": context.callback_type,
+            "callback_result": context.callback_result,
+            "poll": context.poll,
         },
-        category='callbacks',
+        category="callbacks",
     )
 
     def ignore(session, context):
@@ -181,10 +181,8 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.cancel_creation: cancel_creation,
         CallbackType.back_to_init: back_to_creation_init,
         CallbackType.anonymity_settings: open_init_anonymization_settings,
-
         # Voting
         CallbackType.vote: handle_vote,
-
         # Menu
         CallbackType.menu_back: go_back,
         CallbackType.menu_vote: show_vote_menu,
@@ -192,7 +190,6 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.menu_delete: show_deletion_confirmation,
         CallbackType.menu_show: show_menu,
         CallbackType.menu_close: show_close_confirmation,
-
         # Poll management
         CallbackType.delete: delete_poll,
         CallbackType.delete_poll_with_messages: delete_poll_with_messages,
@@ -200,7 +197,6 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.reopen: reopen_poll,
         CallbackType.reset: reset_poll,
         CallbackType.clone: clone_poll,
-
         # Settings
         CallbackType.settings_anonymization_confirmation: show_anonymization_confirmation,
         CallbackType.settings_anonymization: make_anonymous,
@@ -214,7 +210,6 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.settings_open_due_date_datepicker: open_due_date_datepicker,
         CallbackType.settings_open_language_picker: open_language_picker,
         CallbackType.settings_change_poll_language: change_poll_language,
-
         # Styling
         CallbackType.settings_toggle_percentage: toggle_percentage,
         CallbackType.settings_toggle_option_votes: toggle_option_votes,
@@ -223,7 +218,6 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.settings_user_sorting: set_user_order,
         CallbackType.settings_option_sorting: set_option_order,
         CallbackType.settings_toggle_compact_buttons: toggle_compact_buttons,
-
         # User
         CallbackType.init_poll: init_poll,
         CallbackType.user_menu: open_main_menu,
@@ -239,12 +233,10 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.user_delete_closed: delete_closed,
         CallbackType.user_delete_all_confirmation: delete_all_confirmation,
         CallbackType.user_delete_closed_confirmation: delete_closed_confirmation,
-
         # Admin
         CallbackType.admin_settings: open_admin_settings,
         CallbackType.admin_plot: plot,
         CallbackType.admin_update: update_all,
-
         # Datepicker
         CallbackType.pick_creation_date: pick_creation_date,
         CallbackType.pick_creation_weekday: pick_creation_weekday,
@@ -254,17 +246,14 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.pick_external_date: pick_external_date,
         CallbackType.next_month: set_next_month,
         CallbackType.previous_month: set_previous_month,
-
         # External
         CallbackType.activate_notification: activate_notification,
         CallbackType.external_open_datepicker: open_external_datepicker,
         CallbackType.external_open_menu: open_external_menu,
         CallbackType.external_cancel: external_cancel,
-
         # Misc
         CallbackType.switch_help: switch_help,
         CallbackType.show_option_name: show_option_name,
-
         # Ignore
         CallbackType.ignore: ignore,
     }
@@ -277,8 +266,8 @@ def handle_callback_query(bot, update, session, user):
     if response is not None and context.callback_type != CallbackType.vote:
         context.query.answer(response)
     else:
-        context.query.answer('')
+        context.query.answer("")
 
-    increase_stat(session, 'callback_calls')
+    increase_stat(session, "callback_calls")
 
     return

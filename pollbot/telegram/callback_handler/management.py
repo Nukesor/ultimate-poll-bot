@@ -21,8 +21,7 @@ def delete_poll(session, context, poll):
         # User spams the button and issues multiple deletes
         pass
 
-
-    return i18n.t('callback.deleted', locale=poll.user.locale)
+    return i18n.t("callback.deleted", locale=poll.user.locale)
 
 
 @poll_required
@@ -37,7 +36,7 @@ def delete_poll_with_messages(session, context, poll):
         # User spams the button and issues multiple deletes
         pass
 
-    return i18n.t('callback.deleted', locale=poll.user.locale)
+    return i18n.t("callback.deleted", locale=poll.user.locale)
 
 
 @poll_required
@@ -47,14 +46,14 @@ def close_poll(session, context, poll):
     session.commit()
     update_poll_messages(session, context.bot, poll)
 
-    return i18n.t('callback.closed', locale=poll.user.locale)
+    return i18n.t("callback.closed", locale=poll.user.locale)
 
 
 @poll_required
 def reopen_poll(session, context, poll):
     """Reopen this poll."""
     if not poll.results_visible:
-        return i18n.t('callback.cannot_reopen', locale=poll.user.locale)
+        return i18n.t("callback.cannot_reopen", locale=poll.user.locale)
     poll.closed = False
 
     # Remove the due date if it's in the past
@@ -77,7 +76,7 @@ def reset_poll(session, context, poll):
     session.commit()
     update_poll_messages(session, context.bot, poll)
 
-    return i18n.t('callback.votes_removed', locale=poll.user.locale)
+    return i18n.t("callback.votes_removed", locale=poll.user.locale)
 
 
 @poll_required
@@ -88,9 +87,9 @@ def clone_poll(session, context, poll):
 
     context.tg_chat.send_message(
         get_poll_text(session, new_poll),
-        parse_mode='markdown',
+        parse_mode="markdown",
         reply_markup=get_management_keyboard(new_poll),
         disable_web_page_preview=True,
     )
 
-    return i18n.t('callback.cloned', locale=poll.user.locale)
+    return i18n.t("callback.cloned", locale=poll.user.locale)

@@ -17,6 +17,7 @@ from pollbot.i18n import i18n
 
 def job_wrapper(func):
     """Create a session, handle permissions and exceptions for jobs."""
+
     def wrapper(context):
         session = get_session()
         try:
@@ -26,16 +27,18 @@ def job_wrapper(func):
         except Exception as e:
             # Capture all exceptions from jobs. We need to handle those inside the jobs
             if not ignore_job_exception(e):
-                if config['logging']['debug']:
+                if config["logging"]["debug"]:
                     traceback.print_exc()
                 sentry.captureException()
         finally:
             session.close()
+
     return wrapper
 
 
 def inline_query_wrapper(func):
     """Create a session, handle permissions and exceptions for inline queries."""
+
     def wrapper(update, context):
         session = get_session()
         try:
@@ -46,17 +49,19 @@ def inline_query_wrapper(func):
             session.commit()
         except Exception as e:
             if not ignore_exception(e):
-                if config['logging']['debug']:
+                if config["logging"]["debug"]:
                     traceback.print_exc()
                     sentry.captureException()
 
         finally:
             session.close()
+
     return wrapper
 
 
 def inline_result_wrapper(func):
     """Create a session, handle permissions and exceptions for inline results."""
+
     def wrapper(update, context):
         session = get_session()
         try:
@@ -67,17 +72,19 @@ def inline_result_wrapper(func):
             session.commit()
         except Exception as e:
             if not ignore_exception(e):
-                if config['logging']['debug']:
+                if config["logging"]["debug"]:
                     traceback.print_exc()
                     sentry.captureException()
 
         finally:
             session.close()
+
     return wrapper
 
 
 def callback_query_wrapper(func):
     """Create a session, handle permissions and exceptions for callback queries."""
+
     def wrapper(update, context):
         user = None
         session = get_session()
@@ -89,40 +96,45 @@ def callback_query_wrapper(func):
             session.commit()
         except Exception as e:
             if not ignore_exception(e):
-                if config['logging']['debug']:
+                if config["logging"]["debug"]:
                     traceback.print_exc()
                 sentry.captureException()
 
             if not isinstance(e, TelegramError):
-                locale = 'English'
+                locale = "English"
                 if user is not None:
                     locale = user.locale
-                update.callback_query.answer(i18n.t('callback.error', locale=locale))
+                update.callback_query.answer(i18n.t("callback.error", locale=locale))
         finally:
             session.close()
+
     return wrapper
 
 
 def message_wrapper(private=False):
     """Create a session, handle permissions, handle exceptions and prepare some entities."""
+
     def real_decorator(func):
         """Parametrized decorator closure."""
+
         @wraps(func)
         def wrapper(update, context):
             user = None
             session = get_session()
             try:
-                if hasattr(update, 'message') and update.message:
+                if hasattr(update, "message") and update.message:
                     message = update.message
-                elif hasattr(update, 'edited_message') and update.edited_message:
+                elif hasattr(update, "edited_message") and update.edited_message:
                     message = update.edited_message
                 else:
                     raise Exception("Got an update without a message")
 
                 user = get_user(session, message.from_user)
 
-                if private and message.chat.type != 'private':
-                    message.chat.send_message('Please do this in a direct conversation with me.')
+                if private and message.chat.type != "private":
+                    message.chat.send_message(
+                        "Please do this in a direct conversation with me."
+                    )
                     return
 
                 response = func(context.bot, update, session, user)
@@ -135,17 +147,17 @@ def message_wrapper(private=False):
 
             except Exception as e:
                 if not ignore_exception(e):
-                    if config['logging']['debug']:
+                    if config["logging"]["debug"]:
                         traceback.print_exc()
                     sentry.captureException()
 
-                locale = 'English'
+                locale = "English"
                 if user is not None:
                     locale = user.locale
                 session.close()
                 message.chat.send_message(
-                    i18n.t('misc.error', locale=locale),
-                    parse_mode='markdown',
+                    i18n.t("misc.error", locale=locale),
+                    parse_mode="markdown",
                     disable_web_page_preview=True,
                 )
 
@@ -187,21 +199,21 @@ def get_user(session, tg_user):
 
 def get_name_from_tg_user(tg_user):
     """Return the best possible name for a User."""
-    name = ''
+    name = ""
     if tg_user.first_name is not None:
         name = tg_user.first_name
-        name += ' '
+        name += " "
     if tg_user.last_name is not None:
         name += tg_user.last_name
 
-    if tg_user.username is not None and name == '':
+    if tg_user.username is not None and name == "":
         name = tg_user.username
 
-    if name == '':
+    if name == "":
         name = str(tg_user.id)
 
-    for character in ['[', ']', '_', '*']:
-        name = name.replace(character, '')
+    for character in ["[", "]", "_", "*"]:
+        name = name.replace(character, "")
 
     return name.strip()
 
@@ -209,28 +221,38 @@ def get_name_from_tg_user(tg_user):
 def ignore_exception(exception):
     """Check whether we can safely ignore this exception."""
     if isinstance(exception, BadRequest):
-        if exception.message.startswith('Query is too old') or \
-           exception.message.startswith('Have no rights to send a message') or \
-           exception.message.startswith('Message_id_invalid') or \
-           exception.message.startswith('Message identifier not specified') or \
-           exception.message.startswith('Schedule_date_invalid') or \
-           exception.message.startswith('Message is not modified: specified new message content'):
+        if (
+            exception.message.startswith("Query is too old")
+            or exception.message.startswith("Have no rights to send a message")
+            or exception.message.startswith("Message_id_invalid")
+            or exception.message.startswith("Message identifier not specified")
+            or exception.message.startswith("Schedule_date_invalid")
+            or exception.message.startswith(
+                "Message is not modified: specified new message content"
+            )
+        ):
             return True
 
     if isinstance(exception, Unauthorized):
-        if exception.message.lower() == 'forbidden: bot was blocked by the user':
+        if exception.message.lower() == "forbidden: bot was blocked by the user":
             return True
-        if exception.message.lower() == 'forbidden: message_author_required':
+        if exception.message.lower() == "forbidden: message_author_required":
             return True
-        if exception.message.lower() == 'forbidden: bot is not a member of the supergroup chat':
+        if (
+            exception.message.lower()
+            == "forbidden: bot is not a member of the supergroup chat"
+        ):
             return True
-        if exception.message.lower() == 'forbidden: user is deactivated':
+        if exception.message.lower() == "forbidden: user is deactivated":
             return True
-        if exception.message.lower() == 'forbidden: bot was kicked from the group chat':
+        if exception.message.lower() == "forbidden: bot was kicked from the group chat":
             return True
-        if exception.message.lower() == 'forbidden: bot was kicked from the supergroup chat':
+        if (
+            exception.message.lower()
+            == "forbidden: bot was kicked from the supergroup chat"
+        ):
             return True
-        if exception.message.lower() == 'forbidden: chat_write_forbidden':
+        if exception.message.lower() == "forbidden: chat_write_forbidden":
             return True
 
     if isinstance(exception, TimedOut):

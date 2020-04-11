@@ -12,24 +12,28 @@ from pollbot.telegram.keyboard.external import get_notify_keyboard
 @message_wrapper()
 def notify(bot, update, session, user):
     """Activate notifications for polls with due date."""
-    polls = session.query(Poll) \
-        .filter(Poll.user == user) \
-        .filter(Poll.closed.is_(False)) \
-        .filter(Poll.due_date.isnot(None)) \
+    polls = (
+        session.query(Poll)
+        .filter(Poll.user == user)
+        .filter(Poll.closed.is_(False))
+        .filter(Poll.due_date.isnot(None))
         .all()
+    )
 
     select_message = update.message.chat.send_message(
-        i18n.t('external.notification.pick_poll', locale=user.locale),
-        parse_mode='markdown',
-        reply_markup=get_notify_keyboard(polls)
+        i18n.t("external.notification.pick_poll", locale=user.locale),
+        parse_mode="markdown",
+        reply_markup=get_notify_keyboard(polls),
     )
 
     message = update.message
 
-    notification = session.query(Notification) \
-        .filter(Notification.chat_id == message.chat.id) \
-        .filter(Notification.poll_id.is_(None)) \
+    notification = (
+        session.query(Notification)
+        .filter(Notification.chat_id == message.chat.id)
+        .filter(Notification.poll_id.is_(None))
         .one_or_none()
+    )
 
     # Try to invalidate the old notification board
     # If this fails, the old message has probably been deleted.
@@ -37,7 +41,9 @@ def notify(bot, update, session, user):
     if notification is not None:
         try:
             bot.edit_message_text(
-                i18n.t('external.notification.new_notification_board', locale=user.locale),
+                i18n.t(
+                    "external.notification.new_notification_board", locale=user.locale
+                ),
                 message.chat.id,
                 notification.select_message_id,
             )

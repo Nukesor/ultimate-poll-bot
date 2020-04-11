@@ -11,7 +11,7 @@ def send_styling_message(session, context):
     """Update the current styling menu message."""
     context.query.message.edit_text(
         text=get_poll_text(session, context.poll),
-        parse_mode='markdown',
+        parse_mode="markdown",
         reply_markup=get_styling_settings_keyboard(context.poll),
         disable_web_page_preview=True,
     )
@@ -22,7 +22,7 @@ def toggle_percentage(session, context, poll):
     """Toggle the visibility of the percentage bar."""
     if poll.anonymous and not poll.show_option_votes:
         context.query.message.chat.send_message(
-            text=i18n.t('settings.anonymity_warning', locale=context.user.locale),
+            text=i18n.t("settings.anonymity_warning", locale=context.user.locale),
         )
         return
     poll.show_percentage = not poll.show_percentage
@@ -37,7 +37,7 @@ def toggle_option_votes(session, context, poll):
     """Toggle the visibility of the vote overview on an option."""
     if poll.anonymous and not poll.show_percentage:
         context.query.message.chat.send_message(
-            text=i18n.t('settings.anonymity_warning', locale=context.user.locale),
+            text=i18n.t("settings.anonymity_warning", locale=context.user.locale),
         )
         return
 

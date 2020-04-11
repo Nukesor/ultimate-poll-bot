@@ -25,15 +25,15 @@ def search(bot, update, session, user):
 
     # Also search for closed polls if the `closed_polls` keyword is found
     closed = False
-    if 'closed_polls' in query:
+    if "closed_polls" in query:
         closed = True
-        query = query.replace('closed_polls', '').strip()
+        query = query.replace("closed_polls", "").strip()
 
     offset = update.inline_query.offset
 
-    if offset == '':
+    if offset == "":
         offset = 0
-    elif offset == 'Done':
+    elif offset == "Done":
         update.inline_query.answer(
             [], cache_time=0, is_personal=True,
         )
@@ -41,40 +41,47 @@ def search(bot, update, session, user):
     else:
         offset = int(offset)
 
-    if query == '':
+    if query == "":
         # Just display all polls
-        polls = session.query(Poll) \
-            .filter(Poll.user == user) \
-            .filter(Poll.closed.is_(closed)) \
-            .filter(Poll.created.is_(True)) \
-            .order_by(Poll.created_at.desc()) \
-            .limit(10) \
-            .offset(offset) \
+        polls = (
+            session.query(Poll)
+            .filter(Poll.user == user)
+            .filter(Poll.closed.is_(closed))
+            .filter(Poll.created.is_(True))
+            .order_by(Poll.created_at.desc())
+            .limit(10)
+            .offset(offset)
             .all()
+        )
 
     else:
         # Find polls with search parameter in name or description
-        polls = session.query(Poll) \
-            .filter(Poll.user == user) \
-            .filter(Poll.closed.is_(closed)) \
-            .filter(Poll.created.is_(True)) \
-            .filter(or_(
-                Poll.name.ilike(f'%{query}%'),
-                Poll.description.ilike(f'%{query}%'),
-            )) \
-            .order_by(Poll.created_at.desc()) \
-            .limit(10) \
-            .offset(offset) \
+        polls = (
+            session.query(Poll)
+            .filter(Poll.user == user)
+            .filter(Poll.closed.is_(closed))
+            .filter(Poll.created.is_(True))
+            .filter(
+                or_(
+                    Poll.name.ilike(f"%{query}%"), Poll.description.ilike(f"%{query}%"),
+                )
+            )
+            .order_by(Poll.created_at.desc())
+            .limit(10)
+            .offset(offset)
             .all()
+        )
 
     # Try to find polls that are shared by external people via uuid
     if len(polls) == 0 and len(query) == 36:
         try:
             poll_uuid = uuid.UUID(query)
-            poll = session.query(Poll) \
-                .filter(Poll.uuid == poll_uuid) \
-                .offset(offset) \
+            poll = (
+                session.query(Poll)
+                .filter(Poll.uuid == poll_uuid)
+                .offset(offset)
                 .one_or_none()
+            )
 
             if poll is not None:
                 # Check if sharin is enabled
@@ -99,33 +106,35 @@ def search(bot, update, session, user):
                 if reference.type == ReferenceType.inline.name:
                     inline_reference_count += 1
 
-            if inline_reference_count > config['telegram']['max_inline_shares']:
+            if inline_reference_count > config["telegram"]["max_inline_shares"]:
                 continue
 
-            text = i18n.t('poll.please_wait',locale=poll.locale)
-            keyboard = InlineKeyboardMarkup([[InlineKeyboardButton('Please ignore this', callback_data='100:0:0')]])
+            text = i18n.t("poll.please_wait", locale=poll.locale)
+            keyboard = InlineKeyboardMarkup(
+                [[InlineKeyboardButton("Please ignore this", callback_data="100:0:0")]]
+            )
 
             content = InputTextMessageContent(
-                text,
-                parse_mode='markdown',
-                disable_web_page_preview=True,
+                text, parse_mode="markdown", disable_web_page_preview=True,
             )
-            description = poll.description[:100] if poll.description is not None else None
-            results.append(InlineQueryResultArticle(
-                poll.id,
-                poll.name,
-                description=description,
-                input_message_content=content,
-                reply_markup=keyboard,
-            ))
-
+            description = (
+                poll.description[:100] if poll.description is not None else None
+            )
+            results.append(
+                InlineQueryResultArticle(
+                    poll.id,
+                    poll.name,
+                    description=description,
+                    input_message_content=content,
+                    reply_markup=keyboard,
+                )
+            )
 
         if len(polls) < 10:
-            offset = 'Done'
+            offset = "Done"
         else:
-            offset+10
+            offset + 10
 
         update.inline_query.answer(
-            results, cache_time=0, is_personal=True,
-            next_offset=str(offset),
+            results, cache_time=0, is_personal=True, next_offset=str(offset),
         )

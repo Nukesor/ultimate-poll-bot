@@ -7,7 +7,7 @@ from pollbot.i18n import i18n
 from pollbot.models import Poll, Reference
 from pollbot.display.poll.compilation import (
     get_poll_text_and_vote_keyboard,
-    compile_poll_text
+    compile_poll_text,
 )
 
 from pollbot.config import config
@@ -33,18 +33,18 @@ def start(bot, update, session, user):
     user.started = True
 
     try:
-        poll_uuid = UUID(text.split('-')[0])
-        action = StartAction(int(text.split('-')[1]))
+        poll_uuid = UUID(text.split("-")[0])
+        action = StartAction(int(text.split("-")[1]))
 
         poll = session.query(Poll).filter(Poll.uuid == poll_uuid).one()
     except:
-        text = ''
+        text = ""
 
     # We got an empty text, just send the start message
-    if text == '':
+    if text == "":
         update.message.chat.send_message(
-            i18n.t('misc.start', locale=user.locale),
-            parse_mode='markdown',
+            i18n.t("misc.start", locale=user.locale),
+            parse_mode="markdown",
             reply_markup=get_main_keyboard(user),
             disable_web_page_preview=True,
         )
@@ -52,7 +52,7 @@ def start(bot, update, session, user):
         return
 
     if poll is None:
-        return 'This poll no longer exists.'
+        return "This poll no longer exists."
 
     if action == StartAction.new_option and poll.allow_new_options:
         # Update the expected input and set the current poll
@@ -61,9 +61,9 @@ def start(bot, update, session, user):
         session.commit()
 
         update.message.chat.send_message(
-            i18n.t('creation.option.first', locale=poll.locale),
-            parse_mode='markdown',
-            reply_markup=get_external_add_option_keyboard(poll)
+            i18n.t("creation.option.first", locale=poll.locale),
+            parse_mode="markdown",
+            reply_markup=get_external_add_option_keyboard(poll),
         )
     elif action == StartAction.show_results:
         # Get all lines of the poll
@@ -72,55 +72,47 @@ def start(bot, update, session, user):
         chunks = split_text(lines)
 
         for chunk in chunks:
-            message = '\n'.join(chunk)
+            message = "\n".join(chunk)
             try:
                 update.message.chat.send_message(
-                    message,
-                    parse_mode='markdown',
-                    disable_web_page_preview=True,
+                    message, parse_mode="markdown", disable_web_page_preview=True,
                 )
             # Retry for Timeout error (happens quite often when sending large messages)
             except TimeoutError:
                 time.sleep(2)
                 update.message.chat.send_message(
-                    message,
-                    parse_mode='markdown',
-                    disable_web_page_preview=True,
+                    message, parse_mode="markdown", disable_web_page_preview=True,
                 )
             time.sleep(1)
 
         update.message.chat.send_message(
-            i18n.t('misc.start_after_results', locale=poll.locale),
-            parse_mode='markdown',
+            i18n.t("misc.start_after_results", locale=poll.locale),
+            parse_mode="markdown",
             reply_markup=get_main_keyboard(user),
         )
-        increase_stat(session, 'show_results')
+        increase_stat(session, "show_results")
 
     elif action == StartAction.share_poll and poll.allow_sharing:
         update.message.chat.send_message(
-            i18n.t('external.share_poll', locale=poll.locale),
-            reply_markup=get_external_share_keyboard(poll)
+            i18n.t("external.share_poll", locale=poll.locale),
+            reply_markup=get_external_share_keyboard(poll),
         )
-        increase_stat(session, 'externally_shared')
+        increase_stat(session, "externally_shared")
 
     elif action == StartAction.vote:
-        if not config['telegram']['allow_private_votes'] and not poll.is_priority():
+        if not config["telegram"]["allow_private_votes"] and not poll.is_priority():
             return
 
         if poll.is_priority():
             poll.init_votes(session, user)
             session.commit()
 
-        text, keyboard = get_poll_text_and_vote_keyboard(
-            session,
-            poll,
-            user=user,
-        )
+        text, keyboard = get_poll_text_and_vote_keyboard(session, poll, user=user,)
 
         sent_message = update.message.chat.send_message(
             text,
             reply_markup=keyboard,
-            parse_mode='markdown',
+            parse_mode="markdown",
             disable_web_page_preview=True,
         )
 

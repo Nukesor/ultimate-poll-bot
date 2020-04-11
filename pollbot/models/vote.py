@@ -1,11 +1,5 @@
 """The sqlalchemy model for a vote."""
-from sqlalchemy import (
-    Column,
-    func,
-    ForeignKey,
-    Index,
-    UniqueConstraint
-)
+from sqlalchemy import Column, func, ForeignKey, Index, UniqueConstraint
 from sqlalchemy.types import (
     BigInteger,
     DateTime,
@@ -20,10 +14,11 @@ from pollbot.db import base
 class Vote(base):
     """The model for a Vote."""
 
-    __tablename__ = 'vote'
+    __tablename__ = "vote"
     __table_args__ = (
-        UniqueConstraint('user_id', 'poll_id', 'poll_option_id',
-                         name='one_vote_per_option_and_user'),
+        UniqueConstraint(
+            "user_id", "poll_id", "poll_option_id", name="one_vote_per_option_and_user"
+        ),
     )
 
     id = Column(Integer, primary_key=True)
@@ -33,17 +28,31 @@ class Vote(base):
     vote_count = Column(Integer)
 
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
-    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
+    updated_at = Column(
+        DateTime, server_default=func.now(), onupdate=func.now(), nullable=False
+    )
 
     # ManyToOne
-    poll_option_id = Column(Integer, ForeignKey('poll_option.id', ondelete='cascade'), nullable=False, index=True)
-    poll_option = relationship('PollOption')
+    poll_option_id = Column(
+        Integer,
+        ForeignKey("poll_option.id", ondelete="cascade"),
+        nullable=False,
+        index=True,
+    )
+    poll_option = relationship("PollOption")
 
-    poll_id = Column(Integer, ForeignKey('poll.id', ondelete='cascade'), nullable=False, index=True)
-    poll = relationship('Poll')
+    poll_id = Column(
+        Integer, ForeignKey("poll.id", ondelete="cascade"), nullable=False, index=True
+    )
+    poll = relationship("Poll")
 
-    user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade'), nullable=False, index=True)
-    user = relationship('User')
+    user_id = Column(
+        BigInteger,
+        ForeignKey("user.id", ondelete="cascade"),
+        nullable=False,
+        index=True,
+    )
+    user = relationship("User")
 
     def __init__(self, user, poll_option):
         """Create a new vote."""
@@ -55,19 +64,22 @@ class Vote(base):
 
     def __repr__(self):
         """Print as string."""
-        return f'Vote with Id: {self.id}, poll: {self.poll_id}'
+        return f"Vote with Id: {self.id}, poll: {self.poll_id}"
 
 
 Index(
-    'ix_unique_single_vote',
-    Vote.user_id, Vote.poll_id,
+    "ix_unique_single_vote",
+    Vote.user_id,
+    Vote.poll_id,
     unique=True,
-    postgresql_where=Vote.poll_type == 'single_vote',
+    postgresql_where=Vote.poll_type == "single_vote",
 )
 
 Index(
-    'ix_unique_priority_vote',
-    Vote.user_id, Vote.poll_id, Vote.priority,
+    "ix_unique_priority_vote",
+    Vote.user_id,
+    Vote.poll_id,
+    Vote.priority,
     unique=True,
-    postgresql_where=Vote.poll_type == 'priority',
+    postgresql_where=Vote.poll_type == "priority",
 )

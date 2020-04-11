@@ -21,17 +21,21 @@ def activate_notification(session, context, poll):
         return "You aren't allowed to do this"
 
     message = context.query.message
-    notification = session.query(Notification) \
-        .filter(Notification.select_message_id == message.message_id) \
+    notification = (
+        session.query(Notification)
+        .filter(Notification.select_message_id == message.message_id)
         .one_or_none()
+    )
 
     if notification is None:
         raise Exception(f"Got rogue notification board for poll {poll} and user {user}")
 
-    existing_notification = session.query(Notification) \
-        .filter(Notification.poll == poll) \
-        .filter(Notification.chat_id == message.chat_id) \
+    existing_notification = (
+        session.query(Notification)
+        .filter(Notification.poll == poll)
+        .filter(Notification.chat_id == message.chat_id)
         .one_or_none()
+    )
 
     # We already got a notification in this chat for this poll
     # Save the poll message id anyway
@@ -42,8 +46,8 @@ def activate_notification(session, context, poll):
         notification.poll = poll
 
     session.commit()
-    message.edit_text(i18n.t('external.notification.activated', locale=poll.locale))
-    increase_stat(session, 'notifications')
+    message.edit_text(i18n.t("external.notification.activated", locale=poll.locale))
+    increase_stat(session, "notifications")
 
 
 @poll_required
@@ -53,13 +57,13 @@ def open_external_datepicker(session, context, poll):
     # Switch from new option by text to new option via datepicker
     message = context.query.message
     if context.user.expected_input != ExpectedInput.new_user_option.name:
-        message.edit_text(i18n.t('creation.option.finished', locale=context.user.locale))
+        message.edit_text(
+            i18n.t("creation.option.finished", locale=context.user.locale)
+        )
         return
 
     message.edit_text(
-        get_datepicker_text(poll),
-        parse_mode='markdown',
-        reply_markup=keyboard
+        get_datepicker_text(poll), parse_mode="markdown", reply_markup=keyboard
     )
 
 
@@ -71,9 +75,9 @@ def open_external_menu(session, context, poll):
     session.commit()
 
     context.query.message.edit_text(
-        i18n.t('creation.option.first', locale=poll.locale),
-        parse_mode='markdown',
-        reply_markup=get_external_add_option_keyboard(poll)
+        i18n.t("creation.option.first", locale=poll.locale),
+        parse_mode="markdown",
+        reply_markup=get_external_add_option_keyboard(poll),
     )
 
 
@@ -84,4 +88,4 @@ def external_cancel(session, context, poll):
     context.user.current_poll = None
     session.commit()
 
-    context.query.message.edit_text(i18n.t('external.done', locale=poll.locale))
+    context.query.message.edit_text(i18n.t("external.done", locale=poll.locale))

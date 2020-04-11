@@ -9,8 +9,8 @@ import http.client
 conn = http.client.HTTPSConnection("api.lokalise.co")
 
 headers = {
-    'content-type': "application/json",
-    'x-api-token': "50226dfe9152847d3f5f34450aaffcedb1542d0f",
+    "content-type": "application/json",
+    "x-api-token": "50226dfe9152847d3f5f34450aaffcedb1542d0f",
 }
 
 # Specify the way we want our languages formatted
@@ -24,16 +24,7 @@ payload = {
     "original_filenames": False,
     "replace_breaks": False,
     "export_sort": "first_added",
-    "filter_langs": [
-        "ca",
-        "cs",
-        "de",
-        "it",
-        "pl",
-        "pt_BR",
-        "es",
-        "tr",
-    ],
+    "filter_langs": ["ca", "cs", "de", "it", "pl", "pt_BR", "es", "tr",],
 }
 
 # Get the download location for our locales
@@ -50,7 +41,7 @@ data = res.read()
 try:
     # Extract the url from the response
     response = json.loads(data)
-    url = response['bundle_url']
+    url = response["bundle_url"]
 except:
     print(response)
     sys.exit(1)
@@ -60,7 +51,7 @@ file_name = "/tmp/languages.zip"
 urllib.request.urlretrieve(url, file_name)
 
 # Extract all the contents of zip file in i18n
-with ZipFile(file_name, 'r') as zipObj:
-    zipObj.extractall('i18n')
+with ZipFile(file_name, "r") as zipObj:
+    zipObj.extractall("i18n")
 
-os.rename('i18n/Portuguese__28Brazil_29.yml', 'i18n/Portuguese (Brazil).yml')
+os.rename("i18n/Portuguese__28Brazil_29.yml", "i18n/Portuguese (Brazil).yml")

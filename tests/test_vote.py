@@ -3,9 +3,10 @@ import pytest
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import exists
 
+
 class TestVote:
     def test_unique_ordering(self, session, user, poll):
-        option = PollOption(poll, 'option 0')
+        option = PollOption(poll, "option 0")
         session.add(option)
         vote = Vote(user, option)
         vote.priority = 0
@@ -17,7 +18,7 @@ class TestVote:
             session.commit()
 
     def test_cascades_dont_delete_poll(self, session, user, poll):
-        option = PollOption(poll, 'option 0')
+        option = PollOption(poll, "option 0")
         session.add(option)
         vote = Vote(user, option)
         vote.priority = 0
@@ -29,7 +30,7 @@ class TestVote:
         assert poll_exists
 
     def test_cascades_delete_vote(self, session, user, poll):
-        option = PollOption(poll, 'option 0')
+        option = PollOption(poll, "option 0")
         session.add(option)
         vote = Vote(user, option)
         vote.priority = 0

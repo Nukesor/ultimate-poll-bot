@@ -9,14 +9,14 @@ from logging.config import fileConfig
 parent_dir = os.path.abspath(os.path.join(os.getcwd()))
 sys.path.append(parent_dir)
 
-from pollbot.db import base # noqa
-from pollbot.models import * # noqa
+from pollbot.db import base  # noqa
+from pollbot.models import *  # noqa
 from pollbot.config import config as pollbot_config
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-config.set_main_option('sqlalchemy.url', pollbot_config['database']['sql_uri'])
+config.set_main_option("sqlalchemy.url", pollbot_config["database"]["sql_uri"])
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -68,8 +68,9 @@ def run_migrations_online():
     """
     connectable = engine_from_config(
         config.get_section(config.config_ini_section),
-        prefix='sqlalchemy.',
-        poolclass=pool.NullPool)
+        prefix="sqlalchemy.",
+        poolclass=pool.NullPool,
+    )
 
     with connectable.connect() as connection:
         context.configure(

@@ -21,8 +21,9 @@ def create_poll(bot, update, session, user):
     user.started = True
     if user.current_poll is not None and not user.current_poll.created:
         update.message.chat.send_message(
-            i18n.t('creation.already_creating', locale=user.locale),
-            reply_markup=get_cancel_creation_keyboard(user.current_poll))
+            i18n.t("creation.already_creating", locale=user.locale),
+            reply_markup=get_cancel_creation_keyboard(user.current_poll),
+        )
         return
 
     poll = Poll.create(user, session)
@@ -31,7 +32,7 @@ def create_poll(bot, update, session, user):
 
     update.message.chat.send_message(
         text,
-        parse_mode='markdown',
+        parse_mode="markdown",
         reply_markup=keyboard,
         disable_web_page_preview=True,
     )

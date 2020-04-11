@@ -20,17 +20,17 @@ def message_update_job(context, session):
         context.job.enabled = False
         now = datetime.now()
 
-        update_count = session.query(Update) \
-            .filter(Update.next_update <= now) \
-            .count()
+        update_count = session.query(Update).filter(Update.next_update <= now).count()
 
         while update_count > 0:
-            updates = session.query(Update) \
-                .filter(Update.next_update <= now) \
-                .options(joinedload(Update.poll)) \
-                .order_by(Update.next_update.asc()) \
-                .limit(50) \
+            updates = (
+                session.query(Update)
+                .filter(Update.next_update <= now)
+                .options(joinedload(Update.poll))
+                .order_by(Update.next_update.asc())
+                .limit(50)
                 .all()
+            )
 
             for update in updates:
                 try:
@@ -52,9 +52,9 @@ def message_update_job(context, session):
 
             # Update the count again.
             # Updates can be removed by normal operation as well
-            update_count = session.query(Update) \
-                .filter(Update.next_update <= now) \
-                .count()
+            update_count = (
+                session.query(Update).filter(Update.next_update <= now).count()
+            )
 
     except Exception as e:
         raise e
@@ -68,29 +68,35 @@ def message_update_job(context, session):
 @job_wrapper
 def send_notifications(context, session):
     """Notify the users about the poll being closed soon."""
-    polls = session.query(Poll) \
-        .filter(or_(
-            Poll.next_notification <= datetime.now(),
-            Poll.due_date <= datetime.now(),
-        )) \
-        .filter(Poll.closed.is_(False)) \
+    polls = (
+        session.query(Poll)
+        .filter(
+            or_(
+                Poll.next_notification <= datetime.now(),
+                Poll.due_date <= datetime.now(),
+            )
+        )
+        .filter(Poll.closed.is_(False))
         .all()
+    )
 
     for poll in polls:
         time_step = poll.due_date - poll.next_notification
 
         if time_step == timedelta(days=7):
-            send_notifications_for_poll(context, session, poll, 'notification.one_week')
+            send_notifications_for_poll(context, session, poll, "notification.one_week")
             poll.next_notification = poll.due_date - timedelta(days=1)
 
         # One day remaining reminder
         elif time_step == timedelta(days=1):
-            send_notifications_for_poll(context, session, poll, 'notification.one_day')
+            send_notifications_for_poll(context, session, poll, "notification.one_day")
             poll.next_notification = poll.due_date - timedelta(hours=6)
 
         # Six hours remaining reminder
         elif time_step == timedelta(hours=6):
-            send_notifications_for_poll(context, session, poll, 'notification.six_hours')
+            send_notifications_for_poll(
+                context, session, poll, "notification.six_hours"
+            )
             poll.next_notification = poll.due_date
 
         # Send the closed notification, remove all notifications and close the poll
@@ -98,11 +104,10 @@ def send_notifications(context, session):
             poll.closed = True
             update_poll_messages(session, context.bot, poll)
 
-            send_notifications_for_poll(context, session, poll, 'notification.closed')
+            send_notifications_for_poll(context, session, poll, "notification.closed")
             for notification in poll.notifications:
                 session.delete(notification)
             session.commit()
-
 
 
 def send_notifications_for_poll(context, session, poll, message_key):
@@ -114,12 +119,12 @@ def send_notifications_for_poll(context, session, poll, message_key):
             tg_chat = context.bot.get_chat(notification.chat_id)
             tg_chat.send_message(
                 i18n.t(message_key, locale=locale, name=poll.name),
-                parse_mode='markdown',
+                parse_mode="markdown",
                 reply_to_message_id=notification.poll_message_id,
             )
 
         except BadRequest as e:
-            if e.message == 'Chat not found':
+            if e.message == "Chat not found":
                 session.delete(notification)
         # Bot was removed from group
         except Unauthorized:

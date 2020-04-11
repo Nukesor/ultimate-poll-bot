@@ -53,24 +53,29 @@ class Reference(base):
     poll = relationship("Poll")
 
     def __init__(
-        self,
-        poll,
-        reference_type,
-        user=None,
-        message_id=None,
-        inline_message_id=None,
+        self, poll, reference_type, user=None, message_id=None, inline_message_id=None,
     ):
         """Create a new poll."""
         self.poll = poll
         self.type = reference_type
-        if user is not None and message_id is not None and reference_type in [ReferenceType.admin.name, ReferenceType.private_vote.name]:
+        if (
+            user is not None
+            and message_id is not None
+            and reference_type
+            in [ReferenceType.admin.name, ReferenceType.private_vote.name]
+        ):
             self.user = user
             self.message_id = message_id
 
-        elif inline_message_id is not None and reference_type == ReferenceType.inline.name:
+        elif (
+            inline_message_id is not None
+            and reference_type == ReferenceType.inline.name
+        ):
             self.bot_inline_message_id = inline_message_id
         else:
-            raise Exception("Tried to create Reference with wrong type or missing parameters")
+            raise Exception(
+                "Tried to create Reference with wrong type or missing parameters"
+            )
 
     def __repr__(self):
         """Print as string."""

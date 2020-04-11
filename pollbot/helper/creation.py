@@ -17,14 +17,14 @@ def next_option(tg_chat, poll, options):
     keyboard = get_options_entered_keyboard(poll)
 
     if len(options) == 1:
-        text = i18n.t('creation.option.single_added', locale=locale, option=options[0])
+        text = i18n.t("creation.option.single_added", locale=locale, option=options[0])
     else:
-        text = i18n.t('creation.option.multiple_added', locale=locale)
+        text = i18n.t("creation.option.multiple_added", locale=locale)
         for option in options:
-            text += f'\n*{option}*'
-        text += '\n\n' + i18n.t('creation.option.next', locale=locale)
+            text += f"\n*{option}*"
+        text += "\n\n" + i18n.t("creation.option.next", locale=locale)
 
-    tg_chat.send_message(text, reply_markup=keyboard, parse_mode='Markdown')
+    tg_chat.send_message(text, reply_markup=keyboard, parse_mode="Markdown")
 
 
 def create_poll(session, poll, user, chat, message=None):
@@ -36,56 +36,53 @@ def create_poll(session, poll, user, chat, message=None):
     text = get_poll_text(session, poll)
 
     if len(text) > 4000:
-        error_message = i18n.t('misc.over_4000', locale=user.locale)
-        message = chat.send_message(error_message, parse_mode='markdown')
+        error_message = i18n.t("misc.over_4000", locale=user.locale)
+        message = chat.send_message(error_message, parse_mode="markdown")
         session.delete(poll)
         return
 
     if message:
         message = message.edit_text(
             text,
-            parse_mode='markdown',
+            parse_mode="markdown",
             reply_markup=get_management_keyboard(poll),
             disable_web_page_preview=True,
         )
     else:
         message = chat.send_message(
             text,
-            parse_mode='markdown',
+            parse_mode="markdown",
             reply_markup=get_management_keyboard(poll),
             disable_web_page_preview=True,
         )
 
     if len(text) > 3000:
-        error_message = i18n.t('misc.over_3000', locale=user.locale)
-        message = chat.send_message(error_message, parse_mode='markdown')
+        error_message = i18n.t("misc.over_3000", locale=user.locale)
+        message = chat.send_message(error_message, parse_mode="markdown")
 
     reference = Reference(
-        poll,
-        ReferenceType.admin.name,
-        user=user,
-        message_id=message.message_id
+        poll, ReferenceType.admin.name, user=user, message_id=message.message_id
     )
     session.add(reference)
     session.commit()
 
-    increase_stat(session, 'created_polls')
+    increase_stat(session, "created_polls")
 
 
 def add_options(poll, text, is_date=False):
     """Add a new option to the poll."""
-    options_to_add = [x.strip() for x in text.split('\n') if x.strip() != '']
+    options_to_add = [x.strip() for x in text.split("\n") if x.strip() != ""]
     added_options = []
 
     for option_to_add in options_to_add:
         description = None
         # Extract the description if existing
-        if not is_date and '--' in option_to_add:
+        if not is_date and "--" in option_to_add:
             # Extract and strip the description
-            splitted = option_to_add.split('--', 1)
+            splitted = option_to_add.split("--", 1)
             option_to_add = splitted[0].strip()
             description = splitted[1].strip()
-            if description == '':
+            if description == "":
                 description = None
 
         if option_is_duplicate(poll, option_to_add) or option_to_add in added_options:

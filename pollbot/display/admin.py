@@ -5,43 +5,42 @@ def stats(session):
     """Get user stats."""
     # User stats
     total_users = session.query(User.id).count()
-    users_owning_polls = session.query(User) \
-        .join(User.polls) \
-        .filter(Poll.created.is_(True)) \
-        .group_by(User) \
+    users_owning_polls = (
+        session.query(User)
+        .join(User.polls)
+        .filter(Poll.created.is_(True))
+        .group_by(User)
         .count()
-    users_with_votes = session.query(User) \
-        .join(User.votes) \
-        .group_by(User) \
-        .count()
-    users_started = session.query(User) \
-        .filter(User.started.is_(True)) \
-        .count()
+    )
+    users_with_votes = session.query(User).join(User.votes).group_by(User).count()
+    users_started = session.query(User).filter(User.started.is_(True)).count()
 
     # Polls
     highest_id = session.query(Poll.id).order_by(Poll.id.desc()).first()[0]
     total_polls = session.query(Poll).count()
-    created_polls = session.query(Poll) \
-        .filter(Poll.closed.is_(False)) \
-        .filter(Poll.created.is_(True)) \
+    created_polls = (
+        session.query(Poll)
+        .filter(Poll.closed.is_(False))
+        .filter(Poll.created.is_(True))
         .count()
-    unfinished_polls = session.query(Poll) \
-        .filter(Poll.closed.is_(False)) \
-        .filter(Poll.created.is_(False)) \
+    )
+    unfinished_polls = (
+        session.query(Poll)
+        .filter(Poll.closed.is_(False))
+        .filter(Poll.created.is_(False))
         .count()
+    )
 
-    closed_polls = session.query(Poll) \
-        .filter(Poll.closed.is_(True)) \
-        .count()
+    closed_polls = session.query(Poll).filter(Poll.closed.is_(True)).count()
 
     # Poll types
-    single = session.query(Poll).filter(Poll.poll_type == 'single_vote').count()
-    doodle = session.query(Poll).filter(Poll.poll_type == 'doodle').count()
-    count = session.query(Poll).filter(Poll.poll_type == 'count_vote').count()
-    priority = session.query(Poll).filter(Poll.poll_type == 'priority').count()
-    block = session.query(Poll).filter(Poll.poll_type == 'block_vote').count()
-    limited = session.query(Poll).filter(Poll.poll_type == 'limited_vote').count()
-    cumulative = session.query(Poll).filter(Poll.poll_type == 'cumulative_vote').count()
+    single = session.query(Poll).filter(Poll.poll_type == "single_vote").count()
+    doodle = session.query(Poll).filter(Poll.poll_type == "doodle").count()
+    count = session.query(Poll).filter(Poll.poll_type == "count_vote").count()
+    priority = session.query(Poll).filter(Poll.poll_type == "priority").count()
+    block = session.query(Poll).filter(Poll.poll_type == "block_vote").count()
+    limited = session.query(Poll).filter(Poll.poll_type == "limited_vote").count()
+    cumulative = session.query(Poll).filter(Poll.poll_type == "cumulative_vote").count()
 
     single_percent = single / total_polls * 100
     doodle_percent = doodle / total_polls * 100

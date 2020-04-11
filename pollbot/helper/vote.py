@@ -4,6 +4,7 @@ from pollbot.helper.enums import UserSorting
 
 def get_sorted_votes(poll, votes):
     """Sort the votes depending on the poll's current settings."""
+
     def get_user_name(vote):
         """Get the name of user to sort votes."""
         return vote.user.name
@@ -16,7 +17,7 @@ def get_sorted_votes(poll, votes):
 
 def get_sorted_doodle_votes(poll, votes):
     """Sort the votes depending on the poll's current settings."""
-    doodle_answers = ['yes', 'maybe', 'no']
+    doodle_answers = ["yes", "maybe", "no"]
 
     votes_by_answer = {}
     for key in doodle_answers:

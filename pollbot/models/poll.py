@@ -24,18 +24,25 @@ from pollbot.helper.enums import PollType, UserSorting, OptionSorting, ExpectedI
 class Poll(base):
     """The model for a Poll."""
 
-    __tablename__ = 'poll'
+    __tablename__ = "poll"
 
     id = Column(Integer, primary_key=True)
-    uuid = Column(UUID(as_uuid=True), unique=True, nullable=False, server_default=text('gen_random_uuid()'))
+    uuid = Column(
+        UUID(as_uuid=True),
+        unique=True,
+        nullable=False,
+        server_default=text("gen_random_uuid()"),
+    )
 
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
-    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
+    updated_at = Column(
+        DateTime, server_default=func.now(), onupdate=func.now(), nullable=False
+    )
 
     # Options
     name = Column(String)
     description = Column(String)
-    locale = Column(String, default='English')
+    locale = Column(String, default="English")
     poll_type = Column(String, nullable=False)
     number_of_votes = Column(Integer)
 
@@ -45,11 +52,15 @@ class Poll(base):
     due_date = Column(DateTime, nullable=True)
     next_notification = Column(DateTime, nullable=True)
     allow_new_options = Column(Boolean, nullable=False, default=False)
-    allow_sharing = Column(Boolean, nullable=False, default=False, server_default="FALSE")
+    allow_sharing = Column(
+        Boolean, nullable=False, default=False, server_default="FALSE"
+    )
 
     # Styling
     show_percentage = Column(Boolean, nullable=False, default=True)
-    show_option_votes = Column(Boolean, nullable=False, default=True, server_default="true")
+    show_option_votes = Column(
+        Boolean, nullable=False, default=True, server_default="true"
+    )
     european_date_format = Column(Boolean, nullable=False, default=False)
     permanently_summarized = Column(Boolean, nullable=False, default=False)
     compact_buttons = Column(Boolean, nullable=False, default=False)
@@ -66,14 +77,24 @@ class Poll(base):
     in_settings = Column(Boolean, nullable=False, default=False)
 
     # OneToOne
-    user_id = Column(BigInteger, ForeignKey('user.id', ondelete='cascade', name='user'), nullable=False, index=True)
-    user = relationship('User', foreign_keys='Poll.user_id')
+    user_id = Column(
+        BigInteger,
+        ForeignKey("user.id", ondelete="cascade", name="user"),
+        nullable=False,
+        index=True,
+    )
+    user = relationship("User", foreign_keys="Poll.user_id")
 
     # OneToMany
-    options = relationship('PollOption', order_by='asc(PollOption.id)', lazy='joined', passive_deletes='all')
-    votes = relationship('Vote', passive_deletes='all')
-    references = relationship('Reference', lazy='joined', passive_deletes='all')
-    notifications = relationship('Notification', passive_deletes='all')
+    options = relationship(
+        "PollOption",
+        order_by="asc(PollOption.id)",
+        lazy="joined",
+        passive_deletes="all",
+    )
+    votes = relationship("Vote", passive_deletes="all")
+    references = relationship("Reference", lazy="joined", passive_deletes="all")
+    notifications = relationship("Notification", passive_deletes="all")
 
     def __init__(self, user):
         """Create a new poll."""
@@ -100,7 +121,7 @@ class Poll(base):
 
     def __repr__(self):
         """Print as string."""
-        return f'Poll with Id: {self.id}, name: {self.name}, locale: {self.locale}'
+        return f"Poll with Id: {self.id}, name: {self.name}, locale: {self.locale}"
 
     def should_show_result(self):
         """Determine, whether this results of this poll should be shown."""
@@ -129,9 +150,9 @@ class Poll(base):
     def get_formatted_due_date(self):
         """Get the formatted date."""
         if self.european_date_format:
-            return self.due_date.strftime('%d.%m.%Y %H:%M UTC')
+            return self.due_date.strftime("%d.%m.%Y %H:%M UTC")
 
-        return self.due_date.strftime('%Y-%m-%d %H:%M UTC')
+        return self.due_date.strftime("%Y-%m-%d %H:%M UTC")
 
     def set_due_date(self, date):
         """Set the due date and the next notification."""
@@ -171,6 +192,7 @@ class Poll(base):
         poll.show_percentage = self.show_percentage
 
         from pollbot.models import PollOption
+
         for option in self.options:
             new_option = PollOption(poll, option.name)
             new_option.description = option.description
@@ -188,16 +210,16 @@ class Poll(base):
             return
 
         from pollbot.models import User, Vote, PollOption
-        users = session.query(User) \
-            .join(User.votes) \
-            .filter(Vote.poll == self) \
-            .all()
 
-        new_options = session.query(PollOption) \
-            .filter(PollOption.poll == self) \
-            .outerjoin(Vote) \
-            .filter(Vote.id.is_(None)) \
+        users = session.query(User).join(User.votes).filter(Vote.poll == self).all()
+
+        new_options = (
+            session.query(PollOption)
+            .filter(PollOption.poll == self)
+            .outerjoin(Vote)
+            .filter(Vote.id.is_(None))
             .all()
+        )
 
         existing_options_count = len(self.options) - len(new_options)
 
@@ -216,10 +238,13 @@ class Poll(base):
 
         from pollbot.models import Vote
 
-        votes_exist = session.query(Vote) \
-            .filter(Vote.user == user) \
-            .filter(Vote.poll == self) \
-            .first() is not None
+        votes_exist = (
+            session.query(Vote)
+            .filter(Vote.user == user)
+            .filter(Vote.poll == self)
+            .first()
+            is not None
+        )
 
         if votes_exist:
             return
@@ -230,4 +255,3 @@ class Poll(base):
             vote.priority = index
             votes.append(vote)
         session.add_all(votes)
-

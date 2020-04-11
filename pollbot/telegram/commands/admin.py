@@ -12,9 +12,10 @@ from pollbot.helper.session import message_wrapper
 
 def admin_required(function):
     """Return if the poll does not exist in the context object."""
+
     def wrapper(bot, update, session, user):
-        if user.username.lower() != config['telegram']['admin'].lower():
-            return(i18n.t('admin.not_allowed', locale=user.locale))
+        if user.username.lower() != config["telegram"]["admin"].lower():
+            return i18n.t("admin.not_allowed", locale=user.locale)
 
         return function(bot, update, session, user)
 
@@ -26,7 +27,7 @@ def admin_required(function):
 @admin_required
 def reset_broadcast(bot, update, session, user):
     """Reset the broadcast_sent flag for all users."""
-    session.query(User).update({'broadcast_sent': False})
+    session.query(User).update({"broadcast_sent": False})
     session.commit()
 
     return "All broadcast flags resetted"
@@ -38,21 +39,23 @@ def reset_broadcast(bot, update, session, user):
 def broadcast(bot, update, session, user):
     """Broadcast a message to all users."""
     chat = update.message.chat
-    message = update.message.text.split(' ', 1)[1].strip()
-    users = session.query(User) \
-        .filter(User.notifications_enabled.is_(True)) \
-        .filter(User.started.is_(True)) \
-        .filter(User.broadcast_sent.is_(False)) \
+    message = update.message.text.split(" ", 1)[1].strip()
+    users = (
+        session.query(User)
+        .filter(User.notifications_enabled.is_(True))
+        .filter(User.started.is_(True))
+        .filter(User.broadcast_sent.is_(False))
         .all()
+    )
 
-    chat.send_message(f'Sending broadcast to {len(users)} chats.')
+    chat.send_message(f"Sending broadcast to {len(users)} chats.")
     count = 0
     for user in users:
         try:
             bot.send_message(
                 user.id,
                 message,
-                parse_mode='Markdown',
+                parse_mode="Markdown",
                 reply_markup=ReplyKeyboardRemove(),
             )
             user.broadcast_sent = True
@@ -60,7 +63,7 @@ def broadcast(bot, update, session, user):
 
         # The chat doesn't exist any longer, delete it
         except BadRequest as e:
-            if e.message == 'Chat not found':  # noqa
+            if e.message == "Chat not found":  # noqa
                 pass
 
         # We are not allowed to contact this user.
@@ -76,9 +79,9 @@ def broadcast(bot, update, session, user):
 
         count += 1
         if count % 500 == 0:
-            chat.send_message(f'Sent to {count} users.')
+            chat.send_message(f"Sent to {count} users.")
 
-    update.message.chat.send_message('All messages sent')
+    update.message.chat.send_message("All messages sent")
 
 
 @run_async
@@ -86,11 +89,8 @@ def broadcast(bot, update, session, user):
 @admin_required
 def test_broadcast(bot, update, session, user):
     """Send the broadcast message to the admin for test purposes."""
-    message = update.message.text.split(' ', 1)[1].strip()
+    message = update.message.text.split(" ", 1)[1].strip()
 
     bot.send_message(
-        user.id,
-        message,
-        parse_mode='Markdown',
-        reply_markup=ReplyKeyboardRemove(),
+        user.id, message, parse_mode="Markdown", reply_markup=ReplyKeyboardRemove(),
     )

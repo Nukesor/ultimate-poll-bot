@@ -6,7 +6,7 @@ from pollbot.helper.enums import CallbackResult, ExpectedInput, ReferenceType
 from pollbot.display import get_settings_text
 from pollbot.display.poll.compilation import (
     get_poll_text_and_vote_keyboard,
-    get_poll_text
+    get_poll_text,
 )
 from pollbot.telegram.keyboard import (
     get_change_poll_type_keyboard,
@@ -21,9 +21,7 @@ from pollbot.telegram.keyboard import (
 def show_poll_type_keyboard(session, context, poll):
     """Change the initial keyboard to vote type keyboard."""
     keyboard = get_change_poll_type_keyboard(poll)
-    context.query.message.edit_text(
-        reply_markup=keyboard
-    )
+    context.query.message.edit_text(reply_markup=keyboard)
 
 
 @poll_required
@@ -40,7 +38,7 @@ def go_back(session, context, poll):
 
     context.query.message.edit_text(
         text,
-        parse_mode='markdown',
+        parse_mode="markdown",
         reply_markup=keyboard,
         disable_web_page_preview=True,
     )
@@ -56,12 +54,14 @@ def show_vote_menu(session, context, poll):
         poll.init_votes(session, context.user)
         session.commit()
 
-    text, keyboard = get_poll_text_and_vote_keyboard(session, poll, user=context.user, show_back=True)
+    text, keyboard = get_poll_text_and_vote_keyboard(
+        session, poll, user=context.user, show_back=True
+    )
     # Set the expected_input to votes, since the user might want to vote multiple times
     context.user.expected_input = ExpectedInput.votes.name
     context.query.message.edit_text(
         text,
-        parse_mode='markdown',
+        parse_mode="markdown",
         reply_markup=keyboard,
         disable_web_page_preview=True,
     )
@@ -74,7 +74,7 @@ def show_settings(session, context, poll):
     keyboard = get_settings_keyboard(poll)
     context.query.message.edit_text(
         text,
-        parse_mode='markdown',
+        parse_mode="markdown",
         reply_markup=keyboard,
         disable_web_page_preview=True,
     )
@@ -85,7 +85,7 @@ def show_settings(session, context, poll):
 def show_deletion_confirmation(session, context, poll):
     """Show the delete confirmation message."""
     context.query.message.edit_text(
-        i18n.t('management.delete', locale=poll.user.locale),
+        i18n.t("management.delete", locale=poll.user.locale),
         reply_markup=get_deletion_confirmation(poll),
     )
 
@@ -94,7 +94,7 @@ def show_deletion_confirmation(session, context, poll):
 def show_close_confirmation(session, context, poll):
     """Show the permanent close confirmation message."""
     context.query.message.edit_text(
-        i18n.t('management.permanently_close', locale=poll.user.locale),
+        i18n.t("management.permanently_close", locale=poll.user.locale),
         reply_markup=get_close_confirmation(poll),
     )
 
@@ -105,17 +105,14 @@ def show_menu(session, context, poll):
     message = context.query.message
     message.edit_text(
         get_poll_text(session, poll),
-        parse_mode='markdown',
+        parse_mode="markdown",
         reply_markup=get_management_keyboard(poll),
         disable_web_page_preview=True,
     )
     remove_old_references(session, context.bot, poll, context.user)
 
     reference = Reference(
-        poll,
-        ReferenceType.admin.name,
-        user=context.user,
-        message_id=message.message_id
+        poll, ReferenceType.admin.name, user=context.user, message_id=message.message_id
     )
     session.add(reference)
     session.commit()
