@@ -147,11 +147,11 @@ def handle_new_option(bot, update, session, user, text, poll, chat):
     keyboard = get_settings_keyboard(poll)
     message = chat.send_message(text, parse_mode="markdown", reply_markup=keyboard,)
 
-    remove_old_references(session, context.bot, poll, context.user)
+    remove_old_references(session, bot, poll, user)
 
     # Create new reference
     reference = Reference(
-        poll, ReferenceType.inline.name, user=user, message_id=message.message_id
+        poll, ReferenceType.admin.name, user=user, message_id=message.message_id
     )
     session.add(reference)
     session.commit()

@@ -1,7 +1,8 @@
 """The settings management text."""
 from pollbot.i18n import i18n
-from pollbot.helper.poll import translate_poll_type
+from pollbot.config import config
 from pollbot.helper import get_escaped_bot_name
+from pollbot.helper.poll import translate_poll_type
 from pollbot.helper.enums import PollType, StartAction
 from pollbot.telegram.keyboard import get_start_button_payload
 
@@ -88,13 +89,13 @@ def get_settings_text(poll):
         payload = get_start_button_payload(poll, StartAction.share_poll)
         text.append(f"https://t.me/{bot_name}?start={payload}")
 
-    if config["telegram"]["allow_private_votes"]:
+    if config["telegram"]["allow_private_vote"]:
         text.append("")
         text.append(i18n.t("settings.private_vote_link", locale=locale))
         payload = get_start_button_payload(poll, StartAction.vote)
         text.append(f"https://t.me/{bot_name}?start={payload}")
 
-    if config["telegram"]["allow_private_votes"] or poll.allow_sharing:
+    if config["telegram"]["allow_private_vote"] or poll.allow_sharing:
         text.append("")
         text.append(i18n.t("settings.link_warning", locale=locale))
 

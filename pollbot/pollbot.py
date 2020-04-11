@@ -84,7 +84,7 @@ minute = 60
 hour = 60 * minute
 job_queue = updater.job_queue
 job_queue.run_repeating(
-    message_update_job, interval=5, first=0, name="Handle poll message update queue"
+    message_update_job, interval=10, first=0, name="Handle poll message update queue"
 )
 job_queue.run_repeating(
     send_notifications,
