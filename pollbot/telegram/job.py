@@ -8,12 +8,12 @@ from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 
 from pollbot.i18n import i18n
 from pollbot.models import Update, Poll, DailyStatistic
-from pollbot.helper.session import job_session_wrapper
+from pollbot.helper.session import job_wrapper
 from pollbot.helper.update import send_updates, update_poll_messages
 
 
 @run_async
-@job_session_wrapper()
+@job_wrapper
 def message_update_job(context, session):
     """Update all messages if necessary."""
     try:
@@ -65,7 +65,7 @@ def message_update_job(context, session):
 
 
 @run_async
-@job_session_wrapper()
+@job_wrapper
 def send_notifications(context, session):
     """Notify the users about the poll being closed soon."""
     polls = session.query(Poll) \
@@ -127,7 +127,7 @@ def send_notifications_for_poll(context, session, poll, message_key):
 
 
 @run_async
-@job_session_wrapper()
+@job_wrapper
 def create_daily_stats(context, session):
     """Create the daily stats entity for today and tomorrow."""
     today = date.today()

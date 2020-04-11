@@ -1,6 +1,6 @@
 from telegram.ext import run_async
 
-from pollbot.helper.session import session_wrapper
+from pollbot.helper.session import message_wrapper
 from pollbot.display.settings import get_user_settings_text
 from pollbot.telegram.keyboard import (
     get_user_settings_keyboard,
@@ -8,7 +8,7 @@ from pollbot.telegram.keyboard import (
 
 
 @run_async
-@session_wrapper()
+@message_wrapper()
 def open_user_settings_command(bot, update, session, user):
     """Open the settings menu for the user."""
     update.message.chat.send_message(

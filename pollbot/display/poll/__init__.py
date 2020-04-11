@@ -1,5 +1,5 @@
 """Get the text describing the current state of the poll."""
-from pollbot.helper import (
+from pollbot.helper.poll import (
     poll_has_limited_votes,
 )
 from pollbot.models import (

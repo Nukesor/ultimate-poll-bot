@@ -1,7 +1,7 @@
 """Callback functions needed during creation of a Poll."""
 from datetime import date
 from pollbot.i18n import i18n
-from pollbot.helper import poll_required
+from pollbot.helper.poll import poll_required
 from pollbot.helper.creation import create_poll
 from pollbot.helper.enums import PollType, ExpectedInput, DatepickerContext
 from pollbot.telegram.keyboard import (

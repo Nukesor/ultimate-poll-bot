@@ -9,8 +9,10 @@ from pollbot.display.poll.compilation import (
     get_poll_text_and_vote_keyboard,
     compile_poll_text
 )
-from pollbot.helper.enums import ExpectedInput, StartAction
-from pollbot.helper.session import session_wrapper
+
+from pollbot.config import config
+from pollbot.helper.enums import ExpectedInput, StartAction, ReferenceType
+from pollbot.helper.session import message_wrapper
 from pollbot.helper.text import split_text
 from pollbot.helper.stats import increase_stat
 from pollbot.telegram.keyboard import get_main_keyboard
@@ -21,7 +23,7 @@ from pollbot.telegram.keyboard.external import (
 
 
 @run_async
-@session_wrapper()
+@message_wrapper()
 def start(bot, update, session, user):
     """Send a start text."""
     # Truncate the /start command
@@ -102,6 +104,9 @@ def start(bot, update, session, user):
         increase_stat(session, 'externally_shared')
 
     elif action == StartAction.vote:
+        if not config['telegram']['allow_private_votes'] and not poll.is_priority():
+            return
+
         if poll.is_priority():
             poll.init_votes(session, user)
             session.commit()
@@ -121,8 +126,9 @@ def start(bot, update, session, user):
 
         reference = Reference(
             poll,
-            vote_user=user,
-            vote_message_id=sent_message.message_id,
+            ReferenceType.private_vote.name,
+            user=user,
+            message_id=sent_message.message_id,
         )
         session.add(reference)
 

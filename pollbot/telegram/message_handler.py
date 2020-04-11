@@ -1,8 +1,9 @@
 """Handle messages."""
 
 from pollbot.i18n import i18n
-from pollbot.helper.session import session_wrapper
-from pollbot.helper.enums import ExpectedInput, PollType
+from pollbot.helper.session import message_wrapper
+from pollbot.helper.enums import ExpectedInput, PollType, ReferenceType
+from pollbot.helper.poll import remove_old_references
 from pollbot.display import get_settings_text
 from pollbot.helper.update import update_poll_messages
 from pollbot.telegram.callback_handler.creation import create_poll
@@ -20,7 +21,7 @@ from pollbot.telegram.keyboard import (
 from pollbot.models import Reference
 
 
-@session_wrapper()
+@message_wrapper()
 def handle_private_text(bot, update, session, user):
     """Read all private messages and the creation of polls."""
     text = update.message.text.strip()
@@ -145,28 +146,19 @@ def handle_new_option(bot, update, session, user, text, poll, chat):
         reply_markup=keyboard,
     )
 
-    # Delete old references
-    references = session.query(Reference) \
-        .filter(Reference.poll == poll) \
-        .filter(Reference.admin_user_id == chat.id) \
-        .all()
-    for reference in references:
-        try:
-            bot.delete_message(chat.id, reference.admin_message_id)
-        except:
-            pass
-        session.delete(reference)
+    remove_old_references(session, context.bot, poll, context.user)
 
     # Create new reference
     reference = Reference(
         poll,
-        admin_user=user,
-        admin_message_id=message.message_id
+        ReferenceType.inline.name,
+        user=user,
+        message_id=message.message_id
     )
     session.add(reference)
     session.commit()
 
-    update_poll_messages(session, bot, poll)
+    update_poll_messages(session, bot, poll, message_id=message.message_id)
 
 
 def handle_user_option_addition(bot, update, session, user, text, poll, chat):

@@ -1,4 +1,5 @@
 """User related callback handler."""
+from sqlalchemy.orm.exc import StaleDataError 
 from pollbot.i18n import i18n
 from pollbot.helper.update import remove_poll_messages
 from pollbot.display.creation import get_init_text
@@ -141,9 +142,13 @@ def delete_closed_confirmation(session, context):
 def delete_all(session, context):
     """Delete all polls of the user."""
     for poll in context.user.polls:
-        remove_poll_messages(session, context.bot, poll)
-        session.delete(poll)
-        session.commit()
+        try:
+            remove_poll_messages(session, context.bot, poll)
+            session.delete(poll)
+            session.commit()
+        except StaleDataError:
+            session.rollback()
+            session.expire_all()
 
     open_user_settings(session, context)
     return i18n.t('deleted.polls', locale=context.user.locale)
@@ -153,9 +158,13 @@ def delete_closed(session, context):
     """Delete all closed polls of the user."""
     for poll in context.user.polls:
         if poll.closed:
-            remove_poll_messages(session, context.bot, poll)
-            session.delete(poll)
-            session.commit()
+            try:
+                remove_poll_messages(session, context.bot, poll)
+                session.delete(poll)
+                session.commit()
+            except StaleDataError:
+                session.rollback()
+                session.expire_all()
 
     open_user_settings(session, context)
     return i18n.t('deleted.closed_polls', locale=context.user.locale)

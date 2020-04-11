@@ -1,4 +1,4 @@
-from pollbot.helper import poll_allows_cumulative_votes
+from pollbot.helper.poll import poll_allows_cumulative_votes
 from pollbot.helper.enums import (
     VoteResultType,
     OptionSorting,

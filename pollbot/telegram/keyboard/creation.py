@@ -6,7 +6,7 @@ from telegram import (
 
 from pollbot.i18n import i18n
 from pollbot.helper.enums import CallbackType, PollType
-from pollbot.helper import translate_poll_type
+from pollbot.helper.poll import translate_poll_type
 from pollbot.telegram.keyboard.date_picker import get_datepicker_buttons
 
 

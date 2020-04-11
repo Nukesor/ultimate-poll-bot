@@ -1,7 +1,7 @@
 """Poll creation helper."""
 from pollbot.i18n import i18n
 from pollbot.helper.stats import increase_stat
-from pollbot.helper.enums import ExpectedInput
+from pollbot.helper.enums import ExpectedInput, ReferenceType
 from pollbot.display.poll.compilation import get_poll_text
 from pollbot.telegram.keyboard import (
     get_options_entered_keyboard,
@@ -62,8 +62,9 @@ def create_poll(session, poll, user, chat, message=None):
 
     reference = Reference(
         poll,
-        admin_user=user,
-        admin_message_id=message.message_id
+        ReferenceType.admin.name,
+        user=user,
+        message_id=message.message_id
     )
     session.add(reference)
     session.commit()
@@ -79,9 +80,9 @@ def add_options(poll, text, is_date=False):
     for option_to_add in options_to_add:
         description = None
         # Extract the description if existing
-        if not is_date and '-' in option_to_add:
+        if not is_date and '--' in option_to_add:
             # Extract and strip the description
-            splitted = option_to_add.split('-', 1)
+            splitted = option_to_add.split('--', 1)
             option_to_add = splitted[0].strip()
             description = splitted[1].strip()
             if description == '':

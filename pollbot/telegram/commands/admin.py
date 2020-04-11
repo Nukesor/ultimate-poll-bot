@@ -7,7 +7,7 @@ from telegram.error import BadRequest, Unauthorized
 from pollbot.models import User
 from pollbot.config import config
 from pollbot.i18n import i18n
-from pollbot.helper.session import session_wrapper
+from pollbot.helper.session import message_wrapper
 
 
 def admin_required(function):
@@ -22,7 +22,7 @@ def admin_required(function):
 
 
 @run_async
-@session_wrapper()
+@message_wrapper()
 @admin_required
 def reset_broadcast(bot, update, session, user):
     """Reset the broadcast_sent flag for all users."""
@@ -33,7 +33,7 @@ def reset_broadcast(bot, update, session, user):
 
 
 @run_async
-@session_wrapper()
+@message_wrapper()
 @admin_required
 def broadcast(bot, update, session, user):
     """Broadcast a message to all users."""
@@ -82,7 +82,7 @@ def broadcast(bot, update, session, user):
 
 
 @run_async
-@session_wrapper()
+@message_wrapper()
 @admin_required
 def test_broadcast(bot, update, session, user):
     """Send the broadcast message to the admin for test purposes."""

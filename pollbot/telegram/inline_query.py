@@ -10,13 +10,15 @@ from telegram import (
 )
 
 from pollbot.i18n import i18n
+from pollbot.config import config
+from pollbot.helper.enums import ReferenceType
 from pollbot.models import Poll
 from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
-from pollbot.helper.session import hidden_session_wrapper
+from pollbot.helper.session import inline_query_wrapper
 
 
 @run_async
-@hidden_session_wrapper()
+@inline_query_wrapper
 def search(bot, update, session, user):
     """Handle inline queries for sticker search."""
     query = update.inline_query.query.strip()
@@ -31,6 +33,11 @@ def search(bot, update, session, user):
 
     if offset == '':
         offset = 0
+    elif offset == 'Done':
+        update.inline_query.answer(
+            [], cache_time=0, is_personal=True,
+        )
+        return
     else:
         offset = int(offset)
 
@@ -89,17 +96,13 @@ def search(bot, update, session, user):
         for poll in polls:
             inline_reference_count = 0
             for reference in poll.references:
-                if reference.inline_message_id is not None:
+                if reference.type == ReferenceType.inline.name:
                     inline_reference_count += 1
 
-            if inline_reference_count > 20:
+            if inline_reference_count > config['telegram']['max_inline_shares']:
                 continue
 
-            text, keyboard = get_poll_text_and_vote_keyboard(
-                session, poll,
-                user=user,
-                inline_query=True
-            )
+            text = i18n.t('poll.please_wait',locale=poll.locale)
             keyboard = InlineKeyboardMarkup([[InlineKeyboardButton('Please ignore this', callback_data='100:0:0')]])
 
             content = InputTextMessageContent(
@@ -116,7 +119,13 @@ def search(bot, update, session, user):
                 reply_markup=keyboard,
             ))
 
+
+        if len(polls) < 10:
+            offset = 'Done'
+        else:
+            offset+10
+
         update.inline_query.answer(
             results, cache_time=0, is_personal=True,
-            next_offset=str(offset+10),
+            next_offset=str(offset),
         )

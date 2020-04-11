@@ -2,7 +2,7 @@
 from sqlalchemy import func
 
 from pollbot.i18n import i18n
-from pollbot.helper import (
+from pollbot.helper.poll import (
     poll_allows_cumulative_votes,
     poll_allows_multiple_votes,
     calculate_total_votes,

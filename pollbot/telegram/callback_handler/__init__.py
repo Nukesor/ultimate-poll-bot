@@ -3,7 +3,7 @@ from telegram.ext import run_async
 from raven import breadcrumbs
 
 from pollbot.helper.stats import increase_stat
-from pollbot.helper.session import hidden_session_wrapper
+from pollbot.helper.session import callback_query_wrapper
 from pollbot.helper.enums import CallbackType, CallbackResult
 from pollbot.models import Poll
 
@@ -148,7 +148,7 @@ class CallbackContext():
 
 
 @run_async
-@hidden_session_wrapper()
+@callback_query_wrapper
 def handle_callback_query(bot, update, session, user):
     """Handle callback queries from inline keyboards."""
     context = CallbackContext(session, bot, update.callback_query, user)

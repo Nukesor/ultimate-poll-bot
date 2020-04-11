@@ -1,6 +1,6 @@
 """Callback handler for poll styling."""
 from pollbot.i18n import i18n
-from pollbot.helper import poll_required
+from pollbot.helper.poll import poll_required
 from pollbot.helper.enums import OptionSorting, UserSorting
 from pollbot.helper.update import update_poll_messages
 from pollbot.display.poll.compilation import get_poll_text

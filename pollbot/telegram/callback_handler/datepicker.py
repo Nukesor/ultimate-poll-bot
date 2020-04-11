@@ -2,7 +2,7 @@
 from datetime import date, datetime, time
 from dateutil.relativedelta import relativedelta
 from pollbot.i18n import i18n
-from pollbot.helper import poll_required
+from pollbot.helper.poll import poll_required
 from pollbot.helper.enums import DatepickerContext
 from pollbot.helper.creation import add_options
 from pollbot.helper.update import update_poll_messages

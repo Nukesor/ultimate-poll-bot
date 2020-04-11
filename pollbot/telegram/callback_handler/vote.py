@@ -7,7 +7,7 @@ from sqlalchemy.orm.exc import (
 )
 
 from pollbot.i18n import i18n
-from pollbot.helper import poll_allows_cumulative_votes
+from pollbot.helper.poll import poll_allows_cumulative_votes
 from pollbot.helper.stats import increase_stat
 from pollbot.helper.enums import PollType, CallbackResult
 from pollbot.helper.update import update_poll_messages
@@ -20,7 +20,7 @@ def handle_vote(session, context):
     # Remove the poll, in case it got deleted, but we didn't manage to kill all references
     option = session.query(PollOption).get(context.payload)
     if option is None:
-        if context.query.message is not None:
+        if message is not None:
             context.query.message.edit_text(i18n.t('deleted.polls', locale=context.user.locale))
         else:
             context.bot.edit_message_text(
@@ -30,6 +30,7 @@ def handle_vote(session, context):
         return
 
     poll = option.poll
+    update_poll = False
     try:
         # Single vote
         if poll.poll_type == PollType.single_vote.name:
@@ -51,6 +52,7 @@ def handle_vote(session, context):
             update_poll = handle_priority_vote(session, context, option)
         else:
             raise Exception("Unknown poll type")
+        session.commit()
 
     except IntegrityError:
         # Double vote. Rollback the transaction and ignore the second vote
@@ -67,10 +69,16 @@ def handle_vote(session, context):
         session.rollback()
         return
 
-    session.commit()
 
+    # Update the reference depending on message type
+    message = context.query.message
+    inline_message_id = context.query.inline_message_id
     if update_poll:
-        update_poll_messages(session, context.bot, poll)
+        if message is not None:
+            update_poll_messages(session, context.bot, poll, message_id=message.message_id)
+        else:
+            update_poll_messages(session, context.bot, poll, inline_message_id=inline_message_id)
+
 
     increase_stat(session, 'votes')
 
@@ -319,7 +327,7 @@ def handle_priority_vote(session, context, option):
 
     if next_vote is None:
         session.rollback()
-        return
+        return False
 
     next_vote.priority -= direction
     session.commit()

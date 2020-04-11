@@ -1,8 +1,8 @@
 """Callback functions needed during creation of a Poll."""
 from pollbot.i18n import i18n
 from pollbot.models import Reference
-from pollbot.helper import poll_required
-from pollbot.helper.enums import CallbackResult, ExpectedInput
+from pollbot.helper.poll import poll_required, remove_old_references
+from pollbot.helper.enums import CallbackResult, ExpectedInput, ReferenceType
 from pollbot.display import get_settings_text
 from pollbot.display.poll.compilation import (
     get_poll_text_and_vote_keyboard,
@@ -109,11 +109,13 @@ def show_menu(session, context, poll):
         reply_markup=get_management_keyboard(poll),
         disable_web_page_preview=True,
     )
+    remove_old_references(session, context.bot, poll, context.user)
 
     reference = Reference(
         poll,
-        admin_user=context.user,
-        admin_message_id=message.message_id
+        ReferenceType.admin.name,
+        user=context.user,
+        message_id=message.message_id
     )
     session.add(reference)
     session.commit()

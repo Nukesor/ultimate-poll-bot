@@ -2,7 +2,7 @@
 from telegram.ext import run_async
 
 from pollbot.i18n import i18n
-from pollbot.helper.session import session_wrapper
+from pollbot.helper.session import message_wrapper
 from pollbot.display.creation import get_init_text
 from pollbot.display.misc import get_poll_list
 from pollbot.telegram.keyboard import (
@@ -14,7 +14,7 @@ from pollbot.models import Poll
 
 
 @run_async
-@session_wrapper(private=True)
+@message_wrapper(private=True)
 def create_poll(bot, update, session, user):
     """Create a new poll."""
     # The previous unfinished poll will be removed
@@ -38,7 +38,7 @@ def create_poll(bot, update, session, user):
 
 
 @run_async
-@session_wrapper(private=True)
+@message_wrapper(private=True)
 def list_polls(bot, update, session, user):
     """Get a list of all active polls."""
     text, keyboard = get_poll_list(session, user)
@@ -46,7 +46,7 @@ def list_polls(bot, update, session, user):
 
 
 @run_async
-@session_wrapper(private=True)
+@message_wrapper(private=True)
 def list_closed_polls(bot, update, session, user):
     """Get a list of all closed polls."""
     text, keyboard = get_poll_list(session, user, closed=True)

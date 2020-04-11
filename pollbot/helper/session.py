@@ -15,90 +15,122 @@ from pollbot.models import User
 from pollbot.i18n import i18n
 
 
-def job_session_wrapper():
+def job_wrapper(func):
     """Create a session, handle permissions and exceptions for jobs."""
-    def real_decorator(func):
-        """Parametrized decorator closure."""
-        @wraps(func)
-        def wrapper(context):
-            session = get_session()
-            try:
-                func(context, session)
+    def wrapper(context):
+        session = get_session()
+        try:
+            func(context, session)
 
-                session.commit()
-            except Exception as e:
-                # Capture all exceptions from jobs. We need to handle those inside the jobs
-                if not ignore_hidden_exception(e):
-                    if config['logging']['debug']:
-                        traceback.print_exc()
-                    sentry.captureException()
-            finally:
-                session.close()
-        return wrapper
-
-    return real_decorator
+            session.commit()
+        except Exception as e:
+            # Capture all exceptions from jobs. We need to handle those inside the jobs
+            if not ignore_job_exception(e):
+                if config['logging']['debug']:
+                    traceback.print_exc()
+                sentry.captureException()
+        finally:
+            session.close()
+    return wrapper
 
 
-def hidden_session_wrapper():
-    """Create a session, handle permissions and exceptions."""
-    def real_decorator(func):
-        """Parametrized decorator closure."""
-        @wraps(func)
-        def wrapper(update, context):
-            session = get_session()
-            try:
-                user = get_user(session, update)
-                if not is_allowed(user, update):
-                    return
+def inline_query_wrapper(func):
+    """Create a session, handle permissions and exceptions for inline queries."""
+    def wrapper(update, context):
+        session = get_session()
+        try:
+            user = get_user(session, update.inline_query.from_user)
 
-                func(context.bot, update, session, user)
+            func(context.bot, update, session, user)
 
-                session.commit()
-            except Exception as e:
-                if not ignore_exception(e):
-                    if config['logging']['debug']:
-                        traceback.print_exc()
+            session.commit()
+        except Exception as e:
+            if not ignore_exception(e):
+                if config['logging']['debug']:
+                    traceback.print_exc()
                     sentry.captureException()
 
-                if not isinstance(e, TelegramError) and \
-                   hasattr(update, 'callback_query') and \
-                   update.callback_query is not None:
-                    locale = 'English'
-                    if user is not None:
-                        locale = user.locale
-                    update.callback_query.answer(i18n.t('callback.error', locale=locale))
-            finally:
-                session.close()
-        return wrapper
-
-    return real_decorator
+        finally:
+            session.close()
+    return wrapper
 
 
-def session_wrapper(send_message=True, private=False):
+def inline_result_wrapper(func):
+    """Create a session, handle permissions and exceptions for inline results."""
+    def wrapper(update, context):
+        session = get_session()
+        try:
+            user = get_user(session, update.chosen_inline_result.from_user)
+
+            func(context.bot, update, session, user)
+
+            session.commit()
+        except Exception as e:
+            if not ignore_exception(e):
+                if config['logging']['debug']:
+                    traceback.print_exc()
+                    sentry.captureException()
+
+        finally:
+            session.close()
+    return wrapper
+
+
+def callback_query_wrapper(func):
+    """Create a session, handle permissions and exceptions for callback queries."""
+    def wrapper(update, context):
+        user = None
+        session = get_session()
+        try:
+            user = get_user(session, update.callback_query.from_user)
+
+            func(context.bot, update, session, user)
+
+            session.commit()
+        except Exception as e:
+            if not ignore_exception(e):
+                if config['logging']['debug']:
+                    traceback.print_exc()
+                sentry.captureException()
+
+            if not isinstance(e, TelegramError):
+                locale = 'English'
+                if user is not None:
+                    locale = user.locale
+                update.callback_query.answer(i18n.t('callback.error', locale=locale))
+        finally:
+            session.close()
+    return wrapper
+
+
+def message_wrapper(private=False):
     """Create a session, handle permissions, handle exceptions and prepare some entities."""
     def real_decorator(func):
         """Parametrized decorator closure."""
         @wraps(func)
         def wrapper(update, context):
+            user = None
             session = get_session()
             try:
-                user = get_user(session, update)
-                if not is_allowed(user, update, private=private):
-                    return
-
                 if hasattr(update, 'message') and update.message:
                     message = update.message
                 elif hasattr(update, 'edited_message') and update.edited_message:
                     message = update.edited_message
+                else:
+                    raise Exception("Got an update without a message")
 
-                if not is_allowed(user, update, private=private):
+                user = get_user(session, message.from_user)
+
+                if private and message.chat.type != 'private':
+                    message.chat.send_message('Please do this in a direct conversation with me.')
                     return
 
                 response = func(context.bot, update, session, user)
 
                 session.commit()
+
                 # Respond to user
-                if hasattr(update, 'message') and response is not None:
+                if response is not None:
                     message.chat.send_message(response)
 
             except Exception as e:
@@ -107,16 +139,15 @@ def session_wrapper(send_message=True, private=False):
                         traceback.print_exc()
                     sentry.captureException()
 
-                if send_message:
-                    locale = 'English'
-                    if user is not None:
-                        locale = user.locale
-                    session.close()
-                    message.chat.send_message(
-                        i18n.t('misc.error', locale=locale),
-                        parse_mode='markdown',
-                        disable_web_page_preview=True,
-                    )
+                locale = 'English'
+                if user is not None:
+                    locale = user.locale
+                session.close()
+                message.chat.send_message(
+                    i18n.t('misc.error', locale=locale),
+                    parse_mode='markdown',
+                    disable_web_page_preview=True,
+                )
 
             finally:
                 session.close()
@@ -126,29 +157,53 @@ def session_wrapper(send_message=True, private=False):
     return real_decorator
 
 
-def get_user(session, update):
-    """Get the user from the update."""
-    user = None
-    # Check user permissions
-    if hasattr(update, 'message') and update.message:
-        user = User.get_or_create(session, update.message.from_user)
-    if hasattr(update, 'edited_message') and update.edited_message:
-        user = User.get_or_create(session, update.edited_message.from_user)
-    elif hasattr(update, 'inline_query') and update.inline_query:
-        user = User.get_or_create(session, update.inline_query.from_user)
-    elif hasattr(update, 'callback_query') and update.callback_query:
-        user = User.get_or_create(session, update.callback_query.from_user)
+def get_user(session, tg_user):
+    """Get the user from the event."""
+    user = session.query(User).get(tg_user.id)
+    if user is None:
+        user = User(tg_user.id, tg_user.username)
+        session.add(user)
+        try:
+            session.commit()
+            increase_stat(session, "new_users")
+        # Handle race condition for parallel user addition
+        # Return the user that has already been created
+        # in another session
+        except IntegrityError as e:
+            session.rollback()
+            user = session.query(User).get(user_id)
+            if user is None:
+                raise e
+            return user
+
+    if user.username is not None:
+        user.username = tg_user.username.lower()
+
+    name = get_name_from_tg_user(tg_user)
+    user.name = name
 
     return user
 
 
-def is_allowed(user, update, private=False):
-    """Check whether the user is allowed to access this endpoint."""
-    if private and update.message.chat.type != 'private':
-        update.message.chat.send_message('Please do this in a direct conversation with me.')
-        return False
+def get_name_from_tg_user(tg_user):
+    """Return the best possible name for a User."""
+    name = ''
+    if tg_user.first_name is not None:
+        name = tg_user.first_name
+        name += ' '
+    if tg_user.last_name is not None:
+        name += tg_user.last_name
 
-    return True
+    if tg_user.username is not None and name == '':
+        name = tg_user.username
+
+    if name == '':
+        name = str(tg_user.id)
+
+    for character in ['[', ']', '_', '*']:
+        name = name.replace(character, '')
+
+    return name.strip()
 
 
 def ignore_exception(exception):
@@ -184,7 +239,7 @@ def ignore_exception(exception):
     return False
 
 
-def ignore_hidden_exception(exception):
+def ignore_job_exception(exception):
     """Check whether we can safely ignore this exception."""
     if isinstance(exception, TimedOut):
         return True

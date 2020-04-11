@@ -1,7 +1,7 @@
 """Option for setting the current date of the picker."""
 from datetime import date
 from pollbot.i18n import i18n
-from pollbot.helper import poll_required
+from pollbot.helper.poll import poll_required
 from pollbot.models import Notification
 from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.stats import increase_stat

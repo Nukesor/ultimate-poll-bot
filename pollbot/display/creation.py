@@ -1,5 +1,5 @@
 """Text helper for poll creation."""
-from pollbot.helper import translate_poll_type
+from pollbot.helper.poll import translate_poll_type
 from pollbot.i18n import i18n
 from pollbot.helper.enums import ExpectedInput
 
