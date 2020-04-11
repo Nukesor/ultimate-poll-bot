@@ -23,13 +23,11 @@ poll:
     vote_times: "\nTodos os usuários podem votar *%{amount} vezes*"
     due: "\n📅 Esta enquete é válida até %{date}"
     closed: "\n ⚠️ *Esta enquete está fechada* ⚠️"
-    own_poll: 'Crie *sua própria* enquete [aqui](https://t.me/ultimate_pollbot)'
     many_users_voted: '*%{count} usuários* votaram até agora'
     one_user_voted: '*Um usuário* votou até agora'
     total_votes: '(%{count} votos)'
     remaining_votes: "\n Votos restantes:"
     remaining_votes_user: '%{name}: %{count} votos'
-    summarized_users: '_e %{count} outras pessoas._'
     too_many_votes: "⚠️ *Muitos votos no último minuto:* ⚠️\nSeus votos continuaram a ser registrados, mas esta mensagem apenas será atualizada a cada 2 segundos.\n(O Telegram não permite o envio/atualização de mais de um certo tanto de mensagens por minuto em um grupo por um bot.)\n"
     doodle:
         'yes': '- *Sim:*'
@@ -41,6 +39,11 @@ poll:
     doodle_help: '*Toque* nos botões `a)`, `b)` abaixo para ver o texto das opções.'
     please_wait: "\n\nPor favor, espere um instante enquanto o bot sincroniza as enquetes ☺️"
     anonymous_warning: '*Lembre-se:* _As podem ser capazes de adivinhar o seu voto acompanhando a percentagem/contagem de votos e o seu status online._'
+    summarized_users: '_e %{count} outras pessoas._'
+    own_poll: 'Crie *sua própria* enquete [aqui](https://t.me/ultimate_pollbot)'
+    poll: 'Esta enquete foi excluída permanentemente.'
+    polls: 'Todas as enquetes foram deletadas.'
+    closed_polls: 'Todas as enquetes fechadas foram deletadas'
 deleted:
     poll: 'Esta enquete foi excluída permanentemente.'
     polls: 'Todas as enquetes foram deletadas.'
@@ -244,7 +247,7 @@ misc:
         settings: "⚙️ *Configurações:* \n\nConfigurações adicionais da enquete podem ser ajustadas após sua criação: \n\n*Idioma*: É possível alterar o idioma somente para a enquete\n*Anonimato:* Uma enquete pode ser feita anonimamente. \n*Data de encerramento:* É possível definir uma data de encerramento na qual a enquete será encerrada automaticamente.\n*Opções:* Novas opções podem ser adicionadas à enquete e opções existentes podem ser removidas neste menu.\n*Opções do usuário:* Você pode permitir que usuários adicionem opções à sua enquete.\n\n*---- Submenu de estilo: ----*\n\n*Porcentagem:*\n_A linha de porcentagem de cada opção pode ser ocultada no menu de configurações. _\n\n*Votos em uma opção:*\n_É possível ocultar o total de votos em uma opção._\n\n*Consolidar votos:*\n_Caso sua enquete tenha muitos votos, a informação pode ficar muito confusa. Consolidar os votos trará uma visualização mais agradável._\n\n*Ordem:*\n_É possível alterar a ordem na qual usuários ou opções são exibidos nos resultados._ \n \n"
         notifications: "📣 *Notificações:* \n\nSe você habilitar notificações para o seu chat, o bot vai mandar uma mensagem 1 dia, 6 horas e 1 hora antes de a enquete fechar.\nEste é apenas um recurso para lembrar todos do grupo que uma enquete irá fechar logo, e para deixar fácil de achar a mensagem da enquete novamente 😉.\n\nPara habilitar as notificações em seu chat siga os seguintes passos:\n*1.* Crie uma enquete;\n*2.* Coloque uma data de termino no menu de configurações;\n*3.* Vá para o chat que você deseja que seja notificado (o pollbot precisa estar no grupo antes de a enquete ser compartilhada ou você precisará compartilhar ela de novo);\n*4.* Responda com /notify na mensagem da enquete que voce selecionou via @ultimate\\_pollbot;\n*5.* Selecione a enquete correta.\n\nEste procedimento todo é infelizmente complicado, pois o Telegram não permite a detecção de mensagens de bots nos grupos 😐.\nAssim, nós não sabemos qual enquete é postada em cada grupo e tudo precisa ser feito manualmente.\n"
         management: "🕰 *Achar enquetes antigas:* \n\nHá dois comandos /list e /list\\_closed, que permite você achar e gerenciar suas enquetes antigas.\n\n⚠️ *Apagar enquetes:* \n\nVocê pode apagar enquetes individualmente no respectivo menu da enquete.\nTambém há formas de apagar todas as enquetes no menu de configurações (comando /settings).\n"
-        languages: "🌐 *Idioma:* \n\nUltimate pollbot suporta vários idiomas, mas apenas o inglês é oficialmente mantido.\n\nPara adicionar um novo idioma ou atualizar um idioma atual, entre em contato comigo: @Nukesor! \nEstou usando o serviço de localização [Lokalise](https://lokalise.co), que concordou em me fornecer uma licença de código aberto para traduzir meus projetos.\nPara que este serviço funcione, você precisará me fornecer um endereço de email, pois preciso enviar um convite.\n\nPor favor, tenha cuidado para manter o estilo correto do Markdown (`**`, `__`, `${}`), caso contrário não funcionará no seu idioma. \nSe algo der errado, tentarei corrigi-lo, mas, por favor, me ajude a evitar isso. Leva  tempo e esforço para corrigir esses erros.\nO suporte a vários idiomas é um recurso voltado para a comunidade, que eu felizmente suporto, mas não posso cuidar de vários idiomas por conta própria. \n"
+        languages: "🌐 *Idioma:* \n\nUltimate pollbot suporta vários idiomas, mas apenas o inglês é oficialmente mantido.\n\nPara adicionar um novo idioma ou atualizar um idioma atual, entre em contato comigo: @Nukesor! \nEstou usando o serviço de localização [Lokalise](https://lokalise.co), que concordou em me fornecer uma licença de código aberto para traduzir meus projetos.\nPara que este serviço funcione, você precisará me fornecer um endereço de email, pois preciso enviar um convite.\n\nPor favor, tenha cuidado para manter o estilo correto do Markdown (`*`, `_`, `${}`), caso contrário não funcionará no seu idioma. \nSe algo der errado, tentarei corrigi-lo, mas, por favor, me ajude a evitar isso. Leva  tempo e esforço para corrigir esses erros.\nO suporte a vários idiomas é um recurso voltado para a comunidade, que eu felizmente suporto, mas não posso cuidar de vários idiomas por conta própria. \n"
         bugs: "⚠️ *Há um bug desconhecido que não vai embora!!* 😩\n\nEu normalmente recebo notificações assim que algo quebra, mas podem haver alguns bugs que passam desapercebidos!\nCaso o bug não tenha sido corrigido em um ou dois dias, por favor escreva um ticket no [Github](https://github.com/Nukesor/ultimate-poll-bot) ou pelo meu [grupo de suporte](https://t.me/nukesors_projects).\n"
     error: "Ocorreu um erro desconhecido. Provavelmente recebi uma notificação sobre isso e tentarei corrigi-lo o mais rápido possível.\nCaso o bug não tenha sido corrigido em um ou dois dias, por favor envie um ticket no [Github](https://github.com/Nukesor/ultimate-poll-bot) ou no meu [grupo de suporte](https://t.me/nukesors_projects).\n"
     start_after_results: 'Ei! Basta enviar /create para criar sua própria enquete ☺️'

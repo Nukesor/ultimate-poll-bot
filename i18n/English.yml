@@ -29,7 +29,6 @@ poll:
   vote_times: "\nEvery user can vote *%{amount} times*"
   due: "\n📅 This poll is due at: %{date}"
   closed: "\n⚠️ *This poll is closed* ⚠️"
-  own_poll: "Create *your own* poll over [here](https://t.me/ultimate_pollbot)"
   doodle_help: "*Click* on the `a)`, `b)` buttons below to see the option names."
   many_users_voted: "*%{count} users* voted so far"
   one_user_voted: "*One user* voted so far"
@@ -187,6 +186,9 @@ settings:
   dont_summarize: "*Summarize votes*: Show all votes"
   permanently_summarized: "*Summarize votes*: Too many votes. Permanently summarized."
   change_language: Just click on a language to change it for this poll.
+  sharing_link: "Use this link to allow users to share the poll with other chats:"
+  private_vote_link: "With this link users can vote in a private conversation."
+  link_warning: "**Be careful!** Once those links are out there you cannot take them back. Everybody with this link can vote on your poll."
   sharing_link: "Use this link to allow users to share the poll with other chats. *Be careful!* Once it's out there you cannot take it back:"
   anonymity_warning: |
     You cannot hide votes and percentage on an anoymous poll.
@@ -249,8 +251,8 @@ creation:
     next: "Send *another option*, pick a date and add it as an option, or click *Done* when you're finished."
     first: |
       Please send me an option. You can send multiple options at once, each option on a new line.
-      You can also add a description behind a hyphen.
-      For instance `Burger - because it is tasty`
+      You can also add a description behind a double-hyphen.
+      For instance `Burger -- because it is tasty`
     no_new: ❌ No new option has been added
     single_added: "*%{option}* has been added. 👍\nSend *another option*, pick a date and add it as an option, or click *Done* when you're finished."
     multiple_added: "Options have been added:"
@@ -475,7 +477,7 @@ misc:
       I'm using the localization service [Lokalise](https://lokalise.co), which agreed to provide me with an open-source license for translating my projects.
       For this service to work, you'll need to provide me with an email address (any spam mail is enough), since I need to send you an invite via email.
 
-      Please be careful to keep the correct Markdown styling (`**`, `__`, `${}`), otherwise stuff will break for your language.
+      Please be careful to keep the correct Markdown styling (`*`, `_`, `${}`), otherwise stuff will break for your language.
       If anything breaks, I will try to fix it, but please help me to prevent this. It just takes time and effort to fix such bugs.
       The multi language support is a community driven feature I happily support, but I cannot support multiple languages on my own.
 

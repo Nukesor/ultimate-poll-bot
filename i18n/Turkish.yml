@@ -21,19 +21,19 @@ poll:
     vote_times: "\nHer kullanıcı *%{amount} kez* oy verebilir"
     due: "\n📅 Bu anket şu tarihte bitiyor: %{date}"
     closed: "\n⚠️ *Bu anket kapalı* ⚠️"
-    own_poll: '*Kendi* anketinizi [buradan](https://t.me/ultimate_pollbot) oluşturun'
     many_users_voted: 'Şimdiye kadar *%{count} kullanıcı* oy verdi'
     one_user_voted: 'Şimdiye kadar *1 kullanıcı* oy verdi'
     total_votes: ' (%{count} oy)'
     remaining_votes: "\nKalan oylar:"
     remaining_votes_user: '%{name}: %{count} oy'
-    summarized_users: '_ve %{count} diğer kişi._'
     too_many_votes: "⚠️ *Son dakika içinde çok fazla oy:* ⚠️\nOylarınız hala kayıtlı, ama bu mesaj her 2 saniyede güncellenecek\n(Telegram bir grupta bot tarafından aynı dakika içinde birden fazla mesajı göndermeye/güncellemeye izin vermiyor)\n"
     doodle:
         'yes': '├ *Evet:*'
         maybe: '├ *Belki:*'
         'no': '├ *Hayır:*'
     doodle_help: 'Seçenek adlarını görmek için aşağıdaki `a)`, `b)` butonlarına *tıklayın*.'
+    summarized_users: '_ve %{count} diğer kişi._'
+    own_poll: '*Kendi* anketinizi [buradan](https://t.me/ultimate_pollbot) oluşturun'
 deleted:
     poll: 'Bu anket kalıcı olarak silindi'
     polls: 'Tüm anketler silindi'
