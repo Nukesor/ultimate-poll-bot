@@ -11,7 +11,7 @@
 Deciding where you and your friends are going for lunch today can be a real hassle...
 Or, for instance, deciding which games should be played at the next LAN-Party.
 
-Since no other telegram poll-/votebot offered the full feature set my friends and I needed, I decided to write the ULTIMATE pollbot. A bot which combines all good features of all existing bots and even stuff beyond that.
+Since no other telegram poll/vote bot offered the full feature set my friends and I needed, I decided to write the ULTIMATE pollbot. A bot which combines all good features of all existing bots and even stuff beyond that.
 
 
 ## Features:
@@ -44,16 +44,16 @@ As soon as such a poll is closed, the results will be visible. **Beware!**: such
 - Allow other users to add new options
 - Polls can be closed
 - Polls can be reopened unless the poll is configured to hide the results until it has been closed.
-- Polls can be completely deleted, which means that all non-forwarded occurences of the poll will be removed.
-- Polls can be resetted (Delete all votes). Poll needs to be closed first
+- Polls can be completely deleted, which means that all non-forwarded occurrences of the poll will be removed.
+- Polls can be reseted (Delete all votes). Poll needs to be closed first
 - Polls can be cloned (New poll with same options, but without votes). Poll needs to be closed first
 
 
 **Misc:**
 - Internationalization
-- Polls sync between groups in realtime.
+- Polls sync between groups in real time.
 - Polls can be shared via link. This allows other users to spread the poll to arbitrary groups.
-- A datepicker for easier creation of poll options
+- A date picker for easier creation of poll options
 - Specify a due date, at which the poll will be automatically closed.
 - Activate notifications in chats to notify users that the poll will close soon.
 
@@ -62,24 +62,25 @@ As soon as such a poll is closed, the results will be visible. **Beware!**: such
 
 - Results can be displayed in a detailed or summarized manner.
 - The percentage bar in the vote message can be disabled.
-- The bot allows to configure the sorting of the option list and and the user list for each option.
+- The bot allows to configure the sorting of the option list and the user list for each option.
 - Users can be sorted by vote date or username. Options can be sorted by highest percentage, name or by the order they've been added.
 
 
-**Planned features:**
 
-- A Priority poll
+# Project Status
+The project is still actively maintained. However, since my focus shifted to other projects, I most likely won't add new features myself.  
+I'll still discuss and accept new feature requests and review feature PR's. Happy coding ;)
 
 
 # Acknowledgements
 
 First of all, thanks to [Lokalise](https://lokalise.co) for providing my projects with a free license for open-source development!
 
-Thanks to [cnpltdncsln](https://github.com/cnpltdncsln) for providing turkish translations.  
+Thanks to [cnpltdncsln](https://github.com/cnpltdncsln) for providing Turkish translations.  
 Thanks to [tszalbot](https://github.com/tszalbot) for providing polish translations.  
-Thanks to [FedericoAntoniazzi](https://github.com/FedericoAntoniazzi) and [LBindustries](https://github.com/LBindustries) for providing italian translations.  
-Thanks to [balboag](https://github.com/balboag) for providing spanish translations.  
-Thanks to [gui258](https://github.com/gui258) and Leonardo Frazao for providing brazilian portuguese translations.  
+Thanks to [FedericoAntoniazzi](https://github.com/FedericoAntoniazzi) and [LBindustries](https://github.com/LBindustries) for providing Italian translations.  
+Thanks to [balboag](https://github.com/balboag) for providing Spanish translations.  
+Thanks to [gui258](https://github.com/gui258) and Leonardo Frazao for providing Brazilian Portuguese translations.  
 
 
 Thanks to my patreons:
@@ -106,7 +107,7 @@ Thanks to my patreons:
 
 Dependencies: 
 - `poetry` to manage and install dependencies.
-- Ultimate Pollbot uses postgres. Make sure the user has write/read rights.
+- Ultimate Pollbot uses Postgres. Make sure the user has write/read rights.
 
 
 1. Clone the repository:
@@ -114,7 +115,7 @@ Dependencies:
         % git clone git@github.com:nukesor/ultimate-poll-bot pollbot && cd pollbot
 
 2. Execute `poetry install` to install all dependencies.
-3. Either start the pollbot once with `poetry run python main.py` or copy the `pollbot.toml` manually to `~/.config/pollbot.toml` and adjust all necessary values.
+3. Either start the poll bot once with `poetry run python main.py` or copy the `pollbot.toml` manually to `~/.config/pollbot.toml` and adjust all necessary values.
 4. Run `poetry run python initdb.py` to initialize the database.
 5. Start the bot `poetry run python main.py`
 
