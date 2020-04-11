@@ -10,6 +10,8 @@ default_config = {
         "api_key": "your_telegram_api_key",
         "worker_count": 20,
         "admin": 'nukesor',
+        "allow_private_vote": False,
+        "max_inline_shares": 20,
     },
     'database': {
         "sql_uri": 'postgres://localhost/pollbot',

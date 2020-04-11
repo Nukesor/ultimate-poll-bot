@@ -2,6 +2,8 @@
 bot_name = "ultimate_pollbot"
 api_key = ""
 worker_count = 20
+allow_private_vote = false
+max_inline_shares = 20
 
 [database]
 sql_uri = "postgres://localhost/pollbot_test"
