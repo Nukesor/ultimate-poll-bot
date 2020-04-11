@@ -76,18 +76,40 @@ I'll still discuss and accept new feature requests and review feature PR's. Happ
 
 First of all, thanks to [Lokalise](https://lokalise.co) for providing my projects with a free license for open-source development!
 
-Thanks to [cnpltdncsln](https://github.com/cnpltdncsln) for providing Turkish translations.  
-Thanks to [tszalbot](https://github.com/tszalbot) for providing polish translations.  
-Thanks to [FedericoAntoniazzi](https://github.com/FedericoAntoniazzi) and [LBindustries](https://github.com/LBindustries) for providing Italian translations.  
-Thanks to [balboag](https://github.com/balboag) for providing Spanish translations.  
-Thanks to [gui258](https://github.com/gui258) and Leonardo Frazao for providing Brazilian Portuguese translations.  
+Thanks to the Turkish translator:
+- [cnpltdncsln](https://github.com/cnpltdncsln)
 
+Thanks to the Polish translator:
+- [tszalbot](https://github.com/tszalbot)
+
+Thanks to all Italian translators:
+- [FedericoAntoniazzi](https://github.com/FedericoAntoniazzi)
+- [LBindustries](https://github.com/LBindustries) for providing italian translations.  
+
+Thanks to all Spanish translators:
+- [balboag](https://github.com/balboag)
+- [davidgfnet](https://github.com/davidgfnet)
+- Miguel Antunez 
+
+Thanks to all Brazilian Portuguese translators:
+- [gui258](https://github.com/gui258)
+- Leonardo Frazao
+
+Thanks to all German translators:
+- Thorsten Schlaberg 
+- [KnorpelSenf](https://github.com/KnorpelSenf)
+
+Thanks to the Catalan translator:
+- [davidgfnet](https://github.com/davidgfnet)
+
+Thanks to the Czech translator:
+- Ignac (IgnacRR)
 
 Thanks to my patreons:
 
 - [Svenstaro](https://github.com/Svenstaro)
 - [Prior99](https://github.com/prior99)
-- Sgit Kene
+- 憧れ
 
 
 ## Commands:

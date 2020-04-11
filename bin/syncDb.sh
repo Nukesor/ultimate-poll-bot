@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-host=nuke@jarvis
+host=bot@jarvis
 
 echo 'Dumping DB on remote'
 ssh $host 'pg_dump -O -F c pollbot > pollbot.dump'

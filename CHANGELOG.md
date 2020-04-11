@@ -1,3 +1,16 @@
+## v1.4.0
+- New options. You have need to add those your config manually if you already have a deployed bot:
+    1. `telegram.max_inline_shares` The max amount of shared messages via inline query per poll
+    2. `telegram.allow_private_vote` This decides, whether you allowed 
+
+**Improvements:**
+- Catalan language
+
+**Internal:**
+- Configurable amount for max shared messages via inline query per poll
+- Slow async background updating of poll in other chats, while instantly updating the message the user voted on.
+- Removal of duplicate poll messages in private chats
+
 ## v1.3.0
 - Priority vote poll
 - Streamline all datepickers (breaking changes)
