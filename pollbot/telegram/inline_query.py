@@ -106,7 +106,17 @@ def search(bot, update, session, user):
                 if reference.type == ReferenceType.inline.name:
                     inline_reference_count += 1
 
-            if inline_reference_count > config["telegram"]["max_inline_shares"]:
+            max_share_amount = config["telegram"]["max_inline_shares"]
+            if inline_reference_count > max_share_amount:
+                text = i18n.t("poll.shared_too_often", locale=poll.locale, amount=max_share_amount)
+                results.append(
+                    InlineQueryResultArticle(
+                        uuid.uuid4(),
+                        poll.name,
+                        description=text,
+                        input_message_content=InputTextMessageContent(text)
+                    )
+                )
                 continue
 
             text = i18n.t("poll.please_wait", locale=poll.locale)

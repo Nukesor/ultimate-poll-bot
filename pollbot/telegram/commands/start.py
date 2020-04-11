@@ -100,7 +100,7 @@ def start(bot, update, session, user):
         increase_stat(session, "externally_shared")
 
     elif action == StartAction.vote:
-        if not config["telegram"]["allow_private_votes"] and not poll.is_priority():
+        if not config["telegram"]["allow_private_vote"] and not poll.is_priority():
             return
 
         if poll.is_priority():

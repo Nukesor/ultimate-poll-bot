@@ -47,6 +47,7 @@ poll:
         ⚠️ *Too many votes in the last minute:* ⚠️
         Your votes will still be registered, but this message will only update every 2 seconds.
         (Telegram doesn't allow to send/update more than a certain amount of messages per minute in a group by a bot.)
+  shared_too_often: "Poll shared too often. Only %{amount} messages allowed per poll"
 
 deleted:
   poll: This poll has been permanently deleted.

@@ -1,5 +1,6 @@
 """Handle inline query results."""
 from telegram.ext import run_async
+from sqlalchemy.exc import DataError
 
 from pollbot.helper.enums import ReferenceType
 from pollbot.helper.update import update_reference
@@ -14,7 +15,13 @@ def handle_chosen_inline_result(bot, update, session, user):
     result = update.chosen_inline_result
     poll_id = result.result_id
 
-    poll = session.query(Poll).get(poll_id)
+    try:
+        poll = session.query(Poll).get(poll_id)
+
+    except DataError:
+        # Possile if the poll has been shared too often and
+        # the inline result is picked despite saying otherwise.
+        return
 
     reference = Reference(
         poll, ReferenceType.inline.name, inline_message_id=result.inline_message_id,
