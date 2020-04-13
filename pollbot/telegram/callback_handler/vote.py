@@ -12,7 +12,7 @@ from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.helper.enums import PollType, CallbackResult
 from pollbot.helper.update import update_poll_messages
 
-from pollbot.models import PollOption, Vote
+from pollbot.models import PollOption, Vote, UserStatistic
 
 
 def handle_vote(session, context):
