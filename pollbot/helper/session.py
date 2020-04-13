@@ -14,6 +14,7 @@ from pollbot.config import config
 from pollbot.db import get_session
 from pollbot.sentry import sentry
 from pollbot.models import User, UserStatistic
+from pollbot.helper.stats import increase_stat
 from pollbot.i18n import i18n
 
 
