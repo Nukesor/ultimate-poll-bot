@@ -150,7 +150,7 @@ def get_poll_list_keyboard(polls):
         payload = f"{CallbackType.menu_show.value}:{poll.id}:0"
         text = poll.name
         if len(text) > 40:
-            text = poll.name[0:40]
+            poll.name[0:40]
         buttons.append([InlineKeyboardButton(text, callback_data=payload)])
 
     return InlineKeyboardMarkup(buttons)
