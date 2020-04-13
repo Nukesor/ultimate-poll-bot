@@ -8,7 +8,7 @@ from sqlalchemy.orm.exc import (
 
 from pollbot.i18n import i18n
 from pollbot.helper.poll import poll_allows_cumulative_votes
-from pollbot.helper.stats import increase_stat
+from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.helper.enums import PollType, CallbackResult
 from pollbot.helper.update import update_poll_messages
 
@@ -87,6 +87,7 @@ def handle_vote(session, context):
             )
 
     increase_stat(session, "votes")
+    increase_user_stat(session, poll.user, "poll_callback_calls")
 
 
 def respond_to_vote(session, line, context, poll, remaining_votes=None, limited=False):

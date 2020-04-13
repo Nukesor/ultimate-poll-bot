@@ -108,13 +108,15 @@ def search(bot, update, session, user):
 
             max_share_amount = config["telegram"]["max_inline_shares"]
             if inline_reference_count > max_share_amount:
-                text = i18n.t("poll.shared_too_often", locale=poll.locale, amount=max_share_amount)
+                text = i18n.t(
+                    "poll.shared_too_often", locale=poll.locale, amount=max_share_amount
+                )
                 results.append(
                     InlineQueryResultArticle(
                         uuid.uuid4(),
                         poll.name,
                         description=text,
-                        input_message_content=InputTextMessageContent(text)
+                        input_message_content=InputTextMessageContent(text),
                     )
                 )
                 continue

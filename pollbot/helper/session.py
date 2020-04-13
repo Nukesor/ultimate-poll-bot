@@ -1,5 +1,6 @@
 """Session helper functions."""
 import traceback
+from datetime import date
 from functools import wraps
 from telegram.error import (
     TelegramError,
@@ -11,7 +12,7 @@ from telegram.error import (
 from pollbot.config import config
 from pollbot.db import get_session
 from pollbot.sentry import sentry
-from pollbot.models import User
+from pollbot.models import User, UserStatistic
 from pollbot.i18n import i18n
 
 
@@ -43,6 +44,8 @@ def inline_query_wrapper(func):
         session = get_session()
         try:
             user = get_user(session, update.inline_query.from_user)
+            if user.banned:
+                return
 
             func(context.bot, update, session, user)
 
@@ -66,6 +69,8 @@ def inline_result_wrapper(func):
         session = get_session()
         try:
             user = get_user(session, update.chosen_inline_result.from_user)
+            if user.banned:
+                return
 
             func(context.bot, update, session, user)
 
@@ -90,6 +95,8 @@ def callback_query_wrapper(func):
         session = get_session()
         try:
             user = get_user(session, update.callback_query.from_user)
+            if user.banned:
+                return
 
             func(context.bot, update, session, user)
 
@@ -130,6 +137,8 @@ def message_wrapper(private=False):
                     raise Exception("Got an update without a message")
 
                 user = get_user(session, message.from_user)
+                if user.banned:
+                    return
 
                 if private and message.chat.type != "private":
                     message.chat.send_message(
@@ -193,6 +202,27 @@ def get_user(session, tg_user):
 
     name = get_name_from_tg_user(tg_user)
     user.name = name
+
+    # Ensure user statistics exist for this user
+    # We need to track at least some user activity, since there seem to be some users which
+    # abuse the bot by creating polls and spamming up to 1 million votes per day.
+    #
+    # I really hate doing this, but I don't see another way to prevent DOS attacks
+    # without tracking at least some numbers.
+    user_statistic =  session.query(UserStatistic).get((date.today(), user.id))
+
+    if user_statistic is None:
+        user_statistic = UserStatistic(user)
+        session.add(user_statistic)
+        try:
+            session.commit()
+        # Handle race condition for parallel user statistic creation
+        # Return the statistic that has already been created in another session
+        except IntegrityError as e:
+            session.rollback()
+            user_statistic = session.query(UserStatistic).get((date.today, user.id))
+            if user_statistic is None:
+                raise e
 
     return user
 

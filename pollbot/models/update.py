@@ -10,7 +10,7 @@ from pollbot.db import base
 
 
 class Update(base):
-    """The model for a Update."""
+    """Scheduled updates that will be handled by a job."""
 
     __tablename__ = "update"
     __table_args__ = (UniqueConstraint("poll_id", name="one_update_per_poll"),)

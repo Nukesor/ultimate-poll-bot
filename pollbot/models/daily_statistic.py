@@ -12,7 +12,7 @@ from pollbot.db import base
 
 
 class DailyStatistic(base):
-    """The model for a Update."""
+    """Daily activities all accross the bot."""
 
     __tablename__ = "daily_statistic"
 

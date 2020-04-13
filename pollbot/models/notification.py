@@ -11,7 +11,7 @@ from pollbot.db import base
 
 
 class Notification(base):
-    """The model for a Vote."""
+    """Notifications to send reminders of soon closing polls."""
 
     __tablename__ = "notification"
     __table_args__ = (

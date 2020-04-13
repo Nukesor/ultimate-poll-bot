@@ -2,7 +2,7 @@
 from telegram.ext import run_async
 from raven import breadcrumbs
 
-from pollbot.helper.stats import increase_stat
+from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.helper.session import callback_query_wrapper
 from pollbot.helper.enums import CallbackType, CallbackResult
 from pollbot.models import Poll
@@ -269,5 +269,6 @@ def handle_callback_query(bot, update, session, user):
         context.query.answer("")
 
     increase_stat(session, "callback_calls")
+    increase_user_stat(session, user, "callback_calls")
 
     return

@@ -20,3 +20,20 @@ def increase_stat(session, name):
     session.query(DailyStatistic).filter(DailyStatistic.date == date.today()).update(
         {name: column + 1}
     )
+
+
+def increase_user_stat(session, user, name):
+    """Increase a specific statistic."""
+    from pollbot.models import UserStatistic
+
+    mapping = {
+        "callback_calls": UserStatistic.callback_calls,
+        "poll_callback_calls": UserStatistic.poll_callback_calls,
+        "created_polls": UserStatistic.created_polls,
+        "inline_shares": UserStatistic.inline_shares,
+    }
+
+    column = mapping[name]
+    session.query(UserStatistic).filter(UserStatistic.user == user).filter(
+        UserStatistic.date == date.today()
+    ).update({name: column + 1})

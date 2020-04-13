@@ -3,6 +3,7 @@ from telegram.ext import run_async
 from sqlalchemy.exc import DataError
 
 from pollbot.helper.enums import ReferenceType
+from pollbot.helper.stats import increase_user_stat
 from pollbot.helper.update import update_reference
 from pollbot.helper.session import inline_result_wrapper
 from pollbot.models import Poll, Reference
@@ -30,3 +31,4 @@ def handle_chosen_inline_result(bot, update, session, user):
     session.commit()
 
     update_reference(session, bot, poll, reference)
+    increase_user_stat(session, user, "inline_shares")
