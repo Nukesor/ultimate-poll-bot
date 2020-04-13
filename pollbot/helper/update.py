@@ -42,6 +42,7 @@ def update_poll_messages(session, bot, poll, message_id=None, inline_message_id=
             update_reference(session, bot, poll, reference)
         except RetryAfter as e:
             retry_after = int(e.retry_after) + 1
+            retry_after = datetime.now() + timedelta(seconds=retry_after)
             pass
 
     # If there's no update yet, create a new one
@@ -50,7 +51,7 @@ def update_poll_messages(session, bot, poll, message_id=None, inline_message_id=
             update = Update(poll, now)
             session.add(update)
             if retry_after is not None:
-                update.next_update = datetime.now() + timedelta(seconds=retry_after)
+                update.next_update = retry_after
 
             session.commit()
             new_update = True
