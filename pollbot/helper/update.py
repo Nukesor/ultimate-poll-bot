@@ -1,5 +1,5 @@
 """Update or delete poll messages."""
-from datetime import datetime
+from datetime import datetime, timedelta
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
 from telegram.error import BadRequest, RetryAfter, Unauthorized, TimedOut
@@ -32,18 +32,26 @@ def update_poll_messages(session, bot, poll, message_id=None, inline_message_id=
             .one_or_none()
         )
 
-    if reference is not None:
-        update_reference(session, bot, poll, reference)
-
     # Check whether there already is a scheduled update
     new_update = False
+    retry_after = None
     update = session.query(Update).filter(Update.poll == poll).one_or_none()
+
+    if reference is not None:
+        try:
+            update_reference(session, bot, poll, reference)
+        except RetryAfter as e:
+            retry_after = int(e.retry_after) + 1
+            pass
 
     # If there's no update yet, create a new one
     if update is None:
         try:
             update = Update(poll, now)
             session.add(update)
+            if retry_after is not None:
+                update.next_update = datetime.now() + timedelta(seconds=retry_after)
+
             session.commit()
             new_update = True
         except (UniqueViolation, IntegrityError):
@@ -55,10 +63,14 @@ def update_poll_messages(session, bot, poll, message_id=None, inline_message_id=
         # In case there already is an update increase the counter and set the next_update date
         # This will result in a new update in the background job and ensures
         # currently (right now) running updates will be scheduled again.
-        session.query(Update).filter(Update.poll == poll).update(
-            {"count": Update.count + 1, "next_update": datetime.now(),}
-        )
+        if retry_after is not None:
+            next_update = retry_after
+        else:
+            next_update = datetime.now()
 
+        session.query(Update).filter(Update.poll == poll).update(
+            {"count": Update.count + 1, "next_update": next_update}
+        )
 
 def send_updates(session, bot, poll, show_warning=False):
     """Actually update all messages."""
