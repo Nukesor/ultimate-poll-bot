@@ -6,7 +6,7 @@ from telegram import (
 )
 from sqlalchemy.orm import joinedload
 
-from pollbot.models import Vote
+from pollbot.models import Vote, UserStatistic
 from pollbot.i18n import i18n
 from pollbot.config import config
 from pollbot.helper.poll import poll_allows_cumulative_votes
