@@ -2,6 +2,7 @@
 import traceback
 from datetime import date
 from functools import wraps
+from sqlalchemy.exc import IntegrityError
 from telegram.error import (
     TelegramError,
     BadRequest,
@@ -209,7 +210,7 @@ def get_user(session, tg_user):
     #
     # I really hate doing this, but I don't see another way to prevent DOS attacks
     # without tracking at least some numbers.
-    user_statistic =  session.query(UserStatistic).get((date.today(), user.id))
+    user_statistic = session.query(UserStatistic).get((date.today(), user.id))
 
     if user_statistic is None:
         user_statistic = UserStatistic(user)

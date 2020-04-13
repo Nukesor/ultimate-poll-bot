@@ -94,7 +94,7 @@ def handle_vote(session, context):
     #
     # I really hate doing this, but I don't see another way to prevent DOS attacks
     # without tracking at least some numbers.
-    user_statistic =  session.query(UserStatistic).get((date.today(), poll.user.id))
+    user_statistic = session.query(UserStatistic).get((date.today(), poll.user.id))
 
     if user_statistic is None:
         user_statistic = UserStatistic(poll.user)
@@ -105,7 +105,9 @@ def handle_vote(session, context):
         # Return the statistic that has already been created in another session
         except IntegrityError as e:
             session.rollback()
-            user_statistic = session.query(UserStatistic).get((date.today, poll.user.id))
+            user_statistic = session.query(UserStatistic).get(
+                (date.today, poll.user.id)
+            )
             if user_statistic is None:
                 raise e
 

@@ -73,6 +73,7 @@ def update_poll_messages(session, bot, poll, message_id=None, inline_message_id=
             {"count": Update.count + 1, "next_update": next_update}
         )
 
+
 def send_updates(session, bot, poll, show_warning=False):
     """Actually update all messages."""
     for reference in poll.references:
