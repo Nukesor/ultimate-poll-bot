@@ -194,7 +194,7 @@ def get_user(session, tg_user):
         # in another session
         except IntegrityError as e:
             session.rollback()
-            user = session.query(User).get(user_id)
+            user = session.query(User).get(tg_user.id)
             if user is None:
                 raise e
             return user
