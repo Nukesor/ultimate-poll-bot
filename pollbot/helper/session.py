@@ -222,7 +222,7 @@ def get_user(session, tg_user):
         # Return the statistic that has already been created in another session
         except IntegrityError as e:
             session.rollback()
-            user_statistic = session.query(UserStatistic).get((date.today, user.id))
+            user_statistic = session.query(UserStatistic).get((date.today(), user.id))
             if user_statistic is None:
                 raise e
 
