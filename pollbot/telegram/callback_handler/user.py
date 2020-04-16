@@ -1,5 +1,5 @@
 """User related callback handler."""
-from sqlalchemy.orm.exc import StaleDataError
+from sqlalchemy.orm.exc import StaleDataError, ObjectDeletedError
 from pollbot.i18n import i18n
 from pollbot.helper.update import remove_poll_messages
 from pollbot.display.creation import get_init_text
@@ -144,7 +144,7 @@ def delete_all(session, context):
             remove_poll_messages(session, context.bot, poll)
             session.delete(poll)
             session.commit()
-        except StaleDataError:
+        except (StaleDataError, ObjectDeletedError):
             session.rollback()
             session.expire_all()
 
@@ -160,7 +160,7 @@ def delete_closed(session, context):
                 remove_poll_messages(session, context.bot, poll)
                 session.delete(poll)
                 session.commit()
-            except StaleDataError:
+            except (StaleDataError, ObjectDeletedError):
                 session.rollback()
                 session.expire_all()
 
