@@ -21,7 +21,7 @@ def handle_vote(session, context):
     # Remove the poll, in case it got deleted, but we didn't manage to kill all references
     option = session.query(PollOption).get(context.payload)
     if option is None:
-        if message is not None:
+        if context.query.message is not None:
             context.query.message.edit_text(
                 i18n.t("deleted.polls", locale=context.user.locale)
             )
