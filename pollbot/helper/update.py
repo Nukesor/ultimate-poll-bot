@@ -146,11 +146,8 @@ def update_reference(session, bot, poll, reference, show_warning=False):
             raise
 
     except Unauthorized as e:
-        if e.message.startswith("Forbidden: MESSAGE_AUTHOR_REQUIRED"):
-            session.delete(reference)
-            session.commit()
-        else:
-            raise
+        session.delete(reference)
+        session.commit()
     except TimedOut:
         # Ignore timeouts during updates for now
         pass
