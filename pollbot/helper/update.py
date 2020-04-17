@@ -2,6 +2,7 @@
 from datetime import datetime, timedelta
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm.exc import ObjectDeletedError
 from telegram.error import BadRequest, RetryAfter, Unauthorized, TimedOut
 
 from pollbot.i18n import i18n
@@ -69,9 +70,22 @@ def update_poll_messages(session, bot, poll, message_id=None, inline_message_id=
         else:
             next_update = datetime.now()
 
-        session.query(Update).filter(Update.poll == poll).update(
-            {"count": Update.count + 1, "next_update": next_update}
-        )
+        try:
+            session.query(Update).filter(Update.poll == poll).update(
+                {"count": Update.count + 1, "next_update": next_update}
+            )
+        except ObjectDeletedError:
+            # This is a hard edge-case
+            # This occurs, if the update we got a few microseconds ago
+            # just got deleted by the background job. It happens maybe
+            # once every 10000 requests and fixes itself as soon as somebody
+            # votes on the poll once more
+            #
+            # The result of this MAY be, that polls in other chats have a
+            # desync of a single vote. But it may also be the case, that
+            # everything is already in sync.
+            session.rollback()
+            pass
 
 
 def send_updates(session, bot, poll, show_warning=False):
