@@ -112,6 +112,8 @@ def handle_vote(session, context):
             if user_statistic is None:
                 raise e
 
+    # Additional test commit. Sometimes deadlocks happen right here.
+    session.commit()
     increase_user_stat(session, poll.user, "poll_callback_calls")
 
 
