@@ -13,13 +13,13 @@ from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.helper.enums import PollType, CallbackResult
 from pollbot.helper.update import update_poll_messages
 
-from pollbot.models import PollOption, Vote, UserStatistic
+from pollbot.models import Option, Vote, UserStatistic
 
 
 def handle_vote(session, context):
     """Handle any clicks on vote buttons."""
     # Remove the poll, in case it got deleted, but we didn't manage to kill all references
-    option = session.query(PollOption).get(context.payload)
+    option = session.query(Option).get(context.payload)
     if option is None:
         if context.query.message is not None:
             context.query.message.edit_text(
@@ -134,9 +134,9 @@ def respond_to_vote(session, line, context, poll, remaining_votes=None, limited=
     lines.append(i18n.t("callback.vote.your_votes", locale=locale))
     for vote in votes:
         if poll_allows_cumulative_votes(poll):
-            lines.append(f" {vote.poll_option.name} ({vote.vote_count}), ")
+            lines.append(f" {vote.option.name} ({vote.vote_count}), ")
         else:
-            lines.append(f" {vote.poll_option.name}")
+            lines.append(f" {vote.option.name}")
 
     message = "".join(lines)
 
@@ -159,13 +159,13 @@ def handle_single_vote(session, context, option):
     )
 
     # Changed vote
-    if existing_vote and existing_vote.poll_option != option:
-        existing_vote.poll_option = option
+    if existing_vote and existing_vote.option != option:
+        existing_vote.option = option
         vote_changed = i18n.t("callback.vote.changed", locale=locale)
         respond_to_vote(session, vote_changed, context, option.poll)
 
     # Voted for the same thing again
-    elif existing_vote and existing_vote.poll_option == option:
+    elif existing_vote and existing_vote.option == option:
         session.delete(existing_vote)
         vote_removed = i18n.t("callback.vote.removed", locale=locale)
         context.query.answer(vote_removed)
@@ -185,7 +185,7 @@ def handle_block_vote(session, context, option):
     locale = option.poll.locale
     existing_vote = (
         session.query(Vote)
-        .filter(Vote.poll_option == option)
+        .filter(Vote.option == option)
         .filter(Vote.user == context.user)
         .one_or_none()
     )
@@ -211,7 +211,7 @@ def handle_limited_vote(session, context, option):
     locale = option.poll.locale
     existing_vote = (
         session.query(Vote)
-        .filter(Vote.poll_option == option)
+        .filter(Vote.option == option)
         .filter(Vote.user == context.user)
         .one_or_none()
     )
@@ -258,7 +258,7 @@ def handle_cumulative_vote(session, context, option, limited=True):
     locale = option.poll.locale
     existing_vote = (
         session.query(Vote)
-        .filter(Vote.poll_option == option)
+        .filter(Vote.option == option)
         .filter(Vote.user == context.user)
         .one_or_none()
     )
@@ -334,7 +334,7 @@ def handle_doodle_vote(session, context, option):
     locale = option.poll.locale
     vote = (
         session.query(Vote)
-        .filter(Vote.poll_option == option)
+        .filter(Vote.option == option)
         .filter(Vote.user == context.user)
         .one_or_none()
     )
@@ -368,7 +368,7 @@ def handle_priority_vote(session, context, option):
     """Handle a priority vote"""
     vote = (
         session.query(Vote)
-        .filter(Vote.poll_option == option)
+        .filter(Vote.option == option)
         .filter(Vote.user == context.user)
         .one()
     )

@@ -34,6 +34,7 @@ def upgrade():
     op.create_index(
         op.f("ix_user_statistic_user_id"), "user_statistic", ["user_id"], unique=False
     )
+
     op.alter_column(
         "update",
         "count",

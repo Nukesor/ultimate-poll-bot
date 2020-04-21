@@ -168,13 +168,13 @@ def get_priority_buttons(poll, user):
         .filter(Vote.poll == poll)
         .filter(Vote.user == user)
         .order_by(Vote.priority.asc())
-        .options(joinedload(Vote.poll_option))
+        .options(joinedload(Vote.option))
         .all()
     )
 
     indices = get_option_indices(options)
     for index, vote in enumerate(votes):
-        option = vote.poll_option
+        option = vote.option
         if not poll.compact_buttons:
             name_row = [
                 InlineKeyboardButton(f"{option.name}", callback_data=IGNORE_PAYLOAD)

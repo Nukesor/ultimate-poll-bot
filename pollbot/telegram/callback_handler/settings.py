@@ -17,7 +17,7 @@ from pollbot.telegram.keyboard import (
     get_settings_language_keyboard,
 )
 from pollbot.helper.enums import ExpectedInput, DatepickerContext
-from pollbot.models import PollOption, User, Vote
+from pollbot.models import Option, User, Vote
 
 
 def send_settings_message(context):
@@ -126,7 +126,7 @@ def show_remove_options_menu(session, context, poll):
 @poll_required
 def remove_option(session, context, poll):
     """Remove the option."""
-    session.query(PollOption).filter(PollOption.id == context.action).delete()
+    session.query(Option).filter(Option.id == context.action).delete()
 
     if poll.is_priority():
         users = session.query(User).join(User.votes).filter(Vote.poll == poll).all()

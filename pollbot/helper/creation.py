@@ -7,7 +7,7 @@ from pollbot.telegram.keyboard import (
     get_options_entered_keyboard,
     get_management_keyboard,
 )
-from pollbot.models import PollOption, Reference
+from pollbot.models import Option, Reference
 
 
 def next_option(tg_chat, poll, options):
@@ -89,10 +89,10 @@ def add_options(poll, text, is_date=False):
         if option_is_duplicate(poll, option_to_add) or option_to_add in added_options:
             continue
 
-        poll_option = PollOption(poll, option_to_add)
-        poll_option.description = description
-        poll_option.is_date = is_date
-        poll.options.append(poll_option)
+        option = Option(poll, option_to_add)
+        option.description = description
+        option.is_date = is_date
+        poll.options.append(option)
 
         added_options.append(option_to_add)
 

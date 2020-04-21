@@ -87,8 +87,8 @@ class Poll(base):
 
     # OneToMany
     options = relationship(
-        "PollOption",
-        order_by="asc(PollOption.id)",
+        "Option",
+        order_by="asc(Option.id)",
         lazy="joined",
         passive_deletes="all",
     )
@@ -191,10 +191,10 @@ class Poll(base):
         poll.results_visible = self.results_visible
         poll.show_percentage = self.show_percentage
 
-        from pollbot.models import PollOption
+        from pollbot.models import Option
 
         for option in self.options:
-            new_option = PollOption(poll, option.name)
+            new_option = Option(poll, option.name)
             new_option.description = option.description
             new_option.is_date = option.is_date
             session.add(new_option)
@@ -209,13 +209,13 @@ class Poll(base):
         if not self.is_priority():
             return
 
-        from pollbot.models import User, Vote, PollOption
+        from pollbot.models import User, Vote, Option
 
         users = session.query(User).join(User.votes).filter(Vote.poll == self).all()
 
         new_options = (
-            session.query(PollOption)
-            .filter(PollOption.poll == self)
+            session.query(Option)
+            .filter(Option.poll == self)
             .outerjoin(Vote)
             .filter(Vote.id.is_(None))
             .all()

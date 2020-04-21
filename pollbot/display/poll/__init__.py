@@ -2,7 +2,7 @@
 from pollbot.helper.poll import poll_has_limited_votes
 from pollbot.models import (
     User,
-    PollOption,
+    Option,
     Vote,
 )
 
@@ -19,8 +19,8 @@ class Context:
         self.total_user_count = (
             session.query(User.id)
             .join(Vote)
-            .join(PollOption)
-            .filter(PollOption.poll == poll)
+            .join(Option)
+            .filter(Option.poll == poll)
             .group_by(User.id)
             .count()
         )

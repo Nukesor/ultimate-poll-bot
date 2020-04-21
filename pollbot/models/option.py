@@ -16,10 +16,10 @@ from sqlalchemy.orm import relationship
 from pollbot.db import base
 
 
-class PollOption(base):
-    """The model for a PollOption."""
+class Option(base):
+    """The model for a Option."""
 
-    __tablename__ = "poll_option"
+    __tablename__ = "option"
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)

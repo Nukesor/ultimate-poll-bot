@@ -17,7 +17,7 @@ class Vote(base):
     __tablename__ = "vote"
     __table_args__ = (
         UniqueConstraint(
-            "user_id", "poll_id", "poll_option_id", name="one_vote_per_option_and_user"
+            "user_id", "poll_id", "option_id", name="one_vote_per_option_and_user"
         ),
     )
 
@@ -33,13 +33,13 @@ class Vote(base):
     )
 
     # ManyToOne
-    poll_option_id = Column(
+    option_id = Column(
         Integer,
-        ForeignKey("poll_option.id", ondelete="cascade"),
+        ForeignKey("option.id", ondelete="cascade", name="vote_option_id_fkey"),
         nullable=False,
         index=True,
     )
-    poll_option = relationship("PollOption")
+    option = relationship("Option")
 
     poll_id = Column(
         Integer, ForeignKey("poll.id", ondelete="cascade"), nullable=False, index=True
@@ -54,12 +54,12 @@ class Vote(base):
     )
     user = relationship("User")
 
-    def __init__(self, user, poll_option):
+    def __init__(self, user, option):
         """Create a new vote."""
         self.user = user
         self.vote_count = 1
-        self.poll_option = poll_option
-        self.poll = poll_option.poll
+        self.option = option
+        self.poll = option.poll
         self.poll_type = self.poll.poll_type
 
     def __repr__(self):

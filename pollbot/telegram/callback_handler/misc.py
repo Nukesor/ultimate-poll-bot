@@ -1,5 +1,5 @@
 """Option for setting the current date of the picker."""
-from pollbot.models import PollOption
+from pollbot.models import Option
 from pollbot.display.misc import get_help_text_and_keyboard
 
 
@@ -18,7 +18,7 @@ def switch_help(session, context):
 
 def show_option_name(session, context):
     """Return the option name via callback query."""
-    option = session.query(PollOption).get(context.action)
+    option = session.query(Option).get(context.action)
 
     if option is None:
         return "Option no longer exists"
