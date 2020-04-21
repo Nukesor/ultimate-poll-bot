@@ -44,7 +44,7 @@ def close_poll(session, context, poll):
     """Close this poll."""
     poll.closed = True
     session.commit()
-    update_poll_messages(session, context.bot, poll)
+    update_poll_messages(session, context.bot, poll, context.query.message.message_id)
 
     return i18n.t("callback.closed", locale=poll.user.locale)
 
@@ -65,7 +65,7 @@ def reopen_poll(session, context, poll):
         poll.set_due_date(poll.due_date)
 
     session.commit()
-    update_poll_messages(session, context.bot, poll)
+    update_poll_messages(session, context.bot, poll, context.query.message.message_id)
 
 
 @poll_required
@@ -74,8 +74,8 @@ def reset_poll(session, context, poll):
     for vote in poll.votes:
         session.delete(vote)
     session.commit()
-    update_poll_messages(session, context.bot, poll)
 
+    update_poll_messages(session, context.bot, poll, context.query.message.message_id)
     return i18n.t("callback.votes_removed", locale=poll.user.locale)
 
 
