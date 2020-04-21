@@ -9,7 +9,7 @@ def get_sorted_votes(poll, votes):
         """Get the name of user to sort votes."""
         return vote.user.name
 
-    if poll.user_sorting == UserSorting.user_name.name:
+    if poll.user_sorting == UserSorting.name.name:
         votes.sort(key=get_user_name)
 
     return votes

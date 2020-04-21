@@ -4,7 +4,10 @@ from pollbot.helper.poll import poll_required
 from pollbot.helper.enums import OptionSorting, UserSorting
 from pollbot.helper.update import update_poll_messages
 from pollbot.display.poll.compilation import get_poll_text
-from pollbot.telegram.keyboard import get_styling_settings_keyboard
+from pollbot.telegram.keyboard import (
+    get_styling_settings_keyboard,
+    get_manual_option_order_keyboard,
+)
 
 
 def send_styling_message(session, context):
@@ -99,3 +102,93 @@ def set_user_order(session, context, poll):
     session.commit()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)
+
+
+# Manual option order menu
+def send_option_order_message(session, context):
+    """Update the current styling menu message."""
+    context.query.message.edit_text(
+        text=get_poll_text(session, context.poll),
+        parse_mode="markdown",
+        reply_markup=get_manual_option_order_keyboard(context.poll),
+        disable_web_page_preview=True,
+    )
+
+@poll_required
+def open_option_order_menu(session, context, poll):
+    """Open the menu for manually adjusting the option order."""
+    send_option_order_message(session, context)
+
+
+@poll_required
+def increase_option_index(session, context, poll):
+    """Increase the index of a specific option."""
+    option_id = context.action
+
+    target_option = None
+    for option in poll.options:
+        # Find the option we're looking for
+        if option.id == option_id:
+            target_option = option
+
+            continue
+
+        # Switch index with the next option
+        if target_option is not None:
+            target_index = option.index
+            current_index = target_option.index
+
+            # Change indices to allow changing the index
+            # In combination with unique constraints
+            # This also acts as a lock, which prevents other
+            # requests to change order at the same time
+            option.index = -1
+            target_option.index = -2
+            session.commit()
+
+            # Upate indices
+            target_option.index = target_index
+            option.index = current_index
+            session.commit()
+
+            break
+
+    update_poll_messages(session, context.bot, poll)
+    send_option_order_message(session, context)
+
+
+@poll_required
+def decrease_option_index(session, context, poll):
+    """Decrease the index of a specific option."""
+    option_id = context.action
+
+    prev_option = None
+    for option in poll.options:
+        # Find the option we're looking for
+        if option.id == option_id:
+            if prev_option is None:
+                return
+
+            # Switch index with the previous option
+            current_index = option.index
+            target_index = prev_option.index
+
+            # Change indices to allow changing the index
+            # In combination with unique constraints
+            # This also acts as a lock, which prevents other
+            # requests to change order at the same time
+            option.index = -2
+            prev_option.index = -1
+            session.commit()
+
+            # Upate indices
+            prev_option.index = current_index
+            option.index = target_index
+            session.commit()
+
+            break
+
+        prev_option = option
+
+    update_poll_messages(session, context.bot, poll)
+    send_option_order_message(session, context)

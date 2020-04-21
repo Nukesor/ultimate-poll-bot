@@ -97,8 +97,6 @@ def get_normal_buttons(poll):
     vote_button_type = CallbackType.vote.value
 
     options = poll.options
-    if poll.option_sorting == OptionSorting.option_name.name:
-        options = get_sorted_options(poll)
 
     for option in options:
         option_name = option.get_formatted_name()
@@ -126,8 +124,6 @@ def get_cumulative_buttons(poll):
     vote_no = CallbackResult.no.value
 
     options = poll.options
-    if poll.option_sorting == OptionSorting.option_name:
-        options = get_sorted_options(poll)
 
     buttons = []
     for option in options:

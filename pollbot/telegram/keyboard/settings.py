@@ -6,13 +6,9 @@ from telegram import (
 
 from pollbot.i18n import i18n, supported_languages
 from pollbot.telegram.keyboard import get_back_to_management_button
-from pollbot.telegram.keyboard.date_picker import get_datepicker_buttons
 from pollbot.helper.enums import (
     CallbackType,
     CallbackResult,
-    UserSorting,
-    OptionSorting,
-    PollType,
 )
 
 
@@ -71,7 +67,7 @@ def get_settings_keyboard(poll):
         [InlineKeyboardButton(text=new_option_text, callback_data=new_option_payload)]
     )
 
-    # Sorting sub menu
+    # Styling sub menu
     styling_text = i18n.t("keyboard.styling", locale=locale)
     styling_payload = f"{CallbackType.settings_show_styling.value}:{poll.id}:0"
     buttons.append(
@@ -126,126 +122,6 @@ def get_settings_keyboard(poll):
 
     # Back button
     buttons.append([get_back_to_management_button(poll)])
-
-    return InlineKeyboardMarkup(buttons)
-
-
-def get_styling_settings_keyboard(poll):
-    """Get a keyboard for sorting options."""
-    buttons = []
-    locale = poll.user.locale
-
-    if poll.results_visible and not poll.is_priority():
-        # Show/hide percentage
-        percentage_text = i18n.t("keyboard.show_percentage", locale=locale)
-        if poll.show_percentage:
-            percentage_text = i18n.t("keyboard.hide_percentage", locale=locale)
-        percentage_payload = (
-            f"{CallbackType.settings_toggle_percentage.value}:{poll.id}:0"
-        )
-        buttons.append(
-            [
-                InlineKeyboardButton(
-                    text=percentage_text, callback_data=percentage_payload
-                )
-            ]
-        )
-
-        # Show/hide option votes
-        option_votes_text = i18n.t("keyboard.show_option_votes", locale=locale)
-        if poll.show_option_votes:
-            option_votes_text = i18n.t("keyboard.hide_option_votes", locale=locale)
-        option_votes_payload = (
-            f"{CallbackType.settings_toggle_option_votes.value}:{poll.id}:0"
-        )
-        buttons.append(
-            [
-                InlineKeyboardButton(
-                    text=option_votes_text, callback_data=option_votes_payload
-                )
-            ]
-        )
-
-    # Summarize votes in poll
-    if (
-        poll.results_visible
-        and not poll.permanently_summarized
-        and not poll.is_priority()
-    ):
-        summarize_text = i18n.t("keyboard.summarize_votes", locale=locale)
-        if poll.summarize:
-            summarize_text = i18n.t("keyboard.dont_summarize_votes", locale=locale)
-        summarize_payload = (
-            f"{CallbackType.settings_toggle_summarization.value}:{poll.id}:0"
-        )
-        buttons.append(
-            [InlineKeyboardButton(text=summarize_text, callback_data=summarize_payload)]
-        )
-
-    # Date format styling between US and european
-    if poll.has_date_option():
-        date_format_text = (
-            "📅 yyyy-mm-dd date format"
-            if poll.european_date_format
-            else "📅 dd.mm.yyyy date format"
-        )
-        date_format_payload = (
-            f"{CallbackType.settings_toggle_date_format.value}:{poll.id}:0"
-        )
-        buttons.append(
-            [
-                InlineKeyboardButton(
-                    text=date_format_text, callback_data=date_format_payload
-                )
-            ]
-        )
-
-    if poll.is_doodle() or poll.is_priority():
-        doodle_button_text = i18n.t("keyboard.compact_doodle", locale=locale)
-        if poll.compact_buttons:
-            doodle_button_text = i18n.t("keyboard.no_compact_doodle", locale=locale)
-        doodle_button_payload = (
-            f"{CallbackType.settings_toggle_compact_buttons.value}:{poll.id}:0"
-        )
-        buttons.append(
-            [
-                InlineKeyboardButton(
-                    text=doodle_button_text, callback_data=doodle_button_payload
-                )
-            ]
-        )
-
-    # Compile the possible options for user sorting
-    if not poll.anonymous and not poll.is_doodle() and not poll.is_priority():
-        for order in UserSorting:
-            if order.name == poll.user_sorting:
-                continue
-
-            option_name = i18n.t(f"sorting.{order.name}", locale=locale)
-            button = InlineKeyboardButton(
-                i18n.t("keyboard.order_users", locale=locale, name=option_name),
-                callback_data=f"{CallbackType.settings_user_sorting.value}:{poll.id}:{order.value}",
-            )
-            buttons.append([button])
-
-    # Compile the possible options for option sorting
-    for order in OptionSorting:
-        if order.name == poll.option_sorting:
-            continue
-
-        if order.name == OptionSorting.option_percentage.name and (
-            poll.is_doodle() or poll.is_priority()
-        ):
-            continue
-
-        option_name = i18n.t(f"sorting.{order.name}", locale=locale)
-        button = InlineKeyboardButton(
-            i18n.t("keyboard.order_options", locale=locale, name=option_name),
-            callback_data=f"{CallbackType.settings_option_sorting.value}:{poll.id}:{order.value}",
-        )
-        buttons.append([button])
-
-    buttons.append([get_back_to_settings_button(poll)])
 
     return InlineKeyboardMarkup(buttons)
 

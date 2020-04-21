@@ -117,8 +117,8 @@ keyboard:
   due_date: 📅 Set due date
   styling: 🎀 Styling settings
   show_results: 🔎 View all votes
-  hide_percentage: ○% Hide percentage
-  show_percentage: ○% Show percentage
+  hide_percentage: ▭% Hide percentage
+  show_percentage: ▭% Show percentage
   hide_option_votes: "# Hide total votes for option"
   show_option_votes: "# Show total votes for option"
   summarize_votes: Summarize many votes
@@ -133,6 +133,7 @@ keyboard:
   forbid_sharing: 🔗 Forbid others to share the poll
   order_users: Order users %{name}
   order_options: Order options %{name}
+  order_options_manually: Adjust option order
   add_new_language: Add a new language
   vote_with_count: '%{option_name} (%{count} votes)'
   user:
@@ -159,12 +160,10 @@ keyboard:
 
 
 sorting:
-    user_chrono: chronologically
-    user_name: alphabetically
-    option_chrono: chronologically
-    option_percentage: by percentage
-    option_name: alphabetically
-    doodle_sorting: by answer
+    chrono: chronologically
+    name: alphabetically
+    manual: manually
+    percentage: by percentage
 
 settings:
   poll_type: "*Poll type*: %{poll_type}"

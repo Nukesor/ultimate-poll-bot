@@ -4,6 +4,7 @@ from sqlalchemy import (
     Column,
     func,
     ForeignKey,
+    UniqueConstraint,
 )
 from sqlalchemy.types import (
     Boolean,
@@ -20,8 +21,14 @@ class Option(base):
     """The model for a Option."""
 
     __tablename__ = "option"
+    __table_args__ = (
+        UniqueConstraint(
+            "poll_id", "index", name="unique_option_index", deferrable=True
+        ),
+    )
 
     id = Column(Integer, primary_key=True)
+    index = Column(Integer, nullable=False)
     name = Column(String, nullable=False)
     description = Column(String)
     is_date = Column(Boolean, nullable=False, default=False)
@@ -45,6 +52,7 @@ class Option(base):
         """Create a new poll."""
         self.poll = poll
         self.name = name
+        self.index = len(poll.options)
 
     def __repr__(self):
         """Print as string."""

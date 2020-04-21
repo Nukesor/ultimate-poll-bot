@@ -88,7 +88,7 @@ class Poll(base):
     # OneToMany
     options = relationship(
         "Option",
-        order_by="asc(Option.id)",
+        order_by="asc(Option.index)",
         lazy="joined",
         passive_deletes="all",
     )
@@ -103,8 +103,8 @@ class Poll(base):
         self.anonymous = False
         self.results_visible = True
 
-        self.user_sorting = UserSorting.user_chrono.name
-        self.option_sorting = OptionSorting.option_chrono.name
+        self.user_sorting = UserSorting.chrono.name
+        self.option_sorting = OptionSorting.manual.name
 
     @staticmethod
     def create(user, session):

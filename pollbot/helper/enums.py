@@ -115,6 +115,9 @@ class CallbackType(Enum):
     settings_toggle_compact_buttons = 87
     settings_toggle_option_votes = 89
     settings_toggle_allow_sharing = 90
+    settings_open_option_order_menu = 91
+    settings_increase_option_index = 92
+    settings_decrease_option_index  = 93
 
     # Misc
     ignore = 100
@@ -198,17 +201,16 @@ class CallbackResult(Enum):
 class UserSorting(Enum):
     """Save several possible sorting options."""
 
-    user_chrono = 0
-    user_name = 1
+    chrono = 0
+    name = 1
 
 
 @unique
 class OptionSorting(Enum):
     """Save several possible sorting options."""
 
-    option_chrono = 10
-    option_percentage = 11
-    option_name = 12
+    manual = 10
+    percentage = 11
 
 
 @unique

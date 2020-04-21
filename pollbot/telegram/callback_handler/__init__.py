@@ -61,6 +61,9 @@ from .styling import (
     set_option_order,
     set_user_order,
     toggle_compact_buttons,
+    open_option_order_menu,
+    increase_option_index,
+    decrease_option_index,
 )
 from .datepicker import (
     pick_creation_date,
@@ -218,6 +221,9 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.settings_user_sorting: set_user_order,
         CallbackType.settings_option_sorting: set_option_order,
         CallbackType.settings_toggle_compact_buttons: toggle_compact_buttons,
+        CallbackType.settings_open_option_order_menu: open_option_order_menu,
+        CallbackType.settings_increase_option_index: increase_option_index,
+        CallbackType.settings_decrease_option_index: decrease_option_index,
         # User
         CallbackType.init_poll: init_poll,
         CallbackType.user_menu: open_main_menu,

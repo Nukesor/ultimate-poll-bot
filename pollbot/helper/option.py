@@ -10,18 +10,11 @@ def get_sorted_options(poll, total_user_count=0):
     """Sort the options depending on the poll's current settings."""
     options = poll.options.copy()
 
-    def get_option_name(option):
-        """Get the name of the option."""
-        return option.name
-
     def get_option_percentage(option):
         """Get the name of the option."""
         return calculate_percentage(option, total_user_count)
 
-    if poll.option_sorting == OptionSorting.option_name.name:
-        options.sort(key=get_option_name)
-
-    elif poll.option_sorting == OptionSorting.option_percentage.name:
+    if poll.option_sorting == OptionSorting.percentage.name:
         options.sort(key=get_option_percentage, reverse=True)
 
     return options
