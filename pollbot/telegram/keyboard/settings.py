@@ -44,7 +44,7 @@ def get_settings_keyboard(poll):
     buttons = []
     locale = poll.user.locale
     # Anonymization
-    if not poll.anonymous:
+    if not poll.anonymous and not poll.is_priority():
         text = i18n.t("keyboard.anonymize", locale=locale)
         payload = (
             f"{CallbackType.settings_anonymization_confirmation.value}:{poll.id}:0"

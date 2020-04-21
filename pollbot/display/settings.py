@@ -23,7 +23,7 @@ def get_settings_text(poll):
 
     if poll.anonymous:
         text.append(i18n.t("settings.anonymous", locale=locale))
-    else:
+    elif not poll.is_priority():
         text.append(i18n.t("settings.not_anonymous", locale=locale))
 
     if poll.results_visible:
