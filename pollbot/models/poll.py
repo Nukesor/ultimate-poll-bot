@@ -197,6 +197,7 @@ class Poll(base):
             new_option = Option(poll, option.name)
             new_option.description = option.description
             new_option.is_date = option.is_date
+            new_option.index = option.index
             session.add(new_option)
 
         return poll
