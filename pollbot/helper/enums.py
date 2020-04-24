@@ -117,7 +117,7 @@ class CallbackType(Enum):
     settings_toggle_allow_sharing = 90
     settings_open_option_order_menu = 91
     settings_increase_option_index = 92
-    settings_decrease_option_index  = 93
+    settings_decrease_option_index = 93
 
     # Misc
     ignore = 100

@@ -117,14 +117,16 @@ def get_styling_settings_keyboard(poll):
             order = OptionSorting.percentage
             sorting_translation = i18n.t(f"sorting.{order.name}", locale=locale)
             button = InlineKeyboardButton(
-                i18n.t("keyboard.order_options", locale=locale, name=sorting_translation),
+                i18n.t(
+                    "keyboard.order_options", locale=locale, name=sorting_translation
+                ),
                 callback_data=f"{CallbackType.settings_option_sorting.value}:{poll.id}:{order.value}",
             )
             buttons.append([button])
 
         # Button for opening the menu used to manually adjust the option order
         order = OptionSorting.percentage
-        sorting_translation  = i18n.t(f"sorting.{order.name}", locale=locale)
+        sorting_translation = i18n.t(f"sorting.{order.name}", locale=locale)
         button = InlineKeyboardButton(
             i18n.t("keyboard.order_options_manually", locale=locale),
             callback_data=f"{CallbackType.settings_open_option_order_menu.value}:{poll.id}:0",
@@ -140,12 +142,9 @@ def get_styling_settings_keyboard(poll):
         )
         buttons.append([button])
 
-
-
     buttons.append([get_back_to_settings_button(poll)])
 
     return InlineKeyboardMarkup(buttons)
-
 
 
 def get_manual_option_order_keyboard(poll):

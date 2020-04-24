@@ -13,34 +13,34 @@ from sqlalchemy.orm.session import Session
 # Set system path, so alembic is capable of finding the stickerfinder module
 import os
 import sys
+
 parent_dir = os.path.abspath(os.path.join(os.getcwd()))
 sys.path.append(parent_dir)
 from pollbot.models import Poll
 from pollbot.db import engine
 
 # revision identifiers, used by Alembic.
-revision = '8a4f079a3260'
-down_revision = '4a3508ddb972'
+revision = "8a4f079a3260"
+down_revision = "4a3508ddb972"
 branch_labels = None
 depends_on = None
 
 
 def upgrade():
-    op.add_column('option', sa.Column('index', sa.Integer()))
-    op.create_unique_constraint('unique_option_index', 'option', ['poll_id', 'index'], deferrable=True)
+    op.add_column("option", sa.Column("index", sa.Integer()))
+    op.create_unique_constraint(
+        "unique_option_index", "option", ["poll_id", "index"], deferrable=True
+    )
 
     session = Session(bind=op.get_bind())
 
     count = session.query(Poll).count()
-    print(f'Got {count} polls')
+    print(f"Got {count} polls")
 
     runner = 0
     while runner < count:
         print(runner)
-        polls = session.query(Poll) \
-            .offset(runner) \
-            .limit(1000) \
-            .all()
+        polls = session.query(Poll).offset(runner).limit(1000).all()
 
         for poll in polls:
             option_index = 0
@@ -51,50 +51,49 @@ def upgrade():
         runner += 1000
 
     # Update sorting enum renames
-    session.query(Poll) \
-        .filter(or_(
-            Poll.option_sorting == 'option_chrono',
-            Poll.option_sorting == 'option_name'
-        )) \
-        .update({'option_sorting': 'manual'})
+    session.query(Poll).filter(
+        or_(
+            Poll.option_sorting == "option_chrono", Poll.option_sorting == "option_name"
+        )
+    ).update({"option_sorting": "manual"})
 
-    session.query(Poll) \
-        .filter(Poll.option_sorting == 'option_percentage') \
-        .update({'option_sorting': 'percentage'})
+    session.query(Poll).filter(Poll.option_sorting == "option_percentage").update(
+        {"option_sorting": "percentage"}
+    )
 
-    session.query(Poll) \
-        .filter(Poll.user_sorting == 'user_chrono') \
-        .update({'user_sorting': 'chrono'})
+    session.query(Poll).filter(Poll.user_sorting == "user_chrono").update(
+        {"user_sorting": "chrono"}
+    )
 
-    session.query(Poll) \
-        .filter(Poll.user_sorting == 'user_name') \
-        .update({'user_sorting': 'name'})
+    session.query(Poll).filter(Poll.user_sorting == "user_name").update(
+        {"user_sorting": "name"}
+    )
 
     session.commit()
 
-    op.alter_column('option', 'index', nullable=False)
+    op.alter_column("option", "index", nullable=False)
 
 
 def downgrade():
-    op.drop_constraint('unique_option_index', 'option', type_='unique')
-    op.drop_column('option', 'index')
+    op.drop_constraint("unique_option_index", "option", type_="unique")
+    op.drop_column("option", "index")
 
     session = Session(bind=op.get_bind())
     # Update sorting enum renames
-    session.query(Poll) \
-        .filter(Poll.option_sorting == 'manual') \
-        .update({'option_sorting': 'option_chrono'})
+    session.query(Poll).filter(Poll.option_sorting == "manual").update(
+        {"option_sorting": "option_chrono"}
+    )
 
-    session.query(Poll) \
-        .filter(Poll.option_sorting == 'percentage') \
-        .update({'option_sorting': 'option_percentage'})
+    session.query(Poll).filter(Poll.option_sorting == "percentage").update(
+        {"option_sorting": "option_percentage"}
+    )
 
-    session.query(Poll) \
-        .filter(Poll.user_sorting == 'chrono') \
-        .update({'user_sorting': 'user_chrono'})
+    session.query(Poll).filter(Poll.user_sorting == "chrono").update(
+        {"user_sorting": "user_chrono"}
+    )
 
-    session.query(Poll) \
-        .filter(Poll.user_sorting == 'name') \
-        .update({'user_sorting': 'user_name'})
+    session.query(Poll).filter(Poll.user_sorting == "name").update(
+        {"user_sorting": "user_name"}
+    )
 
     session.commit()

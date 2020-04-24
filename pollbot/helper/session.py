@@ -94,11 +94,13 @@ def callback_query_wrapper(func):
 
     def wrapper(update, context):
         user = None
-        if context.user_data.get('ban'):
+        if context.user_data.get("ban"):
             return
 
-        temp_ban_time = context.user_data.get('temporary-ban-time')
-        if temp_ban_time is not None and temp_ban_time >= date.today() - timedelta(days=1):
+        temp_ban_time = context.user_data.get("temporary-ban-time")
+        if temp_ban_time is not None and temp_ban_time >= date.today() - timedelta(
+            days=1
+        ):
             update.callback_query.answer(i18n.t("callback.spam"))
             return
 
@@ -107,13 +109,15 @@ def callback_query_wrapper(func):
             user, statistic = get_user(session, update.callback_query.from_user)
             # Cache ban value, so we don't have to lookup the value in our database
             if user.banned:
-                context.user_data['ban'] = True
+                context.user_data["ban"] = True
                 return
 
             # Cache temporary-ban time, so we don't have to create a connection to our database
             if statistic.votes > config["telegram"]["max_user_votes_per_day"]:
-                update.callback_query.answer(i18n.t("callback.spam", locale=user.locale))
-                context.user_data['temporary-ban-time'] = date.today()
+                update.callback_query.answer(
+                    i18n.t("callback.spam", locale=user.locale)
+                )
+                context.user_data["temporary-ban-time"] = date.today()
                 return
 
             func(context.bot, update, session, user)

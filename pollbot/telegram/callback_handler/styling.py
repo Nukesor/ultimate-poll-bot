@@ -114,6 +114,7 @@ def send_option_order_message(session, context):
         disable_web_page_preview=True,
     )
 
+
 @poll_required
 def open_option_order_menu(session, context, poll):
     """Open the menu for manually adjusting the option order."""

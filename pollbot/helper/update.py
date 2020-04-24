@@ -12,7 +12,9 @@ from pollbot.helper.enums import ExpectedInput, ReferenceType
 from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
 
 
-def update_poll_messages(session, bot, poll, message_id=None, user=None, inline_message_id=None):
+def update_poll_messages(
+    session, bot, poll, message_id=None, user=None, inline_message_id=None
+):
     """Logic for handling updates.
 
     The message the original call has been made from will be updated instantly.
