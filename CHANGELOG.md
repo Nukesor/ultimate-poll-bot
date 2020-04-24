@@ -5,6 +5,9 @@
     3. `telegram.max_user_votes_per_day` Set a limit how many votes are allowed per user per day.
 
 **Improvements:**
+- Add anti-spam measures
+- Add possibility to ban users
+- Temporarily ban users on certain thresholds
 - Catalan language
 
 **Internal:**

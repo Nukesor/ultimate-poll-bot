@@ -175,3 +175,13 @@ def perma_ban_checker(context, session):
         # If the user reached the limit yesterday and two days ago as well, perma-ban him
         if yesterday is not None and two_days_ago is not None:
             stat.user.banned = True
+
+
+@run_async
+@job_wrapper
+def cleanup(context, session):
+    """Remove all user statistics after 7 days."""
+    threshold = date.today() - timedelta(days=7)
+    session.query(UserStatistic) \
+        .filter(UserStatistic.date < threshold) \
+        .delete()
