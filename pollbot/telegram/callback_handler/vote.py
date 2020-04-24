@@ -1,5 +1,4 @@
 """Callback functions needed during creation of a Poll."""
-from datetime import date
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import (

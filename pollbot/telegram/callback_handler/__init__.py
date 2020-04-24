@@ -1,7 +1,8 @@
 """Callback query handling."""
 from datetime import date
-from telegram.ext import run_async
 from raven import breadcrumbs
+from telegram.ext import run_async
+from sqlalchemy.exc import IntegrityError
 
 from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.helper.session import callback_query_wrapper
@@ -268,6 +269,9 @@ def handle_callback_query(bot, update, session, user):
     # Vote logic needs some special handling
     if context.callback_type == CallbackType.vote:
         option = session.query(Option).get(context.payload)
+        if option is None:
+            return
+
         poll = option.poll
 
         # Ensure user statistics exist for this poll owner
