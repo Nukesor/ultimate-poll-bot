@@ -11,6 +11,7 @@ default_config = {
         "worker_count": 20,
         "admin": "nukesor",
         "allow_private_vote": False,
+        "max_user_votes_per_day": 200,
         "max_inline_shares": 20,
     },
     "database": {

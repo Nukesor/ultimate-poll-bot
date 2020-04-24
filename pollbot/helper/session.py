@@ -1,6 +1,6 @@
 """Session helper functions."""
 import traceback
-from datetime import date
+from datetime import date, timedelta
 from functools import wraps
 from sqlalchemy.exc import IntegrityError
 from telegram.error import (
@@ -45,7 +45,7 @@ def inline_query_wrapper(func):
     def wrapper(update, context):
         session = get_session()
         try:
-            user = get_user(session, update.inline_query.from_user)
+            user, statistic = get_user(session, update.inline_query.from_user)
             if user.banned:
                 return
 
@@ -70,7 +70,7 @@ def inline_result_wrapper(func):
     def wrapper(update, context):
         session = get_session()
         try:
-            user = get_user(session, update.chosen_inline_result.from_user)
+            user, _ = get_user(session, update.chosen_inline_result.from_user)
             if user.banned:
                 return
 
@@ -94,10 +94,26 @@ def callback_query_wrapper(func):
 
     def wrapper(update, context):
         user = None
+        if context.user_data.get('ban'):
+            return
+
+        temp_ban_time = context.user_data.get('temporary-ban-time')
+        if temp_ban_time is not None and temp_ban_time >= date.today() - timedelta(days=1):
+            update.callback_query.answer(i18n.t("callback.spam"))
+            return
+
         session = get_session()
         try:
-            user = get_user(session, update.callback_query.from_user)
+            user, statistic = get_user(session, update.callback_query.from_user)
+            # Cache ban value, so we don't have to lookup the value in our database
             if user.banned:
+                context.user_data['ban'] = True
+                return
+
+            # Cache temporary-ban time, so we don't have to create a connection to our database
+            if statistic.votes > config["telegram"]["max_user_votes_per_day"]:
+                update.callback_query.answer(i18n.t("callback.spam", locale=user.locale))
+                context.user_data['temporary-ban-time'] = date.today()
                 return
 
             func(context.bot, update, session, user)
@@ -138,7 +154,7 @@ def message_wrapper(private=False):
                 else:
                     raise Exception("Got an update without a message")
 
-                user = get_user(session, message.from_user)
+                user, _ = get_user(session, message.from_user)
                 if user.banned:
                     return
 
@@ -197,7 +213,6 @@ def get_user(session, tg_user):
             user = session.query(User).get(tg_user.id)
             if user is None:
                 raise e
-            return user
 
     if tg_user.username is not None:
         user.username = tg_user.username.lower()
@@ -226,7 +241,7 @@ def get_user(session, tg_user):
             if user_statistic is None:
                 raise e
 
-    return user
+    return user, user_statistic
 
 
 def get_name_from_tg_user(tg_user):

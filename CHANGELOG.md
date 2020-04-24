@@ -2,6 +2,7 @@
 - New options. You have need to add those your config manually if you already have a deployed bot:
     1. `telegram.max_inline_shares` The max amount of shared messages via inline query per poll
     2. `telegram.allow_private_vote` This decides, whether you allowed 
+    3. `telegram.max_user_votes_per_day` Set a limit how many votes are allowed per user per day.
 
 **Improvements:**
 - Catalan language

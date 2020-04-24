@@ -56,6 +56,7 @@ deleted:
 
 callback:
   error: An error occurred. It'll be fixed soon!
+  spam: Banned for today. Continue spamming and get perma banned.
   closed: Poll closed
   cannot_reopen: Poll cannot be reopened
   cloned: Poll cloned

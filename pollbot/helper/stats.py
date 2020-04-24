@@ -28,6 +28,7 @@ def increase_user_stat(session, user, name):
 
     mapping = {
         "callback_calls": UserStatistic.callback_calls,
+        "votes": UserStatistic.votes,
         "poll_callback_calls": UserStatistic.poll_callback_calls,
         "created_polls": UserStatistic.created_polls,
         "inline_shares": UserStatistic.inline_shares,

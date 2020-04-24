@@ -28,6 +28,7 @@ class UserStatistic(base):
     date = Column(Date, primary_key=True)
 
     callback_calls = Column(Integer, default=0, nullable=False)
+    votes = Column(Integer, default=0, nullable=False)
     poll_callback_calls = Column(Integer, default=0, nullable=False)
     created_polls = Column(Integer, default=0, nullable=False)
     inline_shares = Column(Integer, default=0, nullable=False)
