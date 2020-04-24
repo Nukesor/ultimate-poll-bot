@@ -9,17 +9,16 @@ from sqlalchemy.orm.exc import (
 
 from pollbot.i18n import i18n
 from pollbot.helper.poll import poll_allows_cumulative_votes
-from pollbot.helper.stats import increase_stat, increase_user_stat
+from pollbot.helper.stats import increase_stat
 from pollbot.helper.enums import PollType, CallbackResult
 from pollbot.helper.update import update_poll_messages
 
-from pollbot.models import Option, Vote, UserStatistic
+from pollbot.models import Option, Vote
 
 
-def handle_vote(session, context):
+def handle_vote(session, context, option):
     """Handle any clicks on vote buttons."""
     # Remove the poll, in case it got deleted, but we didn't manage to kill all references
-    option = session.query(Option).get(context.payload)
     if option is None:
         if context.query.message is not None:
             context.query.message.edit_text(
@@ -88,31 +87,6 @@ def handle_vote(session, context):
             )
 
     increase_stat(session, "votes")
-
-    # Ensure user statistics exist for this poll owner
-    # We need to track at least some user activity, since there seem to be some users which
-    # abuse the bot by creating polls and spamming up to 1 million votes per day.
-    #
-    # I really hate doing this, but I don't see another way to prevent DOS attacks
-    # without tracking at least some numbers.
-    user_statistic = session.query(UserStatistic).get((date.today(), poll.user.id))
-
-    if user_statistic is None:
-        user_statistic = UserStatistic(poll.user)
-        session.add(user_statistic)
-        try:
-            session.commit()
-        # Handle race condition for parallel user statistic creation
-        # Return the statistic that has already been created in another session
-        except IntegrityError as e:
-            session.rollback()
-            user_statistic = session.query(UserStatistic).get(
-                (date.today, poll.user.id)
-            )
-            if user_statistic is None:
-                raise e
-
-    # Additional test commit. Sometimes deadlocks happen right here.
     session.commit()
 
 

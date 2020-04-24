@@ -1,11 +1,12 @@
 """Callback query handling."""
+from datetime import date
 from telegram.ext import run_async
 from raven import breadcrumbs
 
 from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.helper.session import callback_query_wrapper
 from pollbot.helper.enums import CallbackType, CallbackResult
-from pollbot.models import Poll
+from pollbot.models import Poll, Option, UserStatistic
 
 from .creation import (
     toggle_anonymity,
@@ -168,10 +169,6 @@ def handle_callback_query(bot, update, session, user):
         category="callbacks",
     )
 
-    if context.callback_type != CallbackType.vote:
-        increase_user_stat(session, context.user, "callback_calls")
-        session.commit()
-
     def ignore(session, context):
         context.query.answer("This button doesn't do anything and is just for styling.")
 
@@ -268,7 +265,47 @@ def handle_callback_query(bot, update, session, user):
         CallbackType.ignore: ignore,
     }
 
-    response = callback_functions[context.callback_type](session, context)
+    # Vote logic needs some special handling
+    if context.callback_type == CallbackType.vote:
+        option = session.query(Option).get(context.payload)
+        poll = option.poll
+
+        # Ensure user statistics exist for this poll owner
+        # We need to track at least some user activity, since there seem to be some users which
+        # abuse the bot by creating polls and spamming up to 1 million votes per day.
+        #
+        # I really hate doing this, but I don't see another way to prevent DOS attacks
+        # without tracking at least some numbers.
+        user_statistic = session.query(UserStatistic).get((date.today(), poll.user.id))
+
+        if user_statistic is None:
+            user_statistic = UserStatistic(poll.user)
+            session.add(user_statistic)
+            try:
+                session.commit()
+            # Handle race condition for parallel user statistic creation
+            # Return the statistic that has already been created in another session
+            except IntegrityError as e:
+                session.rollback()
+                user_statistic = session.query(UserStatistic).get(
+                    (date.today, poll.user.id)
+                )
+                if user_statistic is None:
+                    raise e
+
+        # Increase stats before we do the voting logic
+        # Otherwise the user might dos the bot by triggering flood exceptions
+        # before actually being able to increase the stats
+        increase_user_stat(session, context.user, "votes")
+        increase_user_stat(session, poll.user, "poll_callback_calls")
+
+        session.commit()
+        response = handle_vote(session, context, option)
+
+    else:
+        increase_user_stat(session, context.user, "callback_calls")
+        session.commit()
+        response = callback_functions[context.callback_type](session, context)
 
     # Callback handler functions always return the callback answer
     # The only exception is the vote function, which is way too complicated and
