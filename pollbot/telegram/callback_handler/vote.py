@@ -80,7 +80,7 @@ def handle_vote(session, context):
     if update_poll:
         if message is not None:
             update_poll_messages(
-                session, context.bot, poll, message_id=message.message_id
+                session, context.bot, poll, message.message_id, context.user
             )
         else:
             update_poll_messages(
