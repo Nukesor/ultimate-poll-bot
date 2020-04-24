@@ -125,7 +125,7 @@ def callback_query_wrapper(func):
                     traceback.print_exc()
                 sentry.captureException()
 
-            if not isinstance(e, TelegramError):
+            if not isinstance(e, TelegramError) and not isinstance(e, BadRequest):
                 locale = "English"
                 if user is not None:
                     locale = user.locale
