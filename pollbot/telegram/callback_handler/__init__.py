@@ -275,6 +275,7 @@ def handle_callback_query(bot, update, session, user):
         context.query.answer("")
 
     increase_stat(session, "callback_calls")
-    increase_user_stat(session, user, "callback_calls")
+    if context.callback_type != CallbackType.vote:
+        increase_user_stat(session, user, "callback_calls")
 
     return
