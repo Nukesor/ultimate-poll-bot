@@ -165,6 +165,7 @@ sorting:
     name: alphabetically
     manual: manually
     percentage: by percentage
+    doodle: by answer
 
 settings:
   poll_type: "*Poll type*: %{poll_type}"

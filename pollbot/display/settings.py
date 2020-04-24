@@ -72,7 +72,7 @@ def get_settings_text(poll):
 
     # Sorting of user names
     if poll.poll_type == PollType.doodle.name:
-        sorting_name = i18n.t(f"sorting.doodle_sorting", locale=locale)
+        sorting_name = i18n.t(f"sorting.doodle", locale=locale)
         text.append(i18n.t("settings.user_sorting", locale=locale, name=sorting_name))
     elif not poll.anonymous:
         sorting_name = i18n.t(f"sorting.{poll.user_sorting}", locale=locale)
