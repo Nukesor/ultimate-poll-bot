@@ -114,7 +114,8 @@ def handle_vote(session, context):
 
     # Additional test commit. Sometimes deadlocks happen right here.
     session.commit()
-    increase_user_stat(session, poll.user, "votes")
+    increase_user_stat(session, context.user, "votes")
+    increase_user_stat(session, poll.user, "poll_callback_calls")
 
 
 def respond_to_vote(session, line, context, poll, remaining_votes=None, limited=False):
