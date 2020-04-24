@@ -125,11 +125,11 @@ def callback_query_wrapper(func):
                     traceback.print_exc()
                 sentry.captureException()
 
-            if not isinstance(e, TelegramError) and not isinstance(e, BadRequest):
                 locale = "English"
                 if user is not None:
                     locale = user.locale
                 update.callback_query.answer(i18n.t("callback.error", locale=locale))
+
         finally:
             session.close()
 
@@ -178,15 +178,17 @@ def message_wrapper(private=False):
                         traceback.print_exc()
                     sentry.captureException()
 
-                locale = "English"
-                if user is not None:
-                    locale = user.locale
+                    locale = "English"
+                    if user is not None:
+                        locale = user.locale
+
+                    message.chat.send_message(
+                        i18n.t("misc.error", locale=locale),
+                        parse_mode="markdown",
+                        disable_web_page_preview=True,
+                    )
+
                 session.close()
-                message.chat.send_message(
-                    i18n.t("misc.error", locale=locale),
-                    parse_mode="markdown",
-                    disable_web_page_preview=True,
-                )
 
             finally:
                 session.close()
