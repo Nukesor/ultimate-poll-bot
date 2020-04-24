@@ -156,7 +156,7 @@ def handle_new_option(bot, update, session, user, text, poll, chat):
     session.add(reference)
     session.commit()
 
-    update_poll_messages(session, bot, poll, message_id=message.message_id)
+    update_poll_messages(session, bot, poll, message.message_id, user)
 
 
 def handle_user_option_addition(bot, update, session, user, text, poll, chat):
