@@ -8,6 +8,7 @@ from telegram.error import (
     BadRequest,
     Unauthorized,
     TimedOut,
+    RetryAfter,
 )
 
 from pollbot.config import config
@@ -309,6 +310,9 @@ def ignore_exception(exception):
             return True
 
     if isinstance(exception, TimedOut):
+        return True
+
+    if isinstance(exception, RetryAfter):
         return True
 
     return False
