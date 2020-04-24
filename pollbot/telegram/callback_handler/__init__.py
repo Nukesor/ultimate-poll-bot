@@ -170,10 +170,7 @@ def handle_callback_query(bot, update, session, user):
 
     if context.callback_type != CallbackType.vote:
         increase_user_stat(session, context.user, "callback_calls")
-    else:
-        increase_user_stat(session, context.user, "votes")
-        increase_user_stat(session, context.poll.user, "poll_callback_calls")
-    session.commit()
+        session.commit()
 
     def ignore(session, context):
         context.query.answer("This button doesn't do anything and is just for styling.")
