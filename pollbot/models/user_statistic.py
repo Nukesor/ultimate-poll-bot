@@ -47,3 +47,16 @@ class UserStatistic(base):
         """Create a new dialy statistic."""
         self.date = date.today()
         self.user = user
+
+    def __repr__(self):
+        """Print as string."""
+        text = [
+            f"User {self.user.username} ({self.user_id}) {self.date}:",
+            f"Votes: {self.votes}",
+            f"Callback calls: {self.callback_calls}",
+            f"Poll callback calls: {self.poll_callback_calls}",
+            f"Created polls: {self.created_polls}",
+            f"Inline shares: {self.inline_shares}",
+        ]
+
+        return '\n'.join(text)

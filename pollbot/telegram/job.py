@@ -7,7 +7,8 @@ from telegram.error import BadRequest, Unauthorized, RetryAfter
 from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 
 from pollbot.i18n import i18n
-from pollbot.models import Update, Poll, DailyStatistic
+from pollbot.config import config
+from pollbot.models import Update, Poll, DailyStatistic, UserStatistic
 from pollbot.helper.session import job_wrapper
 from pollbot.helper.update import send_updates, update_poll_messages
 
@@ -144,3 +145,33 @@ def create_daily_stats(context, session):
             statistic = DailyStatistic(stat_date)
             session.add(statistic)
             session.commit()
+
+
+@run_async
+@job_wrapper
+def perma_ban_checker(context, session):
+    """Perma-ban people that send more than 250 votes for 3 successive days."""
+    vote_limit = config['telegram']['max_user_votes_per_day']
+    stats = session.query(UserStatistic) \
+        .filter(UserStatistic.votes >= vote_limit) \
+        .filter(UserStatistic.date == date.today()) \
+        .all()
+
+    for stat in stats:
+        # Check if the limit was reached yesterday as well
+        yesterday = session.query(UserStatistic) \
+            .filter(UserStatistic.votes >= vote_limit) \
+            .filter(UserStatistic.date == date.today() - timedelta(days=1)) \
+            .filter(UserStatistic.user == stat.user) \
+            .one_or_none()
+
+        # Check if the limit was reached two days ago as well
+        two_days_ago = session.query(UserStatistic) \
+            .filter(UserStatistic.votes >= vote_limit) \
+            .filter(UserStatistic.date == date.today() - timedelta(days=2)) \
+            .filter(UserStatistic.user == stat.user) \
+            .one_or_none()
+
+        # If the user reached the limit yesterday and two days ago as well, perma-ban him
+        if yesterday is not None and two_days_ago is not None:
+            stat.user.banned = True

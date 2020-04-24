@@ -17,6 +17,7 @@ from pollbot.telegram.job import (
     message_update_job,
     send_notifications,
     create_daily_stats,
+    perma_ban_checker,
 )
 from pollbot.telegram.message_handler import handle_private_text
 from pollbot.telegram.callback_handler import handle_callback_query
@@ -95,6 +96,12 @@ job_queue.run_repeating(
 job_queue.run_repeating(
     create_daily_stats,
     interval=6 * hour,
+    first=0,
+    name="Create daily statistic entities",
+)
+job_queue.run_repeating(
+    perma_ban_checker,
+    interval=12 * hour,
     first=0,
     name="Create daily statistic entities",
 )
