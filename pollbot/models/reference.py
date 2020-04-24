@@ -3,6 +3,7 @@ from sqlalchemy import (
     Column,
     func,
     ForeignKey,
+    Index,
 )
 from sqlalchemy.types import (
     BigInteger,
@@ -87,3 +88,22 @@ class Reference(base):
             message = f"Reference {self.id}: message_id {self.message_id}, user: {self.user.id}"
 
         return message
+
+
+Index(
+    "ix_unique_admin_reference",
+    Reference.poll_id,
+    Reference.user_id,
+    Reference.message_id,
+    unique=True,
+    postgresql_where=Reference.type == "admin",
+)
+
+Index(
+    "ix_unique_private_vote_reference",
+    Reference.poll_id,
+    Reference.user_id,
+    Reference.message_id,
+    unique=True,
+    postgresql_where=Reference.type == "private_vote",
+)

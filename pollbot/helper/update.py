@@ -27,12 +27,14 @@ def update_poll_messages(
             session.query(Reference)
             .filter(Reference.message_id == message_id)
             .filter(Reference.user == user)
+            .filter(Reference.poll == poll)
             .one_or_none()
         )
     elif inline_message_id is not None:
         reference = (
             session.query(Reference)
             .filter(Reference.bot_inline_message_id == inline_message_id)
+            .filter(Reference.poll == poll)
             .one_or_none()
         )
 
