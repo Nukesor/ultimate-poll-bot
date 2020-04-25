@@ -150,7 +150,7 @@ def create_daily_stats(context, session):
 @run_async
 @job_wrapper
 def perma_ban_checker(context, session):
-    """Perma-ban people that send more than 250 votes for 3 successive days."""
+    """Perma-ban people that send more than 250 votes for at least 3 days in the last week."""
     vote_limit = config['telegram']['max_user_votes_per_day']
     stats = session.query(UserStatistic) \
         .filter(UserStatistic.votes >= vote_limit) \
@@ -158,22 +158,16 @@ def perma_ban_checker(context, session):
         .all()
 
     for stat in stats:
-        # Check if the limit was reached yesterday as well
-        yesterday = session.query(UserStatistic) \
+        # Check how often the user reached the limit in the last week
+        days_above_limit = session.query(UserStatistic) \
             .filter(UserStatistic.votes >= vote_limit) \
-            .filter(UserStatistic.date == date.today() - timedelta(days=1)) \
+            .filter(UserStatistic.date >= date.today() - timedelta(days=6)) \
+            .filter(UserStatistic.date <= date.today() - timedelta(days=1)) \
             .filter(UserStatistic.user == stat.user) \
-            .one_or_none()
+            .all()
 
-        # Check if the limit was reached two days ago as well
-        two_days_ago = session.query(UserStatistic) \
-            .filter(UserStatistic.votes >= vote_limit) \
-            .filter(UserStatistic.date == date.today() - timedelta(days=2)) \
-            .filter(UserStatistic.user == stat.user) \
-            .one_or_none()
-
-        # If the user reached the limit yesterday and two days ago as well, perma-ban him
-        if yesterday is not None and two_days_ago is not None:
+        # If the user reached the limit on two other days in the last week (three days in total)
+        if len(days_above_limit) >= 2:
             stat.user.banned = True
 
 
