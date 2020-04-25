@@ -4,6 +4,8 @@
 from pollbot.pollbot import updater
 from pollbot.config import config
 
+print("Starting up")
+
 if config["webhook"]["enabled"]:
     domain = config["webhook"]["domain"]
     token = config["webhook"]["token"]

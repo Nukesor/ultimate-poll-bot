@@ -102,13 +102,13 @@ job_queue.run_repeating(
 )
 job_queue.run_repeating(
     perma_ban_checker,
-    interval=12 * hour,
+    interval=1 * hour,
     first=0,
     name="Perma-ban users that continuously reach thresholds.",
 )
 job_queue.run_repeating(
     cleanup,
-    interval=24 * hour,
+    interval=6 * hour,
     first=0,
     name="Remove old data",
 )
