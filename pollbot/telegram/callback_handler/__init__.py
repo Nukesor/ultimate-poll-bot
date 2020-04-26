@@ -292,7 +292,7 @@ def handle_callback_query(bot, update, session, user):
             except IntegrityError as e:
                 session.rollback()
                 user_statistic = session.query(UserStatistic).get(
-                    (date.today, poll.user.id)
+                    (date.today(), poll.user.id)
                 )
                 if user_statistic is None:
                     raise e
