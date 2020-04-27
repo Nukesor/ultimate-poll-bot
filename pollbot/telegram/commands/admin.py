@@ -44,6 +44,7 @@ def broadcast(bot, update, session, user):
         session.query(User)
         .filter(User.notifications_enabled.is_(True))
         .filter(User.started.is_(True))
+        .filter(User.banned.is_(False))
         .filter(User.broadcast_sent.is_(False))
         .all()
     )
