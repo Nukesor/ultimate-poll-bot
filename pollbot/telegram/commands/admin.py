@@ -38,7 +38,8 @@ def remaining_time(total, current, start):
     """Small helper to calculate remaining runtime of a command."""
     diff = datetime.now() - start
     remaining_factor = total/current
-    return timedelta(seconds=diff.seconds*remaining_factor)
+    remaining_time = timedelta(seconds=diff.seconds*remaining_factor)
+    return remaining_time - timedelta(microseconds=remaining_time.microseconds)
 
 
 @run_async
