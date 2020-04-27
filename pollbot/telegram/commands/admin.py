@@ -39,7 +39,7 @@ def remaining_time(total, current, start):
     elapsed = (datetime.now() - start).seconds
     remaining_factor = total/current
     total_time = elapsed * remaining_factor
-    remaining_time = ((total-current)/current) * total_time
+    remaining_time = ((total-current)/total) * total_time
     return timedelta(seconds=int(remaining_time))
 
 
