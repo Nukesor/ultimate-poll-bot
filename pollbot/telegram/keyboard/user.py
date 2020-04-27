@@ -84,6 +84,12 @@ def get_admin_settings_keyboard(user):
     buttons = [
         [
             InlineKeyboardButton(
+                text=i18n.t("keyboard.refresh", locale=user.locale),
+                callback_data=f"{CallbackType.admin_settings.value}:0:0",
+            )
+        ],
+        [
+            InlineKeyboardButton(
                 text=i18n.t("keyboard.admin.plot", locale=user.locale),
                 callback_data=f"{CallbackType.admin_plot.value}:0:0",
             )

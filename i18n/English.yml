@@ -102,6 +102,7 @@ keyboard:
   reset: 🔨 Reset
   clone: 🧬 Clone
   reopen: 🔓 Reopen poll
+  refresh: Refresh
   share: Share this poll
   close_poll: 🔒 Close
   settings: ⚙️ Settings
