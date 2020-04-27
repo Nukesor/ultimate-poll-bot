@@ -40,48 +40,66 @@ def broadcast(bot, update, session, user):
     """Broadcast a message to all users."""
     chat = update.message.chat
     message = update.message.text.split(" ", 1)[1].strip()
-    users = (
+    user_count = (
         session.query(User)
         .filter(User.notifications_enabled.is_(True))
         .filter(User.started.is_(True))
         .filter(User.banned.is_(False))
         .filter(User.broadcast_sent.is_(False))
-        .all()
+        .count()
     )
 
-    chat.send_message(f"Sending broadcast to {len(users)} chats.")
-    count = 0
-    for user in users:
-        try:
-            bot.send_message(
-                user.id,
-                message,
-                parse_mode="Markdown",
-                reply_markup=ReplyKeyboardRemove(),
-            )
-            user.broadcast_sent = True
-            session.commit()
+    chat.send_message(f"Sending broadcast to {user_count} chats.")
+    sent_count = 0
+    offset = 0
+    batch_size = 1000
+    # Send the broadcast to 1000 users at a time (minimize ram usage)
+    while offset <= user_count:
+        users = (
+            session.query(User)
+            .filter(User.notifications_enabled.is_(True))
+            .filter(User.started.is_(True))
+            .filter(User.banned.is_(False))
+            .filter(User.broadcast_sent.is_(False))
+            .offset(offset)
+            .limit(batch_size)
+            .all()
+        )
 
-        # The chat does no longer exist, delete it
-        except BadRequest as e:
-            if e.message == "Chat not found":  # noqa
+        for user in users:
+            try:
+                bot.send_message(
+                    user.id,
+                    message,
+                    parse_mode="Markdown",
+                    reply_markup=ReplyKeyboardRemove(),
+                )
+                user.broadcast_sent = True
+
+            # The chat does no longer exist, delete it
+            except BadRequest as e:
+                if e.message == "Chat not found":  # noqa
+                    user.started = False
+                    pass
+
+            # We are not allowed to contact this user.
+            except Unauthorized:
                 user.started = False
                 pass
 
-        # We are not allowed to contact this user.
-        except Unauthorized:
-            user.started = False
-            pass
+            except TimeoutError:
+                pass
 
-        except TimeoutError:
-            pass
 
-        # Sleep a little bit to not trigger flood prevention
-        time.sleep(0.07)
+            session.commit()
+            # Sleep a little bit to not trigger flood prevention
+            time.sleep(0.07)
 
-        count += 1
-        if count % 500 == 0:
-            chat.send_message(f"Sent to {count} users.")
+            sent_count += 1
+            if sent_count % 500 == 0:
+                chat.send_message(f"Sent to {sent_count} users.")
+
+        offset += batch_size
 
     update.message.chat.send_message("All messages sent")
 
