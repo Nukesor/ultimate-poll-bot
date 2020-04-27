@@ -1,5 +1,6 @@
 """Admin related stuff."""
 import time
+from datetime import datetime
 from telegram import ReplyKeyboardRemove
 from telegram.ext import run_async
 from telegram.error import BadRequest, Unauthorized
@@ -33,6 +34,13 @@ def reset_broadcast(bot, update, session, user):
     return "All broadcast flags resetted"
 
 
+def remaining_time(total, current, start):
+    """Small helper to calculate remaining runtime of a command."""
+    diff = datetime.now() - start
+    remaining_factor = total/current
+    return timedelta(seconds=diff.seconds*remaining_factor)
+
+
 @run_async
 @message_wrapper()
 @admin_required
@@ -49,7 +57,10 @@ def broadcast(bot, update, session, user):
         .count()
     )
 
+
+    start_time = datetime.now()
     chat.send_message(f"Sending broadcast to {user_count} chats.")
+
     sent_count = 0
     offset = 0
     batch_size = 1000
@@ -90,14 +101,18 @@ def broadcast(bot, update, session, user):
             except TimeoutError:
                 pass
 
-
             session.commit()
             # Sleep a little bit to not trigger flood prevention
             time.sleep(0.07)
 
             sent_count += 1
-            if sent_count % 500 == 0:
-                chat.send_message(f"Sent to {sent_count} users.")
+            if sent_count == 500:
+                remaining = remaining_time(user_count, sent_count, start_time)
+                chat.send_message(f"First 500 are done. Remaining time: {remaining}")
+
+            if sent_count % 5000 == 0:
+                remaining = remaining_time(user_count, sent_count, start_time)
+                chat.send_message(f"Sent to {sent_count} users. Remaining time: {remaining}")
 
         offset += batch_size
 
