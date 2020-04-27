@@ -1,6 +1,6 @@
 """Admin related stuff."""
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from telegram import ReplyKeyboardRemove
 from telegram.ext import run_async
 from telegram.error import BadRequest, Unauthorized
