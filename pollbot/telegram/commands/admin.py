@@ -36,10 +36,11 @@ def reset_broadcast(bot, update, session, user):
 
 def remaining_time(total, current, start):
     """Small helper to calculate remaining runtime of a command."""
-    diff = datetime.now() - start
+    elapsed = (datetime.now() - start).seconds
     remaining_factor = total/current
-    remaining_time = timedelta(seconds=diff.seconds*remaining_factor)
-    return remaining_time - timedelta(microseconds=remaining_time.microseconds)
+    total_time = elapsed * remaining_factor
+    remaining_time = ((total-current)/current) * total_time
+    return timedelta(seconds=int(remaining_time))
 
 
 @run_async
