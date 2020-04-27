@@ -64,17 +64,15 @@ def broadcast(bot, update, session, user):
     chat.send_message(f"Sending broadcast to {user_count} chats.")
 
     sent_count = 0
-    offset = 0
     batch_size = 1000
     # Send the broadcast to 1000 users at a time (minimize ram usage)
-    while offset <= user_count:
+    while sent_count <= user_count:
         users = (
             session.query(User)
             .filter(User.notifications_enabled.is_(True))
             .filter(User.started.is_(True))
             .filter(User.banned.is_(False))
             .filter(User.broadcast_sent.is_(False))
-            .offset(offset)
             .limit(batch_size)
             .all()
         )
@@ -115,8 +113,6 @@ def broadcast(bot, update, session, user):
             if sent_count % 5000 == 0:
                 remaining = remaining_time(user_count, sent_count, start_time)
                 chat.send_message(f"Sent to {sent_count} users. Remaining time: {remaining}")
-
-        offset += batch_size
 
     update.message.chat.send_message("All messages sent")
 
