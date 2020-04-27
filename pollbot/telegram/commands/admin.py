@@ -62,9 +62,10 @@ def broadcast(bot, update, session, user):
             user.broadcast_sent = True
             session.commit()
 
-        # The chat doesn't exist any longer, delete it
+        # The chat does no longer exist, delete it
         except BadRequest as e:
             if e.message == "Chat not found":  # noqa
+                user.started = False
                 pass
 
         # We are not allowed to contact this user.
@@ -75,7 +76,7 @@ def broadcast(bot, update, session, user):
         except TimeoutError:
             pass
 
-        # Sleep one second to not trigger flood prevention
+        # Sleep a little bit to not trigger flood prevention
         time.sleep(0.07)
 
         count += 1
