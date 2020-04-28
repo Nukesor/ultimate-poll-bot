@@ -41,6 +41,7 @@ poll:
     anonymous_warning: '*Aufpassen:* _Andere können möglicherweise deine Stimmen erraten, indem sie den Prozentsatz bzw. die Stimmenanzahl und deinen Online-Status verfolgen._'
     summarized_users: 'und %{count} andere Leute.'
     own_poll: 'Erstelle [hier](https://t.me/ultimate_pollbot) *deine eigene* Umfrage.'
+    shared_too_often: 'Umfrage zu oft geteilt. Pro Umfrage sind nur %{amount} Nachrichten zulässig'
 deleted:
     poll: 'Diese Umfrage wurde dauerhaft gelöscht'
     polls: 'Alle Umfragen wurden gelöscht'
@@ -70,6 +71,8 @@ callback:
         no_left: 'Keine Stimmen verbleibend!'
         doodle_changed: 'Stimme geändert zu %{vote_type}'
         doodle_registered: 'Stimme registriert (%{vote_type})'
+    due_date_removed: 'Fälligkeitsdatum entfernt'
+    spam: 'Für heute gebanned. Wenn sie weiter spammen werden sie dauerhaft gebanned.'
 inline_query:
     create_first: 'Erstelle zuerst hier eine Umfrage ;)'
     create_poll: 'Klicke hier, um eine Umfrage zu erstellen.'
@@ -139,13 +142,10 @@ keyboard:
     hide_option_votes: '# Gesamtzahl der Stimmen für diese Option ausblenden'
     show_option_votes: '# Gesamtzahl der Stimmen für diese Option anzeigen'
     anonymity_settings: '⚙️ Anonymität'
-sorting:
-    user_chrono: 'nach Zeit'
-    user_name: 'nach Name'
-    option_chrono: 'nach Zeit'
-    option_percentage: 'nach Prozent'
-    option_name: 'nach Name'
-    doodle_sorting: 'nach Antwort'
+    allow_sharing: '🔗 Erlauben Sie anderen, an der Umfrage teilzunehmen'
+    forbid_sharing: '🔗 Verbieten Sie anderen, an der Umfrage teilzunehmen'
+    refresh: Aktualisieren
+    order_options_manually: 'Optionsreihenfolge anpassen'
 settings:
     poll_type: '*Umfragetyp*: %{poll_type}'
     language: '*Sprache*: %{language}'
@@ -188,6 +188,8 @@ settings:
             anonymity: "_In einer anonymen Umfrage werden keine Namen angezeigt. Es ist nicht möglich zu sehen, von welchem Benutzer eine Stimme stammt. \n *Aufpassen:* _Andere können möglicherweise Stimmen erraten, indem sie den Prozentsatz bzw. die Stimmenanzahl und Ihren Onlinestatus beobachten. Um eine absolut anonyme Umfrage zu erhalten, deaktiviere auch die Sichtbarkeit der Ergebnisse._\n"
             visibility: '_Eine Umfrage mit ausgeblendeten Ergebnissen zeigt keine Stimmen oder Prozentsätze an, bis die Umfrage geschlossen wird. Sobald die Umfrage ein mal geschlossen ist, bleibt sie für immer geschlossen. Dies ist erforderlich, um [taktisches Abstimmen](https://en.wikipedia.org/wiki/Tactical_voting) und [Anchoring](https://en.wikipedia.org/wiki/Anchoring) zu vermeiden.'
     anonymity_warning: "Du kannst nicht gleichzeitig Stimmen und Prozentsätze bei einer anonymen Umfrage verstecken.\nDies könnte den Nutzern die Vorstellung vermitteln, dass die Umfrage nicht sichtbare Resultate hat, was jedoch nicht der Fall ist. Wenn du dieses Verhalten wünschst, erstelle bitte die Umfrage mit versteckten Resultaten.\n"
+    private_vote_link: 'Mit diesem Link können Benutzer in einem privaten Chat abstimmen.'
+    link_warning: '*Seien Sie vorsichtig!* Wenn diese Links erst einmal draußen sind, können Sie sie nicht mehr zurücknehmen. Jeder mit diesem Link kann an Ihrer Abstimmung teilnehmen.'
 management:
     permanently_close: "Willst du diese Umfrage wirklich dauerhaft schließen? Die Ergebnisse werden angezeigt, es können aber keine Stimmen mehr abgegeben werden.\n⚠️ Diese Aktion ist unwiderruflich. ⚠️\n"
     delete: 'Willst du diese Umfrage wirklich löschen?'
@@ -223,6 +225,7 @@ creation:
         limit_between: 'Bitte sende mir eine Zahl zwischen 1 und %{limit}'
         markdown: "Bitte sende mir keine Markdown-Symbole in deinen Namen, Beschreibungen und Optionen.\nSolche Symbole sind: `_`,`*` und `[`\nBitte sende mir die Nachricht erneut, ohne diese Symbole.\n"
         too_big: 'Bitte sende uns eine kleinere Nummer. Vielleicht möchtest du auch eine Umfrage „Unbegrenzte Abstimmung“ verwenden.'
+        invalid_poll_name: 'Ihr Umfragename enthält wahrscheinlich ungültige Zeichen. Bitte versuchen Sie es erneut.'
 external:
     canceled: Abgebrochen
     notification:
@@ -251,3 +254,9 @@ misc:
     over_3000: "⚠️ Deine Umfrage ist bereits über * 3000 Zeichen * lang. Versuche, sie zu kürzen und mindestens unter 3000 oder noch besser unter 2500 🙏 zu halten. \n\nTelegram erzwingt ein Maximum von 4096 Zeichen pro Nachricht und ich muss die Stimmen unter Ihrem Ausgangstext anzeigen. Jede Umfrage mit mehr Zeichen *wird nicht mehr richtig angezeigt*.\nIch versuche bereits, das so gut wie möglich zu handhaben, aber mit diesem Limit sind mir die Hände gebunden.\n\nFür wirklich lange Umfragen mit vielen Optionen ist es vielleicht besser, ein externes Tool wie [Doodle](https://doodle.com/) zu verwenden."
     over_4000: "⚠️ Deine Umfrage ist über *4000 Zeichen* lang. Dies ist zu lang, um es in einer einzigen Nachricht anzuzeigen. Bitte versuche, es kurz und knapp unter 3000 Zeichen zu halten, oder noch besser unter 2500 🙏.\n\nTelegramm erzwingt ein Maximum von 4096 Zeichen pro Nachricht und ich muss die Stimmen unter deinem Ausgangstext anzeigen. Jede Umfrage mit mehr Zeichen *wird nicht mehr richtig angezeigt*.\nIch versuche bereits, das so gut wie möglich zu handhaben, aber mit diesem Limit sind mir die Hände gebunden.\n\nFür wirklich lange Umfragen mit vielen Optionen ist es vielleicht besser, ein externes Tool wie [Doodle](https://doodle.com/) zu verwenden.\n"
     too_long: "Hallo!\n\nEs tut mir sehr leid, aber deine Umfrage ist einfach zu lang. Du hast wahrscheinlich eine Menge Optionen oder einen sehr langen Beschreibungstext (oder beides) hinzugefügt. 😬\n\nDa das Telegramm nur 4096 Zeichen pro Nachricht erlaubt, kann ich einfach keine Umfragen anzeigen, die länger werden. 😐\n\nBitte versuche, die Beschreibung und die Namen der Optionen kurz zu halten, und wenn du eine Umfrage mit vielen Optionen möchtest, verwende lieber ein externes Tool wie [Doodle](https://doodle.com/).\n\nEine Möglichkeit, dieses Problem zu lösen, besteht darin, Optionen zu entfernen. (Das kann der Ersteller der Umfrage.)\n\n👇 Du kannst aber trotzdem noch abstimmen und die Ergebnisse unten einsehen. 👇\n"
+sorting:
+    chrono: chronologisch
+    name: alphabetisch
+    manual: manuell
+    percentage: 'nach Prozentsatz'
+    doodle: 'nach Antwort'

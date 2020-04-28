@@ -80,8 +80,8 @@ keyboard:
     permanently_anonymize: '⚠️ Zmień ankietę na anonimową permanentnie! ⚠️'
     anonymize: '🔍 Zrób głosy anonimowe'
     due_date: '📅 Ustaw deadline'
-    hide_percentage: '▭% Ukryj procenty'
-    show_percentage: '▭% Pokaż procenty'
+    hide_percentage: '○% Ukryj procenty'
+    show_percentage: '○% Pokaż procenty'
     new_option: '＋ Dodaj nową opcję'
     remove_option: '－ Usuń opcję'
     forbid_user_options: '🍺 Wyłącz dodawanie nowych opcji'
@@ -89,13 +89,6 @@ keyboard:
     order_users: 'Sortuj osoby %{name}'
     order_options: 'Sortuj opcje %{name}'
     vote_with_count: '%{option_name} (%{count} głosów)'
-sorting:
-    user_chrono: chronologicznie
-    user_name: 'po nazwie'
-    option_chrono: chronologicznie
-    option_percentage: procentowo
-    option_name: 'po nazwie'
-    doodle_sorting: 'według odpowiedzi'
 settings:
     poll_type: '*Typ ankiety*: %{poll_type}'
     language: '*Język*: %{language}'

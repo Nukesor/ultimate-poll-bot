@@ -191,7 +191,7 @@ settings:
   change_language: Just click on a language to change it for this poll.
   sharing_link: "Use this link to allow users to share the poll with other chats:"
   private_vote_link: "With this link users can vote in a private conversation."
-  link_warning: "**Be careful!** Once those links are out there you cannot take them back. Everybody with this link can vote on your poll."
+  link_warning: "*Be careful!* Once those links are out there you cannot take them back. Everybody with this link can vote on your poll."
   sharing_link: "Use this link to allow users to share the poll with other chats. *Be careful!* Once it's out there you cannot take it back:"
   anonymity_warning: |
     You cannot hide votes and percentage on an anoymous poll.

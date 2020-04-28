@@ -96,8 +96,8 @@ keyboard:
     permanently_anonymize: '⚠️ ¡Anonimizar encuesta! ⚠️'
     anonymize: '🔍 Hacer los votos anónimos'
     due_date: '📅 Elegir fecha de vencimiento'
-    hide_percentage: '▭% Ocultar porcentaje'
-    show_percentage: '▭% Mostrar porcentaje'
+    hide_percentage: '○% Ocultar porcentaje'
+    show_percentage: '○% Mostrar porcentaje'
     new_option: '＋ Añadir nueva opción'
     remove_option: '－ Eliminar opciones'
     forbid_user_options: '🍺 Prohibir a los demás usuarios añadir opciones'
@@ -138,13 +138,6 @@ keyboard:
     hide_option_votes: '# Ocultar votos en las opciones'
     show_option_votes: '# Mostar votos en las opciones'
     anonymity_settings: '⚙️ Configuración de anonimato'
-sorting:
-    user_chrono: cronológico
-    user_name: alfabéticamente
-    option_chrono: cronológico
-    option_percentage: 'por porcentaje'
-    option_name: alfabéticamente
-    doodle_sorting: 'por respuesta'
 settings:
     poll_type: '**Tipo de encuesta**: %{poll_type}'
     language: '**Idioma**: %{language}'

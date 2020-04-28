@@ -41,9 +41,6 @@ poll:
     anonymous_warning: '*Lembre-se:* _As podem ser capazes de adivinhar o seu voto acompanhando a percentagem/contagem de votos e o seu status online._'
     summarized_users: '_e %{count} outras pessoas._'
     own_poll: 'Crie *sua própria* enquete [aqui](https://t.me/ultimate_pollbot)'
-    poll: 'Esta enquete foi excluída permanentemente.'
-    polls: 'Todas as enquetes foram deletadas.'
-    closed_polls: 'Todas as enquetes fechadas foram deletadas'
 deleted:
     poll: 'Esta enquete foi excluída permanentemente.'
     polls: 'Todas as enquetes foram deletadas.'
@@ -100,8 +97,8 @@ keyboard:
     permanently_anonymize: '⚠️ Tornar enquete permanentemente anônima! ⚠️'
     anonymize: '🔍 Tornar os votos anônimos'
     due_date: '📅 Definir encerramento'
-    hide_percentage: '▭% Ocultar percentagem'
-    show_percentage: '▭% Mostrar percentagem'
+    hide_percentage: '○% Ocultar percentagem'
+    show_percentage: '○% Mostrar percentagem'
     new_option: '＋ Adicione uma nova opção'
     remove_option: '－ Remover opções'
     forbid_user_options: '🍺 Não permitir que usuários adicionem opções'
@@ -142,13 +139,6 @@ keyboard:
     hide_option_votes: '# Esconder total de votos para a opção'
     show_option_votes: '# Mostra o total de votos para a opção'
     anonymity_settings: '⚙️ Configurações de anonimato'
-sorting:
-    user_chrono: cronologicamente
-    user_name: 'por nome'
-    option_chrono: cronologicamente
-    option_percentage: 'por percentagem'
-    option_name: 'por nome'
-    doodle_sorting: 'por resposta'
 settings:
     poll_type: '*Tipo de enquete*: %{poll_type}'
     language: '*Idioma*: %{language}'

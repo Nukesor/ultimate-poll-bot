@@ -97,8 +97,8 @@ keyboard:
     permanently_anonymize: '⚠️Trvale anonymizovat anketu! ⚠️'
     anonymize: '🔍 Anonymizovat hlasy'
     due_date: '📅 Nastavit datum uzavření'
-    hide_percentage: '▭% Skrýt procenta'
-    show_percentage: '▭% Zobrazit procenta'
+    hide_percentage: '○% Skrýt procenta'
+    show_percentage: '○% Zobrazit procenta'
     new_option: '＋ Přidat novou možnost'
     remove_option: '－ Odstranit možnosti'
     forbid_user_options: '🍺 Zakázat ostatním přidávat nové možnosti'
@@ -139,13 +139,6 @@ keyboard:
     hide_option_votes: '# Skrýt hlasy pro možnost'
     show_option_votes: '# Zobrazit hlasy pro možnost'
     anonymity_settings: '⚙️ Nastavení anonymity'
-sorting:
-    user_chrono: chronologicky
-    user_name: abecedně
-    option_chrono: chronologicky
-    option_percentage: 'dle procent'
-    option_name: abecedně
-    doodle_sorting: 'dle odpovědi'
 settings:
     poll_type: '*Druh ankety*: %{poll_type}'
     language: '*Jazyk*: %{language}'

@@ -38,6 +38,9 @@ poll:
         no_summarized: '├ *No:* %{count} vots'
     doodle_help: '*Clica* als botons `a)`, `b)` a sota per a veure el nom de les opcions.'
     please_wait: "\n\nSi us plau espera un moment mentre el bot sincronitza les enquestes ☺️"
+    anonymous_warning: '*Alerta:* _Altres persones podrien intuir el vostre vot en funció del percentatge/recompte i el vostra estat "en línia"._'
+    summarized_users: '_i %{count} participants més._'
+    shared_too_often: 'Límit assolit. Només es permet compartir un màxim de %{amount} vegades.'
 deleted:
     poll: 'Enquesta eliminada.'
     polls: 'Totes les enquestes han estat eliminades'
@@ -68,7 +71,8 @@ callback:
         doodle_changed: 'Vot canviat a %{vote_type}'
         doodle_registered: 'Vot enregistrat (%{vote_type})'
     date_removed: 'Data eliminada: %{date}'
-    due_date_removed: 'Data de caducitat eliminada'
+    due_date_removed: 'Data límit suprimia'
+    spam: 'Bandejat temposalment. Si continueu fent spam sereu bandejats de manera permanent.'
 inline_query:
     create_first: 'Fes clic aquí per a crear una enquesta primer ;)'
     create_poll: 'Fes clic per a crear una nova enquesta'
@@ -129,22 +133,19 @@ keyboard:
         disable_notifications: '🔇 Desactivar notificacions'
         delete_all: '⚠️ Eliminar totes les enquestes'
         delete_all_closed: '⚠️ Eliminar totes les enquestes tancades'
-        init_poll: '🌟 Crear una nova enquesta'
+        init_poll: '🌟 Crea una nova enquesta'
     admin:
         settings: '⚙️ Configuració d''administrador'
         stats: '📊 Estadístiques'
         plot: '📊 Gràfic d''estadístiques'
         update: 'Actualitzar totes les enquestes'
-    hide_option_votes: '# Amagar vots de les opcions'
-    show_option_votes: '# Mostrar vots de les opcions'
-    anonymity_settings: '⚙️ Configuració de l''anonimat'
-sorting:
-    user_chrono: cronològic
-    user_name: 'per nom'
-    option_chrono: cronològic
-    option_percentage: 'per percentatge'
-    option_name: 'per nom'
-    doodle_sorting: 'per resposta'
+    hide_option_votes: '# Oculta els vots totals de les opcions'
+    show_option_votes: '# Mostra els vots totals de les opcions'
+    anonymity_settings: '⚙️ Configuració d''anonimat'
+    allow_sharing: '🔗 Permet que altres puguin compartir aquesta enquesta'
+    forbid_sharing: '🔗 Impedeix que altres puguin compartir aquesta enquesta'
+    refresh: Recarrega
+    order_options_manually: 'Configura l''ordre de les opcions'
 settings:
     poll_type: '*Tipus d''enquesta*: %{poll_type}'
     language: '*Idioma*: %{language}'
@@ -175,20 +176,20 @@ settings:
         delete_all: '⚠️ Eliminar TOTES les enquestes ⚠️'
         delete_closed: '⚠️ Eliminar totes les enquestes tancades ⚠️'
         delete_all_confirmation: "Estàs segur que vols eliminar TOTES les teves enquestes? \nAixò afecta les enquestes tant tancades com obertes.\n⚠️ * Aquesta acció és irreversible. * ⚠️\n"
-        delete_closed_confirmation: "Estàs segur que vols eliminar totes les enquestes tancades?\n⚠️ Aquesta acció és irreversible. ⚠️"
+        delete_closed_confirmation: "Realment voleu eliminar totes les enquestes tancades?\n⚠️ *Aquesta acció és irreversible.* ⚠️"
         language: '*Idioma per defecte:* %{language}'
         open_polls: '*Enquestes obertes:* %{count}'
         closed_polls: '*Enquestes tancades:* %{count}'
         explanations:
-            language: '_Aquesta configuració determina quin idioma s’utilitza a la teva interfície de gestió i també determina l''idioma per defecte de les teves enquestes._'
-            notifications: '_Enviaré missatges de tant en tant, per informar sobre actualitzacions, canvis o errors._'
+            language: '_Aquesta configuració determina quin idioma s’utilitza en aquesta interfície de gestió i també determina l''idioma per defecte de les enquestes que genereu._'
+            notifications: '_Us enviaré missatges directes de tant en tant informant-vos d''actualitzacions, canvis o errors._'
     poll:
         explanation:
-            anonymity: "_En una enquesta anònima no es mostraràn els noms. No és possible saber d'on ve el vot._\n*Ves amb compte:* _La gent podria endevinar d'on venen els vots mirant si estàs online o no quan canvien els resultats. Si vols que sigui 100% anònim, amaga també els resultats._\n"
-            visibility: '_Una enquesta amb resultats ocults no mostrarà els vots ni els percentatges fins que es tanqui. Un cop tancada, romandrà tancada per sempre. Això és necessari per a evitar la possibilitat de_ [vot tàctic](https://en.wikipedia.org/wiki/Tactical_voting) _i per evitar_ [l''efecte Focus](https://ca.wikipedia.org/wiki/Efecte_focus).'
-    anonymity_warning: "No pots amagar vots i percentatge a una enquesta anònima.\nAixò podria donar al usuaris la sensció que l'enquesta té resultats ocults, que no és el cas. Si vols realment això, crea una enquesta amb resultats amagats.\n"
-    private_vote_link: 'Amb aquest link els usuaris poden votar en un chat privat.'
-    link_warning: "*Ves amb compte!* Un cop el link circula i se'n fa ús, ja no pots tornar enrera.\nTothom que tingui el link podrà votar a l'enquesta."
+            anonymity: "_En una enquesta anònima no es mostraràn els noms. No és possible qui vota què._\n*Vigileu:* _La gent podria endevinar d'on venen els vots mirant qui està en línia o no quan es canvien els resultats. Si voleu que sigui 100% anònima, oculteu també els resultats._\n"
+            visibility: '_Una enquesta amb resultats ocults no mostrarà els vots ni els percentatges fins que no es tanqui. Un cop tancada, romandrà tancada per sempre. Això és necessari per a evitar la possibilitat de_ [vot útil](https://ca.wikipedia.org/wiki/Vot_%C3%BAtil) _i per evitar_ [l''efecte d''ancoratge cognitiu](https://ca.wikipedia.org/wiki/Efecte_focus).'
+    anonymity_warning: "No es poden amagar vots i percentatges a una enquesta anònima.\nAixò podria donar al usuaris la sensació que l'enquesta té resultats ocults, que no és el cas. Si voleu permetre aquest comportament, creeu una nova enquesta amb resultats ocults.\n"
+    private_vote_link: 'Amb aquest enllaç es pot votar a converses privades.'
+    link_warning: "*Aneu amb compte!* Un cop ha estat compartit ja no es pot tornar enrere.\nTothom que en tingui l'enllaç podrà votar a l'enquesta."
 management:
     permanently_close: "Vols tancar aquesta enquesta per sempre?\nEls resultats es faràn visibles, però les persones ja no podràn votar\n⚠️ Aquesta acció és irreversible. ⚠️\n"
     delete: 'Vols eliminar aquesta enquesta?'
@@ -223,7 +224,8 @@ creation:
         limit_bigger_zero: 'Si us plau envia''m un nombre més gran que zero'
         limit_between: 'Si us plau, envia''m un nombre entre 1 i %{limit}'
         markdown: "Si us plau, no facis servir símbols de markdown als teus noms o descripcions. Com ara `_`, `*` i `[`.\nSi us plau, envia'm el missatge novament sense aquests símbols.\n"
-        too_big: 'Si us plau, envia un nombre més petit. També pots fer ús de les enquestes de "Vots il·limitats"'
+        too_big: 'Si us plau, enveu un nombre més petit. També podeu fer ús de les enquestes de "Vots il·limitats"'
+        invalid_poll_name: 'El nom de l''enquesta probablement conté caràcters invàlids. Torneu-ho a provar.'
 external:
     canceled: Cancel·lat
     notification:
@@ -253,3 +255,9 @@ misc:
     over_3000: "⚠️ La teva enquesta ja té més de *3000 caràcters*, si us plau intenta escurçar-ho per sota de 3000, o si pots per sota de 2500 🙏.\n\nTelegram té un límit de 4096 caràcters per als missatges, i necessito mostar els vots després del teu text inicial. Si l'enquesta sobrepassa el límit aleshores *deixarà de funcionar*.\nJa intento ser breu amb els vots quan cal però tot i així l'espai és molt limitat.\n\nPer a enquestes amb molt de text i més de 10-15 opcions, potser és millor que facis servir un servei extern com ara [Doodle](https://doodle.com/)\n"
     over_4000: "⚠️ La teva enquesta ja té més de *4000 caràcters*. És massa text per a mostrar-lo tot de cop. Si us plau intenta escurçar-ho per sota de 3000, o si pots per sota de 2500 🙏.\n\nTelegram té un límit de 4096 caràcters per als missatges, i necessito mostar els vots després del teu text inicial. Si l'enquesta sobrepassa el límit aleshores *deixarà de funcionar*.\nJa intento ser breu amb els vots quan cal però tot i així no puc fer-hi res si el missatge és tan llarg.\n\nPer a enquestes molt llargues i amb moltes opcions, potser seria millor que fecis servir un servei com ara [Doodle](https://doodle.com/)\n"
     too_long: "Hola!\n\nHo sento, però la teva enquesta és massa llarga. Probablement vas afegir moltes opcions i/o un text molt llarg (o les dues coses!). 😬\n\nDonat que Telegram només permet missatges de 4096 caràcters o menys, no m'és possible mostrar enquestes tan llargues.\n\nSi us plau intenta escriure una descripció i unes opcions més curtes, o potser podries fer servir [Doodle](https://doodle.com/).\n\n    Una manera de solucionar el problema podria ser eliminar altres opcions (l'administrador pot fer-ho).\n\n👇 En qualsevol cas encara pots votar i veure els resultats. 👇\n"
+sorting:
+    chrono: cronològicament
+    name: alfabèticament
+    manual: manualment
+    percentage: 'per percentatge'
+    doodle: 'per resposta'
