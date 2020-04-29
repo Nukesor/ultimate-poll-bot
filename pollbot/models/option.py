@@ -52,7 +52,7 @@ class Option(base):
         """Create a new poll."""
         self.poll = poll
         self.name = name
-        self.index = len(poll.options)
+        self.index = max(option.index for option in poll.options) + 1
 
     def __repr__(self):
         """Print as string."""

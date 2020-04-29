@@ -1,4 +1,6 @@
 """Poll creation helper."""
+from sqlalchemy.exc import IntegrityError
+
 from pollbot.i18n import i18n
 from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.helper.enums import ExpectedInput, ReferenceType
@@ -70,33 +72,58 @@ def create_poll(session, poll, user, chat, message=None):
     increase_user_stat(session, user, "created_polls")
 
 
-def add_options(poll, text, is_date=False):
+def add_options(session, poll, text, is_date=False):
     """Add a new option to the poll."""
     options_to_add = [x.strip() for x in text.split("\n") if x.strip() != ""]
     added_options = []
 
     for option_to_add in options_to_add:
-        description = None
-        # Extract the description if existing
-        if not is_date and "--" in option_to_add:
-            # Extract and strip the description
-            splitted = option_to_add.split("--", 1)
-            option_to_add = splitted[0].strip()
-            description = splitted[1].strip()
-            if description == "":
-                description = None
+        try:
+            option = add_option(poll, option_to_add, added_options, is_date)
+            if option is None:
+                continue
 
-        if option_is_duplicate(poll, option_to_add) or option_to_add in added_options:
-            continue
+            session.add(option)
+            session.commit()
 
-        option = Option(poll, option_to_add)
-        option.description = description
-        option.is_date = is_date
-        poll.options.append(option)
+            added_options.append(option_to_add)
+        except IntegrityError:
+            # Options have unique incrementing indices
+            # They can crash if somebody spams while adding options
+            # Rollback and retry
+            print("Triggered")
+            session.rollback()
 
-        added_options.append(option_to_add)
+            option = add_option(poll, option_to_add, added_options, is_date)
+            session.add(option)
+            session.commit()
+
+            added_options.append(option_to_add)
 
     return added_options
+
+
+def add_option(poll, text, added_options, is_date):
+    """Parse the incoming text and create a single option from it."""
+    description = None
+    # Extract the description if existing
+    if "--" in text:
+        # Extract and strip the description
+        splitted = text.split("--", 1)
+        text = splitted[0].strip()
+        description = splitted[1].strip()
+        if description == "":
+            description = None
+
+    if option_is_duplicate(poll, text) or text in added_options:
+        return None
+
+    option = Option(poll, text)
+    option.description = description
+    option.is_date = is_date
+    poll.options.append(option)
+
+    return option
 
 
 def option_is_duplicate(poll, option_to_add):

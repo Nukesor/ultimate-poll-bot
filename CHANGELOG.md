@@ -1,4 +1,5 @@
 ## v1.4.0
+- Options can be sorted manually
 - New options. You have need to add those your config manually if you already have a deployed bot:
     1. `telegram.max_inline_shares` The max amount of shared messages via inline query per poll
     2. `telegram.allow_private_vote` This decides, whether you allowed 

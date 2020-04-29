@@ -76,7 +76,7 @@ class Poll(base):
     expected_input = Column(String)
     in_settings = Column(Boolean, nullable=False, default=False)
 
-    # OneToOne
+    # ManyToOne
     user_id = Column(
         BigInteger,
         ForeignKey("user.id", ondelete="cascade", name="user"),
