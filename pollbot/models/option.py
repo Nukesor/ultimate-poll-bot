@@ -52,7 +52,7 @@ class Option(base):
         """Create a new poll."""
         self.poll = poll
         self.name = name
-        if len(option.index) == 0:
+        if len(poll.options) == 0:
             option.index = 0
         else:
             self.index = max(option.index for option in poll.options) + 1
