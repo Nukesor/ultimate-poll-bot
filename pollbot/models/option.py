@@ -53,7 +53,7 @@ class Option(base):
         self.poll = poll
         self.name = name
         if len(poll.options) == 0:
-            option.index = 0
+            self.index = 0
         else:
             self.index = max(option.index for option in poll.options) + 1
 
