@@ -19,6 +19,7 @@ def delete_poll(session, context, poll):
         session.commit()
     except ObjectDeletedError:
         # User spams the button and issues multiple deletes
+        session.rollback()
         pass
 
     return i18n.t("callback.deleted", locale=poll.user.locale)
@@ -34,6 +35,7 @@ def delete_poll_with_messages(session, context, poll):
         session.commit()
     except ObjectDeletedError:
         # User spams the button and issues multiple deletes
+        session.rollback()
         pass
 
     return i18n.t("callback.deleted", locale=poll.user.locale)
