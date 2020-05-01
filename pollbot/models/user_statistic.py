@@ -59,4 +59,4 @@ class UserStatistic(base):
             f"Inline shares: {self.inline_shares}",
         ]
 
-        return '\n'.join(text)
+        return "\n".join(text)

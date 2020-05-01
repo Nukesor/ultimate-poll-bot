@@ -37,9 +37,9 @@ def reset_broadcast(bot, update, session, user):
 def remaining_time(total, current, start):
     """Small helper to calculate remaining runtime of a command."""
     elapsed = (datetime.now() - start).seconds
-    remaining_factor = total/current
+    remaining_factor = total / current
     total_time = elapsed * remaining_factor
-    remaining_time = ((total-current)/total) * total_time
+    remaining_time = ((total - current) / total) * total_time
     return timedelta(seconds=int(remaining_time))
 
 
@@ -58,7 +58,6 @@ def broadcast(bot, update, session, user):
         .filter(User.broadcast_sent.is_(False))
         .count()
     )
-
 
     start_time = datetime.now()
     chat.send_message(f"Sending broadcast to {user_count} chats.")
@@ -112,7 +111,9 @@ def broadcast(bot, update, session, user):
 
             if sent_count % 5000 == 0:
                 remaining = remaining_time(user_count, sent_count, start_time)
-                chat.send_message(f"Sent to {sent_count} users. Remaining time: {remaining}")
+                chat.send_message(
+                    f"Sent to {sent_count} users. Remaining time: {remaining}"
+                )
 
     update.message.chat.send_message("All messages sent")
 

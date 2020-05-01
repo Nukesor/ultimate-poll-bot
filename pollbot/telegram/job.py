@@ -151,20 +151,24 @@ def create_daily_stats(context, session):
 @job_wrapper
 def perma_ban_checker(context, session):
     """Perma-ban people that send more than 250 votes for at least 3 days in the last week."""
-    vote_limit = config['telegram']['max_user_votes_per_day']
-    stats = session.query(UserStatistic) \
-        .filter(UserStatistic.votes >= vote_limit) \
-        .filter(UserStatistic.date == date.today()) \
+    vote_limit = config["telegram"]["max_user_votes_per_day"]
+    stats = (
+        session.query(UserStatistic)
+        .filter(UserStatistic.votes >= vote_limit)
+        .filter(UserStatistic.date == date.today())
         .all()
+    )
 
     for stat in stats:
         # Check how often the user reached the limit in the last week
-        days_above_limit = session.query(UserStatistic) \
-            .filter(UserStatistic.votes >= vote_limit) \
-            .filter(UserStatistic.date >= date.today() - timedelta(days=6)) \
-            .filter(UserStatistic.date <= date.today() - timedelta(days=1)) \
-            .filter(UserStatistic.user == stat.user) \
+        days_above_limit = (
+            session.query(UserStatistic)
+            .filter(UserStatistic.votes >= vote_limit)
+            .filter(UserStatistic.date >= date.today() - timedelta(days=6))
+            .filter(UserStatistic.date <= date.today() - timedelta(days=1))
+            .filter(UserStatistic.user == stat.user)
             .all()
+        )
 
         # If the user reached the limit on two other days in the last week (three days in total)
         if len(days_above_limit) >= 2:
@@ -176,6 +180,4 @@ def perma_ban_checker(context, session):
 def cleanup(context, session):
     """Remove all user statistics after 7 days."""
     threshold = date.today() - timedelta(days=7)
-    session.query(UserStatistic) \
-        .filter(UserStatistic.date < threshold) \
-        .delete()
+    session.query(UserStatistic).filter(UserStatistic.date < threshold).delete()
