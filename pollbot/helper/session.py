@@ -276,7 +276,7 @@ def ignore_exception(exception):
     """Check whether we can safely ignore this exception."""
     if isinstance(exception, BadRequest):
         if (
-            exception.message.starts_with("Query is too old")
+            exception.message.startswith("Query is too old")
             or exception.message.startswith("Have no rights to send a message")
             or exception.message.startswith("Message_id_invalid")
             or exception.message.startswith("Message identifier not specified")
