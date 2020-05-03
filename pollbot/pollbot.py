@@ -21,7 +21,14 @@ from pollbot.telegram.job import (
     cleanup,
 )
 from pollbot.telegram.message_handler import handle_private_text
-from pollbot.telegram.callback_handler import handle_callback_query
+from pollbot.telegram.callback_handler import (
+    handle_async_callback_query,
+    handle_callback_query,
+)
+from pollbot.telegram.callback_handler.mapping import (
+    get_callback_mapping_regex,
+    get_async_callback_mapping_regex,
+)
 from pollbot.telegram.inline_query import search
 from pollbot.telegram.inline_result_handler import handle_chosen_inline_result
 from pollbot.telegram.commands.poll import (
@@ -74,7 +81,8 @@ dispatcher.add_handler(CommandHandler("reset_broadcast", reset_broadcast))
 dispatcher.add_handler(CommandHandler("test_broadcast", test_broadcast))
 
 # Callback handler
-dispatcher.add_handler(CallbackQueryHandler(handle_callback_query))
+dispatcher.add_handler(CallbackQueryHandler(handle_callback_query, pattern=get_callback_mapping_regex()))
+dispatcher.add_handler(CallbackQueryHandler(handle_async_callback_query, pattern=get_async_callback_mapping_regex()))
 
 # InlineQuery handler
 dispatcher.add_handler(InlineQueryHandler(search))

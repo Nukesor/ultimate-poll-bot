@@ -31,3 +31,8 @@ def show_option_name(session, context):
         message = option.get_formatted_name()
 
     return message
+
+
+def ignore(session, context):
+    """Simple generic helper to return a hint on styling buttons."""
+    context.query.answer("This button doesn't do anything and is just for styling.")
