@@ -82,7 +82,6 @@ def handle_callback_query(bot, update, session, user):
     schema. That's why some calls are restricted to be synchronous.
     """
     context = get_context(bot, update, session, user)
-    print("Synchronous")
 
     increase_user_stat(session, context.user, "callback_calls")
     session.commit()
@@ -115,7 +114,6 @@ def handle_async_callback_query(bot, update, session, user):
     The race condition handling for votes is handled in the respective `handle_vote` function.
     """
     context = get_context(bot, update, session, user)
-    print("Asynchronous")
 
     # Vote logic needs some special handling
     if context.callback_type == CallbackType.vote:
