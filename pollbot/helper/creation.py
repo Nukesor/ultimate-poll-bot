@@ -1,6 +1,4 @@
 """Poll creation helper."""
-from sqlalchemy.exc import IntegrityError
-
 from pollbot.i18n import i18n
 from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.helper.enums import ExpectedInput, ReferenceType
@@ -78,27 +76,14 @@ def add_options(session, poll, text, is_date=False):
     added_options = []
 
     for option_to_add in options_to_add:
-        try:
-            option = add_option(poll, option_to_add, added_options, is_date)
-            if option is None:
-                continue
+        option = add_option(poll, option_to_add, added_options, is_date)
+        if option is None:
+            continue
 
-            session.add(option)
-            session.commit()
+        session.add(option)
+        session.commit()
 
-            added_options.append(option_to_add)
-        except IntegrityError:
-            # Options have unique incrementing indices
-            # They can crash if somebody spams while adding options
-            # Rollback and retry
-            print("Triggered")
-            session.rollback()
-
-            option = add_option(poll, option_to_add, added_options, is_date)
-            session.add(option)
-            session.commit()
-
-            added_options.append(option_to_add)
+        added_options.append(option_to_add)
 
     return added_options
 
