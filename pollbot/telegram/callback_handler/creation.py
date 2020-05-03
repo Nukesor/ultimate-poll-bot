@@ -77,7 +77,10 @@ def show_poll_type_keyboard(session, context, poll):
 
 @poll_required
 def change_poll_type(session, context, poll):
-    """Change the vote type."""
+    """Change the vote type of the poll.
+
+    This is only possible at the very beginning of the creation.
+    """
     if poll.created:
         return i18n.t("callback.poll_created", locale=context.user.locale)
 
@@ -113,7 +116,7 @@ def toggle_results_visible(session, context, poll):
 @poll_required
 def all_options_entered(session, context, poll):
     """All options are entered the poll is created."""
-    if poll is None:
+    if poll is None or poll.created:
         return
 
     locale = context.user.locale
@@ -132,7 +135,7 @@ def all_options_entered(session, context, poll):
 
 @poll_required
 def open_creation_datepicker(session, context, poll):
-    """All options are entered the poll is created."""
+    """Open the datepicker during the creation of a poll."""
     keyboard = get_creation_datepicker_keyboard(poll, date.today())
     # Switch from new option by text to new option via datepicker
     message = context.query.message
@@ -151,7 +154,7 @@ def open_creation_datepicker(session, context, poll):
 
 @poll_required
 def close_creation_datepicker(session, context, poll):
-    """All options are entered the poll is created."""
+    """Close the datepicker during the creation of a poll."""
     user = context.user
     if len(poll.options) == 0:
         text = i18n.t("creation.option.first", locale=user.locale)
@@ -171,7 +174,7 @@ def close_creation_datepicker(session, context, poll):
 
 
 def cancel_creation(session, context):
-    """Cancel the creation of a bot."""
+    """Cancel the creation of a poll."""
     if context.poll is None:
         return i18n.t("delete.doesnt_exist", locale=context.user.locale)
 
