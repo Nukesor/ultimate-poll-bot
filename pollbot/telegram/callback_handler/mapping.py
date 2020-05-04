@@ -80,6 +80,7 @@ from .user import (
     delete_all_confirmation,
     delete_closed,
     delete_closed_confirmation,
+    delete_user,
     list_polls,
     list_closed_polls,
     open_help,
@@ -118,6 +119,7 @@ callback_mapping = {
     CallbackType.settings_decrease_option_index: decrease_option_index,
     # User
     CallbackType.user_delete_all: delete_all,
+    CallbackType.user_delete: delete_user,
     CallbackType.user_delete_closed: delete_closed,
     # Datepicker
     CallbackType.pick_creation_date: pick_creation_date,

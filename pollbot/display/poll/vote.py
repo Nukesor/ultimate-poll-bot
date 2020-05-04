@@ -77,7 +77,10 @@ def get_doodle_answer_lines(votes, summarize, is_last):
             current_line = "┆ "
             characters = len(current_line)
 
-        user_mention = f"[{vote.user.name}](tg://user?id={vote.user.id})"
+        if vote.user.deleted:
+            user_mention = vote.user.username
+        else:
+            user_mention = f"[{vote.user.name}](tg://user?id={vote.user.id})"
         # Add a comma at the end of the user mention if it's not the last one
         if index != (len(votes) - 1):
             user_mention += ", "
@@ -118,7 +121,11 @@ def get_vote_lines(poll, option, summarize):
 
 def get_vote_line(poll, option, vote, index):
     """Get the line showing an actual vote."""
-    user_mention = f"[{vote.user.name}](tg://user?id={vote.user.id})"
+    if vote.user.deleted:
+        user_mention = vote.user.username
+    else:
+        user_mention = f"[{vote.user.name}](tg://user?id={vote.user.id})"
+
     if index == (len(option.votes) - 1):
         vote_line = f"└ {user_mention}"
     else:

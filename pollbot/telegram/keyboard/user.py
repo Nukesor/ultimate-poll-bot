@@ -181,3 +181,15 @@ def get_delete_all_confirmation_keyboard(user, closed=False):
         [get_back_to_settings_button(user)],
     ]
     return InlineKeyboardMarkup(buttons)
+
+
+def get_delete_user_confirmation_keyboard(user):
+    """Get the confirmation keyboard for deleting all information about the user."""
+    text = i18n.t("keyboard.user.delete_me", locale=user.locale)
+    payload = f"{CallbackType.user_delete.value}:0:0"
+
+    buttons = [
+        [InlineKeyboardButton(text, callback_data=payload)],
+        [get_back_to_settings_button(user)],
+    ]
+    return InlineKeyboardMarkup(buttons)

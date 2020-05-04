@@ -1,6 +1,6 @@
 """User related callback handler."""
 from pollbot.i18n import i18n
-from pollbot.helper.update import remove_poll_messages
+from pollbot.helper.update import remove_poll_messages, update_poll_messages
 from pollbot.display.creation import get_init_text
 from pollbot.display.settings import get_user_settings_text
 from pollbot.display.misc import (
@@ -157,3 +157,36 @@ def delete_closed(session, context):
 
     open_user_settings(session, context)
     return i18n.t("deleted.closed_polls", locale=context.user.locale)
+
+
+def delete_user(session, context):
+    """Delete everything of a user and ban them forever."""
+    user = context.user
+
+    for poll in user.polls:
+        remove_poll_messages(session, context.bot, poll)
+        session.delete(poll)
+        session.commit()
+
+    polls_for_update = []
+    for vote in user.votes:
+        if vote.poll not in polls_for_update:
+            polls_for_update.append(vote.poll)
+
+    for poll in polls_for_update:
+        update_poll_messages(session, context.bot, poll)
+    session.commit()
+
+    user.started = False
+    user.banned = True
+    user.deleted = True
+    user.username = "GDPR removed user"
+    user.name = "GDPR removed user"
+    user.locale = "English"
+    user.european_date_format = False
+    user.notifications_enabled = False
+    session.commit()
+
+    context.query.message.chat.send_message(
+        i18n.t("settings.user.deleted", locale=user.locale),
+    )

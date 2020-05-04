@@ -146,6 +146,7 @@ keyboard:
     disable_notifications: 🔇 Disable notifications
     delete_all: ⚠️ Delete all polls
     delete_all_closed : ⚠️ Delete all closed polls
+    delete_me: ❌ Delete me
 
   admin:
     settings: ⚙️ Admin Settings
@@ -220,6 +221,7 @@ settings:
     delete_closed_confirmation: |
       Do you really want to delete all closed polls?
       ⚠️ *This action is irrevertible.* ⚠️
+    deleted: Congratulations! Your data has just been deleted. Farewell
     language: "*Default language:* %{language}"
     open_polls: "*Open polls:* %{count}"
     closed_polls: "*Closed polls:* %{count}"
@@ -340,6 +342,25 @@ user:
 
 misc:
   stop: "You won't be able to use the bot any longer. To start it again type /start"
+  deletion_warning: |
+    *Attention*
+
+    This is a permanent action.
+
+    1. All personal information will be deleted.
+    2. Votes on active polls will be removed, votes on closed polls will be redacted.
+    3. All your active or closed polls will be deleted
+
+    What cannot be deleted:
+    1. Votes on deleted polls cannot be removed, since they have already been purged from the database.
+    2. Deleted polls cannot be removed, since they have already been purged from the database.
+
+    Keep in mind:
+    *If you delete your data, you'll be banned for life.*
+    You'll be no longer able to use the bot.
+
+    This is a simple measure to prevent vote manipulation on closed polls.
+    You do it once, you're gone forever.
   donation: |
     Hello there!
 

@@ -47,6 +47,7 @@ from pollbot.telegram.commands.admin import (
 from pollbot.telegram.commands.user import (
     open_user_settings_command,
     stop,
+    delete_me,
 )
 
 logging.basicConfig(
@@ -70,6 +71,7 @@ dispatcher.add_handler(CommandHandler("create", create_poll))
 # Misc commands
 dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(CommandHandler("stop", stop))
+dispatcher.add_handler(CommandHandler("delete_me", delete_me))
 dispatcher.add_handler(CommandHandler("settings", open_user_settings_command))
 dispatcher.add_handler(CommandHandler("help", send_help))
 dispatcher.add_handler(CommandHandler("list", list_polls))
