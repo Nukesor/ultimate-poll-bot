@@ -339,6 +339,7 @@ user:
   language_changed: Language changed
 
 misc:
+  stop: "You won't be able to use the bot any longer. To start it again type /start"
   donation: |
     Hello there!
 
