@@ -172,6 +172,9 @@ def delete_user(session, context):
     for vote in user.votes:
         if vote.poll not in polls_for_update:
             polls_for_update.append(vote.poll)
+        if not vote.poll.closed:
+            session.delete(vote)
+    session.commit()
 
     for poll in polls_for_update:
         update_poll_messages(session, context.bot, poll)
