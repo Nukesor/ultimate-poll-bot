@@ -62,9 +62,9 @@ def update_poll_messages(
             session.commit()
             new_update = True
         except (UniqueViolation, IntegrityError):
-            # Some other function already created the update
+            # Some other function already created the update. Try again
             session.rollback()
-            update = session.query(Update).filter(Update.poll == poll).one()
+            update_poll_messages(session, bot, poll)
 
     if not new_update:
         # In case there already is an update increase the counter and set the next_update date
@@ -90,6 +90,8 @@ def update_poll_messages(
             # desync of a single vote. But it may also be the case, that
             # everything is already in sync.
             session.rollback()
+            # Anyway just try again
+            update_poll_messages(session, bot, poll)
             pass
 
 
