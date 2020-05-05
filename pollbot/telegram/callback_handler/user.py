@@ -174,6 +174,8 @@ def delete_user(session, context):
             polls_for_update.append(vote.poll)
         if not vote.poll.closed:
             session.delete(vote)
+        else:
+            vote.user = None
     session.commit()
 
     for poll in polls_for_update:
@@ -183,6 +185,7 @@ def delete_user(session, context):
     user.started = False
     user.banned = True
     user.deleted = True
+    user.current_poll = None
     user.username = "GDPR removed user"
     user.name = "GDPR removed user"
     user.locale = "English"

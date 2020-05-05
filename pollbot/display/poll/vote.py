@@ -68,19 +68,24 @@ def get_doodle_answer_lines(votes, summarize, is_last):
     current_line = "┆ "
     characters = len(current_line)
     for index, vote in enumerate(votes):
+        user_exists = vote.user is not None
+        name_length = len('Removed user')
+        if user_exists:
+            name_length = len(vote.user.name)
+
         # Only the characters of the username count (not the mention)
-        characters += len(vote.user.name)
+        characters += name_length
         # If the line lenght is above the threshold, start a new line
         # Don't stop here, if the first name of the line already is too long
-        if characters > threshold and (2 + len(vote.user.name)) != characters:
+        if characters > threshold and (2 + name_length) != characters:
             lines.append(current_line)
             current_line = "┆ "
             characters = len(current_line)
 
-        if vote.user.deleted:
-            user_mention = vote.user.username
-        else:
+        if user_exists:
             user_mention = f"[{vote.user.name}](tg://user?id={vote.user.id})"
+        else:
+            user_mention = 'Removed user'
         # Add a comma at the end of the user mention if it's not the last one
         if index != (len(votes) - 1):
             user_mention += ", "
@@ -121,8 +126,8 @@ def get_vote_lines(poll, option, summarize):
 
 def get_vote_line(poll, option, vote, index):
     """Get the line showing an actual vote."""
-    if vote.user.deleted:
-        user_mention = vote.user.username
+    if vote.user is None:
+        user_mention = 'GDPR removed user'
     else:
         user_mention = f"[{vote.user.name}](tg://user?id={vote.user.id})"
 

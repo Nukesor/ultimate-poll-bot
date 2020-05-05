@@ -49,7 +49,7 @@ class Vote(base):
     user_id = Column(
         BigInteger,
         ForeignKey("user.id", ondelete="cascade"),
-        nullable=False,
+        nullable=True,
         index=True,
     )
     user = relationship("User")
