@@ -99,9 +99,7 @@ def callback_query_wrapper(func):
             return
 
         temp_ban_time = context.user_data.get("temporary-ban-time")
-        if temp_ban_time is not None and temp_ban_time >= date.today() - timedelta(
-            days=1
-        ):
+        if temp_ban_time is not None and temp_ban_time == date.today():
             update.callback_query.answer(i18n.t("callback.spam"))
             return
 
