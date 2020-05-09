@@ -23,9 +23,8 @@ def get_sorted_options(poll, total_user_count=0):
 def calculate_percentage(option, total_user_count):
     """Calculate the percentage for this option."""
     # Return 0 if:
-    # - No user voted yet
+    # - No voted on this poll yet
     # - This option has no votes
-    # - The poll has no votes
     if total_user_count == 0:
         return 0
     if len(option.votes) == 0:
@@ -50,6 +49,6 @@ def calculate_percentage(option, total_user_count):
 
         return score / total_user_count * 100
     else:
-        percentage = round(len(option.votes) / total_user_count * 100)
+        percentage = len(option.votes) / total_user_count * 100
 
     return percentage

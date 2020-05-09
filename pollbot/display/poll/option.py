@@ -79,7 +79,7 @@ def get_percentage_line(option, context):
         filled_slots = math.floor(percentage / 10)
         line += filled_slots * "▬"
         line += (10 - filled_slots) * "▭"
-        line += f" ({percentage:.0f}%)"
+        line += f" ({round(percentage)}%)"
     else:
         option_count = len(poll.options)
         points = sum([option_count - vote.priority for vote in option.votes])
