@@ -107,3 +107,12 @@ Index(
     unique=True,
     postgresql_where=Reference.type == "private_vote",
 )
+
+
+Index(
+    "ix_unique_inline_share",
+    Reference.poll_id,
+    Reference.bot_inline_message_id,
+    unique=True,
+    postgresql_where=Reference.type == "inline",
+)

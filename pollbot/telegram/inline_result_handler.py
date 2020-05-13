@@ -1,6 +1,7 @@
 """Handle inline query results."""
 from telegram.ext import run_async
 from sqlalchemy.exc import DataError
+from psycopg2.errors import UniqueViolation
 
 from pollbot.helper.enums import ReferenceType
 from pollbot.helper.stats import increase_user_stat
@@ -24,11 +25,15 @@ def handle_chosen_inline_result(bot, update, session, user):
         # the inline result is picked despite saying otherwise.
         return
 
-    reference = Reference(
-        poll, ReferenceType.inline.name, inline_message_id=result.inline_message_id,
-    )
-    session.add(reference)
-    session.commit()
+    try:
+        reference = Reference(
+            poll, ReferenceType.inline.name, inline_message_id=result.inline_message_id,
+        )
+        session.add(reference)
+        session.commit()
+    except UniqueViolation as e:
+        # I don't know how this can happen, but it happens.
+        return
 
     update_reference(session, bot, poll, reference)
     increase_user_stat(session, user, "inline_shares")
