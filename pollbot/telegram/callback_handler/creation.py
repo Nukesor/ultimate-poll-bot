@@ -3,7 +3,7 @@ from datetime import date
 from pollbot.i18n import i18n
 from pollbot.helper.poll import poll_required
 from pollbot.helper.creation import create_poll
-from pollbot.helper.enums import PollType, ExpectedInput, DatepickerContext
+from pollbot.helper.enums import PollType, ExpectedInput
 from pollbot.telegram.keyboard import (
     get_change_poll_type_keyboard,
     get_init_keyboard,

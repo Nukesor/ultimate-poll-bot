@@ -13,7 +13,6 @@ from pollbot.i18n import i18n
 from pollbot.config import config
 from pollbot.helper.enums import ReferenceType
 from pollbot.models import Poll
-from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
 from pollbot.helper.session import inline_query_wrapper
 
 

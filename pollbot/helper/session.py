@@ -1,10 +1,9 @@
 """Session helper functions."""
 import traceback
-from datetime import date, timedelta
+from datetime import date
 from functools import wraps
 from sqlalchemy.exc import IntegrityError
 from telegram.error import (
-    TelegramError,
     BadRequest,
     Unauthorized,
     TimedOut,

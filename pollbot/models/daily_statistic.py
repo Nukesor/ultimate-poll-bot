@@ -1,12 +1,6 @@
 """The sqlalchemy model for a statistics."""
-from sqlalchemy import Column, Date, func, ForeignKey, UniqueConstraint
-from sqlalchemy.types import (
-    Boolean,
-    DateTime,
-    Integer,
-    String,
-)
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Date
+from sqlalchemy.types import Integer
 
 from pollbot.db import base
 

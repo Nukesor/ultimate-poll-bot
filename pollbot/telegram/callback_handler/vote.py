@@ -12,7 +12,7 @@ from pollbot.helper.stats import increase_stat
 from pollbot.helper.enums import PollType, CallbackResult
 from pollbot.helper.update import update_poll_messages
 
-from pollbot.models import Option, Vote
+from pollbot.models import Vote
 
 
 def handle_vote(session, context, option):
@@ -312,7 +312,6 @@ def handle_doodle_vote(session, context, option):
     )
 
     if context.callback_result.name is None:
-        data = context.data  # noqa
         raise Exception("Unknown callback result")
 
     # Remove vote
@@ -350,7 +349,6 @@ def handle_priority_vote(session, context, option):
     vote.priority = -1
 
     if context.callback_result.name is None:
-        data = context.data  # noqa
         raise Exception("Unknown callback result")
 
     if context.callback_result.name == CallbackResult.increase_priority.name:

@@ -31,7 +31,7 @@ def handle_chosen_inline_result(bot, update, session, user):
         )
         session.add(reference)
         session.commit()
-    except UniqueViolation as e:
+    except UniqueViolation:
         # I don't know how this can happen, but it happens.
         return
 

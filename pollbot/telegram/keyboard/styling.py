@@ -2,7 +2,7 @@ from telegram import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
 )
-from pollbot.i18n import i18n, supported_languages
+from pollbot.i18n import i18n
 
 from pollbot.helper.enums import (
     CallbackType,

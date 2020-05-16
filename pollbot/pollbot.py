@@ -87,8 +87,14 @@ dispatcher.add_handler(CommandHandler("reset_broadcast", reset_broadcast))
 dispatcher.add_handler(CommandHandler("test_broadcast", test_broadcast))
 
 # Callback handler
-dispatcher.add_handler(CallbackQueryHandler(handle_callback_query, pattern=get_callback_mapping_regex()))
-dispatcher.add_handler(CallbackQueryHandler(handle_async_callback_query, pattern=get_async_callback_mapping_regex()))
+dispatcher.add_handler(
+    CallbackQueryHandler(handle_callback_query, pattern=get_callback_mapping_regex())
+)
+dispatcher.add_handler(
+    CallbackQueryHandler(
+        handle_async_callback_query, pattern=get_async_callback_mapping_regex()
+    )
+)
 
 # InlineQuery handler
 dispatcher.add_handler(InlineQueryHandler(search))

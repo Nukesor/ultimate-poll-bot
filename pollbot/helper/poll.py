@@ -19,7 +19,7 @@ def remove_old_references(session, bot, poll, user):
             bot.delete_message(
                 chat_id=reference.user_id, message_id=reference.message_id
             )
-        except Unauthorized as e:
+        except Unauthorized:
             session.delete(reference)
         except BadRequest as e:
             if (

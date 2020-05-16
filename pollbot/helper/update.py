@@ -166,7 +166,7 @@ def update_reference(session, bot, poll, reference, show_warning=False):
         else:
             raise
 
-    except Unauthorized as e:
+    except Unauthorized:
         session.delete(reference)
         session.commit()
     except TimedOut:

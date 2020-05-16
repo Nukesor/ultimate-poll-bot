@@ -1,7 +1,6 @@
 """Admin related callback handler."""
 import time
 
-from pollbot.i18n import i18n
 from pollbot.helper.plot import send_plots
 from pollbot.helper.update import update_poll_messages
 from pollbot.telegram.keyboard import get_admin_settings_keyboard

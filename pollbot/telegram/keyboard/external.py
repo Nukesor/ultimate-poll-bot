@@ -14,9 +14,7 @@ def get_notify_keyboard(polls):
     buttons = []
     for poll in polls:
         pick_payload = f"{CallbackType.activate_notification.value}:{poll.id}:0"
-        buttons.append(
-            [InlineKeyboardButton(poll.name, callback_data=pick_payload),]
-        )
+        buttons.append([InlineKeyboardButton(poll.name, callback_data=pick_payload)])
 
     return InlineKeyboardMarkup(buttons)
 

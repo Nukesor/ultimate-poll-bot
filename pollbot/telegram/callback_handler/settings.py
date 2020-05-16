@@ -16,7 +16,7 @@ from pollbot.telegram.keyboard import (
     get_due_date_datepicker_keyboard,
     get_settings_language_keyboard,
 )
-from pollbot.helper.enums import ExpectedInput, DatepickerContext
+from pollbot.helper.enums import ExpectedInput
 from pollbot.models import Option, User, Vote
 
 

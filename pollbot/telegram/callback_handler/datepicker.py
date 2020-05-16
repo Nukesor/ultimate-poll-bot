@@ -53,7 +53,7 @@ def owner_pick_date_option(session, context, poll, datepicker_context):
             "callback.date_removed", locale=poll.locale, date=picked_date.isoformat()
         )
     else:
-        added_options = add_options(session, poll, context.data[2], is_date=True)
+        add_options(session, poll, context.data[2], is_date=True)
         message = i18n.t(
             "callback.date_picked", locale=poll.locale, date=picked_date.isoformat()
         )
@@ -97,7 +97,7 @@ def pick_external_date(session, context, poll):
     if existing_option is not None:
         return i18n.t("callback.date_already_picked", locale=poll.locale)
 
-    added_options = add_options(session, poll, context.data[2], is_date=True)
+    add_options(session, poll, context.data[2], is_date=True)
     message = i18n.t(
         "callback.date_picked", locale=poll.locale, date=picked_date.isoformat()
     )

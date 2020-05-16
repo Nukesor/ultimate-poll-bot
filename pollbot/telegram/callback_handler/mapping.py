@@ -107,7 +107,6 @@ from .admin import (
 callback_mapping = {
     # Creation
     CallbackType.all_options_entered: all_options_entered,
-
     # Poll management
     CallbackType.delete: delete_poll,
     CallbackType.delete_poll_with_messages: delete_poll_with_messages,
@@ -212,23 +211,23 @@ async_callback_mapping = {
 
 def get_callback_mapping_regex():
     """Get a filter regex to match synchronous callbacks"""
-    regex = ''
+    regex = ""
     for key, _ in callback_mapping.items():
-        if regex != '':
-            regex += '|'
+        if regex != "":
+            regex += "|"
 
-        regex += f'^{key.value}:.*'
+        regex += f"^{key.value}:.*"
 
     return regex
 
 
 def get_async_callback_mapping_regex():
     """Get a filter regex to match asynchronous callbacks"""
-    regex = ''
+    regex = ""
     for key, _ in async_callback_mapping.items():
-        if regex != '':
-            regex += '|'
+        if regex != "":
+            regex += "|"
 
-        regex += f'^{key.value}:.*'
+        regex += f"^{key.value}:.*"
 
     return regex

@@ -1,5 +1,4 @@
 """Handle messages."""
-
 from pollbot.i18n import i18n
 from pollbot.helper.session import message_wrapper
 from pollbot.helper.enums import ExpectedInput, PollType, ReferenceType
