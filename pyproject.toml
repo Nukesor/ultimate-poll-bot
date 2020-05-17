@@ -23,8 +23,8 @@ pandas = "^0.24"
 pillow = "^7.0"
 
 [tool.poetry.dev-dependencies]
-pytest-mock = "^1.10"
 pytest = "^4.0"
+black = { version = "*", allow-prereleases = true }
 
 [build-system]
 requires = ["poetry>=0.12"]
