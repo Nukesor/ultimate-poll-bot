@@ -117,7 +117,7 @@ keyboard:
         management: Gestió
         languages: Idioma
         bugs: Errors/Bugs
-    styling: '🎀 Configuració d''estils'
+    styling: '🎀 Estils i ordre'
     summarize_votes: 'Resumir els vots'
     dont_summarize_votes: 'Mostrar tots els vots'
     add_new_language: 'Afegir un nou idioma'
@@ -189,7 +189,7 @@ settings:
             visibility: '_Una enquesta amb resultats ocults no mostrarà els vots ni els percentatges fins que no es tanqui. Un cop tancada, romandrà tancada per sempre. Això és necessari per a evitar la possibilitat de_ [vot útil](https://ca.wikipedia.org/wiki/Vot_%C3%BAtil) _i per evitar_ [l''efecte d''ancoratge cognitiu](https://ca.wikipedia.org/wiki/Efecte_focus).'
     anonymity_warning: "No es poden amagar vots i percentatges a una enquesta anònima.\nAixò podria donar al usuaris la sensació que l'enquesta té resultats ocults, que no és el cas. Si voleu permetre aquest comportament, creeu una nova enquesta amb resultats ocults.\n"
     private_vote_link: 'Amb aquest enllaç es pot votar a converses privades.'
-    link_warning: "*Aneu amb compte!* Un cop ha estat compartit ja no es pot tornar enrere.\nTothom que en tingui l'enllaç podrà votar a l'enquesta."
+    link_warning: "*Aneu amb compte!* Un cop ha estat compartit ja no es pot tornar enrere.\nTothom que tingui l'enllaç podrà votar en l'enquesta."
 management:
     permanently_close: "Vols tancar aquesta enquesta per sempre?\nEls resultats es faràn visibles, però les persones ja no podràn votar\n⚠️ Aquesta acció és irreversible. ⚠️\n"
     delete: 'Vols eliminar aquesta enquesta?'
@@ -208,7 +208,7 @@ creation:
         results_not_visible: 'Amagar resultats fins al tancament'
     option:
         next: 'Envia *una altra opció*, tria una data i afegeix-la com a opció o fes clic a *Fet* quan hagis acabat.'
-        first: "Si us plau, envia'm una opció. Pots enviar divereses opcions a la vegada, cada opció en una nova línia.\nTambé pots afegir una descripció després d'un guió.\nPer exemple `Hamburguesa - perque és deliciosa`\n"
+        first: "Si us plau, envieu-me una opció. Podeu enviar múltiples opcions alhora, cada opció en una nova línia.\nTambé podeu afegir una descripció al darrere d’un guionet.\nPer exemple, \"Hamburguesa - perquè és deliciosa\""
         no_new: '❌ No s''ha afegit cap nova opció'
         single_added: "*%{option}* ha estat afegida. 👍\nEnvia *una altra opció*, tria una data i afegeix-la com a opció o fes clic a *Fet* quan hagis acabat."
         multiple_added: 'S''han afegit les opcions:'

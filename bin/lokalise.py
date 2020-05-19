@@ -16,7 +16,6 @@ headers = {
 # Specify the way we want our languages formatted
 payload = {
     "format": "yml",
-    "original_filenames": True,
     "filter_data": ["translated"],
     "export_empty_as": "skip",
     "yaml_include_root": False,
@@ -24,7 +23,7 @@ payload = {
     "original_filenames": False,
     "replace_breaks": False,
     "export_sort": "first_added",
-    "filter_langs": ["ca", "cs", "de", "it", "pl", "pt_BR", "es", "tr",],
+    "filter_langs": ["ca", "cs", "de", "fa", "it", "pl", "pt_BR", "es", "tr"],
 }
 
 # Get the download location for our locales

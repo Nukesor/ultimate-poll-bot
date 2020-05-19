@@ -69,6 +69,7 @@ callback:
         doodle_registered: 'Voto registrado (%{vote_type})'
     date_removed: 'Fecha eliminada: %{date}'
     due_date_removed: 'Fecha de vencimiento eliminada'
+    spam: 'Baneado por hoy. Continúa con el spam y serás baneado permanente.'
 inline_query:
     create_first: 'Haz clic aquí para crear una encuesta primero ;)'
     create_poll: 'Haz clic para crear una nueva encuesta'
@@ -138,6 +139,8 @@ keyboard:
     hide_option_votes: '# Ocultar votos en las opciones'
     show_option_votes: '# Mostar votos en las opciones'
     anonymity_settings: '⚙️ Configuración de anonimato'
+    forbid_sharing: '🔗 Prohibir que otros compartan la encuesta'
+    refresh: Actualizar
 settings:
     poll_type: '**Tipo de encuesta**: %{poll_type}'
     language: '**Idioma**: %{language}'
@@ -217,6 +220,7 @@ creation:
         limit_between: 'Por favor, envíame un número entre 1 y %{limit}'
         markdown: "Por favor, no uses símbolos de markdown en tus nombres, descripciones u opciones. Tales símbolos son `__`,`**` and `[`.\nPor favor, envíame el mensaje de nuevo sin estos símbolos.\n"
         too_big: 'Por favor manda un número más pequeño. También podrías usar una encuesta de "Votos ilimitados"'
+        invalid_poll_name: 'El nombre de tu encuesta contiene caracteres no válidos. Por favor, inténtalo de nuevo.'
 external:
     canceled: Cancelado
     notification:
@@ -246,3 +250,8 @@ misc:
     over_3000: "⚠️ Tu encuesta ya tiene más de **3000 carácteres**, por favor intenta ser breve y mantenera por debajo de los 3000 carácteres, o incluso 2500 si es posible 🙏.\n\nTelegram tiene un máximo de  4096 carácteres por mensaje y necesito mostrar los votos y resultados después de tu texto. Las encuestas que sobrepasen el límite simplemente **dejan de funcionar**.\nYa trato de ser breve con los votos y resumir cuando es posible para ahorrar espacio pero no hay mucho margen de maniobra.\n\nPara encuestas con con mucho texto y más de 10-15 opciones, quizás sea mejor usar una herramienta externa como [Doodle](https://doodle.com/)\n"
     over_4000: "⚠️ Tu encuesta ya tiene más de **4000 carácteres**. Es demasiado larga para que pueda mostrarla en un sólo mensaje. Intenta ser breve y reducirla a 3000 carácteres o 2500 si te es posible 🙏.\n\nTelegram tiene un máximo de  4096 carácteres por mensaje y necesito mostrar los votos y resultados después de tu texto. Las encuestas que sobrepasen el límite simplemente **dejan de funcionar**.\nYa trato de ser breve con los votos y resumir cuando es posible para ahorrar espacio pero en este caso me es literalmente imposible.\n\nPara encuestas muy grandes, quizás sea mejor usar una herramienta externa como [Doodle](https://doodle.com/)\n"
     too_long: "¡Hey!\n\nLo siento mucho pero tu encuesta es simplemente demasiado larga. Probablemente tiene una descripción muy larga o muchas opciones de voto (o ambas cosas). 😬\n\nDado que Telegram sólo permite 4096 carácteres por mensaje, me es imposible mostrar una encuesta más larga que ese límite. 😐\n\nPor favor intenta ser breve en descripción y opciones y si quieres hacer una encuesta muy grande quizás sea mejor que uses algo como [Doodle](https://doodle.com/).\n\n    Una manera de arreglar el problema podría ser eliminar opciones (el administrador puede hacerlo).\n\n👇 Aún así puedes seguir votando y viendo los resultados aquí abajo. 👇\n"
+sorting:
+    chrono: cronológicamente
+    name: alfabéticamente
+    manual: manualmente
+    percentage: 'por porcentaje'
