@@ -91,10 +91,16 @@ def add_options(session, poll, text, is_date=False):
 def add_option(poll, text, added_options, is_date):
     """Parse the incoming text and create a single option from it."""
     description = None
-    # Extract the description if existing
+    description_descriminator = None
     if "--" in text:
+        description_descriminator = '--'
+    elif "—" in text:
+        description_descriminator = '—'
+    # Extract the description if existing
+
+    if description_descriminator is not None:
         # Extract and strip the description
-        splitted = text.split("--", 1)
+        splitted = text.split(description_descriminator, 1)
         text = splitted[0].strip()
         description = splitted[1].strip()
         if description == "":
