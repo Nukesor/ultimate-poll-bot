@@ -23,7 +23,6 @@ payload = {
     "original_filenames": False,
     "replace_breaks": False,
     "export_sort": "first_added",
-    "filter_langs": ["ca", "cs", "de", "fa", "it", "pl", "pt_BR", "es", "tr"],
 }
 
 # Get the download location for our locales

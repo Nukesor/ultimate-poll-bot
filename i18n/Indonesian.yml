@@ -1,0 +1,130 @@
+poll_types:
+    single_vote: 'Suara tunggal'
+    doodle: Doodle
+    block_vote: 'Blokir suara'
+    limited_vote: 'Suara terbatas'
+    priority: 'Suara prioritas'
+list:
+    polls: 'Pilih polling untuk dikelola'
+    no_polls: 'Anda tidak memiliki polling terbuka'
+    no_closed_polls: 'Anda tidak memiliki polling tertutup'
+admin:
+    not_allowed: 'Anda tidak diperbolehkan melakukan ini. Hanya admin!'
+datepicker:
+    pick_date: 'Pilih tanggal ini'
+    due_date: 'Tetapkan tanggal jatuh tempo'
+    remove_due_date: 'Hapus tanggal jatuh tempo'
+settings:
+    percentage: '*Persentase*: Terlihat'
+    no_percentage: '*Persentase*: Tersembunyi'
+    euro_date_format: '*Format tanggal*: DD.MM.YYYY'
+    us_date_format: '*Format tanggal*: YYYY-MM-DD'
+    user_sorting: '*Penyortiran pengguna*: %{name}'
+    option_sorting: '*Penyortiran pilihan*: %{name}'
+    change_language: 'Cukup klik pada bahasa untuk mengubah bahasa untuk polling ini.'
+    anonymize: "Apakah Anda benar-benar ingin menganonimkan jajak pendapat ini? \n ⚠️ Tindakan ini tidak dapat dikembalikan. ⚠️ \n"
+    remove_options: 'Cukup klik tombol di bawah ini untuk menghapus pilihan yang tidak diinginkan.'
+    summarize: '*Ringkas suara*: Ringkas banyak suara'
+    dont_summarize: '*Ringkas suara*: Tampilkan semua suara'
+    permanently_summarized: '*Ringkas suara*: Terlalu banyak suara. Diringkas secara permanen.'
+    sharing_link: 'Gunakan link ini untuk mengizinkan pengguna berbagi polling dengan chat lainnya. *Berhati-hatilah!* setelah itu di luar sana Anda tidak dapat mengambil kembali:'
+    user:
+        notifications_enabled: '*Pemberitahuan:* diaktifkan'
+        notifications_disabled: '*Pemberitahuan:* dinonaktifkan'
+        delete_all: '⚠️ Hapus SEMUA polling ⚠️'
+        delete_closed: '⚠️ Hapus semua polling yang tertutup ⚠️'
+        delete_all_confirmation: "Apakah Anda benar-benar ingin menghapus SEMUA polling anda? \n Ini memengaruhi polling yang saat ini terbuka dan tertutup. \n ⚠️ *Tindakan ini tidak dapat dikembalikan.* ⚠️ \n"
+        delete_closed_confirmation: "Apakah Anda benar-benar ingin menghapus semua polling tertutup? \n ⚠️ *Tindakan ini tidak dapat dikembalikan. * ⚠️ \n"
+        language: '*Bahasa standar:* %{language}'
+        open_polls: '*Polling terbuka:* %{count}'
+        closed_polls: '*Polling tertutup:* %{count}'
+        explanations:
+            language: '_Pengaturan ini menentukan bahasa mana yang digunakan dalam manajemen antarmuka Anda dan juga menentukan bahasa default untuk polling anda._'
+            notifications: '_Saya akan mengirim pesan dari waktu ke waktu, memberi tahu anda tentang pembaruan, perubahan, atau bug._'
+    poll:
+        explanation:
+            anonymity: "_Dalam polling anonim, tidak ada nama yang akan ditampilkan. Tidak mungkin untuk melihat dari mana pengguna memilih._ \n *Waspadalah: * _Orang mungkin dapat menebak suara anda dengan melacak persentase / jumlah suara dan status online anda. Untuk mendapatkan polling yang benar-benar anonim, aktifkan juga hasil tersembunyi._ \n"
+            visibility: '_Polling dengan hasil tersembunyi tidak akan menampilkan suara atau persentase apa pun, sampai polling ditutup. Setelah polling ditutup, tetap ditutup selamanya. Ini diperlukan untuk menghindari kemungkinan_ [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) _and untuk mencegah_ [anchoring](https://en.wikipedia.org/wiki/Anchoring).'
+    anonymity_warning: "Anda tidak dapat menyembunyikan suara dan persentase pada polling anonim. \n Ini mungkin memberi pengguna konsepsi bahwa polling memiliki hasil tersembunyi, yang sebenarnya tidak terjadi. Jika Anda ingin perilaku ini, buat polling dengan hasil tersembunyi diaktifkan. \n"
+management:
+    delete: 'Anda yakin ingin menghapus polling ini?'
+creation:
+    already_creating: 'Anda sudah membuat polling. Batalkan pembuatan polling sebelumnya terlebih dahulu'
+    description: 'Sekarang kirimi saya deskripsinya'
+    skip_description: Lewati
+    not_allowed: 'Anda tidak lagi diizinkan untuk menambahkan opsi baru'
+    cancel: 'Batalkan pembuatan sebelumnya'
+    vote_count_request: 'Kirimi saya jumlah suara yang diizinkan per pengguna.'
+    keyboard:
+        change: 'Ubah jenis polling'
+        anonymity: 'Anonimkan polling'
+        no_anonymity: 'Tampilkan nama dalam polling'
+        results_visible: 'Perlihatkan hasil secara permanen'
+        results_not_visible: 'Sembunyikan hasil sampai polling ditutup'
+    option:
+        multiple_added: 'Pilihan telah ditambahkan:'
+        finished: 'Semua pilihan telah ditambahkan'
+    results_not_visible: 'Hasilnya tidak terlihat sampai polling ditutup'
+    results_visible: 'Hasilnya langsung terlihat'
+    anonymity: 'Nama tidak terlihat'
+    no_anonymity: 'Nama terlihat'
+    error:
+        too_big: 'Silakan kirim nomor yang lebih kecil. Anda juga mungkin ingin menggunakan polling "Suara tidak terbatas"'
+external:
+    canceled: Dibatalkan
+    notification:
+        pick_poll: 'Pilih poll yang benar untuk mengaktifkan notifikasi'
+        activated: 'Pemberitahuan diaktifkan'
+        new_notification_board: 'Silakan gunakan papan pemberitahuan yang lebih baru.'
+    share_poll: 'Untuk berbagi polling ini, cukup klik tombol dan pilih chat yang ingin Anda bagikan polling.'
+user:
+    language_changed: 'Bahasa dirubah'
+misc:
+    help:
+        creation: "🌟 *Pembuatan:* \n\n Untuk membuat polling baru, cukup tulis atau klik /create. \n Untuk setiap polling, Anda dapat menentukan beberapa pengaturan awal \n\n *Jenis polling:* Berbagai jenis dijelaskan secara rinci dalam menu jenis polling. \n *Anonimitas:* Anda dapat menganonimkan polling Anda, yang hasilnya tidak ada nama yang ditampilkan! Ini permanen dan untuk semua pihak. \n *Hasil yang terlihat:* Dalam mode ini, suara hanya akan terlihat setelah menutup polling. Ini diperlukan untuk menghindari kemungkinan [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) dan untuk mencegah [Anchoring/Penahan](https://en.wikipedia.org/wiki/Anchoring) \n\n - > *Perhatian: Polling tertutup dengan hasil yang tidak terlihat tetap tertutup!:* \n Membuka kembali polling akan memungkinkan pengguna, khususnya pencipta polling, untuk melihat suara, dan menempatkan suaranya sendiri, yang akan menghasilkan kemungkinan keuntungan baginya (pemungutan suara taktis). \n"
+        settings: "⚙️ *Pengaturan:*\n\nPengaturan lebih lanjut dari polling dapat disesuaikan setelah jajak pendapat telah dibuat:\n\n*Bahasa:* Bahasa untuk polling spesifik ini dapat diubah.\n*Anonimitas:* Sebuah polling dapat dibuat anonim retrospectively.\n*Tanggal jatuh tempo:* Tanggal jatuh tempo di mana polling akan ditutup secara otomatis dapat diatur.\n*Pilihan:* Pilihan baru dapat ditambahkan dan pilihan yang ada dapat dihapus dalam menu pengaturan.\n*Pilihan pengguna:* Anda dapat mengizinkan pengguna lain untuk menambahkan pilihan ke polling Anda.\n\n*----Submenu gaya:----*\n\n*Persentase:*\n_The baris persentase pilihan dapat disembunyikan dalam menu styling._\n\n*Pilihan suara:*\n_The jumlah semua suara untuk pilihan dapat disembunyikan. _\n\n*Ringkas suara:*\n_Jika banyak orang memberikan suara pada polling Anda, pesan mungkin akan penuh sesak. Ringkas suara untuk memiliki gambaran yang lebih baik._\n\n*Order:*\nUrutan _The di mana nama pengguna dan opsi yang ditampilkan dalam hasil dapat diubah._\n"
+        notifications: "📣 *Pemberitahuan:*\n\nJika Anda mengaktifkan notifikasi untuk chat Anda, bot akan mengirimkan pesan 1 hari, 6 jam, dan 1 jam sebelum jajak pendapat ditutup.\nIni hanya sebuah fitur untuk mengingatkan semua orang dalam grup bahwa polling akan segera ditutup, dan untuk memudahkan untuk menemukan pesan polling lagi 😉.\n\nUntuk mengaktifkan notifikasi di chat, ikuti langkah berikut:\n*1.* Buat polling\n*2.* Atur tanggal jatuh tempo di menu pengaturan\n*3.* Pergi ke chat yang Anda ingin diberitahu\n*4.* Tambahkan pollbot ke grup\n*5.* Bagikan polling ke grup ini\n*6.* Balas dengan /notify kepada pesan polling yang Anda pilih melalui @ultimate\\_pollbot\n*7.* Pilih polling yang benar\n\nSeluruh prosedur ini tidak mudah dan terlalu rumit, karena Telegram tidak mengizinkan untuk mendeteksi pesan dari bot dalam kelompok 😐.\nDengan demikian kita tidak tahu polling mana yang diposting di grup mana dan semuanya perlu dilakukan secara manual.\n"
+        management: "🕰 *Cari polling lama:*\n\nAda pilihan dalam menu /start Anda untuk menemukan semua polling terbuka.\nPolling tertutup dapat dicantumkan di menu /settings.\n\n⚠️ *Hapus polling:*\n\nAnda dapat menghapus setiap polling di menu polling masing-masing.\nAda juga opsi menghapus semua polling atau semua polling tertutup di menu /settings.\n"
+        languages: "🌐 *Bahasa:*\n\nUltimate pollbot mendukung beberapa bahasa, tetapi hanya bahasa Inggris secara resmi dipertahankan.\n\nUntuk menambahkan bahasa baru, atau untuk memperbarui bahasa yang aktif, silahkan hubungi saya @Nukesor!\nSaya menggunakan layanan lokalisasi [Lokalise](https://lokalise.co), yang setuju untuk memberikan saya lisensi open-source untuk menerjemahkan proyek saya.\nUntuk layanan ini bekerja, Anda harus menyediakan saya dengan alamat email (setiap spam mail sudah cukup), karena saya perlu mengirimkan undangan melalui email.\n\nHarap berhati-hati agar styling Markdown yang benar (' * * ', ' _ ', ' $ {} '), jika tidak, sesuatu akan rusak untuk bahasa Anda.\nJika ada yang rusak, saya akan mencoba untuk memperbaikinya, tapi tolong bantu saya untuk mencegah hal ini. Ini hanya membutuhkan waktu dan usaha untuk memperbaiki bug tersebut.\nDukungan multi bahasa adalah fitur yang didorong masyarakat saya senang mendukungnnya, tapi saya tidak bisa mendukung beberapa bahasa dengan sendiri sendiri.\n"
+        bugs: "⚠️ *Ada bug yang tidak diketahui yang tidak akan hilang!!* 😩\n\nSaya biasanya mendapatkan pemberitahuan dengan cepat setelah sesuatu rusak, tapi mungkin ada beberapa bug yang ada tanpa disadari!\nDalam kasus bug tidak diperbaiki dalam satu atau dua hari, silakan menulis tiket di [GitHub](https://github.com/nukesor/Ultimate-Poll-bot) atau berhenti di [grup dukungan](https://nukesors_projects) saya.\n"
+    error: "Terjadi kesalahan yang tidak diketahui. Saya mungkin baru saja mendapat pemberitahuan tentang hal ini dan saya akan mencoba untuk memperbaikinya secepat mungkin.\nDalam kasus bug tidak diperbaiki dalam satu atau dua hari, silakan menulis tiket di [GitHub](https://github.com/nukesor/Ultimate-Poll-bot) atau mampir ke [grup dukungan](https://t.me/nukesors_projects) saya.\n"
+    start_after_results: 'Hei! Cukup ketik /create untuk membuat polling Anda sendiri ☺️'
+    over_3000: "⚠️ Polling Anda panjangnya sudah lebih dari *3000 karakter*, silakan coba untuk tetap pendek dan setidaknya di bawah 3000, atau bahkan lebih baik di bawah 2500 🙏.\n\nTelegram memberlakukan maksimum 4096 karakter per pesan dan saya perlu menampilkan suara di atas teks awal Anda. Setiap polling dengan lebih karakter lebih dari itu *hanya akan berhenti bekerja*.\nSaya sudah mencoba untuk menangani ini sebaik mungkin dan meringkas suara untuk menghemat ruang, tapi hanya ada begitu banyak ruang.\n\nUntuk polling dengan banyak teks dan lebih dari 10-15 pilihan, mungkin lebih baik anda menggunakan alat eksternal seperti [doodle] (https:/doodle.com/)\n"
+    over_4000: "⚠️ Polling Anda panjangnya lebih dari *4000 karakter*. Ini terlalu panjang untuk ditampilkan dalam satu pesan. Cobalah untuk tetap pendek dan di bawah 3000 karakter, atau bahkan lebih baik di bawah 2500 🙏. \n\n Telegram memberlakukan maksimum 4096 karakter per pesan dan saya perlu menampilkan suara di atas teks awal Anda. Setiap polling dengan karakter lebih dari itu *hanya akan berhenti bekerja*. \n Saya sudah mencoba untuk menangani ini sebaik mungkin, tetapi tangan saya terikat dengan ini. \n\n Untuk polling yang sangat panjang dengan banyak opsi, Anda lebih baik menggunakan alat eksternal seperti [Doodle] (https://doodle.com/) \n"
+    too_long: "Hei! \n\n Maaf, tapi polling Anda terlalu panjang. Anda mungkin mendapat sejumlah besar opsi atau menambahkan teks deskripsi yang sangat panjang (atau keduanya). 😬 \n\n Karena Telegram hanya membolehkan 4096 karakter per pesan, saya tidak bisa menunjukkan polling yang lebih panjang dari ini. 😐 \n\n Cobalah untuk membuat uraian dan nama opsi singkat dan jika Anda ingin menggunakan polling dengan banyak pilihan, Anda mungkin lebih baik menggunakan alat eksternal seperti [Doodle] (https://doodle.com/). \n\n Salah satu cara untuk mengatasi masalah ini mungkin dengan menghapus opsi (admin dapat melakukannya). \n\n 👇 Anda masih dapat memilih dan melihat hasilnya di bawah. 👇 \n"
+poll:
+    doodle:
+        'yes': '├ *Ya:*'
+        maybe: '├ *Mungkin:*'
+        'no': '├ *Tidak:*'
+        yes_summarized: '├ *Ya:* %{count} suara'
+        maybe_summarized: '├ *Mungkin:* %{count} suara'
+        no_summarized: '├ *Tidak:* %{count} suara'
+    doodle_help: '*Klik* pada tombol `a)`, `b)` di bawah ini untuk melihat nama-nama pilihan.'
+    please_wait: "\nHarap tunggu sebentar, sementara bot mensinkronisasikan pollingnya ☺️"
+keyboard:
+    styling: '🎀 Pengaturan gaya'
+    summarize_votes: 'Ringkas banyak suara'
+    dont_summarize_votes: 'Tampilkan semua suara'
+    add_new_language: 'Tambahkan bahasa baru'
+    compact_doodle: 'Tampilkan tombol huruf (keyboard lebih kecil)'
+    no_compact_doodle: 'Tampilkan nama pilihan di tombol'
+    show_help: '🤔 Bantuan'
+    help_me_out: '❤️ Pelajari tentang proyek ❤️'
+    permanently_delete_with_messages: '⚠️ Hapus polling dan hapus semua pesan! ⚠️'
+    user:
+        list_polls: '🗓 Daftar polling Anda'
+        list_closed_polls: '🗓 Daftar polling yang tertutup'
+        enable_notifications: '💌 Aktifkan notifikasi'
+        disable_notifications: '🔇 Nonaktifkan notifikasi'
+        delete_all: '⚠️ Hapus SEMUA polling ⚠️'
+        delete_all_closed: '⚠️ Hapus semua polling yang tertutup ⚠️'
+        init_poll: '🌟 Buat polling baru'
+    admin:
+        settings: '⚙️ Pengaturan Admin'
+        stats: '📊 Statistik'
+        plot: '📊 Statistik plot'
+        update: 'Perbarui semua polling'
+    hide_option_votes: '# Sembunyikan total suara untuk pilihan'
+    show_option_votes: '# Tampilkan total suara untuk pilihan'
+    anonymity_settings: '⚙️ Pengaturan Anonimitas'
