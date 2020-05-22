@@ -210,8 +210,8 @@ class UserSorting(Enum):
 class OptionSorting(Enum):
     """Save several possible sorting options."""
 
-    manual = 10
     percentage = 11
+    manual = 10
 
 
 @unique

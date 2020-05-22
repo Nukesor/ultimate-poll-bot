@@ -117,7 +117,6 @@ keyboard:
   permanently_anonymize: ⚠️ Permanently anonymize poll! ⚠️
   anonymize: 🔍 Make votes anonymous
   due_date: 📅 Set due date
-  styling: 🎀 Styling & Order
   show_results: 🔎 View all votes
   hide_percentage: ▭% Hide percentage
   show_percentage: ▭% Show percentage
@@ -161,6 +160,10 @@ keyboard:
     languages: Languages
     bugs: Bugs
     feature: Feature request
+
+  styling:
+    open: 🎀 Styling & Order
+    permanently_summarized: "Too many votes! Permanently summarized!"
 
 sorting:
     chrono: chronologically

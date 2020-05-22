@@ -68,7 +68,7 @@ def get_settings_keyboard(poll):
     )
 
     # Styling sub menu
-    styling_text = i18n.t("keyboard.styling", locale=locale)
+    styling_text = i18n.t("keyboard.styling.open", locale=locale)
     styling_payload = f"{CallbackType.settings_show_styling.value}:{poll.id}:0"
     buttons.append(
         [InlineKeyboardButton(text=styling_text, callback_data=styling_payload)]
