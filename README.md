@@ -13,6 +13,8 @@ Or, for instance, deciding which games should be played at the next LAN-Party.
 
 Since no other telegram poll/vote bot offered the full feature set my friends and I needed, I decided to write the ULTIMATE pollbot. A bot which combines all good features of all existing bots and even stuff beyond that.
 
+Check the [official Trello board](https://trello.com/b/L3XfSRkN/ultimate-poll-bot) for the status of planned features.
+There's also a list of regularly requested "won't implement" features.
 
 ## Features:
 The Ultimate Pollbot delivers a full set of well-tested and battle proven features.
