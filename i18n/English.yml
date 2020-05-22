@@ -160,7 +160,7 @@ keyboard:
     management: Management
     languages: Languages
     bugs: Bugs
-    feature: Features request
+    feature: Feature request
 
 sorting:
     chrono: chronologically
