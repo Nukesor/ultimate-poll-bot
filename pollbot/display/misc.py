@@ -16,6 +16,7 @@ def get_help_text_and_keyboard(user, current_category):
         "management",
         "languages",
         "bugs",
+        "feature",
     ]
 
     text = i18n.t(f"misc.help.{current_category}", locale=user.locale)

@@ -160,7 +160,7 @@ keyboard:
     management: Management
     languages: Languages
     bugs: Bugs
-
+    feature: Features request
 
 sorting:
     chrono: chronologically
@@ -512,7 +512,17 @@ misc:
       I usually get a notification as soon as something breaks, but there might be some bugs that go unnoticed!
       In case a bug isn't fixed in a day or two, please write a ticket on [GitHub](https://github.com/Nukesor/ultimate-poll-bot) or stop by my [support group](https://t.me/nukesors_projects).
 
+    feature: |
+      *I would like to see a specific feature being added to the bot*
+
+      Check out the official feature tracking board: https://trello.com/b/L3XfSRkN/ultimate-poll-bot
+
+      Some features *won't be implemented*, as they don't match the guidelines of the project.
+
+      Some frequently requested features are already planned and are *waiting for somebody to code them*.
+
+      If your feature isn't listed on the trello board, feel free to suggest it in my [support group](https://t.me/nukesors_projects).
+
   error: |
     An unknown error occurred. I probably just got a notification about this and I'll try to fix it as quickly as possible.
     In case the bug isn't fixed in a day or two, please write a ticket on [GitHub](https://github.com/Nukesor/ultimate-poll-bot) or stop by my [support group](https://t.me/nukesors_projects).
-
