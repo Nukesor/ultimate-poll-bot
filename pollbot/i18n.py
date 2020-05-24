@@ -7,13 +7,13 @@ i18n.set("locale", "English")
 i18n.set("fallback", "English")
 i18n.load_path.append("./i18n/")
 
+#    "Persian",
 supported_languages = [
     "English",
     "Catalan",
     "Czech",
     "German",
     "Italian",
-    "Persian",
     "Polish",
     "Portuguese (Brazil)",
     "Spanish",
