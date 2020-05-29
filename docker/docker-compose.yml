@@ -1,0 +1,14 @@
+version: '3'
+services:
+  database:
+    image: postgres:latest  # use latest official postgres version
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: pollbot
+      POSTGRES_USER: pollbot
+      POSTGRES_PASSWORD: null
+    volumes:
+      - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+volumes:
+  database-data: # named volumes can be managed easier using docker-compose
