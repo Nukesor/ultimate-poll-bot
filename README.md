@@ -144,7 +144,7 @@ Dependencies:
 5. Start the bot `poetry run python main.py`
 
 6. If you plan to keep up to date, you need to set the current alembic revision manually with `poetry run alembic stamp head`.
-8. Double-check if you are on the right revision `(head)` with `poetry run alembic current` and comparing it to `poetry run alembic history`.
+7. Double-check if you are on the right revision `(head)` with `poetry run alembic current` and comparing it to `poetry run alembic history`.
 
 ## Upgrading
 If you did Step 7 in the previous section, this is the way you update

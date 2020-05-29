@@ -1,0 +1,182 @@
+# Hi!
+
+This document is supposed to give you a short introduction to the project.
+
+It's purpose is to explain the project structure, so you understand where you can find the parts of code you're looking for.
+
+# Prerequisites
+
+**Python Telegram Bot**
+
+Ultimate Poll Bot is based on the Python Telegram Bot library! Please read the docs and familiarize yourself with the library.
+You can find a nice introduction and basic information on how to use it over [here](https://python-telegram-bot.org/).
+On top of that, there are very detailed [api docs](https://python-telegram-bot.readthedocs.io/en/stable/).
+
+**Sqlalchemy/Alembic/Postgres**
+
+The database integration for this project is written with [SQLAlchemy](https://www.sqlalchemy.org/).
+In detail, the project uses the [SQLAlchemy ORM](https://docs.sqlalchemy.org/en/13/orm/) abstraction layer.
+
+Please familiarize yourself with the basic SQLAlchemy ORM syntax and SQL in general.
+
+**Alembic**
+
+For database migrations, we use the [Alembic](https://alembic.sqlalchemy.org/en/latest/) migration wrapper.
+Alembic wraps around SQLAlchemy and is used to manage migrations and jump between versions.
+
+It's also used to auto-generate migrations, which is possible due to SQLAlchemy's nice ORM implementation.
+
+**Postgres**
+
+There are a few Postgres-only features, that are used in this project.
+It may be possible to use it in combination with another database, but a few important features and safe-guards would be lost in the progress.
+Thereby, this won't be added to the main project, please create a spite-fork for this.
+
+
+# Top level structure:
+
+- `bin` In here you can find a bunch of helper scripts for development.
+        This can be ignored for the most part and isn't important for running anything.
+- `i18n` This is the local mirror for translations from localise.com.
+        You don't need to touch it, unless you want to add new translation keys.
+        In case you do, please add them to `English.yml` and add further translations via Lokalise.
+- `migrations` All alembic migration files.
+        Those all usually managed via the program `alembic` and can usually be generated automatically without any need for manual adjustmentsy without any need for manual adjustments
+        Only do stuff in here, if you change the database schema!
+- `pollbot` This is the source code of the project.
+- `queries` Some helper queries. Nothing important and probably not interesting for you.
+- `tests` Well, there was an attempt to test stuff. If you would like to add tests, please go ahead!! It's very much appreciated.
+
+
+# The main source code structure
+
+- `config.py` Configuration parsing and initialization. Very simple.
+- `db.py` Database initialization and session creation helper function.
+- `i18n.py` Internationalization initialization.
+- `sentry.py` Sentry initialization and a helper/wrapper class.
+- `pollbot.py` The main file of the project. In here the Bot and **all** Handlers are initialized.
+
+## display
+This module is all about creating and formatting text.
+
+This includes various interfaces, such as settings, styling, etc. as well as the full logic for compiling poll texts.
+
+The stuff for creating poll texts is contained in it's own submodule `display.poll`
+
+## helper
+In here you can find a lot of small helper functions.
+These include:
+- Helper functions for creating/managing polls
+- Poll update logic
+- Sorting functions
+- Enums
+- Session handling
+- Statistics
+- Stuff I didn't know where to put it
+
+## models
+
+In here you can find all SQLAlchemy ORM models.
+Each file is dedicated to a single model.
+
+This should be fairly straight forward.
+
+## telegram
+
+Now we're getting to the juicy part.
+
+- `inline_query.py` This is everything that happens when an inline query with `@ultimate_pollbot word` is fired.
+- `inline_result_handler.py` This is everything that happens somebody clicks on an element of an inline query.
+
+### job.py
+
+This is where all jobs are contained.
+These include:
+
+- Asynchronous updating of poll messages
+- Sending of notifications
+- Banning of people
+- Maintenance queries
+
+### message_handler.py
+
+Handling of all private text messages.
+
+This isn't too much.
+It's basically a single entry point, which interprets the given user input depending on the current `User.expected_input` state.
+
+Look at the `helper.enum.ExpectedInput` enum for all possible inputs.
+
+Examples:
+- Poll name, description, options etc.
+- Added option by external user.
+- Option added after poll has been created.
+
+### Keyboard
+
+In here are helper functions for creating **all** keyboards used by the bot.
+
+If you want to change a keyboard or add a new keyboard, please add it to the files in this folder.
+
+Frankly, this folder is a little messy. Sorry for that.
+The imports are pretty little ugly, since I started out using a lot of `import * from .name` in `keyboard/__init__`, so I could import using `from telegram.keyboard import name`.
+
+### Commands
+
+In here you can find all direct command handlers. E.g. `/start` or `/create`.
+This should be pretty straight forward.
+
+
+### Callback handler
+
+Well, now we're getting to the biggest part of the bot.
+Most interactions are done using buttons, that's why this is probably the biggest and most complex part of the bot.
+
+In general, there are two entry points for callbacks in `callback_handler.__init__`:
+
+- `handle_callback_query`, which is used to run critical callbacks, which could lead to race-conditions.
+    If you're doing critical stuff in the database, your call should be handled by this function.
+
+- `handle_async_callback_query`, which is used to run non-critical callbacks.
+    Anything that's not touching the database or is read-only, can be used with this.
+    Voting is an edge-case, since this has to be async to prevent bottle necks.
+    Therefore, there's a lot of special exception handling in the whole voting logic.
+
+
+To add a handler to either of those handlers, take a look at the `callback_handler.mapping` file.
+
+In here, you can assign a CallbackType to a function.
+Each button gets a payload with the default structure of e.g. `f"{{ CallbackType.vote.value }}:{{ poll.id }}:{{ CallbackResult.yes.value }}`.
+
+After formatting, this might look like this `20:51203:21`.
+
+The most important part is the `CallbackType`, which is expected in **EVERY** payload.
+The rest can be used arbitrarily, but the second argument is expected to be `poll.id` in most cases.
+
+
+**CallbackContext**
+
+This is a nice helper class that's passed into all callback functions.
+It automatically parses the payload and tries to interpret:
+- the first element as `CallbackType`
+- the second argument as a `Poll`, which is then stored in `CallbackContext.poll`
+- the third argument as `CallbackResult`
+
+The second and third can fail, the first will thrown an exception, since it's expected!
+
+
+
+# Session helper
+
+Take a look at `helper.session`.
+
+In here you can find convenience helper that are used around **EVERY** Telegram handler.
+
+They do this stuff:
+- User initialization
+- Database session initialization
+- Exception handling and reporting
+- Check whether users are allowed to use the bot
+
+
+If you plan to create a new Telegram handler or handle some exceptions, please consider using/adjusting these session handler.
