@@ -1,5 +1,9 @@
 from pollbot.helper.enums import CallbackType
-
+from .admin import (
+    open_admin_settings,
+    plot,
+    update_all,
+)
 from .creation import (
     toggle_anonymity,
     change_poll_type,
@@ -11,7 +15,31 @@ from .creation import (
     skip_description,
     cancel_creation,
     back_to_creation_init,
-    open_init_anonymization_settings,
+    open_init_anonymization_settings, ask_description,
+)
+from .datepicker import (
+    pick_creation_date,
+    pick_creation_weekday,
+    pick_additional_date,
+    pick_additional_weekday,
+    pick_due_date,
+    pick_external_date,
+    set_next_month,
+    set_previous_month,
+)
+from .external import (
+    activate_notification,
+    open_external_datepicker,
+    open_external_menu,
+    external_cancel,
+)
+from .management import (
+    delete_poll,
+    delete_poll_with_messages,
+    close_poll,
+    reopen_poll,
+    reset_poll,
+    clone_poll,
 )
 from .menu import (
     go_back,
@@ -21,13 +49,10 @@ from .menu import (
     show_vote_menu,
     show_menu,
 )
-from .management import (
-    delete_poll,
-    delete_poll_with_messages,
-    close_poll,
-    reopen_poll,
-    reset_poll,
-    clone_poll,
+from .misc import (
+    switch_help,
+    show_option_name,
+    ignore,
 )
 from .settings import (
     make_anonymous,
@@ -55,24 +80,6 @@ from .styling import (
     increase_option_index,
     decrease_option_index,
 )
-from .datepicker import (
-    pick_creation_date,
-    pick_creation_weekday,
-    pick_additional_date,
-    pick_additional_weekday,
-    pick_due_date,
-    pick_external_date,
-    set_next_month,
-    set_previous_month,
-)
-from .external import (
-    activate_notification,
-    open_external_datepicker,
-    open_external_menu,
-    external_cancel,
-)
-from .vote import handle_vote
-
 from .user import (
     change_user_language,
     init_poll,
@@ -90,17 +97,7 @@ from .user import (
     open_user_settings,
     toggle_notification,
 )
-from .misc import (
-    switch_help,
-    show_option_name,
-    ignore,
-)
-from .admin import (
-    open_admin_settings,
-    plot,
-    update_all,
-)
-
+from .vote import handle_vote
 
 # Some callbacks should be synchronous, since they do database operations that
 # lead to integrity/unique constraint errors when run asynchronously.
@@ -141,6 +138,7 @@ async_callback_mapping = {
     CallbackType.cancel_creation: cancel_creation,
     CallbackType.back_to_init: back_to_creation_init,
     CallbackType.anonymity_settings: open_init_anonymization_settings,
+    CallbackType.ask_description: ask_description,
     # Voting
     CallbackType.vote: handle_vote,
     # Menu

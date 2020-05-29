@@ -5,6 +5,7 @@
     delete_me - Remove me from the bot. Forever
     settings - Open the user settings menu
     create - Create a new poll
+    cancel - Cancel poll creation
     list - List all active polls and manage them
     list_closed - List all closed polls and manage them
     notify - Activate notifications in external chats

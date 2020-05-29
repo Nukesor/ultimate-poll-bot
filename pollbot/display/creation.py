@@ -1,7 +1,8 @@
 """Text helper for poll creation."""
+from pollbot.helper.enums import ExpectedInput
 from pollbot.helper.poll import translate_poll_type
 from pollbot.i18n import i18n
-from pollbot.helper.enums import ExpectedInput
+from pollbot.models import Poll
 
 
 def get_poll_type_help_text(poll):
@@ -44,7 +45,7 @@ def get_init_text(poll):
 def get_init_anonymziation_settings_text(poll):
     locale = poll.locale
     text = ["*Poll Settings:*"]
-    text.append("")
+
     if poll.anonymous:
         text.append(f"*{i18n.t('creation.anonymity', locale=locale)}*")
     else:
@@ -72,3 +73,24 @@ def get_datepicker_text(poll):
         text += f"\n{option.get_formatted_name()}"
 
     return text
+
+
+def get_native_poll_merged_text(poll: Poll):
+    locale = poll.locale
+
+    anonymity = i18n.t("creation.no_anonymity", locale=locale)
+    if poll.anonymous:
+        anonymity = i18n.t("creation.anonymity", locale=locale)
+
+    results_visible = i18n.t("creation.results_not_visible", locale=locale)
+    if poll.results_visible:
+        results_visible = i18n.t("creation.results_visible", locale=locale)
+
+    message = i18n.t(
+        "creation.native_poll.merged",
+        locale=poll.user.locale,
+        poll_type=translate_poll_type(poll.poll_type, poll.locale),
+        anonymity=anonymity,
+        results_visible=results_visible,
+    )
+    return message

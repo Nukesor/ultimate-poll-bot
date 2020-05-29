@@ -1,12 +1,9 @@
 """Reply keyboards."""
-from telegram import (
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-)
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 
-from pollbot.i18n import i18n
 from pollbot.helper.enums import CallbackType, PollType
 from pollbot.helper.poll import translate_poll_type
+from pollbot.i18n import i18n
 
 
 def get_back_to_init_button(poll):
@@ -29,6 +26,24 @@ def get_init_keyboard(poll):
     buttons = [
         [InlineKeyboardButton(change_type_text, callback_data=change_type_payload)],
         [InlineKeyboardButton(anonymity_text, callback_data=anonymity_payload)],
+    ]
+
+    return InlineKeyboardMarkup(buttons)
+
+
+def get_native_poll_merged_keyboard(poll):
+    """Get the initial inline keyboard for poll creation."""
+    locale = poll.user.locale
+    change_type = CallbackType.show_poll_type_keyboard.value
+    change_type_payload = f"{change_type}:{poll.id}:0"
+    change_type_text = i18n.t("creation.keyboard.change", locale=locale)
+
+    accept_text = i18n.t("keyboard.accept_continue", locale=locale)
+    accept_payload = f"{CallbackType.ask_description.value}:{poll.id}:0"
+
+    buttons = [
+        [InlineKeyboardButton(change_type_text, callback_data=change_type_payload)],
+        [InlineKeyboardButton(accept_text, callback_data=accept_payload)]
     ]
 
     return InlineKeyboardMarkup(buttons)
@@ -74,7 +89,7 @@ def get_init_settings_keyboard(poll):
 
 def get_change_poll_type_keyboard(poll):
     """Get the inline keyboard for changing the vote type."""
-    change_type = CallbackType["change_poll_type"].value
+    change_type = CallbackType.change_poll_type.value
 
     # Dynamically create a button for each vote type
     buttons = []
@@ -111,6 +126,21 @@ def get_cancel_creation_keyboard(poll):
         [
             InlineKeyboardButton(
                 i18n.t("creation.cancel", locale=poll.user.locale),
+                callback_data=payload,
+            )
+        ]
+    ]
+
+    return InlineKeyboardMarkup(buttons)
+
+
+def get_replace_current_creation_keyboard(poll):
+    """Get the keyboard for replacing the poll under creation with a new one"""
+    payload = f"{CallbackType.cancel_creation_replace.value}:{poll.id}:0"
+    buttons = [
+        [
+            InlineKeyboardButton(
+                i18n.t("creation.cancel_and_replace_with_new", locale=poll.user.locale),
                 callback_data=payload,
             )
         ]
