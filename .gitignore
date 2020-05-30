@@ -67,3 +67,4 @@ target/
 
 # Repository kram
 pollbot.db
+/.idea

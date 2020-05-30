@@ -127,44 +127,35 @@ Thanks to my patreons:
 
 
 ## Installation and Starting:
-**This bot is developed for Linux.** Windows isn't tested, but it shouldn't be too hard to make it compatible. Feel free to create a PR.
 
 Dependencies: 
-- `poetry` to manage and install dependencies.
-- Ultimate Pollbot uses Postgres. Make sure the user has write/read rights.
+- [Poetry](https://python-poetry.org/) to manage and install dependencies.
+- Ultimate Pollbot uses Postgres. Make sure the user has write/read rights. You can use [the provided docker-compose
+ file](https://github.com/Nukesor/ultimate-poll-bot/blob/master/docker/docker-compose.yml) to set up a local development
+  environment.
 
 
 1. Clone the repository:
 
         % git clone git@github.com:nukesor/ultimate-poll-bot pollbot && cd pollbot
 
-2. Execute `poetry install` to install all dependencies.
-3. Either start the poll bot once with `poetry run python main.py` or copy the `pollbot.toml` manually to `~/.config/pollbot.toml` and adjust all necessary values.
-4. Run `poetry run python initdb.py` to initialize the database.
-5. Start the bot `poetry run python main.py`
+1. Execute `poetry install` to install all dependencies.
+1. Either start the poll bot once with `poetry run python main.py` or copy the `pollbot.toml` manually to `~/.config
+/pollbot.toml` and adjust all necessary values. On Windows, the tilde (`~`) will substitute to your home directory
+, usually at `C:\Users\your.name\.config\pollbot.toml`.
+1. Run `poetry run python initdb.py` to initialize the database (or recreate it, if necessary).
+1. Start the bot by running `poetry run python main.py`.
+1. If you plan to keep your database schema up-to-date, you need to set the current alembic revision manually with
+ `poetry run alembic stamp head`.
+1. Double-check if you are on the right revision `(head)` with `poetry run alembic current` and comparing it 
+to `poetry run alembic history`.
 
-6. If you plan to keep up to date, you need to set the current alembic revision manually with `poetry run alembic stamp head`.
-7. Double-check if you are on the right revision `(head)` with `poetry run alembic current` and comparing it to `poetry run alembic history`.
 
-## Upgrading
-If you did Step 7 in the previous section, this is the way you update
+## Upgrading the Database
+
+If you did Step 7 in the previous section, this is how you upgrade
 
 1. Stop the bot
-2. `git pull`
-3. `poetry run alembic upgrade head` to run migrations on your database
-4. Start the bot
-
-
-
-## Botfather Commands
-
-    start - Start the bot
-    stop - Stop the bot
-    delete_me - Remove me from the bot. Forever
-    settings - Open the user settings menu
-    create - Create a new poll
-    list - List all active polls and manage them
-    list_closed - List all closed polls and manage them
-    notify - Activate notifications in external chats
-    help - Show the help text
-    donations - Get me a coffee
+1. `git pull`
+1. `poetry run alembic upgrade head` to run migrations on your database
+1. Start the bot

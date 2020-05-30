@@ -1,8 +1,9 @@
 """Config values for pollbot."""
+import logging
 import os
 import sys
+
 import toml
-import logging
 
 default_config = {
     "telegram": {
@@ -15,7 +16,7 @@ default_config = {
         "max_inline_shares": 20,
     },
     "database": {
-        "sql_uri": "postgres://localhost/pollbot",
+        "sql_uri": "postgres://pollbot:localhost/pollbot",
         "connection_count": 20,
         "overflow_count": 10,
     },
