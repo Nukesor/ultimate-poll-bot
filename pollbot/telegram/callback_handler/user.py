@@ -16,6 +16,7 @@ from pollbot.telegram.keyboard import (
     get_cancel_creation_keyboard,
     get_donations_keyboard,
     get_delete_all_confirmation_keyboard,
+    get_delete_user_final_confirmation_keyboard,
 )
 
 
@@ -157,6 +158,16 @@ def delete_closed(session, context):
 
     open_user_settings(session, context)
     return i18n.t("deleted.closed_polls", locale=context.user.locale)
+
+
+def delete_user_second_confirmation(session, context):
+    """Delete everything of a user and ban them forever."""
+    user = context.user
+    context.query.message.edit_text(
+        i18n.t("misc.final_deletion_warning", locale=user.locale),
+        reply_markup=get_delete_user_final_confirmation_keyboard(user),
+        parse_mode="markdown",
+    )
 
 
 def delete_user(session, context):
