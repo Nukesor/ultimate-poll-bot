@@ -23,7 +23,6 @@ def create_from_native_poll(bot: Bot, update: Update, session: Session, user: Us
 
     if user.current_poll is not None and not user.current_poll.created:
         update.effective_chat.send_message(
-            # Would you like to create a new poll from {poll.question}?
             i18n.t("creation.already_creating_ask_replace", locale=user.locale),
             reply_markup=get_replace_current_creation_keyboard(user.current_poll),
         )

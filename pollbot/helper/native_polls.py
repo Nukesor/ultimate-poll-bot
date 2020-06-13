@@ -13,6 +13,7 @@ def merge_from_native_poll(
     poll.created_from_native = True
     poll.poll_type = convert_poll_type(native_poll).name
     poll.name = native_poll.question
+    poll.anonymous = native_poll.is_anonymous
     add_text_options_from_list(session, poll, [o.text for o in native_poll.options])
 
 

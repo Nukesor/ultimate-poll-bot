@@ -1,9 +1,5 @@
 from pollbot.helper.enums import CallbackType
-from .admin import (
-    open_admin_settings,
-    plot,
-    update_all,
-)
+from .admin import open_admin_settings, plot, update_all
 from .creation import (
     toggle_anonymity,
     change_poll_type,
@@ -15,7 +11,8 @@ from .creation import (
     skip_description,
     cancel_creation,
     back_to_creation_init,
-    open_init_anonymization_settings, ask_description,
+    open_init_anonymization_settings,
+    ask_description,
 )
 from .datepicker import (
     pick_creation_date,
@@ -49,11 +46,7 @@ from .menu import (
     show_vote_menu,
     show_menu,
 )
-from .misc import (
-    switch_help,
-    show_option_name,
-    ignore,
-)
+from .misc import switch_help, show_option_name, ignore
 from .settings import (
     make_anonymous,
     show_anonymization_confirmation,

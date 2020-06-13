@@ -84,7 +84,7 @@ def skip_description(session, context, poll):
 
 @poll_required
 def show_poll_type_keyboard(session, context, poll):
-    """Show to keyboard to change poll type."""
+    """Show the keyboard to change poll type."""
 
     # TODO: Review if the poll isn't already available from arguments..? @Nukesor
     poll = session.query(Poll).get(context.payload)
