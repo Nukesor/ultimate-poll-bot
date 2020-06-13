@@ -76,7 +76,7 @@ class Poll(base):
     # Chat state variables
     expected_input = Column(String)
     in_settings = Column(Boolean, nullable=False, default=False)
-    created_from_native = Column(Boolean, nullable=False, default=False)
+    created_from_native = Column(Boolean, nullable=False, server_default='False', default=False)
 
     # ManyToOne
     user_id = Column(
