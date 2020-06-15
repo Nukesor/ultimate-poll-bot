@@ -1,23 +1,21 @@
 """Handle messages."""
-from pollbot.i18n import i18n
-from pollbot.helper.session import message_wrapper
-from pollbot.helper.enums import ExpectedInput, PollType, ReferenceType
-from pollbot.helper.poll import remove_old_references
 from pollbot.display import get_settings_text
-from pollbot.helper.update import update_poll_messages
-from pollbot.telegram.callback_handler.creation import create_poll
-
 from pollbot.helper.creation import (
     next_option,
-    add_options,
+    add_options_multiline,
 )
+from pollbot.helper.enums import ExpectedInput, PollType, ReferenceType
+from pollbot.helper.poll import remove_old_references
+from pollbot.helper.session import message_wrapper
+from pollbot.helper.update import update_poll_messages
+from pollbot.i18n import i18n
+from pollbot.models import Reference
+from pollbot.telegram.callback_handler.creation import create_poll
 from pollbot.telegram.keyboard import (
     get_settings_keyboard,
     get_open_datepicker_keyboard,
     get_skip_description_keyboard,
 )
-
-from pollbot.models import Reference
 
 
 @message_wrapper()
@@ -77,19 +75,25 @@ def handle_set_name(bot, update, session, user, text, poll, chat):
 def handle_set_description(bot, update, session, user, text, poll, chat):
     """Set the description of the poll."""
     poll.description = text
-    user.expected_input = ExpectedInput.options.name
-    chat.send_message(
-        i18n.t("creation.option.first", locale=user.locale),
-        reply_markup=get_open_datepicker_keyboard(poll),
-        parse_mode="markdown",
-    )
+
+    if len(poll.options) == 0:
+        user.expected_input = ExpectedInput.options.name
+        chat.send_message(
+            i18n.t("creation.option.first", locale=user.locale),
+            reply_markup=get_open_datepicker_keyboard(poll),
+            parse_mode="markdown",
+        )
+    else:  # options were already prefilled e.g. by native poll
+        create_poll(
+            session, poll, user, update.effective_chat
+        )
 
 
 def handle_create_options(bot, update, session, user, text, poll, chat):
     """Add options to the poll."""
     # Multiple options can be sent at once separated by newline
     # Strip them and ignore empty lines
-    added_options = add_options(session, poll, text)
+    added_options = add_options_multiline(session, poll, text)
 
     if len(added_options) == 0:
         return i18n.t("creation.option.no_new", locale=user.locale)
@@ -127,7 +131,7 @@ def handle_set_vote_count(bot, update, session, user, text, poll, chat):
 
 def handle_new_option(bot, update, session, user, text, poll, chat):
     """Add a new option after poll creation."""
-    added_options = add_options(session, poll, text)
+    added_options = add_options_multiline(session, poll, text)
 
     if len(added_options) > 0:
         text = i18n.t("creation.option.multiple_added", locale=user.locale) + "\n"
@@ -165,7 +169,7 @@ def handle_user_option_addition(bot, update, session, user, text, poll, chat):
         user.expected_input = None
         chat.send_message(i18n.t("creation.not_allowed", locale=user.locale))
 
-    added_options = add_options(session, poll, text)
+    added_options = add_options_multiline(session, poll, text)
 
     if len(added_options) > 0:
         # Reset user

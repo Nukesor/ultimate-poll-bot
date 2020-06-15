@@ -1,9 +1,12 @@
 """Helper class to get a database engine and to get a session."""
-from pollbot.config import config
+from typing import cast
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session
-from sqlalchemy.orm.session import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import scoped_session, Session
+from sqlalchemy.orm.session import sessionmaker
+
+from pollbot.config import config
 
 engine = create_engine(
     config["database"]["sql_uri"],
@@ -14,7 +17,7 @@ engine = create_engine(
 base = declarative_base(bind=engine)
 
 
-def get_session(connection=None):
+def get_session(connection=None) -> Session:
     """Get a new db session."""
     session = scoped_session(sessionmaker(bind=engine))
-    return session
+    return cast(Session, session)

@@ -2,20 +2,20 @@
 import traceback
 from datetime import date
 from functools import wraps
+from typing import Callable, Any
+
 from sqlalchemy.exc import IntegrityError
-from telegram.error import (
-    BadRequest,
-    Unauthorized,
-    TimedOut,
-    RetryAfter,
-)
+from sqlalchemy.orm import Session
+from telegram import Update, Bot
+from telegram.error import BadRequest, Unauthorized, TimedOut, RetryAfter
+from telegram.ext import CallbackContext
 
 from pollbot.config import config
 from pollbot.db import get_session
-from pollbot.sentry import sentry
-from pollbot.models import User, UserStatistic
 from pollbot.helper.stats import increase_stat
 from pollbot.i18n import i18n
+from pollbot.models import User, UserStatistic
+from pollbot.sentry import sentry
 
 
 def job_wrapper(func):
@@ -141,11 +141,11 @@ def callback_query_wrapper(func):
 def message_wrapper(private=False):
     """Create a session, handle permissions, handle exceptions and prepare some entities."""
 
-    def real_decorator(func):
+    def real_decorator(func: Callable[[Bot, Update, Session, User], Any]):
         """Parametrized decorator closure."""
 
         @wraps(func)
-        def wrapper(update, context):
+        def wrapper(update: Update, context: CallbackContext):
             user = None
             session = get_session()
             try:

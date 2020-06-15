@@ -1,6 +1,7 @@
 """The sqlalchemy model for a poll."""
 import random
 from datetime import datetime, timedelta
+
 from sqlalchemy import (
     Column,
     func,
@@ -8,6 +9,7 @@ from sqlalchemy import (
     text,
 )
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 from sqlalchemy.types import (
     BigInteger,
     Boolean,
@@ -15,7 +17,6 @@ from sqlalchemy.types import (
     Integer,
     String,
 )
-from sqlalchemy.orm import relationship
 
 from pollbot.db import base
 from pollbot.helper.enums import PollType, UserSorting, OptionSorting, ExpectedInput
@@ -75,6 +76,7 @@ class Poll(base):
     # Chat state variables
     expected_input = Column(String)
     in_settings = Column(Boolean, nullable=False, default=False)
+    created_from_native = Column(Boolean, nullable=False, server_default='False', default=False)
 
     # ManyToOne
     user_id = Column(

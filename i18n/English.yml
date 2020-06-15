@@ -86,6 +86,7 @@ keyboard:
     close: Close
     back: Back
     cancel: Cancel
+    accept_continue: '✅ Looks right'
     delete: '❌ Delete'
     reset: '🔨 Reset'
     clone: '🧬 Clone'
@@ -217,6 +218,12 @@ creation:
         single_added: "*%{option}* has been added. 👍\nSend *another option*, pick a date and add it as an option, or click *Done* when you're finished."
         multiple_added: 'Options have been added:'
         finished: 'All options have already been added'
+    native_poll:
+        merged: "Nice, creating a new poll from these settings 👍\n\n*Poll type*: %{poll_type}\n*Anonymity*:
+        %{anonymity}\n*Visible results*: %{results_visible}\n\nWould you like to change the poll type or *continue
+        with a %{poll_type}*?"
+        quiz_unsupported: "Sorry, you cannot create a poll from a native Telegram Quiz. Send me a regular Telegram poll
+        instead."
     poll_type_help: "Current poll type: *%{poll_type}*\n\n👍 *Single Vote:*\nEvery user gets a single vote. The default and normal voting mode.\n\n📅 *Doodle:*\nUsers can vote for `yes`, `no`, or `maybe` for each option. Great for finding a date.\n\n↕ *Priority Vote*:\nEvery user ranks the options by preference. Options get points depending on their place in the ranking.\nThis helps to find good compromises, i.e. options that most people prefer over other options.\nFor instance, the Eurovision Song Contest chooses their winner with a form of priority voting.\n\n🛒 *Unlimited Votes* (or the shopping list 😎):\nEvery user can vote as often on any option as they want.\nThis is great if you want to, for instance, determine how much stuff everyone wants for the next festival trip.\n\n🎮 *Block Vote:*\nEvery user can vote for all (or less) options. Like a doodle, but you can only vote `yes`.\nUseful for finding the most wanted options in a group, e.g. games that should be played on a LAN-Party.\n\n🎮 *Limited Vote:*\nEvery user gets a fixed number of votes they can distribute, but only once per option.\nPretty much like block vote, but people need to prioritize.\nThis mode is good for limiting the amount of possible winners e.g. if you only want max 4 games on your LAN-Party.\n\n📊 *Cumulative Vote:*\nEvery user gets a fixed number of votes they can distribute as they like (even multiple votes per option).\nThis mode has a little more depth than limited vote, since it allows users to vote on a single option multiple times.\n"
     results_not_visible: 'Results are not visible until poll is closed'
     results_visible: 'Results are directly visible'
@@ -239,13 +246,16 @@ external:
     share_poll: 'To share this poll, just click the button and choose the chat you want to share the poll with.'
     done: Finished
 delete:
-    doesnt_exist: 'Poll to delete doesn''t exist'
+    doesnt_exist: 'Poll to delete doesn''t exist.'
     previous_deleted: 'Previous unfinished poll deleted.'
 user:
     language_changed: 'Language changed'
 misc:
     donation: "Hello there!\n\nMy name is Arne Beer (@Nukesor). I'm the sole developer of the Ultimate pollbot.\n\nThe idea of writing the Ultimate pollbot was formed, when my friends couldn't decide (again), where we should go for lunch.\nThis had already happened way too many times and we desperately needed a good and stable solution inside of telegram for this problem!\nThat's how the ULTIMATE pollbot was born.\n\nEvery line of code in this project was written in my leisure time and is completely for free.\nThis project is non-profit, open-source on [GitHub](https://github.com/Nukesor/ultimate-poll-bot) and hosted on a server I'm renting.\n\nRight now I usually invest between 5-20 hours a week into developing and maintaining my projects and I would love to get some support.\nIf it accumulates, I may find more time to maintain and develop my projects. Maybe I even get to try some of my ideas!\n\nI really appreciate everything that helps me and keeps my server running ☺️.\n\nIf you like this project, check out my [Patreon page](https://www.patreon.com/nukesor) or [buy me a coffee](https://www.buymeacoffee.com/Nukesor).\nIf you have any questions, stop by my [support group](https://t.me/nukesors_projects).\n\nHave great day!\n"
-    start: "🌟Welcome to the *ULTIMATE* pollbot 🌟\n\nJust type /create or click the button below to start creating polls. Everything is explained underway.\n\n🌐 You can pick another language under settings 🌐\n❓Click help for more explanations ❓\n\nIf you like the project, stop by my [support group](https://t.me/nukesors_projects) or check out my [Patreon page](https://www.patreon.com/nukesor).\nThis bot is open-source on [GitHub](https://github.com/Nukesor/ultimate-poll-bot).\n"
+    start: "🌟Welcome to the *ULTIMATE* pollbot 🌟\n\nJust type /create or click the button below to start creating
+    polls. Everything is explained underway.\n\n🌐 You can pick another language under settings 🌐\n❓ Click /help for
+    more explanations ❓\n\n💡 _Did you know_: You can now also send me a normal Telegram poll! 💡\n\nIf
+    you like the project, stop by my [support group](https://t.me/nukesors_projects) or check out my [Patreon page](https://www.patreon.com/nukesor).\nThis bot is open-source on [GitHub](https://github.com/Nukesor/ultimate-poll-bot).\n"
     help:
         intro: "There are quite a few settings for your polls.\nJust pick the category you're interested in or just read everything 😉.\n\nIn case you just want to create a poll, type /create\n"
         creation: "🌟*Creation:*\n\nTo create a new poll, just write or click /create.\nFor each poll you can specify several initial settings\n\n*Poll type:* The various types are explained in detail in the poll type menu.\n*Anonymity:* You can anonymize your poll, which results in no names being displayed! This is permanent and for all parties.\n*Visible results:* In this mode, votes only become visible after closing the poll. This is needed to avoid the possibility of [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting) and to prevent [Anchoring](https://en.wikipedia.org/wiki/Anchoring)\n\n-> *Attention: A closed poll with invisible results stays closed!:*\nReopening a poll would allow a user, specifically the poll creator, to look at the votes, and place his own vote in a manner, that would result in a possible advantage for him (tactical voting).\n"

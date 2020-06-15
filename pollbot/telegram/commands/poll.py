@@ -1,16 +1,17 @@
 """Poll related commands."""
+from typing import Optional
+
 from telegram.ext import run_async
 
-from pollbot.i18n import i18n
-from pollbot.helper.session import message_wrapper
 from pollbot.display.creation import get_init_text
 from pollbot.display.misc import get_poll_list
+from pollbot.helper.session import message_wrapper
+from pollbot.i18n import i18n
+from pollbot.models import Poll
 from pollbot.telegram.keyboard import (
     get_cancel_creation_keyboard,
     get_init_keyboard,
 )
-
-from pollbot.models import Poll
 
 
 @run_async
@@ -35,6 +36,25 @@ def create_poll(bot, update, session, user):
         parse_mode="markdown",
         reply_markup=keyboard,
         disable_web_page_preview=True,
+    )
+
+
+@run_async
+@message_wrapper(private=True)
+def cancel_poll_creation(bot, update, session, user):
+    """Cancels the creation of the current poll."""
+    current_poll: Optional[Poll] = user.current_poll
+
+    if current_poll is None:
+        update.message.chat.send_message(
+            i18n.t("delete.doesnt_exist", locale=user.locale),
+        )
+        return
+
+    session.delete(current_poll)
+    session.commit()
+    update.effective_chat.send_message(
+        f"{i18n.t('delete.previous_deleted', locale=user.locale)} /start"
     )
 
 

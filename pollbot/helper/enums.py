@@ -73,6 +73,8 @@ class CallbackType(Enum):
     cancel_creation = 6
     back_to_init = 7
     anonymity_settings = 8
+    cancel_creation_replace = 9
+    ask_description = 10
 
     # Poll voting
     vote = 20

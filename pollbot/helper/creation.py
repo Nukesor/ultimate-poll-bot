@@ -1,13 +1,15 @@
 """Poll creation helper."""
-from pollbot.i18n import i18n
-from pollbot.helper.stats import increase_stat, increase_user_stat
-from pollbot.helper.enums import ExpectedInput, ReferenceType
+from typing import List
+
 from pollbot.display.poll.compilation import get_poll_text
+from pollbot.helper.enums import ExpectedInput, ReferenceType
+from pollbot.helper.stats import increase_stat, increase_user_stat
+from pollbot.i18n import i18n
+from pollbot.models import Option, Reference
 from pollbot.telegram.keyboard import (
     get_options_entered_keyboard,
     get_management_keyboard,
 )
-from pollbot.models import Option, Reference
 
 
 def next_option(tg_chat, poll, options):
@@ -70,8 +72,26 @@ def create_poll(session, poll, user, chat, message=None):
     increase_user_stat(session, user, "created_polls")
 
 
-def add_options(session, poll, text, is_date=False):
-    """Add a new option to the poll."""
+def add_text_options_from_list(session, poll, options: List[str]):
+    """Add multiple new options to the poll."""
+    options_to_add = map(str.strip, options)
+    added_options = []
+
+    for option_to_add in options_to_add:
+        option = add_option(poll, option_to_add, added_options, False)
+        if option is None:
+            continue
+
+        session.add(option)
+        session.commit()
+
+        added_options.append(option_to_add)
+
+    return added_options
+
+
+def add_options_multiline(session, poll, text, is_date=False):
+    """Add one or multiple new options to the poll."""
     options_to_add = [x.strip() for x in text.split("\n") if x.strip() != ""]
     added_options = []
 

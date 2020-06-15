@@ -1,13 +1,15 @@
 """Option for setting the current date of the picker."""
 from datetime import date, datetime, time
+
 from dateutil.relativedelta import relativedelta
-from pollbot.i18n import i18n
-from pollbot.helper.poll import poll_required
-from pollbot.helper.enums import DatepickerContext
-from pollbot.helper.creation import add_options
-from pollbot.helper.update import update_poll_messages
+
 from pollbot.display import get_settings_text
 from pollbot.display.creation import get_datepicker_text
+from pollbot.helper.creation import add_options_multiline
+from pollbot.helper.enums import DatepickerContext
+from pollbot.helper.poll import poll_required
+from pollbot.helper.update import update_poll_messages
+from pollbot.i18n import i18n
 from pollbot.telegram.keyboard.date_picker import (
     get_creation_datepicker_keyboard,
     get_add_option_datepicker_keyboard,
@@ -53,7 +55,7 @@ def owner_pick_date_option(session, context, poll, datepicker_context):
             "callback.date_removed", locale=poll.locale, date=picked_date.isoformat()
         )
     else:
-        add_options(session, poll, context.data[2], is_date=True)
+        add_options_multiline(session, poll, context.data[2], is_date=True)
         message = i18n.t(
             "callback.date_picked", locale=poll.locale, date=picked_date.isoformat()
         )
@@ -97,7 +99,7 @@ def pick_external_date(session, context, poll):
     if existing_option is not None:
         return i18n.t("callback.date_already_picked", locale=poll.locale)
 
-    add_options(session, poll, context.data[2], is_date=True)
+    add_options_multiline(session, poll, context.data[2], is_date=True)
     message = i18n.t(
         "callback.date_picked", locale=poll.locale, date=picked_date.isoformat()
     )
