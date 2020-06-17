@@ -5,10 +5,12 @@ from pollbot.display.creation import (
     get_init_text,
     get_poll_type_help_text,
     get_datepicker_text,
-    get_init_anonymziation_settings_text, get_native_poll_merged_text,
+    get_init_anonymziation_settings_text,
+    get_native_poll_merged_text,
 )
 from pollbot.helper.creation import create_poll
 from pollbot.helper.enums import PollType, ExpectedInput
+from pollbot.helper.exceptions import RollbackException
 from pollbot.helper.poll import poll_required
 from pollbot.i18n import i18n
 from pollbot.models import Poll
@@ -19,7 +21,8 @@ from pollbot.telegram.keyboard import (
     get_creation_datepicker_keyboard,
     get_open_datepicker_keyboard,
     get_init_settings_keyboard,
-    get_skip_description_keyboard, get_native_poll_merged_keyboard,
+    get_skip_description_keyboard,
+    get_native_poll_merged_keyboard,
 )
 from .user import init_poll
 
@@ -28,10 +31,16 @@ def open_init_text(message, poll: Poll):
     """Open the initial poll creation message."""
     if poll.created_from_native:
         keyboard = get_native_poll_merged_keyboard(poll)
-        message.edit_text(get_native_poll_merged_text(poll), parse_mode="markdown", reply_markup=keyboard)
+        message.edit_text(
+            get_native_poll_merged_text(poll),
+            parse_mode="markdown",
+            reply_markup=keyboard,
+        )
     else:
         keyboard = get_init_keyboard(poll)
-        message.edit_text(get_init_text(poll), parse_mode="markdown", reply_markup=keyboard)
+        message.edit_text(
+            get_init_text(poll), parse_mode="markdown", reply_markup=keyboard
+        )
 
 
 def open_anonymization_settings(message, poll):
@@ -167,9 +176,13 @@ def open_creation_datepicker(session, context, poll):
 
     context.user.expected_input = ExpectedInput.date.name
 
-    message.edit_text(
-        get_datepicker_text(poll), parse_mode="markdown", reply_markup=keyboard
-    )
+    text = get_datepicker_text(poll)
+
+    if len(text) > 4000:
+        error_message = i18n.t("misc.too_many_options", locale=context.user.locale)
+        raise RollbackException(error_message)
+
+    message.edit_text(text, parse_mode="markdown", reply_markup=keyboard)
 
 
 @poll_required

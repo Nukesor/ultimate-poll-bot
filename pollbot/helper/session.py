@@ -13,6 +13,7 @@ from telegram.ext import CallbackContext
 from pollbot.config import config
 from pollbot.db import get_session
 from pollbot.helper.stats import increase_stat
+from pollbot.helper.exceptions import RollbackException
 from pollbot.i18n import i18n
 from pollbot.models import User, UserStatistic
 from pollbot.sentry import sentry
@@ -121,6 +122,12 @@ def callback_query_wrapper(func):
             func(context.bot, update, session, user)
 
             session.commit()
+
+        except RollbackException as e:
+            session.rollback()
+
+            update.callback_query.answer(e.message)
+
         except Exception as e:
             if not ignore_exception(e):
                 if config["logging"]["debug"]:
@@ -174,6 +181,13 @@ def message_wrapper(private=False):
                 if response is not None:
                     message.chat.send_message(response)
 
+            except RollbackException as e:
+                session.rollback()
+
+                message.chat.send_message(
+                    e.message, parse_mode="markdown", disable_web_page_preview=True,
+                )
+
             except Exception as e:
                 if not ignore_exception(e):
                     if config["logging"]["debug"]:
@@ -189,8 +203,6 @@ def message_wrapper(private=False):
                         parse_mode="markdown",
                         disable_web_page_preview=True,
                     )
-
-                session.close()
 
             finally:
                 session.close()

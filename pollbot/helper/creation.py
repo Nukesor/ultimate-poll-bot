@@ -3,6 +3,7 @@ from typing import List
 
 from pollbot.display.poll.compilation import get_poll_text
 from pollbot.helper.enums import ExpectedInput, ReferenceType
+from pollbot.helper.exceptions import RollbackException
 from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.i18n import i18n
 from pollbot.models import Option, Reference
@@ -25,6 +26,10 @@ def next_option(tg_chat, poll, options):
         for option in options:
             text += f"\n*{option}*"
         text += "\n\n" + i18n.t("creation.option.next", locale=locale)
+
+    if len(text) > 3800:
+        error_message = i18n.t("misc.over_4000", locale=locale)
+        raise RollbackException(error_message)
 
     tg_chat.send_message(text, reply_markup=keyboard, parse_mode="Markdown")
 
@@ -113,9 +118,9 @@ def add_option(poll, text, added_options, is_date):
     description = None
     description_descriminator = None
     if "--" in text:
-        description_descriminator = '--'
+        description_descriminator = "--"
     elif "—" in text:
-        description_descriminator = '—'
+        description_descriminator = "—"
     # Extract the description if existing
 
     if description_descriminator is not None:
