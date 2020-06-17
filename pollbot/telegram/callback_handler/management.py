@@ -16,7 +16,7 @@ def delete_poll(session, context, poll):
     session.delete(poll)
     session.commit()
 
-    return i18n.t("callback.deleted", locale=poll.user.locale)
+    return i18n.t("callback.deleted", locale=context.user.locale)
 
 
 @poll_required
@@ -27,7 +27,7 @@ def delete_poll_with_messages(session, context, poll):
     session.delete(poll)
     session.commit()
 
-    return i18n.t("callback.deleted", locale=poll.user.locale)
+    return i18n.t("callback.deleted", locale=context.user.locale)
 
 
 @poll_required
