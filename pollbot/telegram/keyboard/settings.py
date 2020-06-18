@@ -130,8 +130,12 @@ def get_remove_option_keyboard(poll):
     """Get a keyboard for removing options."""
     buttons = []
     for option in poll.options:
+        name = option.name
+        if len(option.name.strip()) == 0:
+            name = f"[empty] -- {option.description}"
+
         button = InlineKeyboardButton(
-            text=option.name,
+            text=name,
             callback_data=f"{CallbackType.settings_remove_option.value}:{poll.id}:{option.id}",
         )
         buttons.append([button])
