@@ -45,7 +45,7 @@ class Poll(base):
     description = Column(String)
     locale = Column(String, default="English")
     poll_type = Column(String, nullable=False)
-    number_of_votes = Column(Integer)
+    number_of_votes = Column(Integer, default=0)
 
     # Functionality
     anonymous = Column(Boolean, nullable=False)
@@ -76,7 +76,9 @@ class Poll(base):
     # Chat state variables
     expected_input = Column(String)
     in_settings = Column(Boolean, nullable=False, default=False)
-    created_from_native = Column(Boolean, nullable=False, server_default='False', default=False)
+    created_from_native = Column(
+        Boolean, nullable=False, server_default="False", default=False
+    )
 
     # ManyToOne
     user_id = Column(

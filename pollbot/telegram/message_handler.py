@@ -84,9 +84,7 @@ def handle_set_description(bot, update, session, user, text, poll, chat):
             parse_mode="markdown",
         )
     else:  # options were already prefilled e.g. by native poll
-        create_poll(
-            session, poll, user, update.effective_chat
-        )
+        create_poll(session, poll, user, update.effective_chat)
 
 
 def handle_create_options(bot, update, session, user, text, poll, chat):

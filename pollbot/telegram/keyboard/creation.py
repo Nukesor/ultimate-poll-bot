@@ -43,7 +43,7 @@ def get_native_poll_merged_keyboard(poll):
 
     buttons = [
         [InlineKeyboardButton(change_type_text, callback_data=change_type_payload)],
-        [InlineKeyboardButton(accept_text, callback_data=accept_payload)]
+        [InlineKeyboardButton(accept_text, callback_data=accept_payload)],
     ]
 
     return InlineKeyboardMarkup(buttons)

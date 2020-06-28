@@ -8,7 +8,8 @@ from telegram.ext import (
     InlineQueryHandler,
     Filters,
     MessageHandler,
-    Updater, )
+    Updater,
+)
 
 from pollbot.config import config
 from pollbot.helper.filters import CustomFilters
@@ -30,7 +31,8 @@ from pollbot.telegram.commands.misc import send_help, send_donation_text
 from pollbot.telegram.commands.poll import (
     create_poll,
     list_polls,
-    list_closed_polls, cancel_poll_creation,
+    list_closed_polls,
+    cancel_poll_creation,
 )
 from pollbot.telegram.commands.start import start
 from pollbot.telegram.commands.user import (
@@ -48,7 +50,10 @@ from pollbot.telegram.job import (
     cleanup,
 )
 from pollbot.telegram.message_handler import handle_private_text
-from pollbot.telegram.native_poll_handler import create_from_native_poll, send_error_quiz_unsupported
+from pollbot.telegram.native_poll_handler import (
+    create_from_native_poll,
+    send_error_quiz_unsupported,
+)
 
 logging.basicConfig(
     level=config["logging"]["log_level"],
@@ -88,7 +93,9 @@ dispatcher.add_handler(CommandHandler("reset_broadcast", reset_broadcast))
 dispatcher.add_handler(CommandHandler("test_broadcast", test_broadcast))
 
 # Poll handler
-dispatcher.add_handler(MessageHandler(Filters.poll & ~CustomFilters.quiz, create_from_native_poll))
+dispatcher.add_handler(
+    MessageHandler(Filters.poll & ~CustomFilters.quiz, create_from_native_poll)
+)
 dispatcher.add_handler(MessageHandler(CustomFilters.quiz, send_error_quiz_unsupported))
 
 # Callback handler
