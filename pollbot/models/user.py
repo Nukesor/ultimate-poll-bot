@@ -26,8 +26,8 @@ class User(base):
 
     # Flags
     started = Column(Boolean, nullable=False, default=False)
-    banned = Column(Boolean, nullable=False, default=False, server_default="FALSE")
-    deleted = Column(Boolean, nullable=False, default=False, server_default="FALSE")
+    banned = Column(Boolean, nullable=False, default=False)
+    deleted = Column(Boolean, nullable=False, default=False)
     broadcast_sent = Column(Boolean, nullable=False, default=False)
     last_update = Column(DateTime)
 

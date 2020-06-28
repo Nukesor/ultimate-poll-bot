@@ -53,15 +53,11 @@ class Poll(base):
     due_date = Column(DateTime, nullable=True)
     next_notification = Column(DateTime, nullable=True)
     allow_new_options = Column(Boolean, nullable=False, default=False)
-    allow_sharing = Column(
-        Boolean, nullable=False, default=False, server_default="FALSE"
-    )
+    allow_sharing = Column(Boolean, nullable=False, default=False)
 
     # Styling
     show_percentage = Column(Boolean, nullable=False, default=True)
-    show_option_votes = Column(
-        Boolean, nullable=False, default=True, server_default="true"
-    )
+    show_option_votes = Column(Boolean, nullable=False, default=True)
     european_date_format = Column(Boolean, nullable=False, default=False)
     permanently_summarized = Column(Boolean, nullable=False, default=False)
     compact_buttons = Column(Boolean, nullable=False, default=False)
