@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from telegram import Update, Bot
 from telegram.error import BadRequest, Unauthorized, TimedOut, RetryAfter
 from telegram.ext import CallbackContext
+from sentry_sdk import configure_scope
 
 from pollbot.config import config
 from pollbot.db import get_session
@@ -33,7 +34,11 @@ def job_wrapper(func):
             if not ignore_job_exception(e):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
-                sentry.capture_exception(tags={"handler": "job"})
+
+                with configure_scope() as scope:
+                    scope.set_tag("handler", "job")
+                    sentry.capture_exception()
+
         finally:
             session.close()
 
@@ -57,7 +62,10 @@ def inline_query_wrapper(func):
             if not ignore_exception(e):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
-                    sentry.capture_exception(tags={"handler": "inline_query"})
+
+                    with configure_scope() as scope:
+                        scope.set_tag("handler", "inline_query")
+                        sentry.capture_exception()
 
         finally:
             session.close()
@@ -82,7 +90,10 @@ def inline_result_wrapper(func):
             if not ignore_exception(e):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
-                    sentry.capture_exception(tags={"handler": "inline_query_result"})
+
+                    with configure_scope() as scope:
+                        scope.set_tag("handler", "inline_query_result")
+                        sentry.capture_exception()
 
         finally:
             session.close()
@@ -132,7 +143,10 @@ def callback_query_wrapper(func):
             if not ignore_exception(e):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
-                sentry.capture_exception(tags={"handler": "callback_query"})
+
+                with configure_scope() as scope:
+                    scope.set_tag("handler", "callback_query")
+                    sentry.capture_exception()
 
                 locale = "English"
                 if user is not None:
@@ -161,10 +175,10 @@ def message_wrapper(private=False):
                 elif hasattr(update, "edited_message") and update.edited_message:
                     message = update.edited_message
                 else:
-                    sentry.capture_message(
-                        "Got an update without a message",
-                        extra={"calling_function": func.__name__},
-                    )
+                    with configure_scope() as scope:
+                        scope.set_extra("calling_function", func.__name__)
+                        sentry.capture_message("Got an update without a message")
+                    return
 
                 user, _ = get_user(session, message.from_user)
                 if user.banned:
@@ -195,7 +209,10 @@ def message_wrapper(private=False):
                 if not ignore_exception(e):
                     if config["logging"]["debug"]:
                         traceback.print_exc()
-                    sentry.capture_exception(tags={"handler": "message"})
+
+                    with configure_scope() as scope:
+                        scope.set_tag("handler", "message")
+                        sentry.capture_exception()
 
                     locale = "English"
                     if user is not None:
