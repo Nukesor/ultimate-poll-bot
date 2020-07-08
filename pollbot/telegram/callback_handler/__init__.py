@@ -1,6 +1,6 @@
 """Callback query handling."""
 from datetime import date
-from raven import breadcrumbs
+from sentry_sdk import add_breadcrumb
 from telegram.ext import run_async
 from sqlalchemy.exc import IntegrityError
 
@@ -58,8 +58,8 @@ def get_context(bot, update, session, user):
     """Create a context object for callback queries."""
     context = CallbackContext(session, bot, update.callback_query, user)
 
-    breadcrumbs.record(
-        data={
+    add_breadcrumb(
+        crumb={
             "query": update.callback_query,
             "data": update.callback_query.data,
             "user": user,

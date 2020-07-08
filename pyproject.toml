@@ -8,7 +8,7 @@ repository = "https://github.com/nukesor/ultimate-poll-bot"
 
 [tool.poetry.dependencies]
 python = ">=3.6"
-raven = "^6"
+sentry-sdk = "0.16.0"
 alembic = "^1"
 python-telegram-bot = "^12"
 SQLAlchemy = "^1"

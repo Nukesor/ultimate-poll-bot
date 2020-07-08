@@ -1,5 +1,5 @@
 """Simple wrapper around sentry that allows for lazy initilization."""
-from raven import Client
+import sentry_sdk
 from pollbot.config import config
 from telegram.error import TimedOut
 
@@ -16,11 +16,10 @@ class Sentry(object):
         """Construct new sentry wrapper."""
         if config["logging"]["sentry_enabled"]:
             self.initialized = True
-            self.sentry = Client(
-                config["logging"]["sentry_token"], ignore_exceptions=[TimedOut],
-            )
+            sentry_sdk.init(config["logging"]["sentry_token"],)
+            self.sentry = sentry_sdk
 
-    def captureMessage(self, *args, **kwargs):
+    def capture_message(self, *args, **kwargs):
         """Capture message with sentry."""
         if self.initialized:
             if "tags" not in kwargs:
@@ -28,9 +27,9 @@ class Sentry(object):
 
             # Tag it as pollbot
             kwargs["tags"]["bot"] = "pollbot"
-            self.sentry.captureMessage(*args, **kwargs)
+            self.sentry.capture_message(*args, **kwargs)
 
-    def captureException(self, *args, **kwargs):
+    def capture_exception(self, *args, **kwargs):
         """Capture exception with sentry."""
         if self.initialized:
             if "tags" not in kwargs:
@@ -38,7 +37,7 @@ class Sentry(object):
 
             # Tag it as pollbot
             kwargs["tags"]["bot"] = "pollbot"
-            self.sentry.captureException(*args, **kwargs)
+            self.sentry.capture_exception(*args, **kwargs)
 
 
 sentry = Sentry()

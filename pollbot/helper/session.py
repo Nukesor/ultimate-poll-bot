@@ -33,7 +33,7 @@ def job_wrapper(func):
             if not ignore_job_exception(e):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
-                sentry.captureException()
+                sentry.capture_exception(tags={"handler": "job"})
         finally:
             session.close()
 
@@ -57,7 +57,7 @@ def inline_query_wrapper(func):
             if not ignore_exception(e):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
-                    sentry.captureException()
+                    sentry.capture_exception(tags={"handler": "inline_query"})
 
         finally:
             session.close()
@@ -82,7 +82,7 @@ def inline_result_wrapper(func):
             if not ignore_exception(e):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
-                    sentry.captureException()
+                    sentry.capture_exception(tags={"handler": "inline_query_result"})
 
         finally:
             session.close()
@@ -132,7 +132,7 @@ def callback_query_wrapper(func):
             if not ignore_exception(e):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
-                sentry.captureException()
+                sentry.capture_exception(tags={"handler": "callback_query"})
 
                 locale = "English"
                 if user is not None:
@@ -161,7 +161,10 @@ def message_wrapper(private=False):
                 elif hasattr(update, "edited_message") and update.edited_message:
                     message = update.edited_message
                 else:
-                    raise Exception("Got an update without a message")
+                    sentry.capture_message(
+                        "Got an update without a message",
+                        extra={"calling_function": func.__name__},
+                    )
 
                 user, _ = get_user(session, message.from_user)
                 if user.banned:
@@ -192,7 +195,7 @@ def message_wrapper(private=False):
                 if not ignore_exception(e):
                     if config["logging"]["debug"]:
                         traceback.print_exc()
-                    sentry.captureException()
+                    sentry.capture_exception(tags={"handler": "message"})
 
                     locale = "English"
                     if user is not None:
