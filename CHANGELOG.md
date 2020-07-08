@@ -1,4 +1,35 @@
+## v1.5.0
+**Features**
+
+- Create new polls from native Telegram Polls. Thanks to [@Josxa](https://github.com/josxa)
+- Add complete deletion of all user data
+- Support `/stop`
+
+**Improvements**
+
+- Better hints for 
+- Streamline poll styling interface
+- Added feature request tab in `/help`
+
+**Fixes**
+
+- Option with empty names can be fixed
+- Handle `/start` messages without a message
+- Handle polls that have too many options during creation
+- Fix a bug where inline message references could be duplicated
+
+**Internal**
+
+- Fixe race-condition database bugs by running certain callback handlers synchronous
+- Add a contribution guide
+- New sentry sdk
+- Code formatting with black
+- Cleanup session handling
+
 ## v1.4.0
+
+**Features:**
+
 - Options can be sorted manually
 - New options. You have need to add those your config manually if you already have a deployed bot:
     1. `telegram.max_inline_shares` The max amount of shared messages via inline query per poll
@@ -17,7 +48,9 @@
 - Removal of duplicate poll messages in private chats
 
 ## v1.3.0
-- Priority vote poll
+**Features**
+
+- Priority vote poll. Thanks to [Raffomania](https://github.com/raffomania) and [hatzel](https://github.com/hatzel)!
 - Streamline all datepickers (breaking changes)
 - Display week day in vote buttons
 - Add explanations for most important options
@@ -35,6 +68,8 @@
 
 
 ## v1.2.0
+**Features**
+
 - Completely revamp the user settings and /start interface
 - Add /settings command as shortcut to settings submenu
 - Add a prompt when deleting all polls of a user
