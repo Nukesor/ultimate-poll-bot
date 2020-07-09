@@ -177,6 +177,7 @@ def message_wrapper(private=False):
                 else:
                     with configure_scope() as scope:
                         scope.set_extra("calling_function", func.__name__)
+                        scope.set_extra("update", update.to_dict())
                         sentry.capture_message("Got an update without a message")
                     return
 
