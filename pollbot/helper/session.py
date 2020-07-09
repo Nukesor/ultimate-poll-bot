@@ -63,9 +63,9 @@ def inline_query_wrapper(func):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
 
-                    with configure_scope() as scope:
-                        scope.set_tag("handler", "inline_query")
-                        sentry.capture_exception()
+                with configure_scope() as scope:
+                    scope.set_tag("handler", "inline_query")
+                    sentry.capture_exception()
 
         finally:
             session.close()
@@ -91,9 +91,9 @@ def inline_result_wrapper(func):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
 
-                    with configure_scope() as scope:
-                        scope.set_tag("handler", "inline_query_result")
-                        sentry.capture_exception()
+                with configure_scope() as scope:
+                    scope.set_tag("handler", "inline_query_result")
+                    sentry.capture_exception()
 
         finally:
             session.close()
