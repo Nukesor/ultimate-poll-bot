@@ -94,9 +94,13 @@ dispatcher.add_handler(CommandHandler("test_broadcast", test_broadcast))
 
 # Poll handler
 dispatcher.add_handler(
-    MessageHandler(Filters.poll & ~CustomFilters.quiz, create_from_native_poll)
+    MessageHandler(
+        Filters.poll & ~CustomFilters.quiz & Filters.private, create_from_native_poll
+    )
 )
-dispatcher.add_handler(MessageHandler(CustomFilters.quiz, send_error_quiz_unsupported))
+dispatcher.add_handler(
+    MessageHandler(CustomFilters.quiz & Filters.private, send_error_quiz_unsupported)
+)
 
 # Callback handler
 dispatcher.add_handler(
