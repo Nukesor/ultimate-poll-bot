@@ -152,7 +152,8 @@ dispatcher.add_handler(
         Filters.text
         & Filters.private
         & (~Filters.update.edited_message)
-        & (~Filters.reply),
+        & (~Filters.reply)
+        & (~Filters.update.channel_posts),
         handle_private_text,
     )
 )
