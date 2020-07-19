@@ -3,7 +3,7 @@ from pollbot.display import get_settings_text
 from pollbot.enums import ExpectedInput, PollType, ReferenceType
 from pollbot.i18n import i18n
 from pollbot.models import Reference
-from pollbot.poll.helper import remove_old_references
+from pollbot.poll.helper import remove_old_references, init_votes_for_new_options
 from pollbot.poll.option import add_options_multiline, next_option
 from pollbot.poll.update import update_poll_messages
 from pollbot.telegram.callback_handler.creation import create_poll
@@ -133,7 +133,7 @@ def handle_new_option(bot, update, session, user, text, poll, chat):
         for option in added_options:
             text += f"\n*{option}*"
         chat.send_message(text, parse_mode="markdown")
-        poll.init_votes_for_new_options(session)
+        init_votes_for_new_options(session, poll)
     else:
         chat.send_message(i18n.t("creation.option.no_new", locale=user.locale))
 
@@ -178,7 +178,7 @@ def handle_user_option_addition(bot, update, session, user, text, poll, chat):
         chat.send_message(text, parse_mode="markdown")
 
         # Update all polls
-        poll.init_votes_for_new_options(session)
+        init_votes_for_new_options(session, poll)
         session.commit()
         update_poll_messages(session, bot, poll)
     else:

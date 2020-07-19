@@ -7,12 +7,14 @@ from pollbot.display.poll.compilation import (
     compile_poll_text,
     get_poll_text_and_vote_keyboard,
 )
+from pollbot.config import config
 from pollbot.enums import ExpectedInput, ReferenceType, StartAction
 from pollbot.helper.stats import increase_stat
 from pollbot.helper.text import split_text
 from pollbot.i18n import i18n
 from pollbot.models import Poll, Reference
 from pollbot.telegram.keyboard.user import get_main_keyboard
+from pollbot.poll.vote import init_votes
 from pollbot.telegram.keyboard.external import (
     get_external_add_option_keyboard,
     get_external_share_keyboard,
@@ -101,7 +103,7 @@ def start(bot, update, session, user):
             return
 
         if poll.is_priority():
-            poll.init_votes(session, user)
+            init_votes(session, poll, user)
             session.commit()
 
         text, keyboard = get_poll_text_and_vote_keyboard(session, poll, user=user,)

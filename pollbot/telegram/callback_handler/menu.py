@@ -8,6 +8,7 @@ from pollbot.display.poll.compilation import (
 from pollbot.enums import CallbackResult, ExpectedInput, ReferenceType
 from pollbot.i18n import i18n
 from pollbot.models import Reference
+from pollbot.poll.vote import init_votes
 from pollbot.poll.helper import remove_old_references
 from pollbot.telegram.keyboard.management import (
     get_close_confirmation,
@@ -44,7 +45,7 @@ def go_back(session, context, poll):
 def show_vote_menu(session, context, poll):
     """Show the vote keyboard in the management interface."""
     if poll.is_priority():
-        poll.init_votes(session, context.user)
+        init_votes(session, poll, context.user)
         session.commit()
 
     text, keyboard = get_poll_text_and_vote_keyboard(

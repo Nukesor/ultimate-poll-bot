@@ -4,6 +4,7 @@ from datetime import datetime
 from pollbot.decorators import poll_required
 from pollbot.display.poll.compilation import get_poll_text
 from pollbot.i18n import i18n
+from pollbot.poll.helper import clone_poll
 from pollbot.poll.update import update_poll_messages
 from pollbot.poll.remove import remove_poll_messages
 from pollbot.telegram.keyboard.management import get_management_keyboard
@@ -80,7 +81,7 @@ def reset_poll(session, context, poll):
 @poll_required
 def clone_poll(session, context, poll):
     """Clone this poll."""
-    new_poll = poll.clone(session)
+    new_poll = clone_poll(session, poll)
     session.commit()
 
     context.tg_chat.send_message(
