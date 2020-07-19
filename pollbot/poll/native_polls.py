@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 
 from pollbot.enums import PollType
 from pollbot.models import Poll
-from pollbot.poll.option import add_text_options_from_list
+from pollbot.poll.option import add_multiple_options
 from telegram import Poll as NativePoll
 
 
@@ -14,7 +14,11 @@ def merge_from_native_poll(
     poll.poll_type = convert_poll_type(native_poll).name
     poll.name = native_poll.question
     poll.anonymous = native_poll.is_anonymous
-    add_text_options_from_list(session, poll, [o.text for o in native_poll.options])
+
+    # Get all options, strip them and add them
+    options = [o.text for o in native_poll.options]
+    options_to_add = map(str.strip, options)
+    add_multiple_options(session, poll, options_to_add)
 
 
 def convert_poll_type(native_poll: NativePoll) -> PollType:

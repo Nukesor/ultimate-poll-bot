@@ -2,25 +2,13 @@
 import time
 from datetime import datetime, timedelta
 
-from pollbot.config import config
+from pollbot.decorators import admin_required
 from pollbot.i18n import i18n
 from pollbot.models import User
 from pollbot.telegram.session import message_wrapper
 from telegram import ReplyKeyboardRemove
 from telegram.error import BadRequest, Unauthorized
 from telegram.ext import run_async
-
-
-def admin_required(function):
-    """Return if the poll does not exist in the context object."""
-
-    def wrapper(bot, update, session, user):
-        if user.username.lower() != config["telegram"]["admin"].lower():
-            return i18n.t("admin.not_allowed", locale=user.locale)
-
-        return function(bot, update, session, user)
-
-    return wrapper
 
 
 @run_async

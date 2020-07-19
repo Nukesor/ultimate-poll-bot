@@ -1,62 +1,10 @@
-import random
-
 from pollbot.enums import PollType
 from pollbot.i18n import i18n
-from pollbot.models import Poll, User, Vote, Option, Reference
+from pollbot.models import Poll, Option, Reference, User
 from telegram.error import BadRequest, Unauthorized
 
 
-def init_votes(session, poll, user):
-    """
-    Since Priority votes always need priorities, call this to create a vote
-    for every option in the poll with a random priority for the given user
-    """
-    assert poll.is_priority()
-
-    votes_exist = (
-        session.query(Vote).filter(Vote.user == user).filter(Vote.poll == self).first()
-        is not None
-    )
-
-    if votes_exist:
-        return
-
-    votes = []
-    for index, option in enumerate(random.sample(self.options, len(self.options))):
-        vote = Vote(user, option)
-        vote.priority = index
-        votes.append(vote)
-    session.add_all(votes)
-
-
-def init_votes_for_new_options(session, poll):
-    """
-    When a new option is added, we need to create new votes
-    for all users that have already voted for this poll
-    """
-    if not poll.is_priority():
-        return
-
-    users = session.query(User).join(User.votes).filter(Vote.poll == poll).all()
-
-    new_options = (
-        session.query(Option)
-        .filter(Option.poll == poll)
-        .outerjoin(Vote)
-        .filter(Vote.id.is_(None))
-        .all()
-    )
-
-    existing_options_count = len(poll.options) - len(poll_options)
-
-    for user in users:
-        for index, option in enumerate(new_options):
-            vote = Vote(user, option)
-            vote.priority = existing_options_count + index
-            user.votes.append(vote)
-
-
-def clone_poll(session, original_poll):
+def clone_poll(session, original_poll: Poll):
     """Create a clone from the current poll."""
     new_poll = Poll(original_poll.user)
     new_poll.created = True
@@ -83,7 +31,7 @@ def clone_poll(session, original_poll):
     return new_poll
 
 
-def remove_old_references(session, bot, poll, user):
+def remove_old_references(session, bot, poll: Poll, user: User):
     """Remove old references in private chats."""
     references = (
         session.query(Reference)
@@ -112,7 +60,7 @@ def remove_old_references(session, bot, poll, user):
         session.commit()
 
 
-def calculate_total_votes(poll):
+def calculate_total_votes(poll: Poll):
     """Calculate the total number of votes of a poll."""
     total = 0
     for vote in poll.votes:
@@ -121,7 +69,7 @@ def calculate_total_votes(poll):
     return total
 
 
-def translate_poll_type(poll_type, locale):
+def translate_poll_type(poll_type: str, locale: str):
     """Translate a poll type to the users language."""
     mapping = {
         PollType.single_vote.name: i18n.t("poll_types.single_vote", locale=locale),
@@ -138,7 +86,7 @@ def translate_poll_type(poll_type, locale):
     return mapping[poll_type]
 
 
-def poll_allows_multiple_votes(poll):
+def poll_allows_multiple_votes(poll: Poll):
     """Check whether the poll allows multiple votes."""
     multiple_poll_types = [
         PollType.block_vote.name,
@@ -149,7 +97,7 @@ def poll_allows_multiple_votes(poll):
     return poll.poll_type in multiple_poll_types
 
 
-def poll_has_limited_votes(poll):
+def poll_has_limited_votes(poll: Poll):
     """Check whether the poll has limited votes."""
     poll_type_with_vote_count = [
         PollType.limited_vote.name,
@@ -159,6 +107,6 @@ def poll_has_limited_votes(poll):
     return poll.poll_type in poll_type_with_vote_count
 
 
-def poll_allows_cumulative_votes(poll):
+def poll_allows_cumulative_votes(poll: Poll):
     """Check whether this poll's type is cumulative."""
     return poll.poll_type in [PollType.cumulative_vote.name, PollType.count_vote.name]

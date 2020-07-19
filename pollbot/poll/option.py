@@ -1,34 +1,22 @@
 from typing import List
 
 from pollbot.i18n import i18n
-from pollbot.models import Option
-from pollbot.enums import OptionSorting, PollType, VoteResultType, ExpectedInput
+from pollbot.models import Option, Poll
+from pollbot.enums import OptionSorting, PollType, VoteResultType
 from pollbot.poll.helper import poll_allows_cumulative_votes
-from pollbot.exceptions import RollbackException
-from pollbot.telegram.keyboard.creation import get_options_entered_keyboard
+from pollbot.poll.vote import init_votes_for_new_options
 
 
-def add_text_options_from_list(session, poll, options: List[str]):
-    """Add multiple new options to the poll."""
-    options_to_add = map(str.strip, options)
-    added_options = []
-
-    for option_to_add in options_to_add:
-        option = add_option(poll, option_to_add, added_options, False)
-        if option is None:
-            continue
-
-        session.add(option)
-        session.commit()
-
-        added_options.append(option_to_add)
-
-    return added_options
-
-
-def add_options_multiline(session, poll, text, is_date=False):
-    """Add one or multiple new options to the poll."""
+def add_options_multiline(session, poll: Poll, text: str, is_date: bool = False):
+    """Add one or multiple new options to the poll from a block of text."""
     options_to_add = [x.strip() for x in text.split("\n") if x.strip() != ""]
+    return add_multiple_options(session, poll, options_to_add, is_date=False)
+
+
+def add_multiple_options(
+    session, poll: Poll, options_to_add: List[str], is_date: bool = False
+):
+    """Create options from a list of strings."""
     added_options = []
 
     for option_to_add in options_to_add:
@@ -37,15 +25,22 @@ def add_options_multiline(session, poll, text, is_date=False):
             continue
 
         session.add(option)
-        session.commit()
+        session.flush()
 
-        added_options.append(option_to_add)
+    # Initialize priority votes for new options
+    if len(added_options) > 0:
+        init_votes_for_new_options(session, poll, added_options)
 
     return added_options
 
 
-def add_option(poll, text, added_options, is_date):
-    """Parse the incoming text and create a single option from it."""
+def add_option(poll: Poll, text: str, added_options: List[str], is_date: bool):
+    """Parse the incoming text and create a single option from it.
+
+    We allow option descriptions after an `--` or `—` delimiter.
+    `added_options` is a list of names of options that have already
+       been added during this single request.
+    """
     description = None
     description_descriminator = None
     if "--" in text:
@@ -65,36 +60,19 @@ def add_option(poll, text, added_options, is_date):
     if option_is_duplicate(poll, text) or text in added_options:
         return None
 
+    added_options.append(text)
+
     option = Option(poll, text)
     option.description = description
     option.is_date = is_date
     poll.options.append(option)
 
+    added_options.append(text)
+
     return option
 
 
-def next_option(tg_chat, poll, options):
-    """Send the options message during the creation ."""
-    locale = poll.user.locale
-    poll.user.expected_input = ExpectedInput.options.name
-    keyboard = get_options_entered_keyboard(poll)
-
-    if len(options) == 1:
-        text = i18n.t("creation.option.single_added", locale=locale, option=options[0])
-    else:
-        text = i18n.t("creation.option.multiple_added", locale=locale)
-        for option in options:
-            text += f"\n*{option}*"
-        text += "\n\n" + i18n.t("creation.option.next", locale=locale)
-
-    if len(text) > 3800:
-        error_message = i18n.t("misc.over_4000", locale=locale)
-        raise RollbackException(error_message)
-
-    tg_chat.send_message(text, reply_markup=keyboard, parse_mode="Markdown")
-
-
-def get_sorted_options(poll, total_user_count=0):
+def get_sorted_options(poll: Poll, total_user_count=0):
     """Sort the options depending on the poll's current settings."""
     options = poll.options.copy()
 
@@ -142,7 +120,7 @@ def calculate_percentage(option, total_user_count):
     return percentage
 
 
-def option_is_duplicate(poll, option_to_add):
+def option_is_duplicate(poll: Poll, option_to_add):
     """Check whether this option already exists on this poll."""
     for existing_option in poll.options:
         if existing_option.name == option_to_add:

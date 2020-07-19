@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
+- Broken polls after adding new options to Priority Poll.
 - Fixed broken poll creation, when users added too many options at once.
 - Fixed exceptions when the bot was used in groups he wasn't allowed to send messages.
 - Fixed broken `/list` and `/list_closed` for users with too many polls

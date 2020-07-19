@@ -1,12 +1,44 @@
 """Poll text compilation for options."""
 import math
+from typing import List
 
 from pollbot.display.poll.indices import get_option_indices
-from pollbot.enums import PollType
+from pollbot.enums import PollType, ExpectedInput
+from pollbot.exceptions import RollbackException
+from pollbot.i18n import i18n
+from pollbot.models import Poll
 from pollbot.poll.helper import poll_allows_cumulative_votes
 from pollbot.poll.option import calculate_percentage, get_sorted_options
+from pollbot.telegram.keyboard.creation import get_options_entered_keyboard
 
 from .vote import get_doodle_vote_lines, get_vote_lines
+
+
+def next_option(tg_chat, poll: Poll, added_options: List[str]):
+    """Send the options message during the creation.
+
+    This function also has a failsafe in it, that rollbacks the entire transaction,
+    if the message with the added options is too long to be displayed in telegram.
+    """
+    locale = poll.user.locale
+    poll.user.expected_input = ExpectedInput.options.name
+    keyboard = get_options_entered_keyboard(poll)
+
+    if len(added_options) == 1:
+        text = i18n.t(
+            "creation.option.single_added", locale=locale, option=added_options[0]
+        )
+    else:
+        text = i18n.t("creation.option.multiple_added", locale=locale)
+        for option in added_options:
+            text += f"\n*{option}*"
+        text += "\n\n" + i18n.t("creation.option.next", locale=locale)
+
+    if len(text) > 3800:
+        error_message = i18n.t("misc.over_4000", locale=locale)
+        raise RollbackException(error_message)
+
+    tg_chat.send_message(text, reply_markup=keyboard, parse_mode="Markdown")
 
 
 def get_option_information(session, poll, context, summarize):
