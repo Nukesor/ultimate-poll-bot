@@ -59,6 +59,10 @@ class Reference(base):
         """Create a new poll."""
         self.poll = poll
         self.type = reference_type
+        # There are three types of references
+        # 1. Messages in private chat:
+        # - Admin interface
+        # - Private vote
         if (
             user is not None
             and message_id is not None
@@ -68,11 +72,13 @@ class Reference(base):
             self.user = user
             self.message_id = message_id
 
+        # 2. Messages shared via inline query
         elif (
             inline_message_id is not None
             and reference_type == ReferenceType.inline.name
         ):
             self.bot_inline_message_id = inline_message_id
+
         else:
             raise Exception(
                 "Tried to create Reference with wrong type or missing parameters"
