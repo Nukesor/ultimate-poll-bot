@@ -69,3 +69,14 @@ class User(base):
     def __repr__(self):
         """Print as string."""
         return f"User with Id: {self.id}, name: {self.name}, locale: {self.locale}"
+
+    def delete(self):
+        """Delete the user."""
+        self.started = False
+        self.deleted = True
+        self.current_poll = None
+        self.username = "GDPR removed user"
+        self.name = "GDPR removed user"
+        self.locale = "English"
+        self.european_date_format = False
+        self.notifications_enabled = False

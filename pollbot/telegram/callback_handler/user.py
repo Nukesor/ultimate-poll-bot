@@ -193,15 +193,7 @@ def delete_user(session, context):
         update_poll_messages(session, context.bot, poll)
     session.commit()
 
-    user.started = False
-    user.banned = True
-    user.deleted = True
-    user.current_poll = None
-    user.username = "GDPR removed user"
-    user.name = "GDPR removed user"
-    user.locale = "English"
-    user.european_date_format = False
-    user.notifications_enabled = False
+    user.delete()
     session.commit()
 
     context.query.message.chat.send_message(

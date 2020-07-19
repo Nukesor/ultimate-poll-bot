@@ -118,7 +118,7 @@ def callback_query_wrapper(func):
         try:
             user, statistic = get_user(session, update.callback_query.from_user)
             # Cache ban value, so we don't have to lookup the value in our database
-            if user.banned:
+            if user.banned or user.deleted:
                 context.user_data["ban"] = True
                 return
 
