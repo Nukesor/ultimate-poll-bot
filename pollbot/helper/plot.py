@@ -149,7 +149,7 @@ def get_vote_activity(session):
         ax = group.plot(ax=ax, kind="bar", x="date", y="votes", label=key)
         ax.xaxis.set_major_locator(months)
         ax.xaxis.set_major_formatter(months_fmt)
-        ax.yaxis.set_ticks(np.arange(0, max_number, 100))
+        ax.yaxis.set_ticks(np.arange(0, max_number, 2000))
 
     image = image_from_figure(fig)
     image.name = "vote_statistics.png"
