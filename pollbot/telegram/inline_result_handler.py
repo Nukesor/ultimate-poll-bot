@@ -26,7 +26,7 @@ def handle_chosen_inline_result(bot, update, session, user):
         return
 
     if result.inline_message_id is None:
-        raise Exception(f"Got inline message without id: {update.__str__()}")
+        return
 
     try:
         reference = Reference(
