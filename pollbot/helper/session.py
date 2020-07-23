@@ -146,6 +146,7 @@ def callback_query_wrapper(func):
 
                 with configure_scope() as scope:
                     scope.set_tag("handler", "callback_query")
+                    scope.set_extra("query", update.callback_query)
                     sentry.capture_exception()
 
                 locale = "English"
@@ -174,21 +175,16 @@ def message_wrapper(private=False):
                     message = update.message
                 elif hasattr(update, "edited_message") and update.edited_message:
                     message = update.edited_message
-                else:
-                    with configure_scope() as scope:
-                        scope.set_extra("calling_function", func.__name__)
-                        scope.set_extra("update", update.to_dict())
-                        sentry.capture_message("Got an update without a message")
-                    return
 
                 user, _ = get_user(session, message.from_user)
                 if user.banned:
                     return
 
                 if private and message.chat.type != "private":
-                    message.chat.send_message(
-                        "Please do this in a direct conversation with me."
-                    )
+                    if message.chat.permissions.can_send_messages:
+                        message.chat.send_message(
+                            "Please do this in a direct conversation with me."
+                        )
                     return
 
                 response = func(context.bot, update, session, user)
@@ -213,6 +209,8 @@ def message_wrapper(private=False):
 
                     with configure_scope() as scope:
                         scope.set_tag("handler", "message")
+                        scope.set_extra("update", update.to_dict())
+                        scope.set_extra("function", func.__name__)
                         sentry.capture_exception()
 
                     locale = "English"
@@ -312,6 +310,7 @@ def ignore_exception(exception):
             or exception.message.startswith("Message identifier not specified")
             or exception.message.startswith("Schedule_date_invalid")
             or exception.message.startswith("Message to edit not found")
+            or exception.message.startswith("Chat_write_forbidden")
             or exception.message.startswith(
                 "Message is not modified: specified new message content"
             )
