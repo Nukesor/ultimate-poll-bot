@@ -1,16 +1,57 @@
 """Poll creation helper."""
 from typing import List
 
+from pollbot.config import config
+from pollbot.display.creation import get_init_text
 from pollbot.display.poll.compilation import get_poll_text
 from pollbot.helper.enums import ExpectedInput, ReferenceType
 from pollbot.helper.exceptions import RollbackException
 from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.i18n import i18n
-from pollbot.models import Option, Reference
+from pollbot.models import Option, Reference, Poll
 from pollbot.telegram.keyboard import (
     get_options_entered_keyboard,
     get_management_keyboard,
+    get_init_keyboard,
+    get_cancel_creation_keyboard,
 )
+
+
+def initialize_poll(session, user, chat):
+    """Initialize a new poll and send the user the poll creation message.
+
+    This function also prevents users from:
+        - Having too many polls.
+        - Creating a new poll, when they're already in the middle of
+            creating another poll
+    """
+    user.started = True
+
+    # Early return, if the user owns too many polls
+    if len(user.polls) > config["telegram"]["max_polls_per_user"]:
+        chat.send_message(
+            i18n.t("creation.too_many_polls", locale=user.locale, count=len(user.polls))
+        )
+        return
+
+    # Early return, if the user is already in the middle of creating a poll
+    if user.current_poll is not None and not user.current_poll.created:
+        chat.send_message(
+            i18n.t("creation.already_creating", locale=user.locale),
+            reply_markup=get_cancel_creation_keyboard(user.current_poll),
+        )
+        return
+
+    poll = Poll.create(user, session)
+    text = get_init_text(poll)
+    keyboard = get_init_keyboard(poll)
+
+    chat.send_message(
+        text,
+        parse_mode="markdown",
+        reply_markup=keyboard,
+        disable_web_page_preview=True,
+    )
 
 
 def next_option(tg_chat, poll, options):

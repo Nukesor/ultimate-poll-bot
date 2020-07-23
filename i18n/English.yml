@@ -179,7 +179,7 @@ settings:
         notifications_disabled: '*Notifications:* disabled'
         delete_all: '⚠️ Delete ALL polls ⚠️'
         delete_closed: '⚠️ Delete all closed polls ⚠️'
-        delete_all_confirmation: "Do you really want to delete ALL your polls?\nThis affects polls that are currently open and closed polls.\n⚠️ *This action is irrevertible.* ⚠️\n"
+        delete_all_confirmation: "Do you really want to delete ALL your polls?\n⚠️ *This action is irrevertible.* ⚠️\n"
         delete_closed_confirmation: "Do you really want to delete all closed polls?\n⚠️ *This action is irrevertible.* ⚠️\n"
         language: '*Default language:* %{language}'
         open_polls: '*Open polls:* %{count}'
@@ -199,6 +199,7 @@ management:
     permanently_close: "Do you really want to permanently close this poll?\nThe results will become visible, but people will on longer be able to vote\n⚠️ This action is irrevertible. ⚠️\n"
     delete: 'Do you really want to delete this poll?'
 creation:
+    too_many_polls: "You're owning too many polls (%{count}). Please keep it under 200 polls. Delete old ones first. \n\nYou can simply delete all old polls with /start->Settings->Delete all closed polls."
     already_creating: 'You are already creating a poll. Cancel the previous poll creation first'
     description: 'Now send me the description'
     skip_description: Skip

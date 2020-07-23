@@ -14,6 +14,7 @@ default_config = {
         "allow_private_vote": False,
         "max_user_votes_per_day": 200,
         "max_inline_shares": 20,
+        "max_polls_per_user": 200,
     },
     "database": {
         "sql_uri": "postgres://pollbot:localhost/pollbot",
@@ -44,3 +45,9 @@ if not os.path.exists(config_path):
     sys.exit(1)
 else:
     config = toml.load(config_path)
+
+    # Set default values for any missing keys in the loaded config
+    for key, category in default_config.items():
+        for option, value in category.items():
+            if option not in config[key]:
+                config[key][option] = value

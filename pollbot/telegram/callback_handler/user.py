@@ -1,19 +1,16 @@
 """User related callback handler."""
 from pollbot.i18n import i18n
 from pollbot.helper.update import remove_poll_messages, update_poll_messages
-from pollbot.display.creation import get_init_text
 from pollbot.display.settings import get_user_settings_text
 from pollbot.display.misc import (
     get_poll_list,
     get_help_text_and_keyboard,
 )
-from pollbot.models import Poll
+from pollbot.helper.creation import initialize_poll
 from pollbot.telegram.keyboard import (
     get_main_keyboard,
-    get_init_keyboard,
     get_user_settings_keyboard,
     get_user_language_keyboard,
-    get_cancel_creation_keyboard,
     get_donations_keyboard,
     get_delete_all_confirmation_keyboard,
     get_delete_user_final_confirmation_keyboard,
@@ -98,23 +95,8 @@ def init_poll(session, context):
     """Start the creation of a new poll."""
     user = context.user
     chat = context.query.message.chat
-    if user.current_poll is not None and not user.current_poll.created:
-        chat.send_message(
-            i18n.t("creation.already_creating", locale=user.locale),
-            reply_markup=get_cancel_creation_keyboard(user.current_poll),
-        )
-        return
 
-    poll = Poll.create(user, session)
-    text = get_init_text(poll)
-    keyboard = get_init_keyboard(poll)
-
-    chat.send_message(
-        text,
-        parse_mode="markdown",
-        reply_markup=keyboard,
-        disable_web_page_preview=True,
-    )
+    initialize_poll(session, user, chat)
 
 
 def toggle_notification(session, context):
@@ -145,7 +127,7 @@ def delete_all_confirmation(session, context):
 def delete_closed_confirmation(session, context):
     keyboard = get_delete_all_confirmation_keyboard(context.user, closed=True)
     context.query.message.edit_text(
-        i18n.t("settings.user.delete_all_confirmation", locale=context.user.locale),
+        i18n.t("settings.user.delete_closed_confirmation", locale=context.user.locale),
         parse_mode="markdown",
         reply_markup=keyboard,
     )
