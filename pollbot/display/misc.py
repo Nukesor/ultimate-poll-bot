@@ -25,14 +25,23 @@ def get_help_text_and_keyboard(user, current_category):
     return text, keyboard
 
 
-def get_poll_list(session, user, closed=False):
+def get_poll_list(session, user, offset, closed=False):
     """Get the a list of polls for the user."""
     polls = (
         session.query(Poll)
         .filter(Poll.user == user)
         .filter(Poll.created.is_(True))
         .filter(Poll.closed.is_(closed))
+        .offset(offset)
+        .limit(10)
         .all()
+    )
+    poll_count = (
+        session.query(Poll)
+        .filter(Poll.user == user)
+        .filter(Poll.created.is_(True))
+        .filter(Poll.closed.is_(closed))
+        .count()
     )
 
     if len(polls) == 0 and closed:
@@ -41,6 +50,6 @@ def get_poll_list(session, user, closed=False):
         return i18n.t("list.no_polls", locale=user.locale), None
 
     text = i18n.t("list.polls", locale=user.locale)
-    keyboard = get_poll_list_keyboard(polls)
+    keyboard = get_poll_list_keyboard(polls, closed, offset, poll_count)
 
     return text, keyboard

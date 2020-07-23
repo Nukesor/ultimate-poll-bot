@@ -62,7 +62,7 @@ def cancel_poll_creation(bot, update, session, user):
 @message_wrapper(private=True)
 def list_polls(bot, update, session, user):
     """Get a list of all active polls."""
-    text, keyboard = get_poll_list(session, user)
+    text, keyboard = get_poll_list(session, user, 0)
     update.message.chat.send_message(text, reply_markup=keyboard)
 
 
@@ -70,5 +70,5 @@ def list_polls(bot, update, session, user):
 @message_wrapper(private=True)
 def list_closed_polls(bot, update, session, user):
     """Get a list of all closed polls."""
-    text, keyboard = get_poll_list(session, user, closed=True)
+    text, keyboard = get_poll_list(session, user, 0, closed=True)
     update.message.chat.send_message(text, reply_markup=keyboard)

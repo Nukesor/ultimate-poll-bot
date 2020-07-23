@@ -50,14 +50,28 @@ def open_language_menu(session, context):
 
 def list_polls(session, context):
     """List all open polls of a user."""
-    text, keyboard = get_poll_list(session, context.user)
+    text, keyboard = get_poll_list(session, context.user, 0)
     context.query.message.chat.send_message(text, reply_markup=keyboard)
 
 
 def list_closed_polls(session, context):
     """List all open polls of a user."""
-    text, keyboard = get_poll_list(session, context.user, closed=True)
+    text, keyboard = get_poll_list(session, context.user, 0, closed=True)
     context.query.message.chat.send_message(text, reply_markup=keyboard)
+
+
+def list_polls_navigation(session, context):
+    """List all open polls of a user."""
+    text, keyboard = get_poll_list(session, context.user, int(context.payload))
+    context.query.message.edit_text(text, reply_markup=keyboard)
+
+
+def list_closed_polls_navigation(session, context):
+    """List all open polls of a user."""
+    text, keyboard = get_poll_list(
+        session, context.user, int(context.payload), closed=True
+    )
+    context.query.message.edit_text(text, reply_markup=keyboard)
 
 
 def open_donation(session, context):

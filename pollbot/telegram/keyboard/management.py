@@ -143,7 +143,7 @@ def get_deletion_confirmation(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_poll_list_keyboard(polls):
+def get_poll_list_keyboard(polls, closed, offset, poll_count):
     """Get the confirmation keyboard for poll deletion."""
     buttons = []
     for poll in polls:
@@ -152,5 +152,25 @@ def get_poll_list_keyboard(polls):
         if len(text) > 40:
             text = poll.name[0:40]
         buttons.append([InlineKeyboardButton(text, callback_data=payload)])
+
+    # Add navigation
+    navigation = []
+    if closed:
+        callback_type = CallbackType.user_list_closed_polls_navigation.value
+    else:
+        callback_type = CallbackType.user_list_polls_navigation.value
+
+    # Only show the previous button, if we aren't on the first page
+    if offset > 0:
+        previous_page = f"{callback_type}:{offset-10}:0"
+        navigation.append(InlineKeyboardButton("<", callback_data=previous_page))
+
+    # Only show the next button, if there's a next page
+    if poll_count > offset + 10:
+        next_page = f"{callback_type}:{offset+10}:0"
+        navigation.append(InlineKeyboardButton(">", callback_data=next_page))
+
+    if len(navigation) > 0:
+        buttons.append(navigation)
 
     return InlineKeyboardMarkup(buttons)

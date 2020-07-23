@@ -134,8 +134,13 @@ class CallbackType(Enum):
 
     # User
     user_menu = 200
+
     user_list_polls = 213
+    user_list_polls_navigation = 218
+
     user_list_closed_polls = 215
+    user_list_closed_polls_navigation = 220
+
     user_delete = 216
     user_delete_confirmation = 217
 
