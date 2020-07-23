@@ -1,6 +1,6 @@
 """Handle inline query results."""
 from telegram.ext import run_async
-from sqlalchemy.exc import DataError
+from sqlalchemy.exc import DataError, IntegrityError
 from psycopg2.errors import UniqueViolation
 
 from pollbot.helper.enums import ReferenceType
@@ -34,8 +34,10 @@ def handle_chosen_inline_result(bot, update, session, user):
         )
         session.add(reference)
         session.commit()
-    except UniqueViolation:
+    except (UniqueViolation, IntegrityError):
         # I don't know how this can happen, but it happens.
+        # It seems that user can spam click inline query, which then leads to
+        # multiple chosen_inline_result queries being sent to the bot.
         return
 
     update_reference(session, bot, poll, reference)
