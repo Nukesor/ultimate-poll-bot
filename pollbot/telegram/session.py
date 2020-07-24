@@ -109,15 +109,19 @@ def callback_query_wrapper(func):
         if context.user_data.get("ban"):
             return
 
-        temp_ban_time = context.user_data.get("temporary-ban-time")
-        if temp_ban_time is not None and temp_ban_time == date.today():
-            update.callback_query.answer(i18n.t("callback.spam"))
-            return
-
-        session = get_session()
         try:
+            # Check if the user is temporarily banned and send a message.
+            # The check is done via the local telegram cache. This way we can prevent
+            # opening a new DB connection for each spam request. (lots of performance)
+            temp_ban_time = context.user_data.get("temporary-ban-time")
+            if temp_ban_time is not None and temp_ban_time == date.today():
+                update.callback_query.answer(i18n.t("callback.spam"))
+                return
+
+            session = get_session()
+
             user, statistic = get_user(session, update.callback_query.from_user)
-            # Cache ban value, so we don't have to lookup the value in our database
+            # Cache ban value, so we don't have to lookup the value in our database on each request
             if user.banned or user.deleted:
                 context.user_data["ban"] = True
                 return
