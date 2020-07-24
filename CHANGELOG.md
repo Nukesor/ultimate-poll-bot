@@ -5,9 +5,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [1.6.0] -
 
-# Added
+### Added
 
 - Pagination when listing polls.
+
+### Changed
+
+- Users are only allowed to own 200 polls (by default).
+- Poll Messages won't be removed when deleting all/all closed polls.
+
+**Internal:**
+
+- Huge internal restructuring and refactoring
+- Updated from `raven` to `sentry-sdk`
+
+### Fixed
+
+- Fixed broken poll creation, when users added too many options at once.
+- Fixed exceptions when the bot was used in groups he wasn't allowed to send messages.
+- Fixed broken `/list` and `/list_closed` for users with too many polls
+- Fixed exceptions due to duplicate inline result updates.
+- Fixed exceptions due to channel posts in message handlers
+- Ignored exceptions when `/start` commands came in without a message.
 
 ## [1.5.0] - 2020-07-08
 

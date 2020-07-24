@@ -6,9 +6,12 @@ from telegram.error import BadRequest
 
 def remove_poll_messages(session, bot, poll, remove_all=False):
     """Remove all messages (references) of a poll."""
+    # In case the poll messages should not be removed,
+    # only close the poll and update the message, if necessary.
     if not remove_all:
-        poll.closed = True
-        send_updates(session, bot, poll)
+        if not poll.closed:
+            poll.closed = True
+            send_updates(session, bot, poll)
         return
 
     for reference in poll.references:
