@@ -1,5 +1,7 @@
-from pollbot.enum import ReferenceType
+from pollbot.enums import ReferenceType
+from pollbot.i18n import i18n
 from pollbot.poll.update import send_updates
+from telegram.error import BadRequest
 
 
 def remove_poll_messages(session, bot, poll, remove_all=False):

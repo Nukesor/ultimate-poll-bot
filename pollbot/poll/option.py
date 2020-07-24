@@ -1,7 +1,11 @@
 from typing import List
 
-from pollbot.enums import OptionSorting, PollType, VoteResultType
+from pollbot.i18n import i18n
+from pollbot.models import Option
+from pollbot.enums import OptionSorting, PollType, VoteResultType, ExpectedInput
 from pollbot.poll.helper import poll_allows_cumulative_votes
+from pollbot.exceptions import RollbackException
+from pollbot.telegram.keyboard.creation import get_options_entered_keyboard
 
 
 def add_text_options_from_list(session, poll, options: List[str]):

@@ -33,21 +33,6 @@ def remove_old_references(session, bot, poll, user):
         session.commit()
 
 
-def poll_has_limited_votes(poll):
-    """Check whether the poll has limited votes."""
-    poll_type_with_vote_count = [
-        PollType.limited_vote.name,
-        PollType.cumulative_vote.name,
-    ]
-
-    return poll.poll_type in poll_type_with_vote_count
-
-
-def poll_allows_cumulative_votes(poll):
-    """Check whether this poll's type is cumulative."""
-    return poll.poll_type in [PollType.cumulative_vote.name, PollType.count_vote.name]
-
-
 def calculate_total_votes(poll):
     """Calculate the total number of votes of a poll."""
     total = 0
@@ -83,3 +68,18 @@ def poll_allows_multiple_votes(poll):
     ]
 
     return poll.poll_type in multiple_poll_types
+
+
+def poll_has_limited_votes(poll):
+    """Check whether the poll has limited votes."""
+    poll_type_with_vote_count = [
+        PollType.limited_vote.name,
+        PollType.cumulative_vote.name,
+    ]
+
+    return poll.poll_type in poll_type_with_vote_count
+
+
+def poll_allows_cumulative_votes(poll):
+    """Check whether this poll's type is cumulative."""
+    return poll.poll_type in [PollType.cumulative_vote.name, PollType.count_vote.name]

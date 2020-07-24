@@ -4,7 +4,8 @@ from datetime import datetime
 from pollbot.decorators import poll_required
 from pollbot.display.poll.compilation import get_poll_text
 from pollbot.i18n import i18n
-from pollbot.poll.update import remove_poll_messages, update_poll_messages
+from pollbot.poll.update import update_poll_messages
+from pollbot.poll.remove import remove_poll_messages
 from pollbot.telegram.keyboard import get_management_keyboard
 
 

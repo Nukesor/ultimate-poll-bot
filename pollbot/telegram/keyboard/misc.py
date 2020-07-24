@@ -1,7 +1,7 @@
 """All keyboards for external users that don't own the poll."""
 from pollbot.enums import CallbackType
 from pollbot.i18n import i18n
-from pollbot.telegram.keyboard import get_back_to_menu_button
+from pollbot.telegram.keyboard.user import get_back_to_menu_button
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 

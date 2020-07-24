@@ -4,7 +4,7 @@ from pollbot.enums import PollType, StartAction
 from pollbot.helper import get_escaped_bot_name
 from pollbot.i18n import i18n
 from pollbot.poll.helper import translate_poll_type
-from pollbot.telegram.keyboard import get_start_button_payload
+from pollbot.telegram.keyboard.helper import get_start_button_payload
 
 
 def get_settings_text(poll):

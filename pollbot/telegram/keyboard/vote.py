@@ -9,7 +9,7 @@ from pollbot.i18n import i18n
 from pollbot.models import Vote
 from pollbot.poll.helper import poll_allows_cumulative_votes
 from pollbot.poll.option import get_sorted_options
-from pollbot.telegram.keyboard import get_start_button_payload
+from pollbot.telegram.keyboard.helper import get_start_button_payload
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from .management import get_back_to_management_button
