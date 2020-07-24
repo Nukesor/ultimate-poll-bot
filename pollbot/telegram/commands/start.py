@@ -11,8 +11,8 @@ from pollbot.display.poll.compilation import (
 )
 
 from pollbot.config import config
-from pollbot.helper.enums import ExpectedInput, StartAction, ReferenceType
-from pollbot.helper.session import message_wrapper
+from pollbot.enums import ExpectedInput, StartAction, ReferenceType
+from pollbot.telegram.session import message_wrapper
 from pollbot.helper.text import split_text
 from pollbot.helper.stats import increase_stat
 from pollbot.telegram.keyboard import get_main_keyboard

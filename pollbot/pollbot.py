@@ -12,7 +12,7 @@ from telegram.ext import (
 )
 
 from pollbot.config import config
-from pollbot.helper.filters import CustomFilters
+from pollbot.telegram.filters import CustomFilters
 from pollbot.telegram.callback_handler import (
     handle_async_callback_query,
     handle_callback_query,

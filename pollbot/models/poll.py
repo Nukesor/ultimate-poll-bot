@@ -19,7 +19,7 @@ from sqlalchemy.types import (
 )
 
 from pollbot.db import base
-from pollbot.helper.enums import PollType, UserSorting, OptionSorting, ExpectedInput
+from pollbot.enums import PollType, UserSorting, OptionSorting, ExpectedInput
 
 
 class Poll(base):

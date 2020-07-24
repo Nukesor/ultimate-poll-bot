@@ -3,10 +3,10 @@ from telegram.ext import run_async
 from sqlalchemy.exc import DataError, IntegrityError
 from psycopg2.errors import UniqueViolation
 
-from pollbot.helper.enums import ReferenceType
+from pollbot.enums import ReferenceType
 from pollbot.helper.stats import increase_user_stat
-from pollbot.helper.update import update_reference
-from pollbot.helper.session import inline_result_wrapper
+from pollbot.poll.update import update_reference
+from pollbot.telegram.session import inline_result_wrapper
 from pollbot.models import Poll, Reference
 
 

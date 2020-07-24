@@ -1,12 +1,12 @@
 """User related callback handler."""
 from pollbot.i18n import i18n
-from pollbot.helper.update import remove_poll_messages, update_poll_messages
+from pollbot.poll.update import remove_poll_messages, update_poll_messages
 from pollbot.display.settings import get_user_settings_text
 from pollbot.display.misc import (
     get_poll_list,
     get_help_text_and_keyboard,
 )
-from pollbot.helper.creation import initialize_poll
+from pollbot.poll.creation import initialize_poll
 from pollbot.telegram.keyboard import (
     get_main_keyboard,
     get_user_settings_keyboard,

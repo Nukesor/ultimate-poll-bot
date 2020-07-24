@@ -3,13 +3,13 @@ from datetime import date, datetime, time
 
 from dateutil.relativedelta import relativedelta
 
+from pollbot.decorators import poll_required
 from pollbot.display import get_settings_text
 from pollbot.display.creation import get_datepicker_text
-from pollbot.helper.creation import add_options_multiline
-from pollbot.helper.enums import DatepickerContext
-from pollbot.helper.poll import poll_required
-from pollbot.helper.update import update_poll_messages
+from pollbot.enums import DatepickerContext
 from pollbot.i18n import i18n
+from pollbot.poll.option import add_options_multiline
+from pollbot.poll.update import update_poll_messages
 from pollbot.telegram.keyboard.date_picker import (
     get_creation_datepicker_keyboard,
     get_add_option_datepicker_keyboard,

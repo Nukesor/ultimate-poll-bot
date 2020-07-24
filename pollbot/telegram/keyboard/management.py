@@ -5,7 +5,7 @@ from telegram import (
 )
 
 from pollbot.i18n import i18n
-from pollbot.helper.enums import CallbackType, CallbackResult
+from pollbot.enums import CallbackType, CallbackResult
 
 
 def get_back_to_management_button(poll):

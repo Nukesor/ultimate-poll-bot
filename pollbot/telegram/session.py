@@ -14,7 +14,7 @@ from sentry_sdk import configure_scope
 from pollbot.config import config
 from pollbot.db import get_session
 from pollbot.helper.stats import increase_stat
-from pollbot.helper.exceptions import RollbackException
+from pollbot.exceptions import RollbackException
 from pollbot.i18n import i18n
 from pollbot.models import User, UserStatistic
 from pollbot.sentry import sentry

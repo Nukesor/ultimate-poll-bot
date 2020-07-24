@@ -2,7 +2,7 @@
 from telegram.ext import run_async
 
 from pollbot.i18n import i18n
-from pollbot.helper.session import message_wrapper
+from pollbot.telegram.session import message_wrapper
 from pollbot.display.misc import get_help_text_and_keyboard
 from pollbot.telegram.keyboard import get_donations_keyboard
 

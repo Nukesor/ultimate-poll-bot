@@ -6,8 +6,8 @@ from telegram.ext import run_async
 
 from pollbot.display import User
 from pollbot.display.creation import get_native_poll_merged_text
-from pollbot.helper.native_polls import merge_from_native_poll
-from pollbot.helper.session import message_wrapper
+from pollbot.poll.native_polls import merge_from_native_poll
+from pollbot.telegram.session import message_wrapper
 from pollbot.i18n import i18n
 from pollbot.models import Poll
 from pollbot.telegram.keyboard import (

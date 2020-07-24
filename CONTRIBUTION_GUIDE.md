@@ -106,7 +106,7 @@ Handling of private text messages.
 This isn't too much.
 It's basically a single entry point, which interprets the given user input depending on the current `User.expected_input` state.
 
-Look at the `helper.enum.ExpectedInput` enum for all possible inputs.
+Look at the `enum.ExpectedInput` enum for all possible inputs.
 
 Examples:
 - Poll name, description, options etc.
@@ -168,7 +168,7 @@ If `CallbackType` is invalid, an exception will be thrown, since it's expected!
 
 # Session helper
 
-Take a look at `helper.session`.
+Take a look at `telegram.session`.
 
 In here you can find convenience helper that are used around **EVERY** Telegram handler.
 

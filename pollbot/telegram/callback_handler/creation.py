@@ -8,10 +8,10 @@ from pollbot.display.creation import (
     get_init_anonymziation_settings_text,
     get_native_poll_merged_text,
 )
-from pollbot.helper.creation import create_poll
-from pollbot.helper.enums import PollType, ExpectedInput
-from pollbot.helper.exceptions import RollbackException
-from pollbot.helper.poll import poll_required
+from pollbot.poll.creation import create_poll
+from pollbot.enums import PollType, ExpectedInput
+from pollbot.exceptions import RollbackException
+from pollbot.decorators import poll_required
 from pollbot.i18n import i18n
 from pollbot.models import Poll
 from pollbot.telegram.keyboard import (

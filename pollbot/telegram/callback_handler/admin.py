@@ -2,7 +2,7 @@
 import time
 
 from pollbot.helper.plot import send_plots
-from pollbot.helper.update import update_poll_messages
+from pollbot.poll.update import update_poll_messages
 from pollbot.telegram.keyboard import get_admin_settings_keyboard
 from pollbot.models import Poll
 from pollbot.display.admin import stats

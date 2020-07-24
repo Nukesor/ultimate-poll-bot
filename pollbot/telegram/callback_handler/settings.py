@@ -1,8 +1,8 @@
 """Callback functions needed during creation of a Poll."""
 from datetime import date
 from pollbot.i18n import i18n
-from pollbot.helper.poll import poll_required
-from pollbot.helper.update import update_poll_messages
+from pollbot.decorators import poll_required
+from pollbot.poll.update import update_poll_messages
 from pollbot.display import get_settings_text
 from pollbot.display.poll.compilation import get_poll_text
 from pollbot.display.creation import get_datepicker_text
@@ -16,7 +16,7 @@ from pollbot.telegram.keyboard import (
     get_due_date_datepicker_keyboard,
     get_settings_language_keyboard,
 )
-from pollbot.helper.enums import ExpectedInput
+from pollbot.enums import ExpectedInput
 from pollbot.models import Option, User, Vote
 
 

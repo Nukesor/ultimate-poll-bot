@@ -4,7 +4,7 @@ from telegram import (
 )
 from pollbot.i18n import i18n
 
-from pollbot.helper.enums import (
+from pollbot.enums import (
     CallbackType,
     UserSorting,
     OptionSorting,

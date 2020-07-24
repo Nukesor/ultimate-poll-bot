@@ -2,16 +2,16 @@
 from sqlalchemy import func
 
 from pollbot.i18n import i18n
-from pollbot.helper.poll import (
+from pollbot.poll.helper import (
     poll_allows_cumulative_votes,
     poll_allows_multiple_votes,
     calculate_total_votes,
 )
-from pollbot.helper.vote import (
+from pollbot.poll.vote import (
     get_sorted_votes,
     get_sorted_doodle_votes,
 )
-from pollbot.helper.enums import PollType
+from pollbot.enums import PollType
 from pollbot.models import (
     User,
     Vote,

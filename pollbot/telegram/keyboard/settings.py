@@ -6,7 +6,7 @@ from telegram import (
 
 from pollbot.i18n import i18n, supported_languages
 from pollbot.telegram.keyboard import get_back_to_management_button
-from pollbot.helper.enums import (
+from pollbot.enums import (
     CallbackType,
     CallbackResult,
 )

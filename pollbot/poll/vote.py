@@ -1,5 +1,5 @@
 """Helper functions for votes."""
-from pollbot.helper.enums import UserSorting
+from pollbot.enums import UserSorting
 
 
 def get_sorted_votes(poll, votes):

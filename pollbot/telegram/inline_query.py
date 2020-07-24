@@ -11,9 +11,9 @@ from telegram import (
 
 from pollbot.i18n import i18n
 from pollbot.config import config
-from pollbot.helper.enums import ReferenceType
+from pollbot.enums import ReferenceType
 from pollbot.models import Poll
-from pollbot.helper.session import inline_query_wrapper
+from pollbot.telegram.session import inline_query_wrapper
 
 
 @run_async

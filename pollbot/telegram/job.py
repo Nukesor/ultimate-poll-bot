@@ -9,8 +9,8 @@ from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 from pollbot.i18n import i18n
 from pollbot.config import config
 from pollbot.models import Update, Poll, DailyStatistic, UserStatistic
-from pollbot.helper.session import job_wrapper
-from pollbot.helper.update import send_updates, update_poll_messages
+from pollbot.telegram.session import job_wrapper
+from pollbot.poll.update import send_updates, update_poll_messages
 
 
 @run_async

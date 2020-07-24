@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from telegram import Poll as NativePoll
 
-from pollbot.helper.creation import add_text_options_from_list
-from pollbot.helper.enums import PollType
+from pollbot.poll.option import add_text_options_from_list
+from pollbot.enums import PollType
 from pollbot.models import Poll
 
 

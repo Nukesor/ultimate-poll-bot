@@ -2,8 +2,8 @@
 from pollbot.i18n import i18n
 from pollbot.config import config
 from pollbot.helper import get_escaped_bot_name
-from pollbot.helper.poll import translate_poll_type
-from pollbot.helper.enums import PollType, StartAction
+from pollbot.poll.helper import translate_poll_type
+from pollbot.enums import PollType, StartAction
 from pollbot.telegram.keyboard import get_start_button_payload
 
 

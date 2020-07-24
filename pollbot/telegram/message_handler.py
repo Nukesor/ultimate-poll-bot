@@ -1,13 +1,13 @@
 """Handle messages."""
 from pollbot.display import get_settings_text
-from pollbot.helper.creation import (
+from pollbot.poll.option import (
     next_option,
     add_options_multiline,
 )
-from pollbot.helper.enums import ExpectedInput, PollType, ReferenceType
-from pollbot.helper.poll import remove_old_references
-from pollbot.helper.session import message_wrapper
-from pollbot.helper.update import update_poll_messages
+from pollbot.enums import ExpectedInput, PollType, ReferenceType
+from pollbot.poll.helper import remove_old_references
+from pollbot.telegram.session import message_wrapper
+from pollbot.poll.update import update_poll_messages
 from pollbot.i18n import i18n
 from pollbot.models import Reference
 from pollbot.telegram.callback_handler.creation import create_poll

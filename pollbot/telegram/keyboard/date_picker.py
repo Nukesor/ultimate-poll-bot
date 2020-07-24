@@ -4,7 +4,7 @@ from datetime import date
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from pollbot.i18n import i18n
-from pollbot.helper.enums import CallbackType, DatepickerContext
+from pollbot.enums import CallbackType, DatepickerContext
 
 
 def get_creation_datepicker_keyboard(poll, current_date):

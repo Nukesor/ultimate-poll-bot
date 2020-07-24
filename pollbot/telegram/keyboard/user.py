@@ -5,7 +5,7 @@ from telegram import (
 )
 
 from pollbot.i18n import supported_languages, i18n
-from pollbot.helper.enums import CallbackType
+from pollbot.enums import CallbackType
 
 
 def get_back_to_menu_button(user):

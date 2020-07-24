@@ -1,7 +1,7 @@
 from telegram.ext import run_async
 
 from pollbot.i18n import i18n
-from pollbot.helper.session import message_wrapper
+from pollbot.telegram.session import message_wrapper
 from pollbot.display.settings import get_user_settings_text
 from pollbot.telegram.keyboard.user import (
     get_user_settings_keyboard,

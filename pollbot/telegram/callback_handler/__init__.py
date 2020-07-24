@@ -5,8 +5,8 @@ from telegram.ext import run_async
 from sqlalchemy.exc import IntegrityError
 
 from pollbot.helper.stats import increase_stat, increase_user_stat
-from pollbot.helper.session import callback_query_wrapper
-from pollbot.helper.enums import CallbackType, CallbackResult
+from pollbot.telegram.session import callback_query_wrapper
+from pollbot.enums import CallbackType, CallbackResult
 from pollbot.models import Poll, Option, UserStatistic
 
 from .vote import handle_vote

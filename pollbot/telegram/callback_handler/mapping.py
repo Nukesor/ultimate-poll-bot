@@ -1,4 +1,4 @@
-from pollbot.helper.enums import CallbackType
+from pollbot.enums import CallbackType
 from .admin import open_admin_settings, plot, update_all
 from .creation import (
     toggle_anonymity,

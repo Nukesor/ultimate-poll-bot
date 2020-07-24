@@ -6,7 +6,7 @@ from telegram import (
 
 from pollbot.telegram.keyboard import get_back_to_menu_button
 from pollbot.i18n import i18n
-from pollbot.helper.enums import CallbackType
+from pollbot.enums import CallbackType
 
 
 def get_help_keyboard(user, categories, current_category):

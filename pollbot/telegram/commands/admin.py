@@ -8,7 +8,7 @@ from telegram.error import BadRequest, Unauthorized
 from pollbot.models import User
 from pollbot.config import config
 from pollbot.i18n import i18n
-from pollbot.helper.session import message_wrapper
+from pollbot.telegram.session import message_wrapper
 
 
 def admin_required(function):

@@ -3,7 +3,7 @@ from telegram.ext import run_async
 from telegram.error import BadRequest
 
 from pollbot.i18n import i18n
-from pollbot.helper.session import message_wrapper
+from pollbot.telegram.session import message_wrapper
 from pollbot.models import Poll, Notification
 from pollbot.telegram.keyboard.external import get_notify_keyboard
 

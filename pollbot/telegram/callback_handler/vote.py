@@ -7,10 +7,10 @@ from sqlalchemy.orm.exc import (
 )
 
 from pollbot.i18n import i18n
-from pollbot.helper.poll import poll_allows_cumulative_votes
+from pollbot.poll.helper import poll_allows_cumulative_votes
 from pollbot.helper.stats import increase_stat
-from pollbot.helper.enums import PollType, CallbackResult
-from pollbot.helper.update import update_poll_messages
+from pollbot.enums import PollType, CallbackResult
+from pollbot.poll.update import update_poll_messages
 
 from pollbot.models import Vote
 

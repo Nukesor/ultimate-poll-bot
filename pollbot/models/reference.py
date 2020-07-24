@@ -14,7 +14,7 @@ from sqlalchemy.types import (
 from sqlalchemy.orm import relationship
 
 from pollbot.db import base
-from pollbot.helper.enums import ReferenceType
+from pollbot.enums import ReferenceType
 
 
 class Reference(base):

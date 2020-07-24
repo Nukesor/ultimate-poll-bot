@@ -2,7 +2,7 @@ from telegram.error import BadRequest, Unauthorized
 
 from pollbot.models import Reference
 from pollbot.i18n import i18n
-from pollbot.helper.enums import PollType
+from pollbot.enums import PollType
 
 
 def remove_old_references(session, bot, poll, user):
@@ -73,18 +73,6 @@ def translate_poll_type(poll_type, locale):
     }
 
     return mapping[poll_type]
-
-
-def poll_required(function):
-    """Return if the poll does not exist in the context object."""
-
-    def wrapper(session, context):
-        if context.poll is None:
-            return i18n.t("callback.poll_no_longer_exists", locale=context.user.locale)
-
-        return function(session, context, context.poll)
-
-    return wrapper
 
 
 def poll_allows_multiple_votes(poll):

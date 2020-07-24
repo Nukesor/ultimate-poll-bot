@@ -5,7 +5,7 @@ from telegram import (
 )
 
 from pollbot.i18n import i18n
-from pollbot.helper.enums import CallbackType
+from pollbot.enums import CallbackType
 
 
 def get_notify_keyboard(polls):

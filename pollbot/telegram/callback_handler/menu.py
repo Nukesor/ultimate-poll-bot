@@ -1,13 +1,14 @@
 """Callback functions needed during creation of a Poll."""
-from pollbot.i18n import i18n
-from pollbot.models import Reference
-from pollbot.helper.poll import poll_required, remove_old_references
-from pollbot.helper.enums import CallbackResult, ExpectedInput, ReferenceType
+from pollbot.decorators import poll_required
 from pollbot.display import get_settings_text
 from pollbot.display.poll.compilation import (
     get_poll_text_and_vote_keyboard,
     get_poll_text,
 )
+from pollbot.enums import CallbackResult, ExpectedInput, ReferenceType
+from pollbot.i18n import i18n
+from pollbot.models import Reference
+from pollbot.poll.helper import remove_old_references
 from pollbot.telegram.keyboard import (
     get_change_poll_type_keyboard,
     get_deletion_confirmation,
