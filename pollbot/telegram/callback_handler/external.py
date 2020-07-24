@@ -7,10 +7,8 @@ from pollbot.enums import ExpectedInput
 from pollbot.helper.stats import increase_stat
 from pollbot.i18n import i18n
 from pollbot.models import Notification
-from pollbot.telegram.keyboard import (
-    get_external_add_option_keyboard,
-    get_external_datepicker_keyboard,
-)
+from pollbot.telegram.keyboard.external import get_external_add_option_keyboard
+from pollbot.telegram.keyboard.date_picker import get_external_datepicker_keyboard
 
 
 @poll_required

@@ -1,8 +1,9 @@
 """Reply keyboards."""
 from pollbot.enums import CallbackResult, CallbackType
 from pollbot.i18n import i18n, supported_languages
-from pollbot.telegram.keyboard import get_back_to_management_button
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
+from .management import get_back_to_management_button
 
 
 def get_back_to_settings_button(poll):

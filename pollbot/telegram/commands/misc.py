@@ -1,7 +1,7 @@
 """Misc commands."""
 from pollbot.display.misc import get_help_text_and_keyboard
 from pollbot.i18n import i18n
-from pollbot.telegram.keyboard import get_donations_keyboard
+from pollbot.telegram.keyboard.misc import get_donations_keyboard
 from pollbot.telegram.session import message_wrapper
 from telegram.ext import run_async
 

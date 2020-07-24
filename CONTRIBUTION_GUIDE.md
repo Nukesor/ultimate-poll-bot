@@ -32,7 +32,6 @@ There are a few Postgres-only features used in this project.
 It may be possible to use it in combination with another database, but a few important features and safe-guards would be lost in the progress.
 Thereby, this won't be added to the main project, please create a spite-fork for this.
 
-
 # Top level structure:
 
 - `bin` In here you can find a bunch of helper scripts for development.
@@ -48,7 +47,6 @@ Thereby, this won't be added to the main project, please create a spite-fork for
 - `queries` Some helper queries. Nothing important and probably not interesting for you.
 - `tests` Well, there was an attempt to test stuff. If you would like to add tests, please go ahead!! It's very much appreciated.
 
-
 # The main source code structure
 
 - `config.py` Configuration parsing and initialization.
@@ -56,24 +54,23 @@ Thereby, this won't be added to the main project, please create a spite-fork for
 - `i18n.py` Internationalization initialization.
 - `sentry.py` Sentry initialization and a helper/wrapper class.
 - `pollbot.py` The main file of the project. In here the Bot and **all** Handlers are initialized.
+- `enums.py` All enums that are used in the project.
 
 ## display
+
 This module is all about creating and formatting text.
 
 This includes various interfaces, such as settings, styling, etc. as well as the full logic for compiling poll texts.
 
-The stuff for creating poll texts is contained in it's own submodule `display.poll`.
+The stuff for compiling poll texts is contained in it's own submodule `display.poll`.
 
 ## helper
+
 In here you can find a lot of small helper functions.
 These include:
-- Helper functions for creating/managing polls
-- Poll update logic
-- Sorting functions
-- Enums
-- Session handling
+
 - Statistics
-- I didn't know where else to put this
+- Stuff i didn't know where else to put this
 
 ## models
 
@@ -82,12 +79,25 @@ Each file is dedicated to a single model.
 
 This should be fairly straight forward.
 
+## poll
+
+Most of the logic for managing polls.
+This includes:
+
+- Poll update logic
+- Poll remove logic
+- Poll voting logic
+- Sorting functions
+- Helper functions for creating/managing polls
+- Helper functions for adding/removing options
+
 ## telegram
 
 Now we're getting to the juicy part.
 
 - `inline_query.py` Everything that happens when an inline query with `@ultimate_pollbot word` is fired.
 - `inline_result_handler.py` Everything that happens somebody selects a result from an inline query.
+- `session.py` Wrappers for all telegram calls. Take a look at the _Session helper_ section for more information.
 
 ### job.py
 
@@ -109,6 +119,7 @@ It's basically a single entry point, which interprets the given user input depen
 Look at the `enum.ExpectedInput` enum for all possible inputs.
 
 Examples:
+
 - Poll name, description, options etc.
 - Added option by external user.
 - Option added after poll has been created.
@@ -119,14 +130,10 @@ This folder is dedicated to helper functions for creating **all** keyboards used
 
 If you want to change a keyboard or add a new keyboard, please add it to the files in this folder.
 
-Frankly, this folder is a little messy. Sorry for that.
-The imports are pretty little ugly, since I started out using a lot of `import * from .name` in `keyboard/__init__`, so I could import using `from telegram.keyboard import name`.
-
 ### Commands
 
 In here you can find all direct command handlers. E.g. `/start` or `/create`.
 This should be pretty straight forward.
-
 
 ### Callback handler
 
@@ -142,7 +149,6 @@ In general, there are two entry points for callbacks in `callback_handler.__init
     Voting is an edge-case, since this has to be async to prevent a bottle neck.
     Therefore, there's a lot of special exception handling in the whole voting logic.
 
-
 To add a new function to either of those handlers, take a look at the `callback_handler.mapping` file.
 
 In here, you can assign a CallbackType to a function.
@@ -153,18 +159,17 @@ Depending on the `CallbackType` in this payload, the respective handler will the
 `CallbackType` is expected in **EVERY** payload. Otherwise we won't be able to call the correct callback handling function.
 The rest can be used arbitrarily, but the second argument is used for `poll.id` in most cases.
 
-
 **CallbackContext**
 
 This is a nice helper class that's passed into all callback functions.
 It automatically parses the payload and tries to interpret:
+
 - the first element as `CallbackType`
 - the second argument as a `Poll`, which is then stored in `CallbackContext.poll`
 - the third argument as `CallbackResult`
 
 The second and third can fail.
 If `CallbackType` is invalid, an exception will be thrown, since it's expected!
-
 
 # Session helper
 
@@ -173,10 +178,10 @@ Take a look at `telegram.session`.
 In here you can find convenience helper that are used around **EVERY** Telegram handler.
 
 They do this stuff:
+
 - User initialization
 - Database session initialization
 - Exception handling and reporting
 - Check whether users are allowed to use the bot
-
 
 If you plan to create a new Telegram handler or if you want to handle some exceptions, please consider using or adjusting these session handlers.

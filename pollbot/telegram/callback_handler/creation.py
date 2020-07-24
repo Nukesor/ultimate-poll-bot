@@ -14,9 +14,8 @@ from pollbot.exceptions import RollbackException
 from pollbot.i18n import i18n
 from pollbot.models import Poll
 from pollbot.poll.creation import create_poll
-from pollbot.telegram.keyboard import (
+from pollbot.telegram.keyboard.creation import (
     get_change_poll_type_keyboard,
-    get_creation_datepicker_keyboard,
     get_init_keyboard,
     get_init_settings_keyboard,
     get_native_poll_merged_keyboard,
@@ -24,6 +23,7 @@ from pollbot.telegram.keyboard import (
     get_options_entered_keyboard,
     get_skip_description_keyboard,
 )
+from pollbot.telegram.keyboard.date_picker import get_creation_datepicker_keyboard
 
 from .user import init_poll
 
@@ -87,8 +87,7 @@ def skip_description(session, context, poll):
             i18n.t("creation.option.first", locale=context.user.locale),
             reply_markup=get_open_datepicker_keyboard(poll),
         )
-    else:  # options were already prefilled e.g. by native poll
-        # TODO: what if user changed poll type?
+    else:
         create_poll(session, poll, context.user, context.tg_chat, context.query.message)
 
 
@@ -96,7 +95,6 @@ def skip_description(session, context, poll):
 def show_poll_type_keyboard(session, context, poll):
     """Show the keyboard to change poll type."""
 
-    # TODO: Review if the poll isn't already available from arguments..? @Nukesor
     poll = session.query(Poll).get(context.payload)
 
     keyboard = get_change_poll_type_keyboard(poll)

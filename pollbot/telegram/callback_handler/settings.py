@@ -9,16 +9,18 @@ from pollbot.enums import ExpectedInput
 from pollbot.i18n import i18n
 from pollbot.models import Option, User, Vote
 from pollbot.poll.update import update_poll_messages
-from pollbot.telegram.keyboard import (
-    get_add_option_datepicker_keyboard,
+from pollbot.telegram.keyboard.settings import (
     get_add_option_keyboard,
     get_anonymization_confirmation_keyboard,
-    get_due_date_datepicker_keyboard,
     get_remove_option_keyboard,
     get_settings_keyboard,
     get_settings_language_keyboard,
-    get_styling_settings_keyboard,
 )
+from pollbot.telegram.keyboard.date_picker import (
+    get_add_option_datepicker_keyboard,
+    get_due_date_datepicker_keyboard,
+)
+from pollbot.telegram.keyboard.styling import get_styling_settings_keyboard
 
 
 def send_settings_message(context):

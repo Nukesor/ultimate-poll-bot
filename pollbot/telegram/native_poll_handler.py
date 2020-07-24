@@ -6,7 +6,7 @@ from pollbot.display.creation import get_native_poll_merged_text
 from pollbot.i18n import i18n
 from pollbot.models import Poll
 from pollbot.poll.native_polls import merge_from_native_poll
-from pollbot.telegram.keyboard import (
+from pollbot.telegram.keyboard.creation import (
     get_native_poll_merged_keyboard,
     get_replace_current_creation_keyboard,
 )

@@ -5,14 +5,14 @@ from pollbot.i18n import i18n
 from pollbot.poll.creation import initialize_poll
 from pollbot.poll.update import update_poll_messages
 from pollbot.poll.remove import remove_poll_messages
-from pollbot.telegram.keyboard import (
+from pollbot.telegram.keyboard.user import (
     get_delete_all_confirmation_keyboard,
     get_delete_user_final_confirmation_keyboard,
-    get_donations_keyboard,
     get_main_keyboard,
     get_user_language_keyboard,
     get_user_settings_keyboard,
 )
+from pollbot.telegram.keyboard.misc import get_donations_keyboard
 
 
 def open_main_menu(session, context):

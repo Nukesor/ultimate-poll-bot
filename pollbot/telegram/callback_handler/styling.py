@@ -4,7 +4,7 @@ from pollbot.display.poll.compilation import get_poll_text
 from pollbot.enums import OptionSorting, UserSorting
 from pollbot.i18n import i18n
 from pollbot.poll.update import update_poll_messages
-from pollbot.telegram.keyboard import (
+from pollbot.telegram.keyboard.styling import (
     get_manual_option_order_keyboard,
     get_styling_settings_keyboard,
 )

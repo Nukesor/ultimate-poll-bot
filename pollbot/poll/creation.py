@@ -7,12 +7,12 @@ from pollbot.exceptions import RollbackException
 from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.i18n import i18n
 from pollbot.models import Option, Poll, Reference
-from pollbot.telegram.keyboard import (
+from pollbot.telegram.keyboard.creation import (
     get_cancel_creation_keyboard,
     get_init_keyboard,
-    get_management_keyboard,
     get_options_entered_keyboard,
 )
+from pollbot.telegram.keyboard.management import get_management_keyboard
 
 
 def initialize_poll(session, user, chat):

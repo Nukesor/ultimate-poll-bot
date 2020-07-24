@@ -12,7 +12,7 @@ from pollbot.helper.stats import increase_stat
 from pollbot.helper.text import split_text
 from pollbot.i18n import i18n
 from pollbot.models import Poll, Reference
-from pollbot.telegram.keyboard import get_main_keyboard
+from pollbot.telegram.keyboard.user import get_main_keyboard
 from pollbot.telegram.keyboard.external import (
     get_external_add_option_keyboard,
     get_external_share_keyboard,

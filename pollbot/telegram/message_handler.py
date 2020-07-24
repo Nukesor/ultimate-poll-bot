@@ -7,9 +7,9 @@ from pollbot.poll.helper import remove_old_references
 from pollbot.poll.option import add_options_multiline, next_option
 from pollbot.poll.update import update_poll_messages
 from pollbot.telegram.callback_handler.creation import create_poll
-from pollbot.telegram.keyboard import (
+from pollbot.telegram.keyboard.settings import get_settings_keyboard
+from pollbot.telegram.keyboard.creation import (
     get_open_datepicker_keyboard,
-    get_settings_keyboard,
     get_skip_description_keyboard,
 )
 from pollbot.telegram.session import message_wrapper

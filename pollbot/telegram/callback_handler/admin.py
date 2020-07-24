@@ -5,7 +5,7 @@ from pollbot.display.admin import stats
 from pollbot.helper.plot import send_plots
 from pollbot.models import Poll
 from pollbot.poll.update import update_poll_messages
-from pollbot.telegram.keyboard import get_admin_settings_keyboard
+from pollbot.telegram.keyboard.user import get_admin_settings_keyboard
 
 
 def open_admin_settings(session, context):

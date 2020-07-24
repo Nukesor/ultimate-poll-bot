@@ -9,20 +9,12 @@ from pollbot.enums import CallbackResult, ExpectedInput, ReferenceType
 from pollbot.i18n import i18n
 from pollbot.models import Reference
 from pollbot.poll.helper import remove_old_references
-from pollbot.telegram.keyboard import (
-    get_change_poll_type_keyboard,
+from pollbot.telegram.keyboard.management import (
     get_close_confirmation,
     get_deletion_confirmation,
     get_management_keyboard,
-    get_settings_keyboard,
 )
-
-
-@poll_required
-def show_poll_type_keyboard(session, context, poll):
-    """Change the initial keyboard to vote type keyboard."""
-    keyboard = get_change_poll_type_keyboard(poll)
-    context.query.message.edit_text(reply_markup=keyboard)
+from pollbot.telegram.keyboard.settings import get_settings_keyboard
 
 
 @poll_required
