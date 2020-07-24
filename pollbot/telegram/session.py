@@ -180,8 +180,11 @@ def message_wrapper(private=False):
                 if user.banned:
                     return
 
+                # Show an error message, if the users uses the bot in a public chat,
+                # when he shouldn't. Also check if we're even allowed to send a message.
                 if private and message.chat.type != "private":
-                    if message.chat.permissions.can_send_messages:
+                    chat = context.bot.getChat(message.chat.id)
+                    if chat.permissions.can_send_messages:
                         message.chat.send_message(
                             "Please do this in a direct conversation with me."
                         )
