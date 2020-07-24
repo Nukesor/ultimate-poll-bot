@@ -77,8 +77,6 @@ def add_option(poll: Poll, text: str, added_options: List[str], is_date: bool):
     if option_is_duplicate(poll, text) or text in added_options:
         return None
 
-    added_options.append(text)
-
     option = Option(poll, text)
     option.description = description
     option.is_date = is_date
