@@ -89,7 +89,7 @@ def create_poll(session, poll, user, chat, message=None):
         poll, ReferenceType.admin.name, user=user, message_id=message.message_id
     )
     session.add(reference)
-    session.commit()
+    session.flush()
 
     increase_stat(session, "created_polls")
     increase_user_stat(session, user, "created_polls")

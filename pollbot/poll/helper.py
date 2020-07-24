@@ -57,7 +57,7 @@ def remove_old_references(session, bot, poll: Poll, user: User):
             ):
                 session.delete(reference)
 
-        session.commit()
+        session.flush()
 
 
 def calculate_total_votes(poll: Poll):

@@ -17,8 +17,8 @@ def add_single_option(session, poll: Poll, line: str, is_date: bool):
     session.add(option)
     session.flush()
 
-    # Initialize priority votes for new options
-    init_votes_for_new_options(session, poll, [option])
+    # Initialize priority votes for new option
+    init_votes_for_new_options(session, poll, [option.name])
 
 
 def add_options_multiline(session, poll: Poll, text: str, is_date: bool = False):

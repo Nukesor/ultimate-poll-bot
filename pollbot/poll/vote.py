@@ -44,6 +44,8 @@ def init_votes_for_new_options(session, poll: Poll, added_options: List[str]):
         .all()
     )
 
+    # The new options are already flushed.
+    # Subtract the amount of new options to get the proper index.
     existing_options_count = len(poll.options) - len(new_options)
 
     users_that_voted = (
@@ -52,10 +54,31 @@ def init_votes_for_new_options(session, poll: Poll, added_options: List[str]):
 
     for user in users_that_voted:
         for index, option in enumerate(new_options):
-            print(f"New vote with priority {existing_options_count + index}")
             vote = Vote(user, option)
             vote.priority = existing_options_count + index
             user.votes.append(vote)
+
+
+def reorder_votes_after_option_delete(session, poll: Poll):
+    """Reorders votes after the deletion of an option.
+
+    When deleting an option from a poll, all existing votes need to be reordered.
+    Otherwise there might be a gap between priorities of votes.
+    """
+    users = session.query(User).join(User.votes).filter(Vote.poll == poll).all()
+
+    for user in users:
+        votes = (
+            session.query(Vote)
+            .filter(Vote.poll == poll)
+            .filter(Vote.user == user)
+            .order_by(Vote.priority.asc())
+            .all()
+        )
+
+        for index, vote in enumerate(votes):
+            vote.priority = index
+            session.flush()
 
 
 def get_sorted_votes(poll: Poll, votes: List[Vote]):

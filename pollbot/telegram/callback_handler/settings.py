@@ -9,6 +9,7 @@ from pollbot.enums import ExpectedInput
 from pollbot.i18n import i18n
 from pollbot.models import Option, User, Vote
 from pollbot.poll.update import update_poll_messages
+from pollbot.poll.vote import reorder_votes_after_option_delete
 from pollbot.telegram.keyboard.settings import (
     get_add_option_keyboard,
     get_anonymization_confirmation_keyboard,
@@ -132,20 +133,7 @@ def remove_option(session, context, poll):
     session.query(Option).filter(Option.id == context.action).delete()
 
     if poll.is_priority():
-        users = session.query(User).join(User.votes).filter(Vote.poll == poll).all()
-
-        for user in users:
-            votes = (
-                session.query(Vote)
-                .filter(Vote.poll == poll)
-                .filter(Vote.user == user)
-                .order_by(Vote.priority.asc())
-                .all()
-            )
-
-            for index, vote in enumerate(votes):
-                vote.priority = index
-                session.commit()
+        reorder_votes_after_option_delete(session, poll)
 
     session.commit()
 
