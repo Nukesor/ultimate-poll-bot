@@ -1,11 +1,10 @@
 """The start command handler."""
-from telegram.ext import run_async
-from telegram.error import BadRequest
-
 from pollbot.i18n import i18n
-from pollbot.telegram.session import message_wrapper
-from pollbot.models import Poll, Notification
+from pollbot.models import Notification, Poll
 from pollbot.telegram.keyboard.external import get_notify_keyboard
+from pollbot.telegram.session import message_wrapper
+from telegram.error import BadRequest
+from telegram.ext import run_async
 
 
 @run_async

@@ -1,15 +1,15 @@
 """Option for setting the current date of the picker."""
 from datetime import date
-from pollbot.i18n import i18n
+
 from pollbot.decorators import poll_required
-from pollbot.models import Notification
+from pollbot.display.creation import get_datepicker_text
 from pollbot.enums import ExpectedInput
 from pollbot.helper.stats import increase_stat
-from pollbot.display.creation import get_datepicker_text
-
+from pollbot.i18n import i18n
+from pollbot.models import Notification
 from pollbot.telegram.keyboard import (
-    get_external_datepicker_keyboard,
     get_external_add_option_keyboard,
+    get_external_datepicker_keyboard,
 )
 
 

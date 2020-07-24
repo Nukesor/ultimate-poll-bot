@@ -1,14 +1,6 @@
-from telegram import (
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-)
+from pollbot.enums import CallbackType, OptionSorting, UserSorting
 from pollbot.i18n import i18n
-
-from pollbot.enums import (
-    CallbackType,
-    UserSorting,
-    OptionSorting,
-)
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from .settings import get_back_to_settings_button
 

@@ -1,14 +1,14 @@
 """Admin related stuff."""
 import time
 from datetime import datetime, timedelta
-from telegram import ReplyKeyboardRemove
-from telegram.ext import run_async
-from telegram.error import BadRequest, Unauthorized
 
-from pollbot.models import User
 from pollbot.config import config
 from pollbot.i18n import i18n
+from pollbot.models import User
 from pollbot.telegram.session import message_wrapper
+from telegram import ReplyKeyboardRemove
+from telegram.error import BadRequest, Unauthorized
+from telegram.ext import run_async
 
 
 def admin_required(function):

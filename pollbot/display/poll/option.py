@@ -1,11 +1,12 @@
 """Poll text compilation for options."""
 import math
 
+from pollbot.display.poll.indices import get_option_indices
 from pollbot.enums import PollType
 from pollbot.poll.helper import poll_allows_cumulative_votes
-from pollbot.poll.option import get_sorted_options, calculate_percentage
-from pollbot.display.poll.indices import get_option_indices
-from .vote import get_vote_lines, get_doodle_vote_lines
+from pollbot.poll.option import calculate_percentage, get_sorted_options
+
+from .vote import get_doodle_vote_lines, get_vote_lines
 
 
 def get_option_information(session, poll, context, summarize):

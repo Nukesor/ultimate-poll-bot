@@ -1,19 +1,20 @@
 """Inline query handler function."""
 import uuid
-from sqlalchemy import or_
-from telegram.ext import run_async
-from telegram import (
-    InlineQueryResultArticle,
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-    InputTextMessageContent,
-)
 
-from pollbot.i18n import i18n
+from sqlalchemy import or_
+
 from pollbot.config import config
 from pollbot.enums import ReferenceType
+from pollbot.i18n import i18n
 from pollbot.models import Poll
 from pollbot.telegram.session import inline_query_wrapper
+from telegram import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    InlineQueryResultArticle,
+    InputTextMessageContent,
+)
+from telegram.ext import run_async
 
 
 @run_async

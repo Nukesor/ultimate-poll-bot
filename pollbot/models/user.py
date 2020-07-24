@@ -1,16 +1,7 @@
 """The sqlite model for a user."""
-from sqlalchemy import (
-    Boolean,
-    Column,
-    func,
-    ForeignKey,
-)
-from sqlalchemy.types import (
-    BigInteger,
-    DateTime,
-    String,
-)
+from sqlalchemy import Boolean, Column, ForeignKey, func
 from sqlalchemy.orm import relationship
+from sqlalchemy.types import BigInteger, DateTime, String
 
 from pollbot.db import base
 

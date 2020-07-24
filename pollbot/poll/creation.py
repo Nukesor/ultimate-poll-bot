@@ -6,12 +6,12 @@ from pollbot.enums import ExpectedInput, ReferenceType
 from pollbot.exceptions import RollbackException
 from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.i18n import i18n
-from pollbot.models import Option, Reference, Poll
+from pollbot.models import Option, Poll, Reference
 from pollbot.telegram.keyboard import (
-    get_options_entered_keyboard,
-    get_management_keyboard,
-    get_init_keyboard,
     get_cancel_creation_keyboard,
+    get_init_keyboard,
+    get_management_keyboard,
+    get_options_entered_keyboard,
 )
 
 

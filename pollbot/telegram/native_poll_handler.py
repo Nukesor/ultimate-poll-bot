@@ -1,19 +1,20 @@
 """Handle messages."""
-
 from sqlalchemy.orm import Session
-from telegram import Update, Bot, Poll as NativePoll
-from telegram.ext import run_async
 
 from pollbot.display import User
 from pollbot.display.creation import get_native_poll_merged_text
-from pollbot.poll.native_polls import merge_from_native_poll
-from pollbot.telegram.session import message_wrapper
 from pollbot.i18n import i18n
 from pollbot.models import Poll
+from pollbot.poll.native_polls import merge_from_native_poll
 from pollbot.telegram.keyboard import (
-    get_replace_current_creation_keyboard,
     get_native_poll_merged_keyboard,
+    get_replace_current_creation_keyboard,
 )
+from pollbot.telegram.session import message_wrapper
+from telegram import Bot
+from telegram import Poll as NativePoll
+from telegram import Update
+from telegram.ext import run_async
 
 
 @run_async

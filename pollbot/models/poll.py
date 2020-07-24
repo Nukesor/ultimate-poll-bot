@@ -2,24 +2,13 @@
 import random
 from datetime import datetime, timedelta
 
-from sqlalchemy import (
-    Column,
-    func,
-    ForeignKey,
-    text,
-)
+from sqlalchemy import Column, ForeignKey, func, text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from sqlalchemy.types import (
-    BigInteger,
-    Boolean,
-    DateTime,
-    Integer,
-    String,
-)
+from sqlalchemy.types import BigInteger, Boolean, DateTime, Integer, String
 
 from pollbot.db import base
-from pollbot.enums import PollType, UserSorting, OptionSorting, ExpectedInput
+from pollbot.enums import ExpectedInput, OptionSorting, PollType, UserSorting
 
 
 class Poll(base):
@@ -207,7 +196,7 @@ class Poll(base):
         if not self.is_priority():
             return
 
-        from pollbot.models import User, Vote, Option
+        from pollbot.models import Option, User, Vote
 
         users = session.query(User).join(User.votes).filter(Vote.poll == self).all()
 

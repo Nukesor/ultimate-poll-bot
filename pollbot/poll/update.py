@@ -1,15 +1,16 @@
 """Update or delete poll messages."""
 from datetime import datetime, timedelta
+
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import ObjectDeletedError
-from telegram.error import BadRequest, RetryAfter, Unauthorized, TimedOut
 
-from pollbot.i18n import i18n
-from pollbot.models import Update, Reference
-from pollbot.telegram.keyboard import get_management_keyboard
-from pollbot.enums import ExpectedInput, ReferenceType
 from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
+from pollbot.enums import ExpectedInput, ReferenceType
+from pollbot.i18n import i18n
+from pollbot.models import Reference, Update
+from pollbot.telegram.keyboard import get_management_keyboard
+from telegram.error import BadRequest, RetryAfter, TimedOut, Unauthorized
 
 
 def update_poll_messages(

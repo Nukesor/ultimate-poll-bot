@@ -1,11 +1,7 @@
 """Reply keyboards."""
-from telegram import (
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-)
-
+from pollbot.enums import CallbackResult, CallbackType
 from pollbot.i18n import i18n
-from pollbot.enums import CallbackType, CallbackResult
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 def get_back_to_management_button(poll):

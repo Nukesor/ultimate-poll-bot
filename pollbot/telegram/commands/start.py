@@ -1,25 +1,24 @@
 """The start command handler."""
 import time
 from uuid import UUID
-from telegram.ext import run_async
-
-from pollbot.i18n import i18n
-from pollbot.models import Poll, Reference
-from pollbot.display.poll.compilation import (
-    get_poll_text_and_vote_keyboard,
-    compile_poll_text,
-)
 
 from pollbot.config import config
-from pollbot.enums import ExpectedInput, StartAction, ReferenceType
-from pollbot.telegram.session import message_wrapper
-from pollbot.helper.text import split_text
+from pollbot.display.poll.compilation import (
+    compile_poll_text,
+    get_poll_text_and_vote_keyboard,
+)
+from pollbot.enums import ExpectedInput, ReferenceType, StartAction
 from pollbot.helper.stats import increase_stat
+from pollbot.helper.text import split_text
+from pollbot.i18n import i18n
+from pollbot.models import Poll, Reference
 from pollbot.telegram.keyboard import get_main_keyboard
 from pollbot.telegram.keyboard.external import (
     get_external_add_option_keyboard,
     get_external_share_keyboard,
 )
+from pollbot.telegram.session import message_wrapper
+from telegram.ext import run_async
 
 
 @run_async

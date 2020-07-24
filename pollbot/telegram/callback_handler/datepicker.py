@@ -11,10 +11,10 @@ from pollbot.i18n import i18n
 from pollbot.poll.option import add_options_multiline
 from pollbot.poll.update import update_poll_messages
 from pollbot.telegram.keyboard.date_picker import (
-    get_creation_datepicker_keyboard,
     get_add_option_datepicker_keyboard,
-    get_external_datepicker_keyboard,
+    get_creation_datepicker_keyboard,
     get_due_date_datepicker_keyboard,
+    get_external_datepicker_keyboard,
 )
 
 

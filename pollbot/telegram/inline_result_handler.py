@@ -1,13 +1,13 @@
 """Handle inline query results."""
-from telegram.ext import run_async
-from sqlalchemy.exc import DataError, IntegrityError
 from psycopg2.errors import UniqueViolation
+from sqlalchemy.exc import DataError, IntegrityError
 
 from pollbot.enums import ReferenceType
 from pollbot.helper.stats import increase_user_stat
+from pollbot.models import Poll, Reference
 from pollbot.poll.update import update_reference
 from pollbot.telegram.session import inline_result_wrapper
-from pollbot.models import Poll, Reference
+from telegram.ext import run_async
 
 
 @run_async

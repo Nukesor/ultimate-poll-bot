@@ -1,11 +1,7 @@
 """User related keyboards."""
-from telegram import (
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-)
-
-from pollbot.i18n import supported_languages, i18n
 from pollbot.enums import CallbackType
+from pollbot.i18n import i18n, supported_languages
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 def get_back_to_menu_button(user):

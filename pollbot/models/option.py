@@ -1,18 +1,9 @@
 """The sqlalchemy model for a polloption."""
 from datetime import date
-from sqlalchemy import (
-    Column,
-    func,
-    ForeignKey,
-    UniqueConstraint,
-)
-from sqlalchemy.types import (
-    Boolean,
-    Integer,
-    DateTime,
-    String,
-)
+
+from sqlalchemy import Column, ForeignKey, UniqueConstraint, func
 from sqlalchemy.orm import relationship
+from sqlalchemy.types import Boolean, DateTime, Integer, String
 
 from pollbot.db import base
 

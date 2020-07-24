@@ -1,21 +1,15 @@
 """Compilation of vote texts for each option."""
 from sqlalchemy import func
 
+from pollbot.enums import PollType
 from pollbot.i18n import i18n
+from pollbot.models import User, Vote
 from pollbot.poll.helper import (
+    calculate_total_votes,
     poll_allows_cumulative_votes,
     poll_allows_multiple_votes,
-    calculate_total_votes,
 )
-from pollbot.poll.vote import (
-    get_sorted_votes,
-    get_sorted_doodle_votes,
-)
-from pollbot.enums import PollType
-from pollbot.models import (
-    User,
-    Vote,
-)
+from pollbot.poll.vote import get_sorted_doodle_votes, get_sorted_votes
 
 
 def get_doodle_vote_lines(poll, option, summarize):

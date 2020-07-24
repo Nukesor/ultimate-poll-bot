@@ -1,11 +1,7 @@
 from typing import List
 
+from pollbot.enums import OptionSorting, PollType, VoteResultType
 from pollbot.poll.helper import poll_allows_cumulative_votes
-from pollbot.enums import (
-    VoteResultType,
-    OptionSorting,
-    PollType,
-)
 
 
 def add_text_options_from_list(session, poll, options: List[str]):

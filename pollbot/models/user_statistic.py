@@ -1,11 +1,9 @@
 """The sqlalchemy model for a user statistics."""
 from datetime import date
+
 from sqlalchemy import Column, Date, ForeignKey
-from sqlalchemy.types import (
-    BigInteger,
-    Integer,
-)
 from sqlalchemy.orm import relationship
+from sqlalchemy.types import BigInteger, Integer
 
 from pollbot.db import base
 

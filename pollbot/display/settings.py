@@ -1,9 +1,9 @@
 """The settings management text."""
-from pollbot.i18n import i18n
 from pollbot.config import config
-from pollbot.helper import get_escaped_bot_name
-from pollbot.poll.helper import translate_poll_type
 from pollbot.enums import PollType, StartAction
+from pollbot.helper import get_escaped_bot_name
+from pollbot.i18n import i18n
+from pollbot.poll.helper import translate_poll_type
 from pollbot.telegram.keyboard import get_start_button_payload
 
 

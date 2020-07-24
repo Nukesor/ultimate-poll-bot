@@ -1,16 +1,17 @@
 """Callback query handling."""
 from datetime import date
+
 from sentry_sdk import add_breadcrumb
-from telegram.ext import run_async
 from sqlalchemy.exc import IntegrityError
 
+from pollbot.enums import CallbackResult, CallbackType
 from pollbot.helper.stats import increase_stat, increase_user_stat
+from pollbot.models import Option, Poll, UserStatistic
 from pollbot.telegram.session import callback_query_wrapper
-from pollbot.enums import CallbackType, CallbackResult
-from pollbot.models import Poll, Option, UserStatistic
+from telegram.ext import run_async
 
-from .vote import handle_vote
 from .mapping import async_callback_mapping, callback_mapping
+from .vote import handle_vote
 
 
 class CallbackContext:

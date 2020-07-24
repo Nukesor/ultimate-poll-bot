@@ -1,12 +1,12 @@
 """Callback handler for poll styling."""
-from pollbot.i18n import i18n
 from pollbot.decorators import poll_required
-from pollbot.enums import OptionSorting, UserSorting
-from pollbot.poll.update import update_poll_messages
 from pollbot.display.poll.compilation import get_poll_text
+from pollbot.enums import OptionSorting, UserSorting
+from pollbot.i18n import i18n
+from pollbot.poll.update import update_poll_messages
 from pollbot.telegram.keyboard import (
-    get_styling_settings_keyboard,
     get_manual_option_order_keyboard,
+    get_styling_settings_keyboard,
 )
 
 

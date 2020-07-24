@@ -1,8 +1,7 @@
-from telegram.error import BadRequest, Unauthorized
-
-from pollbot.models import Reference
-from pollbot.i18n import i18n
 from pollbot.enums import PollType
+from pollbot.i18n import i18n
+from pollbot.models import Reference
+from telegram.error import BadRequest, Unauthorized
 
 
 def remove_old_references(session, bot, poll, user):

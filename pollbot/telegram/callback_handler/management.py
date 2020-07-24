@@ -1,10 +1,10 @@
 """Callback functions needed during creation of a Poll."""
 from datetime import datetime
 
-from pollbot.i18n import i18n
 from pollbot.decorators import poll_required
-from pollbot.poll.update import remove_poll_messages, update_poll_messages
 from pollbot.display.poll.compilation import get_poll_text
+from pollbot.i18n import i18n
+from pollbot.poll.update import remove_poll_messages, update_poll_messages
 from pollbot.telegram.keyboard import get_management_keyboard
 
 

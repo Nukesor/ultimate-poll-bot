@@ -1,10 +1,7 @@
 """The sqlalchemy model for a vote."""
 from sqlalchemy import Column, ForeignKey, UniqueConstraint
-from sqlalchemy.types import (
-    DateTime,
-    Integer,
-)
 from sqlalchemy.orm import relationship
+from sqlalchemy.types import DateTime, Integer
 
 from pollbot.db import base
 

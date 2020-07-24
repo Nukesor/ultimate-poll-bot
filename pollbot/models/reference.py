@@ -1,17 +1,7 @@
 """The sqlalchemy model for a polloption."""
-from sqlalchemy import (
-    Column,
-    func,
-    ForeignKey,
-    Index,
-)
-from sqlalchemy.types import (
-    BigInteger,
-    Integer,
-    DateTime,
-    String,
-)
+from sqlalchemy import Column, ForeignKey, Index, func
 from sqlalchemy.orm import relationship
+from sqlalchemy.types import BigInteger, DateTime, Integer, String
 
 from pollbot.db import base
 from pollbot.enums import ReferenceType

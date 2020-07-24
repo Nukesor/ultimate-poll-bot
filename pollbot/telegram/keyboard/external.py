@@ -1,11 +1,7 @@
 """All keyboards for external users that don't own the poll."""
-from telegram import (
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-)
-
-from pollbot.i18n import i18n
 from pollbot.enums import CallbackType
+from pollbot.i18n import i18n
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 def get_notify_keyboard(polls):

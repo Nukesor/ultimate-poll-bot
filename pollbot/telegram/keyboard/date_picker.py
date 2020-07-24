@@ -1,10 +1,10 @@
 """Reply keyboards."""
 import calendar
 from datetime import date
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
-from pollbot.i18n import i18n
 from pollbot.enums import CallbackType, DatepickerContext
+from pollbot.i18n import i18n
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 def get_creation_datepicker_keyboard(poll, current_date):

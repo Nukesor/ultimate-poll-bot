@@ -2,22 +2,22 @@
 import traceback
 from datetime import date
 from functools import wraps
-from typing import Callable, Any
+from typing import Any, Callable
 
+from sentry_sdk import configure_scope
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
-from telegram import Update, Bot
-from telegram.error import BadRequest, Unauthorized, TimedOut, RetryAfter
-from telegram.ext import CallbackContext
-from sentry_sdk import configure_scope
 
 from pollbot.config import config
 from pollbot.db import get_session
-from pollbot.helper.stats import increase_stat
 from pollbot.exceptions import RollbackException
+from pollbot.helper.stats import increase_stat
 from pollbot.i18n import i18n
 from pollbot.models import User, UserStatistic
 from pollbot.sentry import sentry
+from telegram import Bot, Update
+from telegram.error import BadRequest, RetryAfter, TimedOut, Unauthorized
+from telegram.ext import CallbackContext
 
 
 def job_wrapper(func):

@@ -1,4 +1,4 @@
-from pollbot.models import User, Poll
+from pollbot.models import Poll, User
 
 
 def stats(session):

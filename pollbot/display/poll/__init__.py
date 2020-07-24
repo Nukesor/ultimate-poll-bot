@@ -1,10 +1,6 @@
 """Get the text describing the current state of the poll."""
+from pollbot.models import Option, User, Vote
 from pollbot.poll.helper import poll_has_limited_votes
-from pollbot.models import (
-    User,
-    Option,
-    Vote,
-)
 
 
 class Context:

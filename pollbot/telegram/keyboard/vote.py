@@ -1,24 +1,16 @@
 """Reply keyboards."""
-from telegram import (
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-)
 from sqlalchemy.orm import joinedload
 
-from pollbot.models import Vote
-from pollbot.i18n import i18n
 from pollbot.config import config
-from pollbot.poll.helper import poll_allows_cumulative_votes
 from pollbot.db import get_session
-from pollbot.enums import (
-    CallbackType,
-    CallbackResult,
-    PollType,
-    StartAction,
-)
-from pollbot.telegram.keyboard import get_start_button_payload
-from pollbot.poll.option import get_sorted_options
 from pollbot.display.poll.indices import get_option_indices
+from pollbot.enums import CallbackResult, CallbackType, PollType, StartAction
+from pollbot.i18n import i18n
+from pollbot.models import Vote
+from pollbot.poll.helper import poll_allows_cumulative_votes
+from pollbot.poll.option import get_sorted_options
+from pollbot.telegram.keyboard import get_start_button_payload
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from .management import get_back_to_management_button
 

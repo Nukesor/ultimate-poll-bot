@@ -1,5 +1,5 @@
-from pollbot.poll.update import send_updates
 from pollbot.enum import ReferenceType
+from pollbot.poll.update import send_updates
 
 
 def remove_poll_messages(session, bot, poll, remove_all=False):

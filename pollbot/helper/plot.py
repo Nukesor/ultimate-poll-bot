@@ -1,15 +1,16 @@
 """Module responsibel for plotting statistics."""
 import io
-import pandas
+
 import matplotlib
-import matplotlib.dates as mdates
 import numpy as np
-from sqlalchemy import func, Date, cast, Integer
+import pandas
+from matplotlib import dates as mdates
+from matplotlib import pyplot as plt  # noqa
+from sqlalchemy import Date, Integer, cast, func
 
 from pollbot.models import User, Vote
 
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa
 
 
 def send_plots(session, chat):

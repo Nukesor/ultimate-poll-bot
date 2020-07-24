@@ -1,16 +1,17 @@
 """Handle messages."""
 from datetime import date, datetime, timedelta
+
 from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
-from telegram.ext import run_async
-from telegram.error import BadRequest, Unauthorized, RetryAfter
 from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 
-from pollbot.i18n import i18n
 from pollbot.config import config
-from pollbot.models import Update, Poll, DailyStatistic, UserStatistic
-from pollbot.telegram.session import job_wrapper
+from pollbot.i18n import i18n
+from pollbot.models import DailyStatistic, Poll, Update, UserStatistic
 from pollbot.poll.update import send_updates, update_poll_messages
+from pollbot.telegram.session import job_wrapper
+from telegram.error import BadRequest, RetryAfter, Unauthorized
+from telegram.ext import run_async
 
 
 @run_async

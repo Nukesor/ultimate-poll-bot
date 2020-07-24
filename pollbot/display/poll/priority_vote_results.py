@@ -1,5 +1,6 @@
-from pollbot.models import Vote, User, Option
 from collections import Counter
+
+from pollbot.models import Option, User, Vote
 
 
 # this is not used at the moment, but maybe we'd like to add this feature later

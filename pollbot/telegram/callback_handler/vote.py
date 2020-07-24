@@ -1,18 +1,14 @@
 """Callback functions needed during creation of a Poll."""
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm.exc import (
-    ObjectDeletedError,
-    StaleDataError,
-)
+from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 
-from pollbot.i18n import i18n
-from pollbot.poll.helper import poll_allows_cumulative_votes
+from pollbot.enums import CallbackResult, PollType
 from pollbot.helper.stats import increase_stat
-from pollbot.enums import PollType, CallbackResult
-from pollbot.poll.update import update_poll_messages
-
+from pollbot.i18n import i18n
 from pollbot.models import Vote
+from pollbot.poll.helper import poll_allows_cumulative_votes
+from pollbot.poll.update import update_poll_messages
 
 
 def handle_vote(session, context, option):

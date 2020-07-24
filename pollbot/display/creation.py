@@ -1,8 +1,8 @@
 """Text helper for poll creation."""
 from pollbot.enums import ExpectedInput
-from pollbot.poll.helper import translate_poll_type
 from pollbot.i18n import i18n
 from pollbot.models import Poll
+from pollbot.poll.helper import translate_poll_type
 
 
 def get_poll_type_help_text(poll):

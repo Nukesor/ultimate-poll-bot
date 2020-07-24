@@ -1,12 +1,9 @@
+from pollbot.display.poll import Context
 from pollbot.i18n import i18n
 from pollbot.telegram.keyboard.vote import get_vote_keyboard
-from pollbot.display.poll import Context
 
 from .option import get_option_information
-from .vote import (
-    get_vote_information_line,
-    get_remaining_votes_lines,
-)
+from .vote import get_remaining_votes_lines, get_vote_information_line
 
 
 def get_poll_text_and_vote_keyboard(

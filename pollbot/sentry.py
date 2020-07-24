@@ -1,5 +1,6 @@
 """Simple wrapper around sentry that allows for lazy initilization."""
 import sentry_sdk
+
 from pollbot.config import config
 from telegram.error import TimedOut
 

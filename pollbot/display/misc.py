@@ -1,10 +1,7 @@
 """Display helper for misc stuff."""
 from pollbot.i18n import i18n
 from pollbot.models import Poll
-from pollbot.telegram.keyboard import (
-    get_help_keyboard,
-    get_poll_list_keyboard,
-)
+from pollbot.telegram.keyboard import get_help_keyboard, get_poll_list_keyboard
 
 
 def get_help_text_and_keyboard(user, current_category):
