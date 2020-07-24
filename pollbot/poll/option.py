@@ -7,6 +7,20 @@ from pollbot.poll.helper import poll_allows_cumulative_votes
 from pollbot.poll.vote import init_votes_for_new_options
 
 
+def add_single_option(session, poll: Poll, line: str, is_date: bool):
+    """Add a single option from a single line."""
+    option = add_option(poll, line, [], is_date)
+
+    if option is None:
+        return
+
+    session.add(option)
+    session.flush()
+
+    # Initialize priority votes for new options
+    init_votes_for_new_options(session, poll, [option])
+
+
 def add_options_multiline(session, poll: Poll, text: str, is_date: bool = False):
     """Add one or multiple new options to the poll from a block of text."""
     options_to_add = [x.strip() for x in text.split("\n") if x.strip() != ""]
@@ -42,21 +56,24 @@ def add_option(poll: Poll, text: str, added_options: List[str], is_date: bool):
        been added during this single request.
     """
     description = None
+
+    # Check if there's a description delimiter in the line
     description_descriminator = None
     if "--" in text:
         description_descriminator = "--"
     elif "—" in text:
         description_descriminator = "—"
-    # Extract the description if existing
 
+    # Extract the description if existing
     if description_descriminator is not None:
-        # Extract and strip the description
         splitted = text.split(description_descriminator, 1)
         text = splitted[0].strip()
         description = splitted[1].strip()
         if description == "":
             description = None
 
+    # Early return, if this option already exists, or
+    # if we already added this option in this request
     if option_is_duplicate(poll, text) or text in added_options:
         return None
 

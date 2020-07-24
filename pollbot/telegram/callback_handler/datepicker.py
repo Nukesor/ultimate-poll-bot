@@ -8,7 +8,7 @@ from pollbot.display import get_settings_text
 from pollbot.display.creation import get_datepicker_text
 from pollbot.enums import DatepickerContext
 from pollbot.i18n import i18n
-from pollbot.poll.option import add_options_multiline
+from pollbot.poll.option import add_single_option
 from pollbot.poll.update import update_poll_messages
 from pollbot.telegram.keyboard.date_picker import (
     get_add_option_datepicker_keyboard,
@@ -55,7 +55,7 @@ def owner_pick_date_option(session, context, poll, datepicker_context):
             "callback.date_removed", locale=poll.locale, date=picked_date.isoformat()
         )
     else:
-        add_options_multiline(session, poll, context.data[2], is_date=True)
+        add_single_option(session, poll, context.data[2], True)
         message = i18n.t(
             "callback.date_picked", locale=poll.locale, date=picked_date.isoformat()
         )
@@ -99,7 +99,7 @@ def pick_external_date(session, context, poll):
     if existing_option is not None:
         return i18n.t("callback.date_already_picked", locale=poll.locale)
 
-    add_options_multiline(session, poll, context.data[2], is_date=True)
+    add_single_option(session, poll, context.data[2], True)
     message = i18n.t(
         "callback.date_picked", locale=poll.locale, date=picked_date.isoformat()
     )
