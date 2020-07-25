@@ -159,26 +159,22 @@ def callback_query_wrapper(func):
                 update.callback_query.answer(i18n.t("callback.error", locale=locale))
 
         finally:
-            # The session might not be there yet
-            # We're checking for bans inside this try/catch, which has to
-            # happen before session initialization due to performance reasons
-            if 'session' in locals():
-                session.close()
+            session.close()
 
-        return wrapper
+    return wrapper
 
 
-    def message_wrapper(private=False):
-        """Create a session, handle permissions, handle exceptions and prepare some entities."""
+def message_wrapper(private=False):
+    """Create a session, handle permissions, handle exceptions and prepare some entities."""
 
-        def real_decorator(func: Callable[[Bot, Update, Session, User], Any]):
-            """Parametrized decorator closure."""
+    def real_decorator(func: Callable[[Bot, Update, Session, User], Any]):
+        """Parametrized decorator closure."""
 
-            @wraps(func)
-            def wrapper(update: Update, context: CallbackContext):
-                user = None
-                session = get_session()
-                try:
+        @wraps(func)
+        def wrapper(update: Update, context: CallbackContext):
+            user = None
+            session = get_session()
+            try:
                 if hasattr(update, "message") and update.message:
                     message = update.message
                 elif hasattr(update, "edited_message") and update.edited_message:
