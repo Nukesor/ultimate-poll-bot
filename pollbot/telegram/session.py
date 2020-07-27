@@ -182,6 +182,15 @@ def message_wrapper(private=False):
 
                 user, _ = get_user(session, message.from_user)
                 if user.banned:
+                    message.chat.send_message(
+                        "You have been permanently banned from using this bot, either due to spamming or inappropriate behavior."
+                    )
+                    return
+                if user.deleted:
+                    message.chat.send_message(
+                        "You have requested a permanent deletion of your Ultimate Poll Bot account. This action is irreversible!\n"
+                        "Please refrain from asking questions in the support group or on Github. There's nothing we can do about this."
+                    )
                     return
 
                 # Show an error message, if the users uses the bot in a public chat,
