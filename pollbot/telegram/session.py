@@ -172,6 +172,10 @@ def message_wrapper(private=False):
 
         @wraps(func)
         def wrapper(update: Update, context: CallbackContext):
+            # The user has been banned/deleted and already got a message regarding this issue
+            if context.user_data.get("deleted-message-sent"):
+                return
+
             user = None
             session = get_session()
             try:
@@ -181,12 +185,21 @@ def message_wrapper(private=False):
                     message = update.edited_message
 
                 user, _ = get_user(session, message.from_user)
+
+                # Send a message explaining the user, why they cannot use the bot.
+                # Also set a flag, which prevents sending this messages multiple times and thereby prevents DOS attacks.
                 if user.banned:
+                    if not context.user_data.get("deleted-message-sent"):
+                        context.user_data["deleted-message-sent"] = True
+
                     message.chat.send_message(
                         "You have been permanently banned from using this bot, either due to spamming or inappropriate behavior."
+                        "Please refrain from asking questions in the support group or on Github. There's nothing we can do about this."
                     )
                     return
-                if user.deleted:
+                elif user.deleted:
+                    if not context.user_data.get("deleted-message-sent"):
+                        context.user_data["deleted-message-sent"] = True
                     message.chat.send_message(
                         "You have requested a permanent deletion of your Ultimate Poll Bot account. This action is irreversible!\n"
                         "Please refrain from asking questions in the support group or on Github. There's nothing we can do about this."
