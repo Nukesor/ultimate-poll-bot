@@ -268,7 +268,7 @@ def get_user(session, tg_user):
     """Get the user from the event."""
     user = session.query(User).get(tg_user.id)
     if user is not None and (user.banned or user.deleted):
-        return user
+        return user, None
 
     if user is None:
         user = User(tg_user.id, tg_user.username)
