@@ -135,7 +135,7 @@ keyboard:
         delete_all: '⚠️ Delete all polls'
         delete_all_closed: '⚠️ Delete all closed polls'
         init_poll: '🌟 Create new poll'
-        delete_me: '❌ Delete me'
+        delete_me: '⚠️⚠️⚠️⚠️⚠️ DELETE ME ⚠️⚠️⚠️⚠️⚠️'
     styling:
       open: '🎀 Styling & Order'
     admin:
