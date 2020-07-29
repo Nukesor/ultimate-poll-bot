@@ -273,7 +273,30 @@ misc:
     too_long: "Hey!\n\nI'm very sorry, but your poll is simply too long. You probably got a large number of options or added a very long description text (or both). 😬\n\nSince Telegram only allows 4096 characters per message, I simply cannot show any polls that are getting longer than this. 😐\n\nPlease try to keep the description and option names short and if you want to use polls with many options, you may be better of using an external tool like [Doodle](https://doodle.com/).\n\n    One way to resolve this problem might be to remove options (the admin can do that).\n\n👇 You can still vote and see the results below. 👇\n"
     too_many_options: "Your poll has too many options to be displayed a single message :("
     stop: 'You won''t be able to use the bot any longer. To start it again type /start'
-    deletion_warning: "*Attention*\n\nThis is a permanent action.\n\n1. All personal information will be deleted.\n2. Votes on active polls will be removed, votes on closed polls will be redacted.\n3. All your active or closed polls will be deleted\n\nWhat cannot be deleted:\n1. Votes on deleted polls cannot be removed, since they have already been purged from the database.\n2. Deleted polls cannot be removed, since they have already been purged from the database.\n\nKeep in mind:\n*If you delete your data, you'll be banned for life.*\nYou'll be no longer able to use the bot.\n\nThis is a simple measure to prevent vote manipulation on closed polls.\nYou do it once, you're gone forever.\n"
+    deletion_warning: |
+      *Attention*
+
+      This a permanent action.
+      1. All personal information will be deleted.
+      2. Votes on active polls will be removed, votes on closed polls will be redacted.
+      3. All your active or closed polls will be deleted
+
+      What cannot be deleted:
+
+      1. Votes on deleted polls cannot be removed, since they have already been purged from the database.
+      2. Deleted polls cannot be removed, since they have already been purged from the database.
+
+      *If you delete your data, you'll be banned for life.*
+
+      You'll be no longer able to use the bot.
+      This is a simple measure to prevent vote manipulation on closed polls.
+      You do it once, you're gone forever.
+
+      *DANGER*
+      *If you delete your data, you'll be banned forever.*
+      *YOU CAN NO LONGER USE THE BOT.*
+      *YOU CAN NO LONGER USE THE BOT.*
+      *DANGER*
     final_deletion_warning: "*Are you ABSOLUTELY sure about this?*"
 sorting:
     chrono: chronologically

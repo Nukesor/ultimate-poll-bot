@@ -184,8 +184,14 @@ def get_delete_user_confirmation_keyboard(user):
     text = i18n.t("keyboard.user.delete_me", locale=user.locale)
     payload = f"{CallbackType.user_delete_confirmation.value}:0:0"
 
+    ignore_payload = f"{CallbackType.ignore.value}:0:0"
+
     buttons = [
+        [InlineKeyboardButton("DANGER", callback_data=ignore_payload)],
+        [InlineKeyboardButton("NOPE ZONE", callback_data=ignore_payload)],
         [InlineKeyboardButton(text, callback_data=payload)],
+        [InlineKeyboardButton("STOP AND READ THE TEXT!", callback_data=ignore_payload)],
+        [InlineKeyboardButton("DANGER", callback_data=ignore_payload)],
         [get_back_to_settings_button(user)],
     ]
     return InlineKeyboardMarkup(buttons)
