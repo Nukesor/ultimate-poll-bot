@@ -52,7 +52,7 @@ def inline_query_wrapper(func):
         session = get_session()
         try:
             user, statistic = get_user(session, update.inline_query.from_user)
-            if user.banned:
+            if user.banned or user.deleted:
                 return
 
             func(context.bot, update, session, user)
@@ -80,7 +80,7 @@ def inline_result_wrapper(func):
         session = get_session()
         try:
             user, _ = get_user(session, update.chosen_inline_result.from_user)
-            if user.banned:
+            if user.banned or user.deleted:
                 return
 
             func(context.bot, update, session, user)
@@ -267,6 +267,9 @@ def message_wrapper(private=False):
 def get_user(session, tg_user):
     """Get the user from the event."""
     user = session.query(User).get(tg_user.id)
+    if user is not None and user.banned or user.deleted:
+        return user
+
     if user is None:
         user = User(tg_user.id, tg_user.username)
         session.add(user)
