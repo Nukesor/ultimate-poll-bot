@@ -267,7 +267,7 @@ def message_wrapper(private=False):
 def get_user(session, tg_user):
     """Get the user from the event."""
     user = session.query(User).get(tg_user.id)
-    if user is not None and user.banned or user.deleted:
+    if user is not None and (user.banned or user.deleted):
         return user
 
     if user is None:
