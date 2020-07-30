@@ -1,7 +1,7 @@
 """Callback functions needed during creation of a Poll."""
 from sqlalchemy import func
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError, OperationalError
+from sqlalchemy.exc import IntegrityError, OperationalError
+from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 
 from pollbot.enums import CallbackResult, PollType
 from pollbot.helper.stats import increase_stat
