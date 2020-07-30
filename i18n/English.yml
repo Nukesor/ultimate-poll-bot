@@ -274,7 +274,7 @@ misc:
     too_many_options: "Your poll has too many options to be displayed a single message :("
     stop: 'You won''t be able to use the bot any longer. To start it again type /start'
     deletion_warning: |
-      *Attention*
+      ⚠️ *Attention* ⚠️
 
       This a permanent action.
       1. All personal information will be deleted.
@@ -286,17 +286,17 @@ misc:
       1. Votes on deleted polls cannot be removed, since they have already been purged from the database.
       2. Deleted polls cannot be removed, since they have already been purged from the database.
 
-      *If you delete your data, you'll be banned for life.*
+      ‼️ *If you delete your data, you'll be banned for life.* ‼️
 
       You'll be no longer able to use the bot.
       This is a simple measure to prevent vote manipulation on closed polls.
       You do it once, you're gone forever.
 
-      *DANGER*
-      *If you delete your data, you'll be banned forever.*
-      *YOU CAN NO LONGER USE THE BOT.*
-      *YOU CAN NO LONGER USE THE BOT.*
-      *DANGER*
+      ☢️ *DANGER* ☢️
+      ☢️ *If you delete your data, you'll be banned forever.* ☢️
+      ☢️ *YOU CAN NO LONGER USE THE BOT.* ☢️
+      ☢️ *YOU CAN NO LONGER USE THE BOT.* ☢️
+      ☢️ *DANGER* ☢️
     final_deletion_warning: "*Are you ABSOLUTELY sure about this?*"
 sorting:
     chrono: chronologically
