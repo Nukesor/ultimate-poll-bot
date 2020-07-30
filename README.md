@@ -14,6 +14,15 @@ Since no other telegram poll/vote bot offered the full feature set my friends an
 Check the [official Trello board](https://trello.com/b/L3XfSRkN/ultimate-poll-bot) for the status of planned features.
 There's also a list of regularly requested "won't implement" features.
 
+## State of the project
+
+The project is still actively maintained!
+However, I (@Nukesor) **won't add any new features myself**, since I'm very happy with the current state of the bot.
+
+Anyway, if you come up with a cool idea, I'll happily discuss it and review your pull requests.
+
+Upcoming bugs will of course be fixed as fast as possible.
+
 ## Features
 
 The Ultimate Pollbot delivers a full set of well-tested and battle proven features.
