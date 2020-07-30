@@ -1,7 +1,7 @@
 """Callback functions needed during creation of a Poll."""
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
+from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError, OperationalError
 
 from pollbot.enums import CallbackResult, PollType
 from pollbot.helper.stats import increase_stat
@@ -65,6 +65,11 @@ def handle_vote(session, context, option):
         # Try to edit a vote that has already been deleted.
         # This happens, if users spam the vote buttons.
         # Rollback the transaction and ignore
+        session.rollback()
+        return
+    except OperationalError:
+        # This happens, when a deadlock is created.
+        # That can be caused by users spamming the vote button.
         session.rollback()
         return
 
