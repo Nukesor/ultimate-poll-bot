@@ -159,7 +159,11 @@ def callback_query_wrapper(func):
                 update.callback_query.answer(i18n.t("callback.error", locale=locale))
 
         finally:
-            session.close()
+            # The session might not be there yet
+            # We're checking for bans inside this try/catch, which has to
+            # happen before session initialization due to performance reasons
+            if "session" in locals():
+                session.close()
 
     return wrapper
 
