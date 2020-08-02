@@ -38,6 +38,7 @@ def handle_chosen_inline_result(bot, update, session, user):
         # I don't know how this can happen, but it happens.
         # It seems that user can spam click inline query, which then leads to
         # multiple chosen_inline_result queries being sent to the bot.
+        session.rollback()
         return
 
     update_reference(session, bot, poll, reference)
