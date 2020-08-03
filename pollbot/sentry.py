@@ -1,14 +1,19 @@
 """Simple wrapper around sentry that allows for lazy initilization."""
 import sentry_sdk
+from sentry_sdk import configure_scope
 
 from pollbot.config import config
 from telegram.error import TimedOut
 
 
 class Sentry(object):
-    """Sentry wrapper class that allows this app to work without a sentry token.
+    """Sentry wrapper class.
 
-    If no token is specified in the config, the messages used for logging are simply not called.
+    This class offers some convenience classes and functions for adding 
+    additional information to sentry calls.
+
+    The extra level of abstraction ensures that everything will still work,
+    if sentry hasn't been initialized.
     """
 
     initialized = False
@@ -18,27 +23,36 @@ class Sentry(object):
         if config["logging"]["sentry_enabled"]:
             self.initialized = True
             sentry_sdk.init(config["logging"]["sentry_token"],)
-            self.sentry = sentry_sdk
 
-    def capture_message(self, *args, **kwargs):
+    def capture_message(self, tags=None):
         """Capture message with sentry."""
-        if self.initialized:
-            if "tags" not in kwargs:
-                kwargs["tags"] = {}
+        if not self.initialized:
+            return
 
-            # Tag it as pollbot
-            kwargs["tags"]["bot"] = "pollbot"
-            self.sentry.capture_message(*args, **kwargs)
+        with configure_scope() as scope:
+            if tags is not None:
+                for key, tag in tags.items():
+                    scope.set_tag("handler", "job")
 
-    def capture_exception(self, *args, **kwargs):
+            scope.set_tag("bot", "pollbot")
+            sentry_sdk.capture_message()
+
+    def capture_exception(self, tags=None, extra=None):
         """Capture exception with sentry."""
-        if self.initialized:
-            if "tags" not in kwargs:
-                kwargs["tags"] = {}
+        if not self.initialized:
+            return
 
-            # Tag it as pollbot
-            kwargs["tags"]["bot"] = "pollbot"
-            self.sentry.capture_exception(*args, **kwargs)
+        with configure_scope() as scope:
+            if tags is not None:
+                for key, tag in tags.items():
+                    scope.set_tag("handler", "job")
+
+            if extra is not None:
+                for key, tag in extra.items():
+                    scope.set_extra("handler", "job")
+
+            scope.set_tag("bot", "pollbot")
+            sentry_sdk.capture_exception()
 
 
 sentry = Sentry()

@@ -4,7 +4,6 @@ from datetime import date
 from functools import wraps
 from typing import Any, Callable
 
-from sentry_sdk import configure_scope
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -35,9 +34,7 @@ def job_wrapper(func):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
 
-                with configure_scope() as scope:
-                    scope.set_tag("handler", "job")
-                    sentry.capture_exception()
+                sentry.capture_exception(tags={"handler": "job"})
 
         finally:
             session.close()
@@ -63,9 +60,7 @@ def inline_query_wrapper(func):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
 
-                with configure_scope() as scope:
-                    scope.set_tag("handler", "inline_query")
-                    sentry.capture_exception()
+                sentry.capture_exception(tags={"handler": "inline_query"})
 
         finally:
             session.close()
@@ -91,9 +86,7 @@ def inline_result_wrapper(func):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
 
-                with configure_scope() as scope:
-                    scope.set_tag("handler", "inline_query_result")
-                    sentry.capture_exception()
+                sentry.capture_exception(tags={"handler": "inline_query_result"})
 
         finally:
             session.close()
@@ -148,10 +141,10 @@ def callback_query_wrapper(func):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
 
-                with configure_scope() as scope:
-                    scope.set_tag("handler", "callback_query")
-                    scope.set_extra("query", update.callback_query)
-                    sentry.capture_exception()
+                sentry.capture_exception(
+                    tags={"handler": "callback_query",},
+                    extra={"query": update.callback_query,},
+                )
 
                 locale = "English"
                 if user is not None:
@@ -240,11 +233,10 @@ def message_wrapper(private=False):
                     if config["logging"]["debug"]:
                         traceback.print_exc()
 
-                    with configure_scope() as scope:
-                        scope.set_tag("handler", "message")
-                        scope.set_extra("update", update.to_dict())
-                        scope.set_extra("function", func.__name__)
-                        sentry.capture_exception()
+                    sentry.capture_exception(
+                        tags={"handler": "message",},
+                        extra={"update": update.to_dict(), "function": func.__name__},
+                    )
 
                     locale = "English"
                     if user is not None:
