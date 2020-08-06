@@ -15,7 +15,7 @@ from pollbot.i18n import i18n
 from pollbot.models import User, UserStatistic
 from pollbot.sentry import sentry
 from telegram import Bot, Update
-from telegram.error import BadRequest, RetryAfter, TimedOut, Unauthorized
+from telegram.error import BadRequest, RetryAfter, TimedOut, Unauthorized, NetworkError
 from telegram.ext import CallbackContext
 
 
@@ -375,6 +375,10 @@ def ignore_exception(exception):
         return True
 
     if isinstance(exception, RetryAfter):
+        return True
+
+    # Super low level http error
+    if isinstance(exception, NetworkError):
         return True
 
     return False
