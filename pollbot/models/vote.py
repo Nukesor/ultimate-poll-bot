@@ -41,12 +41,7 @@ class Vote(base):
     )
     poll = relationship("Poll")
 
-    user_id = Column(
-        BigInteger,
-        ForeignKey("user.id", ondelete="cascade"),
-        nullable=True,
-        index=True,
-    )
+    user_id = Column(BigInteger, ForeignKey("user.id", ondelete="cascade"), index=True,)
     user = relationship("User")
 
     def __init__(self, user, option):

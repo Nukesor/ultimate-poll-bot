@@ -18,7 +18,6 @@ class User(base):
     # Flags
     started = Column(Boolean, nullable=False, default=False)
     banned = Column(Boolean, nullable=False, default=False)
-    deleted = Column(Boolean, nullable=False, default=False)
     broadcast_sent = Column(Boolean, nullable=False, default=False)
     last_update = Column(DateTime)
 
@@ -64,7 +63,6 @@ class User(base):
     def delete(self):
         """Delete the user."""
         self.started = False
-        self.deleted = True
         self.current_poll = None
         self.username = "GDPR removed user"
         self.name = "GDPR removed user"

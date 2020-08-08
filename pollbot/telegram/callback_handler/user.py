@@ -174,13 +174,11 @@ def delete_user(session, context):
         session.commit()
 
     polls_for_update = []
+    # Delete all votes, but only update non-closed polls
     for vote in user.votes:
-        if vote.poll not in polls_for_update:
+        if vote.poll not in polls_for_update and not vote.poll.closed:
             polls_for_update.append(vote.poll)
-        if not vote.poll.closed:
-            session.delete(vote)
-        else:
-            vote.user = None
+        session.delete(vote)
     session.commit()
 
     for poll in polls_for_update:

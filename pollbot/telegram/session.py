@@ -49,7 +49,7 @@ def inline_query_wrapper(func):
         session = get_session()
         try:
             user, statistic = get_user(session, update.inline_query.from_user)
-            if user.banned or user.deleted:
+            if user.banned:
                 return
 
             func(context.bot, update, session, user)
@@ -75,7 +75,7 @@ def inline_result_wrapper(func):
         session = get_session()
         try:
             user, _ = get_user(session, update.chosen_inline_result.from_user)
-            if user.banned or user.deleted:
+            if user.banned:
                 return
 
             func(context.bot, update, session, user)
@@ -115,7 +115,7 @@ def callback_query_wrapper(func):
 
             user, statistic = get_user(session, update.callback_query.from_user)
             # Cache ban value, so we don't have to lookup the value in our database on each request
-            if user.banned or user.deleted:
+            if user.banned:
                 context.user_data["ban"] = True
                 return
 
@@ -169,8 +169,8 @@ def message_wrapper(private=False):
 
         @wraps(func)
         def wrapper(update: Update, context: CallbackContext):
-            # The user has been banned/deleted and already got a message regarding this issue
-            if context.user_data.get("deleted-message-sent"):
+            # The user has been banned and already got a message regarding this issue
+            if context.user_data.get("banned-message-sent"):
                 return
 
             user = None
@@ -186,19 +186,11 @@ def message_wrapper(private=False):
                 # Send a message explaining the user, why they cannot use the bot.
                 # Also set a flag, which prevents sending this messages multiple times and thereby prevents DOS attacks.
                 if user.banned:
-                    if not context.user_data.get("deleted-message-sent"):
-                        context.user_data["deleted-message-sent"] = True
+                    if not context.user_data.get("banned-message-sent"):
+                        context.user_data["banned-message-sent"] = True
 
                     message.chat.send_message(
                         "You have been permanently banned from using this bot, either due to spamming or inappropriate behavior."
-                        "Please refrain from asking questions in the support group or on Github. There's nothing we can do about this."
-                    )
-                    return
-                elif user.deleted:
-                    if not context.user_data.get("deleted-message-sent"):
-                        context.user_data["deleted-message-sent"] = True
-                    message.chat.send_message(
-                        "You have requested a permanent deletion of your Ultimate Poll Bot account. This action is irreversible!\n"
                         "Please refrain from asking questions in the support group or on Github. There's nothing we can do about this."
                     )
                     return
@@ -263,7 +255,7 @@ def message_wrapper(private=False):
 def get_user(session, tg_user):
     """Get the user from the event."""
     user = session.query(User).get(tg_user.id)
-    if user is not None and (user.banned or user.deleted):
+    if user is not None and user.banned:
         return user, None
 
     if user is None:
