@@ -41,4 +41,4 @@ def remove_poll_messages(session, bot, poll, remove_all=False):
             ):
                 pass
             else:
-                raise
+                raise e
