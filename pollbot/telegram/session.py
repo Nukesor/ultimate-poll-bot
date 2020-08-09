@@ -17,6 +17,7 @@ from pollbot.sentry import sentry
 from telegram import Bot, Update
 from telegram.error import BadRequest, RetryAfter, TimedOut, Unauthorized, NetworkError
 from telegram.ext import CallbackContext
+from pollbot.helper import remove_markdown_characters
 
 
 def job_wrapper(func):
@@ -318,8 +319,7 @@ def get_name_from_tg_user(tg_user):
     if name == "":
         name = str(tg_user.id)
 
-    for character in ["[", "]", "_", "*"]:
-        name = name.replace(character, "")
+    name = remove_markdown_characters(name)
 
     return name.strip()
 
