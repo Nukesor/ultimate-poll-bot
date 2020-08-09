@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ultimate-pollbot"
-version = "1.0.0"
+version = "1.6.0"
 description = "A telegram bot for creating all kinds of polls."
 authors = ["Arne Beer <contact@arne.beer>"]
 license = "MIT"
