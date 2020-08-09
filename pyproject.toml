@@ -7,7 +7,7 @@ license = "MIT"
 repository = "https://github.com/nukesor/ultimate-poll-bot"
 
 [tool.poetry.dependencies]
-python = ">=3.6"
+python = ">=3.7"
 sentry-sdk = "0.16.0"
 alembic = "^1"
 python-telegram-bot = "^12"
@@ -19,7 +19,7 @@ toml = "^0.10"
 python-i18n = {version = "^0.3", extras = ["yaml"]}
 
 matplotlib = "3.1"
-pandas = "^0.24"
+pandas = "^1.1"
 pillow = "^7.0"
 argparse = "^1.4.0"
 "ruamel.yaml" = "^0.16.10"
