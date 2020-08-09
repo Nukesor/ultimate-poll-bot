@@ -1,5 +1,6 @@
 """Module responsibel for plotting statistics."""
 import io
+import math
 
 import matplotlib
 import numpy as np
@@ -8,7 +9,7 @@ from matplotlib import dates as mdates
 from matplotlib import pyplot as plt  # noqa
 from sqlalchemy import Date, Integer, cast, func
 
-from pollbot.models import User, Vote
+from pollbot.models import DailyStatistic, User, Vote
 
 matplotlib.use("Agg")
 
@@ -17,9 +18,21 @@ def send_plots(session, chat):
     """Generate and send plots to the user."""
     image = get_user_activity(session)
     chat.send_document(image, caption="User statistics")
+    image.close()
+
     image = get_vote_activity(session)
     chat.send_document(image, caption="Vote statistics")
     image.close()
+
+    image = get_new_activity(session)
+    chat.send_document(image, caption="New statistics")
+    image.close()
+
+
+def get_magnitude(value):
+    if value == 0:
+        return 0
+    return int(math.floor(math.log10(abs(value))))
 
 
 def image_from_figure(fig):
@@ -109,14 +122,16 @@ def get_user_activity(session):
     months = mdates.MonthLocator()  # every month
     months_fmt = mdates.DateFormatter("%Y-%m")
 
-    max_number = all_users[len(all_users) - 1][2]
+    max_value = all_users[len(all_users) - 1][2]
+    magnitude = get_magnitude(max_value)
+
     # Plot each result set
     fig, ax = plt.subplots(figsize=(30, 15), dpi=120)
     for key, group in dataframe.groupby(["type"]):
         ax = group.plot(ax=ax, kind="line", x="date", y="users", label=key)
         ax.xaxis.set_major_locator(months)
         ax.xaxis.set_major_formatter(months_fmt)
-        ax.yaxis.set_ticks(np.arange(0, max_number, 5000))
+        ax.yaxis.set_ticks(np.arange(0, max_value, math.pow(10, magnitude - 1)))
 
     image = image_from_figure(fig)
     image.name = "user_statistics.png"
@@ -143,15 +158,59 @@ def get_vote_activity(session):
     months = mdates.MonthLocator()  # every month
     months_fmt = mdates.DateFormatter("%Y-%m")
 
-    max_number = max([vote[2] for vote in total_votes])
+    max_value = max([vote[2] for vote in total_votes])
+    magnitude = get_magnitude(max_value)
+
     # Plot each result set
     fig, ax = plt.subplots(figsize=(30, 15), dpi=120)
     for key, group in dataframe.groupby(["type"]):
         ax = group.plot(ax=ax, kind="bar", x="date", y="votes", label=key)
         ax.xaxis.set_major_locator(months)
         ax.xaxis.set_major_formatter(months_fmt)
-        ax.yaxis.set_ticks(np.arange(0, max_number, 2000))
+        ax.yaxis.set_ticks(np.arange(0, max_value, math.pow(10, magnitude - 1)))
 
     image = image_from_figure(fig)
     image.name = "vote_statistics.png"
+    return image
+
+
+def get_new_activity(session):
+    """Create a plot showing new users and polls per day."""
+    creation_date = func.date_trunc("week", DailyStatistic.date).label("creation_date")
+    stats = (
+        session.query(
+            creation_date,
+            func.avg(DailyStatistic.created_polls).label("new_polls"),
+            func.avg(DailyStatistic.new_users).label("new_users"),
+        )
+        .group_by(creation_date)
+        .order_by(creation_date)
+        .all()
+    )
+    new_polls = [("New polls", stat[0], float(stat[1])) for stat in stats]
+    new_users = [("New users", stat[0], float(stat[2])) for stat in stats]
+
+    # Grid style
+    plt.style.use("seaborn-whitegrid")
+
+    combined = new_polls + new_users
+    # Combine the results in a single dataframe and name the columns
+    dataframe = pandas.DataFrame(combined, columns=["type", "date", "count"])
+
+    months = mdates.MonthLocator()  # every month
+    months_fmt = mdates.DateFormatter("%Y-%m")
+
+    max_value = max([vote[2] for vote in combined])
+    magnitude = get_magnitude(max_value)
+
+    # Plot each result set
+    fig, ax = plt.subplots(figsize=(30, 15), dpi=120)
+    for key, group in dataframe.groupby(["type"]):
+        ax = group.plot(ax=ax, kind="line", x="date", y="count", label=key)
+        ax.xaxis.set_major_locator(months)
+        ax.xaxis.set_major_formatter(months_fmt)
+        ax.yaxis.set_ticks(np.arange(0, max_value, math.pow(10, magnitude - 1)))
+
+    image = image_from_figure(fig)
+    image.name = "new_statistics.png"
     return image
