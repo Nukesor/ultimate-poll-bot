@@ -4,6 +4,7 @@ from sqlalchemy import func
 from pollbot.enums import PollType
 from pollbot.i18n import i18n
 from pollbot.models import User, Vote
+from pollbot.helper import remove_markdown_characters
 from pollbot.poll.helper import (
     calculate_total_votes,
     poll_allows_cumulative_votes,
@@ -62,10 +63,8 @@ def get_doodle_answer_lines(votes, summarize, is_last):
     current_line = "┆ "
     characters = len(current_line)
     for index, vote in enumerate(votes):
-        user_exists = vote.user is not None
-        name_length = len("Removed user")
-        if user_exists:
-            name_length = len(vote.user.name)
+        username = remove_markdown_characters(vote.user.name)
+        name_length = len(username)
 
         # Only the characters of the username count (not the mention)
         characters += name_length
@@ -76,10 +75,7 @@ def get_doodle_answer_lines(votes, summarize, is_last):
             current_line = "┆ "
             characters = len(current_line)
 
-        if user_exists:
-            user_mention = f"[{vote.user.name}](tg://user?id={vote.user.id})"
-        else:
-            user_mention = "Removed user"
+        user_mention = f"[{username}](tg://user?id={vote.user.id})"
         # Add a comma at the end of the user mention if it's not the last one
         if index != (len(votes) - 1):
             user_mention += ", "
@@ -120,10 +116,8 @@ def get_vote_lines(poll, option, summarize):
 
 def get_vote_line(poll, option, vote, index):
     """Get the line showing an actual vote."""
-    if vote.user is None:
-        user_mention = "GDPR removed user"
-    else:
-        user_mention = f"[{vote.user.name}](tg://user?id={vote.user.id})"
+    username = remove_markdown_characters(vote.user.name)
+    user_mention = f"[{username}](tg://user?id={vote.user.id})"
 
     if index == (len(option.votes) - 1):
         vote_line = f"└ {user_mention}"
@@ -180,7 +174,7 @@ def get_remaining_votes_lines(session, poll):
             i18n.t(
                 "poll.remaining_votes_user",
                 locale=poll.locale,
-                name=user_votes[0],
+                name=remove_markdown_characters(user_votes[0]),
                 count=poll.number_of_votes - user_votes[1],
             )
         )

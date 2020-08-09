@@ -3,6 +3,7 @@ from pollbot.display import get_settings_text
 from pollbot.enums import ExpectedInput, PollType, ReferenceType
 from pollbot.i18n import i18n
 from pollbot.models import Reference
+from pollbot.helper import markdown_characters
 from pollbot.poll.helper import remove_old_references
 from pollbot.poll.option import add_options_multiline
 from pollbot.display.poll.option import next_option
@@ -46,12 +47,13 @@ def handle_private_text(bot, update, session, user):
             ExpectedInput.new_option: handle_new_option,
             ExpectedInput.new_user_option: handle_user_option_addition,
         }
-        if "*" in text or "_" in text or "[" in text:
-            chat.send_message(
-                i18n.t("creation.error.markdown", locale=user.locale),
-                parse_mode="Markdown",
-            )
-            return
+        for char in markdown_characters:
+            if char in text:
+                chat.send_message(
+                    i18n.t("creation.error.markdown", locale=user.locale),
+                    parse_mode="Markdown",
+                )
+                return
 
         return actions[expected_input](bot, update, session, user, text, poll, chat)
 

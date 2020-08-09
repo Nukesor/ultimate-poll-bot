@@ -165,7 +165,7 @@ def update_reference(session, bot, poll, reference, show_warning=False):
         elif e.message.startswith("Message is not modified"):
             pass
         else:
-            raise
+            raise e
 
     except Unauthorized:
         session.delete(reference)

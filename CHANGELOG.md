@@ -13,6 +13,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - Users are only allowed to own 200 polls (by default).
 - Poll Messages won't be removed when deleting all/all closed polls.
+- Use local venv for development with poetry
+- Dependency updates
 
 **Internal:**
 
@@ -28,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fixed exceptions due to duplicate inline result updates.
 - Fixed exceptions due to channel posts in message handlers
 - Ignored exceptions when `/start` commands came in without a message.
+- Fixed broken polls due to special characters in usernames
 
 ## [1.5.0] - 2020-07-08
 
