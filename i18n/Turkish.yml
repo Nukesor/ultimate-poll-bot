@@ -107,7 +107,6 @@ keyboard:
         management: Yönetim
         languages: Diller
         bugs: Hatalar
-    styling: '🎀 Stil ayarları'
     summarize_votes: 'Birçok oyu özetleyin'
     dont_summarize_votes: 'Tüm oyları göster'
     add_new_language: 'Yeni bir dil ekle'

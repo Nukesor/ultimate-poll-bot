@@ -40,6 +40,7 @@ poll:
     please_wait: "\n\nSi us plau espera un moment mentre el bot sincronitza les enquestes ☺️"
     anonymous_warning: '*Alerta:* _Altres persones podrien intuir el vostre vot en funció del percentatge/recompte i el vostra estat "en línia"._'
     summarized_users: '_i %{count} participants més._'
+    own_poll: Buit
     shared_too_often: 'Límit assolit. Només es permet compartir un màxim de %{amount} vegades.'
 deleted:
     poll: 'Enquesta eliminada.'
@@ -117,7 +118,7 @@ keyboard:
         management: Gestió
         languages: Idioma
         bugs: Errors/Bugs
-    styling: '🎀 Estils i ordre'
+        feature: 'Sol·licitud de característiques'
     summarize_votes: 'Resumir els vots'
     dont_summarize_votes: 'Mostrar tots els vots'
     add_new_language: 'Afegir un nou idioma'
@@ -134,6 +135,7 @@ keyboard:
         delete_all: '⚠️ Eliminar totes les enquestes'
         delete_all_closed: '⚠️ Eliminar totes les enquestes tancades'
         init_poll: '🌟 Crea una nova enquesta'
+        delete_me: '❌ Elimineu-me'
     admin:
         settings: '⚙️ Configuració d''administrador'
         stats: '📊 Estadístiques'
@@ -183,6 +185,7 @@ settings:
         explanations:
             language: '_Aquesta configuració determina quin idioma s’utilitza en aquesta interfície de gestió i també determina l''idioma per defecte de les enquestes que genereu._'
             notifications: '_Us enviaré missatges directes de tant en tant informant-vos d''actualitzacions, canvis o errors._'
+        deleted: 'Enhorabona! Les vostres dades s''han eliminat. Adéu'
     poll:
         explanation:
             anonymity: "_En una enquesta anònima no es mostraràn els noms. No és possible qui vota què._\n*Vigileu:* _La gent podria endevinar d'on venen els vots mirant qui està en línia o no quan es canvien els resultats. Si voleu que sigui 100% anònima, oculteu també els resultats._\n"
@@ -232,6 +235,7 @@ external:
         pick_poll: 'Tria l''enquesta per a activar les notificacions'
         activated: 'Notificacions activades'
         new_notification_board: 'Si us plau, fes ús del nou taulell de notificacions'
+        no_active_poll: Buit
     share_poll: 'Per a compartir aquesta enquesta, simplement fes clic al botó i tria el chat on t''agradaria compartir-la.'
     done: Finalitzat
 delete:
@@ -250,11 +254,14 @@ misc:
         management: "🕰 *Trobar enquestes antigues:*\n\nHi ha una opció al menú /start per a trobar totes les enquestes obertes.\nLes tancades es poden veure també al menú /settings.\n\n⚠️ *Esborrar enquestes:*\n\nPots eliminar enquestes individuals als respectius menús de les enquestes.\nTambé hi ha opcions per a esborrar totes les enquestes o totes les enquestes tancades al menú /settings.\n"
         languages: "🌐 *Idioma:*\n\nUltimate pollbot és compatible amb diferents idiomes, però només és dóna suport oficial a l'anglès.\n\nPer a afegir un nou idioma, o canviar un idioma existent, si us plau contacta'm @Nukesor!\nFaig servir el servei de localització [Lokalise](https://lokalise.co), el qual s'ha compromès a donar-me una llicència lliure per a traduir els meus projectes.\nPer a fer-ho servir, hauràs de donar-me una adreça d'email (cualsevol email em serveix), ja que t'he d'enviar una invitació per email.\n\nVes amb compte de no trencar els estils Markdown (`*`, `_`, `${}`), de no ser així les coses es trencaràn al teu idioma.\nSi es trenca alguna cosa, intentaré arreglar-ho, però si us plau, ajuda'm a evitar que això passi. Arreglar errors requereix de temps i esforç.\nEl suport multilingüe és una característica impulsada per la comunitat que recolzo amb molt de gust, però a la que no puc donar suport pel meu compte.\n"
         bugs: "⚠️ *He trobat un error (bug) que no s'arregla de cap manera!!* 😩\n\nNormalment rebo una notificació tant bon punt es trenca alguna cosa, però hi ha errors que passen desapercebuts.\nEn cas que un error no sigui arreglat en un dia o dos, si us plau escriu un ticket a [GitHub](https://github.com/Nukesor/ultimate-poll-bot) o passa't pel meu [grup de suport](https://t.me/nukesors_projects).\n"
+        feature: "*Voldria consultar si una característica específica s'ha afegit al bot*\n\nComproveu el panell oficial de seguiment de característiques: https://trello.com/b/L3XfSRkN/ultimate-poll-bot\n\nAlgunes característiques *no s'implementaran*, atès que no compleixen les directrius del projecte.\n\nAlgunes característiques que es sol·liciten sovint ja estan planificades i es troben *a l'espera que algú les codifiqui*.\n\nSi la característica que cerqueu no hi és al tauler de Trello, suggeriu-la al meu [grup de suport] (https://t.me/nukesors_projects).\n"
     error: "Hi ha hagut un error desconegut. Probablement m'ho acaben de notificar i intentaré arreglar-ho el més aviat possible.\nEn cas que l'error no es solucioni en un dia o dos, si us plau, obre un ticket a [GitHub](https://github.com/Nukesor/ultimate-poll-bot) o ves al meu [grup de suport](https://t.me/nukesors_projects).\n"
     start_after_results: 'Ei! Escriu /create per a crear la teva enquesta ☺️'
     over_3000: "⚠️ La teva enquesta ja té més de *3000 caràcters*, si us plau intenta escurçar-ho per sota de 3000, o si pots per sota de 2500 🙏.\n\nTelegram té un límit de 4096 caràcters per als missatges, i necessito mostar els vots després del teu text inicial. Si l'enquesta sobrepassa el límit aleshores *deixarà de funcionar*.\nJa intento ser breu amb els vots quan cal però tot i així l'espai és molt limitat.\n\nPer a enquestes amb molt de text i més de 10-15 opcions, potser és millor que facis servir un servei extern com ara [Doodle](https://doodle.com/)\n"
     over_4000: "⚠️ La teva enquesta ja té més de *4000 caràcters*. És massa text per a mostrar-lo tot de cop. Si us plau intenta escurçar-ho per sota de 3000, o si pots per sota de 2500 🙏.\n\nTelegram té un límit de 4096 caràcters per als missatges, i necessito mostar els vots després del teu text inicial. Si l'enquesta sobrepassa el límit aleshores *deixarà de funcionar*.\nJa intento ser breu amb els vots quan cal però tot i així no puc fer-hi res si el missatge és tan llarg.\n\nPer a enquestes molt llargues i amb moltes opcions, potser seria millor que fecis servir un servei com ara [Doodle](https://doodle.com/)\n"
     too_long: "Hola!\n\nHo sento, però la teva enquesta és massa llarga. Probablement vas afegir moltes opcions i/o un text molt llarg (o les dues coses!). 😬\n\nDonat que Telegram només permet missatges de 4096 caràcters o menys, no m'és possible mostrar enquestes tan llargues.\n\nSi us plau intenta escriure una descripció i unes opcions més curtes, o potser podries fer servir [Doodle](https://doodle.com/).\n\n    Una manera de solucionar el problema podria ser eliminar altres opcions (l'administrador pot fer-ho).\n\n👇 En qualsevol cas encara pots votar i veure els resultats. 👇\n"
+    stop: 'Ja no podreu tornar a utilitzar el bot. Per començar de nou, escriviu /start'
+    deletion_warning: "*Atenció*\n\nAquesta és una acció permanent.\n\n1.Totes les dades personals seran eliminades.\n2. Els vots de les enquestes actives s'eliminaran, i els vots de les enquestes tancades s'ocultaran.\n3. Totes les enquestes, actives o tancades, seran eliminades.\n\nNo es podran suprimir:\n1. Vots d'enquestes eliminades, atès que ja han estat esborrats de la base de dades.\n2. Enquestes eliminades, atès que ja han estat esborrades de la base de dades.\n\nTingueu en compte el següent:\n*Si elimineu les vostres dades, no podreu accedir-hi mai més.*\nJa no podreu tornar a fer servir el bot mai més.\n\nEs tracta d'una mesura bàsica per impedir la manipulació dels vots a enquestes tancades.\nSi ho feu un sol cop, quedareu fora per sempre."
 sorting:
     chrono: cronològicament
     name: alfabèticament

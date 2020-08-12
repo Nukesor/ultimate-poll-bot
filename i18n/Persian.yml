@@ -118,7 +118,6 @@ keyboard:
         management: مدیریت
         languages: 'زبان ها'
         bugs: اشکالات
-    styling: '🎀 سبک و سفارش'
     summarize_votes: 'خلاصه بسیاری از آرا'
     dont_summarize_votes: 'نمایش همه آرا'
     add_new_language: 'افزودن زبان جدید'

@@ -117,7 +117,6 @@ keyboard:
         management: Verwaltung
         languages: Sprachen
         bugs: Fehler
-    styling: '🎀 Styling-Einstellungen'
     summarize_votes: 'Fasse viele Stimmen zusammen'
     dont_summarize_votes: 'Zeige alle Stimmen'
     add_new_language: 'Neue Sprache hinzufügen'

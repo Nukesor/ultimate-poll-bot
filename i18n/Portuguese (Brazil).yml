@@ -114,7 +114,6 @@ keyboard:
         management: Gerenciamento
         languages: Idiomas
         bugs: Bugs
-    styling: '🎀 Configurações de estilo'
     summarize_votes: 'Consolidar vários votos'
     dont_summarize_votes: 'Mostrar todos os votos'
     add_new_language: 'Adicionar um novo idioma'

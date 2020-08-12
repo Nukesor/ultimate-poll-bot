@@ -41,6 +41,7 @@ poll:
     anonymous_warning: "*Dejte si pozor:*\n_Lidé mohou být schopni odhadnout Váš hlas pomocí sledování procent, hlasů a Vašeho online statusu._"
     summarized_users: '_a další lidé (%{count})_'
     own_poll: 'Vytvořte si *svou vlastní* anketu přímo [zde](https://t.me/ultimate_pollbot)'
+    shared_too_often: 'Anketa sdílena příliš často. Počet zpráv povolených na anketu: %{amount}'
 deleted:
     poll: 'Tato anketa byla natrvalo smazána.'
     polls: 'Všechny ankety byly smazány.'
@@ -70,6 +71,9 @@ callback:
         no_left: 'Již nezbyly hlasy!'
         doodle_changed: 'Hlas změněn na: %{vote_type}'
         doodle_registered: 'Hlas přidán (%{vote_type})'
+    date_removed: 'Odstraněné datum: %{date}'
+    due_date_removed: 'Datum uzavření odstraněno'
+    spam: "Pro dnešek Vám byl udělen ban.\nPokračujte ve spamování a bude Vám udělen trvale."
 inline_query:
     create_first: 'Klepni sem a vytvoř anketu ;)'
     create_poll: 'Klepněte pro vytvoření nové ankety.'
@@ -97,8 +101,8 @@ keyboard:
     permanently_anonymize: '⚠️Trvale anonymizovat anketu! ⚠️'
     anonymize: '🔍 Anonymizovat hlasy'
     due_date: '📅 Nastavit datum uzavření'
-    hide_percentage: '○% Skrýt procenta'
-    show_percentage: '○% Zobrazit procenta'
+    hide_percentage: '▭% Skrýt procenta'
+    show_percentage: '▭% Zobrazit procenta'
     new_option: '＋ Přidat novou možnost'
     remove_option: '－ Odstranit možnosti'
     forbid_user_options: '🍺 Zakázat ostatním přidávat nové možnosti'
@@ -114,7 +118,7 @@ keyboard:
         management: Správa
         languages: Jazyky
         bugs: Chyby
-    styling: '🎀 Stylistická nastavení'
+        feature: 'Požadavky na nové funkce'
     summarize_votes: 'Sumarizovat hodně hlasů'
     dont_summarize_votes: 'Ukázat všechny hlasy'
     add_new_language: 'Přidat nový jazyk'
@@ -131,6 +135,7 @@ keyboard:
         delete_all: '⚠️ Smazat všechny ankety'
         delete_all_closed: '⚠️ Smazat všechny uzavřené ankety'
         init_poll: '🌟 Vytvořit novou anketu'
+        delete_me: '❌ Smažte mě'
     admin:
         settings: '⚙️ Administrační nastavení'
         stats: '📊 Statistiky'
@@ -139,6 +144,10 @@ keyboard:
     hide_option_votes: '# Skrýt hlasy pro možnost'
     show_option_votes: '# Zobrazit hlasy pro možnost'
     anonymity_settings: '⚙️ Nastavení anonymity'
+    allow_sharing: '🔗 Povolit ostatním sdílet tuto anketu'
+    forbid_sharing: '🔗 Zakázat ostatním sdílet tuto anketu'
+    refresh: Obnovit
+    order_options_manually: 'Upravte pořadí možností'
 settings:
     poll_type: '*Druh ankety*: %{poll_type}'
     language: '*Jazyk*: %{language}'
@@ -176,11 +185,14 @@ settings:
         explanations:
             language: '_Toto nastavení určuje jazyk použitý v rozhraní a výchozí jazyk, Vašich anket._'
             notifications: '_Jednou za čas pošlu zprávu informující o aktualizacích, změnách a chybách._'
+        deleted: "Gratulujeme!\nVaše data byla právě smazána.\nSbohem"
     poll:
         explanation:
             anonymity: "_V anonymní anketě nebudou zobrazována žádná jména, není možné vidět, od kterého uživatele hlas přišel._\n*Dejte si pozor:* _Lidé mohou Váš hlas odhadnout sledováním procent, počtu hlasů nebo Vašeho online statusu. Pro zcela anonymní hlasování také zapněte skryté výsledky._\n"
             visibility: '_V anketě se skrytými výsledky nelze vidět procenta ani hlasy, dokud není uzavřena. Ve chvíli, kdy uzavřena je, zůstane tak navždy. To je nutné k zamezení [taktickému hlasování](https://cs.qwertyu.wiki/wiki/Tactical_voting) a vlivu [kotvení](https://cs.m.wikipedia.org/wiki/Kotven%C3%AD_(psychologie\))'
     anonymity_warning: "Nemůžete skrýt hlasy a procenta v anonymní anketě. To by mohlo vytvořit v uživatelích pocit, že anketa má skryté výsledky, což není pravda. Pokud chcete tyto funkce, vytvořte anketu se skrytými výsledky.\n"
+    private_vote_link: 'S tímto odkazem mohou uživatelé hlasovat v soukromé konverzaci.'
+    link_warning: '*Dávejte pozor!* Když je tento odkaz jednou venku, nemůžete ho vzít zpět. Každý s odkazem může v anketě hlasovat.'
 management:
     permanently_close: "Opravdu chcete trvale uzavřít tuto anketu?\nVýsledky budou viditelné, ale již nebude možno dále hlasovat\n⚠️ Tento krok je nevratný. ⚠️\n"
     delete: 'Opravdu chcete smazat tuto anketu?'
@@ -199,7 +211,7 @@ creation:
         results_not_visible: 'Skrýt výsledky do uzavření ankety'
     option:
         next: 'Pošlete *jinou možnost*, zvolte datum a přidejte ho jako možnost, nebo stiskněte *Hotovo*, když jste hotovi.'
-        first: "Pošlete mi prosím možnost. Můžete zaslat více možností najednou, každou na nový řádek.\nMůžete také přidat popisek za spojovník. \nNapříklad `Burger - protože je chutný`\n"
+        first: "Pošlete mi prosím možnost. Můžete zaslat více možností najednou, každou na nový řádek.\nMůžete také přidat popisek za dvojitý spojovník. \nNapříklad `Burger -- protože je chutný`\n"
         no_new: '❌ Nebyla přidána žádná nová možnost'
         single_added: "Možnost *%{option}* byla přidána. 👍\nPošlete *jinou možnost*, vyberte datum a přidejte ho jako možnost, nebo stiskněte *Hotovo*, když jste hotovi."
         multiple_added: 'Možnosti byly přidány:'
@@ -216,13 +228,16 @@ creation:
         limit_between: 'Pošlete mi prosím číslo mezi 1 a %{limit}'
         markdown: "Nepoužívejte prosím v názvech, popisech ani možnostech formátovací symboly. Tyto symboly jsou podtržítko `_`, hvězdička `*` a hranatá závorka `[`.\nPošlete mi prosím zprávu znovu bez těchto symbolů. \n"
         too_big: 'Pošlete mi prosím menší číslo. Také je možné použít druh ankety "Neomezené hlasy"'
+        invalid_poll_name: "Název Vaší ankety patrně obsahuje neplatné znaky.\nZkuste to prosím znovu."
 external:
     canceled: Zrušeno
     notification:
         pick_poll: 'Zvolte správnou anketu k aktivování oznámení'
         activated: 'Oznámení aktivována'
         new_notification_board: 'Použijte prosím novější tabulku oznámení.'
+        no_active_poll: Prázdné
     share_poll: 'K sdílení této ankety stačí stisknout tlačítko a zvolit chat, kde chcete anketu sdílet.'
+    done: Hotovo
 delete:
     doesnt_exist: 'Anketa, kterou chcete vymazat neexistuje'
     previous_deleted: 'Předchozí nedokončená anketa smazána.'
@@ -239,8 +254,17 @@ misc:
         management: "🕰 *Nalezení starých anket:*\n\nExistuje možnost v menu /start k nalezení všech otevřených anket.\nUzavřené ankety si lze nechat vypsat v menu nastavení /settings \n\n⚠️ *Smazání anket:*\n\nMůžete mazat jednotlivé ankety v jejich odpovídajících nabídkách.\nLze využít také funkce smazání všech anket nebo všech uzavřených anket v menu nastavení /settings\n"
         languages: "🌐 *Jazyk:*\n\nUltimate pollbot podporuje několik jazyků, ale jen angličtina je oficiálně udržována.\n\nK přidání nového jazyka mě prosím kontaktujte na @Nukesor!\nPoužívám službu [Lokalise](https://lokalise.co) pro lokalizaci, která mi poskytla open-source licenci pro překlad mých projektů.\nAby tato služba fungovala, budete mi muset poskytnout emailovou adresu (stačí i vedlejší adresa pro spam), abych Vám mohl poslat pozvánku.\n\nDávejte si prosím pozor na ponechání formátovacích symbolů (`*`, `_`, `${}`), jinak se některé funkce ve Vašem jazyce rozbijí.\nKdyž se něco pokazí, pokusím se to opravit, ale prosím pomozte předcházet těmto problémům. Jejich řešení vyžaduje snahu a čas, které šlo využít jinak. Podpora jazyků je řízena komunitou a rád ji podporuji, ale nemůžu sám podporovat více jazyků.\n\nČeský překlad vytvořil @IgnacRR\nPokud se v něm vyskytla nějaká chyba či překlep, kontaktujte jej.\n"
         bugs: "⚠️ *Je zde chyba, která nechce zmizet!!* 😩\n\nObvykle jsem upozorněn, když se něco pokazí, ale některé chyby mohou projít bez povšimnutí!\nPokud chyba není do dne až dvou opravena, napište mi na [GitHub](https://github.com/Nukesor/ultimate-poll-bot) nebo se zastavte v mé [skupině podpory](https://t.me/nukesors_projects).\n\nChyby v českém překladu hlaste @IgnacRR\n"
+        feature: "*Chtěl/a bych, aby do bota byla přidána konkrétní funkce*\n\nPodívej se na oficiální nástěnku znázorňující plány do budoucna: https://trello.com/b/L3XfSRkN/ultimate-poll-bot\n\nNěkteré funkce *nemohou být implementovány*, protože nesplňují cíle projektu.\n\nNěkteré často žádané funkce jsou v plánu a jen  *čekáme na někoho, kdo je naprogramuje*.\n\nPokud Vámi požadovaná funkce není na nástěnce trello, navrhněte ji v mé [skupině podpory](https://t.me/nukesors_projects).\n"
     error: "Objevila se neznámá chyba. Nejspíše jsem již byl upozorněn a pokusím se ji co nejdříve opravit\nPokud chyba není do dne až dvou opravena, napište mi na [GitHub](https://github.com/Nukesor/ultimate-poll-bot) nebo se zastavte v mé [skupině podpory](https://t.me/nukesors_projects).\n"
     start_after_results: 'Ahoj! Stačí napsat /create a vytvořit si vlastní anketu ☺️'
     over_3000: "⚠️ Vaše anketa již obsahuje přes *3000 znaků*, prosím zkraťte ji alespoň na 3000, lépe pod 2500 znaků 🙏.\n\nTelegram umožňuje maximálně 4096 znaků na zprávu a já ještě potřebuji zobrazit hlasy. Každá anketa s více znaly jednoduše *přestane pracovat*.\nJiž se to snažím řešit co nejlépe to jde a sumarizovat hlasy k ušetření místa, ale i přesto je místo omezeno.\n\nPro ankety s dlouhým textem a více než 10-15 odpověďmi by mohlo být lepší použít externí nástroj jako [Doodle](https://doodle.com/)\n"
     over_4000: "⚠️ Vaše anketa již obsahuje přes *4000 znaků*, to je příliš na zobrazení v jedné zprávě. Prosím zkraťte ji alespoň na 3000, lépe pod 2500 znaků 🙏.\n\nTelegram umožňuje maximálně 4096 znaků na zprávu a já ještě potřebuji zobrazit hlasy. Každá anketa s více znaly jednoduše *přestane pracovat*.\nJiž se to snažím řešit co nejlépe to jde a sumarizovat hlasy k ušetření místa, ale i přesto je místo omezeno.\n\nPro ankety s dlouhým textem a více než 10-15 odpověďmi by mohlo být lepší použít externí nástroj jako [Doodle](https://doodle.com/)\n"
     too_long: "Ahoj!\n\nMoc se omlovám, ale tato anketa je příliš dlouhá. Nejspíš má mnoho možností odpovědi nebo dlouhý popis (nebo obojí). 😬\n\nTelegram umožňuje maximálně 4096 znaků na zprávu, delší ankety proto prostě zobrazit nelze. 😐\n\nSnažte se prosím popis i odpovědi udržovat krátké a pokud chcete používat ankety s mnoha možnostmi, může být lepší externí nástroj jako [Doodle](https://doodle.com/).\n\n    Jednou možností vyřešení tohoto problému by mohlo být odstranění možností odpovědi (to ke umožněno administrátorovi).\n\n👇 Stále můžete hlasovat a níže vidět výsledky. 👇\n"
+    stop: 'Již nebudete schopni bota používat. K novému spuštění zadejte /start'
+    deletion_warning: "*Pozor*\n\nTato akce je nevratná.\n\n1. Všechma osobní data budou smazána.\n2. Hlasy v aktivních anketách budou odstraněny, hlasy v zavřených anketách budou upraveny.\n3. Všechny Vaše aktivní i uzavřené ankety budou odstraněny.\n\nCo nemůže být smazáno:\n1. Hlasy ve smazaných anketách nemohou být odstraněny, protože už byly z databáze vyčištěny.\n2. Smazané ankety nemohou být odstraněny, byly už totiž z databáze vyčištěny.\n\nBerte na vědomí:\n*Polud smažete data, bude Vám udělen doživotní ban.*\nNebudete schopni bota nadále používat.\n\nToto je jednoduché opatření k zabránění manipulacím na zavřených anketách. Učiníte-li tak jednou, tak není cesty zpět.\n"
+sorting:
+    chrono: chronologicky
+    name: abecedně
+    manual: ručně
+    percentage: 'dle procent'
+    doodle: 'dle odpovědi'

@@ -113,7 +113,6 @@ keyboard:
         management: Gestione
         languages: Lingue
         bugs: Bugs
-    styling: '🎀 Aspetto'
     summarize_votes: 'Riassumi molti voti'
     dont_summarize_votes: 'Mostra tutti i voti'
     add_new_language: 'Aggiungi una nuova lingua'
