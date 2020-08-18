@@ -381,4 +381,8 @@ def ignore_job_exception(exception):
     if isinstance(exception, TimedOut):
         return True
 
+    # Super low level http error
+    if isinstance(exception, NetworkError):
+        return True
+
     return False
