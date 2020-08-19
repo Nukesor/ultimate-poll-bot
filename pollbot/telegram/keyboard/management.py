@@ -1,7 +1,10 @@
 """Reply keyboards."""
-from pollbot.enums import CallbackResult, CallbackType
-from pollbot.i18n import i18n
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
+from pollbot.config import config
+from pollbot.enums import CallbackResult, CallbackType, StartAction
+from pollbot.i18n import i18n
+from pollbot.telegram.keyboard.helper import get_start_button_payload
 
 
 def get_back_to_management_button(poll):
@@ -20,47 +23,64 @@ def get_management_keyboard(poll):
     locale = poll.user.locale
     delete_payload = f"{CallbackType.menu_delete.value}:{poll.id}:0"
 
-    if poll.closed and not poll.results_visible:
-        return InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        i18n.t("keyboard.delete", locale=locale),
-                        callback_data=delete_payload,
-                    )
-                ]
-            ]
-        )
-    elif poll.closed:
+    if poll.closed:
         reopen_payload = f"{CallbackType.reopen.value}:{poll.id}:0"
         reset_payload = f"{CallbackType.reset.value}:{poll.id}:0"
         clone_payload = f"{CallbackType.clone.value}:{poll.id}:0"
-        buttons = [
-            [
+        buttons = []
+
+        if poll.summarize or poll.permanently_summarized:
+            payload = get_start_button_payload(poll, StartAction.show_results)
+            bot_name = config["telegram"]["bot_name"]
+            url = f"http://t.me/{bot_name}?start={payload}"
+            row = [
                 InlineKeyboardButton(
-                    i18n.t("keyboard.reset", locale=locale), callback_data=reset_payload
-                ),
+                    i18n.t("keyboard.show_results", locale=poll.locale), url=url
+                )
+            ]
+            buttons.append(row)
+
+        buttons.append(
+            [
                 InlineKeyboardButton(
                     i18n.t("keyboard.clone", locale=locale), callback_data=clone_payload
                 ),
-            ],
-            [
                 InlineKeyboardButton(
                     i18n.t("keyboard.delete", locale=locale),
                     callback_data=delete_payload,
                 ),
-                InlineKeyboardButton(
-                    i18n.t("keyboard.share", locale=locale),
-                    switch_inline_query=f"{poll.name} closed_polls",
-                ),
-            ],
-            [
-                InlineKeyboardButton(
-                    i18n.t("keyboard.reopen", locale=locale),
-                    callback_data=reopen_payload,
-                )
-            ],
+            ]
+        )
+        row = [
+            InlineKeyboardButton(
+                i18n.t("keyboard.share", locale=locale),
+                switch_inline_query=f"{poll.name} closed_polls",
+            ),
         ]
+
+        # Only allow the poll to reset on non-directly visible polls
+        if poll.results_visible:
+            row.insert(
+                0,
+                InlineKeyboardButton(
+                    i18n.t("keyboard.reset", locale=locale),
+                    callback_data=reset_payload,
+                ),
+            )
+
+        buttons.append(row)
+
+        # Only allow to re-open if the settings allows so.
+        if poll.results_visible:
+            buttons.append(
+                [
+                    InlineKeyboardButton(
+                        i18n.t("keyboard.reopen", locale=locale),
+                        callback_data=reopen_payload,
+                    )
+                ]
+            )
+
         return InlineKeyboardMarkup(buttons)
 
     vote_payload = f"{CallbackType.menu_vote.value}:{poll.id}:0"
