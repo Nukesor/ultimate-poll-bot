@@ -40,6 +40,7 @@ def image_from_figure(fig):
     io_buffer = io.BytesIO()
     plt.savefig(io_buffer, format="png")
     io_buffer.seek(0)
+    plt.close(fig)
 
     return io_buffer
 
@@ -135,6 +136,7 @@ def get_user_activity(session):
 
     image = image_from_figure(fig)
     image.name = "user_statistics.png"
+
     return image
 
 
