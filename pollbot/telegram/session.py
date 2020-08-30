@@ -150,7 +150,14 @@ def callback_query_wrapper(func):
                 locale = "English"
                 if user is not None:
                     locale = user.locale
-                update.callback_query.answer(i18n.t("callback.error", locale=locale))
+                try:
+                    update.callback_query.answer(
+                        i18n.t("callback.error", locale=locale)
+                    )
+                except BadRequest as e:
+                    # Check if this is a simple query timeout exception
+                    if not ignore_exception(e):
+                        raise e
 
         finally:
             # The session might not be there yet
