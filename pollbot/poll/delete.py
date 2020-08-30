@@ -4,14 +4,23 @@ from pollbot.poll.update import send_updates
 from telegram.error import BadRequest
 
 
-def remove_poll_messages(session, bot, poll, remove_all=False):
-    """Remove all messages (references) of a poll."""
+def delete_poll(session, bot, poll, remove_all=False):
+    """Delete a poll.
+
+    By default, the poll will simply be deleted from the database.
+    If the poll wasn't closed yet, it will be closed and all messages will be
+    updated once, to indicate that the poll is now closed.
+
+    If remove_all is set to true , ALL poll messages will be removed.
+    """
     # In case the poll messages should not be removed,
     # only close the poll and update the message, if necessary.
     if not remove_all:
         if not poll.closed:
             poll.closed = True
             send_updates(session, bot, poll)
+
+        session.delete(poll)
         return
 
     for reference in poll.references:
@@ -36,9 +45,15 @@ def remove_poll_messages(session, bot, poll, remove_all=False):
                 )
 
         except BadRequest as e:
-            if e.message.startswith("Message_id_invalid") or e.message.startswith(
-                "Message to edit not found"
+            if (
+                e.message.startswith("Message_id_invalid")
+                or e.message.startswith("Have no rights to send a message")
+                or e.message.startswith("Message to edit not found")
+                or e.message.startswith("Chat_write_forbidden")
+                or e.message.startswith("Chat not found")
             ):
                 pass
             else:
                 raise e
+
+    session.delete(poll)

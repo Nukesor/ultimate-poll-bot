@@ -8,16 +8,16 @@ from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 from pollbot.config import config
 from pollbot.i18n import i18n
 from pollbot.models import DailyStatistic, Poll, Update, UserStatistic
+from pollbot.enums import PollDeletionMode
 from pollbot.poll.update import send_updates, update_poll_messages
+from pollbot.poll.delete import delete_poll
 from pollbot.telegram.session import job_wrapper
 from telegram.error import BadRequest, RetryAfter, Unauthorized
-from telegram.ext import run_async
 
 
-@run_async
 @job_wrapper
 def message_update_job(context, session):
-    """Update all messages if necessary."""
+    """Update all polls that are scheduled for an update."""
     try:
         context.job.enabled = False
         now = datetime.now()
@@ -58,15 +58,39 @@ def message_update_job(context, session):
                 session.query(Update).filter(Update.next_update <= now).count()
             )
 
+    finally:
+        context.job.enabled = True
+
+
+@job_wrapper
+def delete_polls(context, session):
+    """Delete polls from the database and their messages if requested."""
+    try:
+        context.job.enabled = False
+
+        # Only delete a few polls at a time to prevent RAM usage spikes
+        polls_to_delete = (
+            session.query(Poll)
+            .filter(Poll.delete.isnot(None))
+            .order_by(Poll.updated_at.asc())
+            .limit(20)
+            .all()
+        )
+
+        for poll in polls_to_delete:
+            if poll.delete == PollDeletionMode.DB_ONLY.name:
+                delete_poll(session, context.bot, poll)
+            elif poll.delete == PollDeletionMode.WITH_MESSAGES.name:
+                delete_poll(session, context.bot, poll, True)
+            session.commit()
+
     except Exception as e:
         raise e
 
     finally:
         context.job.enabled = True
-        session.close()
 
 
-@run_async
 @job_wrapper
 def send_notifications(context, session):
     """Notify the users about the poll being closed soon."""
@@ -133,7 +157,6 @@ def send_notifications_for_poll(context, session, poll, message_key):
             session.delete(notification)
 
 
-@run_async
 @job_wrapper
 def create_daily_stats(context, session):
     """Create the daily stats entity for today and tomorrow."""
@@ -148,7 +171,6 @@ def create_daily_stats(context, session):
             session.commit()
 
 
-@run_async
 @job_wrapper
 def perma_ban_checker(context, session):
     """Perma-ban people that send more than 250 votes for at least 3 days in the last week."""
@@ -176,7 +198,6 @@ def perma_ban_checker(context, session):
             stat.user.banned = True
 
 
-@run_async
 @job_wrapper
 def cleanup(context, session):
     """Remove all user statistics after 7 days."""

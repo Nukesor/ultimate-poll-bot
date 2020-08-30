@@ -30,6 +30,7 @@ def get_poll_list(session, user, offset, closed=False):
         .filter(Poll.user == user)
         .filter(Poll.created.is_(True))
         .filter(Poll.closed.is_(closed))
+        .filter(Poll.delete.is_(None))
         .offset(offset)
         .limit(10)
         .all()

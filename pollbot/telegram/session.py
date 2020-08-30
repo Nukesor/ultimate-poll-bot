@@ -16,13 +16,14 @@ from pollbot.models import User, UserStatistic
 from pollbot.sentry import sentry
 from telegram import Bot, Update
 from telegram.error import BadRequest, RetryAfter, TimedOut, Unauthorized, NetworkError
-from telegram.ext import CallbackContext
+from telegram.ext import CallbackContext, run_async
 from pollbot.helper import remove_markdown_characters
 
 
 def job_wrapper(func):
     """Create a session, handle permissions and exceptions for jobs."""
 
+    @run_async
     def wrapper(context):
         session = get_session()
         try:
@@ -333,7 +334,7 @@ def get_name_from_tg_user(tg_user):
 
 def ignore_exception(exception):
     """Check whether we can safely ignore this exception."""
-    if isinstance(exception, BadRequest):
+    if type(exception) is BadRequest:
         if (
             exception.message.startswith("Query is too old")
             or exception.message.startswith("Have no rights to send a message")
@@ -342,13 +343,14 @@ def ignore_exception(exception):
             or exception.message.startswith("Schedule_date_invalid")
             or exception.message.startswith("Message to edit not found")
             or exception.message.startswith("Chat_write_forbidden")
+            or exception.message.startswith("Chat not found")
             or exception.message.startswith(
                 "Message is not modified: specified new message content"
             )
         ):
             return True
 
-    if isinstance(exception, Unauthorized):
+    if type(exception) is Unauthorized:
         if exception.message.lower() == "forbidden: bot was blocked by the user":
             return True
         if exception.message.lower() == "forbidden: message_author_required":
@@ -370,14 +372,14 @@ def ignore_exception(exception):
         if exception.message.lower() == "forbidden: chat_write_forbidden":
             return True
 
-    if isinstance(exception, TimedOut):
+    if type(exception) is TimedOut:
         return True
 
-    if isinstance(exception, RetryAfter):
+    if type(exception) is RetryAfter:
         return True
 
     # Super low level http error
-    if isinstance(exception, NetworkError):
+    if type(exception) is NetworkError:
         return True
 
     return False
@@ -385,11 +387,11 @@ def ignore_exception(exception):
 
 def ignore_job_exception(exception):
     """Check whether we can safely ignore this exception."""
-    if isinstance(exception, TimedOut):
+    if type(exception) is TimedOut:
         return True
 
     # Super low level http error
-    if isinstance(exception, NetworkError):
+    if type(exception) is NetworkError:
         return True
 
     return False

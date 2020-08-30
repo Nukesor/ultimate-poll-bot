@@ -30,6 +30,7 @@ from pollbot.telegram.job import (
     message_update_job,
     perma_ban_checker,
     send_notifications,
+    delete_polls,
 )
 from pollbot.telegram.message_handler import handle_private_text
 from pollbot.telegram.native_poll_handler import (
@@ -128,19 +129,25 @@ minute = 60
 hour = 60 * minute
 job_queue = updater.job_queue
 job_queue.run_repeating(
-    message_update_job, interval=10, first=0, name="Handle poll message update queue"
+    delete_polls,
+    interval=5,
+    first=0,
+    name="Delete polls that are scheduled for deletion.",
+)
+job_queue.run_repeating(
+    message_update_job, interval=10, first=0, name="Handle poll message update queue."
 )
 job_queue.run_repeating(
     send_notifications,
     interval=5 * minute,
     first=0,
-    name="Handle notifications and due dates",
+    name="Handle notifications and due dates.",
 )
 job_queue.run_repeating(
     create_daily_stats,
     interval=6 * hour,
     first=0,
-    name="Create daily statistic entities",
+    name="Create daily statistic entities.",
 )
 job_queue.run_repeating(
     perma_ban_checker,

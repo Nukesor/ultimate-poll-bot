@@ -2,9 +2,9 @@
 from pollbot.display.misc import get_help_text_and_keyboard, get_poll_list
 from pollbot.display.settings import get_user_settings_text
 from pollbot.i18n import i18n
+from pollbot.enums import PollDeletionMode
 from pollbot.poll.creation import initialize_poll
 from pollbot.poll.update import update_poll_messages
-from pollbot.poll.remove import remove_poll_messages
 from pollbot.telegram.keyboard.user import (
     get_delete_all_confirmation_keyboard,
     get_delete_user_final_confirmation_keyboard,
@@ -134,9 +134,9 @@ def delete_closed_confirmation(session, context):
 def delete_all(session, context):
     """Delete all polls of the user."""
     for poll in context.user.polls:
-        remove_poll_messages(session, context.bot, poll, False)
-        session.delete(poll)
-        session.commit()
+        if poll.delete is None:
+            poll.delete = PollDeletionMode.DB_ONLY.name
+    session.commit()
 
     open_user_settings(session, context)
     return i18n.t("deleted.polls", locale=context.user.locale)
@@ -145,10 +145,9 @@ def delete_all(session, context):
 def delete_closed(session, context):
     """Delete all closed polls of the user."""
     for poll in context.user.polls:
-        if poll.closed:
-            remove_poll_messages(session, context.bot, poll, False)
-            session.delete(poll)
-            session.commit()
+        if poll.delete is None:
+            poll.delete = PollDeletionMode.WITH_MESSAGES.name
+    session.commit()
 
     open_user_settings(session, context)
     return i18n.t("deleted.closed_polls", locale=context.user.locale)
@@ -168,10 +167,10 @@ def delete_user(session, context):
     """Delete everything of a user and ban them forever."""
     user = context.user
 
-    for poll in user.polls:
-        remove_poll_messages(session, context.bot, poll)
-        session.delete(poll)
-        session.commit()
+    for poll in context.user.polls:
+        if poll.delete is None:
+            poll.delete = PollDeletionMode.DB_ONLY.name
+    session.commit()
 
     polls_for_update = []
     # Delete all votes, but only update non-closed polls

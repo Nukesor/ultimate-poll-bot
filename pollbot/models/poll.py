@@ -56,6 +56,9 @@ class Poll(base):
     # Flags
     created = Column(Boolean, nullable=False, default=False)
     closed = Column(Boolean, nullable=False, default=False)
+    # Set this, if the poll should be deleted.
+    # There are two modes: DB_ONLY and WITH_MESSAGES.
+    delete = Column(String)
 
     # Chat state variables
     expected_input = Column(String)

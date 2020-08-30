@@ -4,18 +4,16 @@ from datetime import datetime
 from pollbot.decorators import poll_required
 from pollbot.display.poll.compilation import get_poll_text
 from pollbot.i18n import i18n
+from pollbot.enums import PollDeletionMode
 from pollbot.poll.helper import clone_poll as clone_poll_internal
 from pollbot.poll.update import update_poll_messages
-from pollbot.poll.remove import remove_poll_messages
 from pollbot.telegram.keyboard.management import get_management_keyboard
 
 
 @poll_required
 def delete_poll(session, context, poll):
     """Permanently delete the poll."""
-    remove_poll_messages(session, context.bot, poll)
-    session.commit()
-    session.delete(poll)
+    poll.delete = PollDeletionMode.DB_ONLY.name
     session.commit()
 
     return i18n.t("callback.deleted", locale=context.user.locale)
@@ -24,9 +22,7 @@ def delete_poll(session, context, poll):
 @poll_required
 def delete_poll_with_messages(session, context, poll):
     """Permanently delete the poll."""
-    remove_poll_messages(session, context.bot, poll, remove_all=True)
-    session.commit()
-    session.delete(poll)
+    poll.delete = PollDeletionMode.WITH_MESSAGES.name
     session.commit()
 
     return i18n.t("callback.deleted", locale=context.user.locale)
