@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
+- Fixed race-conditions that were created due to asynchronous poll deletion.
 - Some race-condition exception handling
 - Fix statistic plotting related memory leak
 
