@@ -16,6 +16,7 @@ from pollbot.telegram.keyboard.management import (
     get_management_keyboard,
 )
 from pollbot.telegram.keyboard.settings import get_settings_keyboard
+from sqlalchemy.exc import IntegrityError
 
 
 @poll_required
@@ -109,4 +110,9 @@ def show_menu(session, context, poll):
         poll, ReferenceType.admin.name, user=context.user, message_id=message.message_id
     )
     session.add(reference)
-    session.commit()
+    try:
+        session.commit()
+    except IntegrityError:
+        # The user may spam the button in the poll list.
+        # Ignore all duplicate calls, since they case an UniqueConstraint validation
+        session.rollback()
