@@ -113,10 +113,8 @@ callback_mapping = {
     CallbackType.settings_increase_option_index: increase_option_index,
     CallbackType.settings_decrease_option_index: decrease_option_index,
     # User
-    CallbackType.user_delete_all: delete_all,
     CallbackType.user_delete: delete_user,
     CallbackType.user_delete_confirmation: delete_user_second_confirmation,
-    CallbackType.user_delete_closed: delete_closed,
     # Datepicker
     CallbackType.pick_creation_date: pick_creation_date,
     CallbackType.pick_creation_weekday: pick_creation_weekday,
@@ -187,6 +185,8 @@ async_callback_mapping = {
     CallbackType.donate: open_donation,
     CallbackType.user_delete_all_confirmation: delete_all_confirmation,
     CallbackType.user_delete_closed_confirmation: delete_closed_confirmation,
+    CallbackType.user_delete_all: delete_all,
+    CallbackType.user_delete_closed: delete_closed,
     # Admin
     CallbackType.admin_settings: open_admin_settings,
     CallbackType.admin_plot: plot,
