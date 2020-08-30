@@ -101,6 +101,8 @@ from .vote import handle_vote
 callback_mapping = {
     # Creation
     CallbackType.all_options_entered: all_options_entered,
+    # Menu
+    CallbackType.menu_show: show_menu,
     # Poll management
     CallbackType.delete: delete_poll,
     CallbackType.delete_poll_with_messages: delete_poll_with_messages,
@@ -144,7 +146,6 @@ async_callback_mapping = {
     CallbackType.menu_vote: show_vote_menu,
     CallbackType.menu_option: show_settings,
     CallbackType.menu_delete: show_deletion_confirmation,
-    CallbackType.menu_show: show_menu,
     CallbackType.menu_close: show_close_confirmation,
     # Poll management
     CallbackType.close: close_poll,

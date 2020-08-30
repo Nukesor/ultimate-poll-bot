@@ -110,9 +110,4 @@ def show_menu(session, context, poll):
         poll, ReferenceType.admin.name, user=context.user, message_id=message.message_id
     )
     session.add(reference)
-    try:
-        session.commit()
-    except IntegrityError:
-        # The user may spam the button in the poll list.
-        # Ignore all duplicate calls, since they case an UniqueConstraint validation
-        session.rollback()
+    session.commit()
