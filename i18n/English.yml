@@ -200,6 +200,7 @@ management:
     delete: 'Do you really want to delete this poll?'
 creation:
     already_creating: 'You are already creating a poll. Cancel the previous poll creation first'
+    already_creating_ask_replace: 'You are already creating a poll. Do you want to abort your previous poll creation?'
     description: 'Now send me the description'
     skip_description: Skip
     not_allowed: 'You are no longer allowed to add new options'
