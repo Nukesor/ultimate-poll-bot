@@ -48,6 +48,7 @@ def delete_poll(session, bot, poll, remove_all=False):
             if (
                 e.message.startswith("Message_id_invalid")
                 or e.message.startswith("Have no rights to send a message")
+                or e.message.startswith("Message is not modified")
                 or e.message.startswith("Message to edit not found")
                 or e.message.startswith("Chat_write_forbidden")
                 or e.message.startswith("Chat not found")
