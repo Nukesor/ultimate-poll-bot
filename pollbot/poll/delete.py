@@ -1,7 +1,9 @@
+from time import sleep
+
 from pollbot.enums import ReferenceType
 from pollbot.i18n import i18n
 from pollbot.poll.update import send_updates
-from telegram.error import BadRequest
+from telegram.error import BadRequest, RetryAfter
 
 
 def delete_poll(session, bot, poll, remove_all=False):
@@ -44,6 +46,20 @@ def delete_poll(session, bot, poll, remove_all=False):
                     inline_message_id=reference.bot_inline_message_id,
                 )
 
+            # Early delete of the reference
+            # If something critical, such as a flood control error, happens in the middle
+            # of a delete, we don't have to update all previous references again.
+            session.delete(reference)
+            session.commit()
+        except RetryAfter as e:
+            # In case we get an flood control error, wait for the specified time
+            # Then rollback the transaction, and return. The reference will then be updated
+            # the next time the job runs.
+            retry_after = int(e.retry_after) + 1
+            sleep(retry_after)
+            session.rollback()
+            return
+
         except BadRequest as e:
             if (
                 e.message.startswith("Message_id_invalid")
@@ -58,3 +74,4 @@ def delete_poll(session, bot, poll, remove_all=False):
                 raise e
 
     session.delete(poll)
+    session.commit()
