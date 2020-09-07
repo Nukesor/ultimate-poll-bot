@@ -3,7 +3,7 @@ from time import sleep
 from pollbot.enums import ReferenceType
 from pollbot.i18n import i18n
 from pollbot.poll.update import send_updates
-from telegram.error import BadRequest, RetryAfter
+from telegram.error import BadRequest, RetryAfter, Unauthorized
 
 
 def delete_poll(session, bot, poll, remove_all=False):
@@ -72,6 +72,8 @@ def delete_poll(session, bot, poll, remove_all=False):
                 pass
             else:
                 raise e
+        except Unauthorized:
+            pass
 
     session.delete(poll)
     session.commit()
