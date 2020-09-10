@@ -20,7 +20,15 @@ def delete_poll(session, bot, poll, remove_all=False):
     if not remove_all:
         if not poll.closed:
             poll.closed = True
-            send_updates(session, bot, poll)
+            try:
+                send_updates(session, bot, poll)
+            except RetryAfter as e:
+                # In case we get an flood control error, wait for the specified time.
+                # Afterwards, just try again.
+                retry_after = int(e.retry_after) + 1
+                sleep(retry_after)
+
+                send_updates(session, bot, poll)
 
         session.delete(poll)
         return
