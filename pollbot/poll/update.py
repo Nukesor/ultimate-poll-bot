@@ -125,7 +125,10 @@ def update_reference(session, bot, poll, reference, show_warning=False):
         # User that votes in private chat (priority vote)
         elif reference.type == ReferenceType.private_vote.name:
             text, keyboard = get_poll_text_and_vote_keyboard(
-                session, poll, user=reference.user, show_warning=show_warning,
+                session,
+                poll,
+                user=reference.user,
+                show_warning=show_warning,
             )
 
             bot.edit_message_text(

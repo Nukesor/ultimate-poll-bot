@@ -74,13 +74,17 @@ def start(bot, update, session, user):
             message = "\n".join(chunk)
             try:
                 update.message.chat.send_message(
-                    message, parse_mode="markdown", disable_web_page_preview=True,
+                    message,
+                    parse_mode="markdown",
+                    disable_web_page_preview=True,
                 )
             # Retry for Timeout error (happens quite often when sending large messages)
             except TimeoutError:
                 time.sleep(2)
                 update.message.chat.send_message(
-                    message, parse_mode="markdown", disable_web_page_preview=True,
+                    message,
+                    parse_mode="markdown",
+                    disable_web_page_preview=True,
                 )
             time.sleep(1)
 
@@ -106,7 +110,11 @@ def start(bot, update, session, user):
             init_votes(session, poll, user)
             session.commit()
 
-        text, keyboard = get_poll_text_and_vote_keyboard(session, poll, user=user,)
+        text, keyboard = get_poll_text_and_vote_keyboard(
+            session,
+            poll,
+            user=user,
+        )
 
         sent_message = update.message.chat.send_message(
             text,

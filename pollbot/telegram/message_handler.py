@@ -68,7 +68,8 @@ def handle_set_name(bot, update, session, user, text, poll, chat):
     user.expected_input = ExpectedInput.description.name
     keyboard = get_skip_description_keyboard(poll)
     chat.send_message(
-        i18n.t("creation.description", locale=user.locale), reply_markup=keyboard,
+        i18n.t("creation.description", locale=user.locale),
+        reply_markup=keyboard,
     )
 
 
@@ -145,7 +146,11 @@ def handle_new_option(bot, update, session, user, text, poll, chat):
 
     text = get_settings_text(poll)
     keyboard = get_settings_keyboard(poll)
-    message = chat.send_message(text, parse_mode="markdown", reply_markup=keyboard,)
+    message = chat.send_message(
+        text,
+        parse_mode="markdown",
+        reply_markup=keyboard,
+    )
 
     remove_old_references(session, bot, poll, user)
 

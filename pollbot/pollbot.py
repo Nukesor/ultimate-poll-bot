@@ -156,7 +156,10 @@ job_queue.run_repeating(
     name="Perma-ban users that continuously reach thresholds.",
 )
 job_queue.run_repeating(
-    cleanup, interval=6 * hour, first=0, name="Remove old data",
+    cleanup,
+    interval=6 * hour,
+    first=0,
+    name="Remove old data",
 )
 
 # Message handler

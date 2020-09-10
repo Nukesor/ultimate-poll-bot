@@ -22,7 +22,9 @@ class Sentry(object):
         """Construct new sentry wrapper."""
         if config["logging"]["sentry_enabled"]:
             self.initialized = True
-            sentry_sdk.init(config["logging"]["sentry_token"],)
+            sentry_sdk.init(
+                config["logging"]["sentry_token"],
+            )
 
     def capture_message(self, message, level="info", tags=None, extra=None):
         """Capture message with sentry."""

@@ -30,7 +30,9 @@ def handle_chosen_inline_result(bot, update, session, user):
 
     try:
         reference = Reference(
-            poll, ReferenceType.inline.name, inline_message_id=result.inline_message_id,
+            poll,
+            ReferenceType.inline.name,
+            inline_message_id=result.inline_message_id,
         )
         session.add(reference)
         session.commit()

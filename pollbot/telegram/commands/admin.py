@@ -114,5 +114,8 @@ def test_broadcast(bot, update, session, user):
     message = update.message.text.split(" ", 1)[1].strip()
 
     bot.send_message(
-        user.id, message, parse_mode="Markdown", reply_markup=ReplyKeyboardRemove(),
+        user.id,
+        message,
+        parse_mode="Markdown",
+        reply_markup=ReplyKeyboardRemove(),
     )

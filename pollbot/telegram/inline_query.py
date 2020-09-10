@@ -35,7 +35,9 @@ def search(bot, update, session, user):
         offset = 0
     elif offset == "Done":
         update.inline_query.answer(
-            [], cache_time=0, is_personal=True,
+            [],
+            cache_time=0,
+            is_personal=True,
         )
         return
     else:
@@ -63,7 +65,8 @@ def search(bot, update, session, user):
             .filter(Poll.created.is_(True))
             .filter(
                 or_(
-                    Poll.name.ilike(f"%{query}%"), Poll.description.ilike(f"%{query}%"),
+                    Poll.name.ilike(f"%{query}%"),
+                    Poll.description.ilike(f"%{query}%"),
                 )
             )
             .order_by(Poll.created_at.desc())
@@ -96,7 +99,9 @@ def search(bot, update, session, user):
 
     if len(polls) == 0:
         update.inline_query.answer(
-            [], cache_time=0, is_personal=True,
+            [],
+            cache_time=0,
+            is_personal=True,
         )
     else:
         results = []
@@ -127,7 +132,9 @@ def search(bot, update, session, user):
             )
 
             content = InputTextMessageContent(
-                text, parse_mode="markdown", disable_web_page_preview=True,
+                text,
+                parse_mode="markdown",
+                disable_web_page_preview=True,
             )
             description = (
                 poll.description[:100] if poll.description is not None else None
@@ -148,5 +155,8 @@ def search(bot, update, session, user):
             offset + 10
 
         update.inline_query.answer(
-            results, cache_time=0, is_personal=True, next_offset=str(offset),
+            results,
+            cache_time=0,
+            is_personal=True,
+            next_offset=str(offset),
         )

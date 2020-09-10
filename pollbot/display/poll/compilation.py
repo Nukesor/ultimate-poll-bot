@@ -7,10 +7,18 @@ from .vote import get_remaining_votes_lines, get_vote_information_line
 
 
 def get_poll_text_and_vote_keyboard(
-    session, poll, user=None, show_warning=False, show_back=False,
+    session,
+    poll,
+    user=None,
+    show_warning=False,
+    show_back=False,
 ):
     """Get the text and the vote keyboard."""
-    text, summarize = get_poll_text_and_summarize(session, poll, show_warning=False,)
+    text, summarize = get_poll_text_and_summarize(
+        session,
+        poll,
+        show_warning=False,
+    )
 
     keyboard = get_vote_keyboard(poll, user, show_back, summary=summarize)
 

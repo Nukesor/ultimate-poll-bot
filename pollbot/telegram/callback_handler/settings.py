@@ -112,7 +112,9 @@ def open_new_option_datepicker(session, context, poll):
     """Send a text and tell the user that we expect a new option."""
     keyboard = get_add_option_datepicker_keyboard(poll, date.today())
     context.query.message.edit_text(
-        text=get_datepicker_text(poll), parse_mode="markdown", reply_markup=keyboard,
+        text=get_datepicker_text(poll),
+        parse_mode="markdown",
+        reply_markup=keyboard,
     )
 
 

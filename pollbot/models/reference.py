@@ -44,7 +44,12 @@ class Reference(base):
     poll = relationship("Poll")
 
     def __init__(
-        self, poll, reference_type, user=None, message_id=None, inline_message_id=None,
+        self,
+        poll,
+        reference_type,
+        user=None,
+        message_id=None,
+        inline_message_id=None,
     ):
         """Create a new poll."""
         self.poll = poll

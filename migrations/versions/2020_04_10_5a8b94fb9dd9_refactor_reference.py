@@ -63,7 +63,9 @@ def upgrade():
     op.drop_column("reference", "admin_message_id")
 
     op.alter_column(
-        "reference", "inline_message_id", new_column_name="bot_inline_message_id",
+        "reference",
+        "inline_message_id",
+        new_column_name="bot_inline_message_id",
     )
 
 
@@ -114,7 +116,9 @@ def downgrade():
     op.drop_index(op.f("ix_reference_user_id"), table_name="reference")
 
     op.alter_column(
-        "reference", "bot_inline_message_id", new_column_name="inline_message_id",
+        "reference",
+        "bot_inline_message_id",
+        new_column_name="inline_message_id",
     )
 
     op.drop_column("reference", "message_id")

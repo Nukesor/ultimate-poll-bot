@@ -26,7 +26,8 @@ def stop(bot, update, session, user):
     user.started = False
     session.commit()
     update.message.chat.send_message(
-        i18n.t("misc.stop", locale=user.locale), parse_mode="markdown",
+        i18n.t("misc.stop", locale=user.locale),
+        parse_mode="markdown",
     )
 
 
