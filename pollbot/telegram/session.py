@@ -144,8 +144,12 @@ def callback_query_wrapper(func):
                     traceback.print_exc()
 
                 sentry.capture_exception(
-                    tags={"handler": "callback_query",},
-                    extra={"query": update.callback_query,},
+                    tags={
+                        "handler": "callback_query",
+                    },
+                    extra={
+                        "query": update.callback_query,
+                    },
                 )
 
                 locale = "English"
@@ -226,7 +230,9 @@ def message_wrapper(private=False):
                 session.rollback()
 
                 message.chat.send_message(
-                    e.message, parse_mode="markdown", disable_web_page_preview=True,
+                    e.message,
+                    parse_mode="markdown",
+                    disable_web_page_preview=True,
                 )
 
             except Exception as e:
@@ -235,7 +241,9 @@ def message_wrapper(private=False):
                         traceback.print_exc()
 
                     sentry.capture_exception(
-                        tags={"handler": "message",},
+                        tags={
+                            "handler": "message",
+                        },
                         extra={"update": update.to_dict(), "function": func.__name__},
                     )
 
@@ -243,11 +251,26 @@ def message_wrapper(private=False):
                     if user is not None:
                         locale = user.locale
 
-                    message.chat.send_message(
-                        i18n.t("misc.error", locale=locale),
-                        parse_mode="markdown",
-                        disable_web_page_preview=True,
-                    )
+                    try:
+                        message.chat.send_message(
+                            i18n.t("misc.error", locale=locale),
+                            parse_mode="markdown",
+                            disable_web_page_preview=True,
+                        )
+                    except Exception as e:
+                        # It sometimes happens, that an error occurs during sending the
+                        # error message. Only capture important exceptions
+                        if not ignore_exception(e):
+                            sentry.capture_exception(
+                                tags={
+                                    "handler": "message",
+                                },
+                                extra={
+                                    "update": update.to_dict(),
+                                    "function": func.__name__,
+                                },
+                            )
+                            raise e
 
             finally:
                 # The session might not be there yet
