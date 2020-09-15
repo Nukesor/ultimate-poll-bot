@@ -208,7 +208,7 @@ def handle_limited_vote(session, context, option):
         )
 
     # Add vote
-    elif existing_vote is None and vote_count < option.poll.number_of_votes:
+    elif existing_vote is None and vote_count < allowed_votes:
         vote = Vote(context.user, option)
         session.add(vote)
         vote_registered = i18n.t("callback.vote.registered", locale=locale)
