@@ -23,9 +23,9 @@ def delete_poll(session, bot, poll, remove_all=False):
             try:
                 send_updates(session, bot, poll)
             except RetryAfter as e:
-                # In case we get an flood control error, wait for the specified time.
-                # Afterwards, just try again.
-                retry_after = int(e.retry_after) + 1
+                # In case we get an flood control error, wait a little longer
+                # than the specified time. Afterwards, just try again.
+                retry_after = int(e.retry_after) + 5
                 sleep(retry_after)
 
                 send_updates(session, bot, poll)
@@ -63,7 +63,7 @@ def delete_poll(session, bot, poll, remove_all=False):
             # In case we get an flood control error, wait for the specified time
             # Then rollback the transaction, and return. The reference will then be updated
             # the next time the job runs.
-            retry_after = int(e.retry_after) + 1
+            retry_after = int(e.retry_after) + 5
             sleep(retry_after)
             session.rollback()
             return
