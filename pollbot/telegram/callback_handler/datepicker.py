@@ -74,6 +74,14 @@ def pick_creation_date(session, context, poll):
 
 @poll_required
 def pick_creation_weekday(session, context, poll):
+    """
+    Returns a session and previous cycle.
+
+    Args:
+        session: (todo): write your description
+        context: (todo): write your description
+        poll: (todo): write your description
+    """
     return
 
 
@@ -85,6 +93,14 @@ def pick_additional_date(session, context, poll):
 
 @poll_required
 def pick_additional_weekday(session, context, poll):
+    """
+    Pick a set of the given session.
+
+    Args:
+        session: (todo): write your description
+        context: (todo): write your description
+        poll: (str): write your description
+    """
     return
 
 

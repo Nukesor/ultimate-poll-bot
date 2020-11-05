@@ -114,6 +114,13 @@ def change_user_language(session, context):
 
 
 def delete_all_confirmation(session, context):
+    """
+    Https : obj : confirmation.
+
+    Args:
+        session: (todo): write your description
+        context: (todo): write your description
+    """
     keyboard = get_delete_all_confirmation_keyboard(context.user)
     context.query.message.edit_text(
         i18n.t("settings.user.delete_all_confirmation", locale=context.user.locale),
@@ -123,6 +130,13 @@ def delete_all_confirmation(session, context):
 
 
 def delete_closed_confirmation(session, context):
+    """
+    See : func : close_keyboard.
+
+    Args:
+        session: (todo): write your description
+        context: (todo): write your description
+    """
     keyboard = get_delete_all_confirmation_keyboard(context.user, closed=True)
     context.query.message.edit_text(
         i18n.t("settings.user.delete_closed_confirmation", locale=context.user.locale),

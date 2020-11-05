@@ -30,6 +30,12 @@ def send_plots(session, chat):
 
 
 def get_magnitude(value):
+    """
+    Return the value of a magnitude.
+
+    Args:
+        value: (str): write your description
+    """
     if value == 0:
         return 0
     return int(math.floor(math.log10(abs(value))))
@@ -49,6 +55,13 @@ def get_user_activity(session):
     """Create a plot showing the inline usage statistics."""
 
     def running_window(session, subquery):
+        """
+        Return the number of all running jobs.
+
+        Args:
+            session: (todo): write your description
+            subquery: (str): write your description
+        """
         # Create a running window which sums all users up to this point for the current millennium ;P
         users = (
             session.query(

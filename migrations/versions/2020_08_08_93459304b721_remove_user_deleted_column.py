@@ -17,10 +17,20 @@ depends_on = None
 
 
 def upgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     op.drop_column("user", "deleted")
 
 
 def downgrade():
+    """
+    Downgrade database.
+
+    Args:
+    """
     op.add_column(
         "user", sa.Column("deleted", sa.BOOLEAN(), autoincrement=False, nullable=False)
     )

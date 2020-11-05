@@ -30,6 +30,12 @@ def get_help_keyboard(user, categories, current_category):
 
 
 def get_donations_keyboard(user):
+    """
+    Returns keyboard keyboard keyboard for keyboard keyboard.
+
+    Args:
+        user: (todo): write your description
+    """
     buttons = [
         [
             InlineKeyboardButton(

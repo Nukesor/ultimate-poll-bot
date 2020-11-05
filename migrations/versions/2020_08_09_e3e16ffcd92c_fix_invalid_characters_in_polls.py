@@ -17,6 +17,11 @@ depends_on = None
 
 
 def upgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     op.execute(
         (
             "UPDATE poll SET "
@@ -28,4 +33,9 @@ def upgrade():
 
 
 def downgrade():
+    """
+    Downgrade the database.
+
+    Args:
+    """
     pass

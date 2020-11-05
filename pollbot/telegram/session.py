@@ -25,6 +25,12 @@ def job_wrapper(func):
 
     @run_async
     def wrapper(context):
+        """
+        Execute the session
+
+        Args:
+            context: (dict): write your description
+        """
         session = get_session()
         try:
             func(context, session)
@@ -48,6 +54,13 @@ def inline_query_wrapper(func):
     """Create a session, handle permissions and exceptions for inline queries."""
 
     def wrapper(update, context):
+        """
+        Execute the update function.
+
+        Args:
+            update: (todo): write your description
+            context: (dict): write your description
+        """
         session = get_session()
         try:
             user, statistic = get_user(session, update.inline_query.from_user)
@@ -74,6 +87,13 @@ def inline_result_wrapper(func):
     """Create a session, handle permissions and exceptions for inline results."""
 
     def wrapper(update, context):
+        """
+        Execute the update.
+
+        Args:
+            update: (todo): write your description
+            context: (dict): write your description
+        """
         session = get_session()
         try:
             user, _ = get_user(session, update.chosen_inline_result.from_user)
@@ -100,6 +120,13 @@ def callback_query_wrapper(func):
     """Create a session, handle permissions and exceptions for callback queries."""
 
     def wrapper(update, context):
+        """
+        Execute the callback.
+
+        Args:
+            update: (todo): write your description
+            context: (dict): write your description
+        """
         user = None
         if context.user_data.get("ban"):
             return
@@ -182,6 +209,13 @@ def message_wrapper(private=False):
 
         @wraps(func)
         def wrapper(update: Update, context: CallbackContext):
+            """
+            Runs the message handler
+
+            Args:
+                update: (todo): write your description
+                context: (dict): write your description
+            """
             # The user has been banned and already got a message regarding this issue
             if context.user_data.get("banned-message-sent"):
                 return

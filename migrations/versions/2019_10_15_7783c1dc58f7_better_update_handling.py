@@ -17,6 +17,11 @@ depends_on = None
 
 
 def upgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     op.execute('DELETE FROM "update";')
 
     op.add_column("update", sa.Column("next_update", sa.DateTime(), nullable=False))
@@ -28,6 +33,11 @@ def upgrade():
 
 
 def downgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     op.add_column(
         "update",
         sa.Column(

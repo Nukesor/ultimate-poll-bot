@@ -27,6 +27,11 @@ depends_on = None
 
 
 def upgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     with engine.connect() as con:
         con.execute("CREATE EXTENSION IF NOT EXISTS pgcrypto;")
 
@@ -63,6 +68,11 @@ def upgrade():
 
 
 def downgrade():
+    """
+    Downgrade database.
+
+    Args:
+    """
     op.alter_column(
         "user",
         "current_poll_id",

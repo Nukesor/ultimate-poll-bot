@@ -17,8 +17,18 @@ depends_on = None
 
 
 def upgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     op.alter_column("poll", "compact_doodle_buttons", new_column_name="compact_buttons")
 
 
 def downgrade():
+    """
+    Downgrade database.
+
+    Args:
+    """
     op.alter_column("poll", "compact_buttons", new_column_name="compact_doodle_buttons")

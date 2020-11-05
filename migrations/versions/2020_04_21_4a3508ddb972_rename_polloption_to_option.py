@@ -17,6 +17,11 @@ depends_on = None
 
 
 def upgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     # Rename option table
     op.drop_index("ix_poll_option_poll_id", table_name="poll_option")
     op.rename_table("poll_option", "option")
@@ -44,6 +49,11 @@ def upgrade():
 
 
 def downgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     # Rename option table
     op.drop_index(op.f("ix_option_poll_id"), table_name="option")
     op.rename_table("option", "poll_option")

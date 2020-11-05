@@ -22,6 +22,12 @@ def merge_from_native_poll(
 
 
 def convert_poll_type(native_poll: NativePoll) -> PollType:
+    """
+    Convert a poll type to a poll type.
+
+    Args:
+        native_poll: (bool): write your description
+    """
     if native_poll.allows_multiple_answers:
         return PollType.block_vote
     else:

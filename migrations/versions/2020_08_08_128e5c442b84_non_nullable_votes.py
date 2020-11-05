@@ -26,6 +26,11 @@ depends_on = None
 
 
 def upgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     session = Session(bind=op.get_bind())
     polls = session.query(Vote).filter(Vote.user_id.is_(None)).delete()
 
@@ -33,4 +38,9 @@ def upgrade():
 
 
 def downgrade():
+    """
+    Downgrade database.
+
+    Args:
+    """
     op.alter_column("vote", "user_id", existing_type=sa.BIGINT(), nullable=True)

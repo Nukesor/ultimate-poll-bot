@@ -10,6 +10,13 @@ from pollbot.models import *  # noqa
 
 
 def initialize_database(exist_ok: bool = False, drop_existing: bool = False):
+    """
+    Initialize the database.
+
+    Args:
+        exist_ok: (bool): write your description
+        drop_existing: (todo): write your description
+    """
     db_url = engine.url
     typer.echo(f"Using database at {db_url}")
 
@@ -44,6 +51,12 @@ def initialize_database(exist_ok: bool = False, drop_existing: bool = False):
 
 @contextmanager
 def wrap_echo(msg: str):
+    """
+    Wrap msg as a message
+
+    Args:
+        msg: (str): write your description
+    """
     typer.echo(f"{msg}... ", nl=False)
     yield
     typer.echo("done.")

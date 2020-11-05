@@ -12,6 +12,13 @@ def user_factory(session, user_id, name, admin=False):
 
 
 def poll_factory(session, user):
+    """
+    Create a new poll.
+
+    Args:
+        session: (todo): write your description
+        user: (todo): write your description
+    """
     poll = Poll(user)
     session.add(poll)
     session.commit()

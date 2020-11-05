@@ -17,8 +17,18 @@ depends_on = None
 
 
 def upgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     op.alter_column("poll", "vote_type", new_column_name="poll_type")
 
 
 def downgrade():
+    """
+    Downgrade database.
+
+    Args:
+    """
     op.alter_column("poll", "poll_type", new_column_name="vote_type")

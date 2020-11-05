@@ -11,4 +11,11 @@ def user(session):
 
 @pytest.fixture(scope="function")
 def poll(session, user):
+    """
+    Return a : class : ~.
+
+    Args:
+        session: (todo): write your description
+        user: (str): write your description
+    """
     return poll_factory(session, user)

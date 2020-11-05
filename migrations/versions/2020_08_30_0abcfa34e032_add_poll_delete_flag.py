@@ -17,8 +17,18 @@ depends_on = None
 
 
 def upgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     op.add_column("poll", sa.Column("delete", sa.String(), nullable=True))
 
 
 def downgrade():
+    """
+    Downgrade database.
+
+    Args:
+    """
     op.drop_column("poll", "delete")

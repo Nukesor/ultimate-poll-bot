@@ -43,6 +43,11 @@ def session(connection, monkeypatch):
     session = Session(bind=connection)
 
     def get_session():
+        """
+        Returns the session object.
+
+        Args:
+        """
         return session
 
     from pollbot import db

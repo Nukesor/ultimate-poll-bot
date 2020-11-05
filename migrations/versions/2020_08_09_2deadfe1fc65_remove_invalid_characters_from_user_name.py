@@ -17,10 +17,20 @@ depends_on = None
 
 
 def upgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     op.execute(
         """UPDATE "user" SET name = REPLACE(name, '`', '') WHERE name like '%`%'"""
     )
 
 
 def downgrade():
+    """
+    Downgrade the database.
+
+    Args:
+    """
     pass

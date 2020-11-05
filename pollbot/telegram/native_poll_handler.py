@@ -20,6 +20,15 @@ from telegram.ext import run_async
 @run_async
 @message_wrapper(private=True)
 def create_from_native_poll(bot: Bot, update: Update, session: Session, user: User):
+    """
+    Use this method to create a new poll.
+
+    Args:
+        bot: (todo): write your description
+        update: (todo): write your description
+        session: (todo): write your description
+        user: (todo): write your description
+    """
     native_poll: NativePoll = update.message.poll
 
     if user.current_poll is not None and not user.current_poll.created:
@@ -45,4 +54,11 @@ def create_from_native_poll(bot: Bot, update: Update, session: Session, user: Us
 
 @run_async
 def send_error_quiz_unsupported(update: Update, _context):
+    """
+    Sends error message that is supported quiz error message.
+
+    Args:
+        update: (todo): write your description
+        _context: (str): write your description
+    """
     update.effective_chat.send_message(i18n.t("creation.native_poll.quiz_unsupported"))

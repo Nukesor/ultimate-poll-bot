@@ -27,6 +27,11 @@ depends_on = None
 
 
 def upgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     op.add_column("option", sa.Column("index", sa.Integer()))
     op.create_unique_constraint(
         "unique_option_index", "option", ["poll_id", "index"], deferrable=True
@@ -75,6 +80,11 @@ def upgrade():
 
 
 def downgrade():
+    """
+    Downgrade database.
+
+    Args:
+    """
     op.drop_constraint("unique_option_index", "option", type_="unique")
     op.drop_column("option", "index")
 

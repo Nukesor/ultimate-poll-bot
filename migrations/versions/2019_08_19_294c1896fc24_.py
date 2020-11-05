@@ -24,6 +24,11 @@ depends_on = None
 
 
 def upgrade():
+    """
+    Upgrade database.
+
+    Args:
+    """
     session = Session(bind=op.get_bind())
 
     for language in ["english", "german", "polish", "turkish"]:
@@ -37,4 +42,9 @@ def upgrade():
 
 
 def downgrade():
+    """
+    Downgrade the database.
+
+    Args:
+    """
     pass

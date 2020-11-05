@@ -103,6 +103,16 @@ def send_updates(session, bot, poll, show_warning=False):
 
 
 def update_reference(session, bot, poll, reference, show_warning=False):
+    """
+    Updates an existing reference
+
+    Args:
+        session: (todo): write your description
+        bot: (todo): write your description
+        poll: (str): write your description
+        reference: (str): write your description
+        show_warning: (bool): write your description
+    """
     try:
         # Admin poll management interface
         if reference.type == ReferenceType.admin.name and not poll.in_settings:

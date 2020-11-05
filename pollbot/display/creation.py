@@ -43,6 +43,12 @@ def get_init_text(poll):
 
 
 def get_init_anonymziation_settings_text(poll):
+    """
+    Returns a string toonymziation.
+
+    Args:
+        poll: (str): write your description
+    """
     locale = poll.locale
     text = ["*Poll Settings:*"]
 
@@ -76,6 +82,12 @@ def get_datepicker_text(poll):
 
 
 def get_native_poll_merged_text(poll: Poll):
+    """
+    Gets a native native native native native text.
+
+    Args:
+        poll: (todo): write your description
+    """
     locale = poll.locale
 
     anonymity = i18n.t("creation.no_anonymity", locale=locale)

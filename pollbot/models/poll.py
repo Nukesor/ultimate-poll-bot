@@ -119,9 +119,21 @@ class Poll(base):
         return self.results_visible or self.closed
 
     def is_doodle(self):
+        """
+        Return true if the poll is a doodle
+
+        Args:
+            self: (todo): write your description
+        """
         return self.poll_type == PollType.doodle.name
 
     def is_priority(self):
+        """
+        Return true if this priority is priority.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.poll_type == PollType.priority.name
 
     def has_date_option(self):

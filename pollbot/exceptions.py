@@ -6,4 +6,11 @@ class RollbackException(Exception):
     """
 
     def __init__(self, message):
+        """
+        Initialize the message
+
+        Args:
+            self: (todo): write your description
+            message: (str): write your description
+        """
         self.message = message

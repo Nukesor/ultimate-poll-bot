@@ -5,6 +5,13 @@ from pollbot.models import Option, User, Vote
 
 # this is not used at the moment, but maybe we'd like to add this feature later
 def get_priority_result(session, poll):
+    """
+    Get the priority.
+
+    Args:
+        session: (todo): write your description
+        poll: (todo): write your description
+    """
     # todo this query fetches all votes for the user, not only those belonging to the current poll
     users = session.query(User).join(User.votes).filter(Vote.poll_id == poll.id).all()
 
@@ -42,6 +49,15 @@ def get_priority_result(session, poll):
 
 
 def get_ranked_options(session, poll, option_ids, users):
+    """
+    Get the poll options for a poll.
+
+    Args:
+        session: (todo): write your description
+        poll: (todo): write your description
+        option_ids: (str): write your description
+        users: (todo): write your description
+    """
     option_votes = Counter({id: 0 for id in option_ids})
     for user in users:
         for vote in sorted(user.votes, key=lambda vote: vote.priority):
