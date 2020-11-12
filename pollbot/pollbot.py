@@ -102,11 +102,17 @@ dispatcher.add_handler(
 # Poll handler
 dispatcher.add_handler(
     MessageHandler(
-        Filters.poll & ~CustomFilters.quiz & Filters.private, create_from_native_poll
+        Filters.poll & ~CustomFilters.quiz & Filters.private,
+        create_from_native_poll,
+        run_async=True,
     )
 )
 dispatcher.add_handler(
-    MessageHandler(CustomFilters.quiz & Filters.private, send_error_quiz_unsupported)
+    MessageHandler(
+        CustomFilters.quiz & Filters.private,
+        send_error_quiz_unsupported,
+        run_async=True,
+    )
 )
 
 # Callback handler
@@ -115,15 +121,19 @@ dispatcher.add_handler(
 )
 dispatcher.add_handler(
     CallbackQueryHandler(
-        handle_async_callback_query, pattern=get_async_callback_mapping_regex()
+        handle_async_callback_query,
+        pattern=get_async_callback_mapping_regex(),
+        run_async=True,
     )
 )
 
 # InlineQuery handler
-dispatcher.add_handler(InlineQueryHandler(search))
+dispatcher.add_handler(InlineQueryHandler(search, run_async=True))
 
 # InlineQuery result handler
-dispatcher.add_handler(ChosenInlineResultHandler(handle_chosen_inline_result))
+dispatcher.add_handler(
+    ChosenInlineResultHandler(handle_chosen_inline_result, run_async=True)
+)
 
 minute = 60
 hour = 60 * minute

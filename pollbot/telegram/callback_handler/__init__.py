@@ -101,7 +101,6 @@ def handle_callback_query(bot, update, session, user):
     return
 
 
-@run_async
 @callback_query_wrapper
 def handle_async_callback_query(bot, update, session, user):
     """Handle asynchronous callback queries.

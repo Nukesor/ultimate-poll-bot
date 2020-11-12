@@ -1,10 +1,10 @@
 from typing import cast
 
 from telegram import Poll as NativePoll
-from telegram.ext import BaseFilter
+from telegram.ext import MessageFilter
 
 
-class _Quiz(BaseFilter):
+class _Quiz(MessageFilter):
     name = "Filters.quiz"
 
     def filter(self, message):
