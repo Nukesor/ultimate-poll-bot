@@ -135,6 +135,11 @@ dispatcher.add_handler(
     ChosenInlineResultHandler(handle_chosen_inline_result, run_async=True)
 )
 
+# Set the log level for apscheduler to WARNING
+# There's a lot of log output spam otherwise
+logging.getLogger("apscheduler").setLevel(logging.WARNING)
+
+# Register all jobs
 minute = 60
 hour = 60 * minute
 job_queue = updater.job_queue
