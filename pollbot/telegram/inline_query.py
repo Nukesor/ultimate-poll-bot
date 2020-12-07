@@ -17,6 +17,7 @@ from telegram import (
 from telegram.ext import run_async
 
 
+@run_async
 @inline_query_wrapper
 def search(bot, update, session, user):
     """Handle inline queries for sticker search."""

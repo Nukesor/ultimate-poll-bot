@@ -10,6 +10,7 @@ from pollbot.telegram.session import inline_result_wrapper
 from telegram.ext import run_async
 
 
+@run_async
 @inline_result_wrapper
 def handle_chosen_inline_result(bot, update, session, user):
     """Save the chosen inline result."""
