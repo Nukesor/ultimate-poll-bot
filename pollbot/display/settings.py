@@ -119,9 +119,11 @@ def get_user_settings_text(user):
     text.append(i18n.t("settings.user.explanations.notifications", locale=locale))
     text.append("")
 
-    count = len(list(filter(lambda p: not p.closed and p.created, user.polls)))
+    is_open = lambda p: not p.closed and p.created and p.delete is None
+    count = len(list(filter(is_open, user.polls)))
+    is_closed = lambda p: p.closed and p.delete is None
     text.append(i18n.t("settings.user.open_polls", locale=locale, count=count))
-    count = len(list(filter(lambda p: p.closed, user.polls)))
+    count = len(list(filter(is_closed, user.polls)))
     text.append(i18n.t("settings.user.closed_polls", locale=locale, count=count))
 
     return "\n".join(text)

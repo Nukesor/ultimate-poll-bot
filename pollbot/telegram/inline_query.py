@@ -50,6 +50,7 @@ def search(bot, update, session, user):
             .filter(Poll.user == user)
             .filter(Poll.closed.is_(closed))
             .filter(Poll.created.is_(True))
+            .filter(Poll.delete.isnot(None))
             .order_by(Poll.created_at.desc())
             .limit(10)
             .offset(offset)
@@ -63,6 +64,7 @@ def search(bot, update, session, user):
             .filter(Poll.user == user)
             .filter(Poll.closed.is_(closed))
             .filter(Poll.created.is_(True))
+            .filter(Poll.delete.isnot(None))
             .filter(
                 or_(
                     Poll.name.ilike(f"%{query}%"),
@@ -82,6 +84,7 @@ def search(bot, update, session, user):
             poll = (
                 session.query(Poll)
                 .filter(Poll.uuid == poll_uuid)
+                .filter(Poll.delete.isnot(None))
                 .offset(offset)
                 .one_or_none()
             )
