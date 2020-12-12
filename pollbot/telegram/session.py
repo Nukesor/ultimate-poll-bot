@@ -23,7 +23,6 @@ from pollbot.helper import remove_markdown_characters
 def job_wrapper(func):
     """Create a session, handle permissions and exceptions for jobs."""
 
-    @run_async
     def wrapper(context):
         session = get_session()
         try:

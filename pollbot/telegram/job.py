@@ -15,6 +15,7 @@ from pollbot.telegram.session import job_wrapper
 from telegram.error import BadRequest, RetryAfter, Unauthorized
 
 
+@run_async
 @job_wrapper
 def message_update_job(context, session):
     """Update all polls that are scheduled for an update."""
@@ -62,6 +63,7 @@ def message_update_job(context, session):
         context.job.enabled = True
 
 
+@run_async
 @job_wrapper
 def delete_polls(context, session):
     """Delete polls from the database and their messages if requested."""
@@ -157,6 +159,7 @@ def send_notifications_for_poll(context, session, poll, message_key):
             session.delete(notification)
 
 
+@run_async
 @job_wrapper
 def create_daily_stats(context, session):
     """Create the daily stats entity for today and tomorrow."""
@@ -171,6 +174,7 @@ def create_daily_stats(context, session):
             session.commit()
 
 
+@run_async
 @job_wrapper
 def perma_ban_checker(context, session):
     """Perma-ban people that send more than 250 votes for at least 3 days in the last week."""
@@ -198,6 +202,7 @@ def perma_ban_checker(context, session):
             stat.user.banned = True
 
 
+@run_async
 @job_wrapper
 def cleanup(context, session):
     """Remove all user statistics after 7 days."""
