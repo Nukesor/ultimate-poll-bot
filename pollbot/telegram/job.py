@@ -4,6 +4,8 @@ from datetime import date, datetime, timedelta
 from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
+from telegram.error import BadRequest, RetryAfter, Unauthorized
+from telegram.ext import run_async
 
 from pollbot.config import config
 from pollbot.i18n import i18n
@@ -12,7 +14,6 @@ from pollbot.enums import PollDeletionMode
 from pollbot.poll.update import send_updates, update_poll_messages
 from pollbot.poll.delete import delete_poll
 from pollbot.telegram.session import job_wrapper
-from telegram.error import BadRequest, RetryAfter, Unauthorized
 
 
 @run_async

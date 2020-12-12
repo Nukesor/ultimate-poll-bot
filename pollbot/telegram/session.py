@@ -16,7 +16,7 @@ from pollbot.models import User, UserStatistic
 from pollbot.sentry import sentry
 from telegram import Bot, Update
 from telegram.error import BadRequest, RetryAfter, TimedOut, Unauthorized, NetworkError
-from telegram.ext import CallbackContext, run_async
+from telegram.ext import CallbackContext
 from pollbot.helper import remove_markdown_characters
 
 
