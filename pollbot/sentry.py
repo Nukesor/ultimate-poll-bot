@@ -6,6 +6,18 @@ from pollbot.config import config
 from telegram.error import TimedOut
 
 
+def ignore_job_exception(exception):
+    """Check whether we can safely ignore this exception."""
+    if type(exception) is TimedOut:
+        return True
+
+    # Super low level http error
+    if type(exception) is NetworkError:
+        return True
+
+    return False
+
+
 class Sentry(object):
     """Sentry wrapper class.
 
@@ -59,6 +71,14 @@ class Sentry(object):
 
             scope.set_tag("bot", "pollbot")
             sentry_sdk.capture_exception()
+
+    def capture_job_exception(self, exception):
+        # Capture all exceptions from jobs. We need to handle those inside the jobs
+        if not ignore_job_exception(exception):
+            if config["logging"]["debug"]:
+                traceback.print_exc()
+
+            sentry.capture_exception(tags={"handler": "job"})
 
 
 sentry = Sentry()

@@ -13,7 +13,7 @@ from pollbot.exceptions import RollbackException
 from pollbot.helper.stats import increase_stat
 from pollbot.i18n import i18n
 from pollbot.models import User, UserStatistic
-from pollbot.sentry import sentry
+from pollbot.sentry import sentry, ignore_job_exception
 from telegram import Bot, Update
 from telegram.error import BadRequest, RetryAfter, TimedOut, Unauthorized, NetworkError
 from telegram.ext import CallbackContext
@@ -30,7 +30,8 @@ def job_wrapper(func):
 
             session.commit()
         except Exception as e:
-            # Capture all exceptions from jobs. We need to handle those inside the jobs
+            # Capture all exceptions from jobs.
+            # We need to handle those inside the jobs
             if not ignore_job_exception(e):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
@@ -398,18 +399,6 @@ def ignore_exception(exception):
         return True
 
     if type(exception) is RetryAfter:
-        return True
-
-    # Super low level http error
-    if type(exception) is NetworkError:
-        return True
-
-    return False
-
-
-def ignore_job_exception(exception):
-    """Check whether we can safely ignore this exception."""
-    if type(exception) is TimedOut:
         return True
 
     # Super low level http error

@@ -13,6 +13,7 @@ from pollbot.models import DailyStatistic, Poll, Update, UserStatistic
 from pollbot.enums import PollDeletionMode
 from pollbot.poll.update import send_updates, update_poll_messages
 from pollbot.poll.delete import delete_poll
+from pollbot.sentry import sentry
 from pollbot.telegram.session import job_wrapper
 
 
@@ -60,6 +61,9 @@ def message_update_job(context, session):
                 session.query(Update).filter(Update.next_update <= now).count()
             )
 
+    except Exception as e:
+        sentry.capture_job_exception(e)
+
     finally:
         context.job.enabled = True
 
@@ -79,7 +83,6 @@ def delete_polls(context, session):
             .limit(20)
             .all()
         )
-
         for poll in polls_to_delete:
             if poll.delete == PollDeletionMode.DB_ONLY.name:
                 delete_poll(session, context.bot, poll)
@@ -88,7 +91,7 @@ def delete_polls(context, session):
             session.commit()
 
     except Exception as e:
-        raise e
+        sentry.capture_job_exception(e)
 
     finally:
         context.job.enabled = True
@@ -155,25 +158,32 @@ def send_notifications_for_poll(context, session, poll, message_key):
         except BadRequest as e:
             if e.message == "Chat not found":
                 session.delete(notification)
+
         # Bot was removed from group
         except Unauthorized:
             session.delete(notification)
+
+        except Exception as e:
+            sentry.capture_job_exception(e)
 
 
 @run_async
 @job_wrapper
 def create_daily_stats(context, session):
     """Create the daily stats entity for today and tomorrow."""
-    today = date.today()
-    tomorrow = today + timedelta(days=1)
-    for stat_date in [today, tomorrow]:
-        statistic = session.query(DailyStatistic).get(stat_date)
+    try:
+        today = date.today()
+        tomorrow = today + timedelta(days=1)
+        for stat_date in [today, tomorrow]:
+            statistic = session.query(DailyStatistic).get(stat_date)
 
-        if statistic is None:
-            statistic = DailyStatistic(stat_date)
-            session.add(statistic)
-            session.commit()
+            if statistic is None:
+                statistic = DailyStatistic(stat_date)
+                session.add(statistic)
+                session.commit()
 
+    except Exception as e:
+        sentry.capture_job_exception(e)
 
 @run_async
 @job_wrapper

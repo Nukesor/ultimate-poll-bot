@@ -3,6 +3,7 @@ from time import sleep
 from pollbot.enums import ReferenceType
 from pollbot.i18n import i18n
 from pollbot.poll.update import send_updates
+from pollbot.sentry import sentry
 from telegram.error import BadRequest, RetryAfter, Unauthorized
 
 
@@ -74,12 +75,16 @@ def delete_poll(session, bot, poll, remove_all=False):
                 or e.message.startswith("Have no rights to send a message")
                 or e.message.startswith("Message is not modified")
                 or e.message.startswith("Message to edit not found")
+                or e.message.startswith("Message identifier is not specified")
                 or e.message.startswith("Chat_write_forbidden")
                 or e.message.startswith("Chat not found")
             ):
                 pass
             else:
-                raise e
+                # Don't die if a single poll fails.
+                # Otherwise all other users get stuck as well.
+                sentry.capture_exception(tags={"handler": "job"})
+                return
         except Unauthorized:
             pass
 
