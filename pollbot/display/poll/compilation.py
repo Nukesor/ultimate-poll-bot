@@ -17,7 +17,7 @@ def get_poll_text_and_vote_keyboard(
     text, summarize = get_poll_text_and_summarize(
         session,
         poll,
-        show_warning=False,
+        show_warning=show_warning,
     )
 
     keyboard = get_vote_keyboard(poll, user, show_back, summary=summarize)
@@ -27,7 +27,7 @@ def get_poll_text_and_vote_keyboard(
 
 def get_poll_text(session, poll, show_warning=False):
     """Only get the poll text."""
-    text, summarize = get_poll_text_and_summarize(session, poll, show_warning=False)
+    text, _ = get_poll_text_and_summarize(session, poll, show_warning=show_warning)
     return text
 
 
@@ -35,18 +35,29 @@ def get_poll_text_and_summarize(session, poll, show_warning=False):
     """Get the poll text and vote keyboard."""
     summarize = poll.permanently_summarized or poll.summarize
 
-    if not summarize:
-        lines = compile_poll_text(session, poll, show_warning=show_warning)
-        text = "\n".join(lines)
-        summarize = len(text) > 4000
-        poll.permanently_summarized = summarize
-
+    # Always summarize
     if summarize:
         lines = compile_poll_text(
             session, poll, show_warning=show_warning, summarize=summarize
         )
         text = "\n".join(lines)
 
+    else:
+        # We don't know if we should summarize yet.
+        # Don't use the summarized version.
+        lines = compile_poll_text(session, poll, show_warning=show_warning)
+        text = "\n".join(lines)
+
+        # If the text is too long, summarize it.
+        if len(text) > 4000:
+            poll.permanently_summarize = True
+            lines = compile_poll_text(
+                session, poll, show_warning=show_warning, summarize=summarize
+            )
+            text = "\n".join(lines)
+
+    # The text is still too long after summarization
+    # Print a debug text
     if len(text) > 4000:
         text = i18n.t("misc.too_long", locale=poll.locale)
 
@@ -68,11 +79,13 @@ def compile_poll_text(session, poll, show_warning=False, summarize=False):
     if not context.show_results or context.anonymous:
         lines.append("")
     if context.anonymous:
-        lines.append(f"_{i18n.t('poll.anonymous', locale=poll.locale)}_")
+        anonymous = i18n.t("poll.anonymous", locale=poll.locale)
+        lines.append(f"_{anonymous}_")
         if context.show_results:
             lines.append(i18n.t("poll.anonymous_warning", locale=poll.locale))
     if not context.show_results:
-        lines.append(f"_{i18n.t('poll.results_not_visible', locale=poll.locale)}_")
+        not_visible = i18n.t("poll.results_not_visible", locale=poll.locale)
+        lines.append(f"_{not_visible}_")
 
     lines += get_option_information(session, poll, context, summarize)
     lines.append("")

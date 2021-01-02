@@ -24,7 +24,7 @@ def add_single_option(session, poll: Poll, line: str, is_date: bool):
 def add_options_multiline(session, poll: Poll, text: str, is_date: bool = False):
     """Add one or multiple new options to the poll from a block of text."""
     options_to_add = [x.strip() for x in text.split("\n") if x.strip() != ""]
-    return add_multiple_options(session, poll, options_to_add, is_date=False)
+    return add_multiple_options(session, poll, options_to_add, is_date=is_date)
 
 
 def add_multiple_options(

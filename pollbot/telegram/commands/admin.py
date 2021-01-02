@@ -3,7 +3,6 @@ import time
 from datetime import datetime, timedelta
 
 from pollbot.decorators import admin_required
-from pollbot.i18n import i18n
 from pollbot.models import User
 from pollbot.telegram.session import message_wrapper
 from telegram import ReplyKeyboardRemove

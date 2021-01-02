@@ -2,15 +2,13 @@
 from pollbot.config import config
 from pollbot.display.creation import get_init_text
 from pollbot.display.poll.compilation import get_poll_text
-from pollbot.enums import ExpectedInput, ReferenceType
-from pollbot.exceptions import RollbackException
+from pollbot.enums import ReferenceType
 from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.i18n import i18n
-from pollbot.models import Option, Poll, Reference
+from pollbot.models import Poll, Reference
 from pollbot.telegram.keyboard.creation import (
     get_cancel_creation_keyboard,
     get_init_keyboard,
-    get_options_entered_keyboard,
 )
 from pollbot.telegram.keyboard.management import get_management_keyboard
 

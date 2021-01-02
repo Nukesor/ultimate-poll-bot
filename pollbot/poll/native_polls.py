@@ -17,7 +17,7 @@ def merge_from_native_poll(
 
     # Get all options, strip them and add them
     options = [o.text for o in native_poll.options]
-    options_to_add = map(str.strip, options)
+    options_to_add = list(map(str.strip, options))
     add_multiple_options(session, poll, options_to_add)
 
 

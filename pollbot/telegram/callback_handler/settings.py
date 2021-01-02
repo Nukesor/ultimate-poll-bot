@@ -7,7 +7,7 @@ from pollbot.display.creation import get_datepicker_text
 from pollbot.display.poll.compilation import get_poll_text
 from pollbot.enums import ExpectedInput
 from pollbot.i18n import i18n
-from pollbot.models import Option, User, Vote
+from pollbot.models import Option
 from pollbot.poll.update import update_poll_messages
 from pollbot.poll.vote import reorder_votes_after_option_delete
 from pollbot.telegram.keyboard.settings import (
