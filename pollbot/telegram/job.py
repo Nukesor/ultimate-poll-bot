@@ -185,6 +185,7 @@ def create_daily_stats(context, session):
     except Exception as e:
         sentry.capture_job_exception(e)
 
+
 @run_async
 @job_wrapper
 def perma_ban_checker(context, session):
