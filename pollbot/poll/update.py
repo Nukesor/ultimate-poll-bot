@@ -5,6 +5,7 @@ from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import ObjectDeletedError
 
+from pollbot.sentry import sentry
 from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
 from pollbot.enums import ExpectedInput, ReferenceType
 from pollbot.models import Reference, Update
@@ -101,7 +102,9 @@ def send_updates(session, bot, poll, show_warning=False):
         update_reference(session, bot, poll, reference, show_warning)
 
 
-def update_reference(session, bot, poll, reference, show_warning=False):
+def update_reference(
+    session, bot, poll, reference, show_warning=False, first_try=False
+):
     try:
         # Admin poll management interface
         if reference.type == ReferenceType.admin.name and not poll.in_settings:
@@ -162,6 +165,21 @@ def update_reference(session, bot, poll, reference, show_warning=False):
             or e.message.startswith("Chat not found")
             or e.message.startswith("Can't access the chat")
         ):
+            # This is just a hunch
+            # It feels like we're too fast and the message isn't synced between Telegram's servers yet.
+            # If this happens, allow the first try to fail and schedule an update
+            # If it happens again, we'll fail on the second try
+            if first_try:
+                update = Update(poll, datetime.now() + timedelta(seconds=2))
+                session.add(update)
+                sentry.capture_exception(
+                    extra={
+                        "context": "update_reference",
+                    },
+                )
+
+                return
+
             session.delete(reference)
             session.commit()
         elif e.message.startswith("Message is not modified"):

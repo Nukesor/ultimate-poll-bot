@@ -43,5 +43,5 @@ def handle_chosen_inline_result(bot, update, session, user):
         session.rollback()
         return
 
-    update_reference(session, bot, poll, reference)
+    update_reference(session, bot, poll, reference, first_try=True)
     increase_user_stat(session, user, "inline_shares")
