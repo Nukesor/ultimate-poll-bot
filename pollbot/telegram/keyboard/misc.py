@@ -31,12 +31,6 @@ def get_help_keyboard(user, categories, current_category):
 
 def get_donations_keyboard(user):
     buttons = [
-        [
-            InlineKeyboardButton(
-                text="☺️ Buy me a coffee", url="https://www.buymeacoffee.com/Nukesor"
-            )
-        ],
-        [InlineKeyboardButton(text="❤️ Patreon ❤️", url="https://patreon.com/nukesor")],
         [InlineKeyboardButton(text="Paypal", url="https://paypal.me/arnebeer/")],
         [get_back_to_menu_button(user)],
     ]
