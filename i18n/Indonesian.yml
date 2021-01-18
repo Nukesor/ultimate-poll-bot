@@ -28,7 +28,6 @@ poll:
     total_votes: '(%{count} suara)'
     remaining_votes: "\n Suara yang tersisa:"
     remaining_votes_user: '%{name} : %{count} suara'
-    too_many_votes: "⚠️ *Terlalu banyak suara di menit terakhir: * ⚠️\nSuara Anda akan tetap didaftarkan, namun pesan ini hanya akan diperbarui setiap 2 detik.\n(Telegram tidak memungkinkan untuk mengirim/update lebih dari jumlah tertentu pesan per menit dalam grup oleh bot.)\n"
     doodle:
         'yes': '├ *Ya:*'
         maybe: '├ *Mungkin:*'

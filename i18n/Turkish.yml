@@ -26,7 +26,6 @@ poll:
     total_votes: ' (%{count} oy)'
     remaining_votes: "\nKalan oylar:"
     remaining_votes_user: '%{name}: %{count} oy'
-    too_many_votes: "⚠️ *Son dakika içinde çok fazla oy:* ⚠️\nOylarınız hala kayıtlı, ama bu mesaj her 2 saniyede güncellenecek\n(Telegram bir grupta bot tarafından aynı dakika içinde birden fazla mesajı göndermeye/güncellemeye izin vermiyor)\n"
     doodle:
         'yes': '├ *Evet:*'
         maybe: '├ *Belki:*'

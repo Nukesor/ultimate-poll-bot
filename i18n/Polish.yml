@@ -24,7 +24,6 @@ poll:
     total_votes: ' (%{count} głosów)'
     remaining_votes: "\nPozostałe głosy:"
     remaining_votes_user: '%{name}: %{count} głosów'
-    too_many_votes: "⚠️ *Za dużo głosów w przeciągu minuty:* ⚠️\nTwoje głosy nadal będą rejestrowane, Ale ta informacja będzie odświeżana co 2 sekundy.\n(Telegram nie pozwala botom na wysyłanie/odświeżanie wiadomości w grupach zbyt dużo razy na minutę.)\n"
 deleted:
     poll: 'Ankieta została usunięta.'
     polls: 'Wszystkie ankiety zostały usunięte'

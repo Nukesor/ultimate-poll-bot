@@ -28,7 +28,6 @@ poll:
     total_votes: '(%{count} votos)'
     remaining_votes: "\n Votos restantes:"
     remaining_votes_user: '%{name}: %{count} votos'
-    too_many_votes: "⚠️ *Muitos votos no último minuto:* ⚠️\nSeus votos continuaram a ser registrados, mas esta mensagem apenas será atualizada a cada 2 segundos.\n(O Telegram não permite o envio/atualização de mais de um certo tanto de mensagens por minuto em um grupo por um bot.)\n"
     doodle:
         'yes': '- *Sim:*'
         maybe: '- *Talvez:*'

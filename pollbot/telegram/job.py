@@ -39,7 +39,7 @@ def message_update_job(context, session):
 
             for update in updates:
                 try:
-                    send_updates(session, context.bot, update.poll, show_warning=True)
+                    send_updates(session, context.bot, update.poll)
                     session.delete(update)
                     session.commit()
                 except ObjectDeletedError:

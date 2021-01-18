@@ -28,7 +28,6 @@ poll:
     total_votes: ' (Počet hlasů: %{count})'
     remaining_votes: "\nZbylé hlasy:"
     remaining_votes_user: '%{name}, hlasů: %{count}'
-    too_many_votes: "⚠️ *Příliš mnoho hlasů v poslední minutě:* ⚠️\nVaše hlasy budou přidány, ale tato zpráva se bude doplňovat každé 2 vteřiny.\n(Telegram neumožňuje botům ve skupinách, aby zasílali/upravovalivíce zpráv, než je daný limit.)\n"
     doodle:
         'yes': '├ *Ano:*'
         maybe: '├ *Možná:*'

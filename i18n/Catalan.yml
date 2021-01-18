@@ -28,7 +28,6 @@ poll:
     total_votes: ' (%{count} vots)'
     remaining_votes: "\nVots restants:"
     remaining_votes_user: '%{name}: %{count} vots'
-    too_many_votes: "⚠️ *Masses vots en l'últim minut:* ⚠️\nEls teus vots seguiràn sent enregistrats, però aquest missatge s'actualizarà només cada 2 segons.\n(Telegram no permet enviar/actualizar més d'una certa quantitat de missatges per minut en un grup per part d'un bot.)\n"
     doodle:
         'yes': '├ *Sí:*'
         maybe: '├ *Potser:*'

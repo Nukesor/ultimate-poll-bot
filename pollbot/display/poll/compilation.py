@@ -10,14 +10,12 @@ def get_poll_text_and_vote_keyboard(
     session,
     poll,
     user=None,
-    show_warning=False,
     show_back=False,
 ):
     """Get the text and the vote keyboard."""
     text, summarize = get_poll_text_and_summarize(
         session,
         poll,
-        show_warning=show_warning,
     )
 
     keyboard = get_vote_keyboard(poll, user, show_back, summary=summarize)
@@ -25,35 +23,31 @@ def get_poll_text_and_vote_keyboard(
     return text, keyboard
 
 
-def get_poll_text(session, poll, show_warning=False):
+def get_poll_text(session, poll):
     """Only get the poll text."""
-    text, _ = get_poll_text_and_summarize(session, poll, show_warning=show_warning)
+    text, _ = get_poll_text_and_summarize(session, poll)
     return text
 
 
-def get_poll_text_and_summarize(session, poll, show_warning=False):
+def get_poll_text_and_summarize(session, poll):
     """Get the poll text and vote keyboard."""
     summarize = poll.permanently_summarized or poll.summarize
 
     # Always summarize
     if summarize:
-        lines = compile_poll_text(
-            session, poll, show_warning=show_warning, summarize=summarize
-        )
+        lines = compile_poll_text(session, poll, summarize=summarize)
         text = "\n".join(lines)
 
     else:
         # We don't know if we should summarize yet.
         # Don't use the summarized version.
-        lines = compile_poll_text(session, poll, show_warning=show_warning)
+        lines = compile_poll_text(session, poll)
         text = "\n".join(lines)
 
         # If the text is too long, summarize it.
         if len(text) > 4000:
             poll.permanently_summarize = True
-            lines = compile_poll_text(
-                session, poll, show_warning=show_warning, summarize=summarize
-            )
+            lines = compile_poll_text(session, poll, summarize=summarize)
             text = "\n".join(lines)
 
     # The text is still too long after summarization
@@ -64,7 +58,7 @@ def get_poll_text_and_summarize(session, poll, show_warning=False):
     return text, summarize
 
 
-def compile_poll_text(session, poll, show_warning=False, summarize=False):
+def compile_poll_text(session, poll, summarize=False):
     """Create the text of the poll."""
     context = Context(session, poll)
 
@@ -122,8 +116,5 @@ def compile_poll_text(session, poll, show_warning=False, summarize=False):
     # Notify users that poll is closed
     if poll.closed:
         lines.append(i18n.t("poll.closed", locale=poll.locale))
-
-    if show_warning:
-        lines.append(i18n.t("poll.too_many_votes", locale=poll.locale))
 
     return lines

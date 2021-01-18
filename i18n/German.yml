@@ -28,7 +28,6 @@ poll:
     total_votes: ' (%{count} Stimmen)'
     remaining_votes: "\nVerbleibende Stimmen:"
     remaining_votes_user: '%{name}: %{count} Stimmen'
-    too_many_votes: "⚠️ *Zu viele Abstimmungen in der letzten Minute* ⚠️\nDie Abstimmungen werden weiterhin registriert, aber die Nachricht wird sich nur ca. alle zwei Sekunden aktualisieren\n(Telegram erlaubt es Bots nicht, mehr als eine bestimmte Anzahl an Nachrichten pro Minute zu senden/aktualisieren.)\n"
     doodle:
         'yes': '├ *Ja:*'
         maybe: '├ *Vielleicht:*'
