@@ -96,20 +96,20 @@ def update_poll_messages(
             pass
 
 
-def send_updates(session, bot, poll, show_warning=False):
+def send_updates(session, bot, poll):
     """Actually update all messages."""
     for reference in poll.references:
-        update_reference(session, bot, poll, reference, show_warning)
+        update_reference(session, bot, poll, reference)
 
 
 def update_reference(
-    session, bot, poll, reference, show_warning=False, first_try=False
+    session, bot, poll, reference, first_try=False
 ):
     try:
         # Admin poll management interface
         if reference.type == ReferenceType.admin.name and not poll.in_settings:
             text, keyboard = get_poll_text_and_vote_keyboard(
-                session, poll, user=poll.user, show_warning=show_warning, show_back=True
+                session, poll, user=poll.user, show_back=True
             )
 
             if poll.user.expected_input != ExpectedInput.votes.name:
@@ -130,7 +130,6 @@ def update_reference(
                 session,
                 poll,
                 user=reference.user,
-                show_warning=show_warning,
             )
 
             bot.edit_message_text(
@@ -146,7 +145,7 @@ def update_reference(
         elif reference.type == ReferenceType.inline.name:
             # Create text and keyboard
             text, keyboard = get_poll_text_and_vote_keyboard(
-                session, poll, show_warning=show_warning
+                session, poll
             )
 
             bot.edit_message_text(
