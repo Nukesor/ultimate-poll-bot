@@ -169,7 +169,7 @@ def update_reference(
             # If this happens, allow the first try to fail and schedule an update
             # If it happens again, we'll fail on the second try
             if first_try:
-                update = Update(poll, datetime.now() + timedelta(seconds=2))
+                update = Update(poll, datetime.now() + timedelta(seconds=5))
                 session.add(update)
                 sentry.capture_exception(
                     extra={
