@@ -7,7 +7,7 @@ from pollbot.sentry import sentry
 from telegram.error import BadRequest, RetryAfter, Unauthorized
 
 
-def delete_poll(session, bot, poll, remove_all=False):
+def delete_poll(session, context, poll, remove_all=False):
     """Delete a poll.
 
     By default, the poll will simply be deleted from the database.
@@ -22,14 +22,14 @@ def delete_poll(session, bot, poll, remove_all=False):
         if not poll.closed:
             poll.closed = True
             try:
-                send_updates(session, bot, poll)
+                send_updates(session, context.bot, poll)
             except RetryAfter as e:
                 # In case we get an flood control error, wait a little longer
                 # than the specified time. Afterwards, just try again.
                 retry_after = int(e.retry_after) + 5
                 sleep(retry_after)
 
-                send_updates(session, bot, poll)
+                send_updates(session, context.bot, poll)
 
         session.delete(poll)
         return
@@ -42,7 +42,7 @@ def delete_poll(session, bot, poll, remove_all=False):
                 ReferenceType.admin.name,
                 ReferenceType.private_vote.name,
             ]:
-                bot.edit_message_text(
+                context.bot.edit_message_text(
                     i18n.t("deleted.poll", locale=poll.locale),
                     chat_id=reference.user.id,
                     message_id=reference.message_id,
@@ -50,7 +50,7 @@ def delete_poll(session, bot, poll, remove_all=False):
 
             # Remove message created via inline_message_id
             else:
-                bot.edit_message_text(
+                context.bot.edit_message_text(
                     i18n.t("deleted.poll", locale=poll.locale),
                     inline_message_id=reference.bot_inline_message_id,
                 )
@@ -83,7 +83,8 @@ def delete_poll(session, bot, poll, remove_all=False):
             else:
                 # Don't die if a single poll fails.
                 # Otherwise all other users get stuck as well.
-                sentry.capture_exception(tags={"handler": "job"})
+                if should_report_exception(context, e):
+                    sentry.capture_exception(tags={"handler": "job"})
                 return
         except Unauthorized:
             pass

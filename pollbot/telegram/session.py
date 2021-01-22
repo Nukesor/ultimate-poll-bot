@@ -1,6 +1,6 @@
 """Session helper functions."""
 import traceback
-from datetime import date
+from datetime import date, datetime, timedelta
 from functools import wraps
 from typing import Any, Callable
 
@@ -36,7 +36,8 @@ def job_wrapper(func):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
 
-                sentry.capture_exception(tags={"handler": "job"})
+                if should_report_exception(context, e):
+                    sentry.capture_exception(tags={"handler": "job"})
 
         finally:
             session.close()
@@ -62,6 +63,7 @@ def inline_query_wrapper(func):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
 
+            if should_report_exception(context, e):
                 sentry.capture_exception(tags={"handler": "inline_query"})
 
         finally:
@@ -88,6 +90,7 @@ def inline_result_wrapper(func):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
 
+            if should_report_exception(context, e):
                 sentry.capture_exception(tags={"handler": "inline_query_result"})
 
         finally:
@@ -143,14 +146,15 @@ def callback_query_wrapper(func):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
 
-                sentry.capture_exception(
-                    tags={
-                        "handler": "callback_query",
-                    },
-                    extra={
-                        "query": update.callback_query,
-                    },
-                )
+                if should_report_exception(context, e):
+                    sentry.capture_exception(
+                        tags={
+                            "handler": "callback_query",
+                        },
+                        extra={
+                            "query": update.callback_query,
+                        },
+                    )
 
                 locale = "English"
                 if user is not None:
@@ -240,12 +244,13 @@ def message_wrapper(private=False):
                     if config["logging"]["debug"]:
                         traceback.print_exc()
 
-                    sentry.capture_exception(
-                        tags={
-                            "handler": "message",
-                        },
-                        extra={"update": update.to_dict(), "function": func.__name__},
-                    )
+                    if should_report_exception(context, e):
+                        sentry.capture_exception(
+                            tags={
+                                "handler": "message",
+                            },
+                            extra={"update": update.to_dict(), "function": func.__name__},
+                        )
 
                     locale = "English"
                     if user is not None:
@@ -260,7 +265,7 @@ def message_wrapper(private=False):
                     except Exception as e:
                         # It sometimes happens, that an error occurs during sending the
                         # error message. Only capture important exceptions
-                        if not ignore_exception(e):
+                        if not ignore_exception(e) and should_report_exception(context, e):
                             sentry.capture_exception(
                                 tags={
                                     "handler": "message",
@@ -282,6 +287,7 @@ def message_wrapper(private=False):
         return wrapper
 
     return real_decorator
+
 
 
 def get_user(session, tg_user):
@@ -353,6 +359,34 @@ def get_name_from_tg_user(tg_user):
     name = remove_markdown_characters(name)
 
     return name.strip()
+
+
+def should_report_exception(context, exception):
+    """This function is responsible for client-side exception flood-protection.
+
+    Sentry only allows about 5000 events each month.
+    Since there's a lot of traffic on this bot, a single catastrophic event is often
+    enough to disable all error reporting for the rest of the month.
+    """
+    # Initialize on first exception
+    if context.bot_data.get("exceptions") is None:
+        context.bot_data['exceptions'] = {}
+
+    exceptions = context.bot_data.get("exceptions")
+
+    classname = exception.__class__.__name__
+    last_seen = exceptions.get(classname)
+    # Allow exceptions seen for the first time
+    if last_seen is None:
+        exceptions[classname] = datetime.now()
+        return True
+
+    # Allow retransmission of exceptions after 5 minutes
+    if last_seen < (datetime.now() - timedelta(minutes=5)):
+        exceptions[classname] = datetime.now()
+        return True
+
+    return False
 
 
 def ignore_exception(exception):

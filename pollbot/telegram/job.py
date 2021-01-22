@@ -85,9 +85,9 @@ def delete_polls(context, session):
         )
         for poll in polls_to_delete:
             if poll.delete == PollDeletionMode.DB_ONLY.name:
-                delete_poll(session, context.bot, poll)
+                delete_poll(session, context, poll)
             elif poll.delete == PollDeletionMode.WITH_MESSAGES.name:
-                delete_poll(session, context.bot, poll, True)
+                delete_poll(session, context, poll, True)
             session.commit()
 
     except Exception as e:
