@@ -4,7 +4,7 @@ from sqlalchemy.exc import DataError, IntegrityError
 
 from pollbot.enums import ReferenceType
 from pollbot.helper.stats import increase_user_stat
-from pollbot.models import Poll, Reference
+from pollbot.models import Poll, Reference, Update
 from pollbot.poll.update import update_reference
 from pollbot.telegram.session import inline_result_wrapper
 from telegram.ext import run_async
@@ -38,10 +38,20 @@ def handle_chosen_inline_result(bot, update, session, user):
         session.commit()
     except (UniqueViolation, IntegrityError):
         # I don't know how this can happen, but it happens.
-        # It seems that user can spam click inline query, which then leads to
-        # multiple chosen_inline_result queries being sent to the bot.
+        # It seems that user can spam click inline query results, which then leads
+        # to multiple chosen_inline_result queries being sent to the bot.
         session.rollback()
         return
 
-    update_reference(session, bot, poll, reference, first_try=True)
+    try:
+        update_reference(session, bot, poll, reference, first_try=True)
+    except RetryAfter as e:
+        # Handle a flood control exception on initial reference update.
+        retry_after_seconds = int(e.retry_after) + 1
+        retry_after = datetime.now() + timedelta(seconds=retry_after_seconds)
+        update = Update(poll, retry-after)
+        session.add(update)
+        session.commit()
+        pass
+
     increase_user_stat(session, user, "inline_shares")
