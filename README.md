@@ -80,7 +80,10 @@ I'll still discuss and accept new feature requests and review feature PR's. Happ
 
 # Acknowledgements
 
-First of all, thanks to [Lokalise](https://lokalise.co) for providing my projects with a free license for open-source development!
+<a href="https://sentry.io" ><img align="right" src="https://raw.githubusercontent.com/Nukesor/images/master/sentry.svg" alt="Packaging status"></a>
+Thanks to Sentry for providing the project with a sponsored plan (which has super generous quotas!).
+
+Thanks to [Lokalise](https://lokalise.co) for providing my projects with a free license for open-source development!
 
 Thanks to the Turkish translator:
 
@@ -118,12 +121,6 @@ Thanks to the Catalan translator:
 Thanks to the Czech translator:
 
 - Ignac (IgnacRR)
-
-Thanks to my patreons:
-
-- [Svenstaro](https://github.com/Svenstaro)
-- [Prior99](https://github.com/prior99)
-- 憧れ
 
 ## Commands
 
