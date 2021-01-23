@@ -164,18 +164,12 @@ def update_reference(
             or e.message.startswith("Chat not found")
             or e.message.startswith("Can't access the chat")
         ):
-            # This is just a hunch
-            # It feels like we're too fast and the message isn't synced between Telegram's servers yet.
-            # If this happens, allow the first try to fail and schedule an update
-            # If it happens again, we'll fail on the second try
+            # Sometimes it fells like we're too fast and the message isn't synced between Telegram's servers yet.
+            # If this happens, allow the first try to fail and schedule an update.
+            # If it happens again, the reference will be removed on the second try.
             if first_try:
                 update = Update(poll, datetime.now() + timedelta(seconds=5))
                 session.add(update)
-                sentry.capture_exception(
-                    extra={
-                        "context": "update_reference",
-                    },
-                )
 
                 return
 

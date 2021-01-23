@@ -394,6 +394,7 @@ def ignore_exception(exception):
     if type(exception) is BadRequest:
         if (
             exception.message.startswith("Query is too old")
+            or exception.message.startswith("Query is too old and response timeout expired or query id is invalid")
             or exception.message.startswith("Have no rights to send a message")
             or exception.message.startswith("Message_id_invalid")
             or exception.message.startswith("Message identifier not specified")
