@@ -4,13 +4,13 @@ from datetime import datetime, timedelta
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import ObjectDeletedError
+from telegram.error import BadRequest, RetryAfter, TimedOut, Unauthorized
 
 from pollbot.sentry import sentry
 from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
 from pollbot.enums import ExpectedInput, ReferenceType
 from pollbot.models import Reference, Update
 from pollbot.telegram.keyboard.management import get_management_keyboard
-from telegram.error import BadRequest, RetryAfter, TimedOut, Unauthorized
 
 
 def update_poll_messages(
@@ -102,9 +102,7 @@ def send_updates(session, bot, poll):
         update_reference(session, bot, poll, reference)
 
 
-def update_reference(
-    session, bot, poll, reference, first_try=False
-):
+def update_reference(session, bot, poll, reference, first_try=False):
     try:
         # Admin poll management interface
         if reference.type == ReferenceType.admin.name and not poll.in_settings:
@@ -144,9 +142,7 @@ def update_reference(
         # Edit message created via inline query
         elif reference.type == ReferenceType.inline.name:
             # Create text and keyboard
-            text, keyboard = get_poll_text_and_vote_keyboard(
-                session, poll
-            )
+            text, keyboard = get_poll_text_and_vote_keyboard(session, poll)
 
             bot.edit_message_text(
                 text,

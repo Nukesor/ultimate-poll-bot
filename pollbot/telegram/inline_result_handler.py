@@ -1,13 +1,16 @@
 """Handle inline query results."""
+from datetime import datetime, timedelta
+
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import DataError, IntegrityError
+from telegram.ext import run_async
+from telegram.error import RetryAfter
 
 from pollbot.enums import ReferenceType
 from pollbot.helper.stats import increase_user_stat
 from pollbot.models import Poll, Reference, Update
 from pollbot.poll.update import update_reference
 from pollbot.telegram.session import inline_result_wrapper
-from telegram.ext import run_async
 
 
 @run_async
@@ -49,7 +52,7 @@ def handle_chosen_inline_result(bot, update, session, user):
         # Handle a flood control exception on initial reference update.
         retry_after_seconds = int(e.retry_after) + 1
         retry_after = datetime.now() + timedelta(seconds=retry_after_seconds)
-        update = Update(poll, retry-after)
+        update = Update(poll, retry_after)
         session.add(update)
         session.commit()
         pass
