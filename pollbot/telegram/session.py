@@ -63,8 +63,8 @@ def inline_query_wrapper(func):
                 if config["logging"]["debug"]:
                     traceback.print_exc()
 
-            if should_report_exception(context, e):
-                sentry.capture_exception(tags={"handler": "inline_query"})
+                if should_report_exception(context, e):
+                    sentry.capture_exception(tags={"handler": "inline_query"})
 
         finally:
             session.close()
