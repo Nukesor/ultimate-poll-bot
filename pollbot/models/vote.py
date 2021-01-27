@@ -15,6 +15,7 @@ class Vote(base):
             "user_id", "poll_id", "option_id", name="one_vote_per_option_and_user"
         ),
     )
+    __mapper_args__ = {"confirm_deleted_rows": False}
 
     id = Column(Integer, primary_key=True)
     type = Column(String, nullable=True)

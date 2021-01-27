@@ -54,8 +54,11 @@ def handle_chosen_inline_result(bot, update, session, user):
         retry_after_seconds = int(e.retry_after) + 1
         retry_after = datetime.now() + timedelta(seconds=retry_after_seconds)
         update = Update(poll, retry_after)
-        session.add(update)
-        session.commit()
-        pass
+        try:
+            session.add(update)
+            session.commit()
+        except IntegrityError:
+            # There's already a scheduled update for this poll.
+            session.rollback()
 
     increase_user_stat(session, user, "inline_shares")

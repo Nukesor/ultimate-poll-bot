@@ -1,7 +1,7 @@
 """Callback functions needed during creation of a Poll."""
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError, OperationalError
-from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
+from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError, NoResultFound
 
 from pollbot.enums import CallbackResult, PollType
 from pollbot.helper.stats import increase_stat
@@ -70,6 +70,11 @@ def handle_vote(session, context, option):
     except OperationalError:
         # This happens, when a deadlock is created.
         # That can be caused by users spamming the vote button.
+        session.rollback()
+        return
+    except NoResultFound:
+        # This can happen if a user concurrently upvotes and downvotes an option.
+        # -> Downvote deletes the Vote, upvote tries to change the Vote.
         session.rollback()
         return
 

@@ -1,10 +1,11 @@
 from time import sleep
+from telegram.error import BadRequest, RetryAfter, Unauthorized
+from sqlalchemy.orm.exc import ObjectDeletedError
 
 from pollbot.enums import ReferenceType
 from pollbot.i18n import i18n
 from pollbot.poll.update import send_updates
 from pollbot.sentry import sentry
-from telegram.error import BadRequest, RetryAfter, Unauthorized
 
 
 def delete_poll(session, context, poll, remove_all=False):
@@ -87,6 +88,9 @@ def delete_poll(session, context, poll, remove_all=False):
                     sentry.capture_exception(tags={"handler": "job"})
                 return
         except Unauthorized:
+            pass
+        except ObjectDeletedError:
+            # This reference has already been deleted somewhere else. Just ignore this.
             pass
 
     session.delete(poll)

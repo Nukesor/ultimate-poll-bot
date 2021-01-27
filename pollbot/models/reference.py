@@ -11,6 +11,7 @@ class Reference(base):
     """The model for a Reference."""
 
     __tablename__ = "reference"
+    __mapper_args__ = {"confirm_deleted_rows": False}
 
     id = Column(Integer, primary_key=True)
     type = Column(String)
