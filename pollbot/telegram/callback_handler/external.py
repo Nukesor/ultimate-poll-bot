@@ -1,12 +1,13 @@
 """Option for setting the current date of the picker."""
 from datetime import date
+from pollbot.poll.update import try_update_reference
 
 from pollbot.decorators import poll_required
 from pollbot.display.creation import get_datepicker_text
-from pollbot.enums import ExpectedInput
+from pollbot.enums import ExpectedInput, ReferenceType
 from pollbot.helper.stats import increase_stat
 from pollbot.i18n import i18n
-from pollbot.models import Notification
+from pollbot.models import Notification, Reference, Update
 from pollbot.telegram.keyboard.external import get_external_add_option_keyboard
 from pollbot.telegram.keyboard.date_picker import get_external_datepicker_keyboard
 
@@ -87,3 +88,27 @@ def external_cancel(session, context, poll):
     session.commit()
 
     context.query.message.edit_text(i18n.t("external.done", locale=poll.locale))
+
+
+@poll_required
+def update_shared(session, context, poll):
+    """All options are entered the poll is created."""
+    message_id = context.query.inline_message_id
+
+    reference = (
+        session.query(Reference)
+        .filter(Reference.bot_inline_message_id == message_id)
+        .filter(Reference.poll == poll)
+        .one_or_none()
+    )
+
+    if reference is None:
+        reference = Reference(
+            poll,
+            ReferenceType.inline.name,
+            inline_message_id=message_id,
+        )
+        session.add(reference)
+        session.commit()
+
+    try_update_reference(session, context.bot, poll, reference, first_try=True)

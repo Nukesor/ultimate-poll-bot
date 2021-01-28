@@ -85,6 +85,7 @@ class CallbackType(Enum):
 
     # Poll voting
     vote = 20
+    update_shared = 21
 
     # Poll management menu
     menu_back = 30

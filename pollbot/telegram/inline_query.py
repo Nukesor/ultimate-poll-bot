@@ -4,7 +4,7 @@ import uuid
 from sqlalchemy import or_
 
 from pollbot.config import config
-from pollbot.enums import ReferenceType
+from pollbot.enums import ReferenceType, CallbackType
 from pollbot.i18n import i18n
 from pollbot.models import Poll
 from pollbot.telegram.session import inline_query_wrapper
@@ -130,8 +130,15 @@ def search(bot, update, session, user):
                 continue
 
             text = i18n.t("poll.please_wait", locale=poll.locale)
+            data = f"{CallbackType.update_shared.value}:{poll.id}:0"
             keyboard = InlineKeyboardMarkup(
-                [[InlineKeyboardButton("Please ignore this", callback_data="100:0:0")]]
+                [
+                    [
+                        InlineKeyboardButton(
+                            "Not syncing? Try clicking", callback_data=data
+                        )
+                    ]
+                ]
             )
 
             content = InputTextMessageContent(

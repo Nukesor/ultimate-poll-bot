@@ -69,7 +69,7 @@ def update_poll_messages(
 
     if not new_update:
         # In case there already is an update increase the counter and set the next_update date
-        # This will result in a new update in the background job and ensures
+        # This will result in a new update in the background job and ensures that
         # currently (right now) running updates will be scheduled again.
         if retry_after is not None:
             next_update = retry_after
@@ -100,6 +100,23 @@ def send_updates(session, bot, poll):
     """Actually update all messages."""
     for reference in poll.references:
         update_reference(session, bot, poll, reference)
+
+
+def try_update_reference(session, bot, poll, reference, first_try=False):
+    try:
+        update_reference(session, bot, poll, reference, first_try=True)
+    except RetryAfter as e:
+        session.rollback()
+        # Handle a flood control exception on initial reference update.
+        retry_after_seconds = int(e.retry_after) + 1
+        retry_after = datetime.now() + timedelta(seconds=retry_after_seconds)
+        update = Update(poll, retry_after)
+        try:
+            session.add(update)
+            session.commit()
+        except IntegrityError:
+            # There's already a scheduled update for this poll.
+            session.rollback()
 
 
 def update_reference(session, bot, poll, reference, first_try=False):

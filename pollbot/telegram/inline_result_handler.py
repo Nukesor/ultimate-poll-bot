@@ -9,7 +9,7 @@ from telegram.error import RetryAfter
 from pollbot.enums import ReferenceType
 from pollbot.helper.stats import increase_user_stat
 from pollbot.models import Poll, Reference, Update
-from pollbot.poll.update import update_reference
+from pollbot.poll.update import try_update_reference
 from pollbot.telegram.session import inline_result_wrapper
 
 
@@ -46,19 +46,6 @@ def handle_chosen_inline_result(bot, update, session, user):
         session.rollback()
         return
 
-    try:
-        update_reference(session, bot, poll, reference, first_try=True)
-    except RetryAfter as e:
-        session.rollback()
-        # Handle a flood control exception on initial reference update.
-        retry_after_seconds = int(e.retry_after) + 1
-        retry_after = datetime.now() + timedelta(seconds=retry_after_seconds)
-        update = Update(poll, retry_after)
-        try:
-            session.add(update)
-            session.commit()
-        except IntegrityError:
-            # There's already a scheduled update for this poll.
-            session.rollback()
+    try_update_reference(session, bot, poll, reference, first_try=True)
 
     increase_user_stat(session, user, "inline_shares")

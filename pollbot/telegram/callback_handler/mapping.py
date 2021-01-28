@@ -30,6 +30,7 @@ from .external import (
     external_cancel,
     open_external_datepicker,
     open_external_menu,
+    update_shared,
 )
 from .management import (
     clone_poll,
@@ -141,6 +142,7 @@ async_callback_mapping = {
     CallbackType.ask_description: ask_description,
     # Voting
     CallbackType.vote: handle_vote,
+    CallbackType.update_shared: update_shared,
     # Menu
     CallbackType.menu_back: go_back,
     CallbackType.menu_vote: show_vote_menu,
