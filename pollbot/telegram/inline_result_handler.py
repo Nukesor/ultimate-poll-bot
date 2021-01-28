@@ -49,6 +49,7 @@ def handle_chosen_inline_result(bot, update, session, user):
     try:
         update_reference(session, bot, poll, reference, first_try=True)
     except RetryAfter as e:
+        session.rollback()
         # Handle a flood control exception on initial reference update.
         retry_after_seconds = int(e.retry_after) + 1
         retry_after = datetime.now() + timedelta(seconds=retry_after_seconds)
