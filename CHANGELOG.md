@@ -5,11 +5,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [1.7.0]
 
+### Changed
+
+- Wait for a longer time after flood control exceptions in the delete logic.
+    This makes the whole process more resilient.
+- Move the whole poll deletion logic to an asynchronous background job.
+- Black code styling
+- Fix some weird issue that's probably related to Telegram's internal syncing when handling inline query results
+- Add client-side rate-limiting for errors to prevent flooding Sentry.
+- General dependency update.
+
+### Added
+
+- Users can retry to update references via button click.
+
 ### Fixed
 
 - Fixed race-conditions that were created due to asynchronous poll deletion.
 - Some race-condition exception handling
 - Fix statistic plotting related memory leak
+- Handle a lot of edge-case exceptions that can be ignored.
+- Fix some unhandled markdown characters in usernames
 
 ## [1.6.0] - 2020-08-09
 
