@@ -107,16 +107,19 @@ def callback_query_wrapper(func):
         if context.user_data.get("ban"):
             return
 
-        try:
-            # Check if the user is temporarily banned and send a message.
-            # The check is done via the local telegram cache. This way we can prevent
-            # opening a new DB connection for each spam request. (lots of performance)
-            temp_ban_time = context.user_data.get("temporary-ban-time")
-            if temp_ban_time is not None and temp_ban_time == date.today():
+        # Check if the user is temporarily banned and send a message.
+        # The check is done via the local telegram cache. This way we can prevent
+        # opening a new DB connection for each spam request. (lots of performance)
+        temp_ban_time = context.user_data.get("temporary-ban-time")
+        if temp_ban_time is not None and temp_ban_time == date.today():
+            try:
                 update.callback_query.answer(i18n.t("callback.spam"))
-                return
+            except:
+                pass
+            return
 
-            session = get_session()
+        session = get_session()
+        try:
 
             user, statistic = get_user(session, update.callback_query.from_user)
             # Cache ban value, so we don't have to lookup the value in our database on each request
@@ -152,7 +155,7 @@ def callback_query_wrapper(func):
                             "handler": "callback_query",
                         },
                         extra={
-                            "query": update.callback_query,
+                            "query_data": update.callback_query.data,
                         },
                     )
 
@@ -169,11 +172,7 @@ def callback_query_wrapper(func):
                         raise e
 
         finally:
-            # The session might not be there yet
-            # We're checking for bans inside this try/catch, which has to
-            # happen before session initialization due to performance reasons
-            if "session" in locals():
-                session.close()
+            session.close()
 
     return wrapper
 
@@ -249,7 +248,10 @@ def message_wrapper(private=False):
                             tags={
                                 "handler": "message",
                             },
-                            extra={"update": update.to_dict(), "function": func.__name__},
+                            extra={
+                                "update": update.to_dict(),
+                                "function": func.__name__,
+                            },
                         )
 
                     locale = "English"
@@ -265,7 +267,9 @@ def message_wrapper(private=False):
                     except Exception as e:
                         # It sometimes happens, that an error occurs during sending the
                         # error message. Only capture important exceptions
-                        if not ignore_exception(e) and should_report_exception(context, e):
+                        if not ignore_exception(e) and should_report_exception(
+                            context, e
+                        ):
                             sentry.capture_exception(
                                 tags={
                                     "handler": "message",
@@ -287,7 +291,6 @@ def message_wrapper(private=False):
         return wrapper
 
     return real_decorator
-
 
 
 def get_user(session, tg_user):
@@ -370,7 +373,7 @@ def should_report_exception(context, exception):
     """
     # Initialize on first exception
     if context.bot_data.get("exceptions") is None:
-        context.bot_data['exceptions'] = {}
+        context.bot_data["exceptions"] = {}
 
     exceptions = context.bot_data.get("exceptions")
 
@@ -394,7 +397,9 @@ def ignore_exception(exception):
     if type(exception) is BadRequest:
         if (
             exception.message.startswith("Query is too old")
-            or exception.message.startswith("Query is too old and response timeout expired or query id is invalid")
+            or exception.message.startswith(
+                "Query is too old and response timeout expired or query id is invalid"
+            )
             or exception.message.startswith("Have no rights to send a message")
             or exception.message.startswith("Message_id_invalid")
             or exception.message.startswith("Message identifier not specified")
