@@ -50,7 +50,7 @@ def owner_pick_date_option(session, context, poll, datepicker_context):
     # If that's the case, delete it
     if existing_option is not None:
         session.delete(existing_option)
-        session.commit()
+        session.flush()
         message = i18n.t(
             "callback.date_removed", locale=poll.locale, date=picked_date.isoformat()
         )

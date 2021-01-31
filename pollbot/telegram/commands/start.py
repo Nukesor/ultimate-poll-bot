@@ -57,7 +57,7 @@ def start(bot, update, session, user):
         # Update the expected input and set the current poll
         user.expected_input = ExpectedInput.new_user_option.name
         user.current_poll = poll
-        session.commit()
+        session.flush()
 
         update.message.chat.send_message(
             i18n.t("creation.option.first", locale=poll.locale),
@@ -108,7 +108,7 @@ def start(bot, update, session, user):
 
         if poll.is_priority():
             init_votes(session, poll, user)
-            session.commit()
+            session.flush()
 
         text, keyboard = get_poll_text_and_vote_keyboard(
             session,
@@ -131,4 +131,4 @@ def start(bot, update, session, user):
         )
         session.add(reference)
 
-        session.commit()
+        session.flush()

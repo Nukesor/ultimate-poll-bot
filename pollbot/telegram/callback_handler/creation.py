@@ -82,7 +82,7 @@ def skip_description(session, context, poll):
     """Skip description creation step."""
     if len(poll.options) == 0:
         context.user.expected_input = ExpectedInput.options.name
-        session.commit()
+        session.flush()
         context.query.message.edit_text(
             i18n.t("creation.option.first", locale=context.user.locale),
             reply_markup=get_open_datepicker_keyboard(poll),
@@ -211,7 +211,7 @@ def cancel_creation(session, context):
         return i18n.t("delete.doesnt_exist", locale=context.user.locale)
 
     session.delete(context.poll)
-    session.commit()
+    session.flush()
     context.query.message.edit_text(
         i18n.t("delete.previous_deleted", locale=context.user.locale)
     )

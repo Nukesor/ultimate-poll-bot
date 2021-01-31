@@ -85,7 +85,7 @@ def handle_callback_query(bot, update, session, user):
     context = get_context(bot, update, session, user)
 
     increase_user_stat(session, context.user, "callback_calls")
-    session.commit()
+    session.flush()
     response = callback_mapping[context.callback_type](session, context)
 
     # Callback handler functions always return the callback answer
@@ -136,7 +136,7 @@ def handle_async_callback_query(bot, update, session, user):
             user_statistic = UserStatistic(poll.user)
             session.add(user_statistic)
             try:
-                session.commit()
+                session.flush()
             # Handle race condition for parallel user statistic creation
             # Return the statistic that has already been created in another session
             except IntegrityError as e:
@@ -153,12 +153,12 @@ def handle_async_callback_query(bot, update, session, user):
         increase_user_stat(session, context.user, "votes")
         increase_user_stat(session, poll.user, "poll_callback_calls")
 
-        session.commit()
+        session.flush()
         response = handle_vote(session, context, option)
 
     else:
         increase_user_stat(session, context.user, "callback_calls")
-        session.commit()
+        session.flush()
         response = async_callback_mapping[context.callback_type](session, context)
 
     # Callback handler functions always return the callback answer

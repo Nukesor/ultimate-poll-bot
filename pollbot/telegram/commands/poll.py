@@ -29,7 +29,7 @@ def cancel_poll_creation(bot, update, session, user):
         return
 
     session.delete(current_poll)
-    session.commit()
+    session.flush()
     update.effective_chat.send_message(
         f"{i18n.t('delete.previous_deleted', locale=user.locale)} /start"
     )

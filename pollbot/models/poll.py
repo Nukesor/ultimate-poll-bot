@@ -106,7 +106,7 @@ class Poll(base):
         user.current_poll = poll
         user.expected_input = ExpectedInput.name.name
         session.add(poll)
-        session.commit()
+        session.flush()
 
         return poll
 

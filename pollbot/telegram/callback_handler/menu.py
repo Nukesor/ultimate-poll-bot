@@ -47,7 +47,7 @@ def show_vote_menu(session, context, poll):
     """Show the vote keyboard in the management interface."""
     if poll.is_priority():
         init_votes(session, poll, context.user)
-        session.commit()
+        session.flush()
 
     text, keyboard = get_poll_text_and_vote_keyboard(
         session, poll, user=context.user, show_back=True
@@ -110,4 +110,4 @@ def show_menu(session, context, poll):
         poll, ReferenceType.admin.name, user=context.user, message_id=message.message_id
     )
     session.add(reference)
-    session.commit()
+    session.flush()

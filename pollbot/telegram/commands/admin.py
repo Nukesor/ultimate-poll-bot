@@ -16,7 +16,7 @@ from telegram.ext import run_async
 def reset_broadcast(bot, update, session, user):
     """Reset the broadcast_sent flag for all users."""
     session.query(User).update({"broadcast_sent": False})
-    session.commit()
+    session.flush()
 
     return "All broadcast flags resetted"
 
@@ -87,7 +87,7 @@ def broadcast(bot, update, session, user):
             except TimeoutError:
                 pass
 
-            session.commit()
+            session.flush()
             # Sleep a little bit to not trigger flood prevention
             time.sleep(0.07)
 

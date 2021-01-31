@@ -38,7 +38,7 @@ def handle_chosen_inline_result(bot, update, session, user):
             inline_message_id=result.inline_message_id,
         )
         session.add(reference)
-        session.commit()
+        session.flush()
     except (UniqueViolation, IntegrityError):
         # I don't know how this can happen, but it happens.
         # It seems that user can spam click inline query results, which then leads

@@ -30,7 +30,7 @@ def toggle_percentage(session, context, poll):
         return
     poll.show_percentage = not poll.show_percentage
 
-    session.commit()
+    session.flush()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)
 
@@ -46,7 +46,7 @@ def toggle_option_votes(session, context, poll):
 
     poll.show_option_votes = not poll.show_option_votes
 
-    session.commit()
+    session.flush()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)
 
@@ -57,7 +57,7 @@ def toggle_date_format(session, context, poll):
     poll.european_date_format = not poll.european_date_format
     poll.user.european_date_format = poll.european_date_format
 
-    session.commit()
+    session.flush()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)
 
@@ -67,7 +67,7 @@ def toggle_summerization(session, context, poll):
     """Toggle summarization of votes of a poll."""
     poll.summarize = not poll.summarize
 
-    session.commit()
+    session.flush()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)
 
@@ -77,7 +77,7 @@ def toggle_compact_buttons(session, context, poll):
     """Toggle the doodle poll button style."""
     poll.compact_buttons = not poll.compact_buttons
 
-    session.commit()
+    session.flush()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)
 
@@ -88,7 +88,7 @@ def set_option_order(session, context, poll):
     option_sorting = OptionSorting(context.action)
     poll.option_sorting = option_sorting.name
 
-    session.commit()
+    session.flush()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)
 
@@ -99,7 +99,7 @@ def set_user_order(session, context, poll):
     user_sorting = UserSorting(context.action)
     poll.user_sorting = user_sorting.name
 
-    session.commit()
+    session.flush()
     update_poll_messages(session, context.bot, poll)
     send_styling_message(session, context)
 
@@ -145,12 +145,12 @@ def increase_option_index(session, context, poll):
             # requests to change order at the same time
             option.index = -1
             target_option.index = -2
-            session.commit()
+            session.flush()
 
             # Upate indices
             target_option.index = target_index
             option.index = current_index
-            session.commit()
+            session.flush()
 
             break
 
@@ -180,12 +180,12 @@ def decrease_option_index(session, context, poll):
             # requests to change order at the same time
             option.index = -2
             prev_option.index = -1
-            session.commit()
+            session.flush()
 
             # Upate indices
             prev_option.index = current_index
             option.index = target_index
-            session.commit()
+            session.flush()
 
             break
 

@@ -101,14 +101,14 @@ def toggle_notification(session, context):
     """Toggle the notification settings of the user."""
     user = context.user
     user.notifications_enabled = not user.notifications_enabled
-    session.commit()
+    session.flush()
     open_user_settings(session, context)
 
 
 def change_user_language(session, context):
     """Open the language picker."""
     context.user.locale = context.action
-    session.commit()
+    session.flush()
     open_user_settings(session, context)
     return i18n.t("user.language_changed", locale=context.user.locale)
 
@@ -136,7 +136,7 @@ def delete_all(session, context):
     for poll in context.user.polls:
         if poll.delete is None:
             poll.delete = PollDeletionMode.DB_ONLY.name
-    session.commit()
+    session.flush()
 
     open_user_settings(session, context)
     return i18n.t("deleted.polls", locale=context.user.locale)
@@ -147,7 +147,7 @@ def delete_closed(session, context):
     for poll in context.user.polls:
         if poll.delete is None:
             poll.delete = PollDeletionMode.WITH_MESSAGES.name
-    session.commit()
+    session.flush()
 
     open_user_settings(session, context)
     return i18n.t("deleted.closed_polls", locale=context.user.locale)
@@ -170,7 +170,7 @@ def delete_user(session, context):
     for poll in context.user.polls:
         if poll.delete is None:
             poll.delete = PollDeletionMode.DB_ONLY.name
-    session.commit()
+    session.flush()
 
     polls_for_update = []
     # Delete all votes, but only update non-closed polls
@@ -178,14 +178,14 @@ def delete_user(session, context):
         if vote.poll not in polls_for_update and not vote.poll.closed:
             polls_for_update.append(vote.poll)
         session.delete(vote)
-    session.commit()
+    session.flush()
 
     for poll in polls_for_update:
         update_poll_messages(session, context.bot, poll)
-    session.commit()
+    session.flush()
 
     user.delete()
-    session.commit()
+    session.flush()
 
     context.query.message.chat.send_message(
         i18n.t("settings.user.deleted", locale=user.locale),

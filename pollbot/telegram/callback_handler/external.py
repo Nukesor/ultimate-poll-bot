@@ -44,7 +44,7 @@ def activate_notification(session, context, poll):
     else:
         notification.poll = poll
 
-    session.commit()
+    session.flush()
     message.edit_text(i18n.t("external.notification.activated", locale=poll.locale))
     increase_stat(session, "notifications")
 
@@ -71,7 +71,7 @@ def open_external_menu(session, context, poll):
     """All options are entered the poll is created."""
     context.user.expected_input = ExpectedInput.new_user_option.name
     context.user.current_poll = poll
-    session.commit()
+    session.flush()
 
     context.query.message.edit_text(
         i18n.t("creation.option.first", locale=poll.locale),
@@ -85,7 +85,7 @@ def external_cancel(session, context, poll):
     """All options are entered the poll is created."""
     context.user.expected_input = None
     context.user.current_poll = None
-    session.commit()
+    session.flush()
 
     context.query.message.edit_text(i18n.t("external.done", locale=poll.locale))
 
@@ -109,6 +109,6 @@ def update_shared(session, context, poll):
             inline_message_id=message_id,
         )
         session.add(reference)
-        session.commit()
+        session.flush()
 
     try_update_reference(session, context.bot, poll, reference, first_try=True)

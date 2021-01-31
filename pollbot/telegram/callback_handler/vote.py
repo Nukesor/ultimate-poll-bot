@@ -51,7 +51,7 @@ def handle_vote(session, context, option):
             update_poll = handle_priority_vote(session, context, option)
         else:
             raise Exception("Unknown poll type")
-        session.commit()
+        session.flush()
 
     except IntegrityError:
         # Double vote. Rollback the transaction and ignore the second vote
@@ -92,7 +92,7 @@ def handle_vote(session, context, option):
             )
 
     increase_stat(session, "votes")
-    session.commit()
+    session.flush()
 
 
 def respond_to_vote(session, line, context, poll, remaining_votes=None, limited=False):
@@ -271,7 +271,7 @@ def handle_cumulative_vote(session, context, option, limited=True):
         # Add to an existing vote
         if action == CallbackResult.yes:
             existing_vote.vote_count += 1
-            session.commit()
+            session.flush()
             remaining_votes = allowed_votes - (vote_count + 1)
             vote_registered = i18n.t("callback.vote.registered", locale=locale)
             respond_to_vote(
@@ -286,7 +286,7 @@ def handle_cumulative_vote(session, context, option, limited=True):
             if existing_vote.vote_count <= 0:
                 session.delete(existing_vote)
 
-            session.commit()
+            session.flush()
             remaining_votes = allowed_votes - (vote_count - 1)
             vote_removed = i18n.t("callback.vote.removed", locale=locale)
             respond_to_vote(
@@ -297,7 +297,7 @@ def handle_cumulative_vote(session, context, option, limited=True):
     elif existing_vote is None and action == CallbackResult.yes:
         vote = Vote(context.user, option)
         session.add(vote)
-        session.commit()
+        session.flush()
         remaining_votes = allowed_votes - (vote_count + 1)
         vote_registered = i18n.t("callback.vote.registered", locale=locale)
         respond_to_vote(
@@ -375,7 +375,7 @@ def handle_priority_vote(session, context, option):
         return False
 
     next_vote.priority -= direction
-    session.commit()
+    session.flush()
     vote.priority = previous_priority + direction
 
     registered = i18n.t("callback.vote.registered", locale=option.poll.locale)

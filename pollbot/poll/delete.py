@@ -60,7 +60,7 @@ def delete_poll(session, context, poll, remove_all=False):
             # If something critical, such as a flood control error, happens in the middle
             # of a delete, we don't have to update all previous references again.
             session.delete(reference)
-            session.commit()
+            session.flush()
         except RetryAfter as e:
             # In case we get an flood control error, wait for the specified time
             # Then rollback the transaction, and return. The reference will then be updated
@@ -94,4 +94,4 @@ def delete_poll(session, context, poll, remove_all=False):
             pass
 
     session.delete(poll)
-    session.commit()
+    session.flush()

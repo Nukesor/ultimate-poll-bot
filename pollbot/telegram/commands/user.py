@@ -24,7 +24,7 @@ def open_user_settings_command(bot, update, session, user):
 def stop(bot, update, session, user):
     """Stop the user."""
     user.started = False
-    session.commit()
+    session.flush()
     update.message.chat.send_message(
         i18n.t("misc.stop", locale=user.locale),
         parse_mode="markdown",
