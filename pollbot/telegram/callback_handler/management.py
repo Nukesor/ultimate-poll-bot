@@ -14,7 +14,7 @@ from pollbot.telegram.keyboard.management import get_management_keyboard
 def delete_poll(session, context, poll):
     """Permanently delete the poll."""
     poll.delete = PollDeletionMode.DB_ONLY.name
-    session.flush()
+    session.commit()
 
     return i18n.t("callback.deleted", locale=context.user.locale)
 
@@ -23,7 +23,7 @@ def delete_poll(session, context, poll):
 def delete_poll_with_messages(session, context, poll):
     """Permanently delete the poll."""
     poll.delete = PollDeletionMode.WITH_MESSAGES.name
-    session.flush()
+    session.commit()
 
     return i18n.t("callback.deleted", locale=context.user.locale)
 
@@ -32,7 +32,7 @@ def delete_poll_with_messages(session, context, poll):
 def close_poll(session, context, poll):
     """Close this poll."""
     poll.closed = True
-    session.flush()
+    session.commit()
     update_poll_messages(
         session, context.bot, poll, context.query.message.message_id, poll.user
     )
@@ -55,7 +55,7 @@ def reopen_poll(session, context, poll):
     else:
         poll.set_due_date(poll.due_date)
 
-    session.flush()
+    session.commit()
     update_poll_messages(
         session, context.bot, poll, context.query.message.message_id, poll.user
     )
@@ -66,7 +66,7 @@ def reset_poll(session, context, poll):
     """Reset this poll."""
     for vote in poll.votes:
         session.delete(vote)
-    session.flush()
+    session.commit()
 
     update_poll_messages(
         session, context.bot, poll, context.query.message.message_id, poll.user
@@ -78,7 +78,7 @@ def reset_poll(session, context, poll):
 def clone_poll(session, context, poll):
     """Clone this poll."""
     new_poll = clone_poll_internal(session, poll)
-    session.flush()
+    session.commit()
 
     context.tg_chat.send_message(
         get_poll_text(session, new_poll),

@@ -60,7 +60,7 @@ def update_poll_messages(
             if retry_after is not None:
                 update.next_update = retry_after
 
-            session.flush()
+            session.commit()
             new_update = True
         except (UniqueViolation, IntegrityError):
             # Some other function already created the update. Try again
@@ -113,7 +113,7 @@ def try_update_reference(session, bot, poll, reference, first_try=False):
         update = Update(poll, retry_after)
         try:
             session.add(update)
-            session.flush()
+            session.commit()
         except IntegrityError:
             # There's already a scheduled update for this poll.
             session.rollback()

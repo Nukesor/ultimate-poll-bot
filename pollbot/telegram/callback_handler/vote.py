@@ -51,7 +51,7 @@ def handle_vote(session, context, option):
             update_poll = handle_priority_vote(session, context, option)
         else:
             raise Exception("Unknown poll type")
-        session.flush()
+        session.commit()
 
     except IntegrityError:
         # Double vote. Rollback the transaction and ignore the second vote
@@ -92,7 +92,7 @@ def handle_vote(session, context, option):
             )
 
     increase_stat(session, "votes")
-    session.flush()
+    session.commit()
 
 
 def respond_to_vote(session, line, context, poll, remaining_votes=None, limited=False):

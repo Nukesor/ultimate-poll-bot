@@ -101,14 +101,14 @@ def toggle_notification(session, context):
     """Toggle the notification settings of the user."""
     user = context.user
     user.notifications_enabled = not user.notifications_enabled
-    session.flush()
+    session.commit()
     open_user_settings(session, context)
 
 
 def change_user_language(session, context):
     """Open the language picker."""
     context.user.locale = context.action
-    session.flush()
+    session.commit()
     open_user_settings(session, context)
     return i18n.t("user.language_changed", locale=context.user.locale)
 
@@ -136,7 +136,7 @@ def delete_all(session, context):
     for poll in context.user.polls:
         if poll.delete is None:
             poll.delete = PollDeletionMode.DB_ONLY.name
-    session.flush()
+    session.commit()
 
     open_user_settings(session, context)
     return i18n.t("deleted.polls", locale=context.user.locale)
@@ -147,7 +147,7 @@ def delete_closed(session, context):
     for poll in context.user.polls:
         if poll.delete is None:
             poll.delete = PollDeletionMode.WITH_MESSAGES.name
-    session.flush()
+    session.commit()
 
     open_user_settings(session, context)
     return i18n.t("deleted.closed_polls", locale=context.user.locale)
@@ -170,7 +170,7 @@ def delete_user(session, context):
     for poll in context.user.polls:
         if poll.delete is None:
             poll.delete = PollDeletionMode.DB_ONLY.name
-    session.flush()
+    session.commit()
 
     polls_for_update = []
     # Delete all votes, but only update non-closed polls
@@ -185,7 +185,7 @@ def delete_user(session, context):
     session.flush()
 
     user.delete()
-    session.flush()
+    session.commit()
 
     context.query.message.chat.send_message(
         i18n.t("settings.user.deleted", locale=user.locale),

@@ -78,7 +78,7 @@ def reorder_votes_after_option_delete(session, poll: Poll):
 
         for index, vote in enumerate(votes):
             vote.priority = index
-            session.flush()
+    session.flush()
 
 
 def get_sorted_votes(poll: Poll, votes: List[Vote]):

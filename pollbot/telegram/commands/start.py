@@ -31,6 +31,8 @@ def start(bot, update, session, user):
     text = update.message.text[6:].strip()
     user.started = True
 
+    poll = None
+    action = None
     try:
         poll_uuid = UUID(text.split("-")[0])
         action = StartAction(int(text.split("-")[1]))
@@ -57,7 +59,7 @@ def start(bot, update, session, user):
         # Update the expected input and set the current poll
         user.expected_input = ExpectedInput.new_user_option.name
         user.current_poll = poll
-        session.flush()
+        session.commit()
 
         update.message.chat.send_message(
             i18n.t("creation.option.first", locale=poll.locale),
@@ -108,7 +110,7 @@ def start(bot, update, session, user):
 
         if poll.is_priority():
             init_votes(session, poll, user)
-            session.flush()
+            session.commit()
 
         text, keyboard = get_poll_text_and_vote_keyboard(
             session,
@@ -130,5 +132,4 @@ def start(bot, update, session, user):
             message_id=sent_message.message_id,
         )
         session.add(reference)
-
-        session.flush()
+        session.commit()

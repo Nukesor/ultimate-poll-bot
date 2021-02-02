@@ -159,7 +159,7 @@ def handle_new_option(bot, update, session, user, text, poll, chat):
         poll, ReferenceType.admin.name, user=user, message_id=message.message_id
     )
     session.add(reference)
-    session.flush()
+    session.commit()
 
     update_poll_messages(session, bot, poll, message.message_id, user)
 
@@ -178,7 +178,7 @@ def handle_user_option_addition(bot, update, session, user, text, poll, chat):
         user.current_poll = None
         user.expected_input = None
 
-        session.flush()
+        session.commit()
 
         # Send success message
         text = i18n.t("creation.option.multiple_added", locale=user.locale) + "\n"

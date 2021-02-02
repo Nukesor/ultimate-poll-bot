@@ -46,7 +46,7 @@ def remove_old_references(session, bot, poll: Poll, user: User):
                 chat_id=reference.user_id, message_id=reference.message_id
             )
         except Unauthorized:
-            session.delete(reference)
+            pass
         except BadRequest as e:
             if (
                 e.message.startswith("Message_id_invalid")
@@ -55,9 +55,10 @@ def remove_old_references(session, bot, poll: Poll, user: User):
                 or e.message.startswith("Chat not found")
                 or e.message.startswith("Can't access the chat")
             ):
-                session.delete(reference)
+                pass
 
-        session.flush()
+        session.delete(reference)
+        session.commit()
 
 
 def calculate_total_votes(poll: Poll):

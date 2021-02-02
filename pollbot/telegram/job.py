@@ -180,8 +180,8 @@ def create_daily_stats(context, session):
             if statistic is None:
                 statistic = DailyStatistic(stat_date)
                 session.add(statistic)
-                session.flush()
 
+        session.commit()
     except Exception as e:
         sentry.capture_job_exception(e)
 
