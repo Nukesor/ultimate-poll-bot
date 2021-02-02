@@ -41,7 +41,7 @@ def message_update_job(context, session):
                 try:
                     send_updates(session, context.bot, update.poll)
                     session.delete(update)
-                    session.flush()
+                    session.commit()
                 except ObjectDeletedError:
                     # The update has already been handled somewhere else.
                     # This could be either a job or a person that voted in this very moment
@@ -50,7 +50,7 @@ def message_update_job(context, session):
                     # Schedule an update after the RetryAfter timeout + 1 second buffer
                     update.next_update = now + timedelta(seconds=int(e.retry_after) + 1)
                     try:
-                        session.flush()
+                        session.commit()
                     except StaleDataError:
                         # The update has already been handled somewhere else
                         session.rollback()
@@ -88,7 +88,7 @@ def delete_polls(context, session):
                 delete_poll(session, context, poll)
             elif poll.delete == PollDeletionMode.WITH_MESSAGES.name:
                 delete_poll(session, context, poll, True)
-            session.flush()
+            session.commit()
 
     except Exception as e:
         sentry.capture_job_exception(e)
@@ -139,7 +139,7 @@ def send_notifications(context, session):
             send_notifications_for_poll(context, session, poll, "notification.closed")
             for notification in poll.notifications:
                 session.delete(notification)
-            session.flush()
+            session.commit()
 
 
 def send_notifications_for_poll(context, session, poll, message_key):
