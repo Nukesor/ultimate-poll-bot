@@ -104,7 +104,7 @@ def send_updates(session, bot, poll):
 
 def try_update_reference(session, bot, poll, reference, first_try=False):
     try:
-        update_reference(session, bot, poll, reference, first_try=True)
+        update_reference(session, bot, poll, reference, first_try)
     except RetryAfter as e:
         session.rollback()
         # Handle a flood control exception on initial reference update.
@@ -117,6 +117,10 @@ def try_update_reference(session, bot, poll, reference, first_try=False):
         except IntegrityError:
             # There's already a scheduled update for this poll.
             session.rollback()
+
+    except IntegrityError:
+        # There's already a scheduled update for this poll.
+        session.rollback()
 
 
 def update_reference(session, bot, poll, reference, first_try=False):

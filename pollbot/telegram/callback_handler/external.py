@@ -111,4 +111,4 @@ def update_shared(session, context, poll):
         session.add(reference)
         session.flush()
 
-    try_update_reference(session, context.bot, poll, reference, first_try=True)
+    try_update_reference(session, context.bot, poll, reference)
