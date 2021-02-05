@@ -54,6 +54,7 @@ def get_poll_text_and_summarize(session, poll):
     # Print a debug text
     if len(text) > 4000:
         text = i18n.t("misc.too_long", locale=poll.locale)
+        poll.permanently_summarized = True
 
     return text, summarize
 
