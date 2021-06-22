@@ -68,3 +68,4 @@ target/
 # Repository kram
 pollbot.db
 /.idea
+*.sqlite3
