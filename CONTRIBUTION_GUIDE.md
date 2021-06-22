@@ -58,10 +58,8 @@ Thereby, this won't be added to the main project.
 
 ## display
 
-This module is all about creating and formatting text.
-
-This includes various interfaces, such as settings, styling, etc. as well as the full logic for compiling poll texts.
-
+This module is all about creating and formatting text. \
+This includes various interfaces, such as settings, styling, etc. as well as the full logic for compiling poll texts. \
 The stuff for compiling poll texts is contained in it's own submodule `display.poll`.
 
 ## helper
@@ -70,7 +68,7 @@ In here you can find a lot of small helper functions.
 These include:
 
 - Statistics
-- Stuff i didn't know where else to put this
+- I didn't know where else to put this stuff
 
 ## models
 
@@ -96,7 +94,7 @@ This includes:
 Now we're getting to the juicy part.
 
 - `inline_query.py` Everything that happens when an inline query with `@ultimate_pollbot word` is fired.
-- `inline_result_handler.py` Everything that happens somebody selects a result from an inline query.
+- `inline_result_handler.py` Everything that happens once somebody selects a result from an inline query response.
 - `session.py` Wrappers for all telegram calls. Take a look at the _Session helper_ section for more information.
 
 ### job.py
@@ -177,7 +175,7 @@ Take a look at `telegram.session`.
 
 In here you can find convenience helper that are used around **EVERY** Telegram handler.
 
-They do this stuff:
+Their job is to do this:
 
 - User initialization
 - Database session initialization
