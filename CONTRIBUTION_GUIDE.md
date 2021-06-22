@@ -30,7 +30,7 @@ It can also be used to auto-generate migrations, which is possible due to SQLAlc
 
 There are a few Postgres-only features used in this project.
 It may be possible to use it in combination with another database, but a few important features and safe-guards would be lost in the progress.
-Thereby, this won't be added to the main project, please create a spite-fork for this.
+Thereby, this won't be added to the main project.
 
 # Top level structure:
 
