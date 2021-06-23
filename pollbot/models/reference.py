@@ -1,4 +1,6 @@
 """The sqlalchemy model for a polloption."""
+from __future__ import annotations
+
 from sqlalchemy import Column, ForeignKey, Index, func
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import BigInteger, DateTime, Integer, String

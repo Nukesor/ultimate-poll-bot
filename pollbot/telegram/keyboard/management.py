@@ -1,13 +1,18 @@
 """Reply keyboards."""
+from typing import List
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
+from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
 
 from pollbot.config import config
 from pollbot.enums import CallbackResult, CallbackType, StartAction
 from pollbot.i18n import i18n
+from pollbot.models.poll import Poll
 from pollbot.telegram.keyboard.helper import get_start_button_payload
 
 
-def get_back_to_management_button(poll):
+def get_back_to_management_button(poll: Poll) -> InlineKeyboardButton:
     """Get the back to management menu button for management sub menus."""
     locale = poll.user.locale
     payload = (
@@ -18,7 +23,7 @@ def get_back_to_management_button(poll):
     )
 
 
-def get_management_keyboard(poll):
+def get_management_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get the management keyboard for this poll."""
     locale = poll.user.locale
     delete_payload = f"{CallbackType.menu_delete.value}:{poll.id}:0"
@@ -120,7 +125,7 @@ def get_management_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_close_confirmation(poll):
+def get_close_confirmation(poll: Poll) -> InlineKeyboardMarkup:
     """Get the confirmation keyboard for closing of a poll."""
     payload = f"{CallbackType.close.value}:{poll.id}:0"
     locale = poll.user.locale
@@ -136,7 +141,7 @@ def get_close_confirmation(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_deletion_confirmation(poll):
+def get_deletion_confirmation(poll: Poll) -> InlineKeyboardMarkup:
     """Get the confirmation keyboard for poll deletion."""
     delete_payload = f"{CallbackType.delete.value}:{poll.id}:0"
     delete_all_payload = f"{CallbackType.delete_poll_with_messages.value}:{poll.id}:0"
@@ -159,7 +164,9 @@ def get_deletion_confirmation(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_poll_list_keyboard(polls, closed, offset, poll_count):
+def get_poll_list_keyboard(
+    polls: List[Poll], closed: bool, offset: int, poll_count: int
+) -> InlineKeyboardMarkup:
     """Get the confirmation keyboard for poll deletion."""
     buttons = []
     for poll in polls:

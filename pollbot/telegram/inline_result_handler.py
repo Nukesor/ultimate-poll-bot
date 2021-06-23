@@ -3,19 +3,25 @@ from datetime import datetime, timedelta
 
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import DataError, IntegrityError
-from telegram.ext import run_async
+from sqlalchemy.orm.scoping import scoped_session
+from telegram.bot import Bot
 from telegram.error import RetryAfter
+from telegram.ext import run_async
+from telegram.update import Update
 
 from pollbot.enums import ReferenceType
 from pollbot.helper.stats import increase_user_stat
 from pollbot.models import Poll, Reference, Update
+from pollbot.models.user import User
 from pollbot.poll.update import try_update_reference
 from pollbot.telegram.session import inline_result_wrapper
 
 
 @run_async
 @inline_result_wrapper
-def handle_chosen_inline_result(bot, update, session, user):
+def handle_chosen_inline_result(
+    bot: Bot, update: Update, session: scoped_session, user: User
+) -> None:
     """Save the chosen inline result."""
     result = update.chosen_inline_result
     poll_id = result.result_id

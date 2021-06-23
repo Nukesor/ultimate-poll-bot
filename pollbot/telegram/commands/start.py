@@ -2,30 +2,34 @@
 import time
 from uuid import UUID
 
+from sqlalchemy.orm.scoping import scoped_session
+from telegram.bot import Bot
+from telegram.ext import run_async
+from telegram.update import Update
+
 from pollbot.config import config
 from pollbot.display.poll.compilation import (
     compile_poll_text,
     get_poll_text_and_vote_keyboard,
 )
-from pollbot.config import config
 from pollbot.enums import ExpectedInput, ReferenceType, StartAction
 from pollbot.helper.stats import increase_stat
 from pollbot.helper.text import split_text
 from pollbot.i18n import i18n
 from pollbot.models import Poll, Reference
-from pollbot.telegram.keyboard.user import get_main_keyboard
+from pollbot.models.user import User
 from pollbot.poll.vote import init_votes
 from pollbot.telegram.keyboard.external import (
     get_external_add_option_keyboard,
     get_external_share_keyboard,
 )
+from pollbot.telegram.keyboard.user import get_main_keyboard
 from pollbot.telegram.session import message_wrapper
-from telegram.ext import run_async
 
 
 @run_async
 @message_wrapper()
-def start(bot, update, session, user):
+def start(bot: Bot, update: Update, session: scoped_session, user: User) -> None:
     """Send a start text."""
     # Truncate the /start command
     text = update.message.text[6:].strip()

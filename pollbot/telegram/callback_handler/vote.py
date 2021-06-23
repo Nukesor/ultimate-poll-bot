@@ -1,17 +1,25 @@
 """Callback functions needed during creation of a Poll."""
+from typing import Optional
+
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError, OperationalError
-from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError, NoResultFound
+from sqlalchemy.orm.exc import NoResultFound, ObjectDeletedError, StaleDataError
+from sqlalchemy.orm.scoping import scoped_session
 
 from pollbot.enums import CallbackResult, PollType
 from pollbot.helper.stats import increase_stat
 from pollbot.i18n import i18n
 from pollbot.models import Vote
+from pollbot.models.option import Option
+from pollbot.models.poll import Poll
 from pollbot.poll.helper import poll_allows_cumulative_votes
 from pollbot.poll.update import update_poll_messages
+from pollbot.telegram.callback_handler.context import CallbackContext
 
 
-def handle_vote(session, context, option):
+def handle_vote(
+    session: scoped_session, context: CallbackContext, option: Option
+) -> None:
     """Handle any clicks on vote buttons."""
     # Remove the poll, in case it got deleted, but we didn't manage to kill all references
     if option is None:
@@ -95,7 +103,14 @@ def handle_vote(session, context, option):
     session.commit()
 
 
-def respond_to_vote(session, line, context, poll, remaining_votes=None, limited=False):
+def respond_to_vote(
+    session: scoped_session,
+    line: str,
+    context: CallbackContext,
+    poll: Poll,
+    remaining_votes: Optional[int] = None,
+    limited: bool = False,
+) -> None:
     """Get the formatted response for a user."""
     locale = poll.locale
     votes = (
@@ -126,7 +141,9 @@ def respond_to_vote(session, line, context, poll, remaining_votes=None, limited=
     context.query.answer(message)
 
 
-def handle_single_vote(session, context, option):
+def handle_single_vote(
+    session: scoped_session, context: CallbackContext, option: Option
+) -> bool:
     """Handle a single vote."""
     locale = option.poll.locale
     existing_vote = (
@@ -158,7 +175,9 @@ def handle_single_vote(session, context, option):
     return True
 
 
-def handle_block_vote(session, context, option):
+def handle_block_vote(
+    session: scoped_session, context: CallbackContext, option: Option
+) -> bool:
     """Handle a block vote."""
     locale = option.poll.locale
     existing_vote = (
@@ -184,7 +203,9 @@ def handle_block_vote(session, context, option):
     return True
 
 
-def handle_limited_vote(session, context, option):
+def handle_limited_vote(
+    session: scoped_session, context: CallbackContext, option: Option
+) -> bool:
     """Handle a limited vote."""
     locale = option.poll.locale
     existing_vote = (
@@ -231,7 +252,12 @@ def handle_limited_vote(session, context, option):
     return True
 
 
-def handle_cumulative_vote(session, context, option, limited=True):
+def handle_cumulative_vote(
+    session: scoped_session,
+    context: CallbackContext,
+    option: Option,
+    limited: bool = True,
+) -> bool:
     """Handle a cumulative vote."""
     locale = option.poll.locale
     existing_vote = (
@@ -307,7 +333,9 @@ def handle_cumulative_vote(session, context, option, limited=True):
     return True
 
 
-def handle_doodle_vote(session, context, option):
+def handle_doodle_vote(
+    session: scoped_session, context: CallbackContext, option: Option
+) -> bool:
     """Handle a doodle vote."""
     locale = option.poll.locale
     vote = (
@@ -317,7 +345,7 @@ def handle_doodle_vote(session, context, option):
         .one_or_none()
     )
 
-    if context.callback_result.name is None:
+    if context.callback_result is None:
         raise Exception("Unknown callback result")
 
     # Remove vote
@@ -341,7 +369,9 @@ def handle_doodle_vote(session, context, option):
     return True
 
 
-def handle_priority_vote(session, context, option):
+def handle_priority_vote(
+    session: scoped_session, context: CallbackContext, option: Option
+) -> bool:
     """Handle a priority vote"""
     vote = (
         session.query(Vote)
@@ -354,7 +384,7 @@ def handle_priority_vote(session, context, option):
     # allow next vote to take this vote's place
     vote.priority = -1
 
-    if context.callback_result.name is None:
+    if context.callback_result is None:
         raise Exception("Unknown callback result")
 
     if context.callback_result.name == CallbackResult.increase_priority.name:

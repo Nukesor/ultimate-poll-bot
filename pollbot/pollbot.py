@@ -1,6 +1,16 @@
 """A bot which checks if there is a new record in the server section of hetzner."""
 import logging
 
+from telegram.ext import (
+    CallbackQueryHandler,
+    ChosenInlineResultHandler,
+    CommandHandler,
+    Filters,
+    InlineQueryHandler,
+    MessageHandler,
+    Updater,
+)
+
 from pollbot.config import config
 from pollbot.telegram.callback_handler import (
     handle_async_callback_query,
@@ -27,24 +37,15 @@ from pollbot.telegram.inline_result_handler import handle_chosen_inline_result
 from pollbot.telegram.job import (
     cleanup,
     create_daily_stats,
+    delete_polls,
     message_update_job,
     perma_ban_checker,
     send_notifications,
-    delete_polls,
 )
 from pollbot.telegram.message_handler import handle_private_text
 from pollbot.telegram.native_poll_handler import (
     create_from_native_poll,
     send_error_quiz_unsupported,
-)
-from telegram.ext import (
-    CallbackQueryHandler,
-    ChosenInlineResultHandler,
-    CommandHandler,
-    Filters,
-    InlineQueryHandler,
-    MessageHandler,
-    Updater,
 )
 
 logging.basicConfig(

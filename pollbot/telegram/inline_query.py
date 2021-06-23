@@ -2,24 +2,28 @@
 import uuid
 
 from sqlalchemy import or_
-
-from pollbot.config import config
-from pollbot.enums import ReferenceType, CallbackType
-from pollbot.i18n import i18n
-from pollbot.models import Poll
-from pollbot.telegram.session import inline_query_wrapper
+from sqlalchemy.orm.scoping import scoped_session
 from telegram import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     InlineQueryResultArticle,
     InputTextMessageContent,
 )
+from telegram.bot import Bot
 from telegram.ext import run_async
+from telegram.update import Update
+
+from pollbot.config import config
+from pollbot.enums import CallbackType, ReferenceType
+from pollbot.i18n import i18n
+from pollbot.models import Poll
+from pollbot.models.user import User
+from pollbot.telegram.session import inline_query_wrapper
 
 
 @run_async
 @inline_query_wrapper
-def search(bot, update, session, user):
+def search(bot: Bot, update: Update, session: scoped_session, user: User) -> None:
     """Handle inline queries for sticker search."""
     query = update.inline_query.query.strip()
 

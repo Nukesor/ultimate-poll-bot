@@ -1,10 +1,14 @@
 """User related keyboards."""
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
+from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
+
 from pollbot.enums import CallbackType
 from pollbot.i18n import i18n, supported_languages
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from pollbot.models.user import User
 
 
-def get_back_to_menu_button(user):
+def get_back_to_menu_button(user: User) -> InlineKeyboardButton:
     """Get the back to options menu button for option sub menus."""
     payload = f"{CallbackType.user_menu.value}:0:0"
     return InlineKeyboardButton(
@@ -12,7 +16,7 @@ def get_back_to_menu_button(user):
     )
 
 
-def get_back_to_settings_button(user):
+def get_back_to_settings_button(user: User) -> InlineKeyboardButton:
     """Get the back to options settings button for settings sub menus."""
     payload = f"{CallbackType.user_settings.value}:0:0"
     return InlineKeyboardButton(
@@ -20,7 +24,7 @@ def get_back_to_settings_button(user):
     )
 
 
-def get_main_keyboard(user):
+def get_main_keyboard(user: User) -> InlineKeyboardMarkup:
     """User settings keyboard."""
     buttons = [
         [
@@ -102,7 +106,7 @@ def get_admin_settings_keyboard(user):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_user_settings_keyboard(user):
+def get_user_settings_keyboard(user: User) -> InlineKeyboardMarkup:
     """Keyboard for admin operations."""
     if user.notifications_enabled:
         notification_text = i18n.t("keyboard.user.disable_notifications")
@@ -146,7 +150,7 @@ def get_user_settings_keyboard(user):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_user_language_keyboard(user):
+def get_user_language_keyboard(user: User) -> InlineKeyboardMarkup:
     """Get user language picker keyboard."""
     buttons = []
     # Compile the possible options for user sorting
@@ -162,7 +166,9 @@ def get_user_language_keyboard(user):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_delete_all_confirmation_keyboard(user, closed=False):
+def get_delete_all_confirmation_keyboard(
+    user: User, closed: bool = False
+) -> InlineKeyboardMarkup:
     """Get the confirmation keyboard for deleting all (closed) polls."""
     locale = user.locale
     if closed:
@@ -179,7 +185,7 @@ def get_delete_all_confirmation_keyboard(user, closed=False):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_delete_user_confirmation_keyboard(user):
+def get_delete_user_confirmation_keyboard(user: User) -> InlineKeyboardMarkup:
     """Get the second confirmation keyboard for deleting all information about the user."""
     text = i18n.t("keyboard.user.delete_me", locale=user.locale)
     payload = f"{CallbackType.user_delete_confirmation.value}:0:0"

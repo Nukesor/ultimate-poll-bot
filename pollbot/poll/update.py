@@ -1,21 +1,32 @@
 """Update or delete poll messages."""
 from datetime import datetime, timedelta
+from typing import Optional
 
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import ObjectDeletedError
+from sqlalchemy.orm.scoping import scoped_session
+from telegram.bot import Bot
 from telegram.error import BadRequest, RetryAfter, TimedOut, Unauthorized
 
-from pollbot.sentry import sentry
 from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
 from pollbot.enums import ExpectedInput, ReferenceType
 from pollbot.models import Reference, Update
+from pollbot.models.poll import Poll
+from pollbot.models.reference import Reference
+from pollbot.models.user import User
+from pollbot.sentry import sentry
 from pollbot.telegram.keyboard.management import get_management_keyboard
 
 
 def update_poll_messages(
-    session, bot, poll, message_id=None, user=None, inline_message_id=None
-):
+    session: scoped_session,
+    bot: Bot,
+    poll: Poll,
+    message_id: Optional[int] = None,
+    user: Optional[User] = None,
+    inline_message_id: Optional[str] = None,
+) -> None:
     """Logic for handling updates.
 
     The message the original call has been made from will be updated instantly.
@@ -96,13 +107,19 @@ def update_poll_messages(
             pass
 
 
-def send_updates(session, bot, poll):
+def send_updates(session: scoped_session, bot: Bot, poll: Poll) -> None:
     """Actually update all messages."""
     for reference in poll.references:
         update_reference(session, bot, poll, reference)
 
 
-def try_update_reference(session, bot, poll, reference, first_try=False):
+def try_update_reference(
+    session: scoped_session,
+    bot: Bot,
+    poll: Poll,
+    reference: Reference,
+    first_try: bool = False,
+) -> None:
     try:
         update_reference(session, bot, poll, reference, first_try)
     except RetryAfter as e:
@@ -123,7 +140,13 @@ def try_update_reference(session, bot, poll, reference, first_try=False):
         session.rollback()
 
 
-def update_reference(session, bot, poll, reference, first_try=False):
+def update_reference(
+    session: scoped_session,
+    bot: Bot,
+    poll: Poll,
+    reference: Reference,
+    first_try: bool = False,
+) -> None:
     try:
         # Admin poll management interface
         if reference.type == ReferenceType.admin.name and not poll.in_settings:

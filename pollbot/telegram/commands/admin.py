@@ -2,18 +2,25 @@
 import time
 from datetime import datetime, timedelta
 
-from pollbot.decorators import admin_required
-from pollbot.models import User
-from pollbot.telegram.session import message_wrapper
+from sqlalchemy.orm.scoping import scoped_session
 from telegram import ReplyKeyboardRemove
+from telegram.bot import Bot
 from telegram.error import BadRequest, Unauthorized
 from telegram.ext import run_async
+from telegram.update import Update
+
+from pollbot.decorators import admin_required
+from pollbot.models import User
+from pollbot.models.user import User
+from pollbot.telegram.session import message_wrapper
 
 
 @run_async
 @message_wrapper()
 @admin_required
-def reset_broadcast(bot, update, session, user):
+def reset_broadcast(
+    bot: Bot, update: Update, session: scoped_session, user: User
+) -> str:
     """Reset the broadcast_sent flag for all users."""
     session.query(User).update({"broadcast_sent": False})
     session.commit()
@@ -33,7 +40,8 @@ def remaining_time(total, current, start):
 @run_async
 @message_wrapper()
 @admin_required
-def broadcast(bot, update, session, user):
+def broadcast(bot: Bot, update: Update, session: scoped_session, user: User) -> None:
+
     """Broadcast a message to all users."""
     chat = update.message.chat
     message = update.message.text.split(" ", 1)[1].strip()
@@ -108,7 +116,10 @@ def broadcast(bot, update, session, user):
 @run_async
 @message_wrapper()
 @admin_required
-def test_broadcast(bot, update, session, user):
+def test_broadcast(
+    bot: Bot, update: Update, session: scoped_session, user: User
+) -> None:
+
     """Send the broadcast message to the admin for test purposes."""
     message = update.message.text.split(" ", 1)[1].strip()
 

@@ -1,12 +1,16 @@
 """Reply keyboards."""
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
+from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
+
 from pollbot.enums import CallbackResult, CallbackType
 from pollbot.i18n import i18n, supported_languages
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from pollbot.models.poll import Poll
 
 from .management import get_back_to_management_button
 
 
-def get_back_to_settings_button(poll):
+def get_back_to_settings_button(poll: Poll) -> InlineKeyboardButton:
     """Get the back to options menu button for option sub menus."""
     locale = poll.user.locale
     payload = (
@@ -17,7 +21,7 @@ def get_back_to_settings_button(poll):
     )
 
 
-def get_anonymization_confirmation_keyboard(poll):
+def get_anonymization_confirmation_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get the confirmation keyboard for poll deletion."""
     locale = poll.user.locale
     payload = f"{CallbackType.settings_anonymization.value}:{poll.id}:0"
@@ -33,7 +37,7 @@ def get_anonymization_confirmation_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_settings_keyboard(poll):
+def get_settings_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get the options menu for this poll."""
     buttons = []
     locale = poll.user.locale
@@ -120,7 +124,7 @@ def get_settings_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_remove_option_keyboard(poll):
+def get_remove_option_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get a keyboard for removing options."""
     buttons = []
     for option in poll.options:
@@ -139,7 +143,7 @@ def get_remove_option_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_add_option_keyboard(poll):
+def get_add_option_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get the keyboard for adding a new option after poll creation."""
     locale = poll.user.locale
     datepicker_payload = (
@@ -160,7 +164,7 @@ def get_add_option_keyboard(poll):
     return keyboard
 
 
-def get_settings_language_keyboard(poll):
+def get_settings_language_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get a keyboard for sorting options."""
     buttons = []
     # Compile the possible options for user sorting

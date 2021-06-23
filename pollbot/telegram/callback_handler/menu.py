@@ -1,4 +1,8 @@
 """Callback functions needed during creation of a Poll."""
+from typing import Optional
+
+from sqlalchemy.orm.scoping import scoped_session
+
 from pollbot.decorators import poll_required
 from pollbot.display import get_settings_text
 from pollbot.display.poll.compilation import (
@@ -8,19 +12,21 @@ from pollbot.display.poll.compilation import (
 from pollbot.enums import CallbackResult, ExpectedInput, ReferenceType
 from pollbot.i18n import i18n
 from pollbot.models import Reference
-from pollbot.poll.vote import init_votes
+from pollbot.models.poll import Poll
 from pollbot.poll.helper import remove_old_references
+from pollbot.poll.vote import init_votes
+from pollbot.telegram.callback_handler.context import CallbackContext
 from pollbot.telegram.keyboard.management import (
     get_close_confirmation,
     get_deletion_confirmation,
     get_management_keyboard,
 )
 from pollbot.telegram.keyboard.settings import get_settings_keyboard
-from sqlalchemy.exc import IntegrityError
 
 
 @poll_required
-def go_back(session, context, poll):
+def go_back(session: scoped_session, context: CallbackContext, poll: Poll) -> None:
+
     """Go back to the original step."""
     if context.callback_result == CallbackResult.main_menu:
         text = get_poll_text(session, poll)
@@ -30,6 +36,8 @@ def go_back(session, context, poll):
     elif context.callback_result == CallbackResult.settings:
         text = get_settings_text(poll)
         keyboard = get_settings_keyboard(poll)
+    else:
+        raise Exception(f"Got unknown callback result {context.callback_result}")
 
     context.query.message.edit_text(
         text,
@@ -43,7 +51,9 @@ def go_back(session, context, poll):
 
 
 @poll_required
-def show_vote_menu(session, context, poll):
+def show_vote_menu(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Show the vote keyboard in the management interface."""
     if poll.is_priority():
         init_votes(session, poll, context.user)
@@ -63,7 +73,7 @@ def show_vote_menu(session, context, poll):
 
 
 @poll_required
-def show_settings(session, context, poll):
+def show_settings(_: scoped_session, context: CallbackContext, poll: Poll) -> None:
     """Show the settings tab."""
     text = get_settings_text(poll)
     keyboard = get_settings_keyboard(poll)
@@ -77,7 +87,9 @@ def show_settings(session, context, poll):
 
 
 @poll_required
-def show_deletion_confirmation(session, context, poll):
+def show_deletion_confirmation(
+    _: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Show the delete confirmation message."""
     context.query.message.edit_text(
         i18n.t("management.delete", locale=poll.user.locale),
@@ -86,7 +98,9 @@ def show_deletion_confirmation(session, context, poll):
 
 
 @poll_required
-def show_close_confirmation(session, context, poll):
+def show_close_confirmation(
+    _: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Show the permanent close confirmation message."""
     context.query.message.edit_text(
         i18n.t("management.permanently_close", locale=poll.user.locale),
@@ -95,7 +109,7 @@ def show_close_confirmation(session, context, poll):
 
 
 @poll_required
-def show_menu(session, context, poll):
+def show_menu(session: scoped_session, context: CallbackContext, poll: Poll) -> None:
     """Replace the current message with the main poll menu."""
     message = context.query.message
     message.edit_text(

@@ -1,12 +1,18 @@
 """Poll text compilation for options."""
 import math
-from typing import List
+from typing import Any, List, Union
 
+from sqlalchemy.orm.scoping import scoped_session
+from telegram.chat import Chat
+
+from pollbot.display.poll import Context
 from pollbot.display.poll.indices import get_option_indices
-from pollbot.enums import PollType, ExpectedInput
+from pollbot.enums import ExpectedInput, PollType
 from pollbot.exceptions import RollbackException
 from pollbot.i18n import i18n
 from pollbot.models import Poll
+from pollbot.models.option import Option
+from pollbot.models.poll import Poll
 from pollbot.poll.helper import poll_allows_cumulative_votes
 from pollbot.poll.option import calculate_percentage, get_sorted_options
 from pollbot.telegram.keyboard.creation import get_options_entered_keyboard
@@ -14,7 +20,7 @@ from pollbot.telegram.keyboard.creation import get_options_entered_keyboard
 from .vote import get_doodle_vote_lines, get_vote_lines
 
 
-def next_option(tg_chat, poll: Poll, added_options: List[str]):
+def next_option(tg_chat: Chat, poll: Poll, added_options: List[str]) -> None:
     """Send the options message during the creation.
 
     This function also has a failsafe in it, that rollbacks the entire transaction,
@@ -41,7 +47,9 @@ def next_option(tg_chat, poll: Poll, added_options: List[str]):
     tg_chat.send_message(text, reply_markup=keyboard, parse_mode="Markdown")
 
 
-def get_option_information(session, poll, context, summarize):
+def get_option_information(
+    session: scoped_session, poll: Poll, context: Context, summarize: bool
+) -> List[Union[Any, str]]:
     """Compile all information about a poll option."""
     lines = []
     # Sort the options accordingly to the polls settings
@@ -73,7 +81,7 @@ def get_option_information(session, poll, context, summarize):
     return lines
 
 
-def get_option_line(session, option, index):
+def get_option_line(session: scoped_session, option: Option, index: int) -> str:
     """Get the line with vote count for this option."""
     # Special formating for polls with European date format
     option_name = option.get_formatted_name()
@@ -98,7 +106,7 @@ def get_option_line(session, option, index):
         return f"┌ {prefix}*{option_name}*"
 
 
-def get_percentage_line(option, context):
+def get_percentage_line(option: Option, context: Context) -> str:
     """Get the percentage line for each option."""
 
     poll = option.poll

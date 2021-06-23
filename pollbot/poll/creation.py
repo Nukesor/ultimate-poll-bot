@@ -1,4 +1,10 @@
 """Poll creation helper."""
+from typing import Optional
+
+from sqlalchemy.orm.scoping import scoped_session
+from telegram.chat import Chat
+from telegram.message import Message
+
 from pollbot.config import config
 from pollbot.display.creation import get_init_text
 from pollbot.display.poll.compilation import get_poll_text
@@ -6,6 +12,8 @@ from pollbot.enums import ReferenceType
 from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.i18n import i18n
 from pollbot.models import Poll, Reference
+from pollbot.models.poll import Poll
+from pollbot.models.user import User
 from pollbot.telegram.keyboard.creation import (
     get_cancel_creation_keyboard,
     get_init_keyboard,
@@ -13,7 +21,7 @@ from pollbot.telegram.keyboard.creation import (
 from pollbot.telegram.keyboard.management import get_management_keyboard
 
 
-def initialize_poll(session, user, chat):
+def initialize_poll(session: scoped_session, user: User, chat: Chat) -> None:
     """Initialize a new poll and send the user the poll creation message.
 
     This function also prevents users from:
@@ -50,7 +58,13 @@ def initialize_poll(session, user, chat):
     )
 
 
-def create_poll(session, poll, user, chat, message=None):
+def create_poll(
+    session: scoped_session,
+    poll: Poll,
+    user: User,
+    chat: Chat,
+    message: Optional[Message] = None,
+) -> None:
     """Finish the poll creation."""
     poll.created = True
     user.expected_input = None

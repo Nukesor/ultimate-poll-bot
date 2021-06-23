@@ -1,10 +1,14 @@
 """User related callback handler."""
+from sqlalchemy.orm.scoping import scoped_session
+
 from pollbot.display.misc import get_help_text_and_keyboard, get_poll_list
 from pollbot.display.settings import get_user_settings_text
-from pollbot.i18n import i18n
 from pollbot.enums import PollDeletionMode
+from pollbot.i18n import i18n
 from pollbot.poll.creation import initialize_poll
 from pollbot.poll.update import update_poll_messages
+from pollbot.telegram.callback_handler.context import CallbackContext
+from pollbot.telegram.keyboard.misc import get_donations_keyboard
 from pollbot.telegram.keyboard.user import (
     get_delete_all_confirmation_keyboard,
     get_delete_user_final_confirmation_keyboard,
@@ -12,10 +16,9 @@ from pollbot.telegram.keyboard.user import (
     get_user_language_keyboard,
     get_user_settings_keyboard,
 )
-from pollbot.telegram.keyboard.misc import get_donations_keyboard
 
 
-def open_main_menu(session, context):
+def open_main_menu(_: scoped_session, context: CallbackContext) -> None:
     """Open the main menu."""
     keyboard = get_main_keyboard(context.user)
     context.query.message.edit_text(
@@ -26,14 +29,14 @@ def open_main_menu(session, context):
     )
 
 
-def open_user_settings(session, context):
+def open_user_settings(_: scoped_session, context: CallbackContext) -> None:
     """Open the user settings."""
     keyboard = get_user_settings_keyboard(context.user)
     text = get_user_settings_text(context.user)
     context.query.message.edit_text(text, reply_markup=keyboard, parse_mode="Markdown")
 
 
-def open_language_menu(session, context):
+def open_language_menu(_: scoped_session, context: CallbackContext) -> None:
     """Open the user language selection menu."""
     keyboard = get_user_language_keyboard(context.user)
     context.query.message.edit_text(
@@ -43,25 +46,27 @@ def open_language_menu(session, context):
     )
 
 
-def list_polls(session, context):
+def list_polls(session: scoped_session, context: CallbackContext) -> None:
     """List all open polls of a user."""
     text, keyboard = get_poll_list(session, context.user, 0)
     context.query.message.chat.send_message(text, reply_markup=keyboard)
 
 
-def list_closed_polls(session, context):
+def list_closed_polls(session: scoped_session, context: CallbackContext) -> None:
     """List all open polls of a user."""
     text, keyboard = get_poll_list(session, context.user, 0, closed=True)
     context.query.message.chat.send_message(text, reply_markup=keyboard)
 
 
-def list_polls_navigation(session, context):
+def list_polls_navigation(session: scoped_session, context: CallbackContext) -> None:
     """List all open polls of a user."""
     text, keyboard = get_poll_list(session, context.user, int(context.payload))
     context.query.message.edit_text(text, reply_markup=keyboard)
 
 
-def list_closed_polls_navigation(session, context):
+def list_closed_polls_navigation(
+    session: scoped_session, context: CallbackContext
+) -> None:
     """List all open polls of a user."""
     text, keyboard = get_poll_list(
         session, context.user, int(context.payload), closed=True
@@ -69,7 +74,7 @@ def list_closed_polls_navigation(session, context):
     context.query.message.edit_text(text, reply_markup=keyboard)
 
 
-def open_donation(session, context):
+def open_donation(_: scoped_session, context: CallbackContext) -> None:
     """Open the donations text."""
     context.query.message.edit_text(
         i18n.t("misc.donation", locale=context.user.locale),
@@ -78,7 +83,7 @@ def open_donation(session, context):
     )
 
 
-def open_help(session, context):
+def open_help(_: scoped_session, context: CallbackContext) -> None:
     """Open the donations text."""
     text, keyboard = get_help_text_and_keyboard(context.user, "intro")
     context.query.message.edit_text(
@@ -89,7 +94,7 @@ def open_help(session, context):
     )
 
 
-def init_poll(session, context):
+def init_poll(session: scoped_session, context: CallbackContext) -> None:
     """Start the creation of a new poll."""
     user = context.user
     chat = context.query.message.chat
@@ -97,7 +102,7 @@ def init_poll(session, context):
     initialize_poll(session, user, chat)
 
 
-def toggle_notification(session, context):
+def toggle_notification(session: scoped_session, context: CallbackContext) -> None:
     """Toggle the notification settings of the user."""
     user = context.user
     user.notifications_enabled = not user.notifications_enabled
@@ -105,7 +110,7 @@ def toggle_notification(session, context):
     open_user_settings(session, context)
 
 
-def change_user_language(session, context):
+def change_user_language(session: scoped_session, context: CallbackContext) -> str:
     """Open the language picker."""
     context.user.locale = context.action
     session.commit()
@@ -113,7 +118,7 @@ def change_user_language(session, context):
     return i18n.t("user.language_changed", locale=context.user.locale)
 
 
-def delete_all_confirmation(session, context):
+def delete_all_confirmation(_: scoped_session, context: CallbackContext) -> None:
     keyboard = get_delete_all_confirmation_keyboard(context.user)
     context.query.message.edit_text(
         i18n.t("settings.user.delete_all_confirmation", locale=context.user.locale),
@@ -122,7 +127,7 @@ def delete_all_confirmation(session, context):
     )
 
 
-def delete_closed_confirmation(session, context):
+def delete_closed_confirmation(_: scoped_session, context: CallbackContext) -> None:
     keyboard = get_delete_all_confirmation_keyboard(context.user, closed=True)
     context.query.message.edit_text(
         i18n.t("settings.user.delete_closed_confirmation", locale=context.user.locale),
@@ -131,7 +136,7 @@ def delete_closed_confirmation(session, context):
     )
 
 
-def delete_all(session, context):
+def delete_all(session: scoped_session, context: CallbackContext) -> str:
     """Delete all polls of the user."""
     for poll in context.user.polls:
         if poll.delete is None:
@@ -142,7 +147,7 @@ def delete_all(session, context):
     return i18n.t("deleted.polls", locale=context.user.locale)
 
 
-def delete_closed(session, context):
+def delete_closed(session: scoped_session, context: CallbackContext) -> str:
     """Delete all closed polls of the user."""
     for poll in context.user.polls:
         if poll.delete is None:
@@ -153,7 +158,9 @@ def delete_closed(session, context):
     return i18n.t("deleted.closed_polls", locale=context.user.locale)
 
 
-def delete_user_second_confirmation(session, context):
+def delete_user_second_confirmation(
+    _: scoped_session, context: CallbackContext
+) -> None:
     """Delete everything of a user and ban them forever."""
     user = context.user
     context.query.message.edit_text(
@@ -163,7 +170,7 @@ def delete_user_second_confirmation(session, context):
     )
 
 
-def delete_user(session, context):
+def delete_user(session: scoped_session, context: CallbackContext) -> None:
     """Delete everything of a user and ban them forever."""
     user = context.user
 

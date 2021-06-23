@@ -2,182 +2,184 @@
 import traceback
 from datetime import date, datetime, timedelta
 from functools import wraps
-from typing import Any, Callable
+from typing import Any, Callable, Optional, Tuple, Union
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
+from sqlalchemy.orm.scoping import scoped_session
+from telegram import Bot, Update
+from telegram.error import BadRequest, NetworkError, RetryAfter, TimedOut, Unauthorized
+from telegram.ext import CallbackContext
+from telegram.ext.callbackcontext import CallbackContext
+from telegram.user import User
 
 from pollbot.config import config
 from pollbot.db import get_session
 from pollbot.exceptions import RollbackException
+from pollbot.helper import remove_markdown_characters
 from pollbot.helper.stats import increase_stat
 from pollbot.i18n import i18n
 from pollbot.models import User, UserStatistic
-from pollbot.sentry import sentry, ignore_job_exception
-from telegram import Bot, Update
-from telegram.error import BadRequest, RetryAfter, TimedOut, Unauthorized, NetworkError
-from telegram.ext import CallbackContext
-from pollbot.helper import remove_markdown_characters
-import monkeytype
+from pollbot.models.user import User
+from pollbot.models.user_statistic import UserStatistic
+from pollbot.sentry import ignore_job_exception, sentry
 
 
-def job_wrapper(func):
+def job_wrapper(func: Callable[[CallbackContext, Session], Any]):
     """Create a session, handle permissions and exceptions for jobs."""
 
-    def wrapper(context):
-        with monkeytype.trace():
-            session = get_session()
-            try:
-                func(context, session)
+    def wrapper(context: CallbackContext):
+        session = get_session()
+        try:
+            func(context, session)
 
-                session.commit()
-            except Exception as e:
-                # Capture all exceptions from jobs.
-                # We need to handle those inside the jobs
-                if not ignore_job_exception(e):
-                    if config["logging"]["debug"]:
-                        traceback.print_exc()
-
-                    if should_report_exception(context, e):
-                        sentry.capture_exception(tags={"handler": "job"})
-
-            finally:
-                session.close()
-
-    return wrapper
-
-
-def inline_query_wrapper(func):
-    """Create a session, handle permissions and exceptions for inline queries."""
-
-    def wrapper(update, context):
-        with monkeytype.trace():
-            session = get_session()
-            try:
-                user, statistic = get_user(session, update.inline_query.from_user)
-                if user.banned:
-                    return
-
-                func(context.bot, update, session, user)
-
-                session.commit()
-            except Exception as e:
-                if not ignore_exception(e):
-                    if config["logging"]["debug"]:
-                        traceback.print_exc()
-
-                    if should_report_exception(context, e):
-                        sentry.capture_exception(tags={"handler": "inline_query"})
-
-            finally:
-                session.close()
-
-    return wrapper
-
-
-def inline_result_wrapper(func):
-    """Create a session, handle permissions and exceptions for inline results."""
-
-    def wrapper(update, context):
-        with monkeytype.trace():
-            session = get_session()
-            try:
-                user, _ = get_user(session, update.chosen_inline_result.from_user)
-                if user.banned:
-                    return
-
-                func(context.bot, update, session, user)
-
-                session.commit()
-            except Exception as e:
-                if not ignore_exception(e):
-                    if config["logging"]["debug"]:
-                        traceback.print_exc()
+            session.commit()
+        except Exception as e:
+            # Capture all exceptions from jobs.
+            # We need to handle those inside the jobs
+            if not ignore_job_exception(e):
+                if config["logging"]["debug"]:
+                    traceback.print_exc()
 
                 if should_report_exception(context, e):
-                    sentry.capture_exception(tags={"handler": "inline_query_result"})
+                    sentry.capture_exception(tags={"handler": "job"})
 
-            finally:
-                session.close()
+        finally:
+            session.close()
 
     return wrapper
 
 
-def callback_query_wrapper(func):
+def inline_query_wrapper(func: Callable[[Bot, Update, Session, User], Any]):
+    """Create a session, handle permissions and exceptions for inline queries."""
+
+    def wrapper(update: Update, context: CallbackContext):
+        session = get_session()
+        try:
+            user = get_user(session, update.inline_query.from_user)
+            if user.banned:
+                return
+
+            func(context.bot, update, session, user)
+
+            session.commit()
+        except Exception as e:
+            if not ignore_exception(e):
+                if config["logging"]["debug"]:
+                    traceback.print_exc()
+
+                if should_report_exception(context, e):
+                    sentry.capture_exception(tags={"handler": "inline_query"})
+
+        finally:
+            session.close()
+
+    return wrapper
+
+
+def inline_result_wrapper(func: Callable[[Bot, Update, Session, User], Any]):
+    """Create a session, handle permissions and exceptions for inline results."""
+
+    def wrapper(update: Update, context: CallbackContext):
+        session = get_session()
+        try:
+            user = get_user(session, update.chosen_inline_result.from_user)
+            if user.banned:
+                return
+
+            func(context.bot, update, session, user)
+
+            session.commit()
+        except Exception as e:
+            if not ignore_exception(e):
+                if config["logging"]["debug"]:
+                    traceback.print_exc()
+
+            if should_report_exception(context, e):
+                sentry.capture_exception(tags={"handler": "inline_query_result"})
+
+        finally:
+            session.close()
+
+    return wrapper
+
+
+def callback_query_wrapper(func: Callable[[Bot, Update, Session, User], Any]):
     """Create a session, handle permissions and exceptions for callback queries."""
 
-    def wrapper(update, context):
-        with monkeytype.trace():
-            user = None
-            if context.user_data.get("ban"):
-                return
+    def wrapper(update: Update, context: CallbackContext):
+        user = None
+        if context.user_data.get("ban"):
+            return
 
-            # Check if the user is temporarily banned and send a message.
-            # The check is done via the local telegram cache. This way we can prevent
-            # opening a new DB connection for each spam request. (lots of performance)
-            temp_ban_time = context.user_data.get("temporary-ban-time")
-            if temp_ban_time is not None and temp_ban_time == date.today():
-                try:
-                    update.callback_query.answer(i18n.t("callback.spam"))
-                except:
-                    pass
-                return
-
-            session = get_session()
+        # Check if the user is temporarily banned and send a message.
+        # The check is done via the local telegram cache. This way we can prevent
+        # opening a new DB connection for each spam request. (lots of performance)
+        temp_ban_time = context.user_data.get("temporary-ban-time")
+        if temp_ban_time is not None and temp_ban_time == date.today():
             try:
+                update.callback_query.answer(i18n.t("callback.spam"))
+            except:
+                pass
+            return
 
-                user, statistic = get_user(session, update.callback_query.from_user)
-                # Cache ban value, so we don't have to lookup the value in our database on each request
-                if user.banned:
-                    context.user_data["ban"] = True
-                    return
+        session = get_session()
+        try:
 
-                # Cache temporary-ban time, so we don't have to create a connection to our database
-                if statistic.votes > config["telegram"]["max_user_votes_per_day"]:
-                    update.callback_query.answer(
-                        i18n.t("callback.spam", locale=user.locale)
+            user = get_user(session, update.callback_query.from_user)
+            # Cache ban value, so we don't have to lookup the value in our database on each request
+            if user.banned:
+                context.user_data["ban"] = True
+                return
+
+            statistic = get_user_statistics(session, user)
+
+            # Cache temporary-ban time, so we don't have to create a connection to our database
+            if statistic.votes > config["telegram"]["max_user_votes_per_day"]:
+                update.callback_query.answer(
+                    i18n.t("callback.spam", locale=user.locale)
+                )
+                context.user_data["temporary-ban-time"] = date.today()
+                return
+
+            func(context.bot, update, session, user)
+
+            session.commit()
+
+        except RollbackException as e:
+            session.rollback()
+
+            update.callback_query.answer(e.message)
+
+        except Exception as e:
+            if not ignore_exception(e):
+                if config["logging"]["debug"]:
+                    traceback.print_exc()
+
+                if should_report_exception(context, e):
+                    sentry.capture_exception(
+                        tags={
+                            "handler": "callback_query",
+                        },
+                        extra={
+                            "query_data": update.callback_query.data,
+                        },
                     )
-                    context.user_data["temporary-ban-time"] = date.today()
-                    return
 
-                func(context.bot, update, session, user)
+                locale = "English"
+                if user is not None:
+                    locale = user.locale
+                try:
+                    update.callback_query.answer(
+                        i18n.t("callback.error", locale=locale)
+                    )
+                except BadRequest as e:
+                    # Check if this is a simple query timeout exception
+                    if not ignore_exception(e):
+                        raise e
 
-                session.commit()
-
-            except RollbackException as e:
-                session.rollback()
-
-                update.callback_query.answer(e.message)
-
-            except Exception as e:
-                if not ignore_exception(e):
-                    if config["logging"]["debug"]:
-                        traceback.print_exc()
-
-                    if should_report_exception(context, e):
-                        sentry.capture_exception(
-                            tags={
-                                "handler": "callback_query",
-                            },
-                            extra={
-                                "query_data": update.callback_query.data,
-                            },
-                        )
-
-                    locale = "English"
-                    if user is not None:
-                        locale = user.locale
-                    try:
-                        update.callback_query.answer(
-                            i18n.t("callback.error", locale=locale)
-                        )
-                    except BadRequest as e:
-                        # Check if this is a simple query timeout exception
-                        if not ignore_exception(e):
-                            raise e
-
-            finally:
-                session.close()
+        finally:
+            session.close()
 
     return wrapper
 
@@ -190,66 +192,99 @@ def message_wrapper(private=False):
 
         @wraps(func)
         def wrapper(update: Update, context: CallbackContext):
-            with monkeytype.trace():
-                # The user has been banned and already got a message regarding this issue
-                if context.user_data.get("banned-message-sent"):
-                    return
+            # The user has been banned and already got a message regarding this issue
+            if context.user_data.get("banned-message-sent"):
+                return
 
-                user = None
-                session = get_session()
-                try:
-                    if hasattr(update, "message") and update.message:
-                        message = update.message
-                    elif hasattr(update, "edited_message") and update.edited_message:
-                        message = update.edited_message
+            user = None
+            message = None
+            session = get_session()
+            try:
+                if hasattr(update, "message") and update.message:
+                    message = update.message
+                elif hasattr(update, "edited_message") and update.edited_message:
+                    message = update.edited_message
+                else:
+                    raise Exception(f"Couldn't determine message from update: {update}")
 
-                    user, _ = get_user(session, message.from_user)
+                user = get_user(session, message.from_user)
 
-                    # Send a message explaining the user, why they cannot use the bot.
-                    # Also set a flag, which prevents sending this messages multiple times and thereby prevents DOS attacks.
-                    if user.banned:
-                        if not context.user_data.get("banned-message-sent"):
-                            context.user_data["banned-message-sent"] = True
-
-                        message.chat.send_message(
-                            "You have been permanently banned from using this bot, either due to spamming or inappropriate behavior."
-                            "Please refrain from asking questions in the support group or on Github. There's nothing we can do about this."
-                        )
-                        return
-
-                    # Show an error message, if the users uses the bot in a public chat,
-                    # when he shouldn't. Also check if we're even allowed to send a message.
-                    if private and message.chat.type != "private":
-                        chat = context.bot.getChat(message.chat.id)
-                        if chat.permissions.can_send_messages:
-                            message.chat.send_message(
-                                "Please do this in a direct conversation with me."
-                            )
-                        return
-
-                    response = func(context.bot, update, session, user)
-
-                    session.commit()
-
-                    # Respond to user
-                    if response is not None:
-                        message.chat.send_message(response)
-
-                except RollbackException as e:
-                    session.rollback()
+                # Send a message explaining the user, why they cannot use the bot.
+                # Also set a flag, which prevents sending this messages multiple times and thereby prevents DOS attacks.
+                if user.banned:
+                    if not context.user_data.get("banned-message-sent"):
+                        context.user_data["banned-message-sent"] = True
 
                     message.chat.send_message(
-                        e.message,
-                        parse_mode="markdown",
-                        disable_web_page_preview=True,
+                        "You have been permanently banned from using this bot, either due to spamming or inappropriate behavior."
+                        "Please refrain from asking questions in the support group or on Github. There's nothing we can do about this."
                     )
+                    return
 
-                except Exception as e:
-                    if not ignore_exception(e):
-                        if config["logging"]["debug"]:
-                            traceback.print_exc()
+                # Show an error message, if the users uses the bot in a public chat,
+                # when he shouldn't. Also check if we're even allowed to send a message.
+                if private and message.chat.type != "private":
+                    chat = context.bot.getChat(message.chat.id)
+                    if chat.permissions.can_send_messages:
+                        message.chat.send_message(
+                            "Please do this in a direct conversation with me."
+                        )
+                    return
 
-                        if should_report_exception(context, e):
+                response = func(context.bot, update, session, user)
+
+                session.commit()
+
+                # Respond to user
+                if response is not None:
+                    message.chat.send_message(response)
+
+            except RollbackException as e:
+                session.rollback()
+
+                if message is None:
+                    return
+
+                message.chat.send_message(
+                    e.message,
+                    parse_mode="markdown",
+                    disable_web_page_preview=True,
+                )
+
+            except Exception as e:
+                if not ignore_exception(e):
+                    if config["logging"]["debug"]:
+                        traceback.print_exc()
+
+                    if should_report_exception(context, e):
+                        sentry.capture_exception(
+                            tags={
+                                "handler": "message",
+                            },
+                            extra={
+                                "update": update.to_dict(),
+                                "function": func.__name__,
+                            },
+                        )
+
+                    locale = "English"
+                    if user is not None:
+                        locale = user.locale
+
+                    if message is None:
+                        return
+                    try:
+                        message.chat.send_message(
+                            i18n.t("misc.error", locale=locale),
+                            parse_mode="markdown",
+                            disable_web_page_preview=True,
+                        )
+                    except Exception as e:
+                        # It sometimes happens, that an error occurs during sending the
+                        # error message. Only capture important exceptions
+                        if not ignore_exception(e) and should_report_exception(
+                            context, e
+                        ):
                             sentry.capture_exception(
                                 tags={
                                     "handler": "message",
@@ -259,51 +294,25 @@ def message_wrapper(private=False):
                                     "function": func.__name__,
                                 },
                             )
+                            raise e
 
-                        locale = "English"
-                        if user is not None:
-                            locale = user.locale
-
-                        try:
-                            message.chat.send_message(
-                                i18n.t("misc.error", locale=locale),
-                                parse_mode="markdown",
-                                disable_web_page_preview=True,
-                            )
-                        except Exception as e:
-                            # It sometimes happens, that an error occurs during sending the
-                            # error message. Only capture important exceptions
-                            if not ignore_exception(e) and should_report_exception(
-                                context, e
-                            ):
-                                sentry.capture_exception(
-                                    tags={
-                                        "handler": "message",
-                                    },
-                                    extra={
-                                        "update": update.to_dict(),
-                                        "function": func.__name__,
-                                    },
-                                )
-                                raise e
-
-                finally:
-                    # The session might not be there yet
-                    # We're checking for bans inside this try/catch, which has to
-                    # happen before session initialization due to performance reasons
-                    if "session" in locals():
-                        session.close()
+            finally:
+                # The session might not be there yet
+                # We're checking for bans inside this try/catch, which has to
+                # happen before session initialization due to performance reasons
+                if "session" in locals():
+                    session.close()
 
         return wrapper
 
     return real_decorator
 
 
-def get_user(session, tg_user):
+def get_user(session: scoped_session, tg_user: User) -> User:
     """Get the user from the event."""
     user = session.query(User).get(tg_user.id)
     if user is not None and user.banned:
-        return user, None
+        return user
 
     if user is None:
         user = User(tg_user.id, tg_user.username)
@@ -326,12 +335,17 @@ def get_user(session, tg_user):
     name = get_name_from_tg_user(tg_user)
     user.name = name
 
-    # Ensure user statistics exist for this user
-    # We need to track at least some user activity, since there seem to be some users which
-    # abuse the bot by creating polls and spamming up to 1 million votes per day.
-    #
-    # I really hate doing this, but I don't see another way to prevent DOS attacks
-    # without tracking at least some numbers.
+    return user
+
+
+def get_user_statistics(session: scoped_session, user: User) -> UserStatistic:
+    """Ensure user statistics exist for this user.
+    We need to track at least some user activity, since there seem to be some users which
+    abuse the bot by creating polls and spamming up to 1 million votes per day.
+
+    I really hate doing this, but I don't see another way to prevent DOS attacks
+    without tracking at least some numbers.
+    """
     user_statistic = session.query(UserStatistic).get((date.today(), user.id))
 
     if user_statistic is None:
@@ -347,10 +361,10 @@ def get_user(session, tg_user):
             if user_statistic is None:
                 raise e
 
-    return user, user_statistic
+    return user_statistic
 
 
-def get_name_from_tg_user(tg_user):
+def get_name_from_tg_user(tg_user: User) -> str:
     """Return the best possible name for a User."""
     name = ""
     if tg_user.first_name is not None:
@@ -370,7 +384,7 @@ def get_name_from_tg_user(tg_user):
     return name.strip()
 
 
-def should_report_exception(context, exception):
+def should_report_exception(context: CallbackContext, exception: Exception) -> bool:
     """This function is responsible for client-side exception flood-protection.
 
     Sentry only allows about 5000 events each month.
@@ -398,7 +412,7 @@ def should_report_exception(context, exception):
     return False
 
 
-def ignore_exception(exception):
+def ignore_exception(exception: Union[BadRequest, Unauthorized]) -> bool:
     """Check whether we can safely ignore this exception."""
     if type(exception) is BadRequest:
         if (

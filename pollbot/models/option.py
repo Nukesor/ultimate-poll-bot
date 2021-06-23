@@ -1,4 +1,6 @@
 """The sqlalchemy model for a polloption."""
+from __future__ import annotations
+
 from datetime import date
 
 from sqlalchemy import Column, ForeignKey, UniqueConstraint, func
@@ -52,7 +54,7 @@ class Option(base):
         """Print as string."""
         return f"Option with Id: {self.id}, poll: {self.poll_id}, name: {self.name}"
 
-    def get_formatted_name(self):
+    def get_formatted_name(self) -> str:
         """Get the name depending on whether the option is a date."""
         if self.is_date and self.poll.european_date_format:
             option_date = date.fromisoformat(self.name)
@@ -63,7 +65,7 @@ class Option(base):
 
         return self.name
 
-    def as_date(self):
+    def as_date(self) -> date:
         """Either return the option as date or None."""
         if not self.is_date:
             return None

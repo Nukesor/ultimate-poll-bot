@@ -1,17 +1,22 @@
 """Poll related commands."""
 from typing import Optional
 
+from sqlalchemy.orm.scoping import scoped_session
+from telegram.bot import Bot
+from telegram.ext import run_async
+from telegram.update import Update
+
 from pollbot.display.misc import get_poll_list
 from pollbot.i18n import i18n
 from pollbot.models import Poll
+from pollbot.models.user import User
 from pollbot.poll.creation import initialize_poll
 from pollbot.telegram.session import message_wrapper
-from telegram.ext import run_async
 
 
 @run_async
 @message_wrapper(private=True)
-def create_poll(bot, update, session, user):
+def create_poll(bot: Bot, update: Update, session: scoped_session, user: User) -> None:
     """Create a new poll."""
     initialize_poll(session, user, update.message.chat)
 
@@ -37,7 +42,7 @@ def cancel_poll_creation(bot, update, session, user):
 
 @run_async
 @message_wrapper(private=True)
-def list_polls(bot, update, session, user):
+def list_polls(bot: Bot, update: Update, session: scoped_session, user: User) -> None:
     """Get a list of all active polls."""
     text, keyboard = get_poll_list(session, user, 0)
     update.message.chat.send_message(text, reply_markup=keyboard)
@@ -45,7 +50,9 @@ def list_polls(bot, update, session, user):
 
 @run_async
 @message_wrapper(private=True)
-def list_closed_polls(bot, update, session, user):
+def list_closed_polls(
+    bot: Bot, update: Update, session: scoped_session, user: User
+) -> None:
     """Get a list of all closed polls."""
     text, keyboard = get_poll_list(session, user, 0, closed=True)
     update.message.chat.send_message(text, reply_markup=keyboard)

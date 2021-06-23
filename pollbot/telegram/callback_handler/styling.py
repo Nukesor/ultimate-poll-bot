@@ -1,16 +1,22 @@
 """Callback handler for poll styling."""
+from typing import Optional
+
+from sqlalchemy.orm.scoping import scoped_session
+
 from pollbot.decorators import poll_required
 from pollbot.display.poll.compilation import get_poll_text
 from pollbot.enums import OptionSorting, UserSorting
 from pollbot.i18n import i18n
+from pollbot.models.poll import Poll
 from pollbot.poll.update import update_poll_messages
+from pollbot.telegram.callback_handler.context import CallbackContext
 from pollbot.telegram.keyboard.styling import (
     get_manual_option_order_keyboard,
     get_styling_settings_keyboard,
 )
 
 
-def send_styling_message(session, context):
+def send_styling_message(session: scoped_session, context: CallbackContext) -> None:
     """Update the current styling menu message."""
     context.query.message.edit_text(
         text=get_poll_text(session, context.poll),
@@ -21,7 +27,9 @@ def send_styling_message(session, context):
 
 
 @poll_required
-def toggle_percentage(session, context, poll):
+def toggle_percentage(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Toggle the visibility of the percentage bar."""
     if poll.anonymous and not poll.show_option_votes:
         context.query.message.chat.send_message(
@@ -36,7 +44,10 @@ def toggle_percentage(session, context, poll):
 
 
 @poll_required
-def toggle_option_votes(session, context, poll):
+def toggle_option_votes(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
+
     """Toggle the visibility of the vote overview on an option."""
     if poll.anonymous and not poll.show_percentage:
         context.query.message.chat.send_message(
@@ -52,7 +63,10 @@ def toggle_option_votes(session, context, poll):
 
 
 @poll_required
-def toggle_date_format(session, context, poll):
+def toggle_date_format(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
+
     """Switch between european and US date format."""
     poll.european_date_format = not poll.european_date_format
     poll.user.european_date_format = poll.european_date_format
@@ -63,7 +77,10 @@ def toggle_date_format(session, context, poll):
 
 
 @poll_required
-def toggle_summerization(session, context, poll):
+def toggle_summerization(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
+
     """Toggle summarization of votes of a poll."""
     poll.summarize = not poll.summarize
 
@@ -73,7 +90,10 @@ def toggle_summerization(session, context, poll):
 
 
 @poll_required
-def toggle_compact_buttons(session, context, poll):
+def toggle_compact_buttons(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
+
     """Toggle the doodle poll button style."""
     poll.compact_buttons = not poll.compact_buttons
 
@@ -83,7 +103,10 @@ def toggle_compact_buttons(session, context, poll):
 
 
 @poll_required
-def set_option_order(session, context, poll):
+def set_option_order(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
+
     """Set the order in which options are listed."""
     option_sorting = OptionSorting(context.action)
     poll.option_sorting = option_sorting.name
@@ -94,7 +117,10 @@ def set_option_order(session, context, poll):
 
 
 @poll_required
-def set_user_order(session, context, poll):
+def set_user_order(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
+
     """Set the order in which user are listed."""
     user_sorting = UserSorting(context.action)
     poll.user_sorting = user_sorting.name
@@ -105,7 +131,9 @@ def set_user_order(session, context, poll):
 
 
 # Manual option order menu
-def send_option_order_message(session, context):
+def send_option_order_message(
+    session: scoped_session, context: CallbackContext
+) -> None:
     """Update the current styling menu message."""
     context.query.message.edit_text(
         text=get_poll_text(session, context.poll),
@@ -116,13 +144,19 @@ def send_option_order_message(session, context):
 
 
 @poll_required
-def open_option_order_menu(session, context, poll):
+def open_option_order_menu(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
+
     """Open the menu for manually adjusting the option order."""
     send_option_order_message(session, context)
 
 
 @poll_required
-def increase_option_index(session, context, poll):
+def increase_option_index(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
+
     """Increase the index of a specific option."""
     option_id = context.action
 
@@ -159,7 +193,10 @@ def increase_option_index(session, context, poll):
 
 
 @poll_required
-def decrease_option_index(session, context, poll):
+def decrease_option_index(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
+
     """Decrease the index of a specific option."""
     option_id = context.action
 

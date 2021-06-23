@@ -17,7 +17,7 @@ default_config = {
         "max_polls_per_user": 200,
     },
     "database": {
-        "sql_uri": "postgres://pollbot:localhost/pollbot",
+        "sql_uri": "postgresql://pollbot:localhost/pollbot",
         "connection_count": 20,
         "overflow_count": 10,
     },

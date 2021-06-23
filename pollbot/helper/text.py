@@ -1,4 +1,7 @@
-def split_text(lines):
+from typing import List
+
+
+def split_text(lines: List[str]) -> List[List[str]]:
     """Split a text devided by newline into chunks of about 4000 characters."""
     chunks = []
     current_chunk = []

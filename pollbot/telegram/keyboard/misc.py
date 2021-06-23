@@ -1,11 +1,18 @@
 """All keyboards for external users that don't own the poll."""
+from typing import List
+
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
+
 from pollbot.enums import CallbackType
 from pollbot.i18n import i18n
+from pollbot.models.user import User
 from pollbot.telegram.keyboard.user import get_back_to_menu_button
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 
-def get_help_keyboard(user, categories, current_category):
+def get_help_keyboard(
+    user: User, categories: List[str], current_category: str
+) -> InlineKeyboardMarkup:
     """Get the done keyboard for options during poll creation."""
     rows = []
     current_row = []
@@ -29,7 +36,7 @@ def get_help_keyboard(user, categories, current_category):
     return InlineKeyboardMarkup(rows)
 
 
-def get_donations_keyboard(user):
+def get_donations_keyboard(user: User) -> InlineKeyboardMarkup:
     buttons = [
         [InlineKeyboardButton(text="Paypal", url="https://paypal.me/arnebeer/")],
         [get_back_to_menu_button(user)],

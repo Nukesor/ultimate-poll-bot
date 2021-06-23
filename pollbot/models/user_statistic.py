@@ -1,4 +1,6 @@
 """The sqlalchemy model for a user statistics."""
+from __future__ import annotations
+
 from datetime import date
 
 from sqlalchemy import Column, Date, ForeignKey

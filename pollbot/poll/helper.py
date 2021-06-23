@@ -1,10 +1,15 @@
-from pollbot.enums import PollType
-from pollbot.i18n import i18n
-from pollbot.models import Poll, Option, Reference, User
+from sqlalchemy.orm.scoping import scoped_session
+from telegram.bot import Bot
 from telegram.error import BadRequest, Unauthorized
 
+from pollbot.enums import PollType
+from pollbot.i18n import i18n
+from pollbot.models import Option, Poll, Reference, User
+from pollbot.models.poll import Poll
+from pollbot.models.user import User
 
-def clone_poll(session, original_poll: Poll):
+
+def clone_poll(session: scoped_session, original_poll: Poll) -> Poll:
     """Create a clone from the current poll."""
     new_poll = Poll(original_poll.user)
     new_poll.created = True
@@ -31,7 +36,9 @@ def clone_poll(session, original_poll: Poll):
     return new_poll
 
 
-def remove_old_references(session, bot, poll: Poll, user: User):
+def remove_old_references(
+    session: scoped_session, bot: Bot, poll: Poll, user: User
+) -> None:
     """Remove old references in private chats."""
     references = (
         session.query(Reference)
@@ -61,7 +68,7 @@ def remove_old_references(session, bot, poll: Poll, user: User):
         session.commit()
 
 
-def calculate_total_votes(poll: Poll):
+def calculate_total_votes(poll: Poll) -> int:
     """Calculate the total number of votes of a poll."""
     total = 0
     for vote in poll.votes:
@@ -70,7 +77,7 @@ def calculate_total_votes(poll: Poll):
     return total
 
 
-def translate_poll_type(poll_type: str, locale: str):
+def translate_poll_type(poll_type: str, locale: str) -> str:
     """Translate a poll type to the users language."""
     mapping = {
         PollType.single_vote.name: i18n.t("poll_types.single_vote", locale=locale),
@@ -87,7 +94,7 @@ def translate_poll_type(poll_type: str, locale: str):
     return mapping[poll_type]
 
 
-def poll_allows_multiple_votes(poll: Poll):
+def poll_allows_multiple_votes(poll: Poll) -> bool:
     """Check whether the poll allows multiple votes."""
     multiple_poll_types = [
         PollType.block_vote.name,
@@ -98,7 +105,7 @@ def poll_allows_multiple_votes(poll: Poll):
     return poll.poll_type in multiple_poll_types
 
 
-def poll_has_limited_votes(poll: Poll):
+def poll_has_limited_votes(poll: Poll) -> bool:
     """Check whether the poll has limited votes."""
     poll_type_with_vote_count = [
         PollType.limited_vote.name,
@@ -108,6 +115,6 @@ def poll_has_limited_votes(poll: Poll):
     return poll.poll_type in poll_type_with_vote_count
 
 
-def poll_allows_cumulative_votes(poll: Poll):
+def poll_allows_cumulative_votes(poll: Poll) -> bool:
     """Check whether this poll's type is cumulative."""
     return poll.poll_type in [PollType.cumulative_vote.name, PollType.count_vote.name]

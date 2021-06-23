@@ -1,18 +1,22 @@
 """Reply keyboards."""
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
+from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
+
 from pollbot.enums import CallbackType, PollType
 from pollbot.i18n import i18n
+from pollbot.models.poll import Poll
 from pollbot.poll.helper import translate_poll_type
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 
-def get_back_to_init_button(poll):
+def get_back_to_init_button(poll: Poll) -> InlineKeyboardButton:
     """Get the button to go back to the init creation message."""
     back_text = i18n.t("keyboard.back", locale=poll.locale)
     anonymity_payload = f"{CallbackType.back_to_init.value}:{poll.id}:0"
     return InlineKeyboardButton(back_text, callback_data=anonymity_payload)
 
 
-def get_init_keyboard(poll):
+def get_init_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get the initial inline keyboard for poll creation."""
     locale = poll.user.locale
     change_type = CallbackType.show_poll_type_keyboard.value
@@ -48,7 +52,7 @@ def get_native_poll_merged_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_init_settings_keyboard(poll):
+def get_init_settings_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get the keyboard for initial settings during poll creation."""
     locale = poll.locale
 
@@ -86,7 +90,7 @@ def get_init_settings_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_change_poll_type_keyboard(poll):
+def get_change_poll_type_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get the inline keyboard for changing the vote type."""
     change_type = CallbackType.change_poll_type.value
 
@@ -103,7 +107,7 @@ def get_change_poll_type_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_open_datepicker_keyboard(poll):
+def get_open_datepicker_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get the done keyboard for options during poll creation."""
     payload = f"{CallbackType.open_creation_datepicker.value}:{poll.id}:0"
     buttons = [
@@ -118,7 +122,7 @@ def get_open_datepicker_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_cancel_creation_keyboard(poll):
+def get_cancel_creation_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get the cancel creation button."""
     payload = f"{CallbackType.cancel_creation.value}:{poll.id}:0"
     buttons = [
@@ -133,7 +137,7 @@ def get_cancel_creation_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_replace_current_creation_keyboard(poll):
+def get_replace_current_creation_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get the keyboard for replacing the poll under creation with a new one"""
     payload = f"{CallbackType.cancel_creation_replace.value}:{poll.id}:0"
     buttons = [
@@ -148,7 +152,7 @@ def get_replace_current_creation_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_skip_description_keyboard(poll):
+def get_skip_description_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get the keyboard for skipping the description."""
     payload = f"{CallbackType.skip_description.value}:{poll.id}:0"
     buttons = [
@@ -163,7 +167,7 @@ def get_skip_description_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_options_entered_keyboard(poll):
+def get_options_entered_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get the done keyboard for options during poll creation."""
     locale = poll.user.locale
     datepicker_payload = f"{CallbackType.open_creation_datepicker.value}:{poll.id}:0"

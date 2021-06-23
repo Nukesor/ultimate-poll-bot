@@ -1,24 +1,35 @@
 """Handle messages."""
+from typing import Optional
+
+from sqlalchemy.orm.scoping import scoped_session
+from telegram.bot import Bot
+from telegram.chat import Chat
+from telegram.update import Update
+
 from pollbot.display import get_settings_text
+from pollbot.display.poll.option import next_option
 from pollbot.enums import ExpectedInput, PollType, ReferenceType
+from pollbot.helper import markdown_characters
 from pollbot.i18n import i18n
 from pollbot.models import Reference
-from pollbot.helper import markdown_characters
+from pollbot.models.poll import Poll
+from pollbot.models.user import User
 from pollbot.poll.helper import remove_old_references
 from pollbot.poll.option import add_options_multiline
-from pollbot.display.poll.option import next_option
 from pollbot.poll.update import update_poll_messages
 from pollbot.telegram.callback_handler.creation import create_poll
-from pollbot.telegram.keyboard.settings import get_settings_keyboard
 from pollbot.telegram.keyboard.creation import (
     get_open_datepicker_keyboard,
     get_skip_description_keyboard,
 )
+from pollbot.telegram.keyboard.settings import get_settings_keyboard
 from pollbot.telegram.session import message_wrapper
 
 
 @message_wrapper()
-def handle_private_text(bot, update, session, user):
+def handle_private_text(
+    bot: Bot, update: Update, session: scoped_session, user: User
+) -> Optional[str]:
     """Read all private messages and the creation of polls."""
     text = update.message.text.strip()
     poll = user.current_poll
@@ -58,7 +69,15 @@ def handle_private_text(bot, update, session, user):
         return actions[expected_input](bot, update, session, user, text, poll, chat)
 
 
-def handle_set_name(bot, update, session, user, text, poll, chat):
+def handle_set_name(
+    bot: Bot,
+    update: Update,
+    session: scoped_session,
+    user: User,
+    text: str,
+    poll: Poll,
+    chat: Chat,
+) -> None:
     """Set the name of the poll."""
     poll.name = text
 
@@ -73,7 +92,15 @@ def handle_set_name(bot, update, session, user, text, poll, chat):
     )
 
 
-def handle_set_description(bot, update, session, user, text, poll, chat):
+def handle_set_description(
+    bot: Bot,
+    update: Update,
+    session: scoped_session,
+    user: User,
+    text: str,
+    poll: Poll,
+    chat: Chat,
+) -> None:
     """Set the description of the poll."""
     poll.description = text
 
@@ -88,7 +115,15 @@ def handle_set_description(bot, update, session, user, text, poll, chat):
         create_poll(session, poll, user, update.effective_chat)
 
 
-def handle_create_options(bot, update, session, user, text, poll, chat):
+def handle_create_options(
+    bot: Bot,
+    update: Update,
+    session: scoped_session,
+    user: User,
+    text: str,
+    poll: Poll,
+    chat: Chat,
+) -> Optional[str]:
     """Add options to the poll."""
     # Multiple options can be sent at once separated by newline
     # Strip them and ignore empty lines
@@ -100,7 +135,15 @@ def handle_create_options(bot, update, session, user, text, poll, chat):
     next_option(chat, poll, added_options)
 
 
-def handle_set_vote_count(bot, update, session, user, text, poll, chat):
+def handle_set_vote_count(
+    bot: Bot,
+    update: Update,
+    session: scoped_session,
+    user: User,
+    text: str,
+    poll: Poll,
+    chat: Chat,
+) -> Optional[str]:
     """Set the amount of possible votes for this poll."""
     if poll.poll_type == PollType.limited_vote.name:
         error_message = i18n.t(
@@ -128,7 +171,15 @@ def handle_set_vote_count(bot, update, session, user, text, poll, chat):
     create_poll(session, poll, user, chat)
 
 
-def handle_new_option(bot, update, session, user, text, poll, chat):
+def handle_new_option(
+    bot: Bot,
+    update: Update,
+    session: scoped_session,
+    user: User,
+    text: str,
+    poll: Poll,
+    chat: Chat,
+) -> None:
     """Add a new option after poll creation."""
     added_options = add_options_multiline(session, poll, text)
 
@@ -164,7 +215,15 @@ def handle_new_option(bot, update, session, user, text, poll, chat):
     update_poll_messages(session, bot, poll, message.message_id, user)
 
 
-def handle_user_option_addition(bot, update, session, user, text, poll, chat):
+def handle_user_option_addition(
+    bot: Bot,
+    update: Update,
+    session: scoped_session,
+    user: User,
+    text: str,
+    poll: Poll,
+    chat: Chat,
+) -> None:
     """Handle the addition of options from and arbitrary user."""
     if not poll.allow_new_options:
         user.current_poll = None

@@ -1,5 +1,5 @@
 """Helper enums to properly map several properties of Polls and alike."""
-from enum import Enum, unique, auto
+from enum import Enum, auto, unique
 
 
 @unique

@@ -1,19 +1,26 @@
 """Option for setting the current date of the picker."""
 from datetime import date
-from pollbot.poll.update import try_update_reference
+from typing import Optional
+
+from sqlalchemy.orm.scoping import scoped_session
 
 from pollbot.decorators import poll_required
 from pollbot.display.creation import get_datepicker_text
 from pollbot.enums import ExpectedInput, ReferenceType
 from pollbot.helper.stats import increase_stat
 from pollbot.i18n import i18n
-from pollbot.models import Notification, Reference, Update
-from pollbot.telegram.keyboard.external import get_external_add_option_keyboard
+from pollbot.models import Notification, Reference
+from pollbot.models.poll import Poll
+from pollbot.poll.update import try_update_reference
+from pollbot.telegram.callback_handler.context import CallbackContext
 from pollbot.telegram.keyboard.date_picker import get_external_datepicker_keyboard
+from pollbot.telegram.keyboard.external import get_external_add_option_keyboard
 
 
 @poll_required
-def activate_notification(session, context, poll):
+def activate_notification(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> Optional[str]:
     """Show to vote type keyboard."""
     user = context.user
     if user != poll.user:
@@ -50,7 +57,10 @@ def activate_notification(session, context, poll):
 
 
 @poll_required
-def open_external_datepicker(session, context, poll):
+def open_external_datepicker(
+    _: scoped_session, context: CallbackContext, poll: Poll
+) -> Optional[str]:
+
     """All options are entered the poll is created."""
     keyboard = get_external_datepicker_keyboard(poll, date.today())
     # Switch from new option by text to new option via datepicker
@@ -67,7 +77,10 @@ def open_external_datepicker(session, context, poll):
 
 
 @poll_required
-def open_external_menu(session, context, poll):
+def open_external_menu(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
+
     """All options are entered the poll is created."""
     context.user.expected_input = ExpectedInput.new_user_option.name
     context.user.current_poll = poll
@@ -81,7 +94,9 @@ def open_external_menu(session, context, poll):
 
 
 @poll_required
-def external_cancel(session, context, poll):
+def external_cancel(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """All options are entered the poll is created."""
     context.user.expected_input = None
     context.user.current_poll = None
@@ -91,7 +106,9 @@ def external_cancel(session, context, poll):
 
 
 @poll_required
-def update_shared(session, context, poll):
+def update_shared(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """All options are entered the poll is created."""
     message_id = context.query.inline_message_id
 

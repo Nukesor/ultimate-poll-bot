@@ -1,13 +1,19 @@
-from typing import List
+from typing import Any, List, Optional, Union
 
+from sqlalchemy.orm.scoping import scoped_session
+
+from pollbot.enums import OptionSorting, PollType, VoteResultType
 from pollbot.i18n import i18n
 from pollbot.models import Option, Poll
-from pollbot.enums import OptionSorting, PollType, VoteResultType
+from pollbot.models.option import Option
+from pollbot.models.poll import Poll
 from pollbot.poll.helper import poll_allows_cumulative_votes
 from pollbot.poll.vote import init_votes_for_new_options
 
 
-def add_single_option(session, poll: Poll, line: str, is_date: bool):
+def add_single_option(
+    session: scoped_session, poll: Poll, line: str, is_date: bool
+) -> None:
     """Add a single option from a single line."""
     option = add_option(poll, line, [], is_date)
 
@@ -21,15 +27,20 @@ def add_single_option(session, poll: Poll, line: str, is_date: bool):
     init_votes_for_new_options(session, poll, [option.name])
 
 
-def add_options_multiline(session, poll: Poll, text: str, is_date: bool = False):
+def add_options_multiline(
+    session: scoped_session, poll: Poll, text: str, is_date: bool = False
+) -> List[Union[Any, str]]:
     """Add one or multiple new options to the poll from a block of text."""
     options_to_add = [x.strip() for x in text.split("\n") if x.strip() != ""]
     return add_multiple_options(session, poll, options_to_add, is_date=is_date)
 
 
 def add_multiple_options(
-    session, poll: Poll, options_to_add: List[str], is_date: bool = False
-):
+    session: scoped_session,
+    poll: Poll,
+    options_to_add: List[str],
+    is_date: bool = False,
+) -> List[Union[Any, str]]:
     """Create options from a list of strings."""
     added_options = []
 
@@ -48,7 +59,9 @@ def add_multiple_options(
     return added_options
 
 
-def add_option(poll: Poll, text: str, added_options: List[str], is_date: bool):
+def add_option(
+    poll: Poll, text: str, added_options: List[str], is_date: bool
+) -> Optional[Option]:
     """Parse the incoming text and create a single option from it.
 
     We allow option descriptions after an `--` or `—` delimiter.
@@ -87,7 +100,9 @@ def add_option(poll: Poll, text: str, added_options: List[str], is_date: bool):
     return option
 
 
-def get_sorted_options(poll: Poll, total_user_count=0):
+def get_sorted_options(
+    poll: Poll, total_user_count: int = 0
+) -> List[Union[Option, Any]]:
     """Sort the options depending on the poll's current settings."""
     options = poll.options.copy()
 
@@ -101,7 +116,7 @@ def get_sorted_options(poll: Poll, total_user_count=0):
     return options
 
 
-def calculate_percentage(option, total_user_count):
+def calculate_percentage(option: Option, total_user_count: int) -> Union[float, int]:
     """Calculate the percentage for this option."""
     # Return 0 if:
     # - No voted on this poll yet
@@ -135,7 +150,7 @@ def calculate_percentage(option, total_user_count):
     return percentage
 
 
-def option_is_duplicate(poll: Poll, option_to_add):
+def option_is_duplicate(poll: Poll, option_to_add: str) -> bool:
     """Check whether this option already exists on this poll."""
     for existing_option in poll.options:
         if existing_option.name == option_to_add:

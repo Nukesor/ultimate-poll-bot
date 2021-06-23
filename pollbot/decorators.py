@@ -1,5 +1,5 @@
-from pollbot.i18n import i18n
 from pollbot.config import config
+from pollbot.i18n import i18n
 
 
 def poll_required(function):

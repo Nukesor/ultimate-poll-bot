@@ -1,5 +1,9 @@
 """Callback functions needed during creation of a Poll."""
 from datetime import date
+from typing import Optional
+
+from sqlalchemy.orm.scoping import scoped_session
+from telegram.message import Message
 
 from pollbot.decorators import poll_required
 from pollbot.display.creation import (
@@ -13,7 +17,9 @@ from pollbot.enums import ExpectedInput, PollType
 from pollbot.exceptions import RollbackException
 from pollbot.i18n import i18n
 from pollbot.models import Poll
+from pollbot.models.poll import Poll
 from pollbot.poll.creation import create_poll
+from pollbot.telegram.callback_handler.context import CallbackContext
 from pollbot.telegram.keyboard.creation import (
     get_change_poll_type_keyboard,
     get_init_keyboard,
@@ -28,7 +34,7 @@ from pollbot.telegram.keyboard.date_picker import get_creation_datepicker_keyboa
 from .user import init_poll
 
 
-def open_init_text(message, poll: Poll):
+def open_init_text(message: Message, poll: Poll) -> None:
     """Open the initial poll creation message."""
     if poll.created_from_native:
         keyboard = get_native_poll_merged_keyboard(poll)
@@ -44,7 +50,7 @@ def open_init_text(message, poll: Poll):
         )
 
 
-def open_anonymization_settings(message, poll):
+def open_anonymization_settings(message: Message, poll: Poll) -> None:
     """Open the initial poll anonymization settings."""
     message.edit_text(
         get_init_anonymziation_settings_text(poll),
@@ -205,7 +211,7 @@ def close_creation_datepicker(session, context, poll):
     message.edit_text(text, parse_mode="markdown", reply_markup=keyboard)
 
 
-def cancel_creation(session, context):
+def cancel_creation(session: scoped_session, context: CallbackContext) -> Optional[str]:
     """Cancel the creation of a poll."""
     if context.poll is None:
         return i18n.t("delete.doesnt_exist", locale=context.user.locale)

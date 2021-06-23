@@ -1,4 +1,6 @@
 """The sqlalchemy model for a vote."""
+from __future__ import annotations
+
 from sqlalchemy import Column, ForeignKey, UniqueConstraint, func
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import BigInteger, DateTime, Integer

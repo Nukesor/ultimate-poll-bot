@@ -2,10 +2,11 @@
 from pollbot.enums import ExpectedInput
 from pollbot.i18n import i18n
 from pollbot.models import Poll
+from pollbot.models.poll import Poll
 from pollbot.poll.helper import translate_poll_type
 
 
-def get_poll_type_help_text(poll):
+def get_poll_type_help_text(poll: Poll) -> str:
     """Create the help text for vote types."""
     locale = poll.user.locale
 
@@ -18,7 +19,7 @@ def get_poll_type_help_text(poll):
     return message
 
 
-def get_init_text(poll):
+def get_init_text(poll: Poll) -> str:
     """Compile the poll creation initialization text."""
     locale = poll.user.locale
     poll.user.current_poll = poll
@@ -42,7 +43,7 @@ def get_init_text(poll):
     return message
 
 
-def get_init_anonymziation_settings_text(poll):
+def get_init_anonymziation_settings_text(poll: Poll) -> str:
     locale = poll.locale
     text = ["*Poll Settings:*"]
 
@@ -66,7 +67,7 @@ def get_init_anonymziation_settings_text(poll):
     return "\n".join(text)
 
 
-def get_datepicker_text(poll):
+def get_datepicker_text(poll: Poll) -> str:
     """Get the text for the datepicker."""
     text = i18n.t("creation.datepicker_text", locale=poll.locale)
     for option in poll.options:

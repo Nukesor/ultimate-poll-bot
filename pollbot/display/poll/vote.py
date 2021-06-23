@@ -1,9 +1,16 @@
 """Compilation of vote texts for each option."""
-from sqlalchemy import func
+from typing import Any, List, Optional, Union
 
+from sqlalchemy import func
+from sqlalchemy.orm.scoping import scoped_session
+
+from pollbot.display.poll import Context
 from pollbot.enums import PollType
 from pollbot.i18n import i18n
 from pollbot.models import User, Vote
+from pollbot.models.option import Option
+from pollbot.models.poll import Poll
+from pollbot.models.vote import Vote
 from pollbot.poll.helper import (
     calculate_total_votes,
     poll_allows_cumulative_votes,
@@ -12,7 +19,7 @@ from pollbot.poll.helper import (
 from pollbot.poll.vote import get_sorted_doodle_votes, get_sorted_votes
 
 
-def get_doodle_vote_lines(poll, option, summarize):
+def get_doodle_vote_lines(poll: Poll, option: Option, summarize: bool) -> List[str]:
     """Return all vote related lines for this option."""
     lines = []
     votes_by_answer = get_sorted_doodle_votes(poll, option.votes)
@@ -46,7 +53,9 @@ def get_doodle_vote_lines(poll, option, summarize):
     return lines
 
 
-def get_doodle_answer_lines(votes, summarize, is_last):
+def get_doodle_answer_lines(
+    votes: List[Vote], summarize: bool, is_last: bool
+) -> List[str]:
     """Return the user names for a doodle answer.
 
     Try to compress as many usernames as possible into a single line.
@@ -90,7 +99,7 @@ def get_doodle_answer_lines(votes, summarize, is_last):
     return lines
 
 
-def get_vote_lines(poll, option, summarize):
+def get_vote_lines(poll: Poll, option: Option, summarize: bool) -> List[str]:
     """Return all vote related lines for this option."""
     lines = []
     threshold = 2
@@ -112,7 +121,7 @@ def get_vote_lines(poll, option, summarize):
     return lines
 
 
-def get_vote_line(poll, option, vote, index):
+def get_vote_line(poll: Poll, option: Option, vote: Vote, index: int) -> str:
     """Get the line showing an actual vote."""
     user_mention = f"[{vote.user.name}](tg://user?id={vote.user.id})"
 
@@ -129,7 +138,7 @@ def get_vote_line(poll, option, vote, index):
     return vote_line
 
 
-def get_vote_information_line(poll, context):
+def get_vote_information_line(poll: Poll, context: Context) -> Optional[str]:
     """Get line that shows information about total user votes."""
     vote_information = None
     if context.total_user_count > 1:
@@ -148,7 +157,9 @@ def get_vote_information_line(poll, context):
     return vote_information
 
 
-def get_remaining_votes_lines(session, poll):
+def get_remaining_votes_lines(
+    session: scoped_session, poll: Poll
+) -> List[Union[str, Any]]:
     """Get the remaining votes for a poll."""
     user_vote_count = func.sum(Vote.vote_count).label("user_vote_count")
     remaining_user_votes = (

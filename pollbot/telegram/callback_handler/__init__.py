@@ -2,12 +2,13 @@
 from datetime import date
 
 from sqlalchemy.exc import IntegrityError
+from telegram.ext import run_async
 
 from pollbot.enums import CallbackType
 from pollbot.helper.stats import increase_stat, increase_user_stat
-from pollbot.models import Option, Poll, UserStatistic
+from pollbot.models import Option, UserStatistic
+from pollbot.telegram.callback_handler.context import CallbackContext  # noqa
 from pollbot.telegram.session import callback_query_wrapper
-from telegram.ext import run_async
 
 from .context import get_context
 from .mapping import async_callback_mapping, callback_mapping

@@ -1,13 +1,19 @@
 """The sqlalchemy model for a poll."""
-from datetime import datetime, timedelta
+from __future__ import annotations
+
+from datetime import date, datetime, timedelta
+from typing import Optional
 
 from sqlalchemy import Column, ForeignKey, func, text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
+from sqlalchemy.orm.scoping import scoped_session
 from sqlalchemy.types import BigInteger, Boolean, DateTime, Integer, String
 
 from pollbot.db import base
 from pollbot.enums import ExpectedInput, OptionSorting, PollType, UserSorting
+from pollbot.models.option import Option
+from pollbot.models.user import User
 
 
 class Poll(base):
@@ -98,7 +104,7 @@ class Poll(base):
         self.option_sorting = OptionSorting.manual.name
 
     @staticmethod
-    def create(user, session):
+    def create(user: User, session: scoped_session) -> Poll:
         """Create a poll from a user."""
         poll = Poll(user)
         poll.european_date_format = user.european_date_format
@@ -114,38 +120,38 @@ class Poll(base):
         """Print as string."""
         return f"Poll with Id: {self.id}, name: {self.name}, locale: {self.locale}"
 
-    def should_show_result(self):
+    def should_show_result(self) -> bool:
         """Determine, whether this results of this poll should be shown."""
         return self.results_visible or self.closed
 
-    def is_doodle(self):
+    def is_doodle(self) -> bool:
         return self.poll_type == PollType.doodle.name
 
-    def is_priority(self):
+    def is_priority(self) -> bool:
         return self.poll_type == PollType.priority.name
 
-    def has_date_option(self):
+    def has_date_option(self) -> bool:
         """Check whether this poll has a date option."""
         for option in self.options:
             if option.is_date:
                 return True
         return False
 
-    def get_date_option(self, check_date):
+    def get_date_option(self, check_date: date) -> Optional[Option]:
         """Return whether an option with this date already exists."""
         for option in self.options:
             if option.is_date and option.as_date() == check_date:
                 return option
         return None
 
-    def get_formatted_due_date(self):
+    def get_formatted_due_date(self) -> str:
         """Get the formatted date."""
         if self.european_date_format:
             return self.due_date.strftime("%d.%m.%Y %H:%M UTC")
 
         return self.due_date.strftime("%Y-%m-%d %H:%M UTC")
 
-    def set_due_date(self, date):
+    def set_due_date(self, date: Optional[datetime]) -> None:
         """Set the due date and the next notification."""
         if date is None:
             self.due_date = None

@@ -1,10 +1,11 @@
 """Simple wrapper around sentry that allows for lazy initilization."""
-import sentry_sdk
 import traceback
+
+import sentry_sdk
 from sentry_sdk import configure_scope
+from telegram.error import NetworkError, TimedOut
 
 from pollbot.config import config
-from telegram.error import TimedOut, NetworkError
 
 
 def ignore_job_exception(exception):

@@ -1,11 +1,19 @@
 """Display helper for misc stuff."""
+from typing import Tuple, Union
+
+from sqlalchemy.orm.scoping import scoped_session
+from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
+
 from pollbot.i18n import i18n
 from pollbot.models import Poll
-from pollbot.telegram.keyboard.misc import get_help_keyboard
+from pollbot.models.user import User
 from pollbot.telegram.keyboard.management import get_poll_list_keyboard
+from pollbot.telegram.keyboard.misc import get_help_keyboard
 
 
-def get_help_text_and_keyboard(user, current_category):
+def get_help_text_and_keyboard(
+    user: User, current_category: str
+) -> Tuple[str, InlineKeyboardMarkup]:
     """Create the help message depending on the currently selected help category."""
     categories = [
         "creation",
@@ -23,7 +31,9 @@ def get_help_text_and_keyboard(user, current_category):
     return text, keyboard
 
 
-def get_poll_list(session, user, offset, closed=False):
+def get_poll_list(
+    session: scoped_session, user: User, offset: int, closed: bool = False
+) -> Union[Tuple[str, InlineKeyboardMarkup], Tuple[str, None]]:
     """Get the a list of polls for the user."""
     polls = (
         session.query(Poll)

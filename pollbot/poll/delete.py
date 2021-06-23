@@ -1,14 +1,23 @@
 from time import sleep
-from telegram.error import BadRequest, RetryAfter, Unauthorized
+
 from sqlalchemy.orm.exc import ObjectDeletedError
+from sqlalchemy.orm.scoping import scoped_session
+from telegram.error import BadRequest, RetryAfter, Unauthorized
+from telegram.ext.callbackcontext import CallbackContext
 
 from pollbot.enums import ReferenceType
 from pollbot.i18n import i18n
+from pollbot.models.poll import Poll
 from pollbot.poll.update import send_updates
 from pollbot.sentry import sentry
 
 
-def delete_poll(session, context, poll, remove_all=False):
+def delete_poll(
+    session: scoped_session,
+    context: CallbackContext,
+    poll: Poll,
+    remove_all: bool = False,
+) -> None:
     """Delete a poll.
 
     By default, the poll will simply be deleted from the database.

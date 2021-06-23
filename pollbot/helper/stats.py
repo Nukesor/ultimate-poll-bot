@@ -1,8 +1,12 @@
 """Statistics handler."""
 from datetime import date
 
+from sqlalchemy.orm.scoping import scoped_session
 
-def increase_stat(session, name):
+from pollbot.models.user import User
+
+
+def increase_stat(session: scoped_session, name: str) -> None:
     """Increase a specific statistic."""
     from pollbot.models import DailyStatistic
 
@@ -22,7 +26,7 @@ def increase_stat(session, name):
     )
 
 
-def increase_user_stat(session, user, name):
+def increase_user_stat(session: scoped_session, user: User, name: str) -> None:
     """Increase a specific statistic."""
     from pollbot.models import UserStatistic
 

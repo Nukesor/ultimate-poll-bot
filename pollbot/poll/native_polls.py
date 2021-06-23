@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
+from telegram import Poll as NativePoll
 
 from pollbot.enums import PollType
 from pollbot.models import Poll
 from pollbot.poll.option import add_multiple_options
-from telegram import Poll as NativePoll
 
 
 def merge_from_native_poll(

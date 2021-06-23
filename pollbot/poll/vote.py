@@ -1,12 +1,18 @@
 """Helper functions for votes."""
 import random
-from typing import List
+from typing import Dict, List
+
+from sqlalchemy.orm.collections import InstrumentedList
+from sqlalchemy.orm.scoping import scoped_session
 
 from pollbot.enums import UserSorting
-from pollbot.models import Poll, User, Vote, Option
+from pollbot.models import Option, Poll, User, Vote
+from pollbot.models.poll import Poll
+from pollbot.models.user import User
+from pollbot.models.vote import Vote
 
 
-def init_votes(session, poll: Poll, user: User):
+def init_votes(session: scoped_session, poll: Poll, user: User) -> None:
     """
     Since Priority votes always need priorities, call this to create a vote
     for every option in the poll with a random priority for the given user.
@@ -28,7 +34,9 @@ def init_votes(session, poll: Poll, user: User):
     session.add_all(votes)
 
 
-def init_votes_for_new_options(session, poll: Poll, added_options: List[str]):
+def init_votes_for_new_options(
+    session: scoped_session, poll: Poll, added_options: List[str]
+) -> None:
     """
     When a new option is added, we need to create new votes
     for all users that have already voted for this poll.
@@ -81,7 +89,7 @@ def reorder_votes_after_option_delete(session, poll: Poll):
     session.flush()
 
 
-def get_sorted_votes(poll: Poll, votes: List[Vote]):
+def get_sorted_votes(poll: Poll, votes: List[Vote]) -> InstrumentedList:
     """Sort the votes depending on the poll's current settings."""
 
     def get_user_name(vote):
@@ -94,7 +102,7 @@ def get_sorted_votes(poll: Poll, votes: List[Vote]):
     return votes
 
 
-def get_sorted_doodle_votes(poll: Poll, votes: List[Vote]):
+def get_sorted_doodle_votes(poll: Poll, votes: List[Vote]) -> Dict[str, List[Vote]]:
     """Sort the votes depending on the poll's current settings."""
     doodle_answers = ["yes", "maybe", "no"]
 

@@ -1,10 +1,15 @@
 """All keyboards for external users that don't own the poll."""
+from typing import List
+
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
+
 from pollbot.enums import CallbackType
 from pollbot.i18n import i18n
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from pollbot.models.poll import Poll
 
 
-def get_notify_keyboard(polls):
+def get_notify_keyboard(polls: List[Poll]) -> InlineKeyboardMarkup:
     """Get the keyboard for activationg notifications in a chat."""
     # Add back and pick buttons
     buttons = []
@@ -15,7 +20,7 @@ def get_notify_keyboard(polls):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_external_add_option_keyboard(poll):
+def get_external_add_option_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get the external keyboard for adding a new option after poll creation."""
     locale = poll.user.locale
     datepicker_payload = f"{CallbackType.external_open_datepicker.value}:{poll.id}:0"
@@ -40,7 +45,7 @@ def get_external_add_option_keyboard(poll):
     return keyboard
 
 
-def get_external_share_keyboard(poll):
+def get_external_share_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Allow external users to share a poll."""
     locale = poll.user.locale
 

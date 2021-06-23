@@ -1,15 +1,19 @@
 """Option for setting the current date of the picker."""
 from datetime import date, datetime, time
+from typing import Optional
 
 from dateutil.relativedelta import relativedelta
+from sqlalchemy.orm.scoping import scoped_session
 
 from pollbot.decorators import poll_required
 from pollbot.display import get_settings_text
 from pollbot.display.creation import get_datepicker_text
 from pollbot.enums import DatepickerContext
 from pollbot.i18n import i18n
+from pollbot.models.poll import Poll
 from pollbot.poll.option import add_single_option
 from pollbot.poll.update import update_poll_messages
+from pollbot.telegram.callback_handler.context import CallbackContext
 from pollbot.telegram.keyboard.date_picker import (
     get_add_option_datepicker_keyboard,
     get_creation_datepicker_keyboard,
@@ -18,7 +22,12 @@ from pollbot.telegram.keyboard.date_picker import (
 )
 
 
-def update_datepicker(context, poll, datepicker_context, current_date):
+def update_datepicker(
+    context: CallbackContext,
+    poll: Poll,
+    datepicker_context: DatepickerContext,
+    current_date: date,
+) -> None:
     """Update the creation datepicker."""
     message = get_datepicker_text(context.poll)
     if datepicker_context == DatepickerContext.creation:
@@ -41,7 +50,12 @@ def update_datepicker(context, poll, datepicker_context, current_date):
     )
 
 
-def owner_pick_date_option(session, context, poll, datepicker_context):
+def owner_pick_date_option(
+    session: scoped_session,
+    context: CallbackContext,
+    poll: Poll,
+    datepicker_context: DatepickerContext,
+) -> None:
     """Owner adds or removes a date option."""
     picked_date = date.fromisoformat(context.data[2])
 
@@ -69,29 +83,41 @@ def owner_pick_date_option(session, context, poll, datepicker_context):
 
 
 @poll_required
-def pick_creation_date(session, context, poll):
+def pick_creation_date(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Pick an option during poll creation."""
     owner_pick_date_option(session, context, poll, DatepickerContext.creation)
 
 
 @poll_required
-def pick_creation_weekday(session, context, poll):
+def pick_creation_weekday(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
+
     return
 
 
 @poll_required
-def pick_additional_date(session, context, poll):
+def pick_additional_date(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
+
     """Pick an option after creating the poll."""
     owner_pick_date_option(session, context, poll, DatepickerContext.additional_option)
 
 
 @poll_required
-def pick_additional_weekday(session, context, poll):
+def pick_additional_weekday(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     return
 
 
 @poll_required
-def pick_external_date(session, context, poll):
+def pick_external_date(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> Optional[str]:
     """Add or remove a date option during creation."""
     picked_date = date.fromisoformat(context.data[2])
 
@@ -114,7 +140,9 @@ def pick_external_date(session, context, poll):
 
 
 @poll_required
-def pick_due_date(session, context, poll):
+def pick_due_date(
+    _: scoped_session, context: CallbackContext, poll: Poll
+) -> Optional[str]:
     """Set the due date for a poll."""
     picked_date = date.fromisoformat(context.data[2])
     if picked_date <= date.today():
@@ -137,7 +165,8 @@ def pick_due_date(session, context, poll):
 
 
 @poll_required
-def set_next_month(session, context, poll):
+def set_next_month(_: scoped_session, context: CallbackContext, poll: Poll) -> str:
+
     """Show the datepicker keyboard for the next month."""
     this_month = date.fromisoformat(context.data[2])
     datepicker_context = DatepickerContext(int(context.data[3]))
@@ -150,7 +179,7 @@ def set_next_month(session, context, poll):
 
 
 @poll_required
-def set_previous_month(session, context, poll):
+def set_previous_month(_: scoped_session, context: CallbackContext, poll: Poll) -> str:
     """Show the datepicker keyboard for the previous month."""
     this_month = date.fromisoformat(context.data[2])
     datepicker_context = DatepickerContext(int(context.data[3]))

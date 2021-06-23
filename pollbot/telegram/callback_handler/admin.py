@@ -1,14 +1,17 @@
 """Admin related callback handler."""
 import time
 
+from sqlalchemy.orm.scoping import scoped_session
+
 from pollbot.display.admin import stats
 from pollbot.helper.plot import send_plots
 from pollbot.models import Poll
 from pollbot.poll.update import update_poll_messages
+from pollbot.telegram.callback_handler.context import CallbackContext
 from pollbot.telegram.keyboard.user import get_admin_settings_keyboard
 
 
-def open_admin_settings(session, context):
+def open_admin_settings(session: scoped_session, context: CallbackContext) -> None:
     """Open the main menu."""
     keyboard = get_admin_settings_keyboard(context.user)
     context.query.message.edit_text(
@@ -19,7 +22,7 @@ def open_admin_settings(session, context):
     )
 
 
-def update_all(session, context):
+def update_all(session: scoped_session, context: CallbackContext) -> str:
     """Update all polls."""
     chat = context.query.message.chat
 
@@ -49,6 +52,6 @@ def update_all(session, context):
     return "Done"
 
 
-def plot(session, context):
+def plot(session: scoped_session, context: CallbackContext) -> None:
     """Plot interesting statistics."""
     send_plots(session, context.query.message.chat)

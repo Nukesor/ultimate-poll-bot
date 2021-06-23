@@ -3,11 +3,13 @@ from pollbot.config import config
 from pollbot.enums import PollType, StartAction
 from pollbot.helper import get_escaped_bot_name
 from pollbot.i18n import i18n
+from pollbot.models.poll import Poll
+from pollbot.models.user import User
 from pollbot.poll.helper import translate_poll_type
 from pollbot.telegram.keyboard.helper import get_start_button_payload
 
 
-def get_settings_text(poll):
+def get_settings_text(poll: Poll) -> str:
     """Compile the options text for this poll."""
     text = []
     locale = poll.user.locale
@@ -102,7 +104,7 @@ def get_settings_text(poll):
     return "\n".join(text)
 
 
-def get_user_settings_text(user):
+def get_user_settings_text(user: User) -> str:
     """Get information about the user."""
     locale = user.locale
 

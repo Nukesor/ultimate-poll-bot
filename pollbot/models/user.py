@@ -1,4 +1,6 @@
 """The sqlite model for a user."""
+from __future__ import annotations
+
 from sqlalchemy import Boolean, Column, ForeignKey, func
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import BigInteger, DateTime, String

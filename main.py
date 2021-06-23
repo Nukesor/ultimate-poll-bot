@@ -1,6 +1,5 @@
 #!/bin/env python
 """Start the bot."""
-
 from pollbot.pollbot import updater
 from pollbot.config import config
 

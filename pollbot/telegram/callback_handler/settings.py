@@ -1,6 +1,8 @@
 """Callback functions needed during creation of a Poll."""
 from datetime import date
 
+from sqlalchemy.orm.scoping import scoped_session
+
 from pollbot.decorators import poll_required
 from pollbot.display import get_settings_text
 from pollbot.display.creation import get_datepicker_text
@@ -8,8 +10,14 @@ from pollbot.display.poll.compilation import get_poll_text
 from pollbot.enums import ExpectedInput
 from pollbot.i18n import i18n
 from pollbot.models import Option
+from pollbot.models.poll import Poll
 from pollbot.poll.update import update_poll_messages
 from pollbot.poll.vote import reorder_votes_after_option_delete
+from pollbot.telegram.callback_handler.context import CallbackContext
+from pollbot.telegram.keyboard.date_picker import (
+    get_add_option_datepicker_keyboard,
+    get_due_date_datepicker_keyboard,
+)
 from pollbot.telegram.keyboard.settings import (
     get_add_option_keyboard,
     get_anonymization_confirmation_keyboard,
@@ -17,14 +25,10 @@ from pollbot.telegram.keyboard.settings import (
     get_settings_keyboard,
     get_settings_language_keyboard,
 )
-from pollbot.telegram.keyboard.date_picker import (
-    get_add_option_datepicker_keyboard,
-    get_due_date_datepicker_keyboard,
-)
 from pollbot.telegram.keyboard.styling import get_styling_settings_keyboard
 
 
-def send_settings_message(context):
+def send_settings_message(context: CallbackContext) -> None:
     """Edit the message of the current context to the settings menu."""
     context.query.message.edit_text(
         text=get_settings_text(context.poll),
@@ -35,7 +39,9 @@ def send_settings_message(context):
 
 
 @poll_required
-def show_anonymization_confirmation(session, context, poll):
+def show_anonymization_confirmation(
+    _: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Show the delete confirmation message."""
     context.query.message.edit_text(
         i18n.t("settings.anonymize", locale=poll.user.locale),
@@ -44,7 +50,9 @@ def show_anonymization_confirmation(session, context, poll):
 
 
 @poll_required
-def make_anonymous(session, context, poll):
+def make_anonymous(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Change the anonymity settings of a poll."""
     poll.anonymous = True
     if not poll.show_percentage and not poll.show_option_votes:
@@ -56,7 +64,9 @@ def make_anonymous(session, context, poll):
 
 
 @poll_required
-def open_language_picker(session, context, poll):
+def open_language_picker(
+    _: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Open the language picker."""
     keyboard = get_settings_language_keyboard(poll)
     context.query.message.edit_text(
@@ -67,7 +77,9 @@ def open_language_picker(session, context, poll):
 
 
 @poll_required
-def change_poll_language(session, context, poll):
+def change_poll_language(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Open the language picker."""
     poll.locale = context.action
     session.commit()
@@ -75,7 +87,9 @@ def change_poll_language(session, context, poll):
 
 
 @poll_required
-def open_due_date_datepicker(session, context, poll):
+def open_due_date_datepicker(
+    _: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Open the datepicker for setting a due date."""
     poll.user.expected_input = ExpectedInput.due_date.name
     keyboard = get_due_date_datepicker_keyboard(poll, date.today())
@@ -83,7 +97,9 @@ def open_due_date_datepicker(session, context, poll):
 
 
 @poll_required
-def show_styling_menu(session, context, poll):
+def show_styling_menu(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Show the menu for sorting settings."""
     context.query.message.edit_text(
         get_poll_text(session, context.poll),
@@ -94,7 +110,7 @@ def show_styling_menu(session, context, poll):
 
 
 @poll_required
-def expect_new_option(session, context, poll):
+def expect_new_option(_: scoped_session, context: CallbackContext, poll: Poll) -> None:
     """Send a text and tell the user that we expect a new option."""
     user = context.user
     user.expected_input = ExpectedInput.new_option.name
@@ -108,7 +124,9 @@ def expect_new_option(session, context, poll):
 
 
 @poll_required
-def open_new_option_datepicker(session, context, poll):
+def open_new_option_datepicker(
+    _: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Send a text and tell the user that we expect a new option."""
     keyboard = get_add_option_datepicker_keyboard(poll, date.today())
     context.query.message.edit_text(
@@ -119,7 +137,9 @@ def open_new_option_datepicker(session, context, poll):
 
 
 @poll_required
-def show_remove_options_menu(session, context, poll):
+def show_remove_options_menu(
+    _: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Show the menu for removing options."""
     keyboard = get_remove_option_keyboard(poll)
     context.query.message.edit_text(
@@ -130,7 +150,9 @@ def show_remove_options_menu(session, context, poll):
 
 
 @poll_required
-def remove_option(session, context, poll):
+def remove_option(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Remove the option."""
     session.query(Option).filter(Option.id == context.action).delete()
 
@@ -146,7 +168,9 @@ def remove_option(session, context, poll):
 
 
 @poll_required
-def toggle_allow_new_options(session, context, poll):
+def toggle_allow_new_options(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Toggle the visibility of the percentage bar."""
     poll.allow_new_options = not poll.allow_new_options
 
@@ -156,7 +180,9 @@ def toggle_allow_new_options(session, context, poll):
 
 
 @poll_required
-def toggle_allow_sharing(session, context, poll):
+def toggle_allow_sharing(
+    session: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
     """Toggle the visibility of the percentage bar."""
     poll.allow_sharing = not poll.allow_sharing
 

@@ -1,12 +1,15 @@
 """Option for setting the current date of the picker."""
+from sqlalchemy.orm.scoping import scoped_session
+
 from pollbot.display.misc import get_help_text_and_keyboard
 from pollbot.models import Option
+from pollbot.telegram.callback_handler.context import CallbackContext
 
 
-def switch_help(session, context):
+def switch_help(_: scoped_session, context: CallbackContext) -> None:
     """Show the correct help section."""
     user = context.user
-    text, keyboard = get_help_text_and_keyboard(user, context.action)
+    text, keyboard = get_help_text_and_keyboard(user, str(context.action))
 
     context.query.message.edit_text(
         text,
@@ -16,7 +19,7 @@ def switch_help(session, context):
     )
 
 
-def show_option_name(session, context):
+def show_option_name(session: scoped_session, context: CallbackContext) -> str:
     """Return the option name via callback query."""
     option = session.query(Option).get(context.action)
 
@@ -33,6 +36,6 @@ def show_option_name(session, context):
     return message
 
 
-def ignore(session, context):
+def ignore(_: scoped_session, context: CallbackContext) -> None:
     """Simple generic helper to return a hint on styling buttons."""
     context.query.answer("This button doesn't do anything and is just for styling.")

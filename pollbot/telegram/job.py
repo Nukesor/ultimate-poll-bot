@@ -4,22 +4,25 @@ from datetime import date, datetime, timedelta
 from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
+from sqlalchemy.orm.scoping import scoped_session
 from telegram.error import BadRequest, RetryAfter, Unauthorized
 from telegram.ext import run_async
+from telegram.ext.callbackcontext import CallbackContext
 
 from pollbot.config import config
+from pollbot.enums import PollDeletionMode
 from pollbot.i18n import i18n
 from pollbot.models import DailyStatistic, Poll, Update, UserStatistic
-from pollbot.enums import PollDeletionMode
-from pollbot.poll.update import send_updates, update_poll_messages
+from pollbot.models.poll import Poll
 from pollbot.poll.delete import delete_poll
+from pollbot.poll.update import send_updates, update_poll_messages
 from pollbot.sentry import sentry
 from pollbot.telegram.session import job_wrapper
 
 
 @run_async
 @job_wrapper
-def message_update_job(context, session):
+def message_update_job(context: CallbackContext, session: scoped_session) -> None:
     """Update all polls that are scheduled for an update."""
     try:
         context.job.enabled = False
@@ -70,7 +73,7 @@ def message_update_job(context, session):
 
 @run_async
 @job_wrapper
-def delete_polls(context, session):
+def delete_polls(context: CallbackContext, session: scoped_session) -> None:
     """Delete polls from the database and their messages if requested."""
     try:
         context.job.enabled = False
@@ -98,7 +101,7 @@ def delete_polls(context, session):
 
 
 @job_wrapper
-def send_notifications(context, session):
+def send_notifications(context: CallbackContext, session: scoped_session) -> None:
     """Notify the users about the poll being closed soon."""
     polls = (
         session.query(Poll)
@@ -142,7 +145,9 @@ def send_notifications(context, session):
             session.commit()
 
 
-def send_notifications_for_poll(context, session, poll, message_key):
+def send_notifications_for_poll(
+    context: CallbackContext, session: scoped_session, poll: Poll, message_key: str
+) -> None:
     """Send the notifications for a single poll depending on the remaining time."""
     locale = poll.locale
     for notification in poll.notifications:
@@ -169,7 +174,7 @@ def send_notifications_for_poll(context, session, poll, message_key):
 
 @run_async
 @job_wrapper
-def create_daily_stats(context, session):
+def create_daily_stats(context: CallbackContext, session: scoped_session) -> None:
     """Create the daily stats entity for today and tomorrow."""
     try:
         today = date.today()
@@ -188,7 +193,7 @@ def create_daily_stats(context, session):
 
 @run_async
 @job_wrapper
-def perma_ban_checker(context, session):
+def perma_ban_checker(context: CallbackContext, session: scoped_session) -> None:
     """Perma-ban people that send more than 250 votes for at least 3 days in the last week."""
     vote_limit = config["telegram"]["max_user_votes_per_day"]
     stats = (
@@ -216,7 +221,7 @@ def perma_ban_checker(context, session):
 
 @run_async
 @job_wrapper
-def cleanup(context, session):
+def cleanup(context: CallbackContext, session: scoped_session) -> None:
     """Remove all user statistics after 7 days."""
     threshold = date.today() - timedelta(days=7)
     session.query(UserStatistic).filter(UserStatistic.date < threshold).delete()

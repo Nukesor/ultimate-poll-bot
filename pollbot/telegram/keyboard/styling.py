@@ -1,11 +1,14 @@
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
+
 from pollbot.enums import CallbackType, OptionSorting, UserSorting
 from pollbot.i18n import i18n
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from pollbot.models.poll import Poll
 
 from .settings import get_back_to_settings_button
 
 
-def get_styling_settings_keyboard(poll):
+def get_styling_settings_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """Get a keyboard for sorting options."""
     buttons = []
     locale = poll.user.locale
@@ -134,7 +137,7 @@ def get_styling_settings_keyboard(poll):
     return InlineKeyboardMarkup(buttons)
 
 
-def get_manual_option_order_keyboard(poll):
+def get_manual_option_order_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     """A keyboard which can be used to manually adjust the order of options in polls"""
     buttons = []
 
