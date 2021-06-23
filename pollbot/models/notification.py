@@ -29,7 +29,7 @@ class Notification(base):
 
     # ManyToOne
     poll_id = Column(Integer, ForeignKey("poll.id", ondelete="cascade"), index=True)
-    poll = relationship("Poll", lazy="joined")
+    poll = relationship("Poll", lazy="joined", back_populates="notifications")
 
     def __init__(self, chat_id, poll_message_id=None):
         """Create a new poll."""

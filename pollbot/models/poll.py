@@ -84,10 +84,7 @@ class Poll(base):
 
     # OneToMany
     options = relationship(
-        "Option",
-        order_by="asc(Option.index)",
-        lazy="joined",
-        passive_deletes="all",
+        "Option", order_by="asc(Option.index)", lazy="joined", passive_deletes="all"
     )
     votes = relationship("Vote", passive_deletes="all")
     references = relationship("Reference", lazy="joined", passive_deletes="all")

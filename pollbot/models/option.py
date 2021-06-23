@@ -34,7 +34,7 @@ class Option(base):
     poll_id = Column(
         Integer, ForeignKey("poll.id", ondelete="cascade"), nullable=False, index=True
     )
-    poll = relationship("Poll", lazy="joined")
+    poll = relationship("Poll", lazy="joined", back_populates="options")
 
     # OneToMany
     votes = relationship(

@@ -37,19 +37,25 @@ class Vote(base):
         nullable=False,
         index=True,
     )
-    option = relationship("Option")
+    option = relationship("Option", back_populates="votes")
 
     poll_id = Column(
         Integer, ForeignKey("poll.id", ondelete="cascade"), nullable=False, index=True
     )
-    poll = relationship("Poll")
+    poll = relationship(
+        "Poll",
+        back_populates="votes",
+    )
 
     user_id = Column(
         BigInteger,
         ForeignKey("user.id", ondelete="cascade"),
         index=True,
     )
-    user = relationship("User")
+    user = relationship(
+        "User",
+        back_populates="votes",
+    )
 
     def __init__(self, user, option):
         """Create a new vote."""

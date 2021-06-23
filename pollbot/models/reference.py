@@ -44,7 +44,7 @@ class Reference(base):
         nullable=False,
         index=True,
     )
-    poll = relationship("Poll")
+    poll = relationship("Poll", back_populates="references")
 
     def __init__(
         self,
