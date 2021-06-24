@@ -93,7 +93,6 @@ def add_option(
     option = Option(poll, text)
     option.description = description
     option.is_date = is_date
-    poll.options.append(option)
 
     added_options.append(text)
 

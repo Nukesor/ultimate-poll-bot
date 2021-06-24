@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from datetime import date
+from typing import Optional
 
 from sqlalchemy import Column, ForeignKey, UniqueConstraint, func
 from sqlalchemy.orm import relationship
@@ -38,17 +39,21 @@ class Option(base):
 
     # OneToMany
     votes = relationship(
-        "Vote", lazy="joined", passive_deletes="all", order_by="Vote.id"
+        "Vote",
+        lazy="joined",
+        passive_deletes="all",
+        order_by="Vote.id",
+        back_populates="option",
     )
 
     def __init__(self, poll, name):
         """Create a new poll."""
-        self.poll = poll
         self.name = name
         if len(poll.options) == 0:
             self.index = 0
         else:
             self.index = max(option.index for option in poll.options) + 1
+        self.poll = poll
 
     def __repr__(self):
         """Print as string."""
@@ -65,7 +70,7 @@ class Option(base):
 
         return self.name
 
-    def as_date(self) -> date:
+    def as_date(self) -> Optional[date]:
         """Either return the option as date or None."""
         if not self.is_date:
             return None
