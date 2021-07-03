@@ -132,7 +132,6 @@ Thanks to the Czech translator:
 /list_closed    List all closed polls and manage them
 /notify         Activate notifications in a external chats
 /help           Display the help
-/donations      Get me a coffee
 ```
 
 ## Installation and Starting

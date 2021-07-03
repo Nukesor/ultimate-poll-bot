@@ -8,7 +8,6 @@ from pollbot.i18n import i18n
 from pollbot.poll.creation import initialize_poll
 from pollbot.poll.update import update_poll_messages
 from pollbot.telegram.callback_handler.context import CallbackContext
-from pollbot.telegram.keyboard.misc import get_donations_keyboard
 from pollbot.telegram.keyboard.user import (
     get_delete_all_confirmation_keyboard,
     get_delete_user_final_confirmation_keyboard,
@@ -74,17 +73,8 @@ def list_closed_polls_navigation(
     context.query.message.edit_text(text, reply_markup=keyboard)
 
 
-def open_donation(_: scoped_session, context: CallbackContext) -> None:
-    """Open the donations text."""
-    context.query.message.edit_text(
-        i18n.t("misc.donation", locale=context.user.locale),
-        parse_mode="Markdown",
-        reply_markup=get_donations_keyboard(context.user),
-    )
-
-
 def open_help(_: scoped_session, context: CallbackContext) -> None:
-    """Open the donations text."""
+    """Open the help text."""
     text, keyboard = get_help_text_and_keyboard(context.user, "intro")
     context.query.message.edit_text(
         text,

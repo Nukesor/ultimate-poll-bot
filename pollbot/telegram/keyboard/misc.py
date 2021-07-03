@@ -34,12 +34,3 @@ def get_help_keyboard(
     rows.append([get_back_to_menu_button(user)])
 
     return InlineKeyboardMarkup(rows)
-
-
-def get_donations_keyboard(user: User) -> InlineKeyboardMarkup:
-    buttons = [
-        [InlineKeyboardButton(text="Paypal", url="https://paypal.me/arnebeer/")],
-        [get_back_to_menu_button(user)],
-    ]
-
-    return InlineKeyboardMarkup(buttons)

@@ -10,4 +10,3 @@
     list_closed - List all closed polls and manage them
     notify - Activate notifications in external chats
     help - Show the help text
-    donations - Get me a coffee

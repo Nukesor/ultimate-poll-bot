@@ -88,7 +88,6 @@ from .user import (
     list_closed_polls_navigation,
     list_polls,
     list_polls_navigation,
-    open_donation,
     open_help,
     open_language_menu,
     open_main_menu,
@@ -186,7 +185,6 @@ async_callback_mapping = {
     CallbackType.user_list_polls_navigation: list_polls_navigation,
     CallbackType.user_list_closed_polls_navigation: list_closed_polls_navigation,
     CallbackType.open_help: open_help,
-    CallbackType.donate: open_donation,
     CallbackType.user_delete_all_confirmation: delete_all_confirmation,
     CallbackType.user_delete_closed_confirmation: delete_closed_confirmation,
     # Admin

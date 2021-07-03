@@ -22,7 +22,7 @@ from pollbot.telegram.callback_handler.mapping import (
 )
 from pollbot.telegram.commands.admin import broadcast, reset_broadcast, test_broadcast
 from pollbot.telegram.commands.external import notify
-from pollbot.telegram.commands.misc import send_donation_text, send_help
+from pollbot.telegram.commands.misc import send_help
 from pollbot.telegram.commands.poll import (
     cancel_poll_creation,
     create_poll,
@@ -83,9 +83,6 @@ dispatcher.add_handler(CommandHandler("help", send_help, filters=command_filter)
 dispatcher.add_handler(CommandHandler("list", list_polls, filters=command_filter))
 dispatcher.add_handler(
     CommandHandler("list_closed", list_closed_polls, filters=command_filter)
-)
-dispatcher.add_handler(
-    CommandHandler("donations", send_donation_text, filters=command_filter)
 )
 
 # External commands
