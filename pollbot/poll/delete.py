@@ -89,6 +89,7 @@ def delete_poll(
                 or e.message.startswith("Message identifier is not specified")
                 or e.message.startswith("Chat_write_forbidden")
                 or e.message.startswith("Chat not found")
+                or e.message.startswith("Message_author_required")
             ):
                 pass
             else:
