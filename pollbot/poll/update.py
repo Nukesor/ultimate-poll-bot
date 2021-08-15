@@ -122,6 +122,7 @@ def try_update_reference(
 ) -> None:
     try:
         update_reference(session, bot, poll, reference, first_try)
+        session.commit()
     except RetryAfter as e:
         session.rollback()
         # Handle a flood control exception on initial reference update.

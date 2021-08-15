@@ -1,11 +1,8 @@
 """Handle inline query results."""
-from datetime import datetime, timedelta
-
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import DataError, IntegrityError
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.bot import Bot
-from telegram.error import RetryAfter
 from telegram.ext import run_async
 from telegram.update import Update
 
