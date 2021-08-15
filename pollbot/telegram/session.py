@@ -2,11 +2,12 @@
 import traceback
 from datetime import date, datetime, timedelta
 from functools import wraps
-from typing import Any, Callable, Optional, Tuple, Union
+from typing import Any, Callable, Union
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from sqlalchemy.orm.scoping import scoped_session
+from sqlalchemy.orm.exc import ObjectDeletedError
 from telegram import Bot, Update
 from telegram.error import BadRequest, NetworkError, RetryAfter, TimedOut, Unauthorized
 from telegram.ext import CallbackContext
@@ -453,6 +454,17 @@ def ignore_exception(exception: Union[BadRequest, Unauthorized]) -> bool:
         ):
             return True
         if exception.message.lower() == "forbidden: chat_write_forbidden":
+            return True
+
+    # Poll deletion is asynchronous.
+    # As a result, there are a lot of race conditions which can occur.
+    #
+    # For this reason, I decided to simply ignore all errors that occur if a user
+    # tries to interact with a poll that has just been deleted.
+    # example exception message:
+    # Instance '<Poll at 0x7fb2065a2f98>' has been deleted, or its row is otherwise not present.
+    if type(exception) is ObjectDeletedError:
+        if exception.message.contains("<Poll"):
             return True
 
     if type(exception) is TimedOut:
