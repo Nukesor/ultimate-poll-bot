@@ -10,6 +10,7 @@ from pollbot.i18n import i18n
 from pollbot.models.poll import Poll
 from pollbot.poll.update import send_updates
 from pollbot.sentry import sentry
+from pollbot.telegram.session import should_report_exception
 
 
 def delete_poll(

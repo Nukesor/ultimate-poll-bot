@@ -215,7 +215,9 @@ def update_reference(
 
             session.delete(reference)
             session.flush()
-        elif e.message.startswith("Message is not modified"):
+        elif e.message.startswith("Message is not modified") or e.message.startswith(
+            "Message_author_required"
+        ):
             pass
         else:
             raise e
