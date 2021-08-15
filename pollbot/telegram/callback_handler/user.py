@@ -172,7 +172,12 @@ def delete_user(session: scoped_session, context: CallbackContext) -> None:
     polls_for_update = []
     # Delete all votes, but only update non-closed polls
     for vote in user.votes:
-        if vote.poll not in polls_for_update and not vote.poll.closed:
+        # Make sure the poll exists (hasn't just been deleted) and is closed
+        if (
+            vote.poll is not None
+            and vote.poll not in polls_for_update
+            and not vote.poll.closed
+        ):
             polls_for_update.append(vote.poll)
         session.delete(vote)
     session.flush()
