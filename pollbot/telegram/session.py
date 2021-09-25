@@ -424,6 +424,9 @@ def ignore_exception(exception: Union[BadRequest, Unauthorized]) -> bool:
             or exception.message.startswith("Schedule_date_invalid")
             or exception.message.startswith("Have no rights to send a message")
             or exception.message.startswith("Chat_write_forbidden")
+            or exception.message.startswith(
+                "Not enough rights to send text messages to the chat"
+            )
             or exception.message.startswith("Message_id_invalid")
             or exception.message.startswith("Message identifier not specified")
             or exception.message.startswith("Message to edit not found")
@@ -465,7 +468,7 @@ def ignore_exception(exception: Union[BadRequest, Unauthorized]) -> bool:
     # example exception message:
     # Instance '<Poll at 0x7fb2065a2f98>' has been deleted, or its row is otherwise not present.
     if type(exception) is ObjectDeletedError:
-        if exception.message.contains("<Poll"):
+        if exception.__str__().contains("<Poll"):
             return True
 
     if type(exception) is TimedOut:

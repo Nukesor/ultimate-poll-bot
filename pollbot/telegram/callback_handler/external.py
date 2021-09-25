@@ -2,6 +2,7 @@
 from datetime import date
 from typing import Optional
 
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.scoping import scoped_session
 
 from pollbot.decorators import poll_required
@@ -60,8 +61,7 @@ def activate_notification(
 def open_external_datepicker(
     _: scoped_session, context: CallbackContext, poll: Poll
 ) -> Optional[str]:
-
-    """All options are entered the poll is created."""
+    """This opens the datepicker for non-admin users when they're adding options."""
     keyboard = get_external_datepicker_keyboard(poll, date.today())
     # Switch from new option by text to new option via datepicker
     message = context.query.message
@@ -80,8 +80,7 @@ def open_external_datepicker(
 def open_external_menu(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-
-    """All options are entered the poll is created."""
+    """This opens the option adding menu for non-admin users."""
     context.user.expected_input = ExpectedInput.new_user_option.name
     context.user.current_poll = poll
     session.commit()
@@ -97,7 +96,7 @@ def open_external_menu(
 def external_cancel(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-    """All options are entered the poll is created."""
+    """Closes the option adding menu for non-admin users."""
     context.user.expected_input = None
     context.user.current_poll = None
     session.commit()
@@ -109,7 +108,12 @@ def external_cancel(
 def update_shared(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-    """All options are entered the poll is created."""
+    """Fallback button to update a poll that might not sync after sharing.
+
+    It might happen due to bugs or network errors, that polls don't get automatically
+    synced, once they're shared. For that reason, a button is displayed below the initial
+    message, which can be used to trigger a manual update.
+    """
     message_id = context.query.inline_message_id
 
     reference = (
@@ -119,13 +123,21 @@ def update_shared(
         .one_or_none()
     )
 
+    # In case something went wrong and the reference hasn't been created, we have
+    # to try it once more in here.
     if reference is None:
-        reference = Reference(
-            poll,
-            ReferenceType.inline.name,
-            inline_message_id=message_id,
-        )
-        session.add(reference)
-        session.commit()
+        try:
+            reference = Reference(
+                poll,
+                ReferenceType.inline.name,
+                inline_message_id=message_id,
+            )
+            session.add(reference)
+            session.commit()
+        except IntegrityError:
+            # Users can spam this button, which leads to UniqueConstraint errors.
+            # Just ignore those.
+            session.rollback()
+            pass
 
     try_update_reference(session, context.bot, poll, reference)

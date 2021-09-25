@@ -32,15 +32,18 @@ def delete_poll(
     if not remove_all:
         if not poll.closed:
             poll.closed = True
-            try:
-                send_updates(session, context.bot, poll)
-            except RetryAfter as e:
-                # In case we get an flood control error, wait a little longer
-                # than the specified time. Afterwards, just try again.
-                retry_after = int(e.retry_after) + 5
-                sleep(retry_after)
 
-                send_updates(session, context.bot, poll)
+            # In case we get an flood control error, wait little longer
+            # than the specified time and try again.
+            tries = 3
+            current_try = 0
+            while tries < current_try:
+                try:
+                    send_updates(session, context.bot, poll)
+                except RetryAfter as e:
+                    retry_after = int(e.retry_after) + 5
+                    sleep(retry_after)
+                    current_try += 1
 
         session.delete(poll)
         return
