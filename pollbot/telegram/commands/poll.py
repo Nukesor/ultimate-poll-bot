@@ -3,7 +3,6 @@ from typing import Optional
 
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.bot import Bot
-from telegram.ext import run_async
 from telegram.update import Update
 
 from pollbot.display.misc import get_poll_list
@@ -14,14 +13,12 @@ from pollbot.poll.creation import initialize_poll
 from pollbot.telegram.session import message_wrapper
 
 
-@run_async
 @message_wrapper(private=True)
 def create_poll(bot: Bot, update: Update, session: scoped_session, user: User) -> None:
     """Create a new poll."""
     initialize_poll(session, user, update.message.chat)
 
 
-@run_async
 @message_wrapper(private=True)
 def cancel_poll_creation(bot, update, session, user):
     """Cancels the creation of the current poll."""
@@ -40,7 +37,6 @@ def cancel_poll_creation(bot, update, session, user):
     )
 
 
-@run_async
 @message_wrapper(private=True)
 def list_polls(bot: Bot, update: Update, session: scoped_session, user: User) -> None:
     """Get a list of all active polls."""
@@ -48,7 +44,6 @@ def list_polls(bot: Bot, update: Update, session: scoped_session, user: User) ->
     update.message.chat.send_message(text, reply_markup=keyboard)
 
 
-@run_async
 @message_wrapper(private=True)
 def list_closed_polls(
     bot: Bot, update: Update, session: scoped_session, user: User

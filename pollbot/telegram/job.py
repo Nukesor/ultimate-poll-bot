@@ -6,7 +6,6 @@ from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.error import BadRequest, RetryAfter, Unauthorized
-from telegram.ext import run_async
 from telegram.ext.callbackcontext import CallbackContext
 
 from pollbot.config import config
@@ -20,7 +19,6 @@ from pollbot.sentry import sentry
 from pollbot.telegram.session import job_wrapper
 
 
-@run_async
 @job_wrapper
 def message_update_job(context: CallbackContext, session: scoped_session) -> None:
     """Update all polls that are scheduled for an update."""
@@ -71,7 +69,6 @@ def message_update_job(context: CallbackContext, session: scoped_session) -> Non
         context.job.enabled = True
 
 
-@run_async
 @job_wrapper
 def delete_polls(context: CallbackContext, session: scoped_session) -> None:
     """Delete polls from the database and their messages if requested."""
@@ -172,7 +169,6 @@ def send_notifications_for_poll(
             sentry.capture_job_exception(e)
 
 
-@run_async
 @job_wrapper
 def create_daily_stats(context: CallbackContext, session: scoped_session) -> None:
     """Create the daily stats entity for today and tomorrow."""
@@ -191,7 +187,6 @@ def create_daily_stats(context: CallbackContext, session: scoped_session) -> Non
         sentry.capture_job_exception(e)
 
 
-@run_async
 @job_wrapper
 def perma_ban_checker(context: CallbackContext, session: scoped_session) -> None:
     """Perma-ban people that send more than 250 votes for at least 3 days in the last week."""
@@ -219,7 +214,6 @@ def perma_ban_checker(context: CallbackContext, session: scoped_session) -> None
             stat.user.banned = True
 
 
-@run_async
 @job_wrapper
 def cleanup(context: CallbackContext, session: scoped_session) -> None:
     """Remove all user statistics after 7 days."""

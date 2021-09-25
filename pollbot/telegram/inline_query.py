@@ -10,7 +10,6 @@ from telegram import (
     InputTextMessageContent,
 )
 from telegram.bot import Bot
-from telegram.ext import run_async
 from telegram.update import Update
 
 from pollbot.config import config
@@ -21,7 +20,6 @@ from pollbot.models.user import User
 from pollbot.telegram.session import inline_query_wrapper
 
 
-@run_async
 @inline_query_wrapper
 def search(bot: Bot, update: Update, session: scoped_session, user: User) -> None:
     """Handle inline queries for sticker search."""

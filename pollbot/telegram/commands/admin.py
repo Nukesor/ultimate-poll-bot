@@ -6,7 +6,6 @@ from sqlalchemy.orm.scoping import scoped_session
 from telegram import ReplyKeyboardRemove
 from telegram.bot import Bot
 from telegram.error import BadRequest, Unauthorized
-from telegram.ext import run_async
 from telegram.update import Update
 
 from pollbot.decorators import admin_required
@@ -15,7 +14,6 @@ from pollbot.models.user import User
 from pollbot.telegram.session import message_wrapper
 
 
-@run_async
 @message_wrapper()
 @admin_required
 def reset_broadcast(
@@ -37,7 +35,6 @@ def remaining_time(total, current, start):
     return timedelta(seconds=int(remaining_time))
 
 
-@run_async
 @message_wrapper()
 @admin_required
 def broadcast(bot: Bot, update: Update, session: scoped_session, user: User) -> None:
@@ -113,7 +110,6 @@ def broadcast(bot: Bot, update: Update, session: scoped_session, user: User) -> 
     update.message.chat.send_message("All messages sent")
 
 
-@run_async
 @message_wrapper()
 @admin_required
 def test_broadcast(

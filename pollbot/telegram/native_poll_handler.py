@@ -5,7 +5,6 @@ from telegram import Bot
 from telegram import Poll as NativePoll
 from telegram import Update
 from telegram.bot import Bot
-from telegram.ext import run_async
 from telegram.update import Update
 
 from pollbot.display import User
@@ -21,7 +20,6 @@ from pollbot.telegram.keyboard.creation import (
 from pollbot.telegram.session import message_wrapper
 
 
-@run_async
 @message_wrapper(private=True)
 def create_from_native_poll(
     bot: Bot, update: Update, session: Session, user: User
@@ -49,6 +47,5 @@ def create_from_native_poll(
     )
 
 
-@run_async
 def send_error_quiz_unsupported(update: Update, _context):
     update.effective_chat.send_message(i18n.t("creation.native_poll.quiz_unsupported"))

@@ -66,45 +66,130 @@ dispatcher = updater.dispatcher
 command_filter = ~Filters.update.edited_message
 # Poll commands
 dispatcher.add_handler(
-    CommandHandler(["create", "new", "add"], create_poll, filters=command_filter)
+    CommandHandler(
+        ["create", "new", "add"],
+        create_poll,
+        filters=command_filter,
+        run_async=True,
+    )
 )
 dispatcher.add_handler(
-    CommandHandler(["cancel", "abort"], cancel_poll_creation, filters=command_filter)
+    CommandHandler(
+        ["cancel", "abort"],
+        cancel_poll_creation,
+        filters=command_filter,
+        run_async=True,
+    )
 )
 
 # Misc commands
-dispatcher.add_handler(CommandHandler("start", start, filters=command_filter))
-dispatcher.add_handler(CommandHandler("stop", stop, filters=command_filter))
-dispatcher.add_handler(CommandHandler("delete_me", delete_me, filters=command_filter))
 dispatcher.add_handler(
-    CommandHandler("settings", open_user_settings_command, filters=command_filter)
+    CommandHandler(
+        "start",
+        start,
+        filters=command_filter,
+        run_async=True,
+    )
 )
-dispatcher.add_handler(CommandHandler("help", send_help, filters=command_filter))
-dispatcher.add_handler(CommandHandler("list", list_polls, filters=command_filter))
 dispatcher.add_handler(
-    CommandHandler("list_closed", list_closed_polls, filters=command_filter)
+    CommandHandler(
+        "stop",
+        stop,
+        filters=command_filter,
+        run_async=True,
+    )
+)
+dispatcher.add_handler(
+    CommandHandler(
+        "delete_me",
+        delete_me,
+        filters=command_filter,
+        run_async=True,
+    )
+)
+dispatcher.add_handler(
+    CommandHandler(
+        "settings",
+        open_user_settings_command,
+        filters=command_filter,
+        run_async=True,
+    )
+)
+dispatcher.add_handler(
+    CommandHandler(
+        "help",
+        send_help,
+        filters=command_filter,
+        run_async=True,
+    )
+)
+dispatcher.add_handler(
+    CommandHandler(
+        "list",
+        list_polls,
+        filters=command_filter,
+        run_async=True,
+    )
+)
+dispatcher.add_handler(
+    CommandHandler(
+        "list_closed",
+        list_closed_polls,
+        filters=command_filter,
+        run_async=True,
+    )
 )
 
 # External commands
-dispatcher.add_handler(CommandHandler("notify", notify, filters=command_filter))
+dispatcher.add_handler(
+    CommandHandler(
+        "notify",
+        notify,
+        filters=command_filter,
+        run_async=True,
+    )
+)
 
 # Admin command
-dispatcher.add_handler(CommandHandler("broadcast", broadcast, filters=command_filter))
 dispatcher.add_handler(
-    CommandHandler("reset_broadcast", reset_broadcast, filters=command_filter)
+    CommandHandler(
+        "broadcast",
+        broadcast,
+        filters=command_filter,
+        run_async=True,
+    )
 )
 dispatcher.add_handler(
-    CommandHandler("test_broadcast", test_broadcast, filters=command_filter)
+    CommandHandler(
+        "reset_broadcast",
+        reset_broadcast,
+        filters=command_filter,
+        run_async=True,
+    )
+)
+dispatcher.add_handler(
+    CommandHandler(
+        "test_broadcast",
+        test_broadcast,
+        filters=command_filter,
+        run_async=True,
+    )
 )
 
 # Poll handler
 dispatcher.add_handler(
     MessageHandler(
-        Filters.poll & ~CustomFilters.quiz & Filters.private, create_from_native_poll
+        Filters.poll & ~CustomFilters.quiz & Filters.private,
+        create_from_native_poll,
+        run_async=True,
     )
 )
 dispatcher.add_handler(
-    MessageHandler(CustomFilters.quiz & Filters.private, send_error_quiz_unsupported)
+    MessageHandler(
+        CustomFilters.quiz & Filters.private,
+        send_error_quiz_unsupported,
+        run_async=True,
+    )
 )
 
 # Callback handler
@@ -113,15 +198,19 @@ dispatcher.add_handler(
 )
 dispatcher.add_handler(
     CallbackQueryHandler(
-        handle_async_callback_query, pattern=get_async_callback_mapping_regex()
+        handle_async_callback_query,
+        pattern=get_async_callback_mapping_regex(),
+        run_async=True,
     )
 )
 
 # InlineQuery handler
-dispatcher.add_handler(InlineQueryHandler(search))
+dispatcher.add_handler(InlineQueryHandler(search, run_async=True))
 
 # InlineQuery result handler
-dispatcher.add_handler(ChosenInlineResultHandler(handle_chosen_inline_result))
+dispatcher.add_handler(
+    ChosenInlineResultHandler(handle_chosen_inline_result, run_async=True)
+)
 
 minute = 60
 hour = 60 * minute

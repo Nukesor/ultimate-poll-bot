@@ -3,7 +3,6 @@ from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import DataError, IntegrityError
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.bot import Bot
-from telegram.ext import run_async
 from telegram.update import Update
 
 from pollbot.enums import ReferenceType
@@ -14,7 +13,6 @@ from pollbot.poll.update import try_update_reference
 from pollbot.telegram.session import inline_result_wrapper
 
 
-@run_async
 @inline_result_wrapper
 def handle_chosen_inline_result(
     bot: Bot, update: Update, session: scoped_session, user: User

@@ -2,7 +2,6 @@
 from datetime import date
 
 from sqlalchemy.exc import IntegrityError
-from telegram.ext import run_async
 
 from pollbot.enums import CallbackType
 from pollbot.helper.stats import increase_stat, increase_user_stat
@@ -42,7 +41,6 @@ def handle_callback_query(bot, update, session, user):
     return
 
 
-@run_async
 @callback_query_wrapper
 def handle_async_callback_query(bot, update, session, user):
     """Handle asynchronous callback queries.
