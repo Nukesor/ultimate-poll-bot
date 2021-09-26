@@ -16,7 +16,7 @@ def engine():
     return create_engine("postgresql://localhost/pollbot_test")
 
 
-@pytest.yield_fixture(scope="session")
+@pytest.fixture(scope="session")
 def tables(engine):
     """Create the base schema."""
     with engine.connect() as con:
@@ -27,14 +27,14 @@ def tables(engine):
     base.metadata.drop_all(engine)
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def connection(engine, tables):
     """Create the connection for the test case."""
     connection = engine.connect()
     yield connection
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def session(connection, monkeypatch):
     """Return an sqlalchemy session, and after the test tear down everything properly."""
     # Begin the nested transaction
