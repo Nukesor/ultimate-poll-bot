@@ -468,7 +468,7 @@ def ignore_exception(exception: Union[BadRequest, Unauthorized]) -> bool:
     # example exception message:
     # Instance '<Poll at 0x7fb2065a2f98>' has been deleted, or its row is otherwise not present.
     if type(exception) is ObjectDeletedError:
-        if exception.__str__().contains("<Poll"):
+        if "<Poll" in exception.__str__():
             return True
 
     if type(exception) is TimedOut:
