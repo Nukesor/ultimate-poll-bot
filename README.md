@@ -1,8 +1,8 @@
 # Ultimate Pollbot ([@ultimate_pollbot](https://t.me/ultimate_pollbot))
 
-[![MIT Licence](https://img.shields.io/badge/license-MIT-success.svg)](https://github.com/Nukesor/pollbot/blob/master/LICENSE.md)
+[![MIT Licence](https://img.shields.io/badge/license-MIT-success.svg)](https://github.com/Nukesor/pollbot/blob/main/LICENSE.md)
 
-![Alt Text](https://github.com/Nukesor/images/blob/master/pollbot.gif)
+![Alt Text](https://github.com/Nukesor/images/blob/main/pollbot.gif)
 
 Deciding where you and your friends are going for lunch today can be a real hassle...
 Or, for instance, deciding which games should be played at the next LAN-Party.
@@ -80,7 +80,7 @@ I'll still discuss and accept new feature requests and review feature PR's. Happ
 
 # Acknowledgements
 
-<a href="https://sentry.io" ><img align="right" src="https://raw.githubusercontent.com/Nukesor/images/master/sentry.svg" alt="Packaging status"></a>
+<a href="https://sentry.io" ><img align="right" src="https://raw.githubusercontent.com/Nukesor/images/main/sentry.svg" alt="Packaging status"></a>
 Thanks to Sentry for providing the project with a sponsored plan (which has super generous quotas!).
 
 Thanks to [Lokalise](https://lokalise.co) for providing my projects with a free license for open-source development!
@@ -140,7 +140,7 @@ Dependencies:
 
 - [Poetry](https://python-poetry.org/) to manage and install dependencies.
 - Ultimate Pollbot uses Postgres. Make sure the user has write/read rights. You can use [the provided docker-compose
- file](https://github.com/Nukesor/ultimate-poll-bot/blob/master/docker/docker-compose.yml) to set up a local development
+ file](https://github.com/Nukesor/ultimate-poll-bot/blob/main/docker/docker-compose.yml) to set up a local development
   environment.
 
 1. Clone the repository:
