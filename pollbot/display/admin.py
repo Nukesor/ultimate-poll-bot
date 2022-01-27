@@ -17,21 +17,28 @@ def stats(session):
 
     # Polls
     highest_id = session.query(Poll.id).order_by(Poll.id.desc()).first()[0]
-    total_polls = session.query(Poll).count()
+    total_polls = session.query(Poll).filter(Poll.delete.is_(None)).count()
     created_polls = (
         session.query(Poll)
         .filter(Poll.closed.is_(False))
         .filter(Poll.created.is_(True))
+        .filter(Poll.delete.is_(None))
         .count()
     )
     unfinished_polls = (
         session.query(Poll)
         .filter(Poll.closed.is_(False))
         .filter(Poll.created.is_(False))
+        .filter(Poll.delete.is_(None))
         .count()
     )
 
-    closed_polls = session.query(Poll).filter(Poll.closed.is_(True)).count()
+    closed_polls = (
+        session.query(Poll)
+        .filter(Poll.closed.is_(True))
+        .filter(Poll.delete.is_(None))
+        .count()
+    )
 
     # Poll types
     single = session.query(Poll).filter(Poll.poll_type == "single_vote").count()

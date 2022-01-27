@@ -2,7 +2,7 @@
 from datetime import date, datetime, timedelta
 
 from sqlalchemy import or_
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import joinedload, aliased
 from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.error import BadRequest, RetryAfter, Unauthorized
@@ -11,7 +11,7 @@ from telegram.ext.callbackcontext import CallbackContext
 from pollbot.config import config
 from pollbot.enums import PollDeletionMode
 from pollbot.i18n import i18n
-from pollbot.models import DailyStatistic, Poll, Update, UserStatistic
+from pollbot.models import DailyStatistic, Poll, Update, UserStatistic, Vote
 from pollbot.models.poll import Poll
 from pollbot.poll.delete import delete_poll
 from pollbot.poll.update import send_updates, update_poll_messages
@@ -216,6 +216,90 @@ def perma_ban_checker(context: CallbackContext, session: scoped_session) -> None
 
 @job_wrapper
 def cleanup(context: CallbackContext, session: scoped_session) -> None:
+    """Run various database cleanup operations."""
+    user_statistics_cleanup(context, session)
+    old_closed_poll_cleanup(context, session)
+    old_open_poll_cleanup(context, session)
+    unfinished_polls_cleanup(context, session)
+
+
+def user_statistics_cleanup(context: CallbackContext, session: scoped_session) -> None:
     """Remove all user statistics after 7 days."""
     threshold = date.today() - timedelta(days=7)
     session.query(UserStatistic).filter(UserStatistic.date < threshold).delete()
+
+
+def old_closed_poll_cleanup(context: CallbackContext, session: scoped_session) -> None:
+    """Remove old closed polls."""
+    last_update_threshold = date.today() - timedelta(days=180)
+
+    # Subquery to check if any newer votes exist.
+    poll_alias = aliased(Poll)
+    newer_votes_exist_subquery = (
+        session.query(Vote)
+        .filter(Vote.poll_id == poll_alias.id)
+        .filter(Vote.updated_at > last_update_threshold)
+        .exists()
+    )
+
+    poll_ids = (
+        session.query(poll_alias.id)
+        .filter(poll_alias.closed.is_(True))
+        .filter(poll_alias.delete.is_(None))
+        .filter(poll_alias.updated_at < last_update_threshold)
+        .filter(~newer_votes_exist_subquery)
+        .limit(10000)
+        .all()
+    )
+
+    poll_ids = [value[0] for value in poll_ids]
+    session.query(Poll).filter(Poll.id.in_(poll_ids)).update(
+        {"delete": PollDeletionMode.DB_ONLY.name}, synchronize_session=False
+    )
+
+    session.commit()
+
+
+def old_open_poll_cleanup(context: CallbackContext, session: scoped_session) -> None:
+    """Remove old open polls that haven't been touched for for a long time."""
+    last_update_threshold = date.today() - timedelta(days=360)
+
+    # Subquery to check if any newer votes exist.
+    poll_alias = aliased(Poll)
+    newer_votes_exist_subquery = (
+        session.query(Vote)
+        .filter(Vote.poll_id == poll_alias.id)
+        .filter(Vote.updated_at > last_update_threshold)
+        .exists()
+    )
+
+    poll_ids = (
+        session.query(poll_alias.id)
+        .filter(poll_alias.closed.is_(False))
+        .filter(poll_alias.delete.is_(None))
+        .filter(poll_alias.updated_at < last_update_threshold)
+        .filter(~newer_votes_exist_subquery)
+        .limit(10000)
+        .all()
+    )
+
+    poll_ids = [value[0] for value in poll_ids]
+    session.query(Poll).filter(Poll.id.in_(poll_ids)).update(
+        {"delete": PollDeletionMode.DB_ONLY.name}, synchronize_session=False
+    )
+
+    session.commit()
+
+
+def unfinished_polls_cleanup(context: CallbackContext, session: scoped_session) -> None:
+    """Remove unfinished polls that haven't been touched for some time."""
+    last_update_threshold = date.today() - timedelta(days=30)
+
+    (
+        session.query(Poll)
+        .filter(Poll.created.is_(False))
+        .filter(Poll.updated_at < last_update_threshold)
+        .update({"delete": PollDeletionMode.DB_ONLY.name}, synchronize_session=False)
+    )
+
+    session.commit()
