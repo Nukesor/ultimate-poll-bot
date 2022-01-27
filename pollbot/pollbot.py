@@ -215,12 +215,12 @@ dispatcher.add_handler(
 minute = 60
 hour = 60 * minute
 job_queue = updater.job_queue
-# job_queue.run_repeating(
-#    delete_polls,
-#    interval=5,
-#    first=0,
-#    name="Delete polls that are scheduled for deletion.",
-# )
+job_queue.run_repeating(
+    delete_polls,
+    interval=5,
+    first=0,
+    name="Delete polls that are scheduled for deletion.",
+)
 job_queue.run_repeating(
     message_update_job, interval=10, first=0, name="Handle poll message update queue."
 )
