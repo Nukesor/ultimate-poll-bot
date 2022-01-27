@@ -48,6 +48,7 @@ def stats(session):
     block = session.query(Poll).filter(Poll.poll_type == "block_vote").count()
     limited = session.query(Poll).filter(Poll.poll_type == "limited_vote").count()
     cumulative = session.query(Poll).filter(Poll.poll_type == "cumulative_vote").count()
+    to_be_deleted = session.query(Poll).filter(Poll.delete.isnot(None)).count()
 
     single_percent = single / total_polls * 100
     doodle_percent = doodle / total_polls * 100
@@ -70,6 +71,7 @@ Polls:
     Unfinished: {unfinished_polls}
     Closed: {closed_polls}
     Deleted: {highest_id - total_polls}
+    To be deleted: {to_be_deleted}
 
 Types:
     Single:  {single} ({single_percent:.2f}%)
