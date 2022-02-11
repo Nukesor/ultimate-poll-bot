@@ -12,7 +12,7 @@ Since no other telegram poll/vote bot offered the full feature set my friends an
 ## State of the project
 
 The project is still actively maintained!
-However, I (@Nukesor) **won't add any new features myself**, since I'm very happy with the current state of the bot.
+However, I **won't add any new features myself**, since I'm very happy with the current state of the bot.
 
 Anyway, if you come up with a cool idea, I'll happily discuss it and review your pull requests.
 
