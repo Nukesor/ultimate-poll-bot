@@ -63,6 +63,15 @@ def get_settings_keyboard(poll: Poll) -> InlineKeyboardMarkup:
         [InlineKeyboardButton(text=new_option_text, callback_data=new_option_payload)]
     )
 
+    # Open due time duration keyboard
+    new_option_text = i18n.t("keyboard.due_time_duration", locale=locale)
+    new_option_payload = (
+        f"{CallbackType.settings_open_due_time_duration.value}:{poll.id}:0"
+    )
+    buttons.append(
+        [InlineKeyboardButton(text=new_option_text, callback_data=new_option_payload)]
+    )
+
     # Styling sub menu
     styling_text = i18n.t("keyboard.styling.open", locale=locale)
     styling_payload = f"{CallbackType.settings_show_styling.value}:{poll.id}:0"
@@ -160,6 +169,29 @@ def get_add_option_keyboard(poll: Poll) -> InlineKeyboardMarkup:
     keyboard = InlineKeyboardMarkup(buttons)
 
     return keyboard
+
+
+def get_add_due_time_keyboard(poll: Poll) -> InlineKeyboardMarkup:
+    """Get the keyboard for adding a new option after poll creation."""
+
+    buttons = [
+        [get_remove_due_date_setting_button(poll)],
+        [get_back_to_settings_button(poll)],
+    ]
+
+    keyboard = InlineKeyboardMarkup(buttons)
+
+    return keyboard
+
+
+def get_remove_due_date_setting_button(poll: Poll) -> InlineKeyboardButton:
+    """Remove due date for a poll."""
+
+    locale = poll.user.locale
+    payload = f"{CallbackType.settings_remove_due_date.value}:{poll.id}:0"
+    return InlineKeyboardButton(
+        text=i18n.t("keyboard.delete", locale=locale), callback_data=payload
+    )
 
 
 def get_settings_language_keyboard(poll: Poll) -> InlineKeyboardMarkup:

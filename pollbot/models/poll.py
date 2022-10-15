@@ -152,9 +152,9 @@ class Poll(base):
     def get_formatted_due_date(self) -> str:
         """Get the formatted date."""
         if self.european_date_format:
-            return self.due_date.strftime("%d.%m.%Y %H:%M UTC")
+            return self.due_date.strftime("%d.%m.%Y %H:%M")
 
-        return self.due_date.strftime("%Y-%m-%d %H:%M UTC")
+        return self.due_date.strftime("%Y-%m-%d %H:%M")
 
     def set_due_date(self, date: Optional[datetime]) -> None:
         """Set the due date and the next notification."""

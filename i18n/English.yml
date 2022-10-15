@@ -99,6 +99,8 @@ keyboard:
     permanently_anonymize: '⚠️ Permanently anonymize poll! ⚠️'
     anonymize: '🔍 Make votes anonymous'
     due_date: '📅 Set due date'
+    due_time_duration: '📅 Set due time duration'
+    due_time_duration_headline: 'Enter the relative minutes to set due datetime. It will be added it from the current datetime:'
     hide_percentage: '▭% Hide percentage'
     show_percentage: '▭% Show percentage'
     new_option: '＋ Add a new option'

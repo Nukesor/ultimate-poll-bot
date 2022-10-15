@@ -24,6 +24,8 @@ class ExpectedInput(Enum):
     new_option = 10
     new_user_option = 11
 
+    due_time_duration = 12
+
 
 @unique
 class StartAction(Enum):
@@ -128,6 +130,8 @@ class CallbackType(Enum):
     settings_open_option_order_menu = 91
     settings_increase_option_index = 92
     settings_decrease_option_index = 93
+    settings_open_due_time_duration = 94
+    settings_remove_due_date = 95
 
     # Misc
     ignore = 100

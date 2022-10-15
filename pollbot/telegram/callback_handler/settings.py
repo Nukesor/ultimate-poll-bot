@@ -5,7 +5,7 @@ from sqlalchemy.orm.scoping import scoped_session
 
 from pollbot.decorators import poll_required
 from pollbot.display import get_settings_text
-from pollbot.display.creation import get_datepicker_text
+from pollbot.display.creation import get_datepicker_text, get_due_time_duration_text
 from pollbot.display.poll.compilation import get_poll_text
 from pollbot.enums import ExpectedInput
 from pollbot.i18n import i18n
@@ -19,6 +19,7 @@ from pollbot.telegram.keyboard.date_picker import (
     get_due_date_datepicker_keyboard,
 )
 from pollbot.telegram.keyboard.settings import (
+    get_add_due_time_keyboard,
     get_add_option_keyboard,
     get_anonymization_confirmation_keyboard,
     get_remove_option_keyboard,
@@ -87,6 +88,20 @@ def change_poll_language(
 
 
 @poll_required
+def remove_due_date(_: scoped_session, context: CallbackContext, poll: Poll) -> None:
+    """Remove due date for a poll."""
+    poll.set_due_date(None)
+
+    context.query.answer(i18n.t("callback.due_date_removed", locale=poll.user.locale))
+
+    context.query.message.edit_text(
+        text=get_due_time_duration_text(context.poll),
+        parse_mode="markdown",
+        reply_markup=get_add_due_time_keyboard(poll),
+    )
+
+
+@poll_required
 def open_due_date_datepicker(
     _: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
@@ -133,6 +148,22 @@ def open_new_option_datepicker(
         text=get_datepicker_text(poll),
         parse_mode="markdown",
         reply_markup=keyboard,
+    )
+
+
+@poll_required
+def open_due_time_duration_option(
+    _: scoped_session, context: CallbackContext, poll: Poll
+) -> None:
+    """Send a text and tell the user that we expect a due time duration option."""
+    user = context.user
+    user.expected_input = ExpectedInput.due_time_duration.name
+    user.current_poll = poll
+
+    context.query.message.edit_text(
+        text=get_due_time_duration_text(poll),
+        parse_mode="markdown",
+        reply_markup=get_add_due_time_keyboard(poll),
     )
 
 

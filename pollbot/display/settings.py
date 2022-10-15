@@ -9,6 +9,23 @@ from pollbot.poll.helper import translate_poll_type
 from pollbot.telegram.keyboard.helper import get_start_button_payload
 
 
+def get_due_settings_text(poll: Poll) -> str:
+    """Compile the due date options text for this poll."""
+    text = []
+    locale = poll.user.locale
+
+    if poll.due_date:
+        text.append(
+            i18n.t(
+                "settings.due_date", locale=locale, date=poll.get_formatted_due_date()
+            )
+        )
+    else:
+        text.append(i18n.t("settings.no_due_date", locale=locale))
+
+    return "\n".join(text)
+
+
 def get_settings_text(poll: Poll) -> str:
     """Compile the options text for this poll."""
     text = []
@@ -33,14 +50,7 @@ def get_settings_text(poll: Poll) -> str:
     else:
         text.append(i18n.t("settings.results_not_visible", locale=locale))
 
-    if poll.due_date:
-        text.append(
-            i18n.t(
-                "settings.due_date", locale=locale, date=poll.get_formatted_due_date()
-            )
-        )
-    else:
-        text.append(i18n.t("settings.no_due_date", locale=locale))
+    text.append(get_due_settings_text(poll))
 
     text.append("")
 

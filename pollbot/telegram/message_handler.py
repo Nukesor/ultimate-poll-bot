@@ -1,12 +1,15 @@
 """Handle messages."""
+from datetime import datetime
 from typing import Optional
 
+from dateutil.relativedelta import relativedelta
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.bot import Bot
 from telegram.chat import Chat
 from telegram.update import Update
 
 from pollbot.display import get_settings_text
+from pollbot.display.creation import get_due_time_duration_text
 from pollbot.display.poll.option import next_option
 from pollbot.enums import ExpectedInput, PollType, ReferenceType
 from pollbot.helper import markdown_characters
@@ -22,7 +25,10 @@ from pollbot.telegram.keyboard.creation import (
     get_open_datepicker_keyboard,
     get_skip_description_keyboard,
 )
-from pollbot.telegram.keyboard.settings import get_settings_keyboard
+from pollbot.telegram.keyboard.settings import (
+    get_add_due_time_keyboard,
+    get_settings_keyboard,
+)
 from pollbot.telegram.session import message_wrapper
 
 
@@ -57,6 +63,7 @@ def handle_private_text(
             ExpectedInput.vote_count: handle_set_vote_count,
             ExpectedInput.new_option: handle_new_option,
             ExpectedInput.new_user_option: handle_user_option_addition,
+            ExpectedInput.due_time_duration: handle_due_time_duration,
         }
         for char in markdown_characters:
             if char in text:
@@ -249,3 +256,38 @@ def handle_user_option_addition(
         update_poll_messages(session, bot, poll)
     else:
         chat.send_message(i18n.t("creation.option.no_new", locale=user.locale))
+
+
+def handle_due_time_duration(
+    bot: Bot,
+    update: Update,
+    session: scoped_session,
+    user: User,
+    text: str,
+    poll: Poll,
+    chat: Chat,
+) -> Optional[str]:
+    """Set the due time duration of the poll."""
+
+    if not text.isnumeric():
+        return i18n.t("creation.error.limit_bigger_zero", locale=user.locale)
+
+    "Set 1 week in minutes as arbitrary maximum relative value"
+    maximum_relative_minutes = 60 * 24 * 7
+    relative_minutes = int(text)
+    if relative_minutes < 1 or relative_minutes > maximum_relative_minutes:
+        return i18n.t(
+            "creation.error.limit_between",
+            locale=user.locale,
+            limit=maximum_relative_minutes,
+        )
+
+    poll_due_date = datetime.now()
+    next_poll_due_date = poll_due_date + relativedelta(minutes=relative_minutes)
+    poll.set_due_date(next_poll_due_date)
+
+    chat.send_message(
+        text=get_due_time_duration_text(poll),
+        reply_markup=get_add_due_time_keyboard(poll),
+        parse_mode="markdown",
+    )

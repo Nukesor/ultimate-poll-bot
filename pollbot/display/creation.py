@@ -1,4 +1,5 @@
 """Text helper for poll creation."""
+from pollbot.display.settings import get_due_settings_text
 from pollbot.enums import ExpectedInput
 from pollbot.i18n import i18n
 from pollbot.models import Poll
@@ -73,6 +74,17 @@ def get_datepicker_text(poll: Poll) -> str:
         text += f"\n{option.get_formatted_name()}"
 
     return text
+
+
+def get_due_time_duration_text(poll: Poll) -> str:
+    """Get the text for the due time duration."""
+    text = []
+
+    text.append(i18n.t("keyboard.due_time_duration_headline", locale=poll.locale))
+    text.append("")
+    text.append(get_due_settings_text(poll))
+
+    return "\n".join(text)
 
 
 def get_native_poll_merged_text(poll: Poll):
