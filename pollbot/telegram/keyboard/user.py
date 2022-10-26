@@ -157,7 +157,7 @@ def get_user_language_keyboard(user: User) -> InlineKeyboardMarkup:
     for language in supported_languages:
         button = InlineKeyboardButton(
             language,
-            callback_data=f"{CallbackType.user_change_language.value}:{user.id}:{language}",
+            callback_data=f"{CallbackType.user_change_language.value}:0:{language}",
         )
         buttons.append([button])
 
