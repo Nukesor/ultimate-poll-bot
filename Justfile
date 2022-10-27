@@ -19,17 +19,19 @@ test:
     poetry run pytest
 
 lint:
-    poetry run black pollbot --check
-    poetry run isort --check-only pollbot
-    poetry run flake8 --exclude __init__.py,.venv,migrations
+    poetry run black --check pollbot
+    poetry run isort \
+        --skip __init__.py \
+        --check-only pollbot
+    poetry run flake8 pollbot
 
 format:
     # remove unused imports
     poetry run autoflake \
         --remove-all-unused-imports \
         --recursive \
-        --in-place pollbot \
-        --exclude=__init__.py,.venv,migrations
+        --exclude=__init__.py,.venv \
+        --in-place pollbot
     poetry run black pollbot
     poetry run isort pollbot
 
