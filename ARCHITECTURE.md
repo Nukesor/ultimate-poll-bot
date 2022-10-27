@@ -4,35 +4,35 @@ This document is supposed to give you a short introduction to the project.
 
 It's purpose is to explain the project structure, so you understand where you can find the parts of code you're looking for.
 
-# Prerequisites
+## Prerequisites
 
-**Python Telegram Bot**
+### Python Telegram Bot
 
 Ultimate Poll Bot is based on the Python Telegram Bot library! Please read the docs and familiarize yourself with the library.
 You can find a nice introduction and basic information on how to use it over [here](https://python-telegram-bot.org/).
 On top of that, there are very detailed [api docs](https://python-telegram-bot.readthedocs.io/en/stable/).
 
-**Sqlalchemy/Alembic/Postgres**
+### Sqlalchemy
 
 The database integration for this project is written with [SQLAlchemy](https://www.sqlalchemy.org/).
 In detail, the project uses the [SQLAlchemy ORM](https://docs.sqlalchemy.org/en/13/orm/) abstraction layer.
 
 Please familiarize yourself with the basic SQLAlchemy ORM syntax and SQL in general.
 
-**Alembic**
+### Alembic
 
 For database migrations, we use [Alembic](https://alembic.sqlalchemy.org/en/latest/).
 Alembic wraps around SQLAlchemy and is used to manage migrations and transition between versions.
 
 It can also be used to auto-generate migrations, which is possible due to SQLAlchemy's nice ORM implementation.
 
-**Postgres**
+### Postgres
 
 There are a few Postgres-only features used in this project.
 It may be possible to use it in combination with another database, but a few important features and safe-guards would be lost in the progress.
 Thereby, this won't be added to the main project.
 
-# Top level structure:
+## Top level structure
 
 - `bin` In here you can find a bunch of helper scripts for development.
         This can be ignored for the most part and isn't important for normal operation/development.
@@ -47,7 +47,7 @@ Thereby, this won't be added to the main project.
 - `queries` Some helper queries. Nothing important and probably not interesting for you.
 - `tests` Well, there was an attempt to test stuff. If you would like to add tests, please go ahead!! It's very much appreciated.
 
-# The main source code structure
+## The main source code structure
 
 - `config.py` Configuration parsing and initialization.
 - `db.py` Database initialization and session creation helper function.
@@ -56,13 +56,13 @@ Thereby, this won't be added to the main project.
 - `pollbot.py` The main file of the project. In here the Bot and **all** Handlers are initialized.
 - `enums.py` All enums that are used in the project.
 
-## display
+### display
 
 This module is all about creating and formatting text. \
 This includes various interfaces, such as settings, styling, etc. as well as the full logic for compiling poll texts. \
 The stuff for compiling poll texts is contained in it's own submodule `display.poll`.
 
-## helper
+### helper
 
 In here you can find a lot of small helper functions.
 These include:
@@ -70,14 +70,14 @@ These include:
 - Statistics
 - I didn't know where else to put this stuff
 
-## models
+### models
 
 The folder for all SQLAlchemy ORM models.
 Each file is dedicated to a single model.
 
 This should be fairly straight forward.
 
-## poll
+### poll
 
 Most of the logic for managing polls.
 This includes:
@@ -89,7 +89,7 @@ This includes:
 - Helper functions for creating/managing polls
 - Helper functions for adding/removing options
 
-## telegram
+### telegram
 
 Now we're getting to the juicy part.
 
@@ -97,7 +97,7 @@ Now we're getting to the juicy part.
 - `inline_result_handler.py` Everything that happens once somebody selects a result from an inline query response.
 - `session.py` Wrappers for all telegram calls. Take a look at the _Session helper_ section for more information.
 
-### job.py
+#### job.py
 
 This is where all jobs are contained.
 These include:
@@ -107,7 +107,7 @@ These include:
 - Banning people
 - Maintenance queries
 
-### message_handler.py
+#### message_handler.py
 
 Handling of private text messages.
 
@@ -122,18 +122,18 @@ Examples:
 - Added option by external user.
 - Option added after poll has been created.
 
-### Keyboard
+#### Keyboard
 
 This folder is dedicated to helper functions for creating **all** keyboards used by the bot.
 
 If you want to change a keyboard or add a new keyboard, please add it to the files in this folder.
 
-### Commands
+#### Commands
 
 In here you can find all direct command handlers. E.g. `/start` or `/create`.
 This should be pretty straight forward.
 
-### Callback handler
+#### Callback handler
 
 Most interactions are done using buttons, that's why this probably contains most of the bot's logic.
 
@@ -157,7 +157,7 @@ Depending on the `CallbackType` in this payload, the respective handler will the
 `CallbackType` is expected in **EVERY** payload. Otherwise we won't be able to call the correct callback handling function.
 The rest can be used arbitrarily, but the second argument is used for `poll.id` in most cases.
 
-**CallbackContext**
+##### CallbackContext
 
 This is a nice helper class that's passed into all callback functions.
 It automatically parses the payload and tries to interpret:
@@ -169,7 +169,7 @@ It automatically parses the payload and tries to interpret:
 The second and third can fail.
 If `CallbackType` is invalid, an exception will be thrown, since it's expected!
 
-# Session helper
+## Session helper
 
 Take a look at `telegram.session`.
 

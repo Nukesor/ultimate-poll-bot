@@ -1,21 +1,84 @@
 #!/bin/env python
-"""Start the bot."""
+"""The main entry point for the ultimate pollbot."""
+from contextlib import contextmanager
+
+import typer
+from sqlalchemy_utils.functions import database_exists, create_database, drop_database
+
+from pollbot.db import engine, base
+from pollbot.models import *  # noqa
 from pollbot.pollbot import updater
 from pollbot.config import config
 
-print("Starting up")
+cli = typer.Typer()
 
-if config["webhook"]["enabled"]:
-    domain = config["webhook"]["domain"]
-    token = config["webhook"]["token"]
-    updater.start_webhook(
-        listen="127.0.0.1",
-        port=config["webhook"]["port"],
-        url_path=config["webhook"]["token"],
-    )
-    updater.bot.set_webhook(
-        url=f"{domain}{token}", certificate=open(config["webhook"]["cert_path"], "rb")
-    )
-else:
-    updater.start_polling()
-    updater.idle()
+
+@contextmanager
+def wrap_echo(msg: str):
+    typer.echo(f"{msg}... ", nl=False)
+    yield
+    typer.echo("done.")
+
+
+@cli.command()
+def initdb(exist_ok: bool = False, drop_existing: bool = False):
+    """Set up the database.
+
+    Can be used to remove an existing database.
+    """
+    db_url = engine.url
+    typer.echo(f"Using database at {db_url}")
+
+    if database_exists(db_url):
+        if drop_existing:
+            with wrap_echo("Dropping database"):
+                drop_database(db_url)
+        elif not exist_ok:
+            typer.echo(
+                f"Database already exists, aborting.\n"
+                f"Use --exist-ok if you are sure the database is uninitialized and contains no data.\n"
+                f"Use --drop-existing if you want to recreate it.",
+                err=True,
+            )
+            return
+
+    with wrap_echo("Creating database"):
+        create_database(db_url)
+        pass
+
+    with engine.connect() as con:
+        with wrap_echo("Installing pgcrypto extension"):
+            con.execute("CREATE EXTENSION IF NOT EXISTS pgcrypto;")
+            pass
+
+    with wrap_echo("Creating metadata"):
+        base.metadata.create_all()
+        pass
+
+    typer.echo("Database initialization complete.")
+
+
+@cli.command()
+def run():
+    """Actually start the bot."""
+    if config["webhook"]["enabled"]:
+        typer.echo(f"Starting the bot in webhook mode.")
+        domain = config["webhook"]["domain"]
+        token = config["webhook"]["token"]
+        updater.start_webhook(
+            listen="127.0.0.1",
+            port=config["webhook"]["port"],
+            url_path=config["webhook"]["token"],
+        )
+        updater.bot.set_webhook(
+            url=f"{domain}{token}",
+            certificate=open(config["webhook"]["cert_path"], "rb"),
+        )
+    else:
+        typer.echo(f"Starting the bot in polling mode.")
+        updater.start_polling()
+        updater.idle()
+
+
+if __name__ == "__main__":
+    cli()

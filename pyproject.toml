@@ -8,26 +8,25 @@ repository = "https://github.com/nukesor/ultimate-poll-bot"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-sentry-sdk = "^1"
 alembic = "^1"
+argparse = "^1"
+matplotlib = "^3"
 python-telegram-bot = "^13"
+sentry-sdk = "^1"
 SQLAlchemy = "^1"
 sqlalchemy-utils = "^0.38"
-psycopg2-binary = "^2"
-python-dateutil = "^2"
-toml = "^0.10"
-python-i18n = { version = "^0.3", extras = ["yaml"] }
-
-matplotlib = "^3"
 pandas = "^1"
 pillow = "^9"
-argparse = "^1"
+psycopg2-binary = "^2"
+python-dateutil = "^2"
+python-i18n = { version = "^0.3", extras = ["yaml"] }
 "ruamel.yaml" = "^0.17"
+toml = "^0.10"
+typer = "^0.6"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7"
 black = { version = "*", allow-prereleases = true }
-typer = "^0.6"
 types-toml = "^0.10"
 
 [build-system]
