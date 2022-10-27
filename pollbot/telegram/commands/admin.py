@@ -82,12 +82,10 @@ def broadcast(bot: Bot, update: Update, session: scoped_session, user: User) -> 
             except BadRequest as e:
                 if e.message == "Chat not found":  # noqa
                     user.started = False
-                    pass
 
             # We are not allowed to contact this user.
             except Unauthorized:
                 user.started = False
-                pass
 
             except TimeoutError:
                 pass

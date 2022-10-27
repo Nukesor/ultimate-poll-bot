@@ -3,7 +3,6 @@ from typing import Any, List, Optional, Union
 from sqlalchemy.orm.scoping import scoped_session
 
 from pollbot.enums import OptionSorting, PollType, VoteResultType
-from pollbot.i18n import i18n
 from pollbot.models import Option, Poll
 from pollbot.models.option import Option
 from pollbot.models.poll import Poll

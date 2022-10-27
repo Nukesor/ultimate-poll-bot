@@ -1,5 +1,4 @@
 """Callback handler for poll styling."""
-from typing import Optional
 
 from sqlalchemy.orm.scoping import scoped_session
 

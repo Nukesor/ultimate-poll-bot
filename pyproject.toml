@@ -35,3 +35,7 @@ types-toml = "^0.10"
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.isort]
+line_length = 88
+profile = "black"

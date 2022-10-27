@@ -2,7 +2,7 @@
 from datetime import date, datetime, timedelta
 
 from sqlalchemy import or_
-from sqlalchemy.orm import joinedload, aliased
+from sqlalchemy.orm import aliased, joinedload
 from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.error import BadRequest, RetryAfter, Unauthorized

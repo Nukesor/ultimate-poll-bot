@@ -6,8 +6,8 @@ from typing import Any, Callable, Union
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
-from sqlalchemy.orm.scoping import scoped_session
 from sqlalchemy.orm.exc import ObjectDeletedError
+from sqlalchemy.orm.scoping import scoped_session
 from telegram import Bot, Update
 from telegram.error import BadRequest, NetworkError, RetryAfter, TimedOut, Unauthorized
 from telegram.ext import CallbackContext
