@@ -33,7 +33,8 @@ format:
         --exclude=__init__.py,.venv \
         --in-place pollbot
     poetry run black pollbot
-    poetry run isort pollbot
+    poetry run isort pollbot \
+        --skip __init__.py
 
 
 # Watch for something
