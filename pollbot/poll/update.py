@@ -13,7 +13,6 @@ from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
 from pollbot.enums import ExpectedInput, ReferenceType
 from pollbot.models import Reference, Update
 from pollbot.models.poll import Poll
-from pollbot.models.reference import Reference
 from pollbot.models.user import User
 from pollbot.telegram.keyboard.management import get_management_keyboard
 

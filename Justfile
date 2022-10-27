@@ -21,7 +21,7 @@ test:
 lint:
     poetry run black pollbot --check
     poetry run isort --check-only pollbot
-    poetry run flake8 --exclude __init__.py,.venv
+    poetry run flake8 --exclude __init__.py,.venv,migrations
 
 format:
     # remove unused imports
@@ -29,7 +29,7 @@ format:
         --remove-all-unused-imports \
         --recursive \
         --in-place pollbot \
-        --exclude=__init__.py,.venv
+        --exclude=__init__.py,.venv,migrations
     poetry run black pollbot
     poetry run isort pollbot
 

@@ -3,8 +3,6 @@ from typing import Any, List, Optional, Union
 
 from sqlalchemy.orm import joinedload
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
-from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
 
 from pollbot.config import config
 from pollbot.db import get_session

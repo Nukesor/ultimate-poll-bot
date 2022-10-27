@@ -35,9 +35,9 @@ def initdb(exist_ok: bool = False, drop_existing: bool = False):
                 drop_database(db_url)
         elif not exist_ok:
             typer.echo(
-                f"Database already exists, aborting.\n"
-                f"Use --exist-ok if you are sure the database is uninitialized and contains no data.\n"
-                f"Use --drop-existing if you want to recreate it.",
+                "Database already exists, aborting.\n"
+                "Use --exist-ok if you are sure the database is uninitialized and contains no data.\n"
+                "Use --drop-existing if you want to recreate it.",
                 err=True,
             )
             return
@@ -62,7 +62,7 @@ def initdb(exist_ok: bool = False, drop_existing: bool = False):
 def run():
     """Actually start the bot."""
     if config["webhook"]["enabled"]:
-        typer.echo(f"Starting the bot in webhook mode.")
+        typer.echo("Starting the bot in webhook mode.")
         domain = config["webhook"]["domain"]
         token = config["webhook"]["token"]
         updater.start_webhook(
@@ -75,7 +75,7 @@ def run():
             certificate=open(config["webhook"]["cert_path"], "rb"),
         )
     else:
-        typer.echo(f"Starting the bot in polling mode.")
+        typer.echo("Starting the bot in polling mode.")
         updater.start_polling()
         updater.idle()
 

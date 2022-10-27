@@ -2,7 +2,6 @@
 from pollbot.enums import ExpectedInput
 from pollbot.i18n import i18n
 from pollbot.models import Poll
-from pollbot.models.poll import Poll
 from pollbot.poll.helper import translate_poll_type
 
 

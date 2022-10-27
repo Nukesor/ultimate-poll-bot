@@ -3,8 +3,7 @@ from typing import cast
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Session, scoped_session
-from sqlalchemy.orm.session import Session, sessionmaker
+from sqlalchemy.orm import Session, scoped_session, sessionmaker
 
 from pollbot.config import config
 

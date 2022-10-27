@@ -17,7 +17,6 @@ from pollbot.enums import ExpectedInput, PollType
 from pollbot.exceptions import RollbackException
 from pollbot.i18n import i18n
 from pollbot.models import Poll
-from pollbot.models.poll import Poll
 from pollbot.poll.creation import create_poll
 from pollbot.telegram.callback_handler.context import CallbackContext
 from pollbot.telegram.keyboard.creation import (

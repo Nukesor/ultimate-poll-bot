@@ -7,8 +7,7 @@ from telegram.update import Update
 
 from pollbot.enums import ReferenceType
 from pollbot.helper.stats import increase_user_stat
-from pollbot.models import Poll, Reference, Update
-from pollbot.models.user import User
+from pollbot.models import Poll, Reference, User
 from pollbot.poll.update import try_update_reference
 from pollbot.telegram.session import inline_result_wrapper
 

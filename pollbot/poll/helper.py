@@ -5,8 +5,6 @@ from telegram.error import BadRequest, Unauthorized
 from pollbot.enums import PollType
 from pollbot.i18n import i18n
 from pollbot.models import Option, Poll, Reference, User
-from pollbot.models.poll import Poll
-from pollbot.models.user import User
 
 
 def clone_poll(session: scoped_session, original_poll: Poll) -> Poll:

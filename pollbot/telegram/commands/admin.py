@@ -10,7 +10,6 @@ from telegram.update import Update
 
 from pollbot.decorators import admin_required
 from pollbot.models import User
-from pollbot.models.user import User
 from pollbot.telegram.session import message_wrapper
 
 

@@ -10,9 +10,7 @@ from pollbot.display.poll.indices import get_option_indices
 from pollbot.enums import ExpectedInput, PollType
 from pollbot.exceptions import RollbackException
 from pollbot.i18n import i18n
-from pollbot.models import Poll
-from pollbot.models.option import Option
-from pollbot.models.poll import Poll
+from pollbot.models import Option, Poll
 from pollbot.poll.helper import poll_allows_cumulative_votes
 from pollbot.poll.option import calculate_percentage, get_sorted_options
 from pollbot.telegram.keyboard.creation import get_options_entered_keyboard

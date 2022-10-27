@@ -12,7 +12,6 @@ from pollbot.config import config
 from pollbot.enums import PollDeletionMode
 from pollbot.i18n import i18n
 from pollbot.models import DailyStatistic, Poll, Update, UserStatistic, Vote
-from pollbot.models.poll import Poll
 from pollbot.poll.delete import delete_poll
 from pollbot.poll.update import send_updates, update_poll_messages
 from pollbot.sentry import sentry

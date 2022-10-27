@@ -40,7 +40,7 @@ try:
     # Extract the url from the response
     response = json.loads(data)
     url = response["bundle_url"]
-except:
+except:  # noqa E722
     print(response)
     sys.exit(1)
 
