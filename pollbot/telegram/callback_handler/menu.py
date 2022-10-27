@@ -1,5 +1,4 @@
 """Callback functions needed during creation of a Poll."""
-from typing import Optional
 
 from sqlalchemy.orm.scoping import scoped_session
 

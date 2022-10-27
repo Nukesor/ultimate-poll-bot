@@ -2,7 +2,7 @@
 from datetime import date, datetime, timedelta
 
 from sqlalchemy import or_
-from sqlalchemy.orm import joinedload, aliased
+from sqlalchemy.orm import aliased, joinedload
 from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.error import BadRequest, RetryAfter, Unauthorized
@@ -12,7 +12,6 @@ from pollbot.config import config
 from pollbot.enums import PollDeletionMode
 from pollbot.i18n import i18n
 from pollbot.models import DailyStatistic, Poll, Update, UserStatistic, Vote
-from pollbot.models.poll import Poll
 from pollbot.poll.delete import delete_poll
 from pollbot.poll.update import send_updates, update_poll_messages
 from pollbot.sentry import sentry

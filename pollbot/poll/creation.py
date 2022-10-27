@@ -11,9 +11,7 @@ from pollbot.display.poll.compilation import get_poll_text
 from pollbot.enums import ReferenceType
 from pollbot.helper.stats import increase_stat, increase_user_stat
 from pollbot.i18n import i18n
-from pollbot.models import Poll, Reference
-from pollbot.models.poll import Poll
-from pollbot.models.user import User
+from pollbot.models import Poll, Reference, User
 from pollbot.telegram.keyboard.creation import (
     get_cancel_creation_keyboard,
     get_init_keyboard,

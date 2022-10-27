@@ -4,7 +4,6 @@ from telegram.bot import Bot
 from telegram.update import Update
 
 from pollbot.display.misc import get_help_text_and_keyboard
-from pollbot.i18n import i18n
 from pollbot.models.user import User
 from pollbot.telegram.session import message_wrapper
 

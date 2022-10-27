@@ -4,8 +4,6 @@ from datetime import date
 from typing import Any, List, Tuple, Union
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
-from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
 
 from pollbot.enums import CallbackType, DatepickerContext
 from pollbot.i18n import i18n
@@ -80,7 +78,6 @@ def get_external_datepicker_keyboard(poll, current_date):
 
     # Add back and pick buttons
     back_payload = f"{CallbackType.external_open_menu.value}:{poll.id}:0"
-    cancel_payload = f"{CallbackType.external_cancel.value}:{poll.id}:0"
     rows = [
         [
             InlineKeyboardButton(
@@ -121,7 +118,7 @@ def get_datepicker_buttons(
     # Create the week-day column description
     row = []
     for day in ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]:
-        weekday_payload = f"{weekday_type}:{poll.id}:{month.isoformat()}:{day}"
+        # weekday_payload = f"{weekday_type}:{poll.id}:{month.isoformat()}:{day}"
         row.append(InlineKeyboardButton(day, callback_data=ignore_payload))
     buttons.append(row)
 

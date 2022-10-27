@@ -7,10 +7,7 @@ from sqlalchemy.orm.scoping import scoped_session
 from pollbot.display.poll import Context
 from pollbot.enums import PollType
 from pollbot.i18n import i18n
-from pollbot.models import User, Vote
-from pollbot.models.option import Option
-from pollbot.models.poll import Poll
-from pollbot.models.vote import Vote
+from pollbot.models import Option, Poll, User, Vote
 from pollbot.poll.helper import (
     calculate_total_votes,
     poll_allows_cumulative_votes,

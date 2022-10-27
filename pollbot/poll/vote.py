@@ -7,9 +7,6 @@ from sqlalchemy.orm.scoping import scoped_session
 
 from pollbot.enums import UserSorting
 from pollbot.models import Option, Poll, User, Vote
-from pollbot.models.poll import Poll
-from pollbot.models.user import User
-from pollbot.models.vote import Vote
 
 
 def init_votes(session: scoped_session, poll: Poll, user: User) -> None:

@@ -22,7 +22,7 @@ class CallbackContext:
         self.payload = self.data[1]
         try:
             self.action = int(self.data[2])
-        except:
+        except ValueError:
             self.action = self.data[2]
 
         self.poll = session.query(Poll).get(self.payload)

@@ -6,13 +6,11 @@ from typing import Any, Callable, Union
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
-from sqlalchemy.orm.scoping import scoped_session
 from sqlalchemy.orm.exc import ObjectDeletedError
+from sqlalchemy.orm.scoping import scoped_session
 from telegram import Bot, Update
 from telegram.error import BadRequest, NetworkError, RetryAfter, TimedOut, Unauthorized
 from telegram.ext import CallbackContext
-from telegram.ext.callbackcontext import CallbackContext
-from telegram.user import User
 
 from pollbot.config import config
 from pollbot.db import get_session
@@ -21,8 +19,6 @@ from pollbot.helper import remove_markdown_characters
 from pollbot.helper.stats import increase_stat
 from pollbot.i18n import i18n
 from pollbot.models import User, UserStatistic
-from pollbot.models.user import User
-from pollbot.models.user_statistic import UserStatistic
 from pollbot.sentry import ignore_job_exception, sentry
 
 
@@ -120,7 +116,7 @@ def callback_query_wrapper(func: Callable[[Bot, Update, Session, User], Any]):
         if temp_ban_time is not None and temp_ban_time == date.today():
             try:
                 update.callback_query.answer(i18n.t("callback.spam"))
-            except:
+            except:  # noqa E722
                 pass
             return
 

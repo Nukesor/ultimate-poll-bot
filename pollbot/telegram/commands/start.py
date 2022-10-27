@@ -43,7 +43,7 @@ def start(
         action = StartAction(int(text.split("-")[1]))
 
         poll = session.query(Poll).filter(Poll.uuid == poll_uuid).one()
-    except:
+    except:  # noqa E722
         text = ""
 
     # We got an empty text, just send the start message

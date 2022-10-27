@@ -13,9 +13,7 @@ from pollbot.display.poll.compilation import get_poll_text_and_vote_keyboard
 from pollbot.enums import ExpectedInput, ReferenceType
 from pollbot.models import Reference, Update
 from pollbot.models.poll import Poll
-from pollbot.models.reference import Reference
 from pollbot.models.user import User
-from pollbot.sentry import sentry
 from pollbot.telegram.keyboard.management import get_management_keyboard
 
 
@@ -61,7 +59,6 @@ def update_poll_messages(
         except RetryAfter as e:
             retry_after = int(e.retry_after) + 1
             retry_after = datetime.now() + timedelta(seconds=retry_after)
-            pass
 
     # If there's no update yet, create a new one
     if update is None:
@@ -104,7 +101,6 @@ def update_poll_messages(
             session.rollback()
             # Anyway just try again
             update_poll_messages(session, bot, poll)
-            pass
 
 
 def send_updates(session: scoped_session, bot: Bot, poll: Poll) -> None:

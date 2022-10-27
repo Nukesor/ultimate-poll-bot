@@ -2,8 +2,6 @@
 from typing import List
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
-from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
 
 from pollbot.config import config
 from pollbot.enums import CallbackResult, CallbackType, StartAction

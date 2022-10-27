@@ -1,7 +1,5 @@
 """Reply keyboards."""
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
-from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
 
 from pollbot.enums import CallbackResult, CallbackType
 from pollbot.i18n import i18n, supported_languages

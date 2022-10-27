@@ -138,6 +138,5 @@ def update_shared(
             # Users can spam this button, which leads to UniqueConstraint errors.
             # Just ignore those.
             session.rollback()
-            pass
 
     try_update_reference(session, context.bot, poll, reference)
