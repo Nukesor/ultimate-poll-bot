@@ -25,8 +25,11 @@ toml = "^0.10"
 typer = "^0.6"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7"
+autoflake = "^1"
 black = { version = "*", allow-prereleases = true }
+flake8 = "^5"
+isort = "^5"
+pytest = "^7"
 types-toml = "^0.10"
 
 [build-system]
