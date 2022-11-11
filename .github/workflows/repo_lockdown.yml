@@ -1,0 +1,30 @@
+name: Repo Lockdown
+
+on:
+  pull_request_target:
+    types: opened
+
+permissions:
+  pull-requests: write
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dessant/repo-lockdown@v2
+        with:
+          github-token: ${{ github.token }}
+          lock-issue: false
+          exclude-pr-created-before: "2022-11-10"
+          exclude-pr-labels: "internal"
+          pr-comment: |
+            This project longer accepts any pull requests.
+            Maintenance happens on a best-to-my-abilities basis.
+
+            If you started a successful fork of this repository, that has been maintained over a prolonged amount of time,
+            feel free to contact me. I'll then point to your project fork :)
+          close-pr: true
+          lock-pr: true
+          pr-lock-reason: ""
+          process-only: "prs"
+          log-output: true

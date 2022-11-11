@@ -4,22 +4,20 @@
 
 ![Alt Text](https://github.com/Nukesor/images/blob/main/pollbot.gif)
 
+## State of the project
+
+The project is **now longer actively** maintained!
+I try to bump dependencies on a regular basis, but **I won't review or accept** any new pull requests!
+
+If you started a successful fork of this repository, that has been maintained over a prolonged amount of time,
+feel free to contact me. I'll then point to your fork :).
+
+## Introduction
+
 Deciding where you and your friends are going for lunch today can be a real hassle...
 Or, for instance, deciding which games should be played at the next LAN-Party.
 
 Since no other telegram poll/vote bot offered the full feature set my friends and I needed, I decided to write the ULTIMATE pollbot. A bot which combines all good features of all existing bots and even stuff beyond that.
-
-## State of the project
-
-The project is still actively maintained!
-However, I **won't add any new features myself**, since I'm very happy with the current state of the bot.
-
-Anyway, if you come up with a cool idea, I'll happily discuss it and review your pull requests.
-
-Check the [official Trello board](https://trello.com/b/L3XfSRkN/ultimate-poll-bot) for the status of all requested features.
-There's also a list of regularly requested "won't implement" features.
-
-Upcoming bugs will of course be fixed as fast as possible.
 
 ## Features
 
