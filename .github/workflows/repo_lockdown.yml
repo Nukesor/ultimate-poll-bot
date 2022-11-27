@@ -16,7 +16,7 @@ jobs:
           github-token: ${{ github.token }}
           lock-issue: false
           exclude-pr-created-before: "2022-11-10"
-          exclude-pr-labels: "internal"
+          exclude-pr-labels: "internal,dependencies"
           pr-comment: |
             This project longer accepts any pull requests.
             Maintenance happens on a best-to-my-abilities basis.
