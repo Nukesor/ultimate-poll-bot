@@ -72,11 +72,6 @@ As soon as such a poll is closed, the results will be visible. **Beware!**: such
 - The bot allows to configure the sorting of the option list and the user list for each option.
 - Users can be sorted by vote date or username. Options can be sorted by highest percentage, name or by the order they've been added.
 
-## Project Status
-
-The project is still actively maintained. However, since my focus shifted to other projects, I most likely won't add new features myself.  
-I'll still discuss and accept new feature requests and review feature PR's. Happy coding ;)
-
 ## Acknowledgements
 
 <a href="https://sentry.io" ><img align="right" src="https://raw.githubusercontent.com/Nukesor/images/main/sentry.svg" alt="Packaging status"></a>
