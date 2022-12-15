@@ -179,14 +179,14 @@ dispatcher.add_handler(
 # Poll handler
 dispatcher.add_handler(
     MessageHandler(
-        Filters.poll & ~CustomFilters.quiz & Filters.private,
+        Filters.poll & ~CustomFilters.quiz & Filters.chat_type.private,
         create_from_native_poll,
         run_async=True,
     )
 )
 dispatcher.add_handler(
     MessageHandler(
-        CustomFilters.quiz & Filters.private,
+        CustomFilters.quiz & Filters.chat_type.private,
         send_error_quiz_unsupported,
         run_async=True,
     )
@@ -253,7 +253,7 @@ job_queue.run_repeating(
 dispatcher.add_handler(
     MessageHandler(
         Filters.text
-        & Filters.private
+        & Filters.chat_type.private
         & (~Filters.update.edited_message)
         & (~Filters.reply)
         & (~Filters.update.channel_posts),
