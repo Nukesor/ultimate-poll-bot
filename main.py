@@ -69,10 +69,8 @@ def run():
             listen="127.0.0.1",
             port=config["webhook"]["port"],
             url_path=config["webhook"]["token"],
-        )
-        updater.bot.set_webhook(
-            url=f"{domain}{token}",
-            certificate=open(config["webhook"]["cert_path"], "rb"),
+            webhook_url=f"{domain}{token}",
+            cert=config["webhook"]["cert_path"],
         )
     else:
         typer.echo("Starting the bot in polling mode.")
