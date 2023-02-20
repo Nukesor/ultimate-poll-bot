@@ -15,14 +15,22 @@ def clone_poll(session: scoped_session, original_poll: Poll) -> Poll:
 
     new_poll.name = original_poll.name
     new_poll.description = original_poll.description
+    new_poll.locale = original_poll.locale
     new_poll.poll_type = original_poll.poll_type
-    new_poll.anonymous = original_poll.anonymous
     new_poll.number_of_votes = original_poll.number_of_votes
+
+    new_poll.anonymous = original_poll.anonymous
+    new_poll.results_visible = original_poll.results_visible
     new_poll.allow_new_options = original_poll.allow_new_options
+    new_poll.allow_sharing = original_poll.allow_sharing
+
+    new_poll.show_percentage = original_poll.show_percentage
+    new_poll.show_option_votes = original_poll.show_option_votes
+    new_poll.european_date_format = original_poll.european_date_format
+    new_poll.compact_buttons = original_poll.compact_buttons
+    new_poll.summarize = original_poll.summarize
     new_poll.option_sorting = original_poll.option_sorting
     new_poll.user_sorting = original_poll.user_sorting
-    new_poll.results_visible = original_poll.results_visible
-    new_poll.show_percentage = original_poll.show_percentage
 
     for option in original_poll.options:
         new_option = Option(new_poll, option.name)
