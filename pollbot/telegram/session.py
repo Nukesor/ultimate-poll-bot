@@ -419,6 +419,7 @@ def ignore_exception(exception: Union[BadRequest, Unauthorized]) -> bool:
             )
             or exception.message.startswith("Schedule_date_invalid")
             or exception.message.startswith("Have no rights to send a message")
+            or exception.message.startswith("Not enough rights")
             or exception.message.startswith("Chat_write_forbidden")
             or exception.message.startswith(
                 "Not enough rights to send text messages to the chat"
