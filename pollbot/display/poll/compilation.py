@@ -87,8 +87,6 @@ def compile_poll_text(
     if context.anonymous:
         anonymous = i18n.t("poll.anonymous", locale=poll.locale)
         lines.append(f"_{anonymous}_")
-        if context.show_results:
-            lines.append(i18n.t("poll.anonymous_warning", locale=poll.locale))
     if not context.show_results:
         not_visible = i18n.t("poll.results_not_visible", locale=poll.locale)
         lines.append(f"_{not_visible}_")
