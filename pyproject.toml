@@ -15,14 +15,14 @@ python-telegram-bot = "^13"
 sentry-sdk = "^1"
 SQLAlchemy = "^1"
 sqlalchemy-utils = "^0.38"
-pandas = "^1"
-pillow = "^9"
+pandas = "^2"
+pillow = "^10"
 psycopg2-binary = "^2"
 python-dateutil = "^2"
 python-i18n = { version = "^0.3", extras = ["yaml"] }
-"ruamel.yaml" = "^0.17"
+"ruamel.yaml" = "^0.18"
 toml = "^0.10"
-typer = "^0.6"
+typer = "^0.9"
 
 [tool.poetry.dev-dependencies]
 ruff = "^0.1"
