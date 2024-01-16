@@ -19,23 +19,12 @@ test:
     poetry run pytest
 
 lint:
-    poetry run black --check pollbot
-    poetry run isort \
-        --skip __init__.py \
-        --check-only pollbot
-    poetry run flake8 pollbot
+    poetry run ruff check ./pollbot --show-source
+    poetry run ruff format ./pollbot --diff
 
 format:
-    # remove unused imports
-    poetry run autoflake \
-        --remove-all-unused-imports \
-        --recursive \
-        --exclude=__init__.py,.venv \
-        --in-place pollbot
-    poetry run black pollbot
-    poetry run isort pollbot \
-        --skip __init__.py
-
+    poetry run ruff check --fix ./pollbot
+    poetry run ruff format ./pollbot
 
 # Watch for something
 # E.g. `just watch lint` or `just watch test`

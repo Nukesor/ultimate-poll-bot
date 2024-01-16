@@ -37,7 +37,6 @@ def remaining_time(total, current, start):
 @message_wrapper()
 @admin_required
 def broadcast(bot: Bot, update: Update, session: scoped_session, user: User) -> None:
-
     """Broadcast a message to all users."""
     chat = update.message.chat
     message = update.message.text.split(" ", 1)[1].strip()
@@ -79,7 +78,7 @@ def broadcast(bot: Bot, update: Update, session: scoped_session, user: User) -> 
 
             # The chat does no longer exist, delete it
             except BadRequest as e:
-                if e.message == "Chat not found":  # noqa
+                if e.message == "Chat not found":
                     user.started = False
 
             # We are not allowed to contact this user.
@@ -112,7 +111,6 @@ def broadcast(bot: Bot, update: Update, session: scoped_session, user: User) -> 
 def test_broadcast(
     bot: Bot, update: Update, session: scoped_session, user: User
 ) -> None:
-
     """Send the broadcast message to the admin for test purposes."""
     message = update.message.text.split(" ", 1)[1].strip()
 

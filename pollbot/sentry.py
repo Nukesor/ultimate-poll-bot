@@ -20,7 +20,7 @@ def ignore_job_exception(exception):
     return False
 
 
-class Sentry(object):
+class Sentry:
     """Sentry wrapper class.
 
     This class offers some convenience classes and functions for adding

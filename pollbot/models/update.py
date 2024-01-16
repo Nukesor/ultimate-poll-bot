@@ -1,6 +1,8 @@
 """The sqlalchemy model for a vote."""
 from __future__ import annotations
 
+from typing import Any, ClassVar
+
 from sqlalchemy import Column, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import DateTime, Integer
@@ -13,7 +15,7 @@ class Update(base):
 
     __tablename__ = "update"
     __table_args__ = (UniqueConstraint("poll_id", name="one_update_per_poll"),)
-    __mapper_args__ = {"confirm_deleted_rows": False}
+    __mapper_args__: ClassVar[dict[str, Any]] = {"confirm_deleted_rows": False}
 
     id = Column(Integer, primary_key=True)
     next_update = Column(DateTime, nullable=False)

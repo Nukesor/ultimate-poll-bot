@@ -1,5 +1,4 @@
 """Poll related commands."""
-from typing import Optional
 
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.bot import Bot
@@ -22,7 +21,7 @@ def create_poll(bot: Bot, update: Update, session: scoped_session, user: User) -
 @message_wrapper(private=True)
 def cancel_poll_creation(bot, update, session, user):
     """Cancels the creation of the current poll."""
-    current_poll: Optional[Poll] = user.current_poll
+    current_poll: Poll | None = user.current_poll
 
     if current_poll is None:
         update.message.chat.send_message(

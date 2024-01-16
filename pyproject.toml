@@ -25,17 +25,47 @@ toml = "^0.10"
 typer = "^0.6"
 
 [tool.poetry.dev-dependencies]
-autoflake = "^1"
-black = { version = "*", allow-prereleases = true }
-flake8 = "^5"
-isort = "^5"
+ruff = "^0.1"
 pytest = "^7"
 types-toml = "^0.10"
 
-[build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+[tool.ruff]
+line-length = 88
+indent-width = 4
+target-version = "py311"
+exclude = [
+    ".venv",
+    "__init__.py",
+]
 
-[tool.isort]
-line_length = 88
-profile = "black"
+[tool.ruff.lint]
+select = [
+    "E", # Pycodestyle
+    "F", # Pyflakes
+    "I", # Isort
+    "UP", # Language feature updates
+    "RUF", # Ruff Rules
+]
+fixable = [
+    "E",
+    "F",
+    "I",
+    "UP", # Language feature updates
+    "RUF", # Ruff Rules
+]
+ignore = [
+    "RUF001",
+    "E501",
+]
+
+# 4. Ignore `E402` (import violations) in all `__init__.py` and misc files.
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = "dynamic"

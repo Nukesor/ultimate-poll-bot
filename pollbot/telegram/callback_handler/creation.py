@@ -1,6 +1,5 @@
 """Callback functions needed during creation of a Poll."""
 from datetime import date
-from typing import Optional
 
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.message import Message
@@ -210,7 +209,7 @@ def close_creation_datepicker(session, context, poll):
     message.edit_text(text, parse_mode="markdown", reply_markup=keyboard)
 
 
-def cancel_creation(session: scoped_session, context: CallbackContext) -> Optional[str]:
+def cancel_creation(session: scoped_session, context: CallbackContext) -> str | None:
     """Cancel the creation of a poll."""
     if context.poll is None:
         return i18n.t("delete.doesnt_exist", locale=context.user.locale)

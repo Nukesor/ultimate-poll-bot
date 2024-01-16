@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from datetime import date
-from typing import Optional
 
 from sqlalchemy import Column, ForeignKey, UniqueConstraint, func
 from sqlalchemy.orm import relationship
@@ -70,7 +69,7 @@ class Option(base):
 
         return self.name
 
-    def as_date(self) -> Optional[date]:
+    def as_date(self) -> date | None:
         """Either return the option as date or None."""
         if not self.is_date:
             return None

@@ -1,5 +1,5 @@
 """Reply keyboards."""
-from typing import Any, List, Optional, Union
+from typing import Any
 
 from sqlalchemy.orm import joinedload
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
@@ -22,7 +22,7 @@ IGNORE_PAYLOAD = f"{CallbackType.ignore.value}:0:0"
 
 
 def get_vote_keyboard(
-    poll: Poll, user: Optional[User], show_back: bool = False, summary: bool = False
+    poll: Poll, user: User | None, show_back: bool = False, summary: bool = False
 ) -> InlineKeyboardMarkup:
     """Get a plain vote keyboard."""
     buttons = []
@@ -74,8 +74,8 @@ def get_vote_keyboard(
 
 
 def get_vote_buttons(
-    poll: Poll, user: Optional[User] = None, show_back: bool = False
-) -> List[Union[List[InlineKeyboardButton], Any]]:
+    poll: Poll, user: User | None = None, show_back: bool = False
+) -> list[list[InlineKeyboardButton] | Any]:
     """Get the keyboard for actual voting."""
     if poll_allows_cumulative_votes(poll):
         buttons = get_cumulative_buttons(poll)
@@ -89,7 +89,7 @@ def get_vote_buttons(
     return buttons
 
 
-def get_normal_buttons(poll: Poll) -> List[Union[List[InlineKeyboardButton], Any]]:
+def get_normal_buttons(poll: Poll) -> list[list[InlineKeyboardButton] | Any]:
     """Get the normal keyboard with one vote button per option."""
     buttons = []
     vote_button_type = CallbackType.vote.value
@@ -115,7 +115,7 @@ def get_normal_buttons(poll: Poll) -> List[Union[List[InlineKeyboardButton], Any
     return buttons
 
 
-def get_cumulative_buttons(poll: Poll) -> List[List[InlineKeyboardButton]]:
+def get_cumulative_buttons(poll: Poll) -> list[list[InlineKeyboardButton]]:
     """Get the cumulative keyboard with two buttons per option."""
     vote_button_type = CallbackType.vote.value
     vote_yes = CallbackResult.yes.value
@@ -140,8 +140,8 @@ def get_cumulative_buttons(poll: Poll) -> List[List[InlineKeyboardButton]]:
 
 
 def get_priority_buttons(
-    poll: Poll, user: Optional[User]
-) -> List[List[InlineKeyboardButton]]:
+    poll: Poll, user: User | None
+) -> list[list[InlineKeyboardButton]]:
     """Create the keyboard for priority poll. Only show the deeplink, if not in a direct conversation."""
     if user is None:
         bot_name = config["telegram"]["bot_name"]
@@ -205,7 +205,7 @@ def get_priority_buttons(
     return buttons
 
 
-def get_doodle_buttons(poll: Poll) -> List[List[InlineKeyboardButton]]:
+def get_doodle_buttons(poll: Poll) -> list[list[InlineKeyboardButton]]:
     """Get the doodle keyboard with yes, maybe and no button per option."""
     show_option_name = CallbackType.show_option_name.value
     vote_button_type = CallbackType.vote.value

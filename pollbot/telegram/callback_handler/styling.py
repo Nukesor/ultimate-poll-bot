@@ -46,7 +46,6 @@ def toggle_percentage(
 def toggle_option_votes(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-
     """Toggle the visibility of the vote overview on an option."""
     if poll.anonymous and not poll.show_percentage:
         context.query.message.chat.send_message(
@@ -65,7 +64,6 @@ def toggle_option_votes(
 def toggle_date_format(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-
     """Switch between european and US date format."""
     poll.european_date_format = not poll.european_date_format
     poll.user.european_date_format = poll.european_date_format
@@ -79,7 +77,6 @@ def toggle_date_format(
 def toggle_summerization(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-
     """Toggle summarization of votes of a poll."""
     poll.summarize = not poll.summarize
 
@@ -92,7 +89,6 @@ def toggle_summerization(
 def toggle_compact_buttons(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-
     """Toggle the doodle poll button style."""
     poll.compact_buttons = not poll.compact_buttons
 
@@ -105,7 +101,6 @@ def toggle_compact_buttons(
 def set_option_order(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-
     """Set the order in which options are listed."""
     option_sorting = OptionSorting(context.action)
     poll.option_sorting = option_sorting.name
@@ -119,7 +114,6 @@ def set_option_order(
 def set_user_order(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-
     """Set the order in which user are listed."""
     user_sorting = UserSorting(context.action)
     poll.user_sorting = user_sorting.name
@@ -146,7 +140,6 @@ def send_option_order_message(
 def open_option_order_menu(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-
     """Open the menu for manually adjusting the option order."""
     send_option_order_message(session, context)
 
@@ -155,7 +148,6 @@ def open_option_order_menu(
 def increase_option_index(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-
     """Increase the index of a specific option."""
     option_id = context.action
 
@@ -195,7 +187,6 @@ def increase_option_index(
 def decrease_option_index(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-
     """Decrease the index of a specific option."""
     option_id = context.action
 

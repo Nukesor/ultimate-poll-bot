@@ -1,6 +1,5 @@
 """Helper functions for votes."""
 import random
-from typing import Dict, List
 
 from sqlalchemy.orm.collections import InstrumentedList
 from sqlalchemy.orm.scoping import scoped_session
@@ -32,7 +31,7 @@ def init_votes(session: scoped_session, poll: Poll, user: User) -> None:
 
 
 def init_votes_for_new_options(
-    session: scoped_session, poll: Poll, added_options: List[str]
+    session: scoped_session, poll: Poll, added_options: list[str]
 ) -> None:
     """
     When a new option is added, we need to create new votes
@@ -86,7 +85,7 @@ def reorder_votes_after_option_delete(session, poll: Poll):
     session.flush()
 
 
-def get_sorted_votes(poll: Poll, votes: List[Vote]) -> InstrumentedList:
+def get_sorted_votes(poll: Poll, votes: list[Vote]) -> InstrumentedList:
     """Sort the votes depending on the poll's current settings."""
 
     def get_user_name(vote):
@@ -99,7 +98,7 @@ def get_sorted_votes(poll: Poll, votes: List[Vote]) -> InstrumentedList:
     return votes
 
 
-def get_sorted_doodle_votes(poll: Poll, votes: List[Vote]) -> Dict[str, List[Vote]]:
+def get_sorted_doodle_votes(poll: Poll, votes: list[Vote]) -> dict[str, list[Vote]]:
     """Sort the votes depending on the poll's current settings."""
     doodle_answers = ["yes", "maybe", "no"]
 

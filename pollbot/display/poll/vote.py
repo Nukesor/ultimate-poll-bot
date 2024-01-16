@@ -1,5 +1,5 @@
 """Compilation of vote texts for each option."""
-from typing import Any, List, Optional, Union
+from typing import Any
 
 from sqlalchemy import func
 from sqlalchemy.orm.scoping import scoped_session
@@ -16,7 +16,7 @@ from pollbot.poll.helper import (
 from pollbot.poll.vote import get_sorted_doodle_votes, get_sorted_votes
 
 
-def get_doodle_vote_lines(poll: Poll, option: Option, summarize: bool) -> List[str]:
+def get_doodle_vote_lines(poll: Poll, option: Option, summarize: bool) -> list[str]:
     """Return all vote related lines for this option."""
     lines = []
     votes_by_answer = get_sorted_doodle_votes(poll, option.votes)
@@ -51,8 +51,8 @@ def get_doodle_vote_lines(poll: Poll, option: Option, summarize: bool) -> List[s
 
 
 def get_doodle_answer_lines(
-    votes: List[Vote], summarize: bool, is_last: bool
-) -> List[str]:
+    votes: list[Vote], summarize: bool, is_last: bool
+) -> list[str]:
     """Return the user names for a doodle answer.
 
     Try to compress as many usernames as possible into a single line.
@@ -96,7 +96,7 @@ def get_doodle_answer_lines(
     return lines
 
 
-def get_vote_lines(poll: Poll, option: Option, summarize: bool) -> List[str]:
+def get_vote_lines(poll: Poll, option: Option, summarize: bool) -> list[str]:
     """Return all vote related lines for this option."""
     lines = []
     threshold = 2
@@ -135,7 +135,7 @@ def get_vote_line(poll: Poll, option: Option, vote: Vote, index: int) -> str:
     return vote_line
 
 
-def get_vote_information_line(poll: Poll, context: Context) -> Optional[str]:
+def get_vote_information_line(poll: Poll, context: Context) -> str | None:
     """Get line that shows information about total user votes."""
     vote_information = None
     if context.total_user_count > 1:
@@ -154,9 +154,7 @@ def get_vote_information_line(poll: Poll, context: Context) -> Optional[str]:
     return vote_information
 
 
-def get_remaining_votes_lines(
-    session: scoped_session, poll: Poll
-) -> List[Union[str, Any]]:
+def get_remaining_votes_lines(session: scoped_session, poll: Poll) -> list[str | Any]:
     """Get the remaining votes for a poll."""
     user_vote_count = func.sum(Vote.vote_count).label("user_vote_count")
     remaining_user_votes = (

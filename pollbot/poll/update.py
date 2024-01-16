@@ -1,6 +1,5 @@
 """Update or delete poll messages."""
 from datetime import datetime, timedelta
-from typing import Optional
 
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
@@ -21,9 +20,9 @@ def update_poll_messages(
     session: scoped_session,
     bot: Bot,
     poll: Poll,
-    message_id: Optional[int] = None,
-    user: Optional[User] = None,
-    inline_message_id: Optional[str] = None,
+    message_id: int | None = None,
+    user: User | None = None,
+    inline_message_id: str | None = None,
 ) -> None:
     """Logic for handling updates.
 

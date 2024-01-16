@@ -1,6 +1,5 @@
 """Option for setting the current date of the picker."""
 from datetime import date
-from typing import Optional
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.scoping import scoped_session
@@ -21,7 +20,7 @@ from pollbot.telegram.keyboard.external import get_external_add_option_keyboard
 @poll_required
 def activate_notification(
     session: scoped_session, context: CallbackContext, poll: Poll
-) -> Optional[str]:
+) -> str | None:
     """Show to vote type keyboard."""
     user = context.user
     if user != poll.user:
@@ -60,7 +59,7 @@ def activate_notification(
 @poll_required
 def open_external_datepicker(
     _: scoped_session, context: CallbackContext, poll: Poll
-) -> Optional[str]:
+) -> str | None:
     """This opens the datepicker for non-admin users when they're adding options."""
     keyboard = get_external_datepicker_keyboard(poll, date.today())
     # Switch from new option by text to new option via datepicker

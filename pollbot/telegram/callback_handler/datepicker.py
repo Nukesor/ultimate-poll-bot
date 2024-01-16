@@ -1,6 +1,5 @@
 """Option for setting the current date of the picker."""
 from datetime import date, datetime, time
-from typing import Optional
 
 from dateutil.relativedelta import relativedelta
 from sqlalchemy.orm.scoping import scoped_session
@@ -94,7 +93,6 @@ def pick_creation_date(
 def pick_creation_weekday(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-
     return
 
 
@@ -102,7 +100,6 @@ def pick_creation_weekday(
 def pick_additional_date(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> None:
-
     """Pick an option after creating the poll."""
     owner_pick_date_option(session, context, poll, DatepickerContext.additional_option)
 
@@ -117,7 +114,7 @@ def pick_additional_weekday(
 @poll_required
 def pick_external_date(
     session: scoped_session, context: CallbackContext, poll: Poll
-) -> Optional[str]:
+) -> str | None:
     """Add or remove a date option during creation."""
     picked_date = date.fromisoformat(context.data[2])
 
@@ -142,7 +139,7 @@ def pick_external_date(
 @poll_required
 def pick_due_date(
     _: scoped_session, context: CallbackContext, poll: Poll
-) -> Optional[str]:
+) -> str | None:
     """Set the due date for a poll."""
     picked_date = date.fromisoformat(context.data[2])
     if picked_date <= date.today():
@@ -166,7 +163,6 @@ def pick_due_date(
 
 @poll_required
 def set_next_month(_: scoped_session, context: CallbackContext, poll: Poll) -> str:
-
     """Show the datepicker keyboard for the next month."""
     this_month = date.fromisoformat(context.data[2])
     datepicker_context = DatepickerContext(int(context.data[3]))

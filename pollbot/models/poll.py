@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from datetime import date, datetime, timedelta
-from typing import Optional
 
 from sqlalchemy import Column, ForeignKey, func, text
 from sqlalchemy.dialects.postgresql import UUID
@@ -142,7 +141,7 @@ class Poll(base):
                 return True
         return False
 
-    def get_date_option(self, check_date: date) -> Optional[Option]:
+    def get_date_option(self, check_date: date) -> Option | None:
         """Return whether an option with this date already exists."""
         for option in self.options:
             if option.is_date and option.as_date() == check_date:
@@ -156,7 +155,7 @@ class Poll(base):
 
         return self.due_date.strftime("%Y-%m-%d %H:%M UTC")
 
-    def set_due_date(self, date: Optional[datetime]) -> None:
+    def set_due_date(self, date: datetime | None) -> None:
         """Set the due date and the next notification."""
         if date is None:
             self.due_date = None

@@ -1,5 +1,4 @@
 """Handle messages."""
-from typing import Optional
 
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.bot import Bot
@@ -29,7 +28,7 @@ from pollbot.telegram.session import message_wrapper
 @message_wrapper()
 def handle_private_text(
     bot: Bot, update: Update, session: scoped_session, user: User
-) -> Optional[str]:
+) -> str | None:
     """Read all private messages and the creation of polls."""
     text = update.message.text.strip()
     poll = user.current_poll
@@ -123,7 +122,7 @@ def handle_create_options(
     text: str,
     poll: Poll,
     chat: Chat,
-) -> Optional[str]:
+) -> str | None:
     """Add options to the poll."""
     # Multiple options can be sent at once separated by newline
     # Strip them and ignore empty lines
@@ -143,7 +142,7 @@ def handle_set_vote_count(
     text: str,
     poll: Poll,
     chat: Chat,
-) -> Optional[str]:
+) -> str | None:
     """Set the amount of possible votes for this poll."""
     if poll.poll_type == PollType.limited_vote.name:
         error_message = i18n.t(

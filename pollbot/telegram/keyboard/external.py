@@ -1,5 +1,4 @@
 """All keyboards for external users that don't own the poll."""
-from typing import List
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -8,7 +7,7 @@ from pollbot.i18n import i18n
 from pollbot.models.poll import Poll
 
 
-def get_notify_keyboard(polls: List[Poll]) -> InlineKeyboardMarkup:
+def get_notify_keyboard(polls: list[Poll]) -> InlineKeyboardMarkup:
     """Get the keyboard for activationg notifications in a chat."""
     # Add back and pick buttons
     buttons = []

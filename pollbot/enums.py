@@ -4,7 +4,6 @@ from enum import Enum, unique
 
 @unique
 class PollDeletionMode(Enum):
-
     DB_ONLY = 1
     WITH_MESSAGES = 2
 

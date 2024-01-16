@@ -1,5 +1,4 @@
 """Poll creation helper."""
-from typing import Optional
 
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.chat import Chat
@@ -61,7 +60,7 @@ def create_poll(
     poll: Poll,
     user: User,
     chat: Chat,
-    message: Optional[Message] = None,
+    message: Message | None = None,
 ) -> None:
     """Finish the poll creation."""
     poll.created = True

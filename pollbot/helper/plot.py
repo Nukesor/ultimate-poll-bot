@@ -6,7 +6,7 @@ import matplotlib
 import numpy as np
 import pandas
 from matplotlib import dates as mdates
-from matplotlib import pyplot as plt  # noqa
+from matplotlib import pyplot as plt
 from sqlalchemy import Date, Integer, cast, func
 
 from pollbot.models import DailyStatistic, User, Vote

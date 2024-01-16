@@ -13,7 +13,6 @@ from pollbot.telegram.session import message_wrapper
 
 @message_wrapper()
 def notify(bot: Bot, update: Update, session: scoped_session, user: User) -> None:
-
     """Activate notifications for polls with due date."""
     polls = (
         session.query(Poll)

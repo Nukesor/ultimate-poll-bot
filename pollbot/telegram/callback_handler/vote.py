@@ -1,5 +1,4 @@
 """Callback functions needed during creation of a Poll."""
-from typing import Optional
 
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError, OperationalError
@@ -108,7 +107,7 @@ def respond_to_vote(
     line: str,
     context: CallbackContext,
     poll: Poll,
-    remaining_votes: Optional[int] = None,
+    remaining_votes: int | None = None,
     limited: bool = False,
 ) -> None:
     """Get the formatted response for a user."""

@@ -1,5 +1,4 @@
 """Reply keyboards."""
-from typing import List
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -163,7 +162,7 @@ def get_deletion_confirmation(poll: Poll) -> InlineKeyboardMarkup:
 
 
 def get_poll_list_keyboard(
-    polls: List[Poll], closed: bool, offset: int, poll_count: int
+    polls: list[Poll], closed: bool, offset: int, poll_count: int
 ) -> InlineKeyboardMarkup:
     """Get the confirmation keyboard for poll deletion."""
     buttons = []

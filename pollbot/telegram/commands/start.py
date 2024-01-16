@@ -1,6 +1,5 @@
 """The start command handler."""
 import time
-from typing import Optional
 from uuid import UUID
 
 from sqlalchemy.orm.scoping import scoped_session
@@ -28,9 +27,7 @@ from pollbot.telegram.session import message_wrapper
 
 
 @message_wrapper()
-def start(
-    bot: Bot, update: Update, session: scoped_session, user: User
-) -> Optional[str]:
+def start(bot: Bot, update: Update, session: scoped_session, user: User) -> str | None:
     """Send a start text."""
     # Truncate the /start command
     text = update.message.text[6:].strip()

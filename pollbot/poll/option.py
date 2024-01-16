@@ -1,4 +1,4 @@
-from typing import Any, List, Optional, Union
+from typing import Any
 
 from sqlalchemy.orm.scoping import scoped_session
 
@@ -26,7 +26,7 @@ def add_single_option(
 
 def add_options_multiline(
     session: scoped_session, poll: Poll, text: str, is_date: bool = False
-) -> List[Union[Any, str]]:
+) -> list[Any | str]:
     """Add one or multiple new options to the poll from a block of text."""
     options_to_add = [x.strip() for x in text.split("\n") if x.strip() != ""]
     return add_multiple_options(session, poll, options_to_add, is_date=is_date)
@@ -35,9 +35,9 @@ def add_options_multiline(
 def add_multiple_options(
     session: scoped_session,
     poll: Poll,
-    options_to_add: List[str],
+    options_to_add: list[str],
     is_date: bool = False,
-) -> List[Union[Any, str]]:
+) -> list[Any | str]:
     """Create options from a list of strings."""
     added_options = []
 
@@ -57,8 +57,8 @@ def add_multiple_options(
 
 
 def add_option(
-    poll: Poll, text: str, added_options: List[str], is_date: bool
-) -> Optional[Option]:
+    poll: Poll, text: str, added_options: list[str], is_date: bool
+) -> Option | None:
     """Parse the incoming text and create a single option from it.
 
     We allow option descriptions after an `--` or `—` delimiter.
@@ -96,9 +96,7 @@ def add_option(
     return option
 
 
-def get_sorted_options(
-    poll: Poll, total_user_count: int = 0
-) -> List[Union[Option, Any]]:
+def get_sorted_options(poll: Poll, total_user_count: int = 0) -> list[Option | Any]:
     """Sort the options depending on the poll's current settings."""
     options = poll.options.copy()
 
@@ -112,7 +110,7 @@ def get_sorted_options(
     return options
 
 
-def calculate_percentage(option: Option, total_user_count: int) -> Union[float, int]:
+def calculate_percentage(option: Option, total_user_count: int) -> float | int:
     """Calculate the percentage for this option."""
     # Return 0 if:
     # - No voted on this poll yet

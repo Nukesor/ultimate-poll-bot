@@ -1,6 +1,5 @@
 """Callback functions needed during creation of a Poll."""
 from datetime import datetime
-from typing import Optional
 
 from sqlalchemy.orm.scoping import scoped_session
 
@@ -17,7 +16,6 @@ from pollbot.telegram.keyboard.management import get_management_keyboard
 
 @poll_required
 def delete_poll(session: scoped_session, context: CallbackContext, poll: Poll) -> str:
-
     """Permanently delete the poll."""
     poll.delete = PollDeletionMode.DB_ONLY.name
     session.commit()
@@ -29,7 +27,6 @@ def delete_poll(session: scoped_session, context: CallbackContext, poll: Poll) -
 def delete_poll_with_messages(
     session: scoped_session, context: CallbackContext, poll: Poll
 ) -> str:
-
     """Permanently delete the poll."""
     poll.delete = PollDeletionMode.WITH_MESSAGES.name
     session.commit()
@@ -39,7 +36,6 @@ def delete_poll_with_messages(
 
 @poll_required
 def close_poll(session: scoped_session, context: CallbackContext, poll: Poll) -> str:
-
     """Close this poll."""
     poll.closed = True
     session.commit()
@@ -53,8 +49,7 @@ def close_poll(session: scoped_session, context: CallbackContext, poll: Poll) ->
 @poll_required
 def reopen_poll(
     session: scoped_session, context: CallbackContext, poll: Poll
-) -> Optional[str]:
-
+) -> str | None:
     """Reopen this poll."""
     if not poll.results_visible:
         return i18n.t("callback.cannot_reopen", locale=poll.user.locale)
@@ -76,7 +71,6 @@ def reopen_poll(
 
 @poll_required
 def reset_poll(session: scoped_session, context: CallbackContext, poll: Poll) -> str:
-
     """Reset this poll."""
     for vote in poll.votes:
         session.delete(vote)

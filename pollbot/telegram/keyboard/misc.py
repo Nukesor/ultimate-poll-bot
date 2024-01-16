@@ -1,5 +1,4 @@
 """All keyboards for external users that don't own the poll."""
-from typing import List
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -10,7 +9,7 @@ from pollbot.telegram.keyboard.user import get_back_to_menu_button
 
 
 def get_help_keyboard(
-    user: User, categories: List[str], current_category: str
+    user: User, categories: list[str], current_category: str
 ) -> InlineKeyboardMarkup:
     """Get the done keyboard for options during poll creation."""
     rows = []

@@ -25,7 +25,6 @@ from pollbot.telegram.keyboard.settings import get_settings_keyboard
 
 @poll_required
 def go_back(session: scoped_session, context: CallbackContext, poll: Poll) -> None:
-
     """Go back to the original step."""
     if context.callback_result == CallbackResult.main_menu:
         text = get_poll_text(session, poll)

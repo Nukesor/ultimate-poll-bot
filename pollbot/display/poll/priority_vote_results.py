@@ -1,5 +1,4 @@
 from collections import Counter
-from typing import List, Tuple
 
 from sqlalchemy.orm.scoping import scoped_session
 
@@ -7,7 +6,7 @@ from pollbot.models import Option, Poll, User, Vote
 
 
 # this is not used at the moment, but maybe we'd like to add this feature later
-def get_priority_result(session: scoped_session, poll: Poll) -> List[str]:
+def get_priority_result(session: scoped_session, poll: Poll) -> list[str]:
     # todo this query fetches all votes for the user, not only those belonging to the current poll
     users = session.query(User).join(User.votes).filter(Vote.poll_id == poll.id).all()
 
@@ -31,7 +30,7 @@ def get_priority_result(session: scoped_session, poll: Poll) -> List[str]:
             names = ", ".join(
                 [
                     session.query(Option).get(id).name
-                    for id in options_with_same_rank + [last_id]
+                    for id in [*options_with_same_rank, last_id]
                 ]
             )
             lines.append(
@@ -45,8 +44,8 @@ def get_priority_result(session: scoped_session, poll: Poll) -> List[str]:
 
 
 def get_ranked_options(
-    option_ids: List[int], users: List[User]
-) -> List[Tuple[int, int]]:
+    option_ids: list[int], users: list[User]
+) -> list[tuple[int, int]]:
     option_votes = Counter({id: 0 for id in option_ids})
     for user in users:
         for vote in sorted(user.votes, key=lambda vote: vote.priority):

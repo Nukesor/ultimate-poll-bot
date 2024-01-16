@@ -1,5 +1,3 @@
-from typing import List, Optional, Tuple
-
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
 
@@ -16,9 +14,9 @@ from .vote import get_remaining_votes_lines, get_vote_information_line
 def get_poll_text_and_vote_keyboard(
     session: scoped_session,
     poll: Poll,
-    user: Optional[User] = None,
+    user: User | None = None,
     show_back: bool = False,
-) -> Tuple[str, InlineKeyboardMarkup]:
+) -> tuple[str, InlineKeyboardMarkup]:
     """Get the text and the vote keyboard."""
     text, summarize = get_poll_text_and_summarize(
         session,
@@ -38,7 +36,7 @@ def get_poll_text(session: scoped_session, poll: Poll) -> str:
 
 def get_poll_text_and_summarize(
     session: scoped_session, poll: Poll
-) -> Tuple[str, bool]:
+) -> tuple[str, bool]:
     """Get the poll text and vote keyboard."""
     summarize = poll.permanently_summarized or poll.summarize
 
@@ -70,7 +68,7 @@ def get_poll_text_and_summarize(
 
 def compile_poll_text(
     session: scoped_session, poll: Poll, summarize: bool = False
-) -> List[str]:
+) -> list[str]:
     """Create the text of the poll."""
     context = Context(session, poll)
 

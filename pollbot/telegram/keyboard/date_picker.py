@@ -1,7 +1,7 @@
 """Reply keyboards."""
 import calendar
 from datetime import date
-from typing import Any, List, Tuple, Union
+from typing import Any
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -92,7 +92,7 @@ def get_external_datepicker_keyboard(poll, current_date):
 
 def get_datepicker_buttons(
     poll: Poll, current_date: date, datetime_context: DatepickerContext
-) -> List[List[InlineKeyboardButton]]:
+) -> list[list[InlineKeyboardButton]]:
     """Get the buttons for the datepicker.
 
     Since the datepicker is used in several different scenarios, we allow to dynamically
@@ -168,7 +168,7 @@ def get_datepicker_buttons(
 
 def resolve_context(
     poll: Poll, context: DatepickerContext
-) -> Union[Tuple[int, int, int, List[date]], Tuple[int, int, int, List[Any]]]:
+) -> tuple[int, int, int, list[date]] | tuple[int, int, int, list[Any]]:
     """Return the CallbackTypes, context variable and picked dates depending on input string."""
     # Compile a list of all existing option dates
     option_dates = []

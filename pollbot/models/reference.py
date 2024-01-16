@@ -1,6 +1,8 @@
 """The sqlalchemy model for a polloption."""
 from __future__ import annotations
 
+from typing import Any, ClassVar
+
 from sqlalchemy import Column, ForeignKey, Index, func
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import BigInteger, DateTime, Integer, String
@@ -13,7 +15,7 @@ class Reference(base):
     """The model for a Reference."""
 
     __tablename__ = "reference"
-    __mapper_args__ = {"confirm_deleted_rows": False}
+    __mapper_args__: ClassVar[dict[str, Any]] = {"confirm_deleted_rows": False}
 
     id = Column(Integer, primary_key=True)
     type = Column(String)

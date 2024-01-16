@@ -1,8 +1,9 @@
 """Session helper functions."""
 import traceback
+from collections.abc import Callable
 from datetime import date, datetime, timedelta
 from functools import wraps
-from typing import Any, Callable, Union
+from typing import Any
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -122,7 +123,6 @@ def callback_query_wrapper(func: Callable[[Bot, Update, Session, User], Any]):
 
         session = get_session()
         try:
-
             user = get_user(session, update.callback_query.from_user)
             # Cache ban value, so we don't have to lookup the value in our database on each request
             if user.banned:
@@ -409,7 +409,7 @@ def should_report_exception(context: CallbackContext, exception: Exception) -> b
     return False
 
 
-def ignore_exception(exception: Union[BadRequest, Unauthorized]) -> bool:
+def ignore_exception(exception: BadRequest | Unauthorized) -> bool:
     """Check whether we can safely ignore this exception."""
     if type(exception) is BadRequest:
         if (

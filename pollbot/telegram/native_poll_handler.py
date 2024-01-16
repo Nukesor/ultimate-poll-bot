@@ -1,8 +1,7 @@
 """Handle messages."""
 from sqlalchemy.orm import Session
-from telegram import Bot
+from telegram import Bot, Update
 from telegram import Poll as NativePoll
-from telegram import Update
 
 from pollbot.display.creation import get_native_poll_merged_text
 from pollbot.i18n import i18n

@@ -1,6 +1,6 @@
 """Poll text compilation for options."""
 import math
-from typing import Any, List, Union
+from typing import Any
 
 from sqlalchemy.orm.scoping import scoped_session
 from telegram.chat import Chat
@@ -18,7 +18,7 @@ from pollbot.telegram.keyboard.creation import get_options_entered_keyboard
 from .vote import get_doodle_vote_lines, get_vote_lines
 
 
-def next_option(tg_chat: Chat, poll: Poll, added_options: List[str]) -> None:
+def next_option(tg_chat: Chat, poll: Poll, added_options: list[str]) -> None:
     """Send the options message during the creation.
 
     This function also has a failsafe in it, that rollbacks the entire transaction,
@@ -47,7 +47,7 @@ def next_option(tg_chat: Chat, poll: Poll, added_options: List[str]) -> None:
 
 def get_option_information(
     session: scoped_session, poll: Poll, context: Context, summarize: bool
-) -> List[Union[Any, str]]:
+) -> list[Any | str]:
     """Compile all information about a poll option."""
     lines = []
     # Sort the options accordingly to the polls settings
