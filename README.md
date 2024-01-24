@@ -7,7 +7,12 @@
 ## :warning: :warning: :warning:  State of the project :warning: :warning: :warning:
 
 The project is **no longer actively** maintained!
-I try to bump dependencies on a regular basis, but **I won't review or accept** any new pull requests!
+
+Two of the most important dependencies (sqlalchemy and python-telegram-bot) released major version updates that introduced significant changes to their APIs.
+
+I'm no longer feeling comfortable with hosting this and I don't have the time or motivation to update those dependencies. Due to this, the "official" pollbot is now offline.
+
+This project was super useful for many people, in the end there were about ~2 million all-time users on the "official" bot instance. All good things have to come to an end though.
 
 If you started a successful fork of this repository that has been maintained over a longer period of time, feel free to contact me. I'll then point to your fork :).
 
